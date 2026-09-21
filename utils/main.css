@@ -1,0 +1,220 @@
+body {
+    background-color: black;
+}
+
+@keyframes roll {
+    0% {
+        Transform: rotate(0deg);
+        /* Transform: translateY(0)translateX(0); */
+    }
+
+    25% {
+        Transform: rotate(90deg);
+        /* Transform: translateY(-20px)translateX(-10px);        */
+    }
+
+    50% {
+        Transform: rotate(180deg);
+        /* Transform: translateY(-20px)translateX(-10px);        */
+    }
+
+    75% {
+        Transform: rotate(270deg);
+        /* Transform: translateY(-20px)translateX(-10px);        */
+    }
+
+    100% {
+        Transform: rotate(360deg);
+        /* Transform: translateY(0)translateX(0); */
+    }
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(13, 12, 12, 0.532);
+    color: white;
+    border-radius: 10px;
+    backdrop-filter: blur(15px) saturate(180%);
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    background-color: rgba(138, 131, 113, 0.284);
+    border-radius: 5px;
+    border-right: 1.5px solid rgba(188, 179, 154, 0.401);
+    border-bottom: 1px solid rgba(188, 179, 154, 0.401);
+    border-top: 1px solid rgba(188, 179, 154, 0.401);
+    /* box-shadow: 1px 1px 10px 1px rgba(242, 220, 169, 0.48); */
+}
+
+a:hover { 
+    color: gold;
+    box-shadow: 1px 1px 10px 1px rgba(242, 220, 169, 0.8);
+}
+
+a:active {
+    color: rgb(255, 179, 0);
+    transition: scale 0.2s ease-in-out;
+    transform: scale(0.92);
+    
+}
+
+a:visited {
+    color: rgb(236, 136, 136);
+}
+
+    
+
+main {
+    display: grid;
+    border: 1px solid rgb(13, 246, 52);
+    grid-template-areas:
+                         "B B B B B B B B B B B"
+                         "C C E E E F F F G G G"
+                         "D D E E E I I I I I I"
+                         "D D E E E H H H H H H"
+                         "D D E E E H H H H H H"
+                         "J J E E E H H H H H H"
+                         "J J E E E H H H H H H"
+                         "J J E E E H H H H H H"
+                         "J J E E E H H H H H H";
+    gap: 10px;
+    justify-items: stretch
+}
+
+section {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid rgb(48, 13, 246);
+}
+
+article {
+    background-color: rgba(138, 131, 113, 0.284);
+    color: white;
+    border-radius: 8px;
+    backdrop-filter: blur(2px) saturate(180%);
+    border: 1px solid rgb(246, 13, 13);
+    /* border: 1px solid rgba(242, 209, 117, 0.401); */
+}
+
+.base-stats-box {
+    color: white;
+    width: 12%;
+    height: 100%;
+    text-align: center;
+}
+
+.modifier {
+    padding: 3%;
+    border: 1px solid red;
+    border-radius: 500px;
+    width: 50%;
+    height: auto; 
+    margin: 20%;
+    background-color: black;
+    box-shadow: 1px 1px 15px (black);
+    
+}
+
+.modifier:hover {
+    animation:
+        roll 2s ease-in-out infinite;
+        animation-duration: .5s;
+       
+}
+
+
+.base-stats {
+    grid-area: B;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#str, #dex, #con, #int, #wis, #cha, #luc, #spd {
+   text-align: center;
+}
+
+.health {
+    grid-area: C;
+    display: flex;
+    flex-direction: row;
+}
+
+#hp-mod {
+
+}
+
+#hp-mod, #max-hp-container, #curr-hp-container {
+    text-align: center;
+    width: 32%;
+}
+
+.hpNum {
+    border: 1px solid rgba(242, 209, 117, 0.401);
+
+}
+
+#hp, #damage, #heal {
+    background-color: rgba(138, 131, 113, 0.284);
+    color: white;
+    border-radius: 8px;
+    backdrop-filter: blur(15px) saturate(180%);
+    width: 100%;
+    height: 33%;
+    overflow: hidden;
+}
+
+#hp{ 
+width: 92%;
+}
+
+.saving-throw {
+    grid-area: D;
+    display: flex;
+    flex-direction: column;
+}
+
+.skills {
+    grid-area: E;
+    display: flex;
+    flex-direction: column;
+}
+
+.armor-class {
+    grid-area: F;
+    display: flex;
+    flex-direction: column;
+}
+
+.initiative {
+    grid-area: G;
+    display: flex;
+    flex-direction: column;
+}
+
+.action {
+    grid-area: H;
+    display: flex;
+    flex-direction: column;
+}
+
+.condition {
+    grid-area: I;
+    display: flex;
+    flex-direction: column;
+}
+
+.gear {
+    grid-area: J;
+    display: flex;
+    flex-direction: column;
+}
