@@ -1,0 +1,107 @@
+body {
+    background-image: url('/utils/MapBackground.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: black;
+}
+
+h1 {
+    backdrop-filter: blur(10px) saturate(180%);
+    color: white;
+    text-align: center;
+    padding: 3%;
+    margin-top: 0;
+    box-shadow: 2px 2px 15px black;
+}
+
+.navContainer {
+    backdrop-filter: blur(10px) saturate(180%);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    box-shadow: 2px 2px 15px black;
+
+}
+
+ul, li, a {
+    color: white;
+    list-style: none;
+    text-decoration: none;
+    text-align: center;
+    padding: .2rem;
+    border-radius: .2rem;
+    backdrop-filter: blur(10px) saturate(180%);
+}
+
+
+
+.dropDown {
+    display: none;
+    position: absolute;
+    
+
+}
+
+li:hover .dropDown {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    z-index: 1000;
+    background-color: rgb(39, 26, 7);
+    justify-content: space-evenly;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    background-color: rgba(165, 42, 42, 0.613);
+    border: 1px solid goldenrod;
+}
+
+
+main {
+    display: grid;
+    grid-template-areas: 'a b c'
+                         'a b c'
+                         'a b c';
+    gap: 10px;
+    justify-items: stretch;
+    height: 800px;
+    
+}
+
+
+
+#currentCharacter, #currentCampaign, #unfinishedCharacters {
+    background-color: rgba(165, 42, 42, 0.623);
+    text-align: center;
+    backdrop-filter: blur(10px) saturate(180%);
+    border-radius: .5rem;
+    box-shadow: 2px 2px 15px black;
+    z-index: -1;
+}
+
+#currentCharacter {
+    grid-area: a;
+}
+
+#currentCampaign {
+    grid-area: b;
+}
+
+#unfinishedCharacters {
+    grid-area: c;
+}
+
+footer {
+    backdrop-filter: blur(10px) saturate(180%);
+    background-color: rgba(69, 53, 151, 0.623);
+    width: 100%;
+    margin-top: 10%;
+    margin-bottom: 0;
+    padding: .5%;
+    text-align: center;
+    
+}

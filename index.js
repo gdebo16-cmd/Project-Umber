@@ -2,6 +2,9 @@
 import path from "path";
 import { fileURLToPath } from "url";
 import pg from "pg";
+import session from "express-session";
+import fs from "fs/promises";
+const port = 3000;
 
 const { Pool } = pg;
 const pool = new Pool({
@@ -16,7 +19,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = 3000;
+
+app.use(
+	session({
+		secret: 'dev-secret-change-later',
+		resave: false,
+		saveUninitialized: false,
+	})
+);
+
 const publicDir = path.join(__dirname, "Public");
 
 app.use(express.json());
@@ -30,9 +41,21 @@ app.get("/login", (req, res) => {
   res.sendFile("signin.html", { root: publicDir });
 });
 
-app.get("/home", (req, res) => {
-	res.sendFile("home.html", { root: publicDir });
-})
+app.get("/home", async (req, res) => {
+	if(!req.session.userId) {
+		return res.redirect("/login");
+	}
+
+	try {
+		const filePath = path.join(publicDir, 'home.html');
+		let html = await fs.readFile(filePath, "utf8");
+		html = html.replaceAll("{{username}}", req.session.username);
+		res.send(html);
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("could not load home page")
+	}
+});
 
 app.use(express.static(publicDir));
 
@@ -49,7 +72,11 @@ app.post('/submit', async(req, res) => {
 			return res.status(401).send("Username or Password is incorrect");
 		}
 
+		const user = result.rows[0];
+		req.session.userId = user.id;
+		req.session.username = user.username;
 		res.redirect('/home');
+
 	} catch (err) {
 		console.error(err);
 		res.status(500).send("server error during login");
@@ -78,13 +105,17 @@ app.post('/register', async(req, res) => {
 
 		}
 
-		await pool.query(
-			"INSERT INTO users (username, password, name, email) VALUES ($1, $2, COALESCE($3, 'name pending'), COALESCE($4, 'Email Pending'))",
+		const created = await pool.query(
+			"INSERT INTO users (username, password, name, email) VALUES ($1, $2, COALESCE($3, 'name pending'), COALESCE($4, 'Email Pending')) RETURNING ID, username",
 			[userName, password, name || null, email || null] 
 		);
 
+
+		const user = created.rows[0];
+		req.session.userId = user.id;
+		req.session.username = user.username;
 		res.redirect('/home');
-		
+
 	} catch(err) {
 		console.error(err);
 		res.status(500).send("server error during registration.");

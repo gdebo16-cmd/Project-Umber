@@ -29,6 +29,35 @@ body {
     }
 }
 
+.navContainer {
+    display: flex;
+    flex-direction: row;
+    border: solid 2px blue;
+    text-decoration: none;
+    
+}
+
+ul, li {
+    text-decoration: none;
+    color: white;
+    background-color: rgba(138, 131, 113, 0.284);
+    border-radius: 5px;
+    border-right: 1.5px solid rgba(188, 179, 154, 0.401);
+    border-bottom: 1px solid rgba(188, 179, 154, 0.401);
+    border-top: 1px solid rgba(188, 179, 154, 0.401);
+    padding-right: 5%;
+}
+
+.dropDown {
+    display: none;
+    position: absolute;
+}
+
+li:hover .dropDown {
+    display: block;
+}
+
+
 header {
     display: flex;
     justify-content: space-around;

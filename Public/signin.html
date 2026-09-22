@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=neon|outline|emboss|shadow-multiple">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
     <link id="theme-style" rel="stylesheet" href="signin.css">
     <script src="main.js" async></script>
     <title>Eldrid Tales</title>
@@ -16,7 +17,9 @@
              
     </header>
     <main>
+        <section id="title">
         <h1>Welcome to Your Legend</h1> 
+        </section>
         <form id="signInBox" action="/submit" method="POST">
             <div class="formContainer" id="userNameContainer">
                 <label for="userName">Enter Username</label>
@@ -32,7 +35,6 @@
                 <button id="submit" type="submit">Login</button>
                 <a href="/register" id="newUser">Create New User</a>
             </div>
-            
         </form>
     </main>
 </body>
