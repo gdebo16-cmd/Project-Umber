@@ -1,0 +1,140 @@
+Registration structure
+
+    Body
+        header
+            h1
+        main
+            section #title
+                h2
+            section #formContainer
+                form #registrationForm
+                    article #userNameContainer  .formContainer
+                        label
+                        input #userName
+                    article #passwordContainer  .formContainer
+                        label
+                        input #password
+                    article #emailContainer  .formContainer
+                        label
+                        input #email
+                    article #nameContainer .formContainer
+                        label
+                        input #name
+                    article #buttonContainer .formContainer
+                        button #submit
+        footer
+            section #loginLink
+                p 
+                    a  
+                    
+
+signin structure 
+
+    Body
+        header
+            h1
+            main
+                section #title
+                    h2
+                form #SignInBox
+                    div #userNameContainer (.formContainer)
+                        label
+                        input #userName
+                    div #passwordContainer (.formContainer)
+                        label
+                        input #password
+                    div #buttonContainer (.formContainer)
+                        button #submit
+                        a #newUser
+
+
+settings structure 
+
+    Body
+        header
+            h1
+            nav #navBox
+                ul .navContainer
+                    li
+                        a
+                    li
+                        ul #characterDropdown .dropDown
+                            a   
+                            a
+                    li
+                        ul #campaignDropdown .dropDown
+                            a
+                            a
+                            a
+                    li
+                        ul #settingsDropdown .dropDown
+                            a
+                            a   
+                            a
+            
+        main
+            section #title
+                h2
+            section #formContainer
+                h3
+                form
+                    article #userNameContainer .formContainer
+                        label
+                        input #userName
+                    article #emailContainer .formContainer
+                        label
+                        input #email
+                    article #passwordContainer .formContainer
+                        label
+                        input #password
+                    article #buttonContainer .formContainer
+                        button #submit
+            section #homeLink
+                a
+        
+        footer
+            p
+                        
+
+home structure 
+
+    body
+        header
+            h1 #title
+            nav #navBox
+                ul .navContainer
+                    li
+                        a
+                    li
+                        ul #characterDropdown .dropDown
+                            a   
+                            a
+                    li
+                        ul #campaignDropdown .dropDown
+                            a
+                            a
+                            a
+                    li
+                        ul #settingsDropdown .dropDown
+                            a
+                            a   
+                            a
+            
+        main
+            section #title
+                h2
+            section #currentCharacters .mainBlock
+                h3
+                article #characterList
+                    p
+            section #currentCampaign .mainBlock
+                h3
+                article #campaignList
+                    p
+            section #unfinishedCharacters .mainBlock
+                h3
+                article #unfinishedList
+                    p
+      
+        footer
+            p

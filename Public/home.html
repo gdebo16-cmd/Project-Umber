@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=neon|outline|emboss|shadow-multiple">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
     <link id="theme-style" rel="stylesheet" href="home.css">
     <script src="main.js" async></script>
     <title>Eldrid Tales</title>
@@ -13,10 +14,10 @@
 
 <body>
     <header>
-        <section id="headerContainer">
-            <h1 id="title">
+            <h1>
                 Welcome {{username}}, To Eldridia
             </h1>
+
             <nav id="navBox">
                 <ul class="navContainer">
                     <a id="home" href="/home">home</a>
@@ -49,18 +50,28 @@
         </section>
     </header>
     <main>
-        <article id="currentCharacter">
-            <h2>Current Characters</h2>
-            <section>No Characters</section>
-        </article>
-        <article id="currentCampaign">
-            <h2>Current Campaigns</h2>
-            <section>No Campaigns</section>
-        </article>
-        <article id="unfinishedCharacters">
-            <h2>Unfinished characters</h2>
-            <section>No Unfinished Characters</section>
-        </article>
+
+        <section id="title">
+            <h2>Take Hold of Your Legend</h2>
+        </section>
+        <section id="currentCharacters" class="mainBlock">
+            <h3 class="topTile">Current Characters</h3>
+            <article class='bottomTile' id="characterList">
+                <p>No Characters Available</p>
+            </article>
+        </section>
+        <section id="currentCampaign" class="mainBlock">
+            <h3 class="topTile">Current Campaigns</h3>
+            <article class='bottomTile' id="campaignList">
+                <p>No Campaigns Planned</p>
+            </article>
+        </section>
+        <section id="unfinishedCharacters" class="mainBlock">
+            <h3 class="topTile">Unfinished Work</h3>  
+            <article class='bottomTile' id="unfinishedList">
+                <p>Youre All Caught Up!</p>
+            </article>
+        </section>  
     </main>
     <footer>
         <p>copyrite Eldrid Tales LLC</p>

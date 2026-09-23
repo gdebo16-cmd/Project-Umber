@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=neon|outline|emboss|shadow-multiple">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
     <link id="theme-style" rel="stylesheet" href="home.css">
     <title>Eldrid Tales</title>
 </head>
@@ -47,51 +48,38 @@
             </ul>
         </nav>
     </header>
-    <main>
-        <article id="currentCharacter">
+    <main id="settingsMain">
+        <section id="settingsTitle">
             <h2>Settings</h2>
-            <section>
-                <h3>Account Information</h3>
-                <form action="/settings" method="PUT">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" value="{{username}}">
-                    <br>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" value="{{email}}">
-                    <br>
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" value="{{password}}">
-                    <br>
-                    <button type="submit">Update Account</button>
+        </section>
+        <section id="formContainer">
+            <h3>Account Information</h3>
+                <form action="/settings" method="POST">
+                    <article id="userNameContainer" class="formContainer">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" value="{{username}}">
+                    </article>
+                    
+                    <article id="emailContainer" class="formContainer">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="{{email}}">
+                    </article>
+                    
+                    
+                    <article id="passwordContainer" class="formContainer">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" value="">
+                    </article>
+                    
+                    <article id="buttonContainer" class="formContainer">
+                        <button id="submit" type="submit">Update Account</button>
+                    </article>
                 </form>
-            </section>
-            <section id="homeLink">
-                <p><a href="/home">Back to home</a></p>
-            </section>
-            
-        <!--     <section>
-                Security
-            </section>
-            <section>
-                Privacy
-            </section>
-            <section>
-                Notifications
-            </section>
-            <section>
-                Display
-            </section>
-            <section>
-                Help
-                </section>
-            <section>
-                About
-            </section>-->
-        </article> 
-        
+        </section>
     </main>
-    <footer>
-        <p>copyrite Eldrid Tales LLC</p>
+    <footer id="homeLink">
+            <a id="homeButton" href="/home">Back to home</a>
+            <h4>copyrite Eldrid Tales LLC</h4>
     </footer>
 </body>
 </html>

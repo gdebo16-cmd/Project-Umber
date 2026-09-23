@@ -6,51 +6,51 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="reg.css"/>
+  <link rel="stylesheet" href="signin.css"/>
   <title>Create Account — Eldrid Tales</title>
 </head>
 <body>
+  <header>
+    <h1>Eldrid Tales</h1>
+  </header>
   <main>
     <section id="title">
-      <h1>Create Your Legend</h1>
+      <h2>Create Your Legend</h2>
     </section>
 
-    <section class="formContainer">
+    <section id="formContainer">
       <form id="registrationForm" action="/register" method="POST">
 
-        <div id="userNameContainer">
+        <article id="userNameContainer" class="formContainer">
           <label for="userName">Username</label>
           <input type="text" id="userName" name="userName" required />
-        </div>
-      <br/>
-        <div id="passwordContainer">
+        </article>
+      
+        <article id="passwordContainer" class="formContainer">
           <label for="password">Password</label>
           <input type="password" id="password" name="password" required />
-        </div>
-      <br/>
-      <div id="emailContainer">
+        </article>
+      
+      <article id="emailContainer" class="formContainer">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" />
-      </div>
-      <br/>
-      <div id="nameContainer">
+      </article>
+      
+      <article id="nameContainer" class="formContainer">
         <label for="name">Display Name</label>
         <input type="text" id="name" name="name" />
         </div>
-      <br/>
-        <div id="buttonContainer">
+      
+        <article id="buttonContainer" class="formContainer">
           <button id="submit" type="submit">Create Account</button>
-        </div>
+        </article>
       </form>
     </section>
-
-    
-
   </main>
 </body>
 <footer>
-  <section id="loginLink">
-    <p><a href="/login">Back to login</a></p>
+  <section id="loginContainer">
+    <p><a id="loginLink" href="/login">Back to login</a></p>
   </section>
 </footer>
 </html>

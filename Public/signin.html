@@ -14,27 +14,28 @@
 
 <body>
     <header>
-             
+         <h1>Eldrid Tales</h1>
     </header>
     <main>
         <section id="title">
-        <h1>Welcome to Your Legend</h1> 
+            <h2>Welcome to Your Legend</h2> 
         </section>
-        <form id="signInBox" action="/submit" method="POST">
-            <div class="formContainer" id="userNameContainer">
+        
+        <form id="formContainer" action="/submit" method="POST">
+            <article class="formContainer" id="userNameContainer">
                 <label for="userName">Enter Username</label>
                 <input type="text" id="userName" name="userName" required>
-            </div>
-            <br/>
-            <div class="formContainer" id="passwordContainer">
+            </article>
+            
+            <article class="formContainer" id="passwordContainer">
                 <label for="password">Enter Password</label>
                 <input type="password" id="password" name="password" required>
-            </div>
-            <br/>
-            <div class="'formContainer" id="buttonContainer">
+            </article>
+            
+            <article class="'formContainer" id="buttonContainer">
                 <button id="submit" type="submit">Login</button>
                 <a href="/register" id="newUser">Create New User</a>
-            </div>
+            </article>
         </form>
     </main>
 </body>

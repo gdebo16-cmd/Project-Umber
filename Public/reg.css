@@ -4,6 +4,9 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 700;
+    font-style: normal;
 }
 
 main {
@@ -27,19 +30,14 @@ main {
 }
 
 
-
-
 #title {
+    grid-area: b;
     display: flex;
     flex-direction: column;
     justify-content: center;
     flex-wrap: wrap;
     padding: 5%;
-    font-family: "Cinzel Decorative", serif;
-    font-weight: 700;
-    font-style: normal;
     color: white;
-    grid-area: b;
     background-color: rgba(135, 114, 78, 0.595);
     box-shadow: 2px 2px 15px black;
     border-radius: 10px;
@@ -71,7 +69,6 @@ main {
     font-style: normal;
     color: white;
     border-radius: 10px;
-    
  }
 
 
@@ -79,6 +76,7 @@ main {
     background-color: rgba(33, 32, 30, 0.378);
     box-shadow: 2px 2px 15px black;
  }
+
 
  input {
     border-radius: 0 0 10px 10px;
@@ -118,15 +116,12 @@ main {
  #submit {
     padding: 5%; 
     border-radius: 10px;
-    font-family: "Cinzel Decorative", serif;
-    font-weight: 700;
-    font-style: normal;
     background-color: rgba(33, 32, 30, 0.378);
     color: white;
+    transition: all 0.5s ease;
  }
 
  #submit:hover {
-    transition: all 0.5s ease;
     transform: scale(1.05);
     animation: roll 1.5s ease-in-out infinite;
  }
@@ -136,31 +131,31 @@ main {
 @keyframes roll {
     0% {
         box-shadow: 2px 2px 15px rgb(252, 235, 140);
-        Transform: box-shadow rotate(0deg);
+        transform: box-shadow rotate(0deg);
         /* Transform: translateY(0)translateX(0); */
     }
 
     25% {
         box-shadow: 2px 2px 25px rgb(250, 226, 89);
-        Transform: box-shadow rotate(90deg);
-        /* Transform: translateY(-20px)translateX(-10px);        */
+        transform: box-shadow rotate(90deg);
+        
     }
 
     50% {
         box-shadow: 2px 2px 35px rgb(249, 235, 156);
-        Transform: box-shadow rotate(180deg);
-        /* Transform: translateY(-20px)translateX(-10px);        */
+        transform: box-shadow rotate(180deg);
+        
     }
 
     75% {
         box-shadow: 2px 2px 25px rgb(250, 241, 190);
-        Transform: box-shadow rotate(270deg);
-        /* Transform: translateY(-20px)translateX(-10px);        */
+        transform: box-shadow rotate(270deg);
+              
     }
 
     100% {
         box-shadow: 2px 2px 15px rgb(249, 249, 249);
-        Transform: box-shadow rotate(360deg);
-        /* Transform: translateY(0)translateX(0); */
+        transform: box-shadow rotate(360deg);
+        
     }
 }

@@ -4,167 +4,219 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-color: rgb(47, 16, 16);
-}
-
-
-
-main {
-    background-color: rgba(249, 193, 136, 0.489);
-    backdrop-filter: blur(5px) saturate(150%);
-    border-radius: .8rem;
-    display: grid;
-    gap: 20px;
-    grid-template-areas: 
-                         'a a b b'
-                         'c c b b'
-                         'd d b b';
-
     font-family: "Cinzel Decorative", serif;
     font-weight: 700;
     font-style: normal;
-    padding: 3%;
-    justify-self: center;
-    position:fixed;
-    top: 20%;
-    box-shadow: 2px 2px 15px black;
+    max-height: 2160px;
+    max-width: 3840px;
+    margin: auto;
 }
 
-#title {
-    grid-area: b;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-wrap: wrap;
-    backdrop-filter: blur(50px);
-    background-color: rgba(0, 0, 0, 0.732);
-    padding: 2%;
-    border-radius: .5rem;
-    box-shadow: 2px 2px 15px black;
-    text-align: center;
-    color: rgba(248, 178, 28, 0.79);
-    text-shadow: 1px 1px 8px rgb(0, 0, 0);
+:root {
+    --bg-color-2: rgba(68, 42, 196, 0.67);
+    --bg-color-1: rgba(83, 92, 222, 0.72);
+    --txt-color-1: rgba(255, 255, 255, 0.756);
+    --rad1: 15px;
+    --rad2: 5px;
+    --bs1: 2px 2px 15px black;
+    --pad: 30px;
+    --pad2: 15px;
+    --blur1: blur(5px) saturate(150%);
+    --toprad: 10px 10px 0 0;
+    --lowrad: 0 0 10px 10px;
+    --bgc-top: rgba(54, 62, 175, 0.72);
+    --bgc-low: rgba(35, 40, 100, 0.72);
+}
 
+ header h1 {
+        font-size: clamp(.5rem, 4vw + 1rem, 3rem);
+        text-align: center;
+            background-color: var(--bg-color-1);
+            color: var(--txt-color-1);
+            box-shadow: var(--bs1);
+        position: sticky;
+        top: 0;
+        width: auto;
+        margin: 0;
+        left: 0;
+        right: 0;
+        height: 15%;
+    }
+
+main { 
+    margin: 5% 15% 15% 15%;
+        border-radius: var(--rad);
+        padding: var(--pad);
+        background-color: var(--bg-color-1);
+        color: var(--txt-color-1);
+        box-shadow: var(--bs1);
+        backdrop-filter:var(--blur1);
+
+    display: grid;
+        grid-template-areas: 'c c b b'          /*b = title*/
+                             'c c b b'          /*c = formContainer*/
+                             'c c b b';
+        gap: 25px;
 }
 
 
-#signInBox {
-    padding:25% 0 25% 0;
-}
-
-#userNameContainer, #passwordContainer, #buttonContainer {
-    text-align: center;
-    border-radius: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
     
+
+    #title {
+        grid-area: b;
+
+        display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+        text-align: center;
+        font-size: clamp(.1rem, 1vw + .75rem, 3rem);
+            border-radius: var(--rad);
+            padding: var(--pad);
+            background-color: var(--bg-color-2);
+            color: var(--txt-color-1);
+            box-shadow: var(--bs1);
+
+        
+    }
+
+    #formContainer {
+        grid-area: c;
+
+            background-color: var(--bg-color-2);
+            color: var(--txt-color-1);
+            box-shadow: var(--bs1);
+            padding: var(--pad);
+    }
+
+        input {
+            padding: 5px;
+            text-align: center;
+            border: none;
+                border-radius: var(--lowrad);
+                background-color: var(--bgc-low);
+                color: var(--txt-color-1);         
+        }
+
+        label {
+            padding: 5px;
+            text-align: center;
+            border-radius: var(--toprad);
+            background-color: var(--bgc-top);
+        }
+
+            #userNameContainer, #passwordContainer, #emailContainer, #nameContainer {
+                display: flex;
+                flex-direction: column;
+                    color: var(--txt-color-1);
+                    border-radius: 10px 10px 10px 10px;
+                    box-shadow: var(--bs1);
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+            }
+
+            #buttonContainer {
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+                justify-content: center;
+            }
+
+                    #submit {
+                        border: none;
+                        padding: var(--pad);
+                        border-radius: 5px;
+                        background-color: var(--bg-color-1);
+                        color: var(--txt-color-1);
+                        box-shadow: var(--bs1);
+                        transition: all 0.5s ease;
+                        font-family: "Cinzel Decorative", serif;
+                        font-weight: 700;
+                        font-style: normal;
+                        font-size: clamp(.1rem, 1vw + .1rem, 1rem);
+                        width: 100%;
+                    }
+                
+                        #submit:hover {
+                            transform: scale(1.05);
+                            animation: roll 1.5s ease-in-out infinite;
+                        }
+                
+                    #newUser {
+                        border: none;
+                        text-decoration: none;
+                            padding: var(--pad);
+                            border-radius: 5px;
+                            background-color: var(--bg-color-1);
+                            color: var(--txt-color-1);
+                            box-shadow: var(--bs1);
+                            font-size: clamp(.1rem, 1vw + .1rem, 1rem);
+                        transition: all 0.5s ease;
+                        
+                    }
+                
+                        #newUser:hover {
+                            transform: scale(1.05);
+                            animation: roll 1.5s ease-in-out infinite;
+                        
+                        }
+
+
+footer {
+    position: fixed;
+    top: 94%;
+    width: auto;
+    margin: 0;
+    left: 0;
+    right: 0;
+
+        background-color: var(--bg-color-1);
+        color: var(--txt-color-1);
+        box-shadow: var(--bs1);
 }
 
-#userNameContainer {
-    grid-area: a;
-    backdrop-filter: blur(10px) saturate(150%);
-    display: flex;
-    flex-direction: column;
-    box-shadow: 2px 2px 15px black;
-}
-
-#passwordContainer {
-    grid-area: c;
-    backdrop-filter: blur(10px) saturate(150%);
-    display: flex;
-    flex-direction: column;
-    box-shadow: 2px 2px 15px black;
-}
-
-#buttonContainer {
-    grid-area: d;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-#userName, #password {
-    backdrop-filter: blur(10px) saturate(150%);
-    border-radius: 15px;
-    padding: 2%;
-    margin: 5%;
-    background-color: rgba(0, 0, 0, 0.079);
-}
+    #loginLink {
+        color: white;
+        text-decoration: none;
+        background-color: var(--bg-color-1);
+        padding: var(--pad2);
+    }
 
 
-#submit  {
-    border-radius: .3rem;
-    color: black;
-    background-color: rgba(0, 0, 0, 0.079);
-    backdrop-filter: blur(5px);
-    padding: 2%;
-    text-decoration: none;
-    border: none;
-    box-shadow: 2px 2px 15px black;
-    width: 100px;
-    font-family: "Cinzel Decorative", serif;
-    font-weight: 700;
-    padding: 1%;
-}
 
-#newUser {
-    border-radius: .3rem;
-    color: black;
-    backdrop-filter: blur(5px);
-    padding: 2%;
-    text-decoration: none;
-    border: none;
-    box-shadow: 2px 2px 15px black;
-    width: 200px;
-    
-}
 
-#newUser:hover {
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    transform: translateY(0px) translateX(0px) scale(1.05);
-    animation:
-        roll 2s ease-in-out infinite;
-        animation-duration: 2s;
 
-}
 
-#submit:hover {
-    box-shadow: 2px 2px 15px goldenrod;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    transform: translateY(0px) translateX(0px) scale(1.05);
-    animation:
-        roll 2s ease-in-out infinite;
-        animation-duration: 2s;
-}
+
+
+
+ 
+
+
 
 @keyframes roll {
     0% {
         box-shadow: 2px 2px 15px rgb(252, 235, 140);
-        Transform: box-shadow rotate(0deg);
-        /* Transform: translateY(0)translateX(0); */
+        transform: box-shadow rotate(0deg);
     }
 
     25% {
         box-shadow: 2px 2px 25px rgb(250, 226, 89);
-        Transform: box-shadow rotate(90deg);
-        /* Transform: translateY(-20px)translateX(-10px);        */
+        transform: box-shadow rotate(90deg);
     }
 
     50% {
         box-shadow: 2px 2px 35px rgb(249, 235, 156);
-        Transform: box-shadow rotate(180deg);
-        /* Transform: translateY(-20px)translateX(-10px);        */
+        transform: box-shadow rotate(180deg);
     }
 
     75% {
         box-shadow: 2px 2px 25px rgb(250, 241, 190);
-        Transform: box-shadow rotate(270deg);
-        /* Transform: translateY(-20px)translateX(-10px);        */
+        transform: box-shadow rotate(270deg);
     }
 
     100% {
         box-shadow: 2px 2px 15px rgb(249, 249, 249);
-        Transform: box-shadow rotate(360deg);
-        /* Transform: translateY(0)translateX(0); */
+        transform: box-shadow rotate(360deg);
     }
 }
