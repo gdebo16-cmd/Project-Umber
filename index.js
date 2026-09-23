@@ -33,6 +33,10 @@ const publicDir = path.join(__dirname, "Public");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+
+
+
 app.get("/", (req, res) => {
   res.redirect("/login");
 });
@@ -119,6 +123,45 @@ app.post('/register', async(req, res) => {
 	} catch(err) {
 		console.error(err);
 		res.status(500).send("server error during registration.");
+	}
+});
+
+app.get('/settings', async(req, res) => {
+	if(!req.session.userId) {
+		return res.redirect("/login");
+	}
+
+	try {
+		const filePath = path.join(publicDir, 'settings.html');
+		let html = await fs.readFile(filePath, "utf8");
+		html = html.replaceAll("{{username}}", req.session.username);
+		html = html.replaceAll("{{email}}", req.session.email);
+		html = html.replaceAll("{{password}}", req.session.password);
+		res.send(html);
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("could not load home page")
+	}
+});
+
+app.put('/settings', async(req, res) => {
+	const { username, email, password } = req.body;
+
+	try {
+		const result = await pool.query(
+			"UPDATE users SET username = $1, email = $2, password = $3 WHERE id = $4",
+			[username, email, password, req.session.userId]
+		);
+
+		if(result.rowCount === 0) {
+			return res.status(404).send("Update failed");
+		}
+
+		res.status(200).send("Account updated successfully");
+
+	} catch(err) {
+		console.error(err);
+		res.status(500).send("server error during settings update");
 	}
 });
 

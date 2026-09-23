@@ -13,40 +13,40 @@
 
 <body>
     <header>
-        <h1 id="title">Welcome {{username}}, To Eldridia</h1>
-        <nav id="navBox">
-            <ul class="navContainer">
-                <li>
-                    <a href="/home">home</a>
-                </li>
-
-                <li>Characters
-                        <ul class="dropDown" id="characterDropdown">
-                            <a href="/create_char">Create Character</a>
-                            <a href="/char_list">Character List</a>
+        <section id="headerContainer">
+            <h1 id="title">
+                Welcome {{username}}, To Eldridia
+            </h1>
+            <nav id="navBox">
+                <ul class="navContainer">
+                    <a id="home" href="/home">home</a>
+                
+                    <li>Characters
+                            <ul class="dropDown" id="characterDropdown">
+                                <a href="/create_char">Create Character</a>
+                                <a href="/char_list">Character List</a>
+                            </ul>
+                    </li>
+                    
+                    <li>Campaigns
+                        <ul class="dropDown" id="campaignDropdown">
+                            <a href="/create_campaign">Create Campaign</a>
+                            <a href="/campaign_list">Campaign List</a>
+                            <a href="/premade">Premade Campaigns</a>
                         </ul>
-                </li>
-                
-                <li>Campaigns
-                    <ul class="dropDown" id="campaignDropdown">
-                        <a href="/create_campaign">Create Campaign</a>
-                        <a href="/campaign_list">Campaign List</a>
-                        <a href="/premade">Premade Campaigns</a>
-                    </ul>
-                </li>
+                    </li>
 
-                <li>Settings
-                    <ul class="dropDown" id="settingsDropdown">
-                        <a href="/profile">Profile</a>
-                        <a href="/settings">Settings</a>
-                        <a href="/login">Log Out</a>
-                    </ul>
-                </li>
-                
-            </ul>
-
-            </ul>
-        </nav>
+                    <li>Settings
+                        <ul class="dropDown" id="settingsDropdown">
+                            <a href="/profile">Profile</a>
+                            <a href="/settings">Settings</a>
+                            <a href="/login">Log Out</a>
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </nav>
+        </section>
     </header>
     <main>
         <article id="currentCharacter">

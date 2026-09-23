@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="'en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=neon|outline|emboss|shadow-multiple">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+    <link id="theme-style" rel="stylesheet" href="home.css">
+    <title>Eldrid Tales</title>
+</head>
+
+<body>
+    <header>
+        <h1 id="title">Welcome {{username}}, To Eldridia</h1>
+        <nav id="navBox">
+            <ul class="navContainer">
+                <li>
+                    <a href="/home">home</a>
+                </li>
+
+                <li>Characters
+                        <ul class="dropDown" id="characterDropdown">
+                            <a href="/create_char">Create Character</a>
+                            <a href="/char_list">Character List</a>
+                        </ul>
+                </li>
+                
+                <li>Campaigns
+                    <ul class="dropDown" id="campaignDropdown">
+                        <a href="/create_campaign">Create Campaign</a>
+                        <a href="/campaign_list">Campaign List</a>
+                        <a href="/premade">Premade Campaigns</a>
+                    </ul>
+                </li>
+
+                <li>Settings
+                    <ul class="dropDown" id="settingsDropdown">
+                        <a href="/profile">Profile</a>
+                        <a href="/settings">Settings</a>
+                        <a href="/login">Log Out</a>
+                    </ul>
+                </li>
+                
+            </ul>
+
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <article id="currentCharacter">
+            <h2>Settings</h2>
+            <section>
+                <h3>Account Information</h3>
+                <form action="/settings" method="PUT">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" value="{{username}}">
+                    <br>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="{{email}}">
+                    <br>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" value="{{password}}">
+                    <br>
+                    <button type="submit">Update Account</button>
+                </form>
+            </section>
+            <section id="homeLink">
+                <p><a href="/home">Back to home</a></p>
+            </section>
+            
+        <!--     <section>
+                Security
+            </section>
+            <section>
+                Privacy
+            </section>
+            <section>
+                Notifications
+            </section>
+            <section>
+                Display
+            </section>
+            <section>
+                Help
+                </section>
+            <section>
+                About
+            </section>-->
+        </article> 
+        
+    </main>
+    <footer>
+        <p>copyrite Eldrid Tales LLC</p>
+    </footer>
+</body>
+</html>

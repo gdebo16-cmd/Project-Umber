@@ -3,24 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="signin.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="reg.css"/>
   <title>Create Account — Eldrid Tales</title>
 </head>
 <body>
   <main>
-    <h1>Create Your Legend</h1>
-    <form action="/register" method="POST">
-      <label for="userName">Username</label>
-      <input type="text" id="userName" name="userName" required />
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" required />
-      <label for="name">Display Name</label>
-      <input type="text" id="name" name="name" />
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" />
-      <button type="submit">Create Account</button>
-    </form>
-    <p><a href="/login">Back to login</a></p>
+    <section id="title">
+      <h1>Create Your Legend</h1>
+    </section>
+
+    <section class="formContainer">
+      <form id="registrationForm" action="/register" method="POST">
+
+        <div id="userNameContainer">
+          <label for="userName">Username</label>
+          <input type="text" id="userName" name="userName" required />
+        </div>
+      <br/>
+        <div id="passwordContainer">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+      <br/>
+      <div id="emailContainer">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" />
+      </div>
+      <br/>
+      <div id="nameContainer">
+        <label for="name">Display Name</label>
+        <input type="text" id="name" name="name" />
+        </div>
+      <br/>
+        <div id="buttonContainer">
+          <button id="submit" type="submit">Create Account</button>
+        </div>
+      </form>
+    </section>
+
+    
+
   </main>
 </body>
+<footer>
+  <section id="loginLink">
+    <p><a href="/login">Back to login</a></p>
+  </section>
+</footer>
 </html>

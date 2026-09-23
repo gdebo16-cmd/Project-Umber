@@ -1,5 +1,5 @@
 body {
-    background-image: url('/utils/MapBackground.png');
+    background-image: url('/utils/mapblack1.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -7,57 +7,79 @@ body {
     background-color: black;
 }
 
+header {
+    z-index: 1;
+    position: relative;
+    
+}
+
+#headerContainer {
+    box-shadow: 2px 2px 15px black;
+    border-radius: 15px;
+}
+
 h1 {
     backdrop-filter: blur(10px) saturate(180%);
+    background-color: rgba(165, 42, 42, 0.623);
     color: white;
     text-align: center;
-    padding: 3%;
-    margin-top: 0;
-    box-shadow: 2px 2px 15px black;
+    padding: 2%;
+    margin: 0;
+    border-radius: 15px 15px 0 0;
 }
 
 .navContainer {
     backdrop-filter: blur(10px) saturate(180%);
+    background-color: rgba(165, 42, 42, 0.623);
     display: flex;
+    margin: 0;
+    padding: 1%;
     flex-direction: row;
     justify-content: space-evenly;
-    box-shadow: 2px 2px 15px black;
+    border-radius: 0 0 15px 15px;
 
 }
 
 ul, li, a {
-    color: white;
     list-style: none;
     text-decoration: none;
-    text-align: center;
-    padding: .2rem;
-    border-radius: .2rem;
-    backdrop-filter: blur(10px) saturate(180%);
+    color: white;
+    padding-left: 0;
 }
-
-
 
 .dropDown {
     display: none;
     position: absolute;
-    
-
 }
 
 li:hover .dropDown {
     display: flex;
+    position: absolute;
+    top: 100%;
     flex-direction: column;
-    flex-wrap: nowrap;
-    z-index: 1000;
     background-color: rgb(39, 26, 7);
-    justify-content: space-evenly;
+    width: 200px;
+    justify-content: space-between;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px black;
 }
 
-a {
-    text-decoration: none;
-    color: white;
-    background-color: rgba(165, 42, 42, 0.613);
-    border: 1px solid goldenrod;
+ul {
+    text-align: center;
+}
+
+li, #home {
+    background-color: rgb(39, 26, 7);
+    border-radius: 7px;
+    padding: 10px;
+    box-shadow: 2px 2px 10px black;
+
+}
+
+.dropDown a {
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 
@@ -65,11 +87,11 @@ main {
     display: grid;
     grid-template-areas: 'a b c'
                          'a b c'
-                         'a b c';
+                         'a b c'
+                         'd d d';
     gap: 10px;
     justify-items: stretch;
-    height: 800px;
-    
+    margin-top: 1%;
 }
 
 
@@ -80,7 +102,7 @@ main {
     backdrop-filter: blur(10px) saturate(180%);
     border-radius: .5rem;
     box-shadow: 2px 2px 15px black;
-    z-index: -1;
+    
 }
 
 #currentCharacter {
@@ -96,12 +118,10 @@ main {
 }
 
 footer {
+    grid-area: d;
     backdrop-filter: blur(10px) saturate(180%);
     background-color: rgba(69, 53, 151, 0.623);
-    width: 100%;
-    margin-top: 10%;
-    margin-bottom: 0;
-    padding: .5%;
     text-align: center;
+    border: 1px solid red;
     
 }
