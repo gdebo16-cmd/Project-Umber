@@ -23,3 +23,19 @@ TABLE characters
   luc INTEGER,
   spd INTEGER,
   created_at TIMESTAMPTZ DEFAULT NOW()
+
+  TABLE races 
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    creature_type TEXT NOT NULL,
+    traits TEXT NOT NULL,
+    size TEXT NOT NULL,
+    base_speed INTEGER NOT NULL,
+    resistances TEXT NOT NULL,
+    darkvision BOOLEAN NOT NULL,
+
+  TABLE classes
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    

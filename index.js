@@ -186,6 +186,51 @@ app.post('/settings', async(req, res) => {
 	}
 });
 
+app.get("/create_char", async (req, res) => {
+	if (!req.session.userId) {
+		return res.redirect ("/login");
+	}
+
+	try {
+		const races = await pool.query("SELECT id, name FROM races ORDER BY name");
+
+		let raceOptions = races.rows.map(race => `<option value"${race.id}">${race.name}</option>`).join("");
+
+		if (!raceOptions) {
+			raceOptions = `<option value="" disabled selected>No races in database yet</option>`;
+		}
+
+		const filePath = path.join(publicDir, "create_char.html");
+		let html = await fs.readFile(filePath, "utf8");
+		html = html.replaceAll("{{raceOptions}}", raceOptions);
+		res.send(html);
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("could not load character creation");
+	}
+});
+
+app.post("/create_char/step1", (req, res) => {
+	if (!req.session.userId) {
+		return res.redirect("/login");
+	}
+
+	const { name, race_id } = req.body;
+
+	if (!name || !race_id) {
+		return res.status(400).send("name and race are required");
+	}
+
+	//draft locker 
+
+	req.session.charDraft = {
+		name: name.trim(),
+		race_id: Number(race_id),
+	};
+
+	res.redirect("/create_char/step2");
+})
+
 app.listen(port, () => {
   console.log("App is running on http://localhost:" + port);
 });
