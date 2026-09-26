@@ -1,41 +1,44 @@
 ﻿import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
-import pg from "pg";
-import session from "express-session";
-import fs from "fs/promises";
-const port = 3000;
-
-const { Pool } = pg;
-const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "postgres",
-  password: "postgres",
-  port: 5432,
-});
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import 'dotenv/config';
+import pool from './db.js';
+import authRoutes from './routes/auth.js';
+import homeRoutes from './routes/home.js';
+import path from "path"; //import of user paths
+import { fileURLToPath } from "url"; //import of form reader
+import session from "express-session"; //import use of per-session structure
+import fs from "fs/promises"; //import function promise structure
 
 const app = express();
+const store = new session.MemoryStore();
+
+const __filename = fileURLToPath(import.meta.url);  //import of form reader
+const __dirname = path.dirname(__filename); //import of path reader
+const publicDir = path.join(__dirname, "Public"); //Creating a path to join
+
 
 app.use(
-	session({
-		secret: 'dev-secret-change-later',
+	session({               //defines security and rule set of each session
+		secret: process.env.SESSION_SECRET,
+		cookie: { maxAge: 300000000, secure: false, sameSite: "lax" },
 		resave: false,
-		saveUninitialized: false,
+		saveUninitialized: false, store,
 	})
 );
 
-const publicDir = path.join(__dirname, "Public");
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.set("trust proxy", 1);
+app.set('view engine', 'ejs')
 
 
+app.use(express.json()); //to accept JSON strings
+app.use(express.urlencoded({ extended: true }));  //to accept forms
+app.use(express.static(publicDir));
 
+app.use('/auth', authRoutes);
+app.use('/home', homeRoutes)
 
+app.get('/health', (req, res) => {
+  res.json({ ok: true });
+});
 
 app.get("/", (req, res) => {
   res.redirect("/login");
@@ -45,86 +48,10 @@ app.get("/login", (req, res) => {
   res.sendFile("signin.html", { root: publicDir });
 });
 
-app.get("/home", async (req, res) => {
-	if(!req.session.userId) {
-		return res.redirect("/login");
-	}
-
-	try {
-		const filePath = path.join(publicDir, 'home.html');
-		let html = await fs.readFile(filePath, "utf8");
-		html = html.replaceAll("{{username}}", req.session.username);
-		res.send(html);
-	} catch (err) {
-		console.error(err);
-		res.status(500).send("could not load home page")
-	}
-});
-
-app.use(express.static(publicDir));
-
-app.post('/submit', async(req, res) => {
-	const { userName, password } = req.body;
-	
-	try {
-		const result = await pool.query(
-			"SELECT id, username FROM users WHERE username = $1 AND password = $2",
-			[userName, password]
-		);
-
-		if(result.rows.length === 0) {
-			return res.status(401).send("Username or Password is incorrect");
-		}
-
-		const user = result.rows[0];
-		req.session.userId = user.id;
-		req.session.username = user.username;
-		res.redirect('/home');
-
-	} catch (err) {
-		console.error(err);
-		res.status(500).send("server error during login");
-	}
-});
-
 app.get("/register", (req, res) => {
-	res.sendFile("registration.html", { root: publicDir });
+  res.sendFile("registration.html", { root: publicDir });
 });
 
-app.post('/register', async(req, res) => {
-	const { userName, password, name, email } = req.body;
-
-	if(!userName || !password) {
-		return res.status(400).send("Username and Passoword Required.");
-	}
-
-	try {
-		const existing = await pool.query(
-			"SELECT id FROM users WHERE username = $1",
-			[userName]
-		);
-
-		if (existing.rows.length > 0) {
-			return res.status(409).send(`${userName} has already been taken...`);
-
-		}
-
-		const created = await pool.query(
-			"INSERT INTO users (username, password, name, email) VALUES ($1, $2, COALESCE($3, 'name pending'), COALESCE($4, 'Email Pending')) RETURNING ID, username",
-			[userName, password, name || null, email || null] 
-		);
-
-
-		const user = created.rows[0];
-		req.session.userId = user.id;
-		req.session.username = user.username;
-		res.redirect('/home');
-
-	} catch(err) {
-		console.error(err);
-		res.status(500).send("server error during registration.");
-	}
-});
 
 app.get('/settings', async(req, res) => {
 	if(!req.session.userId) {
@@ -157,8 +84,6 @@ app.post('/settings', async(req, res) => {
 	if(!req.session.userId) {
 		return res.redirect('/login');
 	}
-
-
 	const { username, email, password } = req.body;
 
 	if (!username || ! email) {
@@ -231,6 +156,11 @@ app.post("/create_char/step1", (req, res) => {
 	res.redirect("/create_char/step2");
 })
 
-app.listen(port, () => {
-  console.log("App is running on http://localhost:" + port);
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`App is running on http://localhost:${process.env.PORT || 3000}`);
 });
+
+/* setupPrimary().catch((err) => {
+	console.error(err);
+	process.exit(1);
+}) */

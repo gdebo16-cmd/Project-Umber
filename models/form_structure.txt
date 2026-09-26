@@ -138,3 +138,26 @@ home structure
       
         footer
             p
+
+
+Char_create structure
+
+    body
+        header
+            h1 
+            p #title
+        main
+            form
+                label
+                input
+
+                label
+                select
+
+                button
+            
+            p
+                a
+
+
+

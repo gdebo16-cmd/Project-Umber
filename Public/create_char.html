@@ -3,25 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="home.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="char_create.css">
   <title>Create Character — Step 1</title>
 </head>
 <body>
     <header>
       <h1>Create Character</h1>
-      <p>Step 1 of 4 — Name and race</p>
+      <p id="title">Step 1 of 4 — Name and race</p>
     </header>
-    <main>
-      <form action="/create_char/step1" method="POST">
-        <label for="name">Character name</label>
-        <input type="text" id="name" name="name" required>
-        <label for="race_id">Race</label>
-        <select id="race_id" name="race_id" required>
-          {{raceOptions}}
-        </select>
-        <button type="submit">Next: Class</button>
-      </form>
-      <p><a href="/home">Cancel</a></p>
+    <main id="charMain">
+      <section id="formContainer">
+        <form action="/create_char/step1" method="POST">
+          <article id="charNameContainer" class=".formContainer">
+            <label class="topTile" for="name">Character name</label>
+              <input class="bottomTile" type="text" id="name" name="name" required>
+          </article>
+          <article id="raceSelectContainer" class=".formContainer">
+          <label class="topTile" for="race_id">Race</label>
+            <select class="bottomTile" id="race_id" name="race_id" required>
+              {{raceOptions}}
+            </select>
+          </article>
+          <article id="buttonContainer" class=".formContainer">
+            <button id="submit" type="submit">Next: Class</button>
+          </article>
+        </form>
+      </section>
+      
     </main>
+    <footer>
+      <a id="homeLink" href="/home">Cancel</a>
+    </footer>
   </body>
   </html>

@@ -1,0 +1,15 @@
+# Eldridia — Ancestry Look Locks (v1)
+
+For class/subclass sheets. Canon first; soft defaults only where chronicle is thin.
+
+| Ancestry | Build / stature | Face & features | Palette / cues | Notes |
+|----------|-----------------|-----------------|----------------|-------|
+| **Human** | Average Lys midland | Varied; warm skin tones common | Ordinary cloth/steel | Default for earlier class sheets |
+| **Uron** | **Bear-like** minotaur-kin (not bull), **6–7 ft** typical | Broad snout, thick fur, large fangs possible | Earth browns, black coats, jungle Caldera | Noth = Lys-pledged Uron; Shai = Caldera Uron |
+| **Umber Elf** | Human-average height, rugged | **Long ears**; **red eyes** (canon lock; purple retired for defaults); mountain-hard faces | Snow-peak cool greys, white galleries | Machinists of North Umbermere / Historia |
+| **Ochre Elf** | Elven, Lys-aligned | **Bright green eyes**, often **silver/pale hair** (Ludvig lock) | Green-gold Ochre / Tree of Life accents | Umber Elves who joined Lys |
+| **Dragonborn** | Tall scaled humanoid | Snout, horns optional, breath-scar cues | Scale colors vary; Caldera Primordials lean primal | In Lys since Second Age openness |
+| **Dwarf** | Shorter, stout | Broad features, thick hair/beard common | Stone, bronze, forge-practical gear | Lys-allowed peoples |
+| **Gnome** | Small, nimble | Large curious eyes, lively expression | Bright trim on practical kit | Lys-allowed peoples |
+
+**Usage:** Subclass gallery rotates ancestries so all seven appear. Race reference sheets are neutral adventurer pose (no class kit) for handouts.
