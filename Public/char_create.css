@@ -80,6 +80,11 @@ main {
                
         }
 
+    .tile {
+        display: flex;
+        flex-direction: column;
+    }
+
         .topTile {
             text-align: center;
                 color: var(--txt-color-1);
