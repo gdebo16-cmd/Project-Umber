@@ -17,11 +17,11 @@
     <main id="charMain">
       <section id="formContainer">
         <form action="/create_char/step1" method="POST">
-          <article id="charNameContainer" class=".formContainer">
+          <article id="charNameContainer" class=".formContainer tile">
             <label class="topTile" for="name">Character name</label>
               <input class="bottomTile" type="text" id="name" name="name" required>
           </article>
-          <article id="raceSelectContainer" class=".formContainer">
+          <article id="raceSelectContainer" class=".formContainer tile">
           <label class="topTile" for="race_id">Race</label>
             <select class="bottomTile" id="race_id" name="race_id" selected="Choose Your Race" required>
               {{raceOptions}}
@@ -32,7 +32,10 @@
           </article>
         </form>
       </section>
-      
+      <section id="descContainer" class="tile hidden">
+         <img id="img" class="topTile" src="{{png}}" alt='Image of the {{race}}'>
+         <p id="desc" class="bottomTile">{{raceDescription}}</p>
+      </section>
     </main>
     <footer>
       <a id="homeLink" href="/home">Cancel</a>

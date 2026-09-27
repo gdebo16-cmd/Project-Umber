@@ -12,31 +12,33 @@ const publicDir = path.join(__dirname, "..", "Public"); //Creating a path to joi
 
 const router = Router();
 
-router.get("/", async (req, res) => {
+    
+router.get("/", async(req, res) => {
     if (!req.session.userId) {
         return res.redirect("/login");
     }
 
     try {
         const races = await pool.query("SELECT id, name FROM races ORDER BY name");
-
+        
         let raceOptions = races.rows.map(race => `<option value="${race.id}">${race.name}</option>`).join("");
+        
 
         if (!raceOptions) {
-            raceOptions = `<option value="" disabled selected>No Races in Database</option>`;
-        }
-
+                raceOptions = `<option value="" disabled selected>No Races in Database</option>`;
+            }
+        
+        let png = `./${race.name}.png`;
         const filePath = path.join(publicDir, "create_char.html");
         let html = await fs.readFile(filePath, 'utf8');
         html = html.replaceAll('{{raceOptions}}', raceOptions);
+        html = html.replaceAll('{{png}}', png);
         res.send(html);
     
     } catch (err) {
         console.error(err);
         res.status(500).send("could not load character creation");
-    }
-
-    
+    };
 });
 
 router.post("/step1", (req, res) => {

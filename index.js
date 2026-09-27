@@ -27,7 +27,8 @@ app.use(
 );
 
 app.set("trust proxy", 1);
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
 
 app.use(express.json()); //to accept JSON strings
