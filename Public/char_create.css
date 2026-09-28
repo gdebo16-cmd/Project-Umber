@@ -187,7 +187,18 @@ main {
                     }
 
     
-
+            #descImg {
+                max-width: 100%;
+                height: auto;
+                display: block;
+                border-radius: 15px 15px 0 0;
+            }
+            
+            #descText {
+                padding: var(--pad2);
+                white-space: pre-line;
+                
+            }
 footer p {
     backdrop-filter: blur(10px) saturate(180%);
     background-color: rgba(39, 48, 147, 0.678);

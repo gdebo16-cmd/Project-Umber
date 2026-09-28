@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/char_create.css">
+    <title>Create Character — Step 2</title>
+</head>
+
+<body>
+    <header>
+      <h1>Create Character</h1>
+      <p id="title">Step 3 of 3 — Abilities</p>
+    </header>
+    <main id="charMain">
+        <section id="formContainer">
+            <form action="/create_char/step3" method="POST">
+                    <% const stats = [["str","Strength"],["dex","Dexterity"],["con","Constitution"],["int","Intelligence"],
+                        ["wis","Wisdom"],["cha","Charisma"],["luc","Luck"],["spd","Speed"]]; %>
+                    <article class="formContainer tile">
+                        <label class="topTile" for="plus2">+2 bonus</label>
+                        <select class="bottomTile" id="plus2" name="plus2" required>
+                            <option value="" disabled selected>Select a +2 stat</option>
+                            <% stats.forEach(([key, label]) => { %>
+                            <option value="<%= key %>"><%= label %></option>
+                            <% }); %>
+                        </select>
+                    </article>
+                    <article class="formContainer tile">
+                        <label class="topTile" for="plus1">+1 bonus</label>
+                        <select class="bottomTile" id="plus1" name="plus1" required>
+                            <option value="" disabled selected>Select a +1 stat</option>
+                            <% stats.forEach(([key, label]) => { %>
+                            <option value="<%= key %>"><%= label %></option>
+                            <% }); %>
+                        </select>
+                    </article>
+                <section id="baseStatContainer">
+                    <% stats.forEach(([key, label]) => { %>
+                        <article class="formContainer tile">
+                            <span class="topTile"><%= label %></span>
+                            <button type="button" class="bottomTile rollBtn" data-stat="<%= key %>"
+                                <%= rolls[key] !== undefined ? "disabled" : "" %>>
+                                <%= rolls[key] ?? "roll" %>
+                              </button>
+                        </article>
+                    <% }); %>
+                </section>
+            
+                <section id="buttonContainer">
+                    <button id="submit" type="submit">Create Character</button>
+                </section>
+            </form>
+        </section>
+    </main>
+    <script src="/char_step3.js"></script>
+</body>
+</html>

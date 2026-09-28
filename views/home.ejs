@@ -7,15 +7,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
-    <link id="theme-style" rel="stylesheet" href="home.css">
-    <script src="main.js" async></script>
+    <link id="theme-style" rel="stylesheet" href="/home.css">
     <title>Eldrid Tales</title>
 </head>
 
 <body>
     <header>
             <h1>
-                Welcome {{username}}, To Eldridia
+                Welcome <%= username %>, To Eldridia
             </h1>
 
             <nav id="navBox">
@@ -57,7 +56,20 @@
         <section id="currentCharacters" class="mainBlock">
             <h3 class="topTile">Current Characters</h3>
             <article class='bottomTile' id="characterList">
-                <p>No Characters Available</p>
+                <% if (characters.length === 0) { %>
+                    <p>No Characters Available</p>
+                <% } else { %>
+                    <ul>
+                        <% characters.forEach(ch => { %>
+                            <li>
+                                <h3><%= ch.name %></h3>
+                                <p>Race:  <%= ch.race %> </p>
+                                <p>Class: <%= ch.class %> </p>
+                                <p>Sub-class: <%= ch.subclass %> </p>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } %>
             </article>
         </section>
         <section id="currentCampaign" class="mainBlock">

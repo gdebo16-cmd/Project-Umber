@@ -1,21 +1,20 @@
 ﻿import express from "express";
 import 'dotenv/config';
-import pool from './db.js';
 import authRoutes from './routes/auth.js';
 import homeRoutes from './routes/home.js';
+import settingsRoutes from './routes/settings.js';
 import char_createRoutes from './routes/char_create.js';
-import path from "path"; //import of user paths
-import { fileURLToPath } from "url"; //import of form reader
 import session from "express-session"; //import use of per-session structure
-import fs from "fs/promises"; //import function promise structure
+import path from "path";
+import { fileURLToPath } from "url";
+
 
 const app = express();
 const store = new session.MemoryStore();
 
-const __filename = fileURLToPath(import.meta.url);  //import of form reader
-const __dirname = path.dirname(__filename); //import of path reader
-const publicDir = path.join(__dirname, "Public"); //Creating a path to join
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const publicDir = path.join(__dirname, "Public");
 
 app.use(
 	session({               //defines security and rule set of each session
@@ -38,88 +37,17 @@ app.use(express.static(publicDir));
 app.use('/auth', authRoutes);
 app.use('/home', homeRoutes);
 app.use('/create_char', char_createRoutes);
+app.use('/settings', settingsRoutes);
 
 app.get('/health', (req, res) => {
   res.json({ ok: true });
 });
 
-app.get("/", (req, res) => {
-  res.redirect("/login");
-});
-
-app.get("/login", (req, res) => {
-  res.sendFile("signin.html", { root: publicDir });
-});
-
-app.get("/register", (req, res) => {
-  res.sendFile("registration.html", { root: publicDir });
-});
-
-
-app.get('/settings', async(req, res) => {
-	if(!req.session.userId) {
-		return res.redirect("/login");
-	}
-
-	try {
-        const result = await pool.query(
-			"SELECT username, email FROM users where id = $1",
-			[req.session.userId]
-		);
-
-		const user = result.rows[0]
-		if (!user) {
-			return res.redirect("/login");
-		}		
-
-		const filePath = path.join(publicDir, 'settings.html');
-		let html = await fs.readFile(filePath, "utf8");
-		html = html.replaceAll("{{username}}", user.username ?? "");
-		html = html.replaceAll("{{email}}", user.email ?? "");
-		res.send(html);
-	} catch (err) {
-		console.error(err);
-		res.status(500).send("could not load settings page")
-	}
-});
-
-app.post('/settings', async(req, res) => {
-	if(!req.session.userId) {
-		return res.redirect('/login');
-	}
-	const { username, email, password } = req.body;
-
-	if (!username || ! email) {
-		return res.status(400).send('Username and Email are required')
-	}
-	try {
-
-		if (password && password.trim() !== '') {
-		await pool.query(
-			"UPDATE users SET username = $1, email = $2, password = $3 WHERE id = $4",
-			[username, email, password, req.session.userId]
-		);
-		} else {
-			await pool.query(
-				"UPDATE users SET username = $1, email = $2, WHERE id = $3",
-				[username, email, req.session.userId]
-			);
-		}	
-
-		req.session.username = username;
-		res.redirect('/settings');
-
-	} catch(err) {
-		console.error(err);
-		res.status(500).send("server error during settings update");
-	}
-});
+app.get("/", (req, res) => res.redirect("/login"));
+app.get("/login", (req, res) => res.sendFile("signin.html", { root: publicDir }));
+app.get("/register", (req, res) => res.sendFile("registration.html", { root: publicDir }));
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`App is running on http://localhost:${process.env.PORT || 3000}`);
 });
 
-/* setupPrimary().catch((err) => {
-	console.error(err);
-	process.exit(1);
-}) */

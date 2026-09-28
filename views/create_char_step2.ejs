@@ -14,7 +14,7 @@
 <body>
     <header>
       <h1>Create Character</h1>
-      <p id="title">Step 2 of 4 — Name and race</p>
+      <p id="title">Step 2 of 3 — Class and Subclass</p>
     </header>
     <main id="charMain">
       <section id="formContainer">
@@ -22,24 +22,36 @@
           <article id="classContainer" class="formContainer tile">
             <label class="topTile" for="class_id">Select Class</label>
               <select class="bottomTile" id="class_id" name="class_id" required>
-                {{classOptions}}
+                <option value="" disabled selected>Select your Class</option>
+                <% classes.forEach(c => { %>
+                  <option 
+                  value="<%= c.id %>" 
+                  data-img= "<%= c.img_url %>" 
+                  data-desc= "Description: <%= c.description %>&#10; Primary stat: <%= c.primary_stat %>&#10;  Hitpoint die: <%= c.hitpoint_die %>">
+                  <%= c.name %></option> 
+                <% }); %>
+              </select>
           </article>
 
           <article id="subClassContainer" class="formContainer tile">
-          <label class="topTile" for="subclass_id">Race</label>
-            <select class="bottomTile" id="race_id" name="race_id" selected="Choose Your Race" required>
-               {{subclassOptions}}
+          <label class="topTile" for="subclass_id">Select Subclass</label>
+            <select class="bottomTile" id="subclass_id" name="subclass_id" required disabled>
+              <option value="" disabled selected>Select your Sub-Class</option>
             </select>
           </article>
-
           <article id="buttonContainer" class="formContainer">
             <button id="submit" type="submit">Next: Abilities</button>
           </article>
         </form>
-    </section>  
+    </section>
+    <section id="descContainer" class="tile" hidden>
+      <img id="descImg" class="topTile" src="" alt=''>
+      <p id="descText" class="bottomTile"></p>
+    </section> 
     </main>
     <footer>
       <a id="homeLink" href="/home">Cancel</a>
     </footer>
+    <script src="/char_step2.js"></script>
   </body>
   </html>
