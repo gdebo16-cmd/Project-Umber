@@ -12,74 +12,74 @@
 </head>
 
 <body>
-    <header>
-        <h1 id="title">Welcome <%= username %>, To Eldridia</h1>
-        <nav id="navBox">
-            <ul class="navContainer">
-                <li>
-                    <a href="/home">home</a>
-                </li>
+    <header id="topContainer">
+        <h1 id="siteTitle">
+            Welcome <%= username %>, To Eldridia
+        </h1>
 
-                <li>Characters
+        <nav id="navBox">
+            <ul id="navContainer">
+                <a id="homeNav" class="navButton" href="/home">home</a>
+            
+                <li id="characterNav" class="navButton">Characters
                         <ul class="dropDown" id="characterDropdown">
-                            <a href="/create_char">Create Character</a>
-                            <a href="/char_list">Character List</a>
+                            <a id="createCharacter" class="characterDropdownButton" href="/create_char">Create Character</a>
+                            <a id="characterList" class="characterDropdownButton" href="/char_list">Character List</a>
                         </ul>
                 </li>
                 
-                <li>Campaigns
+                <li id="campaignNav" class="navButton">Campaigns
                     <ul class="dropDown" id="campaignDropdown">
-                        <a href="/create_campaign">Create Campaign</a>
-                        <a href="/campaign_list">Campaign List</a>
-                        <a href="/premade">Premade Campaigns</a>
+                        <a id="createCampaign" class="campaignDropdownButton" href="/create_campaign">Create Campaign</a>
+                        <a id="campaignList" class="campaignDropdownButton" href="/campaign_list">Campaign List</a>
+                        <a id="premadeCampaigns" class="campaignDropdownButton" href="/premade">Premade Campaigns</a>
                     </ul>
                 </li>
 
-                <li>Settings
+                <li id="settingsNav" class="navButton">Settings
                     <ul class="dropDown" id="settingsDropdown">
-                        <a href="/profile">Profile</a>
-                        <a href="/settings">Settings</a>
-                        <a href="/login">Log Out</a>
+                        <a id="profile" class="settingsDropdownButton" href="/profile">Profile</a>
+                        <a id="settings" class="settingsDropdownButton" href="/settings">Settings</a>
+                        <a id="logout" class="settingsDropdownButton" href="/login">Log Out</a>
                     </ul>
                 </li>
                 
             </ul>
-
-            </ul>
         </nav>
     </header>
-    <main id="settingsMain">
-        <section id="settingsTitle">
-            <h2>Settings</h2>
-        </section>
+       
+    <main>
         <section id="formContainer">
-            <h3>Account Information</h3>
-                <form action="/settings" method="POST">
-                    <article id="userNameContainer" class="formContainer">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" value="<%= username %>">
-                    </article>
+            <article id="formTitle">
+                <h2 id="titleText">Settings</h2>
+                <h3 id="subTitleText">Account Information</h3>
+            </article>
+            <form class="formContainer" action="/settings" method="POST">
+                <article id="userNameContainer" class="formSectionContainer tile">
+                    <label class="topTile" for="username">Username</label>
+                    <input class="bottomTile" type="text" id="username" name="username" value="<%= username %>">
+                </article>
                     
-                    <article id="emailContainer" class="formContainer">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" value="<%= email %>">
-                    </article>
-                    
-                    
-                    <article id="passwordContainer" class="formContainer">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" value="">
-                    </article>
-                    
-                    <article id="buttonContainer" class="formContainer">
-                        <button id="submit" type="submit">Update Account</button>
-                    </article>
+                <article id="emailContainer" class="formSectionContainer tile">
+                    <label class="topTile" for="email">Email</label>
+                    <input class="bottomTile" type="email" id="email" name="email" value="<%= email %>">
+                </article>
+                
+                
+                <article id="passwordContainer" class="formSectionContainer tile">
+                    <label class="topTile" for="password">Password</label>
+                    <input class="bottomTile" type="password" id="password" name="password" value="">
+                </article>
+                
+                <article id="buttonContainer" class="formSectionContainer">
+                    <button class="formButton" id="submit" type="submit">Update Account</button>
+                </article>
                 </form>
         </section>
     </main>
-    <footer id="homeLink">
-            <a id="homeButton" href="/home">Back to home</a>
-            <h4>copyrite Eldrid Tales LLC</h4>
+    <footer>
+        <a id="homeLink" href="/home">Back to home</a>
+        <p id="footerText">copyrite Eldrid Tales LLC</p>
     </footer>
 </body>
 </html>

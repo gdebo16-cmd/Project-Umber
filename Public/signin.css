@@ -9,189 +9,186 @@ body {
     font-style: normal;
     max-height: 2160px;
     max-width: 3840px;
-    margin: auto;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    backdrop-filter: var(--blur1);                                                                           
+    padding-bottom: 4rem;
+    overflow: hidden;
+}
+
+input {
+    border: none;
+    font-size: 200%;
 }
 
 :root {
     --bg-color-2: rgba(68, 42, 196, 0.67);
     --bg-color-1: rgba(83, 92, 222, 0.72);
     --txt-color-1: rgba(255, 255, 255, 0.756);
-    --rad1: 15px;
-    --rad2: 5px;
+    --rad1: .80rem;
+    --rad2: .35rem;
     --bs1: 2px 2px 15px black;
-    --pad: 30px;
-    --pad2: 15px;
+    --bs2: 2px 2px 10px black;
+    --pad: 2%;
+    --pad2: 1%;
     --blur1: blur(5px) saturate(150%);
     --toprad: 10px 10px 0 0;
     --lowrad: 0 0 10px 10px;
+    --padTop: 3%;
+    --padLow: 2%;
     --bgc-top: rgba(54, 62, 175, 0.72);
     --bgc-low: rgba(35, 40, 100, 0.72);
 }
 
- header h1 {
-        font-size: clamp(.5rem, 4vw + 1rem, 3rem);
+ #siteTitle {
+        background-color: rgba(39, 48, 147, 0.678);
+        color: white;
         text-align: center;
-            background-color: var(--bg-color-1);
-            color: var(--txt-color-1);
-            box-shadow: var(--bs1);
-        position: sticky;
-        top: 0;
-        width: auto;
+        padding: 2%;
         margin: 0;
-        left: 0;
-        right: 0;
-        height: 15%;
     }
 
-main { 
-    margin: 5% 15% 15% 15%;
-        border-radius: var(--rad);
-        padding: var(--pad);
-        background-color: var(--bg-color-1);
-        color: var(--txt-color-1);
-        box-shadow: var(--bs1);
-        backdrop-filter:var(--blur1);
-
+#formContainer { 
+    width: 90%;
+    margin: 5%;
     display: grid;
-        grid-template-areas: 'c c b b'          /*b = title*/
-                             'c c b b'          /*c = formContainer*/
-                             'c c b b';
-        gap: 25px;
+        column-gap: 1.5%;
+        grid-template-areas: 'b a'          
+                             'b a'          
+                             'b a';
+
+    border-radius: var(--rad2);
 }
 
-
-    
-
-    #title {
-        grid-area: b;
+    #formTitle {
+        grid-area: a;
+        text-align: center;
 
         display: flex;
             flex-direction: column;
             justify-content: center;
 
-        text-align: center;
-        font-size: clamp(.1rem, 1vw + .75rem, 3rem);
-            border-radius: var(--rad);
-            padding: var(--pad);
-            background-color: var(--bg-color-2);
-            color: var(--txt-color-1);
-            box-shadow: var(--bs1);
+        background-color: var(--bg-color-2);
+        color: var(--txt-color-1); 
+        border-radius: var(--rad1);
+    }
 
+    .formContainer {
+        grid-area: b;
+    }
         
+
+    .formSectionContainer {
+        display: flex;
+        flex-direction: column; 
+        gap: 2.5%;       
     }
 
-    #formContainer {
-        grid-area: c;
-
-            background-color: var(--bg-color-2);
-            color: var(--txt-color-1);
-            box-shadow: var(--bs1);
-            padding: var(--pad);
-    }
-
-        input {
-            padding: 5px;
-            text-align: center;
-            border: none;
-                border-radius: var(--lowrad);
-                background-color: var(--bgc-low);
-                color: var(--txt-color-1);         
+        #userNameContainer, #passwordContainer, #emailContainer, #nameContainer {
+            margin-top: 1%;
+            margin-bottom: 1%;
         }
 
-        label {
-            padding: 5px;
-            text-align: center;
-            border-radius: var(--toprad);
-            background-color: var(--bgc-top);
+        #buttonContainer {
+            display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                
         }
-
-            #userNameContainer, #passwordContainer, #emailContainer, #nameContainer {
-                display: flex;
-                flex-direction: column;
-                    color: var(--txt-color-1);
-                    border-radius: 10px 10px 10px 10px;
-                    box-shadow: var(--bs1);
-                    margin-top: 10px;
-                    margin-bottom: 10px;
+            .formButton:first-child {
+                margin-right: 1.5%;
+            }
+            .formButton:last-child {
+                margin-left: 1.5%;
             }
 
-            #buttonContainer {
-                display: flex;
-                flex-direction: column;
+        .formButton {
+            font-family: "Cinzel Decorative", serif;
+            font-weight: 700;
+            font-style: normal;
+            
+            transition: all 0.5s ease;
+            
+                background-color: var(--bg-color-1);
+                color: var(--txt-color-1);
+                padding: var(--pad2);
+                border-radius: var(--rad2);
+                backdrop-filter: var(--blur1);
+        }
+            .formButton:hover {
+                transform: scale(1.05);
+                animation: roll 1.5s ease-in-out infinite;
+            }
+        
+            #submit {
+                border: none;
+            }      
+                
+            #newUser {
+                text-decoration: none; 
+            } 
+    
+
+
+        .tile {
+            border-radius: 10px;
+        }
+            .topTile {
                 text-align: center;
-                justify-content: center;
+                    color: var(--txt-color-1);
+                    background-color: var(--bgc-top);
+                    border-radius: var(--toprad);
+                    margin: var(--marTop);
+                    padding: var(--padTop);
+                    backdrop-filter: var(--blur1);
             }
-
-                    #submit {
-                        border: none;
-                        padding: var(--pad);
-                        border-radius: 5px;
-                        background-color: var(--bg-color-1);
-                        color: var(--txt-color-1);
-                        box-shadow: var(--bs1);
-                        transition: all 0.5s ease;
-                        font-family: "Cinzel Decorative", serif;
-                        font-weight: 700;
-                        font-style: normal;
-                        font-size: clamp(.1rem, 1vw + .1rem, 1rem);
-                        width: 100%;
-                    }
-                
-                        #submit:hover {
-                            transform: scale(1.05);
-                            animation: roll 1.5s ease-in-out infinite;
-                        }
-                
-                    #newUser {
-                        border: none;
-                        text-decoration: none;
-                            padding: var(--pad);
-                            border-radius: 5px;
-                            background-color: var(--bg-color-1);
-                            color: var(--txt-color-1);
-                            box-shadow: var(--bs1);
-                            font-size: clamp(.1rem, 1vw + .1rem, 1rem);
-                        transition: all 0.5s ease;
-                        
-                    }
-                
-                        #newUser:hover {
-                            transform: scale(1.05);
-                            animation: roll 1.5s ease-in-out infinite;
-                        
-                        }
-
+    
+            .bottomTile {
+                text-align: center;
+                    color: var(--txt-color-1);
+                    background-color: var(--bgc-low);
+                    border-radius: var(--lowrad);
+                    margin: var(--marLow);
+                    padding: var(--padLow);
+                    backdrop-filter: var(--blur1);
+            }
 
 footer {
-    position: fixed;
-    top: 94%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: static;
+    margin: 0;
     width: auto;
     margin: 0;
     left: 0;
     right: 0;
-
         background-color: var(--bg-color-1);
         color: var(--txt-color-1);
         box-shadow: var(--bs1);
+        
 }
 
     #loginLink {
         color: white;
         text-decoration: none;
-        background-color: var(--bg-color-1);
-        padding: var(--pad2);
+        height: 100%;
+        margin-right: 1%;
+        transition: all 0.5s ease;
     }
-
-
-
-
-
-
-
-
-
- 
-
+    #loginLink:hover {
+        transform: scale(1.05);
+    }
 
 
 @keyframes roll {
@@ -219,4 +216,37 @@ footer {
         box-shadow: 2px 2px 15px rgb(249, 249, 249);
         transform: box-shadow rotate(360deg);
     }
+}
+
+@media (max-width: 992px) {
+
+}
+
+@media (max-width: 768px) {
+    
+
+    #formContainer {
+        grid-template-areas: 'a'
+                             'b';
+    }
+
+    #userNameContainer, #passwordContainer {
+        margin-top: 1.5%;
+        margin-bottom: 1.5%;
+    }
+
+    #buttonContainer {
+        justify-content: center;
+        align-items: stretch;
+        flex: 1, 0, 0
+    }
+
+    #submit, #newUser {
+        padding: 3.5%, 1%, 3.5%, 1%;
+    }
+}
+
+
+@media (max-width: 576px) {
+
 }

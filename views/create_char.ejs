@@ -9,40 +9,42 @@
   <link rel="stylesheet" href="/char_create.css">
   <title>Create Character — Step 1</title>
 </head>
+
 <body>
-    <header>
-      <h1>Create Character</h1>
-      <p id="title">Step 1 of 3 — Name and race</p>
-    </header>
-    <main id="charMain">
-      <section id="formContainer">
-        <form action="/create_char/step1" method="POST">
-          <article id="charNameContainer" class="formContainer tile">
-            <label class="topTile" for="name">Character name</label>
-              <input class="bottomTile" type="text" id="name" name="name" required>
-          </article>
-          <article id="raceSelectContainer" class="formContainer tile">
-          <label class="topTile" for="race_id">Race</label>
+  <header id="topContainer">
+    <h1 id="siteTitle">Create Character</h1>
+    <h2 id="formTitle">Step 1 of 3 — Name and race</h2>
+  </header>
+
+  <main>
+    <section id="formContainer">
+      <form class="formContainer" action="/create_char/step1" method="POST">
+        <article id="charNameContainer" class="formSectionContainer tile">
+          <label class="topTile" for="name">Character name</label>
+            <input class="bottomTile" type="text" id="name" name="name" required>
+        </article>
+        <article id="raceSelectContainer" class="formSectionContainer tile">
+        <label class="topTile" for="race_id">Race</label>
             <select class="bottomTile" id="race_id" name="race_id" required>
               <option value="" disabled selected>Select your Race</option>
               <% races.forEach(r => { %> 
                 <option value="<%= r.id %>" data-img= "<%= r.img_url %>" data-desc= "<%= r.traits %>"><%= r.name %></option> 
               <% }); %>
-            </select>
-          </article>
-          <article id="buttonContainer" class="formContainer">
-            <button id="submit" type="submit">Next: Class</button>
-          </article>
-        </form>
-      </section>
-      <section id="descContainer" class="tile" hidden>
-        <img id="descImg" class="topTile" src="" alt=''>
-        <p id="descText" class="bottomTile"></p>
-      </section>
-    </main>
-    <footer>
-      <a id="homeLink" href="/home">Home</a>
-    </footer>
+            </select>  
+        </article>
+        <article id="buttonContainer" class="formSectionContainer">
+          <button id="submit" type="submit">Next: Class</button>
+        </article>
+      </form>
+    </section>
+    <section id="descContainer" class="tile" hidden>
+      <img id="descImg" class="topTile" src="" alt=''>
+      <p id="descText" class="bottomTile"></p>
+    </section>
+  </main>
+  <footer>
+    <a id="homeLink" href="/home">Home</a>
+  </footer>
   <script src="/char_step1.js"></script>
   </body>
   </html>

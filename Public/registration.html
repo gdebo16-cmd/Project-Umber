@@ -10,47 +10,45 @@
   <title>Create Account — Eldrid Tales</title>
 </head>
 <body>
-  <header>
-    <h1>Eldrid Tales</h1>
+  <header id="topContainer">
+    <h1 id="siteTitle">Eldrid Tales</h1>
   </header>
+
   <main>
-    <section id="title">
-      <h2>Create Your Legend</h2>
-    </section>
-
     <section id="formContainer">
-      <form id="registrationForm" action="/auth/register" method="POST">
-
-        <article id="userNameContainer" class="formContainer">
-          <label for="userName">Username</label>
-          <input type="text" id="userName" name="username" required />
-        </article>
-      
-        <article id="passwordContainer" class="formContainer">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required />
-        </article>
-      
-      <article id="emailContainer" class="formContainer">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" />
+      <article id="formTitle">
+        <h2 id="titleText">Create Your Legend</h2>
       </article>
+      <form class="formContainer" action="/auth/register" method="POST">
+        <article class="formSectionContainer tile" id="userNameContainer" class="formContainer tile">
+          <label id="userNameLabel" class="topTile" for="userName">Username</label>
+          <input class="bottomTile" type="text" id="userName" name="username" required />
+        </article>
+    
+        <article class="formSectionContainer tile" id="passwordContainer" class="formContainer tile">
+          <label id="passwordLabel" class="topTile" for="password">Password</label>
+          <input class="bottomTile" type="password" id="password" name="password" required />
+        </article>
+
+        <article class="formSectionContainer tile" id="emailContainer" class="formContainer tile">
+          <label id="emailLabel" class="topTile" for="email">Email</label>
+          <input class="bottomTile" type="email" id="email" name="email" />
+        </article>
+        
+        <article class="formSectionContainer tile" id="nameContainer" class="formContainer tile">
+          <label id="nameLabel" class="topTile" for="name">Display Name</label>
+          <input class="bottomTile" type="text" id="name" name="name" />
+        </article>
       
-      <article id="nameContainer" class="formContainer">
-        <label for="name">Display Name</label>
-        <input type="text" id="name" name="name" />
-        </div>
-      
-        <article id="buttonContainer" class="formContainer">
-          <button id="submit" type="submit">Create Account</button>
+        <article class="formSectionContainer tile" id="regButtonContainer" class="formContainer">
+          <button class="formButton" id="submit" type="submit">Create Account</button>
         </article>
       </form>
     </section>
   </main>
 </body>
 <footer>
-  <section id="loginContainer">
-    <p><a id="loginLink" href="/login">Back to login</a></p>
-  </section>
+    <p id="footerText">© 2026 Eldrid Tales. All rights reserved.</p>
+    <a id="loginLink" href="/login">Back to login</a>
 </footer>
 </html>

@@ -4,6 +4,7 @@ import authRoutes from './routes/auth.js';
 import homeRoutes from './routes/home.js';
 import settingsRoutes from './routes/settings.js';
 import char_createRoutes from './routes/char_create.js';
+import charRoutes from './routes/char.js';
 import session from "express-session"; //import use of per-session structure
 import path from "path";
 import { fileURLToPath } from "url";
@@ -38,6 +39,7 @@ app.use('/auth', authRoutes);
 app.use('/home', homeRoutes);
 app.use('/create_char', char_createRoutes);
 app.use('/settings', settingsRoutes);
+app.use('/characters', charRoutes);
 
 app.get('/health', (req, res) => {
   res.json({ ok: true });

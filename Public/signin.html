@@ -13,33 +13,36 @@
 </head>
 
 <body>
-    <header>
-         <h1>Eldrid Tales</h1>
+    <header id="topContainer">
+         <h1 id="siteTitle">Eldrid Tales</h1>
     </header>
+
     <main>
-        <section id="title">
-            <h2>Welcome to Your Legend</h2> 
+        <section id="formContainer">
+            <article id="formTitle">
+                <h2 id="titleText">Welcome to Your Legend</h2> 
+            </article>
+            <form class="formContainer" action="/auth/login" method="POST">
+                <article class="formSectionContainer tile" id="userNameContainer">
+                    <label id="userNameLabel" class="topTile" for="userName">Enter Username</label>
+                    <input class="bottomTile" type="text" id="userName" name="username" required>
+                </article>
+            
+                <article class="formSectionContainer tile" id="passwordContainer">
+                    <label id="passwordLabel" class="topTile" for="password">Enter Password</label>
+                    <input class="bottomTile" type="password" id="password" name="password" required>
+                </article>
+            
+                <article class="formSectionContainer" id="buttonContainer">
+                    <button id="submit" class="formButton" type="submit">Login</button>
+                    <a href="/register" class="formButton" id="newUser">Create New User</a>
+                </article>
+            </form>
+            
         </section>
-        
-        <form id="formContainer" action="/auth/login" method="POST">
-            <article class="formContainer" id="userNameContainer">
-                <label for="userName">Enter Username</label>
-                <input type="text" id="userName" name="username" required>
-            </article>
-            
-            <article class="formContainer" id="passwordContainer">
-                <label for="password">Enter Password</label>
-                <input type="password" id="password" name="password" required>
-            </article>
-            
-            <article class="'formContainer" id="buttonContainer">
-                <button id="submit" type="submit">Login</button>
-                <a href="/register" id="newUser">Create New User</a>
-            </article>
-        </form>
     </main>
 </body>
 <footer>
-
+    <p id="footerText">© 2026 Eldrid Tales. All rights reserved.</p>
 </footer>
 </html>

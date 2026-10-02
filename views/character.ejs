@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="'en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=neon|outline|emboss|shadow-multiple">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+    <link id="theme-style" rel="stylesheet" href="/charSheet.css">
+    
+    <title>Eldrid Tales</title>
+</head>
+
+<body>
+    <header>
+        <section id="siteTitle">
+         <h1>Eldrid Tales</h1>
+        </section>
+        <section id="characterHeader">
+            <h2 id="characterName"><%= character.name %></h2>
+            <p id="characterRace"><%= character.race_name %></p>
+            <p id="characterClass"><%= character.class_name %> - <%= character.subclass_name %></p> 
+
+        </section>
+        
+        <nav id="navBox">
+            <ul id="navContainer">
+                <a id="homeNav" class="navButton" href="/home">home</a>
+                
+                <li id="characterNav" class="navButton">Characters
+                    <ul class="dropDown" id="characterDropdown">
+                        <a id="createCharacter" class="characterDropdownButton" href="/create_char">Create Character</a>
+                        <a id="characterList" class="characterDropdownButton" href="/char_list">Character List</a>
+                    </ul>
+                </li>
+                    
+                <li id="campaignNav" class="navButton">Campaigns
+                    <ul class="dropDown" id="campaignDropdown">
+                        <a id="createCampaign" class="campaignDropdownButton" href="/create_campaign">Create Campaign</a>
+                        <a id="campaignList" class="campaignDropdownButton" href="/campaign_list">Campaign List</a>
+                        <a id="premadeCampaigns" class="campaignDropdownButton" href="/premade">Premade Campaigns</a>
+                    </ul>
+                </li>
+
+                <li id="settingsNav" class="navButton">Settings
+                    <ul class="dropDown" id="settingsDropdown">
+                        <a id="profile" class="settingsDropdownButton" href="/profile">Profile</a>
+                        <a id="settings" class="settingsDropdownButton" href="/settings">Settings</a>
+                        <a id="logout" class="settingsDropdownButton" href="/login">Log Out</a>
+                    </ul>
+                </li>
+                    
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="sheet-tabs tab-list" role="tablist" hidden>
+            <button type="button" role="tab" id="sheet-tab-stats" aria-controls="sheet-panel-stats" aria-selected="true">Base Stats</button>
+            <button type="button" role="tab" id="sheet-tab-actions" aria-controls="sheet-panel-actions" aria-selected="false">actions</button>
+            <button type="button" role="tab" id="sheet-tab-Skills" aria-controls="sheet-panel-skills" aria-selected="false">Saving Throws</button>
+            <button type="button" role="tab" id="sheet-tab-Conditions" aria-controls="sheet-panel-conditions" aria-selected="false">Conditions</button>
+            <button type="button" role="tab" id="sheet-tab-Gear" aria-controls="sheet-panel-gear" aria-selected="false">Gear</button>
+        </section>
+
+        <section role="tabpanel" id="sheet-panel-stats" class="sheet-panel" aria-labelledby="tab-stats" hidden>
+            <section class="base-stats">
+                <% const mod = (i) => {
+                    const m = Math.floor((i / 2) - 5);
+                    return (m >= 0 ? "+" : "") + m;
+                } %>
+                <article class="base-stats-box" data-stat="str" data-score="<%= character.str %>">
+                    <p class="stat-name" id="str">strength</p>
+                    <p class="modifier"><%= mod(character.str) %></p>
+                    <p class="stat-count"><%= character.str %></p>
+                </article>
+                <article class="base-stats-box" data-stat="dex" data-score="<%= character.dex %>">
+                    <p class="stat-name" id="dex">dexterity</p>
+                    <p class="modifier"><%= mod(character.dex) %></p>
+                    <p class="stat-count"><%= character.dex %></p>
+                </article>
+                <article class="base-stats-box" data-stat="int" data-score="<%= character.int %>">
+                    <p class="stat-name" id="int">intelligence</p>
+                    <p class="modifier"><%= mod(character.int) %></p>
+                    <p class="stat-count"><%= character.int %></p>
+                </article>
+                <article class="base-stats-box" data-stat="con" data-score="<%= character.con %>">
+                    <p class="stat-name" id="con">constitution</p>
+                    <p class="modifier"><%= mod(character.con) %></p>
+                    <p class ="stat-count"><%= character.con %></p>
+                </article>
+                <article class="base-stats-box" data-stat="wis" data-score="<%= character.wis %>">
+                    <p class="stat-name" id="wis">wisdom</p>
+                    <p class="modifier"><%= mod(character.wis) %></p>
+                    <p class="stat-count"><%= character.wis %></p>
+                </article>
+                <article class="base-stats-box" data-stat="cha" data-score="<%= character.cha %>">
+                    <p class="stat-name" id="cha">charisma</p>
+                    <p class="modifier"><%= mod(character.cha) %></p>
+                    <p class="stat-count"><%= character.cha %></p>
+                </article>
+                <article class="base-stats-box" data-stat="luc" data-score="<%= character.luc %>">
+                    <p class="stat-name" id="luc">Luck</p>
+                    <p class="modifier"><%= mod(character.luc) %></p>
+                    <p class="stat-count"><%= character.luc %></p>
+                </article> 
+                <article class="base-stats-box" data-stat="spd" data-score="<%= character.spd %>">
+                    <p class="stat-name" id="spd">speed</p>
+                    <p class="modifier"><%= mod(character.spd) %></p>
+                    <p class="stat-count"><%= character.spd %></p>
+                </article>
+            </section>
+            <section class="armorClass">
+                <article id="acContainer"><% const dexMod = Number(character.dex / 2) - 5;
+                                        const armorMod = Number(character.armorMod || 0);
+                                        const shieldMod = Number(character.shieldMod || 0);
+                                        const skillMod = Number(character.skillMod || 0);
+                                        const ac = 10 + dexMod + armorMod + shieldMod + skillMod;
+                                    %>
+                    <h2 id="acTitle">Armor Class</h2>
+                    <p id="acValue"><%= ac %></p>
+                </article>
+            </section>
+            <section class="initiative">
+                <article id="initContainer">
+                    <h2 id="initTitle">Initiative</h2>
+                    <p id="initValue">15</p>
+                </article>
+            </section>
+            <section class="saving-throw">
+                <article id="savingThrowTitle">
+                    <h2>Saving Throws</h2>
+                </article>
+                <article id="savingThrowContainer">
+                    <article id="savingThrowCol1">
+                        <article class="saveContainer" id="strSaveContainer">
+                            <p class="saveTitle" id="strSaveTitle">strength save</p>
+                            <p class="saveValue" id="strSaveValue">15</p>
+                        </article>
+                        <article class="saveContainer" id="dexSaveContainer">
+                            <p class="saveTitle" id="dexSaveTitle">dexterity save</p>  
+                            <p class="saveValue" id="dexSaveValue">15</p>
+                        </article>
+                        <article class="saveContainer" id="intSaveContainer">
+                            <p class="saveTitle" id="intSaveTitle">intelligence save</p>
+                            <p class="saveValue" id="intSaveValue">15</p>
+                        </article>
+                    </article>
+                    <article id="savingThrowCol2">
+                        <article class="saveContainer" id="conSaveContainer">
+                            <p class="saveTitle" id="conSaveTitle">constitution save</p>
+                            <p class="saveValue" id="conSaveValue">15</p>
+                        </article>
+                        <article class="saveContainer" id="wisSaveContainer">
+                            <p class="saveTitle" id="wisSaveTitle">wisdom save</p>
+                            <p class="saveValue" id="wisSaveValue">15</p>
+                        </article>
+                        <article class="saveContainer" id="chaSaveContainer">   
+                            <p class="saveTitle" id="chaSaveTitle">charisma save</p>
+                            <p class="saveValue" id="chaSaveValue">15</p>
+                        </article> 
+                    </article>
+                </article>
+            </section>
+        </section>
+        <section role="tabpanel" id="sheet-panel-actions" class="sheet-panel" aria-labelledby="sheet-tab-actions" hidden>
+            <section class="action">
+                <article class="tab-list" role="tablist">
+                    <button type="button" role="tab" id="tab-actions" aria-controls="panel-actions" aria-selected="true">Actions</button>
+                    <button type="button" role="tab" id="tab-spells" aria-controls="panel-spells" aria-selected="false">Spells</button>
+                    <button type="button" role="tab" id="tab-inventory" aria-controls="panel-inventory" aria-selected="false">Inventory</button>
+                    <button type="button" role="tab" id="tab-equipment" aria-controls="panel-equipment" aria-selected="false">Equipment</button>
+                </article>
+                <article role="tabpanel" id="panel-actions" aria-labelledby="tab-actions">
+                    <h2>Actions</h2>
+                </article>
+                <article role="tabpanel" id="panel-spells" aria-labelledby="tab-spells" hidden>
+                    <h2>Spells</h2>
+                </article>
+                <article role="tabpanel" id="panel-inventory" aria-labelledby="tab-inventory" hidden>
+                    <h2>Inventory</h2>
+                </article>
+                <article role="tabpanel" id="panel-equipment" aria-labelledby="tab-equipment" hidden>
+                    <h2>Equipment</h2>
+                </article>
+            </section>
+        </section>
+        <section role="tabpanel" id="sheet-panel-skills" class="sheet-panel" aria-labelledby="sheet-tab-skills" hidden>
+            <section class="skills">
+                <article id="skillsContainer">
+                    <article class="skillContainer" id="acrobaticsContainer">
+                        <h3 class="skillTitle" id="acrobatics">Acrobatics</h3>
+                        <p class="skillValue" id="acrobaticsValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="animalHandlingContainer">
+                        <h3 class="skillTitle" id="animal-handling">Animal Handling</h3>
+                        <p class="skillValue" id="animalHandlingValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="arcanaContainer">
+                        <h3 class="skillTitle" id="arcana">Arcana</h3>
+                        <p class="skillValue" id="arcanaValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="athleticsContainer">
+                        <h3 class="skillTitle" id="athletics">Athletics</h3>
+                        <p class="skillValue" id="athleticsValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="deceptionContainer">
+                        <h3 class="skillTitle" id="deception">Deception</h3>
+                        <p class="skillValue" id="deceptionValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="historyContainer">
+                        <h3 class="skillTitle" id="history">History</h3>
+                        <p class="skillValue" id="historyValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="insightContainer">
+                        <h3 class="skillTitle" id="insight">Insight</h3>
+                        <p class="skillValue" id="insightValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="intimidationContainer">
+                        <h3 class="skillTitle" id="intimidation">Intimidation</h3>
+                        <p class="skillValue" id="intimidationValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="investigationContainer">
+                        <h3 class="skillTitle" id="investigation">Investigation</h3>
+                        <p class="skillValue" id="investigationValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="medicineContainer">
+                        <h3 class="skillTitle" id="medicine">Medicine</h3>
+                        <p class="skillValue" id="medicineValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="natureContainer">
+                        <h3 class="skillTitle" id="nature">Nature</h3>
+                        <p class="skillValue" id="natureValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="perceptionContainer">
+                        <h3 class="skillTitle" id="perception">Perception</h3>
+                        <p class="skillValue" id="perceptionValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="performanceContainer">
+                        <h3 class="skillTitle" id="performance">Performance</h3>
+                        <p class="skillValue" id="performanceValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="persuasionContainer">
+                        <h3 class="skillTitle" id="persuasion">Persuasion</h3>
+                        <p class="skillValue" id="persuasionValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="religionContainer">
+                        <h3 class="skillTitle" id="religion">Religion</h3>
+                        <p class="skillValue" id="religionValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="sleightOfHandContainer">
+                        <h3 class="skillTitle" id="sleight-of-hand">Sleight of Hand</h3>
+                        <p class="skillValue" id="sleightOfHandValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="stealthContainer">
+                        <h3 class="skillTitle" id="stealth">Stealth</h3>
+                        <p class="skillValue" id="stealthValue">15</p>
+                    </article>
+                    <article class="skillContainer" id="survivalContainer">
+                        <h3 class="skillTitle" id="survival">Survival</h3>
+                        <p class="skillValue" id="survivalValue">15</p>
+                    </article>
+                </article>
+            </section>
+        </section>
+        <section role="tabpanel" id="sheet-panel-conditions" class="sheet-panel" aria-labelledby="sheet-tab-conditions" hidden>
+            <section class="health">
+                <article id="healthContainer">
+                    <article id="hpButtonContainer">
+                        <button id="healButton">Heal</button>
+                        <input type="number" id="hpInput" value="0" min="0">
+                        <button id="damageButton">Damage</button>
+                    </article>
+                    <article id="currHpContainer">
+                        <p id="currHpTitle">curr HP</p>
+                        <p class="hpNum" id="currHpValue">130</p>
+                    </article>
+                    <article id="maxHpContainer">
+                        <p id="maxHpTitle">Max HP</p>
+                        <p class="hpNum" id="maxHpValue">200</p>
+                    </article> 
+                </article>
+            </section>
+            <section class="condition">
+                <p id="conditionsTitle">Conditions</p>
+                <article id="conditionsContainer">
+                        <article id="conditionsList">
+                            <label for="blinded">Blinded</label>
+                            <input type="checkbox" id="blinded">
+                            <label for="charmed">Charmed</label>
+                            <input type="checkbox" id="charmed">
+                            <label for="deafened">Deafened</label>
+                            <input type="checkbox" id="deafened">
+                            <label for="frightened">Frightened</label>
+                            <input type="checkbox" id="frightened">
+                        </article>
+                        <article id="conditionsList2">
+                            <label for="paralyzed">Paralyzed</label>
+                            <input type="checkbox" id="paralyzed">
+                            <label for="petrified">Petrified</label>
+                            <input type="checkbox" id="petrified">
+                            <label for="poisoned">Poisoned</label>
+                            <input type="checkbox" id="poisoned">
+                            <label for="prone">Prone</label>
+                            <input type="checkbox" id="prone">
+                        </article>
+                    <article id="conditionsList3">
+                        <label for="exhaustedValue">Exhausted</label>
+                        <input type="range" id="exhaustedValue" inputmode="numeric" min="0" max="10" value="0">
+                        <output for="exhaustedValue">0</output>
+                    </article>
+                </article>
+            </section>
+        </section>
+        <section role="tabpanel" id="sheet-panel-gear" class="sheet-panel" aria-labelledby="sheet-tab-gear" hidden>
+            <section class="gear">
+                <article>
+                    <p>Gear</p>
+                </article>
+            </section>
+        </section>  
+    </main>
+    <div id="rollOrb"
+        class='roll-orb'
+        role='button'
+        tabindex='0'
+        aria-expanded='false'
+        aria-label="Open Roll Panel">
+        <div class='roll-orb-face' aria-hidden="true"></div>
+        <div class="roll-orb__panel" hidden>
+        <p class="roll-orb__label"></p>
+        <p class="roll-orb__total"></p>
+        <p class="roll-orb__detail"></p>    
+        </div>
+    </div>
+    <script src="/charMath.js"></script>
+</body>
+<footer>
+    <section id="dataDump">
+        <pre><%= JSON.stringify(character, null, 2) %></pre>
+    </section>
+</footer>
+</html>

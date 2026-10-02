@@ -31,21 +31,22 @@ Registration structure
 signin structure 
 
     Body
-        header
-            h1
-            main
-                section #title
-                    h2
-                form #SignInBox
-                    div #userNameContainer (.formContainer)
-                        label
-                        input #userName
-                    div #passwordContainer (.formContainer)
-                        label
-                        input #password
-                    div #buttonContainer (.formContainer)
-                        button #submit
-                        a #newUser
+        header #topContainer
+            h1 #topTitle
+        main
+            section #title
+                h2 #titleText
+
+            form #formContainer
+                article #userNameContainer .formContainer .tile
+                    label #userNameLabel .topTile
+                    input #userName .bottomTile
+                article #passwordContainer .formContainer .tile
+                    label #passwordLabel
+                    input #password .bottomTile
+                article #buttonContainer .formContainer
+                    button #submit .formButton
+                    a #newUser .formButton
 
 
 settings structure 
@@ -99,42 +100,44 @@ settings structure
 home structure 
 
     body
-        header
-            h1 #title
+        header #topContainer
+            h1 #siteTitle
             nav #navBox
-                ul .navContainer
-                    li
-                        a
-                    li
+                ul #navContainer
+                    a #homeNav .navButton
+
+                    li #characterNav .navButton
                         ul #characterDropdown .dropDown
-                            a   
-                            a
-                    li
+                            a #createCharacter .characterDropdownButton
+                            a #characterList .characterDropdownButton
+
+                    li #campaignNav .navButton
                         ul #campaignDropdown .dropDown
-                            a
-                            a
-                            a
+                            a #createCampaign .campaignDropdownButton
+                            a #campaignList .campaignDropdownButton
+                            a #premadeCampaigns .campaignDropdownButton
+
                     li
                         ul #settingsDropdown .dropDown
-                            a
-                            a   
-                            a
+                            a #profile .settingsDropdownButton
+                            a #settings .settingsDropdownButton
+                            a #logout .settingsDropdownButton
             
         main
             section #title
-                h2
+                h2 #titleText
             section #currentCharacters .mainBlock
-                h3
-                article #characterList
-                    p
+                h3 .topTile
+                article #characterList .bottomTile
+                    p EJS
             section #currentCampaign .mainBlock
-                h3
-                article #campaignList
-                    p
+                h3 .topTile
+                article #campaignList .bottomTile
+                    p EJS
             section #unfinishedCharacters .mainBlock
-                h3
-                article #unfinishedList
-                    p
+                h3 .topTile
+                article #unfinishedList .bottomTile
+                    p EJS
       
         footer
             p

@@ -12,16 +12,20 @@
 </head>
 
 <body>
-    <header>
-      <h1>Create Character</h1>
-      <p id="title">Step 3 of 3 — Abilities</p>
+    <header id="topContainer">
+      <h1 id="siteTitle">Create Character</h1>
+      <h2 id="formTitle">Step 3 of 3 — Abilities</h2>
     </header>
-    <main id="charMain">
-        <section id="formContainer">
-            <form action="/create_char/step3" method="POST">
+    <main>
+        <section id="section3Title">
+            <h2>Roll for your Abilities</h2>
+        </section>
+        <section id="formContainerStep3">
+            <form class="formContainer" action="/create_char/step3" method="POST">
                     <% const stats = [["str","Strength"],["dex","Dexterity"],["con","Constitution"],["int","Intelligence"],
                         ["wis","Wisdom"],["cha","Charisma"],["luc","Luck"],["spd","Speed"]]; %>
-                    <article class="formContainer tile">
+    
+                    <article id="plus2Container" class="formSectionContainer tile">
                         <label class="topTile" for="plus2">+2 bonus</label>
                         <select class="bottomTile" id="plus2" name="plus2" required>
                             <option value="" disabled selected>Select a +2 stat</option>
@@ -30,7 +34,8 @@
                             <% }); %>
                         </select>
                     </article>
-                    <article class="formContainer tile">
+                    
+                    <article id="plus1Container" class="formSectionContainer tile">
                         <label class="topTile" for="plus1">+1 bonus</label>
                         <select class="bottomTile" id="plus1" name="plus1" required>
                             <option value="" disabled selected>Select a +1 stat</option>
@@ -39,24 +44,28 @@
                             <% }); %>
                         </select>
                     </article>
-                <section id="baseStatContainer">
+                    
+                <article id="baseStatContainer" class="formSectionContainer">
                     <% stats.forEach(([key, label]) => { %>
-                        <article class="formContainer tile">
+                        <article id="baseStatItemContainer" class="formSectionContainer tile">
                             <span class="topTile"><%= label %></span>
-                            <button type="button" class="bottomTile rollBtn" data-stat="<%= key %>"
+                            <button id="rollBtn" type="button" class="bottomTile rollBtn" data-stat="<%= key %>"
                                 <%= rolls[key] !== undefined ? "disabled" : "" %>>
                                 <%= rolls[key] ?? "roll" %>
                               </button>
                         </article>
                     <% }); %>
-                </section>
+                    </article>
             
-                <section id="buttonContainer">
-                    <button id="submit" type="submit">Create Character</button>
-                </section>
+                <article id="buttonContainer" class="formSectionContainer">
+                    <button id="submit" class="formButton" type="submit">Create Character</button>
+                </article>
             </form>
         </section>
     </main>
+    <footer>
+        <a id="homeLink" href="/home">Cancel</a>
+    </footer>
     <script src="/char_step3.js"></script>
 </body>
 </html>

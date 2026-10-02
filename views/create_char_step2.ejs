@@ -12,14 +12,15 @@
 </head>
 
 <body>
-    <header>
-      <h1>Create Character</h1>
-      <p id="title">Step 2 of 3 — Class and Subclass</p>
-    </header>
-    <main id="charMain">
+  <header id="topContainer">
+    <h1 id="siteTitle">Create Character</h1>
+    <h2 id="formTitle">Step 2 of 3 — Class and Subclass</h2>
+  </header>
+
+  <main>
       <section id="formContainer">
-        <form action="/create_char/step2" method="POST">
-          <article id="classContainer" class="formContainer tile">
+        <form class="formContainer" action="/create_char/step2" method="POST">
+          <article id="classContainer" class="formSectionContainer tile">
             <label class="topTile" for="class_id">Select Class</label>
               <select class="bottomTile" id="class_id" name="class_id" required>
                 <option value="" disabled selected>Select your Class</option>
@@ -33,13 +34,13 @@
               </select>
           </article>
 
-          <article id="subClassContainer" class="formContainer tile">
+          <article id="subClassContainer" class="formSectionContainer tile">
           <label class="topTile" for="subclass_id">Select Subclass</label>
             <select class="bottomTile" id="subclass_id" name="subclass_id" required disabled>
               <option value="" disabled selected>Select your Sub-Class</option>
             </select>
           </article>
-          <article id="buttonContainer" class="formContainer">
+          <article id="buttonContainer" class="formSectionContainer">
             <button id="submit" type="submit">Next: Abilities</button>
           </article>
         </form>

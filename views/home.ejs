@@ -12,73 +12,71 @@
 </head>
 
 <body>
-    <header>
-            <h1>
-                Welcome <%= username %>, To Eldridia
-            </h1>
-
-            <nav id="navBox">
-                <ul class="navContainer">
-                    <a id="home" href="/home">home</a>
+    <header id="topContainer">
+        <h1 id="siteTitle">
+            Welcome <%= username %>, To Eldridia
+        </h1>
+        <nav id="navBox">
+            <ul id="navContainer">
+                <a id="homeNav" class="navButton" href="/home">home</a>
                 
-                    <li>Characters
-                            <ul class="dropDown" id="characterDropdown">
-                                <a href="/create_char">Create Character</a>
-                                <a href="/char_list">Character List</a>
-                            </ul>
-                    </li>
+                <li id="characterNav" class="navButton">Characters
+                    <ul class="dropDown" id="characterDropdown">
+                        <a id="createCharacter" class="characterDropdownButton" href="/create_char">Create Character</a>
+                        <a id="characterList" class="characterDropdownButton" href="/char_list">Character List</a>
+                    </ul>
+                </li>
                     
-                    <li>Campaigns
-                        <ul class="dropDown" id="campaignDropdown">
-                            <a href="/create_campaign">Create Campaign</a>
-                            <a href="/campaign_list">Campaign List</a>
-                            <a href="/premade">Premade Campaigns</a>
-                        </ul>
-                    </li>
+                <li id="campaignNav" class="navButton">Campaigns
+                    <ul class="dropDown" id="campaignDropdown">
+                        <a id="createCampaign" class="campaignDropdownButton" href="/create_campaign">Create Campaign</a>
+                        <a id="campaignList" class="campaignDropdownButton" href="/campaign_list">Campaign List</a>
+                        <a id="premadeCampaigns" class="campaignDropdownButton" href="/premade">Premade Campaigns</a>
+                    </ul>
+                </li>
 
-                    <li>Settings
-                        <ul class="dropDown" id="settingsDropdown">
-                            <a href="/profile">Profile</a>
-                            <a href="/settings">Settings</a>
-                            <a href="/login">Log Out</a>
-                        </ul>
-                    </li>
+                <li id="settingsNav" class="navButton">Settings
+                    <ul class="dropDown" id="settingsDropdown">
+                        <a id="profile" class="settingsDropdownButton" href="/profile">Profile</a>
+                        <a id="settings" class="settingsDropdownButton" href="/settings">Settings</a>
+                        <a id="logout" class="settingsDropdownButton" href="/login">Log Out</a>
+                    </ul>
+                </li>
                     
-                </ul>
-            </nav>
-        </section>
+            </ul>
+        </nav>
     </header>
-    <main>
 
-        <section id="title">
-            <h2>Take Hold of Your Legend</h2>
-        </section>
-        <section id="currentCharacters" class="mainBlock">
+    <main>
+        <section id="currentCharacters" class="mainBlock tile">
             <h3 class="topTile">Current Characters</h3>
             <article class='bottomTile' id="characterList">
                 <% if (characters.length === 0) { %>
                     <p>No Characters Available</p>
                 <% } else { %>
-                    <ul>
-                        <% characters.forEach(ch => { %>
-                            <li>
-                                <h3><%= ch.name %></h3>
-                                <p>Race:  <%= ch.race %> </p>
-                                <p>Class: <%= ch.class %> </p>
-                                <p>Sub-class: <%= ch.subclass %> </p>
-                            </li>
-                        <% }); %>
+                    <ul id = "currentCharacterContainer">
+                      <% characters.forEach(ch => { %>
+                        <li id = "currentCharacterItem">
+                            <a href='/characters/<%= ch.id %>' class="char-tile">
+                                <h3 id = "currentCharacterName"><%= ch.name %></h3>
+                                <img id = "currentCharacterImage" src = "/utils/defaultimg.png" alt = "Character Image">
+                                    <p id = "currentCharacterRace">Race:  <%= ch.race %> </p>
+                                    <p id = "currentCharacterClass">Class: <%= ch.class %> </p>
+                                    <p id = "currentCharacterSubclass">Sub-class: <%= ch.subclass %> </p>
+                            </a>
+                        </li>
+                      <% }); %>
                     </ul>
                 <% } %>
             </article>
         </section>
-        <section id="currentCampaign" class="mainBlock">
+        <section id="currentCampaign" class="mainBlock tile">
             <h3 class="topTile">Current Campaigns</h3>
             <article class='bottomTile' id="campaignList">
                 <p>No Campaigns Planned</p>
             </article>
         </section>
-        <section id="unfinishedCharacters" class="mainBlock">
+        <section id="unfinishedCharacters" class="mainBlock tile">
             <h3 class="topTile">Unfinished Work</h3>  
             <article class='bottomTile' id="unfinishedList">
                 <p>Youre All Caught Up!</p>
@@ -86,7 +84,7 @@
         </section>  
     </main>
     <footer>
-        <p>copyrite Eldrid Tales LLC</p>
+        <p id="footerText">copyrite Eldrid Tales LLC</p>
     </footer>
 </body>
 </html>

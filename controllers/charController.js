@@ -183,3 +183,20 @@ export async function charCreateStep3Submit(req, res) {
             res.status(500).send("Could not save character");
         }
     }
+
+    export async function showCharacter(req, res) {
+        if (!req.session.userId) return res.redirect("/login");
+
+        const { rows } = await pool.query(
+            `SELECT ch.*, r.name AS race_name, cl.name AS class_name, s.name AS subclass_name 
+            FROM characters ch
+            LEFT JOIN races r ON r.id = ch.race_id
+            LEFT JOIN classes cl ON cl.id = ch.class_id
+            LEFT JOIN sub_classes s ON s.id = ch.subclass_id
+            WHERE ch.id = $1 AND ch.user_id = $2`,
+            [req.params.id, req.session.userId]
+        );
+
+        if (rows.length === 0) return res.status(404).send('Character not found');
+        res.render('character', { character: rows[0] });
+    };
