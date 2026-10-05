@@ -40,6 +40,8 @@ app.use('/home', homeRoutes);
 app.use('/create_char', char_createRoutes);
 app.use('/settings', settingsRoutes);
 app.use('/characters', charRoutes);
+app.use('/charEdit', charRoutes);
+
 
 app.get('/health', (req, res) => {
   res.json({ ok: true });

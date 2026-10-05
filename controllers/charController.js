@@ -17,6 +17,21 @@ export async function charCreate(req, res) {
     };
 };
 
+export async function deleteCharacter(req, res) {
+    if (!req.session.userId) return res.redirect('/login');
+  
+    const charId = req.params.id;
+    const userId = req.session.userId;
+  
+    const { rowCount } = await pool.query(
+      `DELETE FROM characters WHERE id = $1 AND user_id = $2`,
+      [charId, userId]
+    );
+    if (!rowCount) return res.status(404).send('Character not found');
+  
+    res.redirect('/home');
+  }
+
 export async function charCreateStep1(req, res) {
     if (!req.session.userId) {
         return res.redirect("/login");
@@ -167,14 +182,26 @@ export async function charCreateStep3Submit(req, res) {
     final[plus2] += 2;
     final[plus1] += 1;
     try {
+        const classResult = await pool.query(
+            `SELECT hitpoint_die FROM classes WHERE id = $1`,
+            [draft.class_id]
+          );
+          const hitDie = classResult.rows[0]?.hitpoint_die;
+          if (!hitDie) {
+            return res.status(400).send('Class not found');
+          }
+          
+          const baseHealth = Math.floor(Math.random() * hitDie) + 1;
+          const conMod = Math.floor(final.con / 2) - 5;
+          const maxHp = Math.max(1, baseHealth + conMod);
         await pool.query(
             `INSERT INTO characters
                (user_id, name, race_id, class_id, subclass_id,
-                str, dex, con, "int", wis, cha, luc, spd, plus2_stat, plus1_stat)
-             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)`,
+                str, dex, con, "int", wis, cha, luc, spd, plus2_stat, plus1_stat, max_hp, current_hp)
+             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15, $16, $17)`,
             [req.session.userId, draft.name, draft.race_id, draft.class_id, draft.subclass_id,
              final.str, final.dex, final.con, final.int, final.wis, final.cha, final.luc, final.spd,
-             plus2, plus1]
+             plus2, plus1, maxHp, maxHp]
             );
             delete req.session.charDraft;   // the draft is saved, so throw it away
             res.redirect("/home");
@@ -198,5 +225,216 @@ export async function charCreateStep3Submit(req, res) {
         );
 
         if (rows.length === 0) return res.status(404).send('Character not found');
-        res.render('character', { character: rows[0] });
+
+        const { rows: ownedArmor } = await pool.query(
+            `SELECT a.id, a.name, a.armor_type, a.ac_bonus, ca.is_equipped
+             FROM character_armor ca
+             JOIN armor a ON a.id = ca.armor_id
+             WHERE ca.character_id = $1
+             ORDER BY a.name`,
+            [rows[0].id]
+          );
+          
+          const { rows: ownedWeapons } = await pool.query(
+            `SELECT w.id, w.name, w.category, w.damage_dice, cw.is_equipped
+             FROM character_weapons cw
+             JOIN weapons w ON w.id = cw.weapon_id
+             WHERE cw.character_id = $1
+             ORDER BY w.name`,
+            [rows[0].id]
+          );
+          
+          res.render('character', {
+            character: rows[0],
+            ownedArmor,
+            ownedWeapons,
+          });
+   
     };
+
+    export async function showInventory(req, res) {
+        if (!req.session.userId) return res.redirect("/login");
+        const charId = Number(req.params.id);
+
+        const { rows: chars } = await pool.query(
+            `SELECT id, name FROM characters WHERE id = $1 AND user_id = $2`,
+            [charId, req.session.userId]
+        );
+        if (!chars.length) return res.status(404).send('Character not found');
+
+        const armor = await pool.query(`SELECT id, name, armor_type, ac_bonus, rarity FROM armor ORDER BY name`);
+        const weapons = await pool.query(`SELECT id, name, category, damage_dice, rarity, attack_bonus FROM weapons ORDER BY name`);
+
+        const ownedArmor = await pool.query(`SELECT armor_id FROM character_armor WHERE character_id = $1`, [charId]);
+        const ownedWeapons = await pool.query(`SELECT weapon_id FROM character_weapons WHERE character_id = $1`, [charId]);
+
+        res.render('inventory', { character: chars[0],
+            armor: armor.rows,
+            weapons: weapons.rows,
+            ownedArmorIds: ownedArmor.rows.map(r => Number(r.armor_id)),
+            ownedWeaponIds: ownedWeapons.rows.map(w => Number(w.weapon_id)),
+        })
+    }
+
+    export async function addArmor(req, res) {
+        if (!req.session.userId) return res.redirect("/login");
+        const charId = Number(req.params.id);
+        const armorId = Number(req.body.armor_id);
+
+        await pool.query(`INSERT INTO character_armor (character_id, armor_id) VALUES ($1, $2)`, 
+        [charId, armorId]
+        );
+        res.redirect(`/characters/${charId}/inventory`);
+    }
+
+    export async function addWeapon(req, res) {
+        if (!req.session.userId) return res.redirect("/login");
+        const charId = Number(req.params.id);
+        const weaponId = Number(req.body.weapon_id);
+
+        await pool.query(`INSERT into character_weapons (character_id, weapon_id) VALUES ($1, $2)`,
+            [charId, weaponId]
+        );
+        res.redirect(`/characters/${charId}/inventory`);
+    }
+
+    export async function removeArmor(req, res) {
+        if (!req.session.userId) return res.redirect("/login");
+        const charId = Number(req.params.id);
+        const armorId = Number(req.body.armor_id);
+
+        await pool.query(
+            `DELETE from character_armor
+            WHERE character_id = $1 AND armor_id = $2`,
+            [charId, armorId]
+        );
+        res.redirect(`/characters/${charId}/inventory`);
+    }
+
+    export async function removeWeapon(req, res) {
+        if (!req.session.userId) return res.redirect("/login");
+        const charId = Number(req.params.id);
+        const weaponId = Number(req.body.weapon_id);
+        
+        await pool.query(
+            `DELETE from character_weapons
+            WHERE character_id = $1 AND weapon_id = $2`,
+            [charId, weaponId]
+        );
+        res.redirect(`/characters/${charId}/inventory`);
+    }
+
+    export async function adjustHp(req, res) {
+        if (!req.session.userId) return res.redirect('/login');
+      
+        const amount = Number.parseInt(req.body.amount, 10);
+        const dir = req.body.action === 'damage' ? -1
+                  : req.body.action === 'heal' ? 1
+                  : 0;
+        if (!Number.isInteger(amount) || amount < 0 || amount > 9999 || dir === 0) {
+          return res.status(400).send('Amount must be a whole number from 0 to 9999');
+        }
+      
+        const { rowCount } = await pool.query(
+          `UPDATE characters
+              SET current_hp = LEAST(max_hp, GREATEST(0, current_hp + $1))
+            WHERE id = $2 AND user_id = $3`,
+          [dir * amount, req.params.id, req.session.userId]
+        );
+        if (!rowCount) return res.status(404).send('Character not found');
+      
+        res.redirect(`/characters/${req.params.id}`);
+      }
+
+    export async function showEditCharacter(req, res) {
+        if (!req.session.userId) return res.redirect("/login");
+        const charId = Number(req.params.id);
+
+        const { rows: chars } = await pool.query(
+            `SELECT id, name, race_id, class_id, subclass_id, level, str, dex, con, "int", wis, cha, luc, spd FROM characters WHERE id = $1 AND user_id = $2`,
+            [charId, req.session.userId]
+        );
+        if (!chars.length) return res.status(404).send('Character not found');
+
+        const { rows: races } = await pool.query(
+            `SELECT id, name, traits, img_url FROM races ORDER BY name`
+        );
+        const { rows: classes } = await pool.query(
+            `SELECT id, name, primary_stat, hitpoint_die, img_url, description
+            FROM classes ORDER BY name`
+        );
+        const { rows: subClasses } = await pool.query(
+            `SELECT id, name, class_id, img_url, description
+             FROM sub_classes
+             ORDER BY name`
+        );
+        res.render('charEdit', { character: chars[0], races, classes, subClasses });
+    }
+
+    export async function editClass(req, res) {
+        if (!req.session.userId) return res.redirect("/login");
+
+        const charId = Number(req.params.id);
+        const class_id = Number(req.body.class_id);
+        const subclass_id = Number(req.body.subclass_id);
+
+        const { rows: subs } = await pool.query(
+            `SELECT class_id FROM sub_classes WHERE id = $1`,
+            [subclass_id]
+        );
+        if (!subs.length || Number(subs[0].class_id) !== class_id) {
+            return res.status(400).send("Subclass does not match class");
+        }
+
+        await pool.query(
+            `UPDATE characters
+             SET class_id = $1, subclass_id = $2
+             WHERE id = $3 AND user_id = $4`,
+            [class_id, subclass_id, charId, req.session.userId]
+        );
+        res.redirect(`/characters/${charId}/edit`);
+    }
+
+    export async function editLevel(req, res) {
+        if (!req.session.userId) return res.redirect("/login");
+        const charId = Number(req.params.id);
+        const level = Number(req.body.level);
+        if (!Number.isInteger(level) || level < 1 || level > 30) {
+            return res.status(400).send("Level must be an integer from 1 to 30");
+        }
+        await pool.query(
+            `UPDATE characters SET level = $1 WHERE id = $2 AND user_id = $3`,
+            [level, charId, req.session.userId]
+        );
+        res.redirect(`/characters/${charId}/edit`);
+    }
+
+    export async function editAbilities(req, res) {
+        if (!req.session.userId) return res.redirect("/login");
+        const charId = Number(req.params.id);
+        const { str, dex, con, int, wis, cha, luc, spd } = req.body;
+
+        const vals = [str, dex, con, int, wis, cha, luc, spd].map((v) => Number(v));
+        if (vals.some((v) => !Number.isInteger(v) || v < 3 || v > 18)) {
+            return res.status(400).send("Ability scores must be integers from 3 to 18");
+        }
+
+        await pool.query(
+            `UPDATE characters SET str = $1, dex = $2, con = $3, "int" = $4, wis = $5, cha = $6, luc = $7, spd = $8 WHERE id = $9 AND user_id = $10`,
+            [...vals, charId, req.session.userId]
+        );
+        res.redirect(`/characters/${charId}/edit`);
+    }
+
+    export async function editNameAndRace(req, res) {
+        if (!req.session.userId) return res.redirect("/login");
+        const charId = Number(req.params.id);
+        const { name, race_id } = req.body;
+        if (!name) return res.status(400).send("Name is required");
+        if (!race_id) return res.status(400).send("Race is required");
+        await pool.query(
+            `UPDATE characters SET name = $1, race_id = $2 WHERE id = $3 AND user_id = $4`,
+            [name, race_id, charId, req.session.userId]
+        );
+        res.redirect(`/characters/${charId}/edit`);
+    }

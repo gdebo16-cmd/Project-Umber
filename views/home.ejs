@@ -54,15 +54,19 @@
                 <% if (characters.length === 0) { %>
                     <p>No Characters Available</p>
                 <% } else { %>
-                    <ul id = "currentCharacterContainer">
+                    <ul id="currentCharacterContainer">
                       <% characters.forEach(ch => { %>
-                        <li id = "currentCharacterItem">
+                        <li class="currentCharacterItem">
                             <a href='/characters/<%= ch.id %>' class="char-tile">
-                                <h3 id = "currentCharacterName"><%= ch.name %></h3>
-                                <img id = "currentCharacterImage" src = "/utils/defaultimg.png" alt = "Character Image">
-                                    <p id = "currentCharacterRace">Race:  <%= ch.race %> </p>
-                                    <p id = "currentCharacterClass">Class: <%= ch.class %> </p>
-                                    <p id = "currentCharacterSubclass">Sub-class: <%= ch.subclass %> </p>
+                                <h3 class="currentCharacterName"><%= ch.name %></h3>
+                                <img class="currentCharacterImage" src="/utils/defaultimg.png" alt = "Character Image">
+                                    <p class="currentCharacterRace">Race:  <%= ch.race %> </p>
+                                    <p class="currentCharacterClass">Class: <%= ch.class %> </p>
+                                    <p class="currentCharacterSubclass">Sub-class: <%= ch.subclass %> </p>
+                                    <form method="POST" action="/characters/<%= ch.id %>/delete"
+                                        onsubmit="return confirm('Delete <%= ch.name %>? This cannot be undone.');">
+                                    <button type="submit" class="deleteButton">Delete</button>
+                                </form>
                             </a>
                         </li>
                       <% }); %>

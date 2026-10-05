@@ -110,3 +110,39 @@ const wireTabs = (tabList) => {
     const label = box.querySelector('.stat-name')?.textContent?.trim();
     showRoll(rollOrb, { label, score });
   });
+
+  const addHealth = document.querySelector('#healButton');
+  const removeHealth = document.querySelector('#damageButton');
+  const modifyHp = document.querySelector('#hpInput').value;
+  const currHp = document.querySelector('#currHpValue');
+  const maxHp = document.querySelector('#maxHpValue');
+
+  if (addHealth && removeHealth && modifyHp && currHpEl && maxHpEl) {
+    const readInt = (text) => {
+      const n = Number.parseInt(String(text).trim(), 10);
+      return Number.isInteger(n) ? n : null;
+    };
+    
+    addHealth.addEventListener('click', () => {
+      const amount = readInt(modifyHp.value);
+      const max = readInt(maxHpEl.textContent);
+      const current = readInt(currHpEl.textContent);
+      if (amount === null || amount < 0 || max === null || current === null) return;
+    
+      currHpEl.textContent = String(Math.min(max, current + amount));
+    });
+    
+    removeHealth.addEventListener('click', () => {
+      const amount = readInt(modifyHp.value);
+      const max = readInt(maxHpEl.textContent);
+      const current = readInt(currHpEl.textContent);
+      if (amount === null || amount < 0 || max === null || current === null) return;
+    
+      const next = Math.max(0, current - amount);
+      currHpEl.textContent = String(next);
+      // optional: show "fallen" in a separate <p>, only when next === 0
+    });
+  }
+
+  
+  

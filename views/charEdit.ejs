@@ -1,0 +1,122 @@
+<html>
+<head>
+    <title><%= character.name %> - Character Editor</title>
+    <link rel="stylesheet" href="/charSheet.css">
+</head>
+<body class="subpage">
+    <header>
+        <h1 id="editTitle"><%= character.name %> - Character Editor</h1>
+        <p id="editLink"><a href="/characters/<%= character.id %>">Back to character sheet</a></p>
+    </header>
+    <main class="subpage-main">
+      <section class="panel-shell">
+        <article class="tab-list" role="tablist">
+          <button type="button" role="tab" id="edit-tab-name" aria-controls="edit-panel-name" aria-selected="true">Name and Race</button>
+          <button type="button" role="tab" id="edit-tab-class" aria-controls="edit-panel-class" aria-selected="false">Class and Subclass</button>
+          <button type="button" role="tab" id="edit-tab-abilities" aria-controls="edit-panel-abilities" aria-selected="false">Abilities</button>
+          <button type="button" role="tab" id="edit-tab-level" aria-controls="edit-panel-level" aria-selected="false">Character Level</button>
+        </article>
+
+        <article role="tabpanel" id="edit-panel-name" class="edit-panel" aria-labelledby="edit-tab-name">
+          <h2 class="tabTitle">Name and Race</h2>
+          <form class="formContainer" action="/characters/<%= character.id %>/edit/name" method="POST">
+            <article class="formSectionContainer">
+              <label class="cap-top" for="name">Name</label>
+              <input class="cap-bottom" type="text" id="name" name="name" value="<%= character.name %>" required autofocus>
+            </article>
+            <article class="formSectionContainer">
+              <label class="cap-top" for="race_id">Select Race</label>
+              <select class="cap-bottom" id="race_id" name="race_id" required>
+                <% races.forEach(r => { %>
+                  <option value="<%= r.id %>" <%= Number(r.id) === Number(character.race_id) ? 'selected' : '' %>><%= r.name %></option>
+                <% }); %>
+              </select>
+            </article>
+            <article class="formSectionContainer buttonContainer">
+              <button class="formButton" type="submit">Save Changes</button>
+            </article>
+          </form>
+        </article>
+
+        <article role="tabpanel" id="edit-panel-class" class="edit-panel" aria-labelledby="edit-tab-class" hidden>
+          <h2 class="tabTitle">Class and Subclass</h2>
+          <form class="formContainer" action="/characters/<%= character.id %>/edit/class" method="POST">
+            <article class="formSectionContainer">
+              <label class="cap-top" for="class_id">Select Class</label>
+              <select class="cap-bottom" id="class_id" name="class_id" required>
+                <% classes.forEach(c => { %>
+                  <option
+                    value="<%= c.id %>"
+                    <%= Number(c.id) === Number(character.class_id) ? 'selected' : '' %>
+                    data-img="<%= c.img_url %>">
+                    <%= c.name %>
+                  </option>
+                <% }); %>
+              </select>
+            </article>
+            <article class="formSectionContainer">
+              <label class="cap-top" for="subclass_id">Select Subclass</label>
+              <select class="cap-bottom" id="subclass_id" name="subclass_id" required>
+                <% subClasses.forEach(s => { %>
+                  <% if (Number(s.class_id) === Number(character.class_id)) { %>
+                    <option
+                      value="<%= s.id %>"
+                      data-class-id="<%= s.class_id %>"
+                      <%= Number(s.id) === Number(character.subclass_id) ? 'selected' : '' %>>
+                      <%= s.name %>
+                    </option>
+                  <% } %>
+                <% }); %>
+              </select>
+            </article>
+            <article class="formSectionContainer buttonContainer">
+              <button class="formButton" type="submit">Save Changes</button>
+            </article>
+          </form>
+        </article>
+
+        <article role="tabpanel" id="edit-panel-abilities" class="edit-panel" aria-labelledby="edit-tab-abilities" hidden>
+          <h2 class="tabTitle">Abilities</h2>
+          <form class="formContainer" action="/characters/<%= character.id %>/edit/abilities" method="POST">
+            <% const stats = [["str","Strength"],["dex","Dexterity"],["con","Constitution"],["int","Intelligence"],
+                ["wis","Wisdom"],["cha","Charisma"],["luc","Luck"],["spd","Speed"]]; %>
+            <article id="statsContainer" class="edit-stats">
+              <% stats.forEach(([key, label]) => { %>
+                <article class="formSectionContainer">
+                  <span class="cap-top"><%= label %></span>
+                  <input type="hidden" name="<%= key %>" id="stat-<%= key %>" value="<%= character[key] %>">
+                  <button type="button" class="cap-bottom rollBtn" data-stat="<%= key %>">
+                    <%= character[key] ?? 'roll' %>
+                  </button>
+                </article>
+              <% }); %>
+            </article>
+            <article class="formSectionContainer buttonContainer">
+              <button class="formButton" type="submit">Save Changes</button>
+            </article>
+          </form>
+        </article>
+
+        <article role="tabpanel" id="edit-panel-level" class="edit-panel" aria-labelledby="edit-tab-level" hidden>
+          <h2 class="tabTitle">Character Level</h2>
+          <form class="formContainer" action="/characters/<%= character.id %>/edit/level" method="POST">
+            <article class="formSectionContainer">
+              <label class="cap-top" for="level">Level</label>
+              <select class="cap-bottom" id="level" name="level" required>
+                <% for (let i = 1; i <= 30; i++) { %>
+                  <option value="<%= i %>" <%= Number(character.level) === i ? 'selected' : '' %>><%= i %></option>
+                <% } %>
+              </select>
+            </article>
+            <article class="formSectionContainer buttonContainer">
+              <button class="formButton" type="submit">Save Changes</button>
+            </article>
+          </form>
+        </article>
+      </section>
+      <script id="all-subclasses" type="application/json"><%- JSON.stringify(subClasses) %></script>
+    </main>
+    <script src="/panelTabs.js"></script>
+    <script src="/charEdit.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<html>
+<head>
+    <title><%= character.name %> - Inventory</title>
+    <link rel="stylesheet" href="/charSheet.css">
+</head>
+<body class="subpage">
+    <header>
+        <h1 id="inventoryTitle"><%= character.name %> - Inventory</h1>
+        <p id="inventoryLink"><a href="/characters/<%= character.id %>">Back to character sheet</a></p>
+    </header>
+    <main class="subpage-main">
+      <section class="panel-shell">
+        <article class="tab-list" role="tablist">
+          <button type="button" role="tab" id="inv-tab-armor" aria-controls="inv-panel-armor" aria-selected="true">Armor</button>
+          <button type="button" role="tab" id="inv-tab-weapons" aria-controls="inv-panel-weapons" aria-selected="false">Weapons</button>
+        </article>
+
+        <article role="tabpanel" id="inv-panel-armor" class="inv-panel" aria-labelledby="inv-tab-armor">
+          <h2 class="tabTitle">Armor</h2>
+          <ul class="invList">
+            <% armor.forEach(a => { %>
+              <li class="invListItem">
+                <%= a.name %> (<%= a.armor_type %>, <%= a.ac_bonus %> AC)
+                <% if (ownedArmorIds.includes(Number(a.id))) { %>
+                  <em class="ownedItem">Owned</em>
+                  <form class="removeItemForm" method="POST" action="/characters/<%= character.id %>/inventory/armor/remove">
+                    <input class="invIdInput" type="hidden" name="armor_id" value="<%= a.id %>">
+                    <button type="submit" class="removeItemButton hover-grow">Remove</button>
+                  </form>
+                <% } else { %>
+                  <form class="addItemForm" method="POST" action="/characters/<%= character.id %>/inventory/armor">
+                    <input class="invIdInput" type="hidden" name="armor_id" value="<%= a.id %>">
+                    <button type="submit" class="addItemButton hover-grow">Add</button>
+                  </form>
+                <% } %>
+              </li>
+            <% }) %>
+          </ul>
+        </article>
+
+        <article role="tabpanel" id="inv-panel-weapons" class="inv-panel" aria-labelledby="inv-tab-weapons" hidden>
+          <h2 class="tabTitle">Weapons</h2>
+          <ul class="invList">
+            <% weapons.forEach(w => { %>
+              <li class="invListItem">
+                <%= w.name %> (<%= w.weapon_category %>, <%= w.damage_dice %>, <%= w.rarity %>, <%= w.attack_bonus %> Attack Bonus)
+                <% if (ownedWeaponIds.includes(Number(w.id))) { %>
+                  <em class="ownedItem">Owned</em>
+                  <form class="removeItemForm" method="POST" action="/characters/<%= character.id %>/inventory/weapon/remove">
+                    <input type="hidden" name="weapon_id" value="<%= w.id %>">
+                    <button type="submit" class="removeItemButton hover-grow">Remove</button>
+                  </form>
+                <% } else { %>
+                  <form class="addItemForm" method="POST" action="/characters/<%= character.id %>/inventory/weapon">
+                    <input type="hidden" name="weapon_id" value="<%= w.id %>">
+                    <button type="submit" class="addItemButton hover-grow">Add</button>
+                  </form>
+                <% } %>
+              </li>
+            <% }) %>
+          </ul>
+        </article>
+      </section>
+    </main>
+    <script src="/panelTabs.js"></script>
+</body>
+</html>
