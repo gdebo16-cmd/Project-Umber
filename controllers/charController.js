@@ -1,5 +1,6 @@
 import pool from '../db.js';
 
+
 export async function charCreate(req, res) {
     if (!req.session.userId) {
         return res.redirect("/login");
@@ -248,6 +249,7 @@ export async function charCreateStep3Submit(req, res) {
             character: rows[0],
             ownedArmor,
             ownedWeapons,
+            equippedWeapons: ownedWeapons.filter(w => w.is_equipped),
           });
    
     };
@@ -281,6 +283,12 @@ export async function charCreateStep3Submit(req, res) {
         const charId = Number(req.params.id);
         const armorId = Number(req.body.armor_id);
 
+        const { rows: owner } = await pool.query(
+            `SELECT id FROM characters WHERE id = $1 AND user_id = $2`,
+            [charId, req.session.userId]
+        );
+        if (!owner.length) return res.status(404).send('Character not found');
+
         await pool.query(`INSERT INTO character_armor (character_id, armor_id) VALUES ($1, $2)`, 
         [charId, armorId]
         );
@@ -292,6 +300,12 @@ export async function charCreateStep3Submit(req, res) {
         const charId = Number(req.params.id);
         const weaponId = Number(req.body.weapon_id);
 
+        const { rows: owner } = await pool.query(
+            `SELECT id FROM characters WHERE id = $1 AND user_id = $2`,
+            [charId, req.session.userId]
+        );
+        if (!owner.length) return res.status(404).send('Character not found');
+
         await pool.query(`INSERT into character_weapons (character_id, weapon_id) VALUES ($1, $2)`,
             [charId, weaponId]
         );
@@ -302,6 +316,12 @@ export async function charCreateStep3Submit(req, res) {
         if (!req.session.userId) return res.redirect("/login");
         const charId = Number(req.params.id);
         const armorId = Number(req.body.armor_id);
+
+        const { rows: owner } = await pool.query(
+            `SELECT id FROM characters WHERE id = $1 AND user_id = $2`,
+            [charId, req.session.userId]
+        );
+        if (!owner.length) return res.status(404).send('Character not found');
 
         await pool.query(
             `DELETE from character_armor
@@ -315,6 +335,12 @@ export async function charCreateStep3Submit(req, res) {
         if (!req.session.userId) return res.redirect("/login");
         const charId = Number(req.params.id);
         const weaponId = Number(req.body.weapon_id);
+
+        const { rows: owner } = await pool.query(
+            `SELECT id FROM characters WHERE id = $1 AND user_id = $2`,
+            [charId, req.session.userId]
+        );
+        if (!owner.length) return res.status(404).send('Character not found');
         
         await pool.query(
             `DELETE from character_weapons
@@ -438,3 +464,86 @@ export async function charCreateStep3Submit(req, res) {
         );
         res.redirect(`/characters/${charId}/edit`);
     }
+
+    export async function equipArmor(req, res) {
+
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+        const { rows: item } = await client.query(
+            `SELECT a.armor_type FROM character_armor ca
+            JOIN armor a ON a.id = ca.armor_id
+            WHERE ca.character_id =$1 AND ca.armor_id =$2`,
+            [charId, armorId]
+        );
+        if (!item.length) {
+            await client.query('ROLLBACK');
+            return res.status(404).send('Armor not owned');
+        }
+        const isShield= item[0].armor_type === 'shield';
+        await client.query(
+            `UPDATE character_armor ca SET is_equipped = false
+            FROM armor a WHERE ca.armor_id = a.id AND ca.character_id = $1
+            AND (a.armor_type = 'shield') = $2`, [charId, isShield]);
+        
+            await client.query(
+            `UPDATE character_armor ca SET is_equipped = true
+            WHERE character_id = $1 AND armor_id = $2`, [charId, armorId]);
+            await client.query('COMMIT');
+            res.redirect(`/characters/${charId}`);
+    } catch (err) { await client.query('ROLLBACK'); throw err; }
+    finally { client.release(); 
+    }
+};
+
+export async function unequipArmor(req, res) {
+    if (!req.session.userId) return res.redirect("/login");
+    const charId = Number(req.params.id);
+    const armorId = Number(req.body.armor_id);
+
+        const { rows: owner } = await pool.query(
+            `SELECT id FROM characters WHERE id = $1 AND user_id = $2`,
+            [charId, req.session.userId]
+        );
+        if (!owner.length) return res.status(404).send('Character not found');
+
+    await pool.query(
+        `UPDATE character_armor SET is_equipped = false WHERE character_id = $1 AND armor_id = $2`, [charId, armorId]
+    );
+    res.redirect(`/characters/${charId}`);
+}   
+
+export async function unequipWeapon(req, res) {
+    if (!req.session.userId) return res.redirect("/login");
+    const charId = Number(req.params.id);
+    const weaponId = Number(req.body.weapon_id);
+
+        const { rows: owner } = await pool.query(
+            `SELECT id FROM characters WHERE id = $1 AND user_id = $2`,
+            [charId, req.session.userId]
+        );
+        if (!owner.length) return res.status(404).send('Character not found');
+
+    await pool.query(
+        `UPDATE character_weapons SET is_equipped = false WHERE character_id = $1 AND weapon_id = $2`, [charId, weaponId]
+    );
+    res.redirect(`/characters/${charId}`);
+}
+
+
+export async function equipWeapon(req, res) {
+    const charId = req.params.id;
+    const { weapon_id } = req.body;
+  
+    const { rows: owner } = await pool.query(
+      'SELECT 1 FROM characters WHERE id = $1 AND user_id = $2',
+      [charId, req.session.userId]);
+    if (!owner.length) return res.status(403).send('Not your character');
+  
+    const { rowCount } = await pool.query(
+      `UPDATE character_weapons SET is_equipped = true
+       WHERE character_id = $1 AND weapon_id = $2`, [charId, weapon_id]);
+    if (!rowCount) return res.status(404).send('Weapon not owned');
+  
+    res.redirect(`/characters/${charId}`);
+  }

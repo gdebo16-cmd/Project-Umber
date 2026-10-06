@@ -80,21 +80,40 @@ const wireTabs = (tabList) => {
   const abilityMod = (score) => {
     return Math.floor(Number(score) / 2) - 5;
   }
+
+  const skillMod = (score) => {
+    return Math.floor(Number(score));
+  }
+
+  const initMod = (score) => {
+    return Math.floor(Number(score));
+  }
+
+  const hitMod = (score) => {
+    return Math.floor(Number(score));
+  }
   
   const formatMod = (m) => {
     return (m >= 0 ? '+' : '') + m;
   }
 
-  const showRoll = (orb, {label, score }) => {
-    const mod = abilityMod(score);
+  const showRoll = (orb, { label, score, kind }) => {
+    let mod = abilityMod(score);
+    if (kind === 'skill') mod = skillMod(score);
+    if (kind === 'init') mod = initMod(score);
+    if (kind === 'hit') mod = hitMod(score);
     const d20 = Math.floor(Math.random() * 20) + 1;
     const total = d20 + mod;
 
     const name = (label || 'check').replace(/^\w/, (c) => c.toUpperCase());
 
-    orb.querySelector('.roll-orb__label').textContent = `${name} Check Roll: ${total}`;
-    orb.querySelector('.roll-orb__total').textContent = `(${d20}${formatMod(mod)})`;
-    ;
+    if (kind === 'check') orb.querySelector('.roll-orb__label').textContent = `${name} roll: ${total}`;
+    if (kind === 'skill') orb.querySelector('.roll-orb__label').textContent = `${name} check: ${total}`;
+    if (kind === 'init') orb.querySelector('.roll-orb__label').textContent = `Initiative: ${total}`;
+    if (kind === 'hit') orb.querySelector('.roll-orb__label').textContent = `Chance to hit: ${total}`;
+    if (kind === 'damage') orb.querySelector('.roll-orb__label').textContent = `Damage dealt: ${total}`;
+  
+    
 
     orb.classList.add('is-open');
     orb.setAttribute('aria-expanded', 'true');
@@ -108,14 +127,44 @@ const wireTabs = (tabList) => {
 
     const score = box.dataset.score;
     const label = box.querySelector('.stat-name')?.textContent?.trim();
-    showRoll(rollOrb, { label, score });
+    showRoll(rollOrb, { label, score, kind: 'check' });
+
+    
   });
+
+  document.querySelector('#skillsContainer').addEventListener('click', (e) => {
+    const skill = e.target.closest('.skillContainer');
+    if (!skill || !rollOrb) return;
+
+    const score = skill.querySelector('.skillValue')?.textContent?.trim();
+    const label = skill.querySelector('.skillTitle')?.textContent?.trim();
+    showRoll(rollOrb, { label, score, kind: 'skill' });
+  });
+
+  document.querySelector('.initiative').addEventListener('click', (e) => {
+    const init = e.target.closest('.initContainer');
+    if (!init || !rollOrb) return;
+
+    const score = init.querySelector('#initValue')?.textContent?.trim();
+    const label = init.querySelector('#initTitle')?.textContent?.trim();
+    showRoll(rollOrb, { label, score, kind: 'init' });
+  });
+
+  document.querySelector('.actionRow').addEventListener('click', (e) => {
+    const toHit = e.target.closest('.toHitButton');
+    if (!toHit || !rollOrb) return;
+
+    const score = toHit.querySelector('#toHitValue')?.textContent?.trim();
+    const label = toHit.querySelector('#toHitTitle')?.textContent?.trim();
+    showRoll(rollOrb, { label, score, kind: 'hit' });
+  });
+
 
   const addHealth = document.querySelector('#healButton');
   const removeHealth = document.querySelector('#damageButton');
   const modifyHp = document.querySelector('#hpInput').value;
-  const currHp = document.querySelector('#currHpValue');
-  const maxHp = document.querySelector('#maxHpValue');
+  const currHpEl = document.querySelector('#currHpValue');
+  const maxHpEl = document.querySelector('#maxHpValue');
 
   if (addHealth && removeHealth && modifyHp && currHpEl && maxHpEl) {
     const readInt = (text) => {
@@ -140,7 +189,9 @@ const wireTabs = (tabList) => {
     
       const next = Math.max(0, current - amount);
       currHpEl.textContent = String(next);
-      // optional: show "fallen" in a separate <p>, only when next === 0
+      if (next === 0) {
+        currHpEl.textContent = 'You Have Fallen!';
+      }
     });
   }
 

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="'en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=neon|outline|emboss|shadow-multiple">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+    <link id="theme-style" rel="stylesheet" href="/charSheet.css">
+    
+    <title>Eldrid Tales</title>
+</head>
+
+<body>
+    <header>
+        <section id="siteTitle">
+         <h1>Eldrid Tales</h1>
+        </section>
+        <section id="characterHeader">
+            <h2 id="characterName"><%= character.name %></h2>
+            <p id="characterRace"><%= character.race_name %></p>
+            <p id="characterClass"><%= character.class_name %> - <%= character.subclass_name %></p> 
+
+
+        </section>
+        
+        <nav id="navBox">
+            <ul id="navContainer">
+                <a id="homeNav" class="navButton hover-grow" href="/home">home</a>
+                <article class="navButton" id="themeNav">
+                <label class="cap-top" for="theme-select">Color scheme</label>
+                <select class="cap-bottom" id="theme-select" aria-label="Color scheme" value="" selected>
+                    <option value="green">Green</option>
+                    <option value="purple">Purple</option>
+                    <option value="blue">Blue</option>
+                    <option value="red">Red</option>
+                    <option value="orange">Orange</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                    <option value="pink">Pink</option>
+                    <option value="cyan">Cyan</option>
+                  </select>
+                </article>
+
+                <li id="characterNav" class="navButton">Characters
+                    <ul class="dropDown" id="characterDropdown">
+                        <a id="createCharacter" class="characterDropdownButton" href="/create_char">Create Character</a>
+                        <a id="characterList" class="characterDropdownButton" href="/char_list">Character List</a>
+                    </ul>
+                </li>
+                    
+                <li id="campaignNav" class="navButton">Character Editor   
+                    <ul class="dropDown" id="campaignDropdown">
+                        <a id="charSheetEdit" class="campaignDropdownButton" href="/characters/<%= character.id %>/edit">Edit Character</a>
+                    </ul>
+                </li>
+
+                <li id="settingsNav" class="navButton">Settings
+                    <ul class="dropDown" id="settingsDropdown">
+                        <a id="profile" class="settingsDropdownButton" href="/profile">Profile</a>
+                        <a id="settings" class="settingsDropdownButton" href="/settings">Settings</a>
+                        <a id="logout" class="settingsDropdownButton" href="/login">Log Out</a>
+                    </ul>
+                </li>
+                    
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="sheet-tabs tab-list" role="tablist" hidden>
+            <button type="button" role="tab" id="sheet-tab-stats" aria-controls="sheet-panel-stats" aria-selected="true">Base Stats</button>
+            <button type="button" role="tab" id="sheet-tab-actions" aria-controls="sheet-panel-actions" aria-selected="false">actions</button>
+            <button type="button" role="tab" id="sheet-tab-Skills" aria-controls="sheet-panel-skills" aria-selected="false">Saving Throws</button>
+            <button type="button" role="tab" id="sheet-tab-Conditions" aria-controls="sheet-panel-conditions" aria-selected="false">Conditions</button>
+            <button type="button" role="tab" id="sheet-tab-Gear" aria-controls="sheet-panel-gear" aria-selected="false">Gear</button>
+        </section>
+
+        <section role="tabpanel" id="sheet-panel-stats" class="sheet-panel" aria-labelledby="tab-stats" hidden>
+            <section class="base-stats">
+                <% const mod = (i) => {
+                    const m = Math.floor((i / 2) - 5);
+                    return (m >= 0 ? "+" : "") + m;
+                } %>
+                <article class="base-stats-box hover-grow" data-stat="str" data-score="<%= character.str %>">
+                    <p class="stat-name cap-top" id="str">strength</p>
+                    <p class="modifier"><%= mod(character.str) %></p>
+                    <p class="stat-count cap-bottom"><%= character.str %></p>
+                </article>
+                <article class="base-stats-box hover-grow" data-stat="dex" data-score="<%= character.dex %>">
+                    <p class="stat-name cap-top" id="dex">dexterity</p>
+                    <p class="modifier"><%= mod(character.dex) %></p>
+                    <p class="stat-count cap-bottom"><%= character.dex %></p>
+                </article>
+                <article class="base-stats-box hover-grow" data-stat="int" data-score="<%= character.int %>">
+                    <p class="stat-name cap-top" id="int">intelligence</p>
+                    <p class="modifier"><%= mod(character.int) %></p>
+                    <p class="stat-count cap-bottom"><%= character.int %></p>
+                </article>
+                <article class="base-stats-box hover-grow" data-stat="con" data-score="<%= character.con %>">
+                    <p class="stat-name cap-top" id="con">constitution</p>
+                    <p class="modifier"><%= mod(character.con) %></p>
+                    <p class="stat-count cap-bottom"><%= character.con %></p>
+                </article>
+                <article class="base-stats-box hover-grow" data-stat="wis" data-score="<%= character.wis %>">
+                    <p class="stat-name cap-top" id="wis">wisdom</p>
+                    <p class="modifier"><%= mod(character.wis) %></p>
+                    <p class="stat-count cap-bottom"><%= character.wis %></p>
+                </article>
+                <article class="base-stats-box hover-grow" data-stat="cha" data-score="<%= character.cha %>">
+                    <p class="stat-name cap-top" id="cha">charisma</p>
+                    <p class="modifier"><%= mod(character.cha) %></p>
+                    <p class="stat-count cap-bottom"><%= character.cha %></p>
+                </article>
+                <article class="base-stats-box hover-grow" data-stat="luc" data-score="<%= character.luc %>">
+                    <p class="stat-name cap-top" id="luc">Luck</p>
+                    <p class="modifier"><%= mod(character.luc) %></p>
+                    <p class="stat-count cap-bottom"><%= character.luc %></p>
+                </article> 
+                <article class="base-stats-box hover-grow" data-stat="spd" data-score="<%= character.spd %>">
+                    <p class="stat-name cap-top" id="spd">speed</p>
+                    <p class="modifier"><%= mod(character.spd) %></p>
+                    <p class="stat-count cap-bottom"><%= character.spd %></p>
+                </article>
+            </section>
+            <section class="armorClass">
+                <article id="acContainer"><% const dexMod = Number(character.dex / 2) - 5;
+                                        const armorMod = Number(character.armorMod || 0);
+                                        const shieldMod = Number(character.shieldMod || 0);
+                                        const skillMod = Number(character.skillMod || 0);
+                                        const ac = 10 + dexMod + armorMod + shieldMod + skillMod;
+                                    %>
+                    <h2 id="acTitle" class="cap-top">Armor Class</h2>
+                    <p id="acValue"><%= ac %></p>
+                </article>
+            </section>
+            <section class="initiative">
+                <article id="initContainer">
+                    <h2 id="initTitle" class="cap-top">Initiative</h2>
+                    <p id="initValue">15</p>
+                </article>
+            </section>
+            <section class="saving-throw">
+                <article id="savingThrowTitle">
+                    <h2>Saving Throws</h2>
+                </article>
+                <article id="savingThrowContainer">
+                    <article id="savingThrowCol1" class="saveCol">
+                        <article class="saveContainer hover-grow" id="strSaveContainer">
+                            <p class="saveTitle cap-top" id="strSaveTitle">strength save</p>
+                            <p class="saveValue" id="strSaveValue">15</p>
+                        </article>
+                        <article class="saveContainer hover-grow" id="dexSaveContainer">
+                            <p class="saveTitle cap-top" id="dexSaveTitle">dexterity save</p>  
+                            <p class="saveValue" id="dexSaveValue">15</p>
+                        </article>
+                        <article class="saveContainer hover-grow" id="intSaveContainer">
+                            <p class="saveTitle cap-top" id="intSaveTitle">intelligence save</p>
+                            <p class="saveValue" id="intSaveValue">15</p>
+                        </article>
+                    </article>
+                    <article id="savingThrowCol2" class="saveCol">
+                        <article class="saveContainer hover-grow" id="conSaveContainer">
+                            <p class="saveTitle cap-top" id="conSaveTitle">constitution save</p>
+                            <p class="saveValue" id="conSaveValue">15</p>
+                        </article>
+                        <article class="saveContainer hover-grow" id="wisSaveContainer">
+                            <p class="saveTitle cap-top" id="wisSaveTitle">wisdom save</p>
+                            <p class="saveValue" id="wisSaveValue">15</p>
+                        </article>
+                        <article class="saveContainer hover-grow" id="chaSaveContainer">   
+                            <p class="saveTitle cap-top" id="chaSaveTitle">charisma save</p>
+                            <p class="saveValue" id="chaSaveValue">15</p>
+                        </article> 
+                    </article>
+                </article>
+            </section>
+        </section>
+        <section role="tabpanel" id="sheet-panel-actions" class="sheet-panel" aria-labelledby="sheet-tab-actions" hidden>
+            <section class="action">
+                <article class="tab-list" role="tablist">
+                    <button type="button" role="tab" id="tab-actions" aria-controls="panel-actions" aria-selected="true">Actions</button>
+                    <button type="button" role="tab" id="tab-spells" aria-controls="panel-spells" aria-selected="false">Spells</button>
+                    <button type="button" role="tab" id="tab-inventory" aria-controls="panel-inventory" aria-selected="false">Inventory</button>
+                    <button type="button" role="tab" id="tab-equipment" aria-controls="panel-equipment" aria-selected="false">Proficiencies</button>
+                </article>
+                <article role="tabpanel" id="panel-actions" aria-labelledby="tab-actions">
+                <h2 class="tabTitle" id="actionsTitle">Actions</h2>
+                    <ul id="actionsList">
+                        <h3 class="actionTitle cap-top">Actions</h3>
+                        <div id="actionsContainer" class="actionRow">
+                            <label class="actionLabel" for action>Action Placeholder</label>
+                            <button type="button" role="button" class="toHitButton hover-grow">+3</button>
+                            <button type="button" role="button" class="damageButton hover-grow">1d6</button>
+                        </div>
+                        <h3 class="actionTitle cap-top">Bonus Actions</h3>
+                        <div id="bonusActionsContainer" class="actionRow">
+                            <label class="actionLabel" for bonusAction>Bonus Action Placeholder</label>
+                            <button type="button" role="button" class="toHitButton hover-grow">+3</button>
+                            <button type="button" role="button" class="damageButton hover-grow">1d6</button>
+                        </div>
+                        <h3 class="actionTitle cap-top">Reactions</h3>
+                        <div id="reactionsContainer" class="actionRow">
+                            <label class="actionLabel" for reaction>Reaction Placeholder</label>
+                            <button type="button" role="button" class="toHitButton hover-grow">+3</button>
+                            <button type="button" role="button" class="damageButton hover-grow">1d6</button>
+                        </div>
+                        <h3 class="actionTitle cap-top">Class Abilities</h3>
+                        <div id="classAbilitiesContainer" class="actionRow">
+                            <label class="actionLabel" for classAbility>Class Ability Placeholder</label>
+                            <button type="button" role="button" class="toHitButton hover-grow">+3</button>
+                            <button type="button" role="button" class="damageButton hover-grow">1d6</button>
+                        </div>
+                    </ul>  
+                </article>
+                <article role="tabpanel" id="panel-spells" aria-labelledby="tab-spells" hidden>
+                    <h2 class="tabTitle" id="spellsTitle">Spells</h2>
+                    <ul id="spellsList">
+                        <li class="spellItem">
+                            <h3 class="spellLevelTitle cap-top" id="spellTitle">Level 0 Spells</h3>
+                            <ul id="level0SpellsList">
+                                <li class="spellItemBar">
+                                    <h4 class="spellTitle" id="cantripSpellTitle">fireball</h4>
+                                    <button type="button" role="button" class="damageButton hover-grow">6d8</button>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="spellItem">
+                            <h3 class="spellLevelTitle cap-top" id="spellTitle">Level 1 Spells</h3>
+                            <input type="checkbox" class="spellCheckbox" id="level1SpellsCheckbox">
+                            <input type="checkbox" class="spellCheckbox" id="level1SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level1SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level1SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level1SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level1SpellsCheckbox" >
+                            <ul id="level1SpellsList">
+                                <li class="spellItemBar">
+                                    <h4 class="spellTitle" id="level1SpellTitle">Spell</h4>
+                                    <button type="button" role="button" class="damageButton hover-grow">6d8</button>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="spellItem">
+                            <h3 class="spellLevelTitle cap-top" id="spellTitle">Level 2 Spells</h3>
+                            <input type="checkbox" class="spellCheckbox" id="level2SpellsCheckbox">
+                            <input type="checkbox" class="spellCheckbox" id="level2SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level2SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level2SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level2SpellsCheckbox" >
+                            <ul id="level1SpellsList">
+                                <li class="spellItemBar">
+                                    <h4 class="spellTitle" id="level1SpellTitle">Spell</h4>
+                                    <button type="button" role="button" class="damageButton hover-grow">6d8</button>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="spellItem"> 
+                            <h3 class="spellLevelTitle cap-top" id="spellTitle">Level 3 Spells</h3>
+                            <input type="checkbox" class="spellCheckbox" id="level3SpellsCheckbox">
+                            <input type="checkbox" class="spellCheckbox" id="level3SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level3SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level3SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level3SpellsCheckbox" >
+                            <ul id="level3SpellsList">
+                                <li class="spellItemBar">
+                                    <h4 class="spellTitle" id="level3SpellTitle">Spell</h4>
+                                    <button type="button" role="button" class="damageButton hover-grow">6d8</button>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="spellItem"> 
+                            <h3 class="spellLevelTitle cap-top" id="spellTitle">Level 4 Spells</h3>
+                            <input type="checkbox" class="spellCheckbox" id="level4SpellsCheckbox">
+                            <input type="checkbox" class="spellCheckbox" id="level4SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level4SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level4SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level4SpellsCheckbox" >
+                            <ul id="level4SpellsList">
+                                <li class="spellItemBar">
+                                    <h4 class="spellTitle" id="level4SpellTitle">Spell</h4>
+                                    <button type="button" role="button" class="damageButton hover-grow">6d8</button>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="spellItem"> 
+                            <h3 class="spellLevelTitle cap-top" id="spellTitle">Level 5 Spells</h3>
+                            <input type="checkbox" class="spellCheckbox" id="level5SpellsCheckbox">
+                            <input type="checkbox" class="spellCheckbox" id="level5SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level5SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level5SpellsCheckbox" >
+                            <ul id="level5SpellsList">
+                                <li class="spellItemBar">
+                                    <h4 class="spellTitle" id="level5SpellTitle">Spell</h4>
+                                    <button type="button" role="button" class="damageButton hover-grow">6d8</button>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="spellItem"> 
+                            <h3 class="spellLevelTitle cap-top" id="spellTitle">Level 6 Spells</h3>
+                            <input type="checkbox" class="spellCheckbox" id="level6SpellsCheckbox">
+                            <input type="checkbox" class="spellCheckbox" id="level6SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level6SpellsCheckbox" >
+                            <ul id="level6SpellsList">
+                                <li class="spellItemBar">
+                                    <h4 class="spellTitle" id="level6SpellTitle">Spell</h4>
+                                    <button type="button" role="button" class="damageButton hover-grow">6d8</button>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="spellItem"> 
+                            <h3 class="spellLevelTitle cap-top" id="spellTitle">Level 7 Spells</h3>
+                            <input type="checkbox" class="spellCheckbox" id="level7SpellsCheckbox">
+                            <input type="checkbox" class="spellCheckbox" id="level7SpellsCheckbox" >
+                            <input type="checkbox" class="spellCheckbox" id="level7SpellsCheckbox" >
+                            <ul id="level7SpellsList">
+                                <li class="spellItemBar">
+                                    <h4 class="spellTitle" id="level7SpellTitle">Spell</h4>
+                                    <button type="button" role="button" class="damageButton hover-grow">6d8</button>
+                                    
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="spellItem"> 
+                            <h3 class="spellLevelTitle cap-top" id="spellTitle">Level 8 Spells</h3>
+                            <input type="checkbox" class="spellCheckbox" id="level8SpellsCheckbox">
+                            <input type="checkbox" class="spellCheckbox" id="level8SpellsCheckbox" >
+                            <ul id="level8SpellsList">
+                                <li class="spellItemBar">
+                                    <h4 class="spellTitle" id="level8SpellTitle">Spell</h4>
+                                    <button type="button" role="button" class="damageButton hover-grow">6d8</button>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="spellItem"> 
+                            <h3 class="spellLevelTitle cap-top" id="spellTitle">Level 9 Spells</h3>
+                            <input type="checkbox" class="spellCheckbox" id="level9SpellsCheckbox">
+                            <ul id="level9SpellsList">
+                                <li class="spellItemBar">
+                                    <h4 class="spellTitle" id="level9SpellTitle">Spell</h4>
+                                    <button type="button" role="button" class="damageButton hover-grow">6d8</button>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </article>
+                <article role="tabpanel" id="panel-inventory" aria-labelledby="tab-inventory" hidden>
+                    <h2 class="tabTitle" id="inventoryTitle">Inventory</h2>
+                    <p id="inventoryLink"><a href="/characters/<%= character.id %>/inventory">Add Armor &amp; weapons</a></p>
+
+                    <h3 class="invTitle cap-top" id="armorTitle">Armor</h3>
+                        <% if (!ownedArmor.length) { %>
+                            <p>No armor yet.</p>
+                        <% } else { %>
+                            <ul id="armorList" class="invList cap-bottom">
+                            <% ownedArmor.forEach(a => { %>
+                                <li id="armorItem"><%= a.name %> (<%= a.armor_type %>, +<%= a.ac_bonus %> AC)</li>
+                            <% }) %>
+                            </ul>
+                        <% } %>
+                        <h3 class="invTitle cap-top" id="weaponsTitle">Weapons</h3>
+                        <% if (!ownedWeapons.length) { %>
+                            <p>No weapons yet.</p>
+                        <% } else { %>
+                            <ul id="weaponsList" class="invList cap-bottom">
+                            <% ownedWeapons.forEach(w => { %>
+                                <li id="weaponItem"><%= w.name %> (<%= w.damage_dice %> <%= w.category %>)</li>
+                            <% }) %>
+                            </ul>
+                        <% } %>
+                </article>
+                <article role="tabpanel" id="panel-equipment" aria-labelledby="tab-equipment" hidden>
+                    <h2 class="tabTitle" id="proficienciesTitle">Proficiencies</h2>
+                    <ul id="proficienciesList">
+                        <li class="proficiencyItem">
+                            <h3 class="proficiencyTitle" id="proficiencyTitle">Proficiency</h3>
+                            <p class="proficiencyValue" id="proficiencyValue">Light Armor</p>
+                        </li>
+                    </ul>
+                </article>
+            </section>
+        </section>
+        <section role="tabpanel" id="sheet-panel-skills" class="sheet-panel" aria-labelledby="sheet-tab-skills" hidden>
+            <section class="skills">
+                <h2 class="tabTitle" id="skillsTitle">Skills</h2>
+                <article id="skillsContainer">
+                    <article class="skillContainer hover-grow" id="acrobaticsContainer">
+                        <h3 class="skillTitle" id="acrobatics">Acrobatics</h3>
+                        <p class="skillValue" id="acrobaticsValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="animalHandlingContainer">
+                        <h3 class="skillTitle" id="animal-handling">Animal Handling</h3>
+                        <p class="skillValue" id="animalHandlingValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="arcanaContainer">
+                        <h3 class="skillTitle" id="arcana">Arcana</h3>
+                        <p class="skillValue" id="arcanaValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="athleticsContainer">
+                        <h3 class="skillTitle" id="athletics">Athletics</h3>
+                        <p class="skillValue" id="athleticsValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="deceptionContainer">
+                        <h3 class="skillTitle" id="deception">Deception</h3>
+                        <p class="skillValue" id="deceptionValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="historyContainer">
+                        <h3 class="skillTitle" id="history">History</h3>
+                        <p class="skillValue" id="historyValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="insightContainer">
+                        <h3 class="skillTitle" id="insight">Insight</h3>
+                        <p class="skillValue" id="insightValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="intimidationContainer">
+                        <h3 class="skillTitle" id="intimidation">Intimidation</h3>
+                        <p class="skillValue" id="intimidationValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="investigationContainer">
+                        <h3 class="skillTitle" id="investigation">Investigation</h3>
+                        <p class="skillValue" id="investigationValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="medicineContainer">
+                        <h3 class="skillTitle" id="medicine">Medicine</h3>
+                        <p class="skillValue" id="medicineValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="natureContainer">
+                        <h3 class="skillTitle" id="nature">Nature</h3>
+                        <p class="skillValue" id="natureValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="perceptionContainer">
+                        <h3 class="skillTitle" id="perception">Perception</h3>
+                        <p class="skillValue" id="perceptionValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="performanceContainer">
+                        <h3 class="skillTitle" id="performance">Performance</h3>
+                        <p class="skillValue" id="performanceValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="persuasionContainer">
+                        <h3 class="skillTitle" id="persuasion">Persuasion</h3>
+                        <p class="skillValue" id="persuasionValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="religionContainer">
+                        <h3 class="skillTitle" id="religion">Religion</h3>
+                        <p class="skillValue" id="religionValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="sleightOfHandContainer">
+                        <h3 class="skillTitle" id="sleight-of-hand">Sleight of Hand</h3>
+                        <p class="skillValue" id="sleightOfHandValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="stealthContainer">
+                        <h3 class="skillTitle" id="stealth">Stealth</h3>
+                        <p class="skillValue" id="stealthValue">15</p>
+                    </article>
+                    <article class="skillContainer hover-grow" id="survivalContainer">
+                        <h3 class="skillTitle" id="survival">Survival</h3>
+                        <p class="skillValue" id="survivalValue">15</p>
+                    </article>
+                </article>
+            </section>
+        </section>
+        <section role="tabpanel" id="sheet-panel-conditions" class="sheet-panel" aria-labelledby="sheet-tab-conditions" hidden>
+            <section class="health">
+                <article id="healthContainer">
+                    <article id="hpButtonContainer">
+                        <form method="POST" action="/characters/<%= character.id %>/hp">
+                            <button type="submit" name="action" value="heal" id="healButton" class="hover-grow">Heal</button>
+                            <input type="number" id="hpInput" name="amount" value="0" min="0" step="1" required>
+                            <button type="submit" name="action" value="damage" id="damageButton" class="hover-grow">Damage</button>
+                        </form>
+                    </article>
+                    <article id="currHpContainer" class="hpCol">
+                        <p id="currHpTitle" class="hpLabel">curr HP</p>
+                        <p class="hpNum" id="currHpValue"><%= character.current_hp %></p>
+                    </article>
+                    <article id="maxHpContainer" class="hpCol">
+                        <p id="maxHpTitle" class="hpLabel">Max HP</p>
+                        <p class="hpNum" id="maxHpValue"><%= character.max_hp %></p>
+                    </article> 
+                </article>
+            </section>
+            <section class="condition">
+                <p id="conditionsTitle" class="cap-top">Conditions</p>
+                <article id="conditionsContainer">
+                        <article id="conditionsList">
+                            <label for="blinded">Blinded</label>
+                            <input type="checkbox" id="blinded">
+                            <label for="charmed">Charmed</label>
+                            <input type="checkbox" id="charmed">
+                            <label for="deafened">Deafened</label>
+                            <input type="checkbox" id="deafened">
+                            <label for="frightened">Frightened</label>
+                            <input type="checkbox" id="frightened">
+                        </article>
+                        <article id="conditionsList2">
+                            <label for="paralyzed">Paralyzed</label>
+                            <input type="checkbox" id="paralyzed">
+                            <label for="petrified">Petrified</label>
+                            <input type="checkbox" id="petrified">
+                            <label for="poisoned">Poisoned</label>
+                            <input type="checkbox" id="poisoned">
+                            <label for="prone">Prone</label>
+                            <input type="checkbox" id="prone">
+                        </article>
+                    <article id="conditionsList3">
+                        <label for="exhaustedValue">Exhausted</label>
+                        <input type="range" id="exhaustedValue" inputmode="numeric" min="0" max="10" value="0">
+                        <output for="exhaustedValue">0</output>
+                    </article>
+                </article>
+            </section>
+        </section>      
+            </section>
+        </section>  
+    </main>
+    <div id="rollOrb"
+        class='roll-orb'
+        role='button'
+        tabindex='0'
+        aria-expanded='false'
+        aria-label="Open Roll Panel">
+        <div class='roll-orb-face' aria-hidden="true"></div>
+        <div class="roll-orb__panel" hidden>
+        <p class="roll-orb__label"></p>
+        <p class="roll-orb__total"></p>
+        <p class="roll-orb__detail"></p>    
+        </div>
+    </div>
+    <script src="/charMath.js"></script>
+    <script src="/theme.js"></script>
+</body>
+<footer>
+    <section id="dataDump">
+        <pre><%= JSON.stringify(character, null, 2) %></pre>
+    </section>
+</footer>
+</html>

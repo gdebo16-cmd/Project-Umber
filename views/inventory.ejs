@@ -43,7 +43,7 @@
           <ul class="invList">
             <% weapons.forEach(w => { %>
               <li class="invListItem">
-                <%= w.name %> (<%= w.weapon_category %>, <%= w.damage_dice %>, <%= w.rarity %>, <%= w.attack_bonus %> Attack Bonus)
+                <%= w.name %> (<%= w.category %>, <%= w.damage_dice %>, <%= w.rarity %>, <%= w.attack_bonus %> Attack Bonus)
                 <% if (ownedWeaponIds.includes(Number(w.id))) { %>
                   <em class="ownedItem">Owned</em>
                   <form class="removeItemForm" method="POST" action="/characters/<%= character.id %>/inventory/weapon/remove">

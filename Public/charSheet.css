@@ -1,31 +1,189 @@
-﻿/* Project-Umber character sheet
+/* Project-Umber character sheet
    Tokens in :root are shared with theme swaps. Unused tokens are kept on purpose.
 */
 
 :root {
-    --bg-color-2: rgba(68, 42, 196, 0.67);
-    --bg-color-1: rgba(83, 92, 222, 0.72);
-    --txt-color-1: rgba(255, 255, 255, 0.756);
+    
     --rad1: .80rem;
     --rad2: .35rem;
     --bs1: 2px 2px 15px black;
     --bs2: 2px 2px 10px black;
     --pad: 2%;
     --pad2: 1%;
-    --blur1: blur(5px) saturate(150%);
+    --shadowInner: inset 6px 6px 8px #000000a9, 
+                   inset -1px -1px 5px #00000079;
     --toprad: 10px 10px 0 0;
     --lowrad: 0 0 10px 10px;
     --padTop: 3%;
     --padLow: 2%;
     --tile: 10px;
-    --bgc-top: rgba(54, 62, 175, 0.72);
-    --bgc-low: rgba(35, 40, 100, 0.72);
     --marTop: 0;
     --marLow: 0;
-    --tileBorder: 1px solid rgba(160, 150, 180, 0.565);
-    --accent: rgb(245, 188, 103);
+    --section-gap: 0.75rem;
+    --healColor: rgba(46, 79, 46, 0.712);
+    --damageColor:  rgba(79, 46, 46, 0.712);
+    
 }
 
+:root, 
+
+[data-theme="purple"] {
+    --bg-color-4: rgba(71, 52, 139, 0.356);
+    --bg-color-3: rgba(74, 60, 199, 0.678);
+    --bg-color-2: rgba(68, 42, 196, 0.171);
+    --bg-color-1: rgba(109, 83, 222, 0.72);
+    --txt-color-1: rgba(255, 255, 255, 0.756);
+    --tileBorder: 1px solid rgba(160, 150, 180, 0.565);
+    --bgc-top: rgba(64, 72, 175, 0.72);
+    --bgc-low: rgba(46, 31, 133, 0.466);
+    --accent: rgb(245, 188, 103);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(2px) saturate(150%);
+    --background: url('/utils/mapblack1.png');
+}
+[data-theme="green"] {
+    --bg-color-4: rgba(41, 66, 43, 0.377);
+    --bg-color-3: rgba(41, 66, 43, 0.678);
+    --bg-color-2: rgba(59, 110, 66, 0.24);
+    --bg-color-1: rgba(34, 53, 41, 0.548);
+    --txt-color-1: rgba(237, 243, 221, 0.822);
+    --tileBorder: 1px solid rgba(150, 180, 154, 0.565);
+    --bgc-top: rgba(64, 104, 73, 0.72);
+    --bgc-low: rgba(51, 80, 48, 0.596);
+    --accent: rgb(238, 224, 163);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(2px) saturate(150%);
+    --background: url('/utils/mapblack1.png');
+}
+
+[data-theme="blue"] {
+    --bg-color-4: rgba(26, 55, 150, 0.37);
+    --bg-color-3: rgba(16, 47, 146, 0.404);
+    --bg-color-2: rgba(59, 86, 209, 0.637);
+    --bg-color-1: rgba(44, 62, 128, 0.72);
+    --txt-color-1: rgba(232, 239, 250, 0.822);
+    --tileBorder: 1px solid rgba(202, 218, 255, 0.565);
+    --bgc-top: rgba(33, 60, 184, 0.72);
+    --bgc-low: rgba(20, 44, 150, 0.486);
+    --accent: rgb(163, 238, 238);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(2px) saturate(150%);
+    --background: url('/utils/mapblack1.png');
+}
+
+[data-theme="red"] {
+    --bg-color-4: rgba(112, 20, 20, 0.356);
+    --bg-color-3: rgba(126, 35, 35, 0.678);
+    --bg-color-2: rgba(88, 28, 28, 0.67);
+    --bg-color-1: rgba(65, 9, 9, 0.72);
+    --txt-color-1: rgba(250, 232, 232, 0.822);
+    --tileBorder: 1px solid rgba(252, 199, 199, 0.565);
+    --bgc-top: rgba(131, 39, 39, 0.72);
+    --bgc-low: rgba(97, 26, 26, 0.397);
+    --accent: rgb(252, 226, 187);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(5px) saturate(150%);
+    --background: url('/utils/mapblack1.png');
+}
+
+[data-theme="orange"] {
+    --bg-color-4: rgba(112, 72, 20, 0.39);
+    --bg-color-3: rgba(112, 72, 20, 0.678);
+    --bg-color-2: rgba(129, 83, 22, 0.67);
+    --bg-color-1: rgba(65, 45, 9, 0.72);
+    --txt-color-1: rgba(250, 232, 232, 0.822);
+    --tileBorder: 1px solid rgba(252, 225, 199, 0.565);
+    --bgc-top: rgba(202, 136, 60, 0.72);
+    --bgc-low: rgba(145, 99, 39, 0.459);
+    --accent: rgb(252, 226, 187);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(5px) saturate(150%);
+    --background: url('/utils/mapblack1.png');
+}
+
+[data-theme="yellow"] {
+    --bg-color-4: rgba(172, 149, 24, 0.432);
+    --bg-color-3: rgba(160, 148, 42, 0.678);
+    --bg-color-2: rgba(192, 169, 41, 0.67);
+    --bg-color-1: rgba(124, 114, 67, 0.72);
+    --txt-color-1: rgba(250, 250, 232, 0.822);
+    --tileBorder: 1px solid rgba(252, 247, 199, 0.565);
+    --bgc-top: rgba(209, 183, 35, 0.72);
+    --bgc-low: rgba(148, 136, 68, 0.452);
+    --accent: rgb(208, 252, 187);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(5px) saturate(150%);
+    --background: url('/utils/mapblack1.png');
+}
+
+[data-theme="dark"] {
+    --bg-color-4: rgba(0, 0, 0, 0.466);
+    --bg-color-3: rgba(0, 0, 0, 0.466);
+    --bg-color-2: rgba(36, 35, 35, 0.67);
+    --bg-color-1: rgba(0, 0, 0, 0.452);
+    --txt-color-1: rgba(255, 255, 255, 0.822);
+    --tileBorder: 1px solid rgba(255, 255, 255, 0.74);
+    --bgc-top: rgba(0, 0, 0, 0.671);
+    --bgc-low: rgba(5, 5, 5, 0.068);
+    --accent: rgb(252, 196, 112);
+    --healColor: rgba(140, 184, 140, 0.384);
+    --damageColor:  rgba(48, 37, 37, 0.712);
+    --shadowInner: inset 4px 4px 15px #ffeacea9, 
+                   inset 0px 0px 5px #ffeacea9;
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(5px) saturate(150%);
+    --background: url('/utils/mapblack1.png');
+}
+
+[data-theme="light"] {
+    --bg-color-4: rgba(255, 255, 255, 0.062);
+    --bg-color-3: rgba(255, 230, 184, 0.781);
+    --bg-color-2: rgba(253, 249, 242, 0.829);
+    --bg-color-1: rgba(238, 232, 216, 0.74);
+    --txt-color-1: rgba(0, 0, 0, 0.678);
+    --text-color-2: rgba(255, 255, 255, 0.986);
+    --tileBorder: 1px solid rgb(255, 228, 179);
+    --bgc-top: rgba(255, 255, 255, 0.918);
+    --bgc-low: rgba(255, 255, 255, 0.486);
+    --accent: rgb(145, 100, 3);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(2px) saturate(150%);
+    --background: url('/utils/mapwhite1.png');
+}
+
+[data-theme="hellfire"] {
+    --bg-color-4: rgba(78, 71, 71, 0.459);
+    --bg-color-3: rgba(3, 3, 3, 0.678);
+    --bg-color-2: rgba(119, 42, 42, 0.67);
+    --bg-color-1: rgba(65, 9, 9, 0.72);
+    --txt-color-1: rgba(228, 43, 11, 0.822);
+    --tileBorder: 1px solid rgba(252, 199, 199, 0.565);
+    --bgc-top: rgba(82, 37, 25, 0.72);
+    --bgc-low: rgba(0, 0, 0, 0.72);
+    --accent: rgb(252, 226, 187);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(5px) saturate(150%);
+    --healColor: rgba(253, 249, 227, 0.685);
+    --damageColor:  rgba(65, 56, 56, 0.712);
+    --background: url('/utils/hellfiremap.png');
+}
+
+[data-theme="frozen"] {
+    --bg-color-4: rgba(155, 220, 245, 0.438);
+    --bg-color-3: rgba(20, 83, 112, 0.678);
+    --bg-color-2: rgba(22, 99, 129, 0.67);
+    --bg-color-1: rgba(26, 79, 92, 0.72);
+    --txt-color-1: rgba(232, 250, 247, 0.822);
+    --tileBorder: 1px solid rgba(208, 248, 241, 0.801);
+    --bgc-top: rgba(168, 221, 245, 0.486);
+    --bgc-low: rgba(92, 125, 138, 0.534);
+    --accent: rgb(252, 226, 187);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(0) saturate(150%);
+    --healColor: rgba(109, 188, 253, 0.63);
+    --damageColor:  rgba(39, 96, 252, 0.712);
+    --background: url('/utils/frozenmap1.png');
+}
 /* ---------- reset / base ---------- */
 
 *, *::before, *::after {
@@ -41,7 +199,8 @@ body {
     width: 100%;
     max-width: 3840px;
     overflow-x: hidden;
-    background-image: url('/utils/mapblack1.png');
+    overflow-y: auto; /* safety: scroll if a tile min-height needs more room */
+    background-image: var(--background);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -49,12 +208,13 @@ body {
     font-family: "Cinzel Decorative", serif;
     font-weight: 700;
     font-style: normal;
-    max-height: 2160px;
-    min-height: 100vh;
+    height: 100vh;
+    max-height: 100vh;
+    min-height: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    color: white;
+    color: var(--txt-color-1);
 }
 
 pre {
@@ -71,6 +231,18 @@ pre {
 ul, li, a {
     list-style: none;
     text-decoration: none;
+}
+
+option {
+    background-color: var(--bg-color-1);
+    color: var(--txt-color-1);
+    border: var(--tileBorder);
+    padding: 1%;
+    margin: 0;
+    text-align: center;
+    font-size: 100%;
+    font-weight: 700;
+    font-style: normal;
 }
 
 /* Shared press/hover grow. Same 1.03 scale the old per-selector rules used. */
@@ -102,11 +274,12 @@ ul, li, a {
 header {
     z-index: 1;
     position: relative;
+    flex-shrink: 0;
 }
 
 #siteTitle {
-    background-color: rgba(39, 48, 147, 0.678);
-    color: white;
+    background-color: var(--bg-color-3);
+    color: var(--txt-color-1);
     text-align: center;
     padding: 2%;
     margin: 0;
@@ -119,9 +292,8 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    color: white;
-    background-color: rgba(55, 65, 116, 0.44);
-    border: 1px solid black;
+    color: var(--txt-color-1);
+    background-color: var(--bg-color-2);
 }
 
 #characterName,
@@ -131,7 +303,10 @@ header {
     text-align: center;
     padding: 3%;
     margin: 0;
-    border: .5px solid black;
+    border: var(--tileBorder);
+    border-bottom: none;
+    border-right: none;
+    backdrop-filter: var(--blur2);
 }
 
 #characterName {
@@ -149,7 +324,7 @@ header {
 }
 
 #navContainer {
-    background-color: rgba(55, 65, 116, 0.44);
+    background-color: var(--bg-color-3);
     border-radius: var(--lowrad);
     margin: 0;
     padding: 0;
@@ -161,23 +336,86 @@ header {
 }
 
 #homeNav,
+#themeNav,
 #characterNav,
 #campaignNav,
 #settingsNav {
     min-width: 0;
     flex: 1;
+    backdrop-filter: var(--blur2);
 }
 
 .navButton {
-    border: .5px solid rgba(0, 0, 0, 0.417);
-    background-color: rgba(56, 52, 118, 0.623);
+    border: var(--tileBorder);
+    border-bottom: none;
+    border-right: none;
+    background-color: var(--bg-color-2);
     padding: 1% 2% 1% 2%;
-    color: white;
+    color: var(--txt-color-1);
 }
 
 #homeNav {
     border-radius: 0 0 0 10px;
 }
+
+#themeNav {
+    /* Match sibling .navButton items in #navContainer:
+       same flex share, height, font, padding, border, radius (from .navButton).
+       Keep padding ON #themeNav so % padding resolves against #navContainer
+       the same way as home / Characters / etc. */
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    min-width: 0;
+    position: relative;
+    box-sizing: border-box;
+}
+
+#themeNav label {
+    /* Keep for a11y; do not take layout space (select is the visible control) */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+#themeNav select {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
+    align-self: stretch;
+    margin: 0;
+    /* Padding/border/radius come from #themeNav.navButton — do not re-declare % here */
+    padding: 0;
+    border: none;
+    border-radius: inherit;
+    background-color: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    text-align: center;
+    text-align-last: center;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+#themeNav select.cap-bottom {
+    /* Neutralize inventory tile paint; keep nav chrome from #themeNav.navButton */
+    background-color: transparent;
+    border-radius: inherit;
+    border: none;
+}
+
 
 #settingsNav {
     border-radius: 0 0 10px 0;
@@ -204,6 +442,8 @@ header {
     text-align: center;
     box-shadow: var(--bs2);
     transition: all 1s ease;
+    padding: 0;
+    margin: 0;
 }
 
 li:hover .dropDown {
@@ -215,8 +455,10 @@ li:hover .dropDown {
 .characterDropdownButton,
 .campaignDropdownButton,
 .settingsDropdownButton {
-    border: 1px solid rgba(0, 0, 0, 0.649);
-    color: white;
+    border: var(--tileBorder);
+    border-bottom: none;
+    border-right: none;
+    color: var(--txt-drop-1);
     padding: 1.5%;
 }
 
@@ -229,6 +471,10 @@ li:hover .dropDown {
     left: 50%;
     right: auto;
     transform: translateX(-50%);
+    background-color: var(--bg-color-2);
+    border: var(--accent);
+    box-shadow: var(--bs2);
+    color: var(--txt-color-1);
 }
 
 /* ---------- layout ---------- */
@@ -241,22 +487,33 @@ main {
     width: 100%;
     max-width: 100%;
     min-width: 0;
+    min-height: 0;
+    flex: 1 1 auto;
     overflow-x: hidden;
-    flex: 1;
+    overflow-y: auto; /* safety net with body */
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(8, 1fr);
+    /* 7 rows: B, mid, skills x3, saves x2. Actions (H) spans skills+saves
+       so it ends level with the bottom of saving throws and stays tall. */
+    grid-template-rows:
+        minmax(0, 0.85fr)
+        minmax(0, 0.95fr)
+        minmax(0, 1.2fr)
+        minmax(0, 1.2fr)
+        minmax(0, 1.2fr)
+        minmax(0, 1.2fr)
+        minmax(0, 1.2fr);
+    /* H and E share the bottom block: skills span full actions height (no saves) */
     grid-template-areas:
         "B B B B B B B B"
         "I I I F G C C C"
-        "D D E E H H H H"
-        "D D E E H H H H"
-        "D D E E H H H H"
-        "J J E E H H H H"
-        "J J E E H H H H"
-        "J J E E H H H H";
-    gap: 1%;
-    place-items: center;
+        "H H H H E E E E"
+        "H H H H E E E E"
+        "H H H H E E E E"
+        "H H H H E E E E"
+        "H H H H E E E E";
+    gap: 0.5rem;
+    place-items: stretch;
     align-items: stretch;
     justify-items: stretch;
     backdrop-filter: var(--blur1);
@@ -274,17 +531,23 @@ main {
 }
 
 .base-stats-box {
-    color: white;
+    color: var(--txt-color-1);
     box-shadow: var(--bs2);
     border: var(--tileBorder);
+    border-bottom: none;
+    border-right: none;
+    background-color: var(--bgc-low);
     text-align: center;
     flex: 1 1 0;
     min-width: 0;
     width: auto;
     border-radius: var(--tile);
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
     height: 100%;
+    min-height: 0;
+    container-type: size;
+    overflow: hidden;
 }
 
 .stat-name,
@@ -293,20 +556,39 @@ main {
     margin: 0;
 }
 
-.stat-name {
-    font-size: 130%;
-}
-
-.modifier {
-    font-size: 150%;
-    flex: 1 1 auto;
+.stat-count {
+    font-size: clamp(0.7rem, 20cqh, 1.1rem);
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.stat-name {
+    font-size: clamp(0.7rem, 18cqh, 0.95rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.modifier {
+    font-size: clamp(0.8rem, 26cqh, 1.45rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    overflow: hidden;
 }
 
 .stat-count {
     font-size: 130%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
 }
 
 .armorClass {
@@ -320,163 +602,150 @@ main {
 .armorClass,
 .initiative {
     border: var(--tileBorder);
+    border-bottom: none;
+    border-right: none;
     text-align: center;
     border-radius: var(--tile);
     box-shadow: var(--bs2);
-    display: flex;
-    flex-direction: column;
     height: 100%;
     min-height: 0;
 }
 
 #acContainer,
 #initContainer {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
     height: 100%;
     min-height: 0;
+    container-type: size;
 }
 
 #acTitle,
 #initTitle {
     margin: 0;
-    height: 33%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    font-size: clamp(0.7rem, 18cqh, 1rem);
+    overflow: hidden;
 }
 
 #acValue,
 #initValue {
     margin: 0;
-    margin-top: auto;
-    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: var(--bgc-low);
+    border-radius: 0 0 10px 10px;
+    min-height: 0;
+    font-size: clamp(0.85rem, 30cqh, 1.55rem);
+    overflow: hidden;
 }
 
-/* ---------- saving throws ---------- */
 
-.saving-throw {
-    grid-area: D;
-    width: 100%;
-}
-
-#savingThrowTitle {
-    text-align: center;
-    background-color: var(--bgc-top);
-    font-size: clamp(100%, 130%, 150%);
-    padding: 3%;
-    margin: 0;
-    border-radius: var(--tile);
-    border: var(--tileBorder);
-}
-
-#savingThrowContainer {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    gap: 8px;
-    align-items: stretch;
-}
-
-.saveCol {
-    flex: 1 1 0;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.saveContainer {
-    border: var(--tileBorder);
-    border-radius: var(--tile);
-    flex: 1 1 0;
-    min-width: 0;
-    width: 100%;
-    height: auto;
-    text-align: center;
-    box-shadow: var(--bs2);
-}
-
-.saveTitle,
-.saveValue {
-    font-size: clamp(100%, 150%, 170%);
-    padding: 0.5rem 0.25rem;
-    margin: 0;
-    min-width: 0;
-}
-
-.saveTitle {
-    font-size: clamp(90%, 100%, 130%);
-    padding-top: 5%;
-    padding-bottom: 5%;
-    margin: 0;
-    height: 33%;
-}
-
-.saveValue {
-    font-size: 150%;
-}
 
 /* ---------- skills ---------- */
 
 .skills {
     grid-area: E;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: var(--section-gap);
     height: 100%;
     min-height: 0;
+    overflow: hidden;
+    
+}
+
+#skillsTitle {
+    flex-shrink: 0;
+    margin: 0;
+    container-type: inline-size;
+    /* match compact .tabTitle / actions tab-bar height */
+    padding: 0.35rem 0.6rem;
+    line-height: 1.2;
+    height: auto;
+    border: var(--tileBorder);
+    border-bottom: none;
+    border-right: none;
+    font-size: clamp(0.75rem, 4.5cqi, 1.05rem);
+    overflow: hidden;
+    background-color: var(--bgc-top);
+    border-radius: var(--tile);
+    box-shadow: var(--bs2);
+    text-align: center;
 }
 
 #skillsContainer {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    /* Gabriel's desktop skills: 3 columns x 6 rows, fill by column */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(6, minmax(0, 1fr));
+    grid-auto-flow: column;
+    gap: 0.35rem;
     width: 100%;
-    flex: 1;
-    gap: 1%;
     min-height: 0;
+    height: 100%;
+    box-shadow: var(--bs2);
 }
 
 .skillContainer {
-    border: var(--tileBorder);
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
     width: 100%;
     min-height: 0;
-    flex: 1;
     border-radius: var(--tile);
-    box-shadow: var(--bs2);
+    container-type: size;
+    overflow: hidden;
 }
 
 .skillTitle,
 .skillValue {
     border: var(--tileBorder);
-    padding: 5%;
-    flex: 1;
+    border-bottom: none;
+    border-right: none;
+    padding: 0.2rem 0.25rem;
     margin: 0;
-    height: auto;
+    min-width: 0;
+    min-height: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 130%;
+    overflow: hidden;
+    width: 100%;
+}
+.skillTitle {
+    font-size: clamp(0.75rem, 28cqh, 1.05rem);
+    border-radius: 10px 10px 0 0;
+    line-height: 1.15;
+}
+.skillValue {
+    font-size: clamp(0.8rem, 32cqh, 1.2rem);
+    border-radius: 0 0 10px 10px;
+    border-top: none;
 }
 
 .skillTitle {
     background-color: var(--bgc-top);
-    border-radius: 10px 0 0 10px;
+    border-bottom: none;
 }
 
 .skillValue {
-    border-radius: 0 10px 10px 0;
+    background-color: var(--bgc-low);
 }
 
 /* ---------- health ---------- */
 
 .health {
-    border: var(--tileBorder);
     grid-area: C;
     border-radius: var(--tile);
     box-shadow: var(--bs2);
+    border: var(--tileBorder);
+    border-bottom: none;
+    border-right: none;
 }
 
 #healthContainer {
@@ -495,6 +764,7 @@ main {
     flex-direction: column;
     justify-content: stretch;
     align-items: stretch;
+    
 }
 
 #hpButtonContainer form {
@@ -518,25 +788,30 @@ main {
     font-family: "Cinzel Decorative", serif;
     font-weight: 700;
     font-style: normal;
+    
 }
 
 #healButton,
 #damageButton {
-    border: var(--tileBorder);
+    border: none;
     color: var(--txt-color-1);
+    
 }
 
 #healButton {
     border-radius: 10px 0 0 0;
-    background-color: rgba(46, 79, 46, 0.712);
+    background-color: var(--healColor);
     font-size: 140%;
 }
+    
 
 #damageButton {
     border-radius: 0 0 0 10px;
-    background-color: rgba(79, 46, 46, 0.712);
+    background-color: var(--damageColor);
     font-size: 160%;
     scrollbar-gutter: stable;
+    
+    
 }
 
 #hpInput {
@@ -544,33 +819,58 @@ main {
     background-color: rgba(79, 46, 46, 0);
     color: var(--txt-color-1);
     text-align: center;
-    font-size: 100%;
+    font-size: clamp(0.75rem, 20cqh, 1.1rem);
+    appearance: textfield;
+    -moz-appearance: textfield;
+    
 }
-
-.hpCol {
-    flex: 1 1 32%;
-    border: var(--tileBorder);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: stretch;
-}
-
-.hpLabel {
-    flex: 1 1 32%;
-    text-align: center;
-    font-size: 130%;
-    background-color: var(--bgc-top);
-    padding-top: 5%;
-    padding-bottom: 5%;
+#hpInput::-webkit-outer-spin-button,
+#hpInput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
     margin: 0;
 }
 
-.hpNum {
-    font-size: 150%;
-    flex: 2 1 65%;
+#maxHpContainer {
+    border-radius: 0 10px 10px 0;
+}
+
+
+.hpCol {
+    flex: 1 1 32%;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    min-width: 0;
+    min-height: 0;
+    container-type: size;
+    overflow: hidden;
+}
+
+.hpLabel {
     text-align: center;
-    margin-top: 0.5rem;
+    font-size: clamp(0.7rem, 18cqh, 1rem);
+    background-color: var(--bgc-top);
+    padding-top: 4%;
+    padding-bottom: 4%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.hpNum {
+    font-size: clamp(0.85rem, 30cqh, 1.5rem);
+    text-align: center;
+    margin: 0;
+    background-color: var(--bgc-low);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    overflow: hidden;
+    
+    
 }
 
 /* ---------- conditions ---------- */
@@ -579,32 +879,67 @@ main {
     text-align: center;
     grid-area: I;
     border: var(--tileBorder);
+    border-bottom: none;
+    border-right: none;
     border-radius: var(--tile);
     box-shadow: var(--bs2);
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    container-type: size;
+}
+.condition > * {
+    min-height: 0;
+    max-height: 100%;
 }
 
 #conditionsTitle {
-    font-size: 130%;
-    padding: 5%;
+    font-size: clamp(0.7rem, 22cqh, 1rem);
+    padding: 0.35rem;
     margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    overflow: hidden;
 }
 
 #conditionsContainer {
-    font-size: 120%;
-    margin-top: 5%;
-    padding-right: 2%;
+    font-size: clamp(0.7rem, 12cqh, 0.95rem);
+    margin-top: 0;
+    padding: 0.25rem 2% 0.25rem 0.25rem;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    background-color: var(--bgc-low);
+    border-radius: var(--lowrad);
+    min-height: 0;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.35) transparent;
 }
+#conditionsContainer::-webkit-scrollbar {
+    width: 6px;
+}
+#conditionsContainer::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.35);
+    border-radius: 3px;
+}
+
 
 #conditionsList,
 #conditionsList2,
 #conditionsList3 {
     flex: 1 1 32%;
+    min-width: 0;
+    font-size: 0.85em;
 }
 
 #conditionsList,
@@ -617,23 +952,36 @@ main {
 .action,
 .panel-shell {
     border: var(--tileBorder);
-    display: flex;
-    flex-direction: column;
+    border-bottom: none;
+    border-right: none;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
     border-radius: var(--tile);
     overflow: hidden;
-    background-color: var(--bgc-low);
+    background-color: var(--bg-color-4);
+    min-height: 0;
+    container-type: size;
+    box-shadow: var(--bs2);
 }
 
 .action {
     grid-area: H;
+    min-height: 0;
+    height: 100%;
+    max-height: 100%;
+    align-self: stretch;
+    overflow: hidden;
 }
 
 .tab-list {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     gap: 0.25rem;
-    border-bottom: var(--tileBorder);
     background-color: var(--bgc-top);
+    height: auto;
+    min-height: 0;
+    padding: 0.5rem;
 }
 
 [role="tab"] {
@@ -641,24 +989,48 @@ main {
     padding: 0.5rem 1rem;
     cursor: pointer;
     width: 100%;
-    border-radius: 5px;
-    box-shadow: var(--bs2);
+    border-radius: 10px;
     border: var(--tileBorder);
+    border-bottom: none;
+    border-right: none;
     color: var(--txt-color-1);
+    background-color: var(--bg-color-4);
 }
 
 [role="tab"][aria-selected="true"] {
     font-weight: bold;
-    border-bottom: 2px solid #333;
+    box-shadow: var(--shadowInner);
+    border-top: none;
+    border-left: none;
     color: var(--accent);
 }
 
 [role="tabpanel"] {
     padding: 1rem;
     border-radius: var(--lowrad);
-    box-shadow: var(--bs2);
     height: 100%;
     background-color: var(--bgc-low);
+}
+
+
+.action > [role="tabpanel"],
+.panel-shell > [role="tabpanel"] {
+    min-height: 0;
+    height: auto;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.35) transparent;
+}
+.action > [role="tabpanel"]::-webkit-scrollbar,
+.panel-shell > [role="tabpanel"]::-webkit-scrollbar {
+    width: 6px;
+}
+.action > [role="tabpanel"]::-webkit-scrollbar-thumb,
+.panel-shell > [role="tabpanel"]::-webkit-scrollbar-thumb {
+    background: var(--bg-color-4);
+    border-radius: 3px;
 }
 
 /* Only hide panels inside action / subpage shells — never .sheet-panel on desktop */
@@ -671,19 +1043,97 @@ main {
     text-align: center;
     background-color: var(--bgc-top);
     border: var(--tileBorder);
+    border-bottom: none;
+    border-right: none;
     border-radius: var(--tile);
-    padding: 5%;
+    padding: 0.35rem 0.6rem;
     margin: 0;
+    container-type: inline-size;
+    font-size: clamp(0.75rem, 4.5cqi, 1.05rem);
+    overflow: auto;
+    flex-shrink: 0;
+    line-height: 1.2;
+    height: auto;
+}
+
+/* Compact in-panel section headers (e.g. Actions title inside tabpanel) */
+.action > [role="tabpanel"] > .tabTitle,
+.panel-shell > [role="tabpanel"] > .tabTitle,
+#actionsTitle,
+#spellsTitle,
+#inventoryTitle,
+#proficienciesTitle {
+    padding: 0.3rem 0.5rem;
+    margin-bottom: 0.35rem;
+    line-height: 1.15;
+    height: auto;
+    flex-shrink: 0;
+}
+
+
+
+.actionTitle {
+    border: var(--tileBorder);
+    border-radius: 10px;
+    padding: 3%;
+    text-align: center;
+    box-shadow: var(--bs2);
+    
 }
 
 #actionsList {
-    margin: 0;
-    padding: 0;
+    border: var(--tileBorder);
+    border-radius: var(--rad2);
+    box-shadow: var(--bs2);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding-top: 5%;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 5%;
+    margin-bottom: 0.35rem;
+    line-height: 1.15;
+    height: auto;
+    flex-shrink: 0;
 }
 
-.actionTitle,
-.spellLevelTitle {
+
+.actionItem {
     border: var(--tileBorder);
+    background-color: var(--bgc-top);
+    border-radius: var(--rad2);
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.3rem 0.5rem;
+    height: auto;
+    overflow: hidden;
+    
+}
+
+.actionLabel {
+    max-height: 100%;
+    overflow: hidden;
+}
+
+.actionButtonContainer {
+    display: flex;
+    flex-direction: row;
+    align-self: stretch;
+    flex-direction: row;
+}
+
+.toHitButton,
+.damageButton {
+    flex: 1;
+    align-self: stretch;  
+}
+
+.spellLevelTitle {
     padding: 2%;
     margin-bottom: 0;
 }
@@ -693,38 +1143,6 @@ main {
     width: 100%;
 }
 
-.actionRow {
-    border: var(--tileBorder);
-    background-color: var(--bgc-low);
-    border-radius: var(--lowrad);
-    margin: 0;
-    padding: 3%;
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    align-items: stretch;
-}
-
-.actionLabel {
-    border: var(--tileBorder);
-    border-radius: 10px 0 0 10px;
-    padding: 2%;
-    background-color: var(--bgc-low);
-    width: 70%;
-}
-
-.toHitButton,
-.damageButton {
-    border: var(--tileBorder);
-    padding: 2%;
-    background-color: var(--bg-color-1);
-    margin: 0;
-    color: var(--txt-color-1);
-}
-
-.damageButton {
-    border-radius: 0 10px 10px 0;
-}
 
 .toHitButton:hover,
 .damageButton:hover {
@@ -736,7 +1154,7 @@ main {
 #spellsList {
     scrollbar-gutter: stable;
     overflow-y: auto;
-    max-height: 100vh;
+    max-height: 100%;
     margin: 0;
     padding: 0;
 }
@@ -750,9 +1168,12 @@ main {
 
 .spellTitle {
     padding: 2%;
-    background-color: var(--bgc-top);
+    background-color: var(--bgc-low);
+    border: var(--tileBorder);
+    border-radius: 10px 0 0 10px;
     margin: 0;
     width: 70%;
+    
 }
 
 .spellItemBar {
@@ -761,6 +1182,7 @@ main {
     justify-content: start;
     align-items: stretch;
     border-radius: 10px 0 0 10px;
+    margin: 1%;
 }
 
 #panel-inventory {
@@ -896,7 +1318,6 @@ main > *,
 .sheet-panel,
 .base-stats,
 .health,
-.saving-throw,
 .skills,
 .armorClass,
 .initiative,
@@ -904,16 +1325,15 @@ main > *,
 .condition,
 .gear,
 #healthContainer,
-#savingThrowContainer,
 #skillsContainer,
 #conditionsContainer {
     min-width: 0;
     max-width: 100%;
+    min-height: 0;
 }
 
 .skillTitle,
 .skillValue,
-.saveTitle,
 .stat-name,
 .stat-count {
     overflow-wrap: anywhere;
@@ -923,20 +1343,97 @@ main > *,
 /* ---------- breakpoints ---------- */
 
 @media (max-width: 768px) {
+    /* Keep the page inside the viewport: no child may invent a width
+       wider than the screen (the usual culprits are width:100% + padding
+       without border-box, flex items that refuse to shrink, or fixed
+       grid tracks). */
+    html,
+    body,
+    header,
+    #siteTitle,
+    #navBox,
+    #characterHeader,
+    #navContainer,
+    main {
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        height: auto;
+        max-height: none;
+        width: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    /* Header: three cells share one row; text may shrink/wrap so "Wizard" stays on-screen.
+       (Old rule set width:100% on EACH cell = three full widths side by side.) */
     #characterHeader {
+        display: flex;
         flex-direction: row;
+        flex-wrap: nowrap;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
     }
 
     #characterName,
     #characterRace,
     #characterClass {
-        width: 100%;
-        font-size: 110%;
-        padding: 0.5rem;
+        flex: 1 1 0;
+        width: auto;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        font-size: clamp(0.65rem, 3.2vw, 1.05rem);
+        padding: 0.35rem 0.25rem;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        white-space: normal;
+        hyphens: auto;
     }
 
+    /* Nav: equal share; wrap to a second row when five labels cannot fit one line */
     #navContainer {
+        display: flex;
+        flex-direction: row;
         flex-wrap: wrap;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    #homeNav,
+    #themeNav,
+    #characterNav,
+    #campaignNav,
+    #settingsNav {
+        flex: 1 1 0;
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+        /* ~3 per row → second row for the leftover buttons */
+        flex-basis: 30%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: clamp(0.65rem, 2.8vw, 0.95rem);
+        padding: 0.4rem 0.25rem;
+    }
+
+    #themeNav {
+        /* Stay matched to sibling nav buttons (padding already set above) */
+        padding: 0.4rem 0.25rem;
+    }
+
+    #themeNav select {
+        min-width: 0;
+        max-width: 100%;
+        font-size: inherit;
     }
 
     .dropDown {
@@ -944,6 +1441,7 @@ main > *,
         right: 0;
         width: auto;
         max-width: 100%;
+        box-sizing: border-box;
     }
 
     main {
@@ -952,20 +1450,28 @@ main > *,
         width: 100%;
         max-width: 100%;
         min-width: 0;
+        min-height: 0;
+        flex: none;
         gap: 8px;
         grid-template-areas: none;
         grid-template-columns: none;
         grid-template-rows: none;
         overflow-x: hidden;
+        overflow-y: visible;
+        height: auto;
+        box-sizing: border-box;
     }
 
     .sheet-tabs {
         display: flex !important;
         flex-direction: row;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
         width: 100%;
+        max-width: 100%;
+        min-width: 0;
         gap: 0.25rem;
-        border-bottom: 1px solid #ccc;
+        border-bottom: var(--tileBorder);
+        box-sizing: border-box;
     }
 
     .sheet-tabs [role="tab"] {
@@ -973,6 +1479,7 @@ main > *,
         width: auto;
         flex: 1 1 0;
         min-width: 0;
+        box-sizing: border-box;
     }
 
     .sheet-panel[hidden] {
@@ -984,11 +1491,11 @@ main > *,
         max-width: 100%;
         min-width: 0;
         overflow-x: hidden;
+        box-sizing: border-box;
     }
 
     .base-stats,
     .health,
-    .saving-throw,
     .skills,
     .armorClass,
     .initiative,
@@ -998,20 +1505,28 @@ main > *,
         width: 100%;
         max-width: 100%;
         min-width: 0;
+        box-sizing: border-box;
     }
 
+    /* Base stats: true 4×2 grid that cannot spill past the viewport */
     .base-stats {
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-auto-rows: auto;
+        gap: 0.35rem;
         margin-top: 1%;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
     }
 
     .base-stats-box {
-        flex: 1 1 calc(25% - 8px);
+        flex: unset;
+        width: auto;
+        max-width: 100%;
         min-width: 0;
-    }
-
-    #savingThrowContainer {
-        flex-direction: column;
+        box-sizing: border-box;
     }
 
     #conditionsContainer {
@@ -1038,9 +1553,84 @@ main > *,
         padding: 0.5rem;
         font-size: 0.85rem;
     }
+
+    /* --- mobile: undo size containment that collapses tiles ---
+       container-type: size makes a box ignore its children's height when
+       laying out. On desktop the sheet grid gives every tile a real height,
+       so that works. On mobile, tiles only grow from their content — so
+       size containment shrinks them to nearly nothing and text vanishes.
+       Reset to normal, give sensible min-heights, let the page scroll. */
+    .base-stats-box,
+    .skillContainer,
+    #acContainer,
+    #initContainer,
+    .hpCol,
+    .condition,
+    .action,
+    .panel-shell {
+        container-type: normal;
+        height: auto;
+        max-height: none;
+        min-height: 0;
+    }
+
+    .base-stats-box {
+        min-height: 5.5rem;
+        overflow: hidden;
+    }
+
+    .skillContainer {
+        min-height: 3.5rem;
+        overflow: hidden;
+    }
+
+    .armorClass,
+    .initiative,
+    .hpCol,
+    .condition {
+        min-height: 4.75rem;
+        height: auto;
+    }
+
+    #acContainer,
+    #initContainer {
+        min-height: 4.75rem;
+    }
+
+    .action {
+        min-height: 14rem;
+        overflow: hidden;
+    }
+
+    .skills,
+
+    #skillsContainer {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: none;
+        grid-auto-rows: minmax(3.5rem, auto);
+        height: auto;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .health,
+    #healthContainer {
+        height: auto;
+        min-height: 5rem;
+    }
+
 }
 
 /* ---------- edit / inventory subpages ---------- */
+
+body.subpage {
+    height: auto;
+    max-height: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
 
 body.subpage main.subpage-main,
 main.subpage-main {
@@ -1088,8 +1678,8 @@ body.subpage input.cap-bottom {
     padding: 0.5rem 0.75rem;
     border: var(--tileBorder);
     border-radius: var(--lowrad);
-    background-color: rgba(0, 0, 0, 0.25);
-    color: white;
+    background-color: var(--bg-color-2);
+    color: var(--txt-color-1);
     font: inherit;
 }
 
