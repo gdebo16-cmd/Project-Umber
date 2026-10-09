@@ -150,7 +150,7 @@ const wireTabs = (tabList) => {
     showRoll(rollOrb, { label, score, kind: 'init' });
   });
 
-  document.querySelector('.actionRow').addEventListener('click', (e) => {
+  document.querySelector('#panel-actions').addEventListener('click', (e) => {
     const toHit = e.target.closest('.toHitButton');
     if (!toHit || !rollOrb) return;
 
@@ -194,6 +194,20 @@ const wireTabs = (tabList) => {
       }
     });
   }
+
+
+  const roll = (dice, mod = 0) => {
+    const [count, sides] = dice.split('d').map(Number);
+    let total = mod;
+    for (let i = 0; i < count; i++) total += Math.floor(Math.random() * sides) + 1;
+    return total;
+  }
+ 
+  document.querySelectorAll('.damageButton').forEach(btn =>
+    btn.addEventListener('click', () => {
+    const total = roll(btn.dataset.dice, Number(btn.dataset.mod));
+    showRoll(rollOrb, { label: btn.dataset.mod, score: total, kind: 'damage' });
+    }));
 
   
   

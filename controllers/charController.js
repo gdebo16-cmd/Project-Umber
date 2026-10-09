@@ -216,7 +216,7 @@ export async function charCreateStep3Submit(req, res) {
         if (!req.session.userId) return res.redirect("/login");
 
         const { rows } = await pool.query(
-            `SELECT ch.*, r.name AS race_name, cl.name AS class_name, s.name AS subclass_name 
+            `SELECT ch.*, r.name AS race_name, cl.name AS class_name, cl.hitpoint_die, s.name AS subclass_name
             FROM characters ch
             LEFT JOIN races r ON r.id = ch.race_id
             LEFT JOIN classes cl ON cl.id = ch.class_id
@@ -228,7 +228,7 @@ export async function charCreateStep3Submit(req, res) {
         if (rows.length === 0) return res.status(404).send('Character not found');
 
         const { rows: ownedArmor } = await pool.query(
-            `SELECT a.id, a.name, a.armor_type, a.ac_bonus, ca.is_equipped
+            `SELECT ca.character_id, ca.armor_id AS id, ca.armor_id, ca.is_equipped, a.name, a.armor_type, a.ac_bonus
              FROM character_armor ca
              JOIN armor a ON a.id = ca.armor_id
              WHERE ca.character_id = $1
@@ -245,11 +245,35 @@ export async function charCreateStep3Submit(req, res) {
             [rows[0].id]
           );
           
+          const { rows: armorRows } = await pool.query(
+            `SELECT a.ac_bonus, a.armor_type
+             FROM character_armor ca JOIN armor a ON a.id = ca.armor_id
+             WHERE ca.character_id = $1 AND ca.is_equipped`,
+            [req.params.id]
+          );
+
+          const armorBonus = armorRows
+            .filter(r => r.armor_type !== 'shield')
+            .reduce((sum, r) => sum + Number(r.ac_bonus || 0), 0);
+
+          const shieldBonus = armorRows
+            .filter(r => r.armor_type === 'shield')
+            .reduce((sum, r) => sum + Number(r.ac_bonus || 0), 0);
+
+        const mod = s => Math.floor(s / 2) - 5;
+        const equippedWeapons = ownedWeapons.filter(w => w.is_equipped).map(w => {
+            const m = w.category === 'ranged' ? mod(rows[0].dex) : mod(rows[0].str);
+            return { ...w, dmgMod: m, dmgLabel: `${w.damage_dice}${m > 0 ? '+' : ''}${m}` };
+        });
+
+
           res.render('character', {
             character: rows[0],
             ownedArmor,
             ownedWeapons,
-            equippedWeapons: ownedWeapons.filter(w => w.is_equipped),
+            equippedWeapons,
+            armorBonus,
+            shieldBonus,
           });
    
     };
@@ -428,10 +452,30 @@ export async function charCreateStep3Submit(req, res) {
         if (!Number.isInteger(level) || level < 1 || level > 30) {
             return res.status(400).send("Level must be an integer from 1 to 30");
         }
-        await pool.query(
-            `UPDATE characters SET level = $1 WHERE id = $2 AND user_id = $3`,
-            [level, charId, req.session.userId]
+        const { rows } = await pool.query(
+            `SELECT ch.level, ch.con, ch.max_hp, cl.hitpoint_die
+               FROM characters ch
+               JOIN classes cl ON cl.id = ch.class_id
+              WHERE ch.id = $1 AND ch.user_id = $2`,
+            [charId, req.session.userId]
         );
+        if (rows.length === 0) return res.status(404).send("Character not found");
+        const ch = rows[0];
+
+        const conMod = Math.floor(Number(ch.con) / 2) - 5;
+        const perLvl = Math.max(1, Math.floor(Number(ch.hitpoint_die) / 2) + 1 + conMod);
+        const oldLvl = Number(ch.level) || 1;
+        const baseHp = Number(ch.max_hp) - (oldLvl - 1) * perLvl;   // level-1 HP
+        const newMax = Math.max(1, baseHp + (level - 1) * perLvl);
+
+        await pool.query(
+            `UPDATE characters
+                SET level = $1, max_hp = $2, current_hp = LEAST(current_hp, $2)
+              WHERE id = $3 AND user_id = $4`,
+            [level, newMax, charId, req.session.userId]
+        );
+
+
         res.redirect(`/characters/${charId}/edit`);
     }
 
@@ -466,7 +510,8 @@ export async function charCreateStep3Submit(req, res) {
     }
 
     export async function equipArmor(req, res) {
-
+        const charId = Number(req.params.id);
+        const armorId = Number(req.body.armor_id);
     const client = await pool.connect();
     try {
         await client.query('BEGIN');
@@ -547,3 +592,4 @@ export async function equipWeapon(req, res) {
   
     res.redirect(`/characters/${charId}`);
   }
+

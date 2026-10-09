@@ -281,7 +281,7 @@ header {
     background-color: var(--bg-color-3);
     color: var(--txt-color-1);
     text-align: center;
-    padding: 2%;
+    padding: 1%;
     margin: 0;
 }
 
@@ -299,9 +299,9 @@ header {
 #characterName,
 #characterRace,
 #characterClass {
-    font-size: 150%;
+    font-size: 130%;
     text-align: center;
-    padding: 3%;
+    padding: 1%;
     margin: 0;
     border: var(--tileBorder);
     border-bottom: none;
@@ -548,6 +548,7 @@ main {
     min-height: 0;
     container-type: size;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .stat-name,
@@ -557,21 +558,27 @@ main {
 }
 
 .stat-count {
-    font-size: clamp(0.7rem, 20cqh, 1.1rem);
+    font-size: clamp(0.2rem, 8cqh, 0.75rem);
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 0;
+    background-color: var(--bgc-top);
+    border-radius: 50% 50% 0 0;
+    padding: 0.2rem 0.25rem;
     overflow: hidden;
 }
 
 .stat-name {
-    font-size: clamp(0.7rem, 18cqh, 0.95rem);
+    font-size: clamp(0.6rem, 15cqh, 0.85rem);
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 0;
     overflow: hidden;
+    border-radius: 0 0 50% 50%;
+    padding: 0.2rem 0.25rem;
+    background-color: var(--bgc-top);
 }
 
 .modifier {
@@ -618,6 +625,7 @@ main {
     height: 100%;
     min-height: 0;
     container-type: size;
+    cursor: pointer;
 }
 
 #acTitle,
@@ -674,7 +682,6 @@ main {
     overflow: hidden;
     background-color: var(--bgc-top);
     border-radius: var(--tile);
-    box-shadow: var(--bs2);
     text-align: center;
 }
 
@@ -688,7 +695,7 @@ main {
     width: 100%;
     min-height: 0;
     height: 100%;
-    box-shadow: var(--bs2);
+    cursor: pointer;
 }
 
 .skillContainer {
@@ -701,6 +708,7 @@ main {
     container-type: size;
     overflow: hidden;
 }
+
 
 .skillTitle,
 .skillValue {
@@ -795,21 +803,24 @@ main {
 #damageButton {
     border: none;
     color: var(--txt-color-1);
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    overflow: hidden;
+    cursor: pointer;
 }
 
 #healButton {
     border-radius: 10px 0 0 0;
     background-color: var(--healColor);
-    font-size: 140%;
 }
     
 
 #damageButton {
     border-radius: 0 0 0 10px;
     background-color: var(--damageColor);
-    font-size: 160%;
-    scrollbar-gutter: stable;
+    
     
     
 }
@@ -893,6 +904,7 @@ main {
 .condition > * {
     min-height: 0;
     max-height: 100%;
+    
 }
 
 #conditionsTitle {
@@ -909,13 +921,13 @@ main {
 #conditionsContainer {
     font-size: clamp(0.7rem, 12cqh, 0.95rem);
     margin-top: 0;
-    padding: 0.25rem 2% 0.25rem 0.25rem;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
-    align-content: flex-start;
+    padding: 0.35rem 0.6rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: min-content;
+    column-gap: 0.75rem;
+    row-gap: 0.2rem;
+    align-content: start;
     background-color: var(--bgc-low);
     border-radius: var(--lowrad);
     min-height: 0;
@@ -934,17 +946,68 @@ main {
 }
 
 
-#conditionsList,
-#conditionsList2,
-#conditionsList3 {
-    flex: 1 1 32%;
-    min-width: 0;
-    font-size: 0.85em;
-}
-
+/* Two checkbox columns: box in column 1, label beside it in column 2.
+   Markup has label-then-input, so "dense" pulls each input back into the
+   empty first cell of its label's row. */
 #conditionsList,
 #conditionsList2 {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-auto-flow: row dense;
+    grid-auto-rows: 1.4em;
+    align-items: center;
+    column-gap: 0.45em;
+    min-width: 0;
+    font-size: 0.85em;
+    text-align: left;
+}
+
+#conditionsList > .conditionCheckbox,
+#conditionsList2 > .conditionCheckbox {
+    grid-column: 1;
+    margin: 0;
+    width: 1em;
+    height: 1em;
+    cursor: pointer;
+}
+
+#conditionsList > label,
+#conditionsList2 > label {
+    grid-column: 2;
+    justify-self: start;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+/* Exhaustion: own row under both columns, full width: label | slider | value */
+#conditionsList3 {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 0.5em;
+    min-width: 0;
+    font-size: 0.85em;
+    text-align: left;
+}
+
+#conditionsList3 .conditionRange {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+}
+
+#conditionsList3 output {
+    min-width: 2ch;
     text-align: right;
+}
+
+#checkbox {
+    cursor: pointer;
 }
 
 /* ---------- actions / spells / tabs ---------- */
@@ -1405,6 +1468,7 @@ main > *,
         max-width: 100%;
         min-width: 0;
         box-sizing: border-box;
+        margin-bottom: 1%;
     }
 
     #homeNav,
@@ -1423,6 +1487,14 @@ main > *,
         white-space: nowrap;
         font-size: clamp(0.65rem, 2.8vw, 0.95rem);
         padding: 0.4rem 0.25rem;
+    }
+
+    #homeNav {
+        border-radius: 0;
+    }
+
+    #campaignNav {
+        border-radius: 0 0 0 10px;
     }
 
     #themeNav {
@@ -1469,13 +1541,12 @@ main > *,
         width: 100%;
         max-width: 100%;
         min-width: 0;
-        gap: 0.25rem;
         border-bottom: var(--tileBorder);
         box-sizing: border-box;
+        border-radius: 10px 10px 0 0;
     }
 
     .sheet-tabs [role="tab"] {
-        margin-top: 1%;
         width: auto;
         flex: 1 1 0;
         min-width: 0;
@@ -1513,8 +1584,6 @@ main > *,
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
         grid-auto-rows: auto;
-        gap: 0.35rem;
-        margin-top: 1%;
         width: 100%;
         max-width: 100%;
         min-width: 0;
@@ -1529,18 +1598,22 @@ main > *,
         box-sizing: border-box;
     }
 
+    /* Conditions (mobile): keep the 2-column checkbox grid, slider row spans both */
+    .condition {
+        grid-template-rows: auto auto;
+    }
+
     #conditionsContainer {
-        flex-direction: column;
-        align-items: stretch;
-        padding-right: 0;
-        gap: 0.5rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.5rem 0.75rem;
+        padding-right: 0.5rem;
     }
 
     #conditionsList,
     #conditionsList2,
     #conditionsList3 {
         text-align: left;
-        width: 100%;
+        width: auto;
     }
 
     .tab-list {
@@ -1592,6 +1665,37 @@ main > *,
         height: auto;
     }
 
+    #sheet-panel-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: 1fr 6fr;
+        grid-template-areas:
+            "armorClass initiative"
+            "actions actions"
+            "actions actions"
+            "actions actions"
+            "actions actions"
+            "actions actions"
+            "actions actions"
+            ;
+        gap: 0.75rem;
+    }
+
+    .armorClass {
+        grid-area: armorClass;
+    }
+    .initiative {
+        grid-area: initiative;
+    }
+    .action {
+        grid-area: actions;
+    }
+
+    .tab-list {
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
     #acContainer,
     #initContainer {
         min-height: 4.75rem;
@@ -1602,11 +1706,19 @@ main > *,
         overflow: hidden;
     }
 
-    .skills,
+    .skills {
+        margin-top: 2%;
+    }
+
+    #skillsTitle {
+       padding: 0.35rem;
+       
+    }
 
     #skillsContainer {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-template-rows: none;
+        
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        grid-template-rows: 3fr 3fr 3fr;
         grid-auto-rows: minmax(3.5rem, auto);
         height: auto;
         width: 100%;
@@ -1615,12 +1727,25 @@ main > *,
         box-sizing: border-box;
     }
 
+    .skillContainer {
+        text-align: center;
+    }
+
     .health,
     #healthContainer {
         height: auto;
         min-height: 5rem;
     }
 
+    #sheet-panel-conditions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+        .condition {
+            gap: 0.75rem;
+        }
 }
 
 /* ---------- edit / inventory subpages ---------- */
@@ -1719,4 +1844,5 @@ body.subpage .invList {
     .sheet-panel[hidden] {
         display: contents !important;
     }
+
 }
