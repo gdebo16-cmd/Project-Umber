@@ -1,17 +1,23 @@
 ﻿import express from "express";
 import 'dotenv/config';
+import connectPgSimple from 'connect-pg-simple';
+import pool from './db.js';
 import authRoutes from './routes/auth.js';
 import homeRoutes from './routes/home.js';
 import settingsRoutes from './routes/settings.js';
 import char_createRoutes from './routes/char_create.js';
 import charRoutes from './routes/char.js';
+import apiRoutes from './routes/api.js';
 import session from "express-session"; //import use of per-session structure
 import path from "path";
 import { fileURLToPath } from "url";
 
 
 const app = express();
-const store = new session.MemoryStore();
+const PgStore = connectPgSimple(session);
+const store = new PgStore({
+	pool, createTableIfMissing: true,
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -40,6 +46,7 @@ app.use('/home', homeRoutes);
 app.use('/create_char', char_createRoutes);
 app.use('/settings', settingsRoutes);
 app.use('/characters', charRoutes);
+app.use('/api', apiRoutes);
 app.use('/charEdit', charRoutes);
 
 
