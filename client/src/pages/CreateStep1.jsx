@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import useFetch from '../useFetch';
-import usePageStyle from '../usePageStyle';
-import createCss from '../char_create.css?inline';
-import { sendJson } from '../api';
+import useFetch from '../hooks/useFetch';
+import usePageStyle from '../hooks/usePageStyle';
+import createCss from '../styles/char_create.css?inline';
+import { sendJson } from '../utils/api';
 import CreateDescription from './CreateDescription';
 
 // Replaces views/create_char.ejs (step 1: name and race)

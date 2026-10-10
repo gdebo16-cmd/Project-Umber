@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ItemShop from './ItemShop';
-import { sendJson } from './api';
+import { sendJson } from '../../utils/api';
 
 // The Inventory tab on the sheet: what you own, with Equip / Unequip buttons.
 // After each click the server sends back the new list, and the parent swaps it in,

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
-import usePageStyle from '../usePageStyle';
-import homeCss from '../home.css?inline';
-import SiteNav from '../SiteNav';
-import { sendJson } from '../api';
+import usePageStyle from '../hooks/usePageStyle';
+import homeCss from '../styles/home.css?inline';
+import SiteNav from '../components/SiteNav';
+import { sendJson } from '../utils/api';
 
 // Replaces views/settings.ejs
 function SettingsPage() {

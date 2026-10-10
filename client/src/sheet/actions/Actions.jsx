@@ -1,4 +1,4 @@
-import { modOf, signed, healthInit, rollDice, d20 } from './math';
+import { modOf, signed, healthInit, rollDice, d20 } from '../../utils/math';
 
 // Your equipped weapons plus Fists. Each has a To Hit button and a Damage button.
 function Actions({ character, hp, ownedWeapons, onRoll }) {

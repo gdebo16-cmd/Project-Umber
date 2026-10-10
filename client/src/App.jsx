@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
-import RequireLogin from './RequireLogin';
-import CharacterSheet from './CharacterSheet';
+import RequireLogin from './components/RequireLogin';
+import CharacterSheet from './sheet/CharacterSheet';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';

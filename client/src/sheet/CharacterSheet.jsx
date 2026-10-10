@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { useParams } from 'react-router';
-import useFetch from './useFetch';
-import usePageStyle from './usePageStyle';
-import sheetCss from './charSheet.css?inline';
-import TabList from './TabList';
+import useFetch from '../hooks/useFetch';
+import usePageStyle from '../hooks/usePageStyle';
+import sheetCss from '../styles/charSheet.css?inline';
+import TabList from '../components/TabList';
 import CharacterHeader from './CharacterHeader';
 import StatBox from './StatBox';
 import Skills from './Skills';
 import ArmorClass from './ArmorClass';
 import Initiative from './Initiative';
-import ActionPanel from './ActionPanel';
+import ActionPanel from './actions/ActionPanel';
 import HealthBox from './HealthBox';
 import Conditions from './Conditions';
 import RollOrb from './RollOrb';
-import { STATS } from './stats';
+import { STATS } from '../utils/stats';
 
 // Mobile only: the three big tabs at the top. On desktop the CSS shows all three panels at once.
 const SHEET_TABS = [

@@ -1,4 +1,4 @@
-import { modOf, signed, d20, capitalize } from './math';
+import { modOf, signed, d20, capitalize } from '../utils/math';
 
 // Click a box to roll a d20 + that stat's modifier
 function StatBox({ label, score, onRoll }) {

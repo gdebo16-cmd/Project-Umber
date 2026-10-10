@@ -1,5 +1,5 @@
-import { modOf, signed, d20 } from './math';
-import { SKILLS } from './stats';
+import { modOf, signed, d20 } from '../utils/math';
+import { SKILLS } from '../utils/stats';
 
 // Skill value = modifier of its first stat + modifier of its second stat.
 // Click a skill to roll a d20 + that value.

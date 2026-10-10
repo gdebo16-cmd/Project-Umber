@@ -1,8 +1,8 @@
-//import { rollDice } from './math';
+//import { rollDice } from '../../utils/math';
 import { useState } from 'react';
 import SpellBook from './SpellBook';
-import { sendJson } from './api';
-import TabList from './TabList';
+import { sendJson } from '../../utils/api';
+import TabList from '../../components/TabList';
 
 // Same placeholder layout as character.ejs: spell levels 0-9, slot checkboxes,
 // and a sample "Spell 6d8" row on levels 4-9. Nothing here is loaded from the database yet.

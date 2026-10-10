@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import useFetch from './useFetch';
-import TabList from './TabList';
-import { sendJson } from './api';
+import useFetch from '../../hooks/useFetch';
+import TabList from '../../components/TabList';
+import { sendJson } from '../../utils/api';
 
 const TABS = [
     { id: 'armor', label: 'Armor' },

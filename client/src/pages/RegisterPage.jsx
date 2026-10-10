@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import usePageStyle from '../usePageStyle';
-import signinCss from '../signin.css?inline';
-import { sendJson } from '../api';
+import usePageStyle from '../hooks/usePageStyle';
+import signinCss from '../styles/signin.css?inline';
+import { sendJson } from '../utils/api';
 
 // Replaces Public/registration.html
 function RegisterPage() {

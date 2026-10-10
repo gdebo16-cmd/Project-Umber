@@ -1,4 +1,4 @@
-import { modOf } from './math';
+import { modOf } from '../utils/math';
 
 function ArmorClass({ character, ownedArmor }) {
     const equipped = ownedArmor.filter((a) => a.is_equipped); 

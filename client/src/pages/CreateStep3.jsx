@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router';
-import useFetch from '../useFetch';
-import usePageStyle from '../usePageStyle';
-import createCss from '../char_create.css?inline';
-import { sendJson } from '../api';
-import { STATS } from '../stats';
+import useFetch from '../hooks/useFetch';
+import usePageStyle from '../hooks/usePageStyle';
+import createCss from '../styles/char_create.css?inline';
+import { sendJson } from '../utils/api';
+import { STATS } from '../utils/stats';
 
 // Replaces views/create_char_step3.ejs (step 3: roll abilities, pick +2 and +1)
 // The server does the rolling and remembers each roll, so you can't reroll by refreshing.

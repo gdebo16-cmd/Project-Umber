@@ -1,4 +1,4 @@
-import { modOf, signed, healthInit, d20 } from './math';
+import { modOf, signed, healthInit, d20 } from '../utils/math';
 
 // Click the box to roll a d20 + initiative
 function Initiative({ character, hp, onRoll }) {

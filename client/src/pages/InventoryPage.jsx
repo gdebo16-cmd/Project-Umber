@@ -1,7 +1,7 @@
 import { Link, useParams, useNavigate } from 'react-router';
-import usePageStyle from '../usePageStyle';
-import sheetCss from '../charSheet.css?inline';
-import ItemShop from '../ItemShop';
+import usePageStyle from '../hooks/usePageStyle';
+import sheetCss from '../styles/charSheet.css?inline';
+import ItemShop from '../sheet/actions/ItemShop';
 
 // Replaces views/inventory.ejs. The list itself lives in ItemShop,
 // which the character sheet's Inventory tab also uses.

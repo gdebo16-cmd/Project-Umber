@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import TabList from './TabList';
+import TabList from '../../components/TabList';
 import Actions from './Actions';
 import SpellsTab from './SpellsTab';
 import InventoryTab from './InventoryTab';

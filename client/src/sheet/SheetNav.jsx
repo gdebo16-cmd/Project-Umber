@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
-import ThemePicker from './ThemePicker';
-import LogoutLink from './LogoutLink';
+import ThemePicker from '../components/ThemePicker';
+import LogoutLink from '../components/LogoutLink';
 
 // The menu at the top of the character sheet (same links as character.ejs)
 function SheetNav({ characterId }) {

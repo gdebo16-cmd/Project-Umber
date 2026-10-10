@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import useSave from './useSave';
-import { STATS } from '../../stats';
-import { roll4d6DropLowest } from '../../math';
+import { STATS } from '../../utils/stats';
+import { roll4d6DropLowest } from '../../utils/math';
 
 // Each stat button rerolls that stat (4d6, drop the lowest). Nothing saves until "Save Changes".
 function EditAbilitiesForm({ character, onSaved }) {

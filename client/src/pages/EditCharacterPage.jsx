@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router';
-import useFetch from '../useFetch';
-import usePageStyle from '../usePageStyle';
-import sheetCss from '../charSheet.css?inline';
-import TabList from '../TabList';
+import useFetch from '../hooks/useFetch';
+import usePageStyle from '../hooks/usePageStyle';
+import sheetCss from '../styles/charSheet.css?inline';
+import TabList from '../components/TabList';
 import EditNameForm from './edit/EditNameForm';
 import EditClassForm from './edit/EditClassForm';
 import EditAbilitiesForm from './edit/EditAbilitiesForm';

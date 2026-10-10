@@ -1,8 +1,8 @@
 import { Link } from 'react-router';
-import useFetch from '../useFetch';
-import usePageStyle from '../usePageStyle';
-import homeCss from '../home.css?inline';
-import SiteNav from '../SiteNav';
+import useFetch from '../hooks/useFetch';
+import usePageStyle from '../hooks/usePageStyle';
+import homeCss from '../styles/home.css?inline';
+import SiteNav from '../components/SiteNav';
 
 // Replaces views/home.ejs
 function HomePage() {
