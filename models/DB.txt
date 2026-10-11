@@ -1,0 +1,135 @@
+
+
+TABLE users
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
+  username TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  **updated_at TIMESTAMPTZ DEFAULT NOW(),
+
+TABLE characters 
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  name TEXT NOT NULL,
+  str INTEGER,
+  dex INTEGER,
+  con INTEGER,
+  int INTEGER,
+  wis INTEGER,
+  cha INTEGER,
+  luc INTEGER,
+  spd INTEGER,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+  race_id INTEGER NOT NULL REFERENCES races(id),
+  class_id INTEGER NOT NULL REFERENCES classes(id),
+  sub_class_id INTEGER NOT NULL REFERENCES sub_classes(id),
+  plus_2_stat TEXT NOT NULL,
+  plus_1_stat TEXT NOT NULL,
+  armor_id INTEGER NOT NULL REFERENCES armor(id),
+  shield_id INTEGER NOT NULL REFERENCES shield(id),
+  max_hp INTEGER NOT NULL,
+  current_hp INTEGER NOT NULL,
+  level INTEGER NOT NULL,
+  
+
+  TABLE races 
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    creature_type TEXT NOT NULL,
+    traits TEXT NOT NULL,
+    size TEXT NOT NULL,
+    base_speed INTEGER NOT NULL,
+    resistances TEXT NOT NULL,
+    darkvision BOOLEAN NOT NULL,
+    img_url TEXT NOT NULL,
+
+  TABLE classes
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    primary_stat TEXT NOT NULL,
+    hitpoint_die INTEGER NOT NULL,
+    img_url TEXT NOT NULL,
+    description TEXT NOT NULL,
+    
+  TABLE sub_classes
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    class_id INTEGER NOT NULL REFERENCES classes(id),
+    img_url TEXT NOT NULL,
+    description TEXT NOT NULL,
+
+
+  TABLE armor
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    armor_type TEXT NOT NULL,
+    ac_bonus INTEGER NOT NULL,
+    dex_cap INTEGER NOT NULL,
+    stealth_disadvantage BOOLEAN NOT NULL,
+    strength_req INTEGER NOT NULL,
+    description TEXT NOT NULL,
+    rarity TEXT NOT NULL,
+
+
+  TABLE character_armor
+    id SERIAL PRIMARY KEY,
+    character_id INTEGER NOT NULL REFERENCES characters(id),
+    armor_id INTEGER NOT NULL REFERENCES armor(id),
+    is_equipped BOOLEAN NOT NULL,
+  
+ TABLE weapons
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    weapon_type TEXT NOT NULL,
+    damage_dice INTEGER NOT NULL,
+    damage_type TEXT NOT NULL,
+    properties TEXT NOT NULL,
+    range_normal INTEGER NOT NULL,
+    range_long INTEGER NOT NULL,
+    versatile_dice text NOT NULL,
+    weight numeric(4,1) NOT NULL,
+    description TEXT NOT NULL,
+    rarity TEXT NOT NULL,
+    attack_bonus INTEGER NOT NULL,
+    is_unique BOOLEAN NOT NULL,
+
+  TABLE character_weapons
+    id SERIAL PRIMARY KEY,
+    character_id INTEGER NOT NULL REFERENCES characters(id),
+    weapon_id INTEGER NOT NULL REFERENCES weapons(id),
+    is_equipped BOOLEAN NOT NULL,
+  
+  TABLE spells
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    casting_time TEXT NOT NULL,
+    range TEXT NOT NULL,
+    duration TEXT NOT NULL,
+    base_level INTEGER NOT NULL,
+    base_description TEXT NOT NULL,
+    focus_level INTEGER NOT NULL,
+    state_id INTEGER NOT NULL REFERENCES spell_state(id),
+    element_id INTEGER NOT NULL REFERENCES spell_element(id),
+    alignment_id INTEGER NOT NULL REFERENCES spell_alignment(id),
+
+  TABLE spell_state
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    difficulty INTEGER NOT NULL,
+
+
+  table spell_element
+    id SERIAL PRIMARY KEY,
+    element TEXT NOT NULL,
+    difficulty INTEGER NOT NULL,
+
+  TABLE spell_alignment
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    type TEXT NOT NULL,
+
+  TABLES class_levels
+   id SERIAL PRIMARY KEY,
