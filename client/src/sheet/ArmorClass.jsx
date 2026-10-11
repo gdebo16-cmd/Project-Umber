@@ -10,10 +10,10 @@ function ArmorClass({ character, ownedArmor }) {
     const ac = 10 + modOf(character.con) + armorBonus + shieldBonus;
     
     return (
-        <section className='armorClass'>
-            <article id='acContainer'>
-                <h2 id='acTitle' className='cap-top'>Armor Class</h2>
-                <p id='acValue'>{ac}</p>
+        <section className='container' id='armor-class-container'>
+            <article className='tile armor-class-tile' id='armor-class-tile-container'>
+                <p className='tile-component label-component cap-top' id='armor-class-tile-label'>Armor Class</p>
+                <p className='tile-component value-component cap-bottom' id='armor-class-tile-value'>{ac}</p>
             </article>
         </section>
     );

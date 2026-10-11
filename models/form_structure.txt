@@ -164,3 +164,11 @@ Char_create structure
 
 
 
+Preferred Structure - Character Sheet
+
+main grid
+    container .container #item-container
+        tile .item-tile .tile 
+            tile components .tile-component #item-component
+
+            (component parts [label, modifier, value]) 

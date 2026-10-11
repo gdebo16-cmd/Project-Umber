@@ -53,7 +53,7 @@ export async function getCharacter(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'You aint logged in, fool!' });
 
     const { rows } = await pool.query(
-        `SELECT ch.*, r.name AS race_name, cl.name AS class_name, cl.hitpoint_die, s.name AS subclass_name
+        `SELECT ch.*, r.name AS race_name, cl.name AS class_name, cl.hitpoint_die, cl.primary_stat AS spell_stat, s.name AS subclass_name
         FROM characters ch
         LEFT JOIN races r ON r.id = ch.race_id
         LEFT JOIN classes cl ON cl.id = ch.class_id

@@ -19,7 +19,7 @@ function Conditions() {
             </label>
             <input
                 id={name}
-                className="conditionCheckbox"
+                className="condition-checkbox"
                 type="checkbox"
                 checked={!!checked[name]}
                 onChange={() => toggle(name)}
@@ -28,16 +28,16 @@ function Conditions() {
     );
 
     return (
-        <section className="condition">
-            <p id="conditionsTitle" className="cap-top">Conditions</p>
-            <article id="conditionsContainer">
-                <article id="conditionsList">{GROUP_1.map(checkbox)}</article>
-                <article id="conditionsList2">{GROUP_2.map(checkbox)}</article>
-                <article id="conditionsList3">
-                    <label id="exhaustedLabel" className="conditionLabel" htmlFor="exhaustedValue">Exhausted</label>
+        <section className="container condition-container" id="conditions-container">
+            <p className="tile-component label-component cap-top" id="condition-title">Conditions</p>
+            <article className="tile condition-tile">
+                <article className="tile-component list-component" id="conditions-list-1">{GROUP_1.map(checkbox)}</article>
+                <article className="tile-component list-component" id="conditions-list-2">{GROUP_2.map(checkbox)}</article>
+                <article className="tile-component list-component" id="conditions-list-3">
+                    <label id="exhausted-label" className="tile-component exhausted-component label-component" htmlFor="exhausted-value">Exhausted</label>
                     <input
-                        id="exhaustedValue"
-                        className="conditionRange"
+                        id="exhausted-value"
+                        className="tile-component exhausted-component range-component"
                         type="range"
                         inputMode="numeric"
                         min="0"
@@ -45,7 +45,7 @@ function Conditions() {
                         value={exhaustion}
                         onChange={(e) => setExhaustion(Number(e.target.value))}
                     />
-                    <output htmlFor="exhaustedValue">{exhaustion}</output>
+                    <output htmlFor="exhausted-value">{exhaustion}</output>
                 </article>
             </article>
         </section>

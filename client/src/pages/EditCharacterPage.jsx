@@ -42,22 +42,22 @@ function EditCharacterPage() {
                     <TabList tabs={TABS} active={tab} onChange={setTab} prefix="edit-" />
 
                     <article role="tabpanel" id="edit-panel-name" className="edit-panel" aria-labelledby="edit-tab-name" hidden={tab !== 'name'}>
-                        <h2 className="tabTitle">Name and Race</h2>
+                        <h2 className="action-tab-title">Name and Race</h2>
                         <EditNameForm character={character} races={races} onSaved={onSaved} />
                     </article>
 
                     <article role="tabpanel" id="edit-panel-class" className="edit-panel" aria-labelledby="edit-tab-class" hidden={tab !== 'class'}>
-                        <h2 className="tabTitle">Class and Subclass</h2>
+                        <h2 className="action-tab-title">Class and Subclass</h2>
                         <EditClassForm character={character} classes={classes} subClasses={subClasses} onSaved={onSaved} />
                     </article>
 
                     <article role="tabpanel" id="edit-panel-abilities" className="edit-panel" aria-labelledby="edit-tab-abilities" hidden={tab !== 'abilities'}>
-                        <h2 className="tabTitle">Abilities</h2>
+                        <h2 className="action-tab-title">Abilities</h2>
                         <EditAbilitiesForm character={character} onSaved={onSaved} />
                     </article>
 
                     <article role="tabpanel" id="edit-panel-level" className="edit-panel" aria-labelledby="edit-tab-level" hidden={tab !== 'level'}>
-                        <h2 className="tabTitle">Character Level</h2>
+                        <h2 className="action-tab-title">Character Level</h2>
                         <EditLevelForm character={character} onSaved={onSaved} />
                     </article>
                 </section>

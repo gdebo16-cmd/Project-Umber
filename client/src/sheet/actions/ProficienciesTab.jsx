@@ -2,7 +2,7 @@
 function ProficienciesTab() {
     return (
         <>
-            <h2 className="tabTitle" id="proficienciesTitle">Proficiencies</h2>
+            <h2 className="action-tab-title" id="proficiency-title">Proficiencies</h2>
             <ul id="proficienciesList">
                 <li className="proficiencyItem">
                     <h3 className="proficiencyTitle" id="proficiencyTitle">Proficiency</h3>

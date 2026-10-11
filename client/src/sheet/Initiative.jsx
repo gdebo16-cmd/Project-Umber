@@ -5,10 +5,10 @@ function Initiative({ character, hp, onRoll }) {
     const init = modOf(character.dex) + healthInit(hp, character.max_hp);
 
     return (
-        <section className='initiative'>
-            <article id='initContainer' className='initContainer' onClick={() => onRoll(`Initiative: ${d20() + init}`)}>
-                <h2 id='initTitle' className='cap-top'>Initiative</h2>
-                <p id='initValue'>{signed(init)}</p>
+        <section className='container' id='initiative-container'>
+            <article className='tile initiative-tile' id='initiative-tile-container' onClick={() => onRoll(`Initiative: ${d20() + init}`)}>
+                <p className='tile-component label-component cap-top' id='initiative-tile-label'>Initiative</p>
+                <p className='tile-component value-component' id='initiative-tile-value'>{signed(init)}</p>
             </article>
         </section>
     );

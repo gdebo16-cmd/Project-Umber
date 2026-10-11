@@ -8,8 +8,11 @@
     --rad2: .35rem;
     --bs1: 2px 2px 15px black;
     --bs2: 2px 2px 10px black;
-    --pad: 2%;
+    --pad1: .25%;
     --pad2: 1%;
+    --pad3: 0;
+    --mar1: 0;
+    --mar2: 2%;
     --shadowInner: inset 6px 6px 8px #000000a9, 
                    inset -1px -1px 5px #00000079;
     --toprad: 10px 10px 0 0;
@@ -22,7 +25,29 @@
     --section-gap: 0.75rem;
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor:  rgba(79, 46, 46, 0.712);
-    
+    --fontF: "Cinzel Decorative", serif;
+    --fontW1: 700;
+    --fontW2: 400;
+    --fontStyle: normal;
+    --fontS1: 100%;
+    --fontS2: 130%;
+    --fontS3: 160%;
+    --w1: 100%;
+    --w2: 100vw;
+    --h1: 100%;
+    --h2: 100vh;
+    --maxW: 100%;
+    --maxH1: 100%;
+    --maxH2: 100vh;
+    --minW1: 0;
+    --minW2: 0;
+    --minH1: 0;
+    --minH2: 0;
+    --ofX1: hidden;
+    --ofX2: hidden;
+    --ofY1: auto;
+    --ofY2: auto;
+    --border1: none;
 }
 
 :root, 
@@ -191,27 +216,27 @@
 }
 
 html {
-    max-width: 100%;
-    overflow-x: hidden;
+    max-width: var(--maxW);
+    overflow-x: var(--ofX1);
 }
 
 body {
-    width: 100%;
+    width: var(--w1);
     max-width: 3840px;
-    overflow-x: hidden;
+    overflow-x: var(--ofX1);
     overflow-y: auto; /* safety: scroll if a tile min-height needs more room */
     background-image: var(--background);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    font-family: "Cinzel Decorative", serif;
-    font-weight: 700;
-    font-style: normal;
-    height: 100vh;
-    max-height: 100vh;
-    min-height: 0;
-    margin: 0;
+    font-family: var(--fontF);
+    font-weight: var(--fontW1);
+    font-style: var(--fontStyle);
+    height: var(--h2);
+    max-height: var(--maxH2);
+    min-height: var(--minH2);
+    margin: var(--mar1);
     display: flex;
     flex-direction: column;
     color: var(--txt-color-1);
@@ -219,13 +244,13 @@ body {
 
 pre {
     display: none;
-    max-width: 100%;
+    max-width: var(--maxW);
     overflow-x: auto;
     white-space: pre-wrap;
     word-break: break-word;
     color: white;
     backdrop-filter: var(--blur1);
-    font-size: 160%;
+    font-size: var(--fontS3);
 }
 
 ul, li, a {
@@ -237,12 +262,12 @@ option {
     background-color: var(--bg-color-1);
     color: var(--txt-color-1);
     border: var(--tileBorder);
-    padding: 1%;
-    margin: 0;
+    padding: var(--pad3);
+    margin: var(--mar1);
     text-align: center;
-    font-size: 100%;
-    font-weight: 700;
-    font-style: normal;
+    font-size: var(--fontS1);
+    font-weight: var(--fontW1);
+    font-style: var(--fontStyle);
 }
 
 /* Shared press/hover grow. Same 1.03 scale the old per-selector rules used. */
@@ -281,14 +306,14 @@ header {
     background-color: var(--bg-color-3);
     color: var(--txt-color-1);
     text-align: center;
-    padding: 1%;
-    margin: 0;
+    padding: var(--pad1);
+    margin: var(--mar1);
 }
 
 #characterHeader {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
+    width: var(--w1);
+    max-width: var(--maxW);
+    min-width: var(--minW1);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -299,10 +324,10 @@ header {
 #characterName,
 #characterRace,
 #characterClass {
-    font-size: 130%;
+    font-size: var(--fontS2);
     text-align: center;
-    padding: 1%;
-    margin: 0;
+    padding: var(--pad2);
+    margin: var(--mar1);
     border: var(--tileBorder);
     border-bottom: none;
     border-right: none;
@@ -326,8 +351,8 @@ header {
 #navContainer {
     background-color: var(--bg-color-3);
     border-radius: var(--lowrad);
-    margin: 0;
-    padding: 0;
+    margin: var(--mar1);
+    padding: var(--pad3);
     text-align: center;
     display: flex;
     flex-direction: row;
@@ -340,7 +365,7 @@ header {
 #characterNav,
 #campaignNav,
 #settingsNav {
-    min-width: 0;
+    min-width: var(--minW1);
     flex: 1;
     backdrop-filter: var(--blur2);
 }
@@ -350,7 +375,7 @@ header {
     border-bottom: none;
     border-right: none;
     background-color: var(--bg-color-2);
-    padding: 1% 2% 1% 2%;
+    padding: var(--pad2);
     color: var(--txt-color-1);
 }
 
@@ -368,7 +393,7 @@ header {
     flex-direction: row;
     align-items: stretch;
     justify-content: center;
-    min-width: 0;
+    min-width: var(--minW1);
     position: relative;
     box-sizing: border-box;
 }
@@ -378,25 +403,25 @@ header {
     position: absolute;
     width: 1px;
     height: 1px;
-    padding: 0;
+    padding: var(--pad3);
     margin: -1px;
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
-    border: 0;
+    border: var(--border1);
 }
 
 #themeNav select {
     box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    min-width: 0;
+    width: var(--w1);
+    height: var(--h1);
+    min-width: var(--minW1);
     flex: 1 1 auto;
     align-self: stretch;
-    margin: 0;
+    margin: var(--mar1);
     /* Padding/border/radius come from #themeNav.navButton — do not re-declare % here */
-    padding: 0;
-    border: none;
+    padding: var(--pad3);
+    border: var(--border1);
     border-radius: inherit;
     background-color: transparent;
     color: inherit;
@@ -413,7 +438,7 @@ header {
     /* Neutralize inventory tile paint; keep nav chrome from #themeNav.navButton */
     background-color: transparent;
     border-radius: inherit;
-    border: none;
+    border: var(--border1);
 }
 
 
@@ -441,9 +466,11 @@ header {
     z-index: 10;
     text-align: center;
     box-shadow: var(--bs2);
+    background-color: var(--bg-color-5);
+    border: var(--tileBorder);
     transition: all 1s ease;
-    padding: 0;
-    margin: 0;
+    padding: var(--pad3);
+    margin: var(--mar1);
 }
 
 li:hover .dropDown {
@@ -484,13 +511,13 @@ li:hover .dropDown {
 }
 
 main {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    min-height: 0;
+    width: var(--w1);
+    max-width: var(--maxW);
+    min-width: var(--minW1);
+    min-height: var(--minH1);
     flex: 1 1 auto;
-    overflow-x: hidden;
-    overflow-y: auto; /* safety net with body */
+    overflow-x: var(--ofX1);
+    overflow-y: var(--ofY1); /* safety net with body */
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     /* 7 rows: B, mid, skills x3, saves x2. Actions (H) spans skills+saves
@@ -521,240 +548,215 @@ main {
 
 /* ---------- stat tiles ---------- */
 
-.base-stats {
+
+.tile {
+    border-bottom: none;
+    border-right: none;
+    text-align: center;
+    
+   
+    
+    border: var(--tileBorder);
+    border-radius: var(--tile);
+    box-shadow: var(--bs2);
+
+    color: var(--txt-color-1);
+    
+    min-width: var(--minW1);
+    width: var(--w1);
+    
+}
+
+
+#stat-container {
     grid-area: B;
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: var(--w1);
     gap: 8px;
+    
     margin-top: 1%;
+    background-color: var(--bg-color-4);
 }
 
-.base-stats-box {
-    color: var(--txt-color-1);
-    box-shadow: var(--bs2);
-    border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
-    background-color: var(--bgc-low);
-    text-align: center;
+.stat-tile {
     flex: 1 1 0;
-    min-width: 0;
-    width: auto;
-    border-radius: var(--tile);
+    cursor: pointer;
+    container-type: size;
+    
     display: grid;
     grid-template-rows: 1fr 2fr 1fr;
-    height: 100%;
-    min-height: 0;
-    container-type: size;
-    overflow: hidden;
-    cursor: pointer;
+    
+    height: var(--h1);
+    min-height: var(--minH1);
+    overflow: var(--ofX1);
+    
 }
 
-.stat-name,
-.modifier,
-.stat-count {
-    margin: 0;
+#stat-tile-label,
+#stat-tile-modifier,
+#stat-tile-value {
+    margin: var(--mar1);
 }
 
-.stat-count {
-    font-size: clamp(0.2rem, 8cqh, 0.75rem);
+#stat-tile-value {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 0;
-    background-color: var(--bgc-top);
+    min-height: var(--minH1);
     border-radius: 50% 50% 0 0;
-    padding: 0.2rem 0.25rem;
-    overflow: hidden;
+    overflow: var(--ofX1);
 }
 
-.stat-name {
+#stat-tile-label {
     font-size: clamp(0.6rem, 15cqh, 0.85rem);
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 0;
-    overflow: hidden;
+    min-height: var(--minH1);
+    overflow: var(--ofX1);
     border-radius: 0 0 50% 50%;
-    padding: 0.2rem 0.25rem;
-    background-color: var(--bgc-top);
 }
 
-.modifier {
+#stat-tile-modifier {
     font-size: clamp(0.8rem, 26cqh, 1.45rem);
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 0;
-    overflow: hidden;
+    min-height: var(--minH1);
+    overflow: var(--ofX1);
 }
 
-.stat-count {
-    font-size: 130%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 0;
-}
-
-.armorClass {
+#armor-class-container {
     grid-area: F;
 }
 
-.initiative {
+#initiative-container {
     grid-area: G;
 }
 
-.armorClass,
-.initiative {
-    border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
-    text-align: center;
-    border-radius: var(--tile);
-    box-shadow: var(--bs2);
-    height: 100%;
-    min-height: 0;
-}
+#armor-class-tile-container,
+#initiative-tile-container {
 
-#acContainer,
-#initContainer {
     display: grid;
     grid-template-rows: 1fr 2fr;
-    height: 100%;
-    min-height: 0;
+    height: var(--h1);
+    min-height: var(--minH1);
     container-type: size;
     cursor: pointer;
 }
 
-#acTitle,
-#initTitle {
-    margin: 0;
+.armor-class-tile,
+.initiative-tile {
+    container-type: size;
+    border: var(--tileBorder);
+    text-align: center;
+    border-radius: var(--tile);
+    box-shadow: var(--bs2);
+    height: var(--h1);
+    min-height: var(--minH1);
+}
+
+
+
+#armor-class-tile-label,
+#initiative-tile-label {
+    margin: var(--mar1);
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 0;
-    font-size: clamp(0.7rem, 18cqh, 1rem);
-    overflow: hidden;
+    min-height: var(--minH1);
+    font-size: clamp(0.5rem, 13cqh, 1rem);
+    overflow: var(--ofX1);
+
 }
 
-#acValue,
-#initValue {
-    margin: 0;
+#armor-class-tile-value,
+#initiative-tile-value {
+    margin: var(--mar1);
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: var(--bgc-low);
     border-radius: 0 0 10px 10px;
-    min-height: 0;
+    min-height: var(--minH1);
     font-size: clamp(0.85rem, 30cqh, 1.55rem);
-    overflow: hidden;
+    overflow: var(--ofX1);
 }
 
 
 
 /* ---------- skills ---------- */
 
-.skills {
+.skills-container {
     grid-area: E;
     display: grid;
-    grid-template-rows: auto 1fr;
-    gap: var(--section-gap);
-    height: 100%;
-    min-height: 0;
-    overflow: hidden;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto repeat(6, minmax(0, 1fr));
+    grid-auto-flow: column;
+    gap: 0.35rem;
+    height: var(--h1);
+    cursor: pointer;
+    border-radius: var(--tile);
     
 }
 
-#skillsTitle {
+#skills-title {
+    grid-column: 1 / -1;
+    grid-row: 1;
     flex-shrink: 0;
-    margin: 0;
+    border: var(--tileBorder);
+    margin: var(--mar1);
     container-type: inline-size;
-    /* match compact .tabTitle / actions tab-bar height */
     padding: 0.35rem 0.6rem;
     line-height: 1.2;
-    height: auto;
-    border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
+    height: var(--h1);
     font-size: clamp(0.75rem, 4.5cqi, 1.05rem);
-    overflow: hidden;
+    overflow: var(--ofX1);
     background-color: var(--bgc-top);
     border-radius: var(--tile);
     text-align: center;
+    box-shadow: var(--bs1);
+    border-radius: var(--tile);
 }
 
-#skillsContainer {
-    display: grid;
-    /* Gabriel's desktop skills: 3 columns x 6 rows, fill by column */
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: repeat(6, minmax(0, 1fr));
-    grid-auto-flow: column;
-    gap: 0.35rem;
-    width: 100%;
-    min-height: 0;
-    height: 100%;
-    cursor: pointer;
-}
 
-.skillContainer {
+.skill-tile {
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr;
-    width: 100%;
-    min-height: 0;
     border-radius: var(--tile);
     container-type: size;
-    overflow: hidden;
+    cursor: pointer;
+    box-shadow: var(--bs2);
+    overflow: var(--ofX1);
 }
 
 
-.skillTitle,
-.skillValue {
-    border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
+.skill-label,
+.skill-value { 
     padding: 0.2rem 0.25rem;
-    margin: 0;
-    min-width: 0;
-    min-height: 0;
+    margin: var(--mar1);
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    width: 100%;
+    overflow: var(--ofX1);
 }
-.skillTitle {
-    font-size: clamp(0.75rem, 28cqh, 1.05rem);
-    border-radius: 10px 10px 0 0;
+.skill-label {
+    font-size: clamp(0.5rem, 18cqh, 1rem);
     line-height: 1.15;
 }
-.skillValue {
+.skill-value {
     font-size: clamp(0.8rem, 32cqh, 1.2rem);
-    border-radius: 0 0 10px 10px;
-    border-top: none;
-}
-
-.skillTitle {
-    background-color: var(--bgc-top);
-    border-bottom: none;
-}
-
-.skillValue {
-    background-color: var(--bgc-low);
 }
 
 /* ---------- health ---------- */
 
-.health {
+.health-container {
     grid-area: C;
-    
     border-radius: var(--tile);
     box-shadow: var(--bs2);
     border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
 
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -762,95 +764,85 @@ main {
     grid-template-areas:
         "a b c"
         "d d d";
-    height: 100%;
-    min-height: 0;
-    overflow: hidden;
+    height: var(--h1);
+    min-height: var(--minH1);
+    overflow: var(--ofX1);
 
     background-color: var(--bg-color-4);
 }
 
-#hpButtonContainer {
+.health-button-tile {
     grid-area: a;
     
     display: grid;
     grid-template-rows: repeat(3, minmax(0, 1fr));
 
-    width: 100%;
-    min-width: 0;
-    min-height: 0;
-    height: 100%;
     container-type: size;
-    overflow: hidden;
-    font-family: "Cinzel Decorative", serif;
-    font-weight: 700;
-    font-style: normal;
+    overflow: var(--ofX1);
+    font-family: var(--fontF1);
+    font-weight: var(--fontW1);
+    font-style: var(--fontStyle);
 }
 
-#HpLabelContainer {
+.current-hp-tile {
     grid-area: b;
 }
 
-#HpValueContainer {
+.max-hp-tile {
     grid-area: c;
 }
 
 
-.hp-bar {
+.hp-bar-tile {
     grid-area: d;
-    min-height: 0;
+    min-height: var(--minH1);
     height: 60%;
     align-self: center;
     background: #444;
-    border-radius: 5px;
-    overflow: hidden;
-    margin: 0 3%;
+    border-radius: var(--rad1);
+    overflow: var(--ofX1);
+    margin: 0 2%;
   }
   
-  .hp-fill {
-    height: 100%;
+  #hp-bar-fill {
+    height: var(--h1);
     background: #3cb371;
   }
 
 
-#healButton,
-#damageButton,
-#hpInput {
-    width: 100%;
-    height: 100%;
-    min-width: 0;
-    min-height: 0;
+.button-tile-component {
+    min-width: var(--minW1);
     font-family: inherit;
     font-size: clamp(0.55rem, min(18cqh, 14cqi), 1rem);
     padding: 0 4%;
     white-space: nowrap;
-    overflow: hidden;
+    overflow: var(--ofX1);
     text-overflow: ellipsis;
 }
 
-#healButton,
-#damageButton {
-    border: none;
-    color: var(--txt-color-1);
-    overflow: hidden;
+.button-component {
+    border: var(--border1);
+    color: var(--txtC1);
+    overflow: var(--ofX1);
     cursor: pointer;
 }
 
-#healButton {
+#heal-button {
     border-radius: 10px 0 0 0;
     background-color: var(--healColor);
 }
     
 
-#damageButton {
+#damage-button {
     background-color: var(--damageColor);
     border-radius: 0 0 0 10px;
     
     
     
-}
+}   
 
-#hpInput {
-    border: none;
+#hp-input {
+    border: var(--border1);
     color: var(--txt-color-1);
     background-color: transparent;
     text-align: center;
@@ -858,58 +850,51 @@ main {
     -moz-appearance: textfield;
     
 }
-#hpInput::-webkit-outer-spin-button,
-#hpInput::-webkit-inner-spin-button {
+#hp-input::-webkit-outer-spin-button,
+#hp-input::-webkit-inner-spin-button {
     -webkit-appearance: none;
-    margin: 0;
-}
-
-#maxHpContainer {
-    border-radius: 0 10px 10px 0;
-}
-
-#maxHpValue {
-    border-radius: 0 0 10px 0;
+    margin: var(--mar1);
 }
 
 
-.hpCol {
+.current-hp-tile,
+.max-hp-tile {
     display: grid;
     grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
-    min-width: 0;
-    min-height: 0;
+    min-width: var(--minW1);
+    min-height: var(--minH1);
     container-type: size;
-    overflow: hidden;
+    overflow: var(--ofX1);
 }
 
-.hpLabel {
+.hp-label-component {
     text-align: center;
     font-size: clamp(0.55rem, min(18cqh, 12cqi), 1rem);
-    line-height: 1.1;
+    line-height: 1.1;   
     background-color: var(--bgc-top);
     padding-top: 4%;
     padding-bottom: 4%;
-    margin: 0;
+    margin: var(--mar1);
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 0;
-    overflow: hidden;
+    min-height: var(--minH1);
+    overflow: var(--ofX1);
 }
 
-.hpNum {
+.hp-value-component {
     font-size: clamp(0.7rem, min(30cqh, 22cqi), 1.5rem);
     text-align: center;
-    margin: 0;
+    margin: var(--mar1);
     background-color: var(--bgc-low);
-    display: flex;
+    display: flex;  
     align-items: center;
     justify-content: center;
-    min-height: 0;
-    overflow: hidden;
+    min-height: var(--minH1);
+    overflow: var(--ofX1);
 }
 
-.hpNum--fallen {
+#current-hp-value--fallen {
     font-size: clamp(0.5rem, min(14cqh, 11cqi), 0.9rem);
     line-height: 1.1;
     overflow-wrap: anywhere;
@@ -917,41 +902,36 @@ main {
 
 /* ---------- conditions ---------- */
 
-.condition {
-    text-align: center;
+.condition-container {
     grid-area: I;
-    border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
     border-radius: var(--tile);
+    border: var(--tileBorder);
     box-shadow: var(--bs2);
     display: grid;
     grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
-    height: 100%;
-    min-height: 0;
-    overflow: hidden;
+    overflow: var(--ofX1);
     container-type: size;
 }
-.condition > * {
-    min-height: 0;
-    max-height: 100%;
+.condition-container > * {
+    min-height: var(--minH1);
+    max-height: var(--h1);
     
 }
 
-#conditionsTitle {
+#condition-title {
     font-size: clamp(0.7rem, 22cqh, 1rem);
     padding: 0.35rem;
-    margin: 0;
+    margin: var(--mar1);
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 0;
-    overflow: hidden;
+    min-height: var(--minH1);
+    overflow: var(--ofX1);
 }
 
-#conditionsContainer {
+.condition-tile {
     font-size: clamp(0.7rem, 12cqh, 0.95rem);
-    margin-top: 0;
+    margin-top: var(--mar1);
     padding: 0.35rem 0.6rem;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -959,143 +939,184 @@ main {
     column-gap: 0.75rem;
     row-gap: 0.2rem;
     align-content: start;
-    background-color: var(--bgc-low);
-    border-radius: var(--lowrad);
-    min-height: 0;
-    max-height: 100%;
-    overflow-x: hidden;
+
+    min-height: var(--minH1);
+    max-height: var(--h1);
+    overflow-x: var(--ofX1);
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: rgba(255,255,255,0.35) transparent;
 }
-#conditionsContainer::-webkit-scrollbar {
-    width: 6px;
-}
-#conditionsContainer::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.35);
-    border-radius: 3px;
-}
 
 
-/* Two checkbox columns: box in column 1, label beside it in column 2.
-   Markup has label-then-input, so "dense" pulls each input back into the
-   empty first cell of its label's row. */
-#conditionsList,
-#conditionsList2 {
+
+#conditions-list-1,
+#conditions-list-2,
+#conditions-list-3 {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     grid-auto-flow: row dense;
     grid-auto-rows: 1.4em;
     align-items: center;
     column-gap: 0.45em;
-    min-width: 0;
+    min-width: var(--minW1);
+    
     font-size: 0.85em;
     text-align: left;
 }
 
-#conditionsList > .conditionCheckbox,
-#conditionsList2 > .conditionCheckbox {
+#conditions-list-1 > .condition-checkbox,
+#conditions-list-2 > .condition-checkbox {
     grid-column: 1;
-    margin: 0;
+    margin: var(--mar1);
     width: 1em;
     height: 1em;
     cursor: pointer;
 }
 
-#conditionsList > label,
-#conditionsList2 > label {
+#conditions-list-1 > label,
+#conditions-list-2 > label {
     grid-column: 2;
     justify-self: start;
-    min-width: 0;
-    max-width: 100%;
-    overflow: hidden;
+    min-width: var(--minW1);
+    max-width: var(--w1);
+    overflow: var(--ofX1);
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
 }
 
 /* Exhaustion: own row under both columns, full width: label | slider | value */
-#conditionsList3 {
+#conditions-list-3 {
     grid-column: 1 / -1;
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
     column-gap: 0.5em;
-    min-width: 0;
+    min-width: var(--minW1);
     font-size: 0.85em;
     text-align: left;
 }
 
-#conditionsList3 .conditionRange {
+.exhausted-component {
     width: 100%;
-    min-width: 0;
-    margin: 0;
+    min-width: var(--minW1);
+    margin: var(--mar1);
 }
 
-#conditionsList3 output {
+#conditions-list-3 output {
     min-width: 2ch;
     text-align: right;
 }
 
-#checkbox {
+#condition-checkbox {
     cursor: pointer;
 }
 
 /* ---------- actions / spells / tabs ---------- */
 
-.action,
-.panel-shell {
-    border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
+
+
+.action-container {
+    grid-area: H;
+    min-height: var(--minH1);  
+    height: var(--h1);
+    max-height: var(--h1);
     display: grid;
     grid-template-rows: auto minmax(0, 1fr);
-    border-radius: var(--tile);
-    overflow: hidden;
-    background-color: var(--bg-color-4);
-    min-height: 0;
-    container-type: size;
+    align-items: start;
+    font-family: var(--fontF1);
+    font-weight: var(--fontW2);
+    font-style: var(--fontStyle);
+    border-radius: 15px;
     box-shadow: var(--bs2);
+    
 }
 
-.action {
-    grid-area: H;
-    min-height: 0;
-    height: 100%;
-    max-height: 100%;
-    align-self: stretch;
-    overflow: hidden;
-    font-family: "Cinzel Decorative", serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.tab-list {
+.action-tab-list {
     display: flex;
     justify-content: space-around;
-    align-items: center;
-    gap: 0.25rem;
+    align-items: stretch;
+    gap: 0.5rem;
     background-color: var(--bgc-top);
+    border-radius: var(--toprad);
+    border: var(--tileBorder);
     height: auto;
-    min-height: 0;
+    min-height: var(--minH1);
+    padding: 0.5rem;
+    margin: var(--mar1);
+    box-shadow: var(--bs2);
+    overflow: auto;
+    scrollbar-width: none;
+    scrollbar-color: rgba(255,255,255,0.35) transparent;
+    
+}
+
+/* the whole bar holding both tabs */
+.spells-tab .action-tab-list {
+    border-radius: var(--toprad);
+    gap: 0.25rem;
+    margin: 0 0.5rem;
     padding: 0.5rem;
 }
 
+.spells-panel {
+    margin: 0 0.5rem;
+    padding:  0.5rem;
+    border-radius: var(--lowrad);
+}
+
+/* each tab button */
+.spells-tab [role="tab"] {
+    padding: 0.5rem 1rem;
+    
+}
+
+/* the tab that's currently open */
+.spells-tab [role="tab"][aria-selected="true"] {
+    color: var(--accent);
+    background-color: var(--bgc-low);
+}
+
+.spell-slot-checkbox {
+    appearance: none;          /* turn off the browser's default box */
+    width: 1.1rem;
+    height: 1.1rem;
+    margin: .35rem 0.25rem;
+    border: 2px solid var(--accent);
+    border-radius: 50%;        /* round, like a gem. Use 3px for a square */
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+/* when the box is checked (slot used) */
+.spell-slot-checkbox:checked {
+    background-color: var(--accent);
+    box-shadow: 0 0 6px var(--accent);   /* a little glow */
+}
+
+/* when you hover over one */
+.spell-slot-checkbox:hover {
+    box-shadow: 0 0 4px var(--accent);
+}
+
+
 [role="tab"] {
-    background: transparent;
     padding: 0.5rem 1rem;
     cursor: pointer;
-    width: 100%;
-    border-radius: 10px;
+    width: var(--w1);
+    border-radius: var(--rad1);
     border: var(--tileBorder);
     border-bottom: none;
     border-right: none;
     color: var(--txt-color-1);
     background-color: var(--bg-color-4);
+    
 }
 
 [role="tab"][aria-selected="true"] {
-    font-weight: bold;
+    font-weight: var(--fontW1);
     box-shadow: var(--shadowInner);
     border-top: none;
     border-left: none;
@@ -1103,249 +1124,185 @@ main {
 }
 
 [role="tabpanel"] {
-    padding: 1rem;
-    border-radius: var(--lowrad);
-    height: 100%;
+    height: var(--h1);
     background-color: var(--bgc-low);
 }
 
 
-.action > [role="tabpanel"],
+.action-container > [role="tabpanel"],
 .panel-shell > [role="tabpanel"] {
     min-height: 0;
     height: auto;
     max-height: 100%;
-    overflow-x: hidden;
     overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255,255,255,0.35) transparent;
+    overflow-x: hidden;
+    scrollbar-width: none; /* scrolls by wheel/touch, no visible bar */
 }
-.action > [role="tabpanel"]::-webkit-scrollbar,
+
+.action-container > [role="tabpanel"]::-webkit-scrollbar,
 .panel-shell > [role="tabpanel"]::-webkit-scrollbar {
-    width: 6px;
+    display: none;
 }
-.action > [role="tabpanel"]::-webkit-scrollbar-thumb,
-.panel-shell > [role="tabpanel"]::-webkit-scrollbar-thumb {
-    background: var(--bg-color-4);
-    border-radius: 3px;
+
+#panel-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    
 }
 
 /* Only hide panels inside action / subpage shells — never .sheet-panel on desktop */
-.action > [role="tabpanel"][hidden],
+.action-container > [role="tabpanel"][hidden],
 .panel-shell > [role="tabpanel"][hidden] {
     display: none !important;
 }
 
-.tabTitle {
-    text-align: center;
-    background-color: var(--bgc-top);
+.spell-book-tabs {
     border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
     border-radius: var(--tile);
-    padding: 0.35rem 0.6rem;
-    margin: 0;
-    container-type: inline-size;
-    font-size: clamp(0.75rem, 4.5cqi, 1.05rem);
-    overflow: auto;
-    flex-shrink: 0;
-    line-height: 1.2;
-    height: auto;
-}
-
-/* Compact in-panel section headers (e.g. Actions title inside tabpanel) */
-.action > [role="tabpanel"] > .tabTitle,
-.panel-shell > [role="tabpanel"] > .tabTitle,
-#actionsTitle,
-#spellsTitle,
-#inventoryTitle,
-#proficienciesTitle {
-    padding: 0.3rem 0.5rem;
-    margin-bottom: 0.35rem;
-    line-height: 1.15;
-    height: auto;
-    flex-shrink: 0;
-}
-
-
-
-.actionTitle {
-    border: var(--tileBorder);
-    border-radius: 10px;
-    padding: 3%;
-    text-align: center;
     box-shadow: var(--bs2);
+}
+
+.action-tile {
+    max-height: var(--h1);
+    border: var(--tileBorder);
+    border-top: none;
+    padding: 0.5rem;
     
 }
 
-#actionsList {
-    border: var(--tileBorder);
-    border-radius: var(--rad2);
-    box-shadow: var(--bs2);
+.action-item.spell-slot {   /* both classes, so this beats the plain .action-item rule further down */
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: stretch;
-    gap: 0.5rem;
-    padding-top: 5%;
-    padding-left: 2%;
-    padding-right: 2%;
-    padding-bottom: 5%;
-    margin-bottom: 0.35rem;
-    line-height: 1.15;
-    height: auto;
-    flex-shrink: 0;
+    align-items: stretch;   /* title and list both go full width */
+    gap: .5rem;                 /* no space between them */
+    padding: 0;             /* drop the .action-item padding */
+    border: none;           /* drop the extra frame around both */
+    background: none;
+    box-shadow: none;
+    overflow: var(--ofX1);
+    border: var(--tileBorder);
+    box-shadow: var(--bs2);
 }
 
+.spell-slot > .spell-list {
+    margin: 0;
+    border-top: none;       /* so the title and list don't draw a double line */
+    min-height: 1.5rem; 
+        /* empty levels still show a small box */
+}
 
-.actionItem {
-    border: var(--tileBorder);
+.spellList {
+    display: flex;
+    
+    gap: 0.75rem;
+}
+
+.action-title {
+    text-align: left;
     background-color: var(--bgc-top);
-    border-radius: var(--rad2);
-    flex: 1;
+    border-radius: var(--toprad);
+    padding: 0.6rem;
+    border-bottom: none;
+    margin: 0;
+}
+
+.action-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.3rem;
+    margin: 0 0.5rem;
+    
+}
+
+.action-item {
+    border: var(--tileBorder);
+    border-radius: var(--tile);
+    box-shadow: var(--bs2);
+    background-color: var(--bgc-low);
+    padding: 1.25rem;
+    margin-bottom: 0.5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 0.3rem 0.5rem;
-    height: auto;
-    overflow: hidden;
+    align-items: center;
+    overflow: var(--ofX1);
+}
+
+.action-button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 0.125rem;
+    align-self: stretch;
+    flex-direction: row;
     
 }
 
-.actionLabel {
-    max-height: 100%;
-    overflow: hidden;
-}
-
-.actionButtonContainer {
-    display: flex;
-    flex-direction: row;
-    align-self: stretch;
-    flex-direction: row;
-}
-
-.toHitButton,
-.damageButton {
+.action-button {
     flex: 1;
-    align-self: stretch;  
-}
-
-.spellLevelTitle {
-    padding: 2%;
-    margin-bottom: 0;
-}
-
-.spellLevelTitle {
+    align-self: stretch; 
+    background-color: var(--accent); 
+    border: var(--tileBorder);
+    border-radius: var(--rad2);
+    box-shadow: var(--bs2);
     margin: 0;
-    width: 100%;
 }
 
 
-.toHitButton:hover,
-.damageButton:hover {
+.action-button:hover {
     background-color: var(--bg-color-2);
     color: var(--accent);
     cursor: pointer;
 }
 
-#spellsList {
-    scrollbar-gutter: stable;
-    overflow-y: auto;
-    max-height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-.spellItem {
-    border: var(--tileBorder);
-    border-radius: var(--tile);
-    background-color: var(--bgc-low);
-    margin-bottom: 2%;
-}
-
-.spellTitle {
-    padding: 2%;
-    background-color: var(--bgc-low);
-    border: var(--tileBorder);
-    border-radius: 10px 0 0 10px;
-    margin: 0;
-    width: 70%;
-    
-}
-
-.spellItemBar {
+.title-tile {
     display: flex;
-    flex-direction: row;
-    justify-content: start;
-    align-items: stretch;
-    border-radius: 10px 0 0 10px;
     margin: 1%;
-}
-
-#panel-inventory {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    border: var(--tileBorder);
     border-radius: var(--tile);
     box-shadow: var(--bs2);
     background-color: var(--bgc-low);
-}
-
-#inventoryTitle {
     text-align: center;
-    background-color: var(--bgc-top);
+}
+.action-tab-title {
     border-radius: var(--toprad);
-    padding: 5%;
+    background-color: var(--bgc-top);
     margin: 0;
-    border: var(--tileBorder);
-    border-bottom: none;
 }
 
-#inventoryLink {
-    text-align: end;
-    color: var(--txt-color-1);
-    margin: 0;
-    padding: 3%;
+.link-button {
+    border: none;
+    text-align: right;
     border-radius: var(--lowrad);
     background-color: var(--bgc-low);
-    border: var(--tileBorder);
-    border-top: none;
-}
-
-#inventoryLink a {
+    padding: 2%;
+    margin: 0;
     color: var(--txt-color-1);
-    text-decoration: none;
+    font-family: var(--fontF1);
+    font-weight: var(--fontW1);
+    font-style: var(--fontStyle);
 }
 
-#inventoryLink a:hover {
-    color: var(--accent);
-}
+
+
+
+
+
 
 /* ---------- inventory ---------- */
 
-.invTitle {
-    border: var(--tileBorder);
-    padding: 3%;
-    margin-bottom: 0;
+
+
+.learnedSpell {
+    text-align: right;
+    margin-right: 1%;
 }
 
-.invList {
-    border: var(--tileBorder);
-    padding: 3%;
-    border-top: none;
-    margin: 0;
-}
-
-.invListItem {
-    border: var(--tileBorder);
-    padding: 3%;
-    background-color: var(--bgc-low);
-    border-radius: var(--tile);
-    margin-bottom: 1%;
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    gap: 1.5%;
-}
-
-.ownedItem {
+em {
     color: var(--accent);
     margin-left: 1%;
     flex: 1 1 32%;
@@ -1413,26 +1370,26 @@ main {
 
 main > *,
 .sheet-panel,
-.base-stats,
-.health,
-.skills,
-.armorClass,
-.initiative,
-.action,
-.condition,
+#stat-container,
+.health-container,
+.skills-container,
+#armor-class-container,
+#initiative-container,
+.action-container,
+.condition-container,
 .gear,
 #healthContainer,
-#skillsContainer,
-#conditionsContainer {
+#skills-container,
+.condition-tile {
     min-width: 0;
     max-width: 100%;
     min-height: 0;
 }
 
-.skillTitle,
-.skillValue,
-.stat-name,
-.stat-count {
+.skill-label,
+.skill-value,
+#stat-tile-label,
+#stat-tile-value {
     overflow-wrap: anywhere;
     word-break: break-word;
 }
@@ -1599,13 +1556,13 @@ main > *,
         box-sizing: border-box;
     }
 
-    .base-stats,
-    .health,
-    .skills,
-    .armorClass,
-    .initiative,
-    .action,
-    .condition,
+    #stat-container,
+    .health-container,
+    .skills-container,
+    #armor-class-container,
+    #initiative-container,
+    .action-container,
+    .condition-container,
     .gear {
         width: 100%;
         max-width: 100%;
@@ -1614,7 +1571,7 @@ main > *,
     }
 
     /* Base stats: true 4×2 grid that cannot spill past the viewport */
-    .base-stats {
+    #stat-container {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
         grid-auto-rows: auto;
@@ -1624,7 +1581,7 @@ main > *,
         box-sizing: border-box;
     }
 
-    .base-stats-box {
+    .stat-tile {
         flex: unset;
         width: auto;
         max-width: 100%;
@@ -1633,24 +1590,24 @@ main > *,
     }
 
     /* Conditions (mobile): keep the 2-column checkbox grid, slider row spans both */
-    .condition {
+    .condition-container {
         grid-template-rows: auto auto;
     }
 
-    #conditionsContainer {
+    .condition-tile {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.5rem 0.75rem;
         padding-right: 0.5rem;
     }
 
-    #conditionsList,
-    #conditionsList2,
-    #conditionsList3 {
+    #conditions-list-1,
+    #conditions-list-2,
+    #conditions-list-3 {
         text-align: left;
         width: auto;
     }
 
-    .tab-list {
+    .action-tab-list {
         flex-wrap: wrap;
     }
 
@@ -1667,14 +1624,15 @@ main > *,
        so that works. On mobile, tiles only grow from their content — so
        size containment shrinks them to nearly nothing and text vanishes.
        Reset to normal, give sensible min-heights, let the page scroll. */
-    .base-stats-box,
-    .skillContainer,
-    #acContainer,
-    #initContainer,
-    .hpCol,
-    #hpButtonContainer,
-    .condition,
-    .action,
+    .stat-tile,
+    .skill-tile,
+    #armor-class-tile-container,
+    #initiative-tile-container,
+    .current-hp-tile,
+    .max-hp-tile,
+    .health-button-tile,
+    .condition-container,
+    .action-container,
     .panel-shell {
         container-type: normal;
         height: auto;
@@ -1682,21 +1640,22 @@ main > *,
         min-height: 0;
     }
 
-    .base-stats-box {
+    .stat-tile {
         min-height: 5.5rem;
         overflow: hidden;
     }
 
-    .skillContainer {
+    .skill-tile {
         min-height: 3.5rem;
         overflow: hidden;
     }
 
-    .armorClass,
-    .initiative,
-    .hpCol,
-    #hpButtonContainer,
-    .condition {
+    #armor-class-container,
+    #initiative-container,
+    .current-hp-tile,
+    .max-hp-tile,
+    .health-button-tile,
+    .condition-container {
         min-height: 4.75rem;
         height: auto;
     }
@@ -1717,44 +1676,44 @@ main > *,
         gap: 0.75rem;
     }
 
-    .armorClass {
+    #armor-class-container {
         grid-area: armorClass;
     }
-    .initiative {
+    #initiative-container {
         grid-area: initiative;
     }
-    .action {
+    .action-container {
         grid-area: actions;
     }
 
-    .tab-list {
+    .action-tab-list {
         flex-direction: row;
         flex-wrap: nowrap;
     }
 
-    #acContainer,
-    #initContainer {
+    #armor-class-tile-container,
+    #initiative-tile-container {
         min-height: 4.75rem;
     }
 
-    .action {
+    .action-container {
         min-height: 14rem;
         overflow: hidden;
     }
 
-    .skills {
+    .skills-container {
         margin-top: 2%;
     }
 
-    #skillsTitle {
+    #skills-title {
        padding: 0.35rem;
        
     }
 
-    #skillsContainer {
+    .skills-container {
         
         grid-template-columns: repeat(6, minmax(0, 1fr));
-        grid-template-rows: 3fr 3fr 3fr;
+        grid-template-rows: auto 3fr 3fr 3fr;
         grid-auto-rows: minmax(3.5rem, auto);
         height: auto;
         width: 100%;
@@ -1763,12 +1722,11 @@ main > *,
         box-sizing: border-box;
     }
 
-    .skillContainer {
+    .skill-tile {
         text-align: center;
     }
 
-    .health,
-    #healthContainer {
+    .health-container {
         height: auto;
         min-height: 5rem;
         grid-template-rows: auto 10px;
@@ -1780,7 +1738,7 @@ main > *,
         gap: 0.75rem;
     }
 
-        .condition {
+        .condition-container {
             gap: 0.75rem;
         }
 }
@@ -1817,7 +1775,7 @@ body.subpage .panel-shell {
     min-height: 60vh;
 }
 
-body.subpage .tab-list {
+body.subpage .action-tab-list {
     flex-shrink: 0;
 }
 
@@ -1888,7 +1846,7 @@ body.subpage .invList {
 /* The shop list when it opens inside the sheet's Inventory tab.
    .panel-shell normally uses container-type: size, which makes it 0px tall
    when it sits inside another box whose height comes from its content. */
-.action .item-shop {
+.action-container .item-shop {
     container-type: normal;
     height: auto;
     min-height: 20rem;
@@ -1896,10 +1854,53 @@ body.subpage .invList {
 }
 
 /* The spell book list when it opens inside the sheet's Spell Book tab (same fix as .item-shop). */
-.action .spell-book,
-.action .spells-tab {
+.action-container .spell-book,
+.action-container .spells-tab {
     container-type: normal;
     height: auto;
     min-height: 20rem;
     margin-top: 0.5rem;
+}
+
+
+/* ---------- action buttons fill the end of each row ---------- */
+/* No padding on the top, right and bottom of the row, so the buttons can reach its edges.
+   The left padding keeps the item name off the border. */
+.action-item {
+    padding: 0 0 0 0.75rem;
+    min-height: 2.5rem;
+    overflow: hidden;            /* clips the buttons to the row's rounded corners */
+}
+
+/* The button groups and the <form> wrappers stretch from the top of the row to the bottom */
+.action-item > .action-button-container,
+.action-item > form,
+.action-button-container > form {
+    display: flex;
+    align-self: stretch;
+    margin: 0;
+}
+
+/* Buttons fill their wrapper top to bottom, with square corners so they sit flush */
+.action-item .action-button {
+    align-self: stretch;
+    min-width: 4.5rem;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* The "Equipped" label sits centered next to the Unequip button */
+.action-button-container > .equipped-item {
+    align-self: center;
+    padding: 0 0.5rem;
+}
+
+/* A disabled action button (e.g. "Prepared"): greyed out and not clickable */
+.action-button:disabled,
+.action-button:disabled:hover {
+    background-color: grey;
+    color: lightgrey;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;   /* stop the hover-grow effect */
 }

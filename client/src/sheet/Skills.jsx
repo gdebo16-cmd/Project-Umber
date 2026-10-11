@@ -5,25 +5,23 @@ import { SKILLS } from '../utils/stats';
 // Click a skill to roll a d20 + that value.
 function Skills({ character, onRoll }) {
     return (
-        <section className="skills">
-            <h2 className="tabTitle" id="skillsTitle">Skills</h2>
-            <article id="skillsContainer">
+        <section className="container skills-container" id="skills-container">
+                <p className="container-title cap-top" id="skills-title">Skills</p>
                 {SKILLS.map((skill) => {
                     const [a, b] = skill.stats;
                     const value = modOf(character[a]) + modOf(character[b]);
                     return (
                         <article
                             key={skill.id}
-                            className="skillContainer hover-grow"
-                            id={`${skill.id}Container`}
+                            className="tile skill-tile hover-grow"
+                            id={`${skill.id}-container`}
                             onClick={() => onRoll(`${skill.name} check: ${d20() + value}`)}
                         >
-                            <h3 className="skillTitle">{skill.name}</h3>
-                            <p className="skillValue" id={`${skill.id}Value`}>{signed(value)}</p>
+                            <p className="tile-component label-component skill-label cap-top" id={`${skill.id}-label`}>{skill.name}</p>
+                            <p className="tile-component value-component skill-value cap-bottom" id={`${skill.id}-value`}>{signed(value)}</p>
                         </article>
                     );
                 })}
-            </article>
         </section>
     );
 }

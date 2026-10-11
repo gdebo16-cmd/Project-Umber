@@ -13,8 +13,8 @@ function InventoryPage() {
     return (
         <>
             <header>
-                <h1 id="inventoryTitle">Inventory</h1>
-                <p id="inventoryLink"><Link to={`/characters/${id}`}>Back to character sheet</Link></p>
+                <h1 id="inventory-title">Inventory</h1>
+                <p id="inventory-link"><Link to={`/characters/${id}`}>Back to character sheet</Link></p>
             </header>
             <main className="subpage-main">
                 <ItemShop characterId={id} onDone={() => navigate(`/characters/${id}`)} />

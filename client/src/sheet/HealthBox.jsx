@@ -22,26 +22,23 @@ function HealthBox({ id, hp, max, onHpChange }) {
     };
 
     return (
-        <section className='health'>
-            <article id='hpButtonContainer'>
-                <button type='button' id='healButton' className='hover-grow' onClick={() => change('heal')}>Heal</button>
-                <input type='number' id='hpInput' min='0' value={amount} onChange={(e) => setAmount(e.target.value)} />
-                <button type='button' id='damageButton' className='hover-grow' onClick={() => change('damage')}>Damage</button>
+        <section className='container health-container' id='health-container'>
+            <article className='tile health-button-tile'>
+                <button type='button' id='heal-button' className='tile-component button-tile-component button-component hover-grow' onClick={() => change('heal')}>Heal</button>
+                <input type='number' id='hp-input' className='tile-component button-tile-component input-component' min='0' value={amount} onChange={(e) => setAmount(e.target.value)} />
+                <button type='button' id='damage-button' className='tile-component button-tile-component button-component hover-grow' onClick={() => change('damage')}>Damage</button>
             </article>
-            <article id='HpLabelContainer' className='hpCol'>
-                <p id='currHpTitle' className='hpLabel'>Current HP</p>
-                <p className={`hpNum${hp === 0 ? ' hpNum--fallen' : ''}`} id='currHpValue'>{hp === 0 ? 'You Have Fallen!' : hp}</p>
+            <article className='tile current-hp-tile'>
+                <p className='tile-component label-component hp-label-component' id='current-hp-label'>Current HP</p>
+                <p className='tile-component value-component hp-value-component' id={hp === 0 ? 'current-hp-value--fallen' : 'current-hp-value'}>{hp === 0 ? 'You Have Fallen!' : hp}</p>
             </article>
-            <article id='HpValueContainer' className='hpCol'>
-                <p id='maxHpTitle' className='hpLabel'>Max HP</p>
-                <p className='hpNum' id='maxHpValue'>{max}</p>
+            <article className='tile max-hp-tile'>
+                <p className='tile-component label-component hp-label-component' id='max-hp-label'>Max HP</p>
+                <p className='tile-component value-component hp-value-component' id='max-hp-value'>{max}</p>
             </article>
-            <article className='hp-bar'>
-                <div className='hp-fill' style={{ width: `${Math.min(100, Math.max(0, max ? (hp / max) * 100 : 0))}%` }}>
-            </div>
+            <article className='hp-bar-tile'>
+                <div className='tile-component bar-component' id='hp-bar-fill' style={{ width: `${Math.min(100, Math.max(0, max ? (hp / max) * 100 : 0))}%` }}></div>
             </article>
-                
-
         </section>
     );
 }

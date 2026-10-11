@@ -58,12 +58,12 @@ function CharacterSheet() {
                     active={sheetTab}
                     onChange={setSheetTab}
                     prefix="sheet-"
-                    className="sheet-tabs tab-list"
+                    className="sheet-tabs action-tab-list"
                     hidden
                 />
 
                 <section role="tabpanel" id="sheet-panel-stats" className="sheet-panel" hidden={sheetTab !== 'stats'}>
-                    <section className="base-stats">
+                    <section className="container" id="stat-container">
                         {STATS.map((s) => (
                             <StatBox key={s.key} label={s.label} score={character[s.key]} onRoll={showRoll} />
                         ))}

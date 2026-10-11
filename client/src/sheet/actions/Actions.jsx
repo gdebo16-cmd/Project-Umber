@@ -23,56 +23,81 @@ function Actions({ character, hp, ownedWeapons, onRoll }) {
 
     return (
         <>
-            <h3 className="actionTitle cap-top">Physical Actions</h3>
-            <ul id="actionsList">
-                {actions.map((a) => (
-                    <li key={a.key} className="actionItem">
-                        <div className="actionLabelContainer">
-                            <span className="actionLabel">{a.name}</span>
-                        </div>
-                        <div className="actionButtonContainer">
-                            <button type="button" className="toHitButton hover-grow" onClick={rollHit}>
-                                {signed(toHit)}
+            <article className="tile action-tile physical-actions-tile"> 
+                <h3 className="tile-component title-component action-title" id="physical-actions-title">Physical Actions</h3>
+                <ul className="action-list" id="physical-actions-list">
+                    {actions.map((a) => (
+                        <li key={a.key} className="tile-component action-tile-component action-item" id="physical-action-item">
+                            <span className="tile-component label-component action-label" id="physical-action-label">{a.name}</span>
+                            <div className="action-button-container">
+                                <button type="button" className="tile-component action-button to-hit-component to-hit-button hover-grow" id="physical-action-to-hit-button" onClick={rollHit}>
+                                    {signed(toHit)}
+                                </button>
+                                <button type="button" className="tile-component action-button damage-component damage-button hover-grow" id="physical-action-damage-button" onClick={() => rollDamage(a)}>
+                                    {a.dice}{a.dmgMod ? signed(a.dmgMod) : ''}
+                                </button>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </article>
+            
+            <article className="tile action-tile magical-actions-tile">
+                <h3 className="tile-component title-component action-title" id="magical-actions-title">Magical Actions</h3>
+                <ul className='action-list' id='magical-actions-list'>
+                    <li key={signed.key} className='tile-component action-tile-component action-item' id='magical-action-item'>
+                        <span className='tile-component label-component action-label' id='magical-action-label'>Action Spell</span>
+                        <div className="action-button-container">
+                            <button type="button" className="action-button tile-component to-hit-component to-hit-button hover-grow" id="magical-action-to-hit-button" onClick={rollHit}>
+                            +2
                             </button>
-                            <button type="button" className="damageButton hover-grow" onClick={() => rollDamage(a)}>
-                                {a.dice}{a.dmgMod ? signed(a.dmgMod) : ''}
+                            <button type="button" className="action-button tile-component damage-component damage-button hover-grow" id="magical-action-damage-button" onClick={() => rollDamage({dice: '2d6', dmgMod: 2})}>
+                            2d6 + 2
                             </button>
                         </div>
                     </li>
-                ))}
-            </ul>
-            <h3 className="actionTitle cap-top">Magical Actions</h3>
-            <ul id='spellActionsList'>
-                <li key={signed.key} className='spellActionItem'>
-                    <div className='spellActionLabelContainer'>
-                        <span className='spellActionLabel'>Action Spell</span>
-                    </div>
-                </li>
-            </ul>
-            <h3 className="actionTitle cap-top">Bonus Actions</h3>
-            <ul id='bonusActionsList'>
-                <li key={signed.key} className='spellActionItem'>
-                    <div className='spellActionLabelContainer'>
-                        <span className='spellActionLabel'>Bonus Action</span>
-                    </div>
-                </li>
-            </ul>
-            <h3 className="actionTitle cap-top">Reactions</h3>
-            <ul id='reactionsActionsList'>
-                <li key={signed.key} className='spellActionItem'>
-                    <div className='spellActionLabelContainer'>
-                        <span className='spellActionLabel'>Reaction</span>
-                    </div>
-                </li>
-            </ul>
-            <h3 className="actionTitle cap-top">Class Abilities</h3>
-            <ul id='classActionsList'>
-                <li key={signed.key} className='spellActionItem'>
-                    <div className='spellActionLabelContainer'>
-                        <span className='spellActionLabel'>Class Action</span>
-                    </div>
-                </li>
-            </ul>
+                </ul>
+            </article>
+            <article className="tile action-tile bonus-actions-tile">
+                <h3 className="tile-component title-component action-title" id="bonus-actions-title">Bonus Actions</h3>
+                <ul className="action-list" id='bonus-actions-list'>
+                    <li key={signed.key} className='tile-component action-tile-component action-item' id='bonus-action-item'>
+                        <span className='tile-component label-component action-label' id='bonus-action-label'>Bonus Action</span>
+                        <div className="action-button-container">
+                            <button type="button" className="tile-component to-hit-component to-hit-button hover-grow" id="bonus-action-to-hit-button" onClick={rollHit}>
+                            +3
+                            </button>
+                            <button type="button" className="tile-component damage-component damage-button hover-grow" id="bonus-action-damage-button" onClick={() => rollDamage({dice: '1d6', dmgMod: 1})}>
+                            1d6 + 1
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </article>
+            <article className="tile action-tile reactions-tile">
+                <h3 className="tile-component title-component action-title" id="reactions-title">Reactions</h3>
+                <ul className="action-list" id='reactions-list'>
+                    <li key={signed.key} className='tile-component action-tile-component action-item' id='reaction-item'>
+                        <span className='tile-component label-component action-label' id='reaction-label'>Reaction</span>
+                        <div className="action-button-container">
+                            <button type="button" className="tile-component to-hit-component to-hit-button hover-grow" id="reaction-to-hit-button" onClick={rollHit}>
+                            +5
+                            </button>
+                            <button type="button" className="tile-component damage-component damage-button hover-grow" id="reaction-damage-button" onClick={() => rollDamage({dice: '2d6', dmgMod: 2})}>
+                            2d6 + 2
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </article>
+            <article className="tile action-tile class-abilities-tile">
+                <h3 className="tile-component label-component action-title" id="class-abilities-label">Class Abilities</h3>
+                <ul className="action-list" id='class-abilities-list'>
+                    <li key={signed.key} className='tile-component action-tile-component action-item' id='class-ability-item'>
+                        <span className='tile-component label-component action-label' id='class-ability-label'>Class Action</span>
+                    </li>
+                </ul>
+            </article>
         </>
     );
 }

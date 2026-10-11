@@ -48,61 +48,70 @@ function InventoryTab({ characterId, ownedArmor, ownedWeapons, onArmorChange, on
         return <ItemShop characterId={characterId} onDone={finishBrowsing} />;
     }
     return (
-        <>
-            <h2 className="tabTitle" id="inventoryTitle">Inventory</h2>
-            <p id="inventoryLink"><button type="button" className="hover-grow" onClick={() => setBrowsing(true)}>Add Armor &amp; weapons</button></p>
+        <section id="inventory-container">
+            <article className='title-tile'>
+                <h3 className="action-title" id="inventory-title">Inventory</h3>
+                <button type="button" className="link-button hover-grow" onClick={() => setBrowsing(true)}>Add Armor &amp; weapons</button>
+            </article>
             {error && <p>{error}</p>}
 
-            <h3 className="invTitle cap-top" id="armorTitle">Armor</h3>
-            {ownedArmor.length === 0 ? (
-                <p>No armor yet.</p>
-            ) : (
-                <ul id="armorList" className="invList cap-bottom">
-                    {ownedArmor.map((a) => (
-                        <li key={a.id}>
-                            {a.name} ({a.armor_type}, +{a.ac_bonus} AC)
-                            {a.is_equipped ? (
-                                <>
-                                    <em className="equippedItem">Equipped</em>
-                                    <form className="removeItemForm" onSubmit={(e) => { e.preventDefault(); armorAction(a.id, 'unequip'); }}>
-                                        <button type="submit" className="unequipItemButton hover-grow">Unequip</button>
-                                    </form>
-                                </>
-                            ) : (
-                                <form className="equipItemForm" onSubmit={(e) => { e.preventDefault(); armorAction(a.id, 'equip'); }}>
-                                        <button type="submit" className="equipItemButton hover-grow">Equip</button>
-                                    </form>
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            )}
+            {/* Same shape as the spell levels: one wrapper li per group, with a title on top and the list under it */}
+            <ul className="action-list spellList">
+                <li className="action-item spell-slot">
+                    <span className="action-title" id="armorTitle">Armor</span>
+                    <ul id="armorList" className="action-list">
+                        {ownedArmor.length === 0 ? (
+                            <li className="action-item spell">No armor yet.</li>
+                        ) : (
+                            ownedArmor.map((a) => (
+                                <li className="action-item spell" key={a.id}>
+                                    {a.name} ({a.armor_type}, +{a.ac_bonus} AC)
+                                    {a.is_equipped ? (
+                                        <div className="action-button-container">
+                                            <em className="equipped-item">Equipped</em>
+                                            <form className="removeItemForm" onSubmit={(e) => { e.preventDefault(); armorAction(a.id, 'unequip'); }}>
+                                                <button type="submit" className="action-button hover-grow">Unequip</button>
+                                            </form>
+                                        </div>
+                                    ) : (
+                                        <form className="equipItemForm" onSubmit={(e) => { e.preventDefault(); armorAction(a.id, 'equip'); }}>
+                                            <button type="submit" className="action-button hover-grow">Equip</button>
+                                        </form>
+                                    )}
+                                </li>
+                            ))
+                        )}
+                    </ul>
+                </li>
 
-            <h3 className="invTitle cap-top" id="weaponsTitle">Weapons</h3>
-            {ownedWeapons.length === 0 ? (
-                <p>No weapons yet.</p>
-            ) : (
-                <ul id="weaponsList" className="invList cap-bottom">
-                    {ownedWeapons.map((w) => (
-                        <li key={w.id}>
-                            {w.name} ({w.damage_dice} {w.category})
-                            {w.is_equipped ? (
-                                <>
-                                    <em className="equippedItem">Equipped</em>
-                                    <form className="removeItemForm" onSubmit={(e) => { e.preventDefault(); weaponAction(w.id, 'unequip'); }}>
-                                        <button type="submit" className="unequipItemButton hover-grow">Unequip</button>
-                                    </form>
-                                </>
-                            ) : (
-                                <form className="equipItemForm" onSubmit={(e) => { e.preventDefault(); weaponAction(w.id, 'equip'); }}>
-                                        <button type="submit" className="equipItemButton hover-grow">Equip</button>
-                                    </form>
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </>
+                <li className="action-item spell-slot">
+                    <span className="action-title" id="weaponsTitle">Weapons</span>
+                    <ul id="weaponsList" className="action-list">
+                        {ownedWeapons.length === 0 ? (
+                            <li className="action-item spell">No weapons yet.</li>
+                        ) : (
+                            ownedWeapons.map((w) => (
+                                <li className="action-item spell" key={w.id}>
+                                    {w.name} ({w.damage_dice} {w.category})
+                                    {w.is_equipped ? (
+                                        <div className="action-button-container">
+                                            <em className="equipped-item">Equipped</em>
+                                            <form className="removeItemForm" onSubmit={(e) => { e.preventDefault(); weaponAction(w.id, 'unequip'); }}>
+                                                <button type="submit" className="action-button hover-grow">Unequip</button>
+                                            </form>
+                                        </div>
+                                    ) : (
+                                        <form className="equipItemForm" onSubmit={(e) => { e.preventDefault(); weaponAction(w.id, 'equip'); }}>
+                                            <button type="submit" className="action-button hover-grow">Equip</button>
+                                        </form>
+                                    )}
+                                </li>
+                            ))
+                        )}
+                    </ul>
+                </li>
+            </ul>
+        </section>
     );
 }
 

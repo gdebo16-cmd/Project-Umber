@@ -29,3 +29,6 @@ export const roll4d6DropLowest = () => {
 
 // "strength" -> "Strength"
 export const capitalize = (text) => (text || '').replace(/^\w/, (c) => c.toUpperCase());
+
+
+export const proficiencyBonus = (level) => 2 + Math.floor((level - 1) / 4);
