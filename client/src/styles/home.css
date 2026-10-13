@@ -794,3 +794,32 @@ li:hover .dropDown {
         box-shadow: none;
     }
 }
+
+
+/* Mobile: keep character cards inside their tile */
+@media (max-width: 768px) {
+    .tile-list {
+        margin: 0;
+        padding: 2%;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .character-tile {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .char-tile {
+        grid-template-columns: repeat(5, minmax(0, 1fr)); /* columns can shrink below their text width */
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .char-tile > * {
+        min-width: 0;
+        box-sizing: border-box;
+        overflow-wrap: anywhere; /* long names and classes wrap instead of pushing out */
+    }
+}
