@@ -944,3 +944,12 @@ li:hover .dropDown {
         min-height: max-content;
     }
 }
+
+
+/* Mobile: stretch the fixed background up under the status bar so no bare band shows */
+@media (max-width: 768px) {
+    html::before {
+        top: calc(-1 * env(safe-area-inset-top));
+        height: calc(100lvh + env(safe-area-inset-top));
+    }
+}
