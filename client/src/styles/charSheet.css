@@ -1980,3 +1980,69 @@ body.subpage .invList {
         min-width: 0;
         white-space: nowrap;
     }
+
+
+/* Mobile: same title / status bar / background treatment as the home page */
+@media (max-width: 768px) {
+    html {
+        padding-top: 0 !important; /* overrides the safe-area padding in index.html */
+        background-color: var(--bgc-title, var(--bg-color-1));
+    }
+
+    body {
+        background-image: none;
+        min-height: 100lvh;
+    }
+
+    /* title bar is solid title color and reaches up under the status bar */
+    header,
+    #siteTitle {
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    #siteTitle {
+        background-color: var(--bgc-title, var(--bg-color-3));
+        padding-top: calc(env(safe-area-inset-top) + 0.5rem);
+    }
+
+    /* fixed background picture, zoomed so the dark bar at the top of the image is cropped */
+    html::before {
+        content: '';
+        position: fixed;
+        left: 0;
+        width: 100%;
+        top: calc(-1 * env(safe-area-inset-top));
+        height: calc(100lvh + env(safe-area-inset-top));
+        z-index: -1;
+        pointer-events: none;
+        background-image: var(--background);
+        background-size: auto 120%;
+        background-position: center bottom;
+        background-repeat: no-repeat;
+    }
+
+    /* solid strip under the status bar, then soft fades at the top and bottom edges */
+    html::after {
+        content: '';
+        position: fixed;
+        left: 0;
+        width: 100%;
+        top: calc(-1 * env(safe-area-inset-top));
+        height: calc(100lvh + env(safe-area-inset-top));
+        z-index: -1;
+        pointer-events: none;
+        background: linear-gradient(to bottom,
+            var(--bgc-title, rgb(65, 37, 157)) 0,
+            var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
+            transparent calc(env(safe-area-inset-top) + 4rem),
+            transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
+            var(--bgc-title, rgb(65, 37, 157)) 100%);
+    }
+
+    footer {
+        display: none;
+    }
+}
