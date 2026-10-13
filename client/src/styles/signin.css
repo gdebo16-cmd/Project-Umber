@@ -667,3 +667,12 @@ footer {
         height: calc(100lvh + env(safe-area-inset-top));
     }
 }
+
+
+/* Mobile: zoom the background so the dark bar baked into the top of the image is cropped off */
+@media (max-width: 768px) {
+    html::before {
+        background-size: auto 120%;
+        background-position: center bottom;
+    }
+}
