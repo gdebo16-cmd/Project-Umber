@@ -696,3 +696,20 @@ footer {
             var(--status-solid, rgb(109, 83, 222)) 100%);
     }
 }
+
+
+/* Mobile: iOS Safari colors its bar from what is painted at the top, so paint a solid title-color strip there */
+@media (max-width: 768px) {
+    html {
+        background-color: var(--bgc-title, var(--bg-color-1));
+    }
+
+    html::after {
+        background: linear-gradient(to bottom,
+            var(--bgc-title, rgb(65, 37, 157)) 0,
+            var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
+            transparent calc(env(safe-area-inset-top) + 4rem),
+            transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
+            var(--bgc-title, rgb(65, 37, 157)) 100%);
+    }
+}
