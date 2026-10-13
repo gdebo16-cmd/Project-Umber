@@ -928,3 +928,50 @@ li:hover .dropDown {
             var(--bgc-title, rgb(65, 37, 157)) 100%);
     }
 }
+
+
+/* Home tabs: hidden on desktop, on mobile they switch between the two sections */
+.home-tabs {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .home-tabs {
+        display: flex;
+        gap: 0;
+        margin: 0.75rem 2% 0;
+    }
+
+    .home-tab {
+        flex: 1;
+        padding: 0.6rem 0.25rem;
+        font: inherit;
+        font-size: clamp(0.8rem, 3.6vw, 1rem);
+        color: var(--txt-color-1);
+        background-color: var(--bgc-low);
+        border: var(--tileBorder);
+        border-bottom: none;
+        border-radius: 10px 10px 0 0;
+        cursor: pointer;
+    }
+
+    .home-tab.active {
+        background-color: var(--bgc-top);
+        color: var(--accent);
+    }
+
+    /* only the picked section shows; the tab already names it, so drop its title bar */
+    main > .container:not(.tab-active) {
+        display: none !important;
+    }
+
+    main > .container.tab-active {
+        margin-top: 0 !important;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    main > .container.tab-active > .title {
+        display: none;
+    }
+}

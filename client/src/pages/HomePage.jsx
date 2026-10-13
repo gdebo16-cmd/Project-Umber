@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router';
 import useFetch from '../hooks/useFetch';
 import usePageStyle from '../hooks/usePageStyle';
@@ -7,6 +8,7 @@ import SiteNav from '../components/SiteNav';
 function HomePage() {
     usePageStyle(homeCss);
     const { data, setData, loading, error } = useFetch('/api/home');
+    const [homeTab, setHomeTab] = useState('current'); // which section shows on mobile
 
     const deleteCharacter = async (e, ch) => {
         e.preventDefault();   // the button sits inside the card's link, so don't follow the link
@@ -41,7 +43,11 @@ function HomePage() {
             </header>
             <SiteNav />
             <main>
-                <section id="current-character-container" className="container">
+                <nav className="home-tabs">
+                    <button type="button" className={homeTab === 'current' ? 'home-tab active' : 'home-tab'} onClick={() => setHomeTab('current')}>Current Characters</button>
+                    <button type="button" className={homeTab === 'unfinished' ? 'home-tab active' : 'home-tab'} onClick={() => setHomeTab('unfinished')}>Unfinished Work</button>
+                </nav>
+                <section id="current-character-container" className={homeTab === 'current' ? 'container tab-active' : 'container'}>
                     <article className="title" id="current-character-title">
                         <h2 className="title-text">Current Characters</h2>
                     </article>
@@ -74,7 +80,7 @@ function HomePage() {
                         <p className="tile-text">No Campaigns Planned</p>
                     </article>
                 </section>
-                <section id="unfinished-character-container" className="container">
+                <section id="unfinished-character-container" className={homeTab === 'unfinished' ? 'container tab-active' : 'container'}>
                     <article className="title" id="unfinished-character-title">
                         <h2 className="title-text">Unfinished Work</h2>
                     </article>
