@@ -34,9 +34,8 @@ const pickDisplay = async(e) => {
                 <h1>Profile</h1>  
             </header>
             <SiteNav />
-            <main>
+            <main id="profile-main">
                 <section>
-                    
                         <article className="formSectionContainer profile-tile" id="profile-username-container">
                             <label id="theme-label" className="tile-label cap-top" htmlFor="theme-select">Color scheme</label>
                             <select className="tile-value cap-bottom" id="theme-value" aria-label="Color scheme" defaultValue={localStorage.getItem('siteTheme') || 'default'} onChange={pickTheme}>
@@ -53,9 +52,6 @@ const pickDisplay = async(e) => {
                                 ))}
                             </select>
                         </article>
-                </section>
-                <section>
-                    
                         <article className="formSectionContainer profile-tile" id="profile-username-container">
                             <label id="img-label" className="tile-label cap-top" htmlFor="img-input">Character Image</label>
                             <img src={'/images/default-avatar.png'} alt="Avatar" className='tile-value cap-bottom'/>

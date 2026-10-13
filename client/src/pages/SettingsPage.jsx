@@ -40,7 +40,7 @@ function SettingsPage() {
                 <h1>Account Settings</h1>
             </header>
             <SiteNav />
-            <main>
+            <main id="profile-main">
                 <section>
                     <form onSubmit={submit}>
                         <article className="formSectionContainer profile-tile" id="profile-username-container">

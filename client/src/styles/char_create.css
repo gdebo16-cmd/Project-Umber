@@ -170,10 +170,10 @@ header {
                     color: var(--txt-color-1);
                     box-shadow: var(--bs1);
                     transition: all 0.5s ease;
-                    font-family: "Cinzel Decorative", serif;
-                    font-weight: 700;
+                    font: inherit;
                     font-style: normal;
                     width: 100%;
+                    padding: 3%;
                 }
                     #submit:hover {
                         transform: scale(1.05);

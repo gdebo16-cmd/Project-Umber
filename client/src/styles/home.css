@@ -10,13 +10,24 @@ main {
     backdrop-filter: var(--blur1);
     
     display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         grid-template-rows: 1fr;
         grid-template-areas:
-            'b c d';
+            'b c';
         place-items: center;
         align-items: stretch;
         justify-items: stretch;
+}
+
+#profile-main {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--bg-color-1) transparent;
+    scrollbar-gutter: stable;
+    overscroll-behavior: contain;
 }
 
 ul, li, a {
@@ -60,7 +71,6 @@ body {
 
 img {
     border: var(--tileBorder);
-    border-radius: var(--tile);
 }
 
 select { 
@@ -108,7 +118,6 @@ header {
     margin: 0;
     padding: 0;
     border: var(--tileBorder);
-    border-radius: var(--tile);
 }
 
 .drop-button {
@@ -221,17 +230,6 @@ li:hover .dropDown {
     transform: translateX(-50%);
 }
 
-#title-container {
-    grid-area: a;
-}
-
-#look-container {
-    grid-area: b;
-}
-
-#info-container {
-    grid-area: c;
-}
 
 .container{
     background-color: var(--bg-color-1);
@@ -245,8 +243,7 @@ li:hover .dropDown {
     text-align: center;
 }
 
-
-.micro-tile {
+.profile-tile {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -282,19 +279,53 @@ li:hover .dropDown {
     width: 100%;
     min-width: 0;
     margin: 0;
-    border-radius: var(--lowrad);
+
     box-shadow: var(--bs2);
 }
 
 
- #siteTitle {
-        background-color: var(--bg-color-1);   
-        color: var(--txt-color-1);
-        text-align: center;
-        padding: 2%;
-        margin: 0;
-        
-    }
+.profile-tile {
+    text-align: center;
+    font-size: 120%;
+    border: var(--tileBorder);
+    border-radius: var(--tile);
+    box-shadow: var(--bs2);
+    margin: 5%;
+    
+}
+.profile-label {
+    border: var(--tileBorder);
+    border-radius: var(--toprad);
+    box-shadow: var(--bs2);
+    padding: 4%;
+    background-color: var(--bgc-top);
+    font: inherit;
+}
+.profile-value {
+    border: var(--tileBorder);
+    border-radius: var(--lowrad);
+    box-shadow: var(--bs2);
+    padding: 4%;
+    background-color: var(--bgc-low);
+    color: var(--txt-color-1);
+    text-align: center;
+    font-size: var(--fontS1);
+}
+
+#password {
+    background-color: var(--bgc-low);
+}
+
+.profile-button {
+    border: var(--tileBorder);
+    background-color: var(--bg-color-1);
+    color: var(--txt-color-1);
+    border-radius: var(--rad2);
+    box-shadow: var(--bs2);
+    padding: 4%;
+    font: inherit;
+
+}
 
 
     #currentCharacters {
@@ -341,6 +372,7 @@ li:hover .dropDown {
             overscroll-behavior: contain;
             scrollbar-width: thin;
             scrollbar-color: transparent transparent;
+            
         }
             #current-character-tile:hover {
                 scrollbar-color: rgba(255, 255, 255, 0.45) transparent;
@@ -380,11 +412,17 @@ li:hover .dropDown {
                 height: var(--h1);
                 min-height: 0;
                 margin-bottom: 3%;
+                box-shadow: var(--bs2);
+                border-radius: var(--tile);
+                border: var(--tileBorder);
             }
 
 
                 .character-name {
                     grid-area: a;
+                    display: flex;
+                    justify-content: start;
+                    align-items: center;
                     position: relative;
                     padding: 4%;
                     border-radius: 10px 0 0 0;
@@ -394,15 +432,6 @@ li:hover .dropDown {
                         
                 }
 
-                .character-name::after {
-                    content: '';
-                    position: absolute;
-                    top: 100%;            /* sit just below the name bar */
-                    left: 0;            /* the picture's right edge (2 of your 5 columns) */
-                    width: 10px;          /* same size as the picture's border-radius */
-                    height: 10px;
-                    background-color: var(--bgc-top);  /* paints the name color into the gap */
-                }
 
                 .character-image {
                     grid-area: d;
@@ -411,7 +440,8 @@ li:hover .dropDown {
                     max-height: none;
                     object-fit: cover;
                     align-self: stretch;
-                    border-radius: 10px; 
+                    border: 4px solid var(--tileBorder);
+                    border-radius: 0 0 0 10px;
                     z-index: 1;
                 }
 
@@ -419,83 +449,60 @@ li:hover .dropDown {
                         grid-area: b;
 
                         display: flex;
-                            flex-direction: column;
-                            justify-content: center;
-                            
-                        border-left: none;
+                            align-items: center;
                         text-align: center;
                         margin: var(--mar1);
-                        padding: var(--pad1);
+                        padding: var(--pad2);
                         text-align: left;
                         border: var(--tileBorder);
-                        background-color: var(--bgc-low);
+                        background-color: var(--bg-color-1);
                         backdrop-filter: var(--blur1);
                         
                     }
 
-                    .character-race::after {
-                        content: '';
-                        position: absolute;
-                        top: 100%;
-                        left: 0;
-                        width: 10px;
-                        height: 10px;
-                        background-color: var(--bgc-low);
-                        backdrop-filter: var(--blur1);
-                    }
-
                     .character-class {
-                        display: flex;
-                            flex-direction: column;
-                            justify-content: center;
-
                         grid-area: c;
+                        display: flex;
+                            align-items: center;
                         text-align: center;
                         margin: var(--mar1);
-                        padding: var(--pad1);
+                        padding: var(--pad2);
                         text-align: left;
                         border: var(--tileBorder);
-                        background-color: var(--bgc-low);
+                        background-color: var(--bg-color-1);
                         backdrop-filter: var(--blur1);
                         
                     }
 
                     .character-subclass {
-                        display: flex;
-                            flex-direction: column;
-                            justify-content: center;
+
                         grid-area: e;
+                        display: flex;
+                            align-items: center;
                         text-align: center;
                         margin: var(--mar1);
-                        padding: var(--pad1);
+                        padding: var(--pad2);
                         text-align: left;
                         border: var(--tileBorder);
-                        border-radius: 0 0 10px 0;
-                        background-color: var(--bgc-low);
+                        background-color: var(--bg-color-1);
                         backdrop-filter: var(--blur1);
-                        border-left: none;
+                        border-radius: 0 0 10px 0;
                     }
 
-                    .character-subclass::after {
-                        content: '';
-                        position: absolute;
-                        right: 100%;
-                        top: 85%;
-                        width: 10px;
-                        height: 10px;
-                        background-color: var(--bgc-low);
-                        backdrop-filter: var(--blur1);
-                    }
+
 
                     .character-delete-button {
                         grid-area: f;
                         text-align: center;
                         margin: var(--mar1);
                         padding: var(--pad1);
-                        border: var(--tileBorder);
+                        border: 2px solid var(--tileBorder);
+                        background-color: var(--bg-color-5);
+                        color: var(--txt-color-1);
                         border-radius: 0 10px 0 0;
                         backdrop-filter: var(--blur1);
                         transition: all 0.5s ease;
+                        font: inherit;
                     } 
 
                     .character-delete-button:hover {
@@ -586,18 +593,19 @@ li:hover .dropDown {
 
      #siteTitle {
         display: flex;
+        font-size: var(--fontS1);
         flex-direction: row;
-        justify-content: space-between;
-        align-items: stretch;
-        padding: 5%;
-        margin: 0;
+        justify-content: center;
+        align-items: center;
         font-style: var(--fontS1);
         font-weight: var(--fontW1);
         color: var(--title-color);
         background-color: var(--bg-color-1);
-        border-radius: var(--tile);
+        border-radius: none;
         border: var(--tileBorder);
         box-shadow: var(--bs2);
+        padding: 2%;
+        margin: 0;
     }
     
     h1 {
@@ -614,10 +622,6 @@ li:hover .dropDown {
         border: none;
         box-shadow: none;
     }
-
-    
-
-
 
 
     footer {
@@ -764,221 +768,141 @@ li:hover .dropDown {
             transform: scale(0.95);
             color: var(--accent);
         }
-    }
+
+        #siteTitle h1 {
+            font-size: clamp(1.75rem, 8vw, 5rem);
+            line-height: 1;
+            margin: 0;
+        }
+
+        header,
+        #siteTitle,
+        #navBox,
+        #navContainer {
+            border: none;
+            border-radius: 0;
+            margin: 0;
+        }
+    
+        #siteTitle {
+            box-shadow: none;
+        }
+    
+        html {
+            padding-top: 0 !important;
+        }
+       
+        html::after {
+            content: '';
+            position: fixed;
+            left: 0;
+            width: 100%;
+            top: calc(-1 * env(safe-area-inset-top));
+            height: calc(100lvh + env(safe-area-inset-top));
+            z-index: -1;
+            pointer-events: none;
+            background: linear-gradient(to bottom,
+                var(--status-solid, rgb(109, 83, 222)) 0,
+                transparent calc(env(safe-area-inset-top) + 4rem),
+                transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
+                var(--status-solid, rgb(109, 83, 222)) 100%);
+        }
+    
+        #current-character-container,
+        #unfinished-character-container {
+            height: auto;
+            min-height: 0;
+        }
+    
+        #current-character-tile,
+        #unfinished-character-tile {
+            height: auto;
+            max-height: none;
+            overflow: visible;
+            display: block;
+        }
+    
+        .char-tile {
+            height: auto;
+            grid-template-rows: auto repeat(3, minmax(2.5rem, auto)); /* rows grow to fit text */
+        }
+    
+        .tile-list {
+            margin: 0;
+            padding: 2%;
+            box-sizing: border-box;
+            width: 100%;
+        }
+    
+        .character-tile {
+            min-width: 0;
+            max-width: 100%;
+        }
+    
+        .char-tile {
+            grid-template-columns: repeat(5, minmax(0, 1fr)); /* columns can shrink below their text width */
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            min-width: 0;
+            box-sizing: border-box;
+            overflow-wrap: anywhere; 
+        }
     
     
+        .tile-list,
+        .character-tile,
+        .char-tile {
+            flex-shrink: 0;
+            height: auto;
+            min-height: max-content;
+        }
     
-
+        header {
+            padding-top: 0; /* the empty strip came from padding on the see-through header */
+        }
     
-
-/* Welcome text sized to match the 100px logo */
-#siteTitle h1 {
-    font-size: clamp(1.75rem, 8vw, 5rem);
-    line-height: 1;
-    margin: 0;
-}
-
-
-/* Mobile: header, title and nav run edge to edge with no seams or rounded corners */
-@media (max-width: 768px) {
-    header,
-    #siteTitle,
-    #navBox,
-    #navContainer {
-        border: none;
-        border-radius: 0;
-        margin: 0;
+        #siteTitle {
+            padding-top: calc(env(safe-area-inset-top) + 0.5rem); /* title color fills the status bar area */
+        }
+    
+        body {
+            height: auto;
+            max-height: none;
+            min-height: 100lvh; /* full screen, including under Safari's toolbar */
+        }
+    
+        footer {
+            padding-bottom: calc(env(safe-area-inset-bottom) + 0.75rem); /* footer color fills the home-bar area */
+        }
+    
+        body {
+            height: 100dvh; /* the real visible height on phones, unlike 100vh */
+            max-height: 100dvh;
+        }
+    
+        header {
+            padding-top: env(safe-area-inset-top);
+        }
+    
+        footer {
+            padding-bottom: max(1%, env(safe-area-inset-bottom));
+        }
+    
+    
+        .char-tile .character-name {
+            font-size: clamp(0.9rem, 4.5vw, 1.25rem);
+        }
+    
+        .char-tile .character-race,
+        .char-tile .character-class,
+        .char-tile .character-subclass,
+        .char-tile .character-delete-button {
+            font-size: clamp(0.65rem, 3.2vw, 0.95rem);
+            overflow: hidden;
+        }
+        
     }
+    
+     
 
-    #siteTitle {
-        box-shadow: none;
-    }
-}
-
-
-/* Mobile: keep character cards inside their tile */
-@media (max-width: 768px) {
-    .tile-list {
-        margin: 0;
-        padding: 2%;
-        box-sizing: border-box;
-        width: 100%;
-    }
-
-    .character-tile {
-        min-width: 0;
-        max-width: 100%;
-    }
-
-    .char-tile {
-        grid-template-columns: repeat(5, minmax(0, 1fr)); /* columns can shrink below their text width */
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-
-    .char-tile > * {
-        min-width: 0;
-        box-sizing: border-box;
-        overflow-wrap: anywhere; /* long names and classes wrap instead of pushing out */
-    }
-}
-
-
-/* Mobile: header and footer hug the screen edges. Fill the notch / home-bar areas with their own color instead of empty space */
-@media (max-width: 768px) {
-    html {
-        padding-top: 0 !important; /* overrides the safe-area padding in index.html */
-    }
-
-    body {
-        height: 100dvh; /* the real visible height on phones, unlike 100vh */
-        max-height: 100dvh;
-    }
-
-    header {
-        padding-top: env(safe-area-inset-top);
-    }
-
-    footer {
-        padding-bottom: max(1%, env(safe-area-inset-bottom));
-    }
-}
-
-
-/* Mobile v2: card stays inside Current Characters; background reaches every screen edge */
-@media (max-width: 768px) {
-    #current-character-container,
-    #unfinished-character-container {
-        height: auto;
-        min-height: 0;
-    }
-
-    #current-character-tile,
-    #unfinished-character-tile {
-        height: auto;
-        max-height: none;
-        overflow: visible;
-    }
-
-    .char-tile {
-        height: auto;
-        grid-template-rows: auto repeat(3, minmax(2.5rem, auto)); /* rows grow to fit text */
-    }
-}
-
-
-@media (max-width: 768px) {
-    /* A fixed layer behind everything, sized to the LARGEST viewport so it runs under the status bar and Safari's toolbar */
-    html::before { /* on html, because body's backdrop-filter would trap a fixed layer */
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100lvh;
-        z-index: -1;
-        background-image: var(--background);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        pointer-events: none;
-    }
-
-    body {
-        background-image: none; /* the fixed layer above replaces it */
-    }
-}
-
-
-/* iPhone: character card text shrinks with the screen so wider fonts can't push it out */
-@media (max-width: 768px) {
-    .char-tile .character-name {
-        font-size: clamp(0.9rem, 4.5vw, 1.25rem);
-    }
-
-    .char-tile .character-race,
-    .char-tile .character-class,
-    .char-tile .character-subclass,
-    .char-tile .character-delete-button {
-        font-size: clamp(0.65rem, 3.2vw, 0.95rem);
-        overflow: hidden;
-    }
-}
-
-
-/* Mobile v3: header/footer colors reach the very top and bottom of the phone */
-@media (max-width: 768px) {
-    header {
-        padding-top: 0; /* the empty strip came from padding on the see-through header */
-    }
-
-    #siteTitle {
-        padding-top: calc(env(safe-area-inset-top) + 0.5rem); /* title color fills the status bar area */
-    }
-
-    body {
-        height: auto;
-        max-height: none;
-        min-height: 100lvh; /* full screen, including under Safari's toolbar */
-    }
-
-    footer {
-        padding-bottom: calc(env(safe-area-inset-bottom) + 0.75rem); /* footer color fills the home-bar area */
-    }
-}
-
-
-/* Mobile: the card list must not squeeze the card */
-@media (max-width: 768px) {
-    #current-character-tile,
-    #unfinished-character-tile {
-        display: block;
-    }
-
-    .tile-list,
-    .character-tile,
-    .char-tile {
-        flex-shrink: 0;
-        height: auto;
-        min-height: max-content;
-    }
-}
-
-
-/* Mobile: stretch the fixed background up under the status bar so no bare band shows */
-@media (max-width: 768px) {
-    html::before {
-        top: calc(-1 * env(safe-area-inset-top));
-        height: calc(100lvh + env(safe-area-inset-top));
-    }
-}
-
-
-/* Mobile: zoom the background so the dark bar baked into the top of the image is cropped off */
-@media (max-width: 768px) {
-    html::before {
-        background-size: auto 120%;
-        background-position: center bottom;
-    }
-}
-
-
-/* Mobile: soft fade at the top and bottom edges into the status bar color */
-@media (max-width: 768px) {
-    html::after {
-        content: '';
-        position: fixed;
-        left: 0;
-        width: 100%;
-        top: calc(-1 * env(safe-area-inset-top));
-        height: calc(100lvh + env(safe-area-inset-top));
-        z-index: -1;
-        pointer-events: none;
-        background: linear-gradient(to bottom,
-            var(--status-solid, rgb(109, 83, 222)) 0,
-            transparent calc(env(safe-area-inset-top) + 4rem),
-            transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
-            var(--status-solid, rgb(109, 83, 222)) 100%);
-    }
-}
