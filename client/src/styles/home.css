@@ -905,3 +905,42 @@ li:hover .dropDown {
         overflow: hidden;
     }
 }
+
+
+/* Mobile v3: header/footer colors reach the very top and bottom of the phone */
+@media (max-width: 768px) {
+    header {
+        padding-top: 0; /* the empty strip came from padding on the see-through header */
+    }
+
+    #siteTitle {
+        padding-top: calc(env(safe-area-inset-top) + 0.5rem); /* title color fills the status bar area */
+    }
+
+    body {
+        height: auto;
+        max-height: none;
+        min-height: 100lvh; /* full screen, including under Safari's toolbar */
+    }
+
+    footer {
+        padding-bottom: calc(env(safe-area-inset-bottom) + 0.75rem); /* footer color fills the home-bar area */
+    }
+}
+
+
+/* Mobile: the card list must not squeeze the card */
+@media (max-width: 768px) {
+    #current-character-tile,
+    #unfinished-character-tile {
+        display: block;
+    }
+
+    .tile-list,
+    .character-tile,
+    .char-tile {
+        flex-shrink: 0;
+        height: auto;
+        min-height: max-content;
+    }
+}
