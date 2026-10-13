@@ -110,7 +110,7 @@ function CharacterSheet() {
                     <Conditions />
                 </section>
             </main>
-            <RollOrb open={orbOpen} label={rollLabel} onToggle={() => setOrbOpen(!orbOpen)} />
+            <RollOrb open={orbOpen} label={rollLabel} onToggle={() => setOrbOpen((o) => !o)} />
         </CharacterContext.Provider>
     );
 }

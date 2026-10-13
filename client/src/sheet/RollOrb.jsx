@@ -24,12 +24,20 @@ function RollOrb({ open, label, onToggle }) {
         setPosition({ left: drag.current.left + dx, top: drag.current.top + dy });
     };
 
+    const justDragged = useRef(false); // set after a real drag so the click that follows is ignored
+
+    // Pointer events only handle dragging. iOS can cancel pointer events mid-tap,
+    // so the open/close toggle lives in onClick, which Safari always fires for a tap.
     const onPointerUp = () => {
         if (!drag.current) return;
-        const wasDrag = drag.current.moved;
+        justDragged.current = drag.current.moved;
         drag.current = null;
         setDragging(false);
-        if (!wasDrag) onToggle(); // a tap, not a drag
+    };
+
+    const onClick = () => {
+        if (justDragged.current) { justDragged.current = false; return; } // that was a drag
+        onToggle();
     };
 
     const classes = ['roll-orb', open && 'is-open', dragging && 'is-dragging'].filter(Boolean).join(' ');
@@ -47,6 +55,7 @@ function RollOrb({ open, label, onToggle }) {
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerUp}
+            onClick={onClick}
         >
             <div className="roll-orb-face" aria-hidden="true"></div>
             <div className="roll-orb__panel" hidden={!open}>
