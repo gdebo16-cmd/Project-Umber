@@ -2045,4 +2045,8 @@ body.subpage .invList {
     footer {
         display: none;
     }
+
+    #stat-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
