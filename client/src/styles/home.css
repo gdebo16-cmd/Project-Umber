@@ -1002,3 +1002,17 @@ li:hover .dropDown {
     padding-bottom: 0.35rem;
     border-bottom: 3px solid var(--accent);
 }
+
+
+/* Title bar: logo and title meet in the middle, evenly spaced */
+#siteTitle {
+    column-gap: 1rem;
+}
+
+#siteTitle .titleLogo {
+    justify-self: end;
+}
+
+#siteTitle h1 {
+    justify-self: start;
+}
