@@ -50,7 +50,7 @@ app.get('/health', (req, res) => {
 app.use(express.static(clientDist));
 
 app.get(/^(?!\/api).*/, (req, res) => {
-	res.sendFile(path.join(clientDist, 'index.html'));
+	res.sendFile('index.html', { root: clientDist });
 });
 
 app.listen(process.env.PORT || 3000, () => {
