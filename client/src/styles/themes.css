@@ -401,3 +401,14 @@ html {
     background-repeat: no-repeat;
     min-height: 100%;
 }
+
+/* iPhone: stop Safari from enlarging text on its own, and never allow sideways scrolling */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+html,
+body {
+    overflow-x: hidden;
+}

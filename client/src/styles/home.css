@@ -889,3 +889,19 @@ li:hover .dropDown {
         background-image: none; /* the fixed layer above replaces it */
     }
 }
+
+
+/* iPhone: character card text shrinks with the screen so wider fonts can't push it out */
+@media (max-width: 768px) {
+    .char-tile .character-name {
+        font-size: clamp(0.9rem, 4.5vw, 1.25rem);
+    }
+
+    .char-tile .character-race,
+    .char-tile .character-class,
+    .char-tile .character-subclass,
+    .char-tile .character-delete-button {
+        font-size: clamp(0.65rem, 3.2vw, 0.95rem);
+        overflow: hidden;
+    }
+}
