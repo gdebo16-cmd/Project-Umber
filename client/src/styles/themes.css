@@ -395,4 +395,9 @@
 /* stop white showing around the page on phones (notch area, overscroll) */
 html {
     background-color: var(--bg-color-1);
+    background-image: var(--background); /* same image as body, so it reaches the screen curves */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100%;
 }
