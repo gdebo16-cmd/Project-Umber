@@ -15,6 +15,7 @@ function syncStatusBarColor() {
         document.head.appendChild(tag);
     }
     tag.content = solid;
+    document.documentElement.style.setProperty('--status-solid', solid); // used by the edge fade in CSS
 }
 
 function usePageTheme() {

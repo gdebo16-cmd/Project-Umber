@@ -962,3 +962,23 @@ li:hover .dropDown {
         background-position: center bottom;
     }
 }
+
+
+/* Mobile: soft fade at the top and bottom edges into the status bar color */
+@media (max-width: 768px) {
+    html::after {
+        content: '';
+        position: fixed;
+        left: 0;
+        width: 100%;
+        top: calc(-1 * env(safe-area-inset-top));
+        height: calc(100lvh + env(safe-area-inset-top));
+        z-index: -1;
+        pointer-events: none;
+        background: linear-gradient(to bottom,
+            var(--status-solid, rgb(109, 83, 222)) 0,
+            transparent calc(env(safe-area-inset-top) + 4rem),
+            transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
+            var(--status-solid, rgb(109, 83, 222)) 100%);
+    }
+}
