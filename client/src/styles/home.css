@@ -709,8 +709,8 @@ li:hover .dropDown {
 
         #siteTitle {
             display: flex;
-            flex-direction: row;
-            justify-content: space-around;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
             box-shadow: none;
             border-radius: 0
