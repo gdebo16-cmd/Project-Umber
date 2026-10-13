@@ -810,16 +810,20 @@ li:hover .dropDown {
     
         #current-character-container,
         #unfinished-character-container {
-            height: auto;
+            max-height: 50%;
             min-height: 0;
+            overflow: none;
         }
     
         #current-character-tile,
         #unfinished-character-tile {
             height: auto;
-            max-height: none;
-            overflow: visible;
-            display: block;
+            max-height: 100%;
+            overflow: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: center;
         }
     
         .char-tile {
@@ -846,7 +850,7 @@ li:hover .dropDown {
             box-sizing: border-box;
             min-width: 0;
             box-sizing: border-box;
-            overflow-wrap: anywhere; 
+            overflow: none;
         }
     
     
