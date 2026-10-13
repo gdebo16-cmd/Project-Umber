@@ -975,3 +975,11 @@ li:hover .dropDown {
         display: none;
     }
 }
+
+
+/* Mobile: no footer */
+@media (max-width: 768px) {
+    footer {
+        display: none;
+    }
+}

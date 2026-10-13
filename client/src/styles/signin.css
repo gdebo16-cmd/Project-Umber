@@ -713,3 +713,11 @@ footer {
             var(--bgc-title, rgb(65, 37, 157)) 100%);
     }
 }
+
+
+/* Mobile: no footer */
+@media (max-width: 768px) {
+    footer {
+        display: none;
+    }
+}
