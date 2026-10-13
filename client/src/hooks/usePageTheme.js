@@ -4,7 +4,9 @@ import { useLocation } from 'react-router';
 // Safari colors the status bar with the theme-color tag. Our title color is see-through,
 // so drop its transparency and use the solid version of the same color.
 function syncStatusBarColor() {
-    const raw = getComputedStyle(document.documentElement).getPropertyValue('--bg-color-1').trim();
+    const css = getComputedStyle(document.documentElement);
+    // prefer the theme's solid title color, fall back to the see-through one
+    const raw = (css.getPropertyValue('--bgc-title') || css.getPropertyValue('--bg-color-1')).trim();
     const nums = raw.match(/[\d.]+/g);
     if (!nums || nums.length < 3) return;
     const solid = `rgb(${nums[0]}, ${nums[1]}, ${nums[2]})`;
