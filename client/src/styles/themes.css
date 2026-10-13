@@ -166,6 +166,7 @@
     --bordercolor: rgba(160, 150, 180, 0.565);
     --bgc-top: rgba(64, 72, 175, 0.72);
     --bgc-low: rgba(46, 31, 133, 0.466);
+    --bgc-title: rgb(65, 37, 157);
     --accent: rgb(245, 188, 103);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(2px) saturate(150%);
@@ -188,6 +189,7 @@
     --bordercolor: rgba(160, 150, 180, 0.565);
     --bgc-top: rgba(64, 72, 175, 0.72);
     --bgc-low: rgba(46, 31, 133, 0.466);
+    --bgc-title: rgb(46, 30, 102);
     --accent: rgb(245, 188, 103);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(2px) saturate(150%);
@@ -208,6 +210,7 @@
     --bordercolor: rgba(150, 180, 154, 0.565);
     --bgc-top: rgba(64, 104, 73, 0.72);
     --bgc-low: rgba(51, 80, 48, 0.596);
+    --bgc-title: rgb(18, 41, 19);
     --accent: rgb(238, 224, 163);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(2px) saturate(150%);
@@ -229,6 +232,7 @@
     --bordercolor: rgba(202, 218, 255, 0.565);
     --bgc-top: rgba(33, 60, 184, 0.72);
     --bgc-low: rgba(20, 44, 150, 0.486);
+    --bgc-title: rgb(19, 30, 100);
     --accent: rgb(163, 238, 238);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(2px) saturate(150%);
@@ -250,6 +254,7 @@
     --bordercolor: rgba(252, 199, 199, 0.565);
     --bgc-top: rgba(131, 39, 39, 0.72);
     --bgc-low: rgba(97, 26, 26, 0.397);
+    --bgc-title: rgb(67, 19, 19);
     --accent: rgb(252, 226, 187);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(5px) saturate(150%);
@@ -272,7 +277,8 @@
     --bordercolor: rgba(252, 225, 199, 0.565);
     --bgc-top: rgba(202, 136, 60, 0.72);
     --bgc-low: rgba(145, 99, 39, 0.459);
-    --accent: rgb(252, 226, 187);
+    --bgc-title: rgb(52, 37, 18);
+    --accent: rgb(252, 226, 187);       
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(5px) saturate(150%);
     --background: url('/utils/mapblack1.png');
@@ -293,6 +299,7 @@
     --bordercolor: rgba(252, 247, 199, 0.565);
     --bgc-top: rgba(209, 183, 35, 0.72);
     --bgc-low: rgba(148, 136, 68, 0.452);
+    --bgc-title: rgb(0, 0, 0);
     --accent: rgb(208, 252, 187);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(5px) saturate(150%);
@@ -312,8 +319,9 @@
     --bg-color-1: rgba(0, 0, 0, 0.452);
     --txt-color-1: rgba(255, 255, 255, 0.822);
     --bordercolor: rgba(255, 255, 255, 0.74);
-    --bgc-top: rgba(0, 0, 0, 0.671);
-    --bgc-low: rgba(5, 5, 5, 0.068);
+    --bgc-top: rgba(0, 0, 0, 0.958);
+    --bgc-low: rgba(5, 5, 5, 0.466);
+    --bgc-title: rgb(0, 0, 0);
     --accent: rgb(252, 196, 112);
     --healColor: rgba(140, 184, 140, 0.384);
     --damageColor:  rgba(48, 37, 37, 0.712);
@@ -336,10 +344,12 @@
     --bg-color-2: rgba(253, 249, 242, 0.829);
     --bg-color-1: rgba(238, 232, 216, 0.74);
     --txt-color-1: rgba(0, 0, 0, 0.678);
+    --title-text: rgb(255, 255, 255);
     --text-color-2: rgba(255, 255, 255, 0.986);
     --bordercolor: rgb(255, 228, 179);
     --bgc-top: rgba(255, 255, 255, 0.918);
     --bgc-low: rgba(255, 255, 255, 0.486);
+    --bgc-title: rgb(254, 238, 200);
     --accent: rgb(145, 100, 3);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(2px) saturate(150%);
@@ -361,6 +371,7 @@
     --bordercolor:  rgba(252, 199, 199, 0.565);
     --bgc-top: rgba(82, 37, 25, 0.72);
     --bgc-low: rgba(0, 0, 0, 0.72);
+    --bgc-title: rgb(67, 22, 22);
     --accent: rgb(252, 226, 187);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(5px) saturate(150%);
@@ -384,6 +395,7 @@
     --bordercolor: rgba(208, 248, 241, 0.801);
     --bgc-top: rgba(168, 221, 245, 0.486);
     --bgc-low: rgba(92, 125, 138, 0.534);
+    --bgc-title: rgba(71, 102, 115, 0.977);
     --accent: rgb(252, 226, 187);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(0) saturate(150%);
