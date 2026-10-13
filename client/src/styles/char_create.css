@@ -454,3 +454,23 @@ header {
         line-height: 1.4;
         white-space: pre-line;
     }
+
+
+/* Mobile: header and footer hug the screen edges. Fill the notch / home-bar areas with their own color instead of empty space */
+@media (max-width: 768px) {
+    html {
+        padding-top: 0 !important; /* overrides the safe-area padding in index.html */
+    }
+
+    body {
+        min-height: 100dvh; /* the real visible height on phones, unlike 100vh */
+    }
+
+    header {
+        padding-top: env(safe-area-inset-top);
+    }
+
+    footer {
+        padding-bottom: max(1%, env(safe-area-inset-bottom));
+    }
+}
