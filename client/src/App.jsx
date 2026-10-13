@@ -5,15 +5,23 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import SettingsPage from './pages/SettingsPage';
+import ProfilePage from './pages/ProfilePage';
 import InventoryPage from './pages/InventoryPage';
 import EditCharacterPage from './pages/EditCharacterPage';
 import CreateStep1 from './pages/CreateStep1';
 import CreateStep2 from './pages/CreateStep2';
 import CreateStep3 from './pages/CreateStep3';
+import usePageTheme from './hooks/usePageTheme';
+
+function ThemeWatcher() {
+    usePageTheme();
+    return null;
+}
 
 function App() {
     return (
         <BrowserRouter>
+            <ThemeWatcher />
             <Routes>
                 {/* anyone can see these */}
                 <Route path="/" element={<Navigate to="/login" replace />} />
@@ -23,6 +31,7 @@ function App() {
                 {/* these need you to be logged in */}
                 <Route element={<RequireLogin />}>
                     <Route path="/home" element={<HomePage />} />
+                    <Route path='/profile' element={<ProfilePage />} />
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/create_char" element={<CreateStep1 />} />
                     <Route path="/create_char/step2" element={<CreateStep2 />} />

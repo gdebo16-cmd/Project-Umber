@@ -7,6 +7,21 @@ import { sendJson } from '../utils/api';
 import CreateDescription from './CreateDescription';
 
 // Replaces views/create_char_step2.ejs (step 2: class and subclass)
+// Builds what the description box shows for a class: dropdown sections + feature tree
+function classSections(c, subs) {
+    return [
+        { label: 'Description', body: c.description },
+        { label: 'Spellcasting Ability', body: c.spellcasting_stat ? `${c.spellcasting_stat} - ${c.spellcasting}` : c.spellcasting },
+        { label: 'Subclasses', body: subs.length ? subs.map((s) => s.name).join('\n') : 'Loading...' },
+        { label: 'Stat Details', body: `Primary stat: ${c.primary_stat}\nHit die: ${c.hitpoint_die}` },
+        { label: 'Armor & Weapons', body: `Armor: ${c.armor_proficiencies ?? '-'}\nWeapons: ${c.weapon_proficiencies ?? '-'}` },
+        { label: 'Tools', body: c.tool_proficiencies ?? '-' },
+    ];
+}
+function classShown(c, subs) {
+    return { img: c.img_url, name: c.name, hideTitle: true, sections: classSections(c, subs), features: c.features };
+}
+
 function CreateStep2() {
     usePageStyle(createCss);
     const navigate = useNavigate();
@@ -22,11 +37,7 @@ function CreateStep2() {
         const picked = classes.find((c) => String(c.id) === id);
         setClassId(id);
         setSubclassId('');
-        setShown({
-            img: picked.img_url,
-            name: picked.name,
-            text: `Description: ${picked.description}\n Primary stat: ${picked.primary_stat}\n  Hitpoint die: ${picked.hitpoint_die}`,
-        });
+        setShown(classShown(picked, []));
 
         // load this class's subclasses (same as char_step2.js did)
         const res = await fetch(`/api/create_char/subclasses/${id}`);
@@ -34,14 +45,30 @@ function CreateStep2() {
             setSaveError('could not load subclasses');
             return;
         }
-        setSubclasses(await res.json());
+        const subs = await res.json();
+        setSubclasses(subs);
+        setShown(classShown(picked, subs));
     };
 
     const changeSubclass = (e) => {
         const id = e.target.value;
         const picked = subclasses.find((s) => String(s.id) === id);
         setSubclassId(id);
-        setShown({ img: picked.img_url ?? '', name: picked.name, text: picked.description ?? '' });
+        const extras = [
+            picked.armor_proficiencies && `Armor: ${picked.armor_proficiencies}`,
+            picked.weapon_proficiencies && `Weapons: ${picked.weapon_proficiencies}`,
+            picked.tool_proficiencies && `Tools: ${picked.tool_proficiencies}`,
+        ].filter(Boolean);
+        setShown({
+            img: picked.img_url ?? '',
+            name: picked.name,
+            hideTitle: true,
+            sections: [
+                { label: 'Description', body: picked.description ?? '-' },
+                ...(extras.length ? [{ label: 'Bonus Proficiencies', body: extras.join('\n') }] : []),
+            ],
+            features: picked.features,
+        });
     };
 
     const submit = async (e) => {

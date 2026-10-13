@@ -13,7 +13,9 @@ import ActionPanel from './actions/ActionPanel';
 import HealthBox from './HealthBox';
 import Conditions from './Conditions';
 import RollOrb from './RollOrb';
+import { CharacterContext } from './CharacterContext';
 import { STATS } from '../utils/stats';
+import { getSpellSlots } from '../utils/spellSlots';
 
 // Mobile only: the three big tabs at the top. On desktop the CSS shows all three panels at once.
 const SHEET_TABS = [
@@ -29,7 +31,7 @@ function CharacterSheet() {
     const [sheetTab, setSheetTab] = useState('stats');
     const [rollLabel, setRollLabel] = useState(''); // what the roll orb shows
     const [orbOpen, setOrbOpen] = useState(false);
-
+    const [usedSlots, setUsedSlots] = useState({});
     // Children call these to change the data everything else reads from
     const setHp = (newHp) =>
         setData((prev) => ({ ...prev, character: { ...prev.character, current_hp: newHp } }));
@@ -46,11 +48,37 @@ function CharacterSheet() {
     if (loading) return <div>Loading...</div>;
     if (error) return <p>Failure is upon us: {error}</p>;
 
-    const { character, ownedArmor, ownedWeapons, learnedSpells = [] } = data;
+    const { character, ownedArmor, ownedWeapons, learnedSpells = [], actionFeatures = [] } = data;
     const hp = character.current_hp;
 
+    const spendSlot = (lvl) => {
+        if (lvl === 0) return true;
+        const total = getSpellSlots(character.level)[lvl - 1] || 0;
+        const used = usedSlots[lvl] || 0;
+        if (used >= total) return false;
+        setUsedSlots({ ...usedSlots, [lvl]: used + 1 });
+        return true;
+    };
+
+    // Everything the Actions panel tabs share. They read it with useCharacter() instead of props.
+    const sheetData = {
+        character,
+        hp,
+        ownedArmor,
+        ownedWeapons,
+        setOwnedArmor,
+        setOwnedWeapons,
+        learnedSpells,
+        actionFeatures,
+        setLearnedSpells,
+        onRoll: showRoll,
+        usedSlots,
+        setUsedSlots,
+        spendSlot,
+    };
+
     return (
-        <>
+        <CharacterContext.Provider value={sheetData}>
             <CharacterHeader character={character} />
             <main>
                 <TabList
@@ -74,17 +102,7 @@ function CharacterSheet() {
                 <section role="tabpanel" id="sheet-panel-actions" className="sheet-panel" hidden={sheetTab !== 'actions'}>
                     <ArmorClass character={character} ownedArmor={ownedArmor} />
                     <Initiative character={character} hp={hp} onRoll={showRoll} />
-                    <ActionPanel
-                        character={character}
-                        hp={hp}
-                        ownedArmor={ownedArmor}
-                        ownedWeapons={ownedWeapons}
-                        onArmorChange={setOwnedArmor}
-                        onWeaponsChange={setOwnedWeapons}
-                        learnedSpells={learnedSpells}
-                        onSpellChange={setLearnedSpells}
-                        onRoll={showRoll}
-                    />
+                    <ActionPanel />
                 </section>
 
                 <section role="tabpanel" id="sheet-panel-conditions" className="sheet-panel" hidden={sheetTab !== 'conditions'}>
@@ -93,7 +111,7 @@ function CharacterSheet() {
                 </section>
             </main>
             <RollOrb open={orbOpen} label={rollLabel} onToggle={() => setOrbOpen(!orbOpen)} />
-        </>
+        </CharacterContext.Provider>
     );
 }
 

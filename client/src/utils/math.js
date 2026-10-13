@@ -12,8 +12,11 @@ export const healthInit = (current, max) => {
 
 // "2d6" -> roll two 6-sided dice and add them up
 export const rollDice = (dice) => {
-    const [count, sides] = String(dice).split('d').map(Number);
-    let total = 0;
+    const text = String(dice).replace(/\s/g, '');          // "3d4 + 3" becomes "3d4+3"
+    if (!text.includes('d')) return Number(text) || 0;     // a flat number like "20"
+    const [diePart, bonus = 0] = text.split('+');          // "3d4" and "3"
+    const [count, sides] = diePart.split('d').map(Number);
+    let total = Number(bonus);
     for (let i = 0; i < count; i++) total += Math.floor(Math.random() * sides) + 1;
     return total;
 };

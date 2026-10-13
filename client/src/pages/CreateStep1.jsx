@@ -43,7 +43,7 @@ function CreateStep1() {
                     <form className="formContainer" onSubmit={submit}>
                         <article id="charNameContainer" className="formSectionContainer tile">
                             <label className="topTile" htmlFor="name">Character name</label>
-                            <input className="bottomTile" type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+                            <input className="bottomTile" type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="One with no name"  />
                         </article>
                         <article id="raceSelectContainer" className="formSectionContainer tile">
                             <label className="topTile" htmlFor="race_id">Race</label>
@@ -60,7 +60,7 @@ function CreateStep1() {
                         </article>
                     </form>
                 </section>
-                <CreateDescription item={race && { img: race.img_url, name: race.name, text: race.traits }} />
+                <CreateDescription item={race && { img: race.img_url, name: race.name, text: race.traits, race }} />
             </main>
             <footer>
                 <Link id="homeLink" to="/home">Home</Link>

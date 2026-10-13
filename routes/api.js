@@ -1,16 +1,14 @@
 // JSON routes for the React client. Everything here is mounted at /api in index.js.
-// The EJS routes in the other route files are untouched.
 import { Router } from 'express';
 import {
     getCharacter, updateHp, deleteCharacter,
     equipArmor, unequipArmor, equipWeapon, unequipWeapon,
 } from '../controllers/apiController.js';
-import { me, login, logout, register, home, getSettings, updateSettings } from '../controllers/apiUserController.js';
+import { me, login, logout, register, home, getSettings, updateSettings, getProfile, updateProfile } from '../controllers/apiUserController.js';
 import { getInventory, addArmor, addWeapon, removeArmor, removeWeapon } from '../controllers/apiInventoryController.js';
 import { getEditCharacter, editNameAndRace, editClass, editLevel, editAbilities } from '../controllers/apiEditController.js';
-import { getRaces, step1Submit, getStep2, step2Submit, getStep3, step3Submit } from '../controllers/apiCreateController.js';
-import { rollStat, selectSubclass } from '../controllers/charController.js'; // these already send JSON
-import { getSpellbook, learnSpell, unlearnSpell, prepareSpell, unprepareSpell } from '../controllers/apiSpellController.js';
+import { getRaces, step1Submit, getStep2, step2Submit, getStep3, step3Submit, clearDraft, rollStat, selectSubclass } from '../controllers/apiCreateController.js';
+import { getSpellbook, learnSpell, unlearnSpell, prepareSpell, unprepareSpell, setAction, removeAction } from '../controllers/apiSpellController.js';
 
 const router = Router();
 
@@ -22,6 +20,8 @@ router.post('/register', register);
 router.get('/home', home);
 router.get('/settings', getSettings);
 router.put('/settings', updateSettings);
+router.get('/profile', getProfile);
+router.put('/profile', updateProfile);
 
 // character creation
 router.get('/create_char/races', getRaces);
@@ -31,6 +31,7 @@ router.post('/create_char/step2', step2Submit);
 router.get('/create_char/subclasses/:classId', selectSubclass);
 router.get('/create_char/step3', getStep3);
 router.post('/create_char/step3', step3Submit);
+router.delete('/create_char/draft', clearDraft);
 router.post('/create_char/roll/:stat', rollStat);
 
 // character sheet
@@ -55,6 +56,8 @@ router.post('/characters/:id/spells/learn', learnSpell);
 router.post('/characters/:id/spells/unlearn', unlearnSpell);
 router.post('/characters/:id/spells/prepare', prepareSpell);
 router.post('/characters/:id/spells/unprepare', unprepareSpell);
+router.post('/characters/:id/spells/setAction', setAction);
+router.post('/characters/:id/spells/removeAction', removeAction);
 
 // character editor
 router.get('/characters/:id/edit', getEditCharacter);

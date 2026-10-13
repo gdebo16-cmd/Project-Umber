@@ -1,0 +1,162 @@
+// Character database reads and writes: sheet data, hp, levels, stats, create/delete.
+import pool from '../db.js';
+
+// true if this character belongs to the logged-in user
+export async function ownsCharacter(charId, userId) {
+    const { rows } = await pool.query(
+        `SELECT id FROM characters WHERE id = $1 AND user_id = $2`,
+        [charId, userId]
+    );
+    return rows.length > 0;
+}
+
+// Full sheet row (with race/class/subclass names) or undefined
+export async function getSheetCharacter(charId, userId) {
+    const { rows } = await pool.query(
+        `SELECT ch.*, r.name AS race_name, cl.name AS class_name, cl.hitpoint_die, cl.primary_stat AS spell_stat, NULLIF(concat_ws(', ', cl.armor_proficiencies, s.armor_proficiencies), '') AS armor_proficiencies, NULLIF(concat_ws(', ', cl.weapon_proficiencies, s.weapon_proficiencies), '') AS weapon_proficiencies, NULLIF(concat_ws(', ', cl.tool_proficiencies, s.tool_proficiencies), '') AS tool_proficiencies, s.name AS subclass_name
+        FROM characters ch
+        LEFT JOIN races r ON r.id = ch.race_id
+        LEFT JOIN classes cl ON cl.id = ch.class_id
+        LEFT JOIN sub_classes s ON s.id = ch.subclass_id
+        WHERE ch.id = $1 AND ch.user_id = $2`,
+        [charId, userId]
+    );
+    return rows[0];
+}
+
+// Home page list for one user
+export async function listCharactersForUser(userId) {
+    const { rows } = await pool.query(
+        `SELECT ch.id, ch.name,
+                r.name AS race,
+                c.name AS class,
+                sc.name AS subclass
+        FROM characters ch
+        LEFT JOIN races r ON ch.race_id = r.id
+        LEFT JOIN classes c ON ch.class_id = c.id
+        LEFT JOIN sub_classes sc ON ch.subclass_id = sc.id
+        WHERE ch.user_id = $1
+        ORDER BY ch.created_at DESC`,
+        [userId]
+    );
+    return rows;
+}
+
+// Just id + name (inventory page header) or undefined
+export async function getCharacterName(charId, userId) {
+    const { rows } = await pool.query(
+        `SELECT id, name FROM characters WHERE id = $1 AND user_id = $2`,
+        [charId, userId]
+    );
+    return rows[0];
+}
+
+// Heal (+) or damage (-), clamped to 0..max_hp. Returns { current_hp, max_hp } or undefined
+export async function changeHp(charId, userId, change) {
+    const { rows } = await pool.query(
+        `UPDATE characters
+         SET current_hp = LEAST(max_hp, GREATEST(0, current_hp + $1))
+         WHERE id = $2 AND user_id = $3
+         RETURNING current_hp, max_hp`,
+        [change, charId, userId]
+    );
+    return rows[0];
+}
+
+// Returns how many rows were deleted (0 or 1)
+export async function deleteCharacter(charId, userId) {
+    const { rowCount } = await pool.query(
+        `DELETE FROM characters WHERE id = $1 AND user_id = $2`,
+        [charId, userId]
+    );
+    return rowCount;
+}
+
+// Save a finished draft. Returns the new id
+export async function createCharacter(userId, draft, final, plus2, plus1, maxHp) {
+    const { rows } = await pool.query(
+        `INSERT INTO characters
+           (user_id, name, race_id, class_id, subclass_id,
+            str, dex, con, "int", wis, cha, luc, spd, plus2_stat, plus1_stat, max_hp, current_hp)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)
+         RETURNING id`,
+        [userId, draft.name, draft.race_id, draft.class_id, draft.subclass_id,
+         final.str, final.dex, final.con, final.int, final.wis, final.cha, final.luc, final.spd,
+         plus2, plus1, maxHp, maxHp]
+    );
+    return rows[0].id;
+}
+
+// ---------- character editor ----------
+
+export async function getEditCharacter(charId, userId) {
+    const { rows } = await pool.query(
+        `SELECT id, name, race_id, class_id, subclass_id, level, str, dex, con, "int", wis, cha, luc, spd
+         FROM characters WHERE id = $1 AND user_id = $2`,
+        [charId, userId]
+    );
+    return rows[0];
+}
+
+export async function updateNameAndRace(charId, userId, name, raceId) {
+    await pool.query(
+        `UPDATE characters SET name = $1, race_id = $2 WHERE id = $3 AND user_id = $4`,
+        [name, raceId, charId, userId]
+    );
+}
+
+export async function updateClass(charId, userId, classId, subclassId) {
+    await pool.query(
+        `UPDATE characters SET class_id = $1, subclass_id = $2 WHERE id = $3 AND user_id = $4`,
+        [classId, subclassId, charId, userId]
+    );
+}
+
+// level, con, max_hp and class hit die for the level-up math, or undefined
+export async function getLevelInfo(charId, userId) {
+    const { rows } = await pool.query(
+        `SELECT ch.level, ch.con, ch.max_hp, cl.hitpoint_die
+           FROM characters ch
+           JOIN classes cl ON cl.id = ch.class_id
+          WHERE ch.id = $1 AND ch.user_id = $2`,
+        [charId, userId]
+    );
+    return rows[0];
+}
+
+export async function updateLevel(charId, userId, level, newMax) {
+    await pool.query(
+        `UPDATE characters
+            SET level = $1, max_hp = $2, current_hp = LEAST(current_hp, $2)
+          WHERE id = $3 AND user_id = $4`,
+        [level, newMax, charId, userId]
+    );
+}
+
+export async function getActionFeatures(classId, subclassId, level, raceId) {
+    const { rows } = await pool.query(
+        `SELECT 'class' AS source, id, name, description, level, action_type, uses, dice
+        FROM class_features
+        WHERE class_id = $1 AND level <= $3 AND action_type IS NOT NULL
+        UNION ALL
+        SELECT 'subclass' AS source, id, name, description, level, action_type, uses, dice
+        FROM subclass_features
+        WHERE subclass_id = $2 AND level <= $3 AND action_type IS NOT NULL
+        UNION ALL
+        SELECT 'race' AS source, id, name, description, level, action_type, uses, dice
+        FROM race_lineage_bonuses
+        WHERE race_id = $4 AND level <= $3 AND action_type IS NOT NULL
+        ORDER BY level, name`,
+        [classId, subclassId, level, raceId]
+    );
+    return rows;
+}
+
+// vals = [str, dex, con, int, wis, cha, luc, spd]
+export async function updateAbilities(charId, userId, vals) {
+    await pool.query(
+        `UPDATE characters SET str = $1, dex = $2, con = $3, "int" = $4, wis = $5, cha = $6, luc = $7, spd = $8
+         WHERE id = $9 AND user_id = $10`,
+        [...vals, charId, userId]
+    );
+}

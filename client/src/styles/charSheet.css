@@ -1,214 +1,5 @@
-/* Project-Umber character sheet
-   Tokens in :root are shared with theme swaps. Unused tokens are kept on purpose.
-*/
+@import './themes.css';
 
-:root {
-    
-    --rad1: .80rem;
-    --rad2: .35rem;
-    --bs1: 2px 2px 15px black;
-    --bs2: 2px 2px 10px black;
-    --pad1: .25%;
-    --pad2: 1%;
-    --pad3: 0;
-    --mar1: 0;
-    --mar2: 2%;
-    --shadowInner: inset 6px 6px 8px #000000a9, 
-                   inset -1px -1px 5px #00000079;
-    --toprad: 10px 10px 0 0;
-    --lowrad: 0 0 10px 10px;
-    --padTop: 3%;
-    --padLow: 2%;
-    --tile: 10px;
-    --marTop: 0;
-    --marLow: 0;
-    --section-gap: 0.75rem;
-    --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor:  rgba(79, 46, 46, 0.712);
-    --fontF: "Cinzel Decorative", serif;
-    --fontW1: 700;
-    --fontW2: 400;
-    --fontStyle: normal;
-    --fontS1: 100%;
-    --fontS2: 130%;
-    --fontS3: 160%;
-    --w1: 100%;
-    --w2: 100vw;
-    --h1: 100%;
-    --h2: 100vh;
-    --maxW: 100%;
-    --maxH1: 100%;
-    --maxH2: 100vh;
-    --minW1: 0;
-    --minW2: 0;
-    --minH1: 0;
-    --minH2: 0;
-    --ofX1: hidden;
-    --ofX2: hidden;
-    --ofY1: auto;
-    --ofY2: auto;
-    --border1: none;
-}
-
-:root, 
-
-[data-theme="purple"] {
-    --bg-color-4: rgba(71, 52, 139, 0.356);
-    --bg-color-3: rgba(74, 60, 199, 0.678);
-    --bg-color-2: rgba(68, 42, 196, 0.171);
-    --bg-color-1: rgba(109, 83, 222, 0.72);
-    --txt-color-1: rgba(255, 255, 255, 0.756);
-    --tileBorder: 1px solid rgba(160, 150, 180, 0.565);
-    --bgc-top: rgba(64, 72, 175, 0.72);
-    --bgc-low: rgba(46, 31, 133, 0.466);
-    --accent: rgb(245, 188, 103);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(2px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
-}
-[data-theme="green"] {
-    --bg-color-4: rgba(41, 66, 43, 0.377);
-    --bg-color-3: rgba(41, 66, 43, 0.678);
-    --bg-color-2: rgba(59, 110, 66, 0.24);
-    --bg-color-1: rgba(34, 53, 41, 0.548);
-    --txt-color-1: rgba(237, 243, 221, 0.822);
-    --tileBorder: 1px solid rgba(150, 180, 154, 0.565);
-    --bgc-top: rgba(64, 104, 73, 0.72);
-    --bgc-low: rgba(51, 80, 48, 0.596);
-    --accent: rgb(238, 224, 163);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(2px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
-}
-
-[data-theme="blue"] {
-    --bg-color-4: rgba(26, 55, 150, 0.37);
-    --bg-color-3: rgba(16, 47, 146, 0.404);
-    --bg-color-2: rgba(59, 86, 209, 0.637);
-    --bg-color-1: rgba(44, 62, 128, 0.72);
-    --txt-color-1: rgba(232, 239, 250, 0.822);
-    --tileBorder: 1px solid rgba(202, 218, 255, 0.565);
-    --bgc-top: rgba(33, 60, 184, 0.72);
-    --bgc-low: rgba(20, 44, 150, 0.486);
-    --accent: rgb(163, 238, 238);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(2px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
-}
-
-[data-theme="red"] {
-    --bg-color-4: rgba(112, 20, 20, 0.356);
-    --bg-color-3: rgba(126, 35, 35, 0.678);
-    --bg-color-2: rgba(88, 28, 28, 0.67);
-    --bg-color-1: rgba(65, 9, 9, 0.72);
-    --txt-color-1: rgba(250, 232, 232, 0.822);
-    --tileBorder: 1px solid rgba(252, 199, 199, 0.565);
-    --bgc-top: rgba(131, 39, 39, 0.72);
-    --bgc-low: rgba(97, 26, 26, 0.397);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(5px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
-}
-
-[data-theme="orange"] {
-    --bg-color-4: rgba(112, 72, 20, 0.39);
-    --bg-color-3: rgba(112, 72, 20, 0.678);
-    --bg-color-2: rgba(129, 83, 22, 0.67);
-    --bg-color-1: rgba(65, 45, 9, 0.72);
-    --txt-color-1: rgba(250, 232, 232, 0.822);
-    --tileBorder: 1px solid rgba(252, 225, 199, 0.565);
-    --bgc-top: rgba(202, 136, 60, 0.72);
-    --bgc-low: rgba(145, 99, 39, 0.459);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(5px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
-}
-
-[data-theme="yellow"] {
-    --bg-color-4: rgba(172, 149, 24, 0.432);
-    --bg-color-3: rgba(160, 148, 42, 0.678);
-    --bg-color-2: rgba(192, 169, 41, 0.67);
-    --bg-color-1: rgba(124, 114, 67, 0.72);
-    --txt-color-1: rgba(250, 250, 232, 0.822);
-    --tileBorder: 1px solid rgba(252, 247, 199, 0.565);
-    --bgc-top: rgba(209, 183, 35, 0.72);
-    --bgc-low: rgba(148, 136, 68, 0.452);
-    --accent: rgb(208, 252, 187);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(5px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
-}
-
-[data-theme="dark"] {
-    --bg-color-4: rgba(0, 0, 0, 0.466);
-    --bg-color-3: rgba(0, 0, 0, 0.466);
-    --bg-color-2: rgba(36, 35, 35, 0.67);
-    --bg-color-1: rgba(0, 0, 0, 0.452);
-    --txt-color-1: rgba(255, 255, 255, 0.822);
-    --tileBorder: 1px solid rgba(255, 255, 255, 0.74);
-    --bgc-top: rgba(0, 0, 0, 0.671);
-    --bgc-low: rgba(5, 5, 5, 0.068);
-    --accent: rgb(252, 196, 112);
-    --healColor: rgba(140, 184, 140, 0.384);
-    --damageColor:  rgba(48, 37, 37, 0.712);
-    --shadowInner: inset 4px 4px 15px #ffeacea9, 
-                   inset 0px 0px 5px #ffeacea9;
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(5px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
-}
-
-[data-theme="light"] {
-    --bg-color-4: rgba(255, 255, 255, 0.062);
-    --bg-color-3: rgba(255, 230, 184, 0.781);
-    --bg-color-2: rgba(253, 249, 242, 0.829);
-    --bg-color-1: rgba(238, 232, 216, 0.74);
-    --txt-color-1: rgba(0, 0, 0, 0.678);
-    --text-color-2: rgba(255, 255, 255, 0.986);
-    --tileBorder: 1px solid rgb(255, 228, 179);
-    --bgc-top: rgba(255, 255, 255, 0.918);
-    --bgc-low: rgba(255, 255, 255, 0.486);
-    --accent: rgb(145, 100, 3);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(2px) saturate(150%);
-    --background: url('/utils/mapwhite1.png');
-}
-
-[data-theme="hellfire"] {
-    --bg-color-4: rgba(78, 71, 71, 0.459);
-    --bg-color-3: rgba(3, 3, 3, 0.678);
-    --bg-color-2: rgba(119, 42, 42, 0.67);
-    --bg-color-1: rgba(65, 9, 9, 0.72);
-    --txt-color-1: rgba(228, 43, 11, 0.822);
-    --tileBorder: 1px solid rgba(252, 199, 199, 0.565);
-    --bgc-top: rgba(82, 37, 25, 0.72);
-    --bgc-low: rgba(0, 0, 0, 0.72);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(5px) saturate(150%);
-    --healColor: rgba(253, 249, 227, 0.685);
-    --damageColor:  rgba(65, 56, 56, 0.712);
-    --background: url('/utils/hellfiremap.png');
-}
-
-[data-theme="frozen"] {
-    --bg-color-4: rgba(155, 220, 245, 0.438);
-    --bg-color-3: rgba(20, 83, 112, 0.678);
-    --bg-color-2: rgba(22, 99, 129, 0.67);
-    --bg-color-1: rgba(26, 79, 92, 0.72);
-    --txt-color-1: rgba(232, 250, 247, 0.822);
-    --tileBorder: 1px solid rgba(208, 248, 241, 0.801);
-    --bgc-top: rgba(168, 221, 245, 0.486);
-    --bgc-low: rgba(92, 125, 138, 0.534);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(0) saturate(150%);
-    --healColor: rgba(109, 188, 253, 0.63);
-    --damageColor:  rgba(39, 96, 252, 0.712);
-    --background: url('/utils/frozenmap1.png');
-}
 /* ---------- reset / base ---------- */
 
 *, *::before, *::after {
@@ -419,7 +210,7 @@ header {
     flex: 1 1 auto;
     align-self: stretch;
     margin: var(--mar1);
-    /* Padding/border/radius come from #themeNav.navButton — do not re-declare % here */
+    /* Padding/border/radius come from #themeNav.navButton â€” do not re-declare % here */
     padding: var(--pad3);
     border: var(--border1);
     border-radius: inherit;
@@ -1151,7 +942,7 @@ main {
     
 }
 
-/* Only hide panels inside action / subpage shells — never .sheet-panel on desktop */
+/* Only hide panels inside action / subpage shells â€” never .sheet-panel on desktop */
 .action-container > [role="tabpanel"][hidden],
 .panel-shell > [role="tabpanel"][hidden] {
     display: none !important;
@@ -1221,13 +1012,11 @@ main {
     border-radius: var(--tile);
     box-shadow: var(--bs2);
     background-color: var(--bgc-low);
-    padding: 1.25rem;
     margin-bottom: 0.5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    overflow: var(--ofX1);
 }
 
 .action-button-container {
@@ -1340,16 +1129,37 @@ em {
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
-    background-color: var(--bgc-top);
+    background-color: var(--bgc-orb);
     border: var(--tileBorder);
     cursor: grab;
     user-select: none;
     touch-action: none;
 }
 
+.roll-orb__panel {
+    position: relative;          /* lets the tail be placed relative to the bubble */
+    display: inline-block;
+    padding: 0.75rem 1rem;
+    background-color: var(--bgc-bubble-send);
+    border-radius: 1rem 1rem 1rem .5rem;         /* the rounded box */
+    max-width: 20rem;
+    width: 60%;
+    margin: 4%;
+}
+
+.roll-orb__panel::after {
+    content: '';
+    position: absolute;
+    bottom: -0.6rem;
+    left: .5rem;
+    border-width: 0.6rem 0.6rem 0 0;
+    border-style: solid;
+    border-color: var(--bgc-bubble-send) transparent;
+}
+
 .roll-orb.is-open {
-    width: 15rem;
-    height: 12rem;
+    width: 18rem;
+    height: 16rem;
     border-radius: 0.5rem;
     cursor: default;
 }
@@ -1471,7 +1281,7 @@ main > *,
         min-width: 0;
         max-width: 100%;
         box-sizing: border-box;
-        /* ~3 per row → second row for the leftover buttons */
+        /* ~3 per row â†’ second row for the leftover buttons */
         flex-basis: 30%;
         white-space: nowrap;
         font-size: clamp(0.65rem, 2.8vw, 0.95rem);
@@ -1570,7 +1380,7 @@ main > *,
         box-sizing: border-box;
     }
 
-    /* Base stats: true 4×2 grid that cannot spill past the viewport */
+    /* Base stats: true 4Ã—2 grid that cannot spill past the viewport */
     #stat-container {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1581,17 +1391,10 @@ main > *,
         box-sizing: border-box;
     }
 
-    .stat-tile {
-        flex: unset;
-        width: auto;
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-    }
-
     /* Conditions (mobile): keep the 2-column checkbox grid, slider row spans both */
     .condition-container {
         grid-template-rows: auto auto;
+        gap: 0.75rem;
     }
 
     .condition-tile {
@@ -1607,10 +1410,6 @@ main > *,
         width: auto;
     }
 
-    .action-tab-list {
-        flex-wrap: wrap;
-    }
-
     [role="tab"] {
         flex: 1 1 auto;
         min-width: 0;
@@ -1621,7 +1420,7 @@ main > *,
     /* --- mobile: undo size containment that collapses tiles ---
        container-type: size makes a box ignore its children's height when
        laying out. On desktop the sheet grid gives every tile a real height,
-       so that works. On mobile, tiles only grow from their content — so
+       so that works. On mobile, tiles only grow from their content â€” so
        size containment shrinks them to nearly nothing and text vanishes.
        Reset to normal, give sensible min-heights, let the page scroll. */
     .stat-tile,
@@ -1641,6 +1440,11 @@ main > *,
     }
 
     .stat-tile {
+        flex: unset;
+        width: auto;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
         min-height: 5.5rem;
         overflow: hidden;
     }
@@ -1648,6 +1452,7 @@ main > *,
     .skill-tile {
         min-height: 3.5rem;
         overflow: hidden;
+        text-align: center;
     }
 
     #armor-class-container,
@@ -1684,6 +1489,8 @@ main > *,
     }
     .action-container {
         grid-area: actions;
+        min-height: 14rem;
+        overflow: hidden;
     }
 
     .action-tab-list {
@@ -1696,22 +1503,13 @@ main > *,
         min-height: 4.75rem;
     }
 
-    .action-container {
-        min-height: 14rem;
-        overflow: hidden;
-    }
-
-    .skills-container {
-        margin-top: 2%;
-    }
-
     #skills-title {
        padding: 0.35rem;
        
     }
 
     .skills-container {
-        
+        margin-top: 2%;
         grid-template-columns: repeat(6, minmax(0, 1fr));
         grid-template-rows: auto 3fr 3fr 3fr;
         grid-auto-rows: minmax(3.5rem, auto);
@@ -1720,10 +1518,6 @@ main > *,
         max-width: 100%;
         min-width: 0;
         box-sizing: border-box;
-    }
-
-    .skill-tile {
-        text-align: center;
     }
 
     .health-container {
@@ -1737,10 +1531,6 @@ main > *,
         flex-direction: column;
         gap: 0.75rem;
     }
-
-        .condition-container {
-            gap: 0.75rem;
-        }
 }
 
 /* ---------- edit / inventory subpages ---------- */
@@ -1881,14 +1671,6 @@ body.subpage .invList {
     margin: 0;
 }
 
-/* Buttons fill their wrapper top to bottom, with square corners so they sit flush */
-.action-item .action-button {
-    align-self: stretch;
-    min-width: 4.5rem;
-    border-radius: 0;
-    box-shadow: none;
-}
-
 /* The "Equipped" label sits centered next to the Unequip button */
 .action-button-container > .equipped-item {
     align-self: center;
@@ -1904,3 +1686,211 @@ body.subpage .invList {
     opacity: 0.6;
     transform: none;   /* stop the hover-grow effect */
 }
+
+/* ---------- Spell Book header: Consult the Scrolls + 3 stats ---------- */
+/* Four equal columns, so each one fills exactly a quarter of the bar */
+.spell-stat-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.125rem;
+    align-items: stretch;
+}
+
+/* The button and the three stats share the same box, so they all sit level */
+.spell-stat-bar > .link-button,
+.spell-stat-bar > .spell-stat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+    padding: 0.5rem 0.25rem;
+    min-height: 2.5rem;
+    box-sizing: border-box;
+    background-color: var(--bgc-low);
+    border-radius: 0;
+}
+
+/* Keep the bottom corners rounded on the outer two so the tile edge stays smooth */
+.spell-stat-bar > :first-child { border-bottom-left-radius: 10px; }
+.spell-stat-bar > :last-child  { border-bottom-right-radius: 10px; }
+
+/* ---------- Every button in an action/spell row is the same size ---------- */
+/* Fixed width + centered text, so To Hit, Save, Damage and Cast line up from row to row.
+   Buttons also fill their wrapper top to bottom, with square corners so they sit flush. */
+.action-item .action-button {
+    align-self: stretch;
+    min-width: 4.5rem;
+    border-radius: 0;
+    box-shadow: none;
+    flex: 0 0 5.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 0.25rem;
+    white-space: nowrap;
+    font: inherit;
+}
+
+/* ---------- Spell details pop-up ---------- */
+.spell-name-button {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+.spell-name-button:hover { 
+    text-decoration: none; 
+    color: var(--accent);
+}
+
+.spell-details {
+    position: fixed;
+    top: 50%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    width: min(38rem, 90vw);
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 1.5rem 1.25rem 1.25rem;
+    background-color: var(--bg-color-5);
+    backdrop-filter: blur(8px);
+    border: var(--tileBorder);
+    border-radius: var(--rad1);
+    box-shadow: var(--bs2);
+}
+
+.details-container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    gap: .75rem;
+}
+
+.combat-box {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.spell-build-box {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: .25rem;
+    text-align: right;
+}
+
+.combat-box p,
+.spell-build-box p {
+    white-space: nowrap;
+    overflow-wrap: normal;
+}
+
+.spell-details-title {
+    text-align: center;
+    margin: 0 2rem .75rem;
+    padding: 0;
+    font-size: 1.5rem;
+    font-weight: var(--fontW1);
+    color: var(--accent);
+}
+
+.combat-box,
+.spell-build-box,
+.spell-description-box {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border: var(--tileBorder);
+    border-radius: var(--rad1);
+    background-color: var(--bg-color-2);
+}
+
+.spell-details p {
+    margin: .2rem 0;
+    overflow-wrap: anywhere;
+}
+.spell-details-close {
+    position: absolute;
+    border: none;
+    top: .5rem;
+    right: .5rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+}
+.spell-details-close:hover { background-color: var(--bg-color-1); }
+
+/* ---------- Proficiencies Tab ---------- */
+
+.tab-title {
+    text-align: center;
+    margin: 2%;
+    padding: 3%;
+}
+
+.proficiency-list {
+    padding: 0;
+    margin: 0;
+}
+
+.proficiency-tile {
+    border-top: var(--accent) solid 3px;
+    margin: 2%;
+    padding: 2%;
+}
+
+.proficiency-title {
+    text-align: center;
+}
+/* Upcast level picker in Magical Actions */
+.upcast-picker {
+    font: inherit;
+    padding: 2px 4px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* ---------- Learned Spells: smaller buttons, text scales with them ---------- */
+/* The panel is a size container, so cqi = 1% of the panel's width */
+#spells-panel-learned {
+    container-type: inline-size;
+}
+
+#spells-panel-learned .action-item .action-button {
+    flex: 0 0 auto;
+    width: clamp(4.25rem, 13cqi, 5rem);            /* all three buttons share one width that follows the panel */
+    min-width: 0;
+    font-size: clamp(0.65rem, 2.2cqi, 0.85rem);    /* text shrinks and grows with the panel */
+    padding: 0.2rem 0.4rem;
+    white-space: normal !important;                /* long labels like "Remove Action" wrap onto two lines */
+    line-height: 1.1;
+    text-align: center;
+}
+
+/* Spell Book level tabs: wrap onto a second row instead of overflowing (no sideways scroll needed) */
+.spell-book-tabs .action-tab-list,
+.spell-book-tabs .action-tab-list[role="tablist"] {
+    flex-wrap: wrap;
+    overflow: visible;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+    .spell-book-tabs .action-tab-list [role="tab"] {
+        flex: 1 1 5.5rem;
+        min-width: 0;
+        white-space: nowrap;
+    }

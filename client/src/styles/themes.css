@@ -1,0 +1,370 @@
+/* Shared theme + display variables. Pulled in by home.css, charSheet.css and signin.css via @import. */
+
+:root,
+
+[data-display='standard'] {
+    --tileBorder: 1px solid var(--bordercolor);
+    --rad1: .80rem;
+    --rad2: .35rem;
+    --bs1: 2px 2px 15px black;
+    --bs2: 2px 2px 10px black;
+    --pad1: .25%;
+    --pad2: 1%;
+    --pad3: 0;
+    --mar1: 0;
+    --mar2: 2%;
+    --shadowInner: inset 6px 6px 8px #000000a9, 
+                   inset -1px -1px 5px #00000079;
+    --toprad: 10px 10px 0 0;
+    --lowrad: 0 0 10px 10px;
+    --padTop: 3%;
+    --padLow: 2%;
+    --tile: 10px;
+    --marTop: 0;
+    --marLow: 0;
+    --section-gap: 0.75rem;
+
+    --fontF: "Cinzel Decorative", serif;
+    --fontW1: 700;
+    --fontW2: 400;
+    --fontStyle: normal;
+    --fontS1: 100%;
+    --fontS2: 130%;
+    --fontS3: 160%;
+    --w1: 100%;
+    --w2: 100vw;
+    --h1: 100%;
+    --h2: 100vh;
+    --maxW: 100%;
+    --maxH1: 100%;
+    --maxH2: 100vh;
+    --minW1: 0;
+    --minW2: 0;
+    --minH1: 0;
+    --minH2: 0;
+    --ofX1: hidden;
+    --ofX2: hidden;
+    --ofY1: auto;
+    --ofY2: auto;
+    --border1: none;
+}
+
+[data-display='compact'] {
+    --tileBorder: none;
+    --rad1: .5rem;
+    --rad2: .25rem;
+    --bs1: 2px 2px 5px black;
+    --bs2: 2px 2px 9px black;
+    --bs3: 2px 2px 5px black;
+    --pad1: 2.5%;
+    --pad2: 1.5%;
+    --pad3: 0;
+    --mar1: 0;
+    --mar2: 1%;
+    --shadowInner: inset 6px 6px 8px #000000a9, 
+                   inset -1px -1px 5px #00000079;
+    --toprad: 1.5rem 1.5rem 0 0;
+    --lowrad: 0 0 1.5rem 1.5rem;
+    --padTop: 1.5rem;
+    --padLow: 1.5rem;
+    --tile: 1.5rem;
+    --marTop: 0;
+    --marLow: 0;
+    --section-gap: 0.75rem;
+    --fontF: "Cinzel Decorative", serif;
+    --fontW1: 700;
+    --fontW2: 400;
+    --fontStyle: normal;
+    --fontS1: 100%;
+    --fontS2: 130%;
+    --fontS3: 150%;
+    --w1: 100%;
+    --w2: 100vw;
+    --h1: 100%;
+    --h2: 100vh;
+    --maxW: 100%;
+    --maxH1: 100%;
+    --maxH2: 100vh;
+    --minW1: 0;
+    --minW2: 0;
+    --minH1: 0;
+    --minH2: 0;
+    --ofX1: hidden;
+    --ofX2: hidden;
+    --ofY1: auto;
+    --ofY2: auto;
+    --border1: none;
+}
+    
+[data-display='neon'] {
+    --tileBorder:3px double var(--bgc-bubble-receive);
+    --rad1: .25rem;
+    --rad2: .125rem;
+    --bs1: 2px 2px 5px black;
+    --bs2: 2px 2px 9px black;
+    --bs3: 2px 2px 5px black;
+    --pad1: 2.5%;
+    --pad2: 1.5%;
+    --pad3: 0;
+    --mar1: 0;
+    --mar2: 1%;
+    --shadowInner: inset 6px 6px 8px #000000a9, 
+                   inset -1px -1px 5px #00000079;
+    --toprad: .5rem .5rem 0 0;
+    --lowrad: 0 0 .5rem .5rem;
+    --padTop: .5rem;
+    --padLow: .5rem;
+    --tile: .5rem;
+    --marTop: 0;
+    --marLow: 0;
+    --section-gap: 0.75rem;
+    --fontF: "Cinzel Decorative", serif;
+    --fontW1: 700;
+    --fontW2: 400;
+    --fontStyle: normal;
+    --fontS1: 100%;
+    --fontS2: 130%;
+    --fontS3: 150%;
+    --w1: 100%;
+    --w2: 100vw;
+    --h1: 100%;
+    --h2: 100vh;
+    --maxW: 100%;
+    --maxH1: 100%;
+    --maxH2: 100vh;
+    --minW1: 0;
+    --minW2: 0;
+    --minH1: 0;
+    --minH2: 0;
+    --ofX1: hidden;
+    --ofX2: hidden;
+    --ofY1: auto;
+    --ofY2: auto;
+    --border1: none;
+    --bs3: var(--glow);
+    --bs2: var(--glow);
+    --glow: 2px 2px 15px var(--bgc-bubble-receive);
+    --backdrop: blur(10px) saturate(190%);
+    
+}
+
+:root, 
+
+[data-theme="purple"] {
+    --healColor: rgba(46, 79, 46, 0.712);
+    --damageColor:  rgba(79, 46, 46, 0.712);
+    --bgc-bubble-send: rgb(26, 29, 72);
+    --bgc-bubble-receive: rgb(116, 94, 212);
+    --bgc-orb: rgb(64, 71, 175);
+    --bg-color-5: rgb(65, 27, 137);
+    --bg-color-4: rgba(71, 52, 139, 0.356);
+    --bg-color-3: rgba(74, 60, 199, 0.678);
+    --bg-color-2: rgba(68, 42, 196, 0.171);
+    --bg-color-1: rgba(109, 83, 222, 0.72);
+    --txt-color-1: rgba(255, 255, 255, 0.756);
+    --bordercolor: rgba(160, 150, 180, 0.565);
+    --bgc-top: rgba(64, 72, 175, 0.72);
+    --bgc-low: rgba(46, 31, 133, 0.466);
+    --accent: rgb(245, 188, 103);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(2px) saturate(150%);
+    --background: url('/utils/mapblack1.png');
+}
+[data-theme="green"] {
+    --healColor: rgba(46, 79, 46, 0.712);
+    --damageColor:  rgba(79, 46, 46, 0.712);
+    --bgc-bubble-send: rgb(20, 57, 50);
+    --bgc-bubble-receive: rgb(45, 140, 109);
+    --bgc-orb: rgb(66, 156, 120);
+    --bg-color-5: rgb(28, 54, 33);
+    --bg-color-4: rgba(41, 66, 43, 0.377);
+    --bg-color-3: rgba(41, 66, 43, 0.678);
+    --bg-color-2: rgba(59, 110, 66, 0.24);
+    --bg-color-1: rgba(34, 53, 41, 0.548);
+    --txt-color-1: rgba(237, 243, 221, 0.822);
+    --bordercolor: rgba(150, 180, 154, 0.565);
+    --bgc-top: rgba(64, 104, 73, 0.72);
+    --bgc-low: rgba(51, 80, 48, 0.596);
+    --accent: rgb(238, 224, 163);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(2px) saturate(150%);
+    --background: url('/utils/mapblack1.png');
+}
+
+[data-theme="blue"] {
+    --healColor: rgba(46, 79, 46, 0.712);
+    --damageColor:  rgba(79, 46, 46, 0.712);
+    --bgc-bubble-send: rgb(35, 60, 149);
+    --bgc-bubble-receive: rgb(94, 135, 212);
+    --bgc-orb: rgb(64, 112, 175);
+    --bg-color-5: rgb(22, 42, 112);
+    --bg-color-4: rgba(26, 55, 150, 0.37);
+    --bg-color-3: rgba(16, 47, 146, 0.404);
+    --bg-color-2: rgba(59, 86, 209, 0.637);
+    --bg-color-1: rgba(44, 62, 128, 0.72);
+    --txt-color-1: rgba(232, 239, 250, 0.822);
+    --bordercolor: rgba(202, 218, 255, 0.565);
+    --bgc-top: rgba(33, 60, 184, 0.72);
+    --bgc-low: rgba(20, 44, 150, 0.486);
+    --accent: rgb(163, 238, 238);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(2px) saturate(150%);
+    --background: url('/utils/mapblack1.png');
+}
+
+[data-theme="red"] {
+    --healColor: rgba(46, 79, 46, 0.712);
+    --damageColor:  rgba(79, 46, 46, 0.712);
+    --bgc-bubble-send: rgb(72, 26, 26);
+    --bgc-bubble-receive: rgb(212, 94, 94);
+    --bgc-orb: rgb(175, 64, 64);
+    --bg-color-5: rgb(92, 18, 18);
+    --bg-color-4: rgba(112, 20, 20, 0.356);
+    --bg-color-3: rgba(126, 35, 35, 0.678);
+    --bg-color-2: rgba(88, 28, 28, 0.67);
+    --bg-color-1: rgba(65, 9, 9, 0.72);
+    --txt-color-1: rgba(250, 232, 232, 0.822);
+    --bordercolor: rgba(252, 199, 199, 0.565);
+    --bgc-top: rgba(131, 39, 39, 0.72);
+    --bgc-low: rgba(97, 26, 26, 0.397);
+    --accent: rgb(252, 226, 187);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(5px) saturate(150%);
+    --background: url('/utils/mapblack1.png');
+}
+
+
+[data-theme="orange"] {
+    --healColor: rgba(46, 79, 46, 0.712);
+    --damageColor:  rgba(79, 46, 46, 0.712);
+    --bgc-bubble-send: rgb(72, 43, 26);
+    --bgc-bubble-receive: rgb(212, 141, 94);
+    --bgc-orb: rgb(175, 118, 64);
+    --bg-color-5: rgb(110, 62, 14);
+    --bg-color-4: rgba(112, 72, 20, 0.39);
+    --bg-color-3: rgba(112, 72, 20, 0.678);
+    --bg-color-2: rgba(129, 83, 22, 0.67);
+    --bg-color-1: rgba(65, 45, 9, 0.72);
+    --txt-color-1: rgba(250, 232, 232, 0.822);
+    --bordercolor: rgba(252, 225, 199, 0.565);
+    --bgc-top: rgba(202, 136, 60, 0.72);
+    --bgc-low: rgba(145, 99, 39, 0.459);
+    --accent: rgb(252, 226, 187);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(5px) saturate(150%);
+    --background: url('/utils/mapblack1.png');
+}
+
+[data-theme="yellow"] {
+    --healColor: rgba(46, 79, 46, 0.712);
+    --damageColor:  rgba(79, 46, 46, 0.712);
+    --bgc-bubble-send: rgb(72, 62, 26);
+    --bgc-bubble-receive: rgb(212, 206, 94);
+    --bgc-orb: rgb(175, 147, 64);
+    --bg-color-5: rgb(120, 102, 22);
+    --bg-color-4: rgba(172, 149, 24, 0.432);
+    --bg-color-3: rgba(160, 148, 42, 0.678);
+    --bg-color-2: rgba(192, 169, 41, 0.67);
+    --bg-color-1: rgba(124, 114, 67, 0.72);
+    --txt-color-1: rgba(250, 250, 232, 0.822);
+    --bordercolor: rgba(252, 247, 199, 0.565);
+    --bgc-top: rgba(209, 183, 35, 0.72);
+    --bgc-low: rgba(148, 136, 68, 0.452);
+    --accent: rgb(208, 252, 187);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(5px) saturate(150%);
+    --background: url('/utils/mapblack1.png');
+}
+
+[data-theme="dark"] {
+    --healColor: rgba(46, 79, 46, 0.712);
+    --damageColor:  rgba(79, 46, 46, 0.712);
+    --bgc-bubble-send: rgb(0, 0, 0);
+    --bgc-bubble-receive: rgb(43, 43, 43);
+    --bgc-orb: rgb(107, 107, 107);
+    --bg-color-5: rgb(18, 18, 18);
+    --bg-color-4: rgba(0, 0, 0, 0.466);
+    --bg-color-3: rgba(0, 0, 0, 0.466);
+    --bg-color-2: rgba(36, 35, 35, 0.67);
+    --bg-color-1: rgba(0, 0, 0, 0.452);
+    --txt-color-1: rgba(255, 255, 255, 0.822);
+    --bordercolor: rgba(255, 255, 255, 0.74);
+    --bgc-top: rgba(0, 0, 0, 0.671);
+    --bgc-low: rgba(5, 5, 5, 0.068);
+    --accent: rgb(252, 196, 112);
+    --healColor: rgba(140, 184, 140, 0.384);
+    --damageColor:  rgba(48, 37, 37, 0.712);
+    --shadowInner: inset 4px 4px 15px #ffeacea9, 
+                   inset 0px 0px 5px #ffeacea9;
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(5px) saturate(150%);
+    --background: url('/utils/mapblack1.png');
+}
+
+[data-theme="light"] {
+    --healColor: rgba(46, 79, 46, 0.712);
+    --damageColor:  rgba(79, 46, 46, 0.712);
+    --bgc-bubble-send: rgb(249, 232, 200);
+    --bgc-bubble-receive: rgb(255, 255, 255);
+    --bgc-orb: rgb(63, 59, 49);
+    --bg-color-5: rgb(245, 236, 214);
+    --bg-color-4: rgba(255, 255, 255, 0.062);
+    --bg-color-3: rgba(255, 230, 184, 0.781);
+    --bg-color-2: rgba(253, 249, 242, 0.829);
+    --bg-color-1: rgba(238, 232, 216, 0.74);
+    --txt-color-1: rgba(0, 0, 0, 0.678);
+    --text-color-2: rgba(255, 255, 255, 0.986);
+    --bordercolor: rgb(255, 228, 179);
+    --bgc-top: rgba(255, 255, 255, 0.918);
+    --bgc-low: rgba(255, 255, 255, 0.486);
+    --accent: rgb(145, 100, 3);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(2px) saturate(150%);
+    --background: url('/utils/mapwhite1.png');
+}
+
+[data-theme="hellfire"] {
+    --healColor: rgba(46, 79, 46, 0.712);
+    --damageColor:  rgba(79, 46, 46, 0.712);
+    --bgc-bubble-send: rgb(82, 37, 25);
+    --bgc-bubble-receive: rgb(138, 67, 47);
+    --bgc-orb: rgb(104, 51, 33);
+    --bg-color-5: rgb(71, 55, 55);
+    --bg-color-4: rgba(78, 71, 71, 0.459);
+    --bg-color-3: rgba(3, 3, 3, 0.678);
+    --bg-color-2: rgba(119, 42, 42, 0.67);
+    --bg-color-1: rgba(65, 9, 9, 0.72);
+    --txt-color-1: rgba(228, 43, 11, 0.822);
+    --bordercolor:  rgba(252, 199, 199, 0.565);
+    --bgc-top: rgba(82, 37, 25, 0.72);
+    --bgc-low: rgba(0, 0, 0, 0.72);
+    --accent: rgb(252, 226, 187);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(5px) saturate(150%);
+    --healColor: rgba(253, 249, 227, 0.685);
+    --damageColor:  rgba(65, 56, 56, 0.712);
+    --background: url('/utils/hellfiremap.png');
+}
+
+[data-theme="frozen"] {
+    --healColor: rgba(46, 79, 46, 0.712);
+    --damageColor:  rgba(79, 46, 46, 0.712);
+    --bgc-bubble-send: rgb(20, 83, 112);
+    --bgc-bubble-receive: rgb(155, 220, 245);
+    --bgc-orb: rgb(104, 161, 175);
+    --bg-color-5: rgb(16, 66, 90);
+    --bg-color-4: rgba(155, 220, 245, 0.438);
+    --bg-color-3: rgba(20, 83, 112, 0.678);
+    --bg-color-2: rgba(22, 99, 129, 0.67);
+    --bg-color-1: rgba(26, 79, 92, 0.72);
+    --txt-color-1: rgba(232, 250, 247, 0.822);
+    --bordercolor: rgba(208, 248, 241, 0.801);
+    --bgc-top: rgba(168, 221, 245, 0.486);
+    --bgc-low: rgba(92, 125, 138, 0.534);
+    --accent: rgb(252, 226, 187);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(0) saturate(150%);
+    --healColor: rgba(109, 188, 253, 0.63);
+    --damageColor:  rgba(39, 96, 252, 0.712);
+    --background: url('/utils/frozenmap1.png');
+}

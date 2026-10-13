@@ -1,40 +1,53 @@
-// Character creation (3 steps) as JSON for React.
-// Uses the same "draft locker" (req.session.charDraft) as the EJS version.
-// Rolling a stat and loading subclasses already answer with JSON, so routes/api.js
-// reuses rollStat and selectSubclass straight from charController.js.
-import pool from "../db.js";
+// Character creation (3 steps) as JSON for React. Queries live in models/.
+// Uses the session "draft locker" (req.session.charDraft) until step 3 saves it.
+import { listRaces } from '../models/raceModel.js';
+import { listClasses, getHitDie, listSubclassesForClass, subclassBelongsToClass } from '../models/classModel.js';
+import { createCharacter } from '../models/characterModel.js';
 
 const STATS = ["str", "dex", "con", "int", "wis", "cha", "luc", "spd"];
 
-// GET /api/create_char/races
-export async function getRaces(req, res) {
-    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
-    const races = await pool.query("SELECT id, name, traits, img_url FROM races ORDER BY name");
-    res.json(races.rows);
+// 4d6, drop the lowest
+function rollStatValue() {
+    const dice = [1, 2, 3, 4].map(() => Math.floor(Math.random() * 6) + 1);
+    dice.sort((a, b) => a - b);
+    return dice[1] + dice[2] + dice[3];
 }
 
-// POST /api/create_char/step1   body: { name, race_id }
+export async function getRaces(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    res.json(await listRaces());
+}
+
 export function step1Submit(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
     const { name, race_id } = req.body;
-    if (!name || !race_id) return res.status(400).json({ error: 'Name and Race Select Required' });
+    if (!race_id) return res.status(400).json({ error: 'Race Select Required' });
 
-    req.session.charDraft = { name: name.trim(), race_id: Number(race_id) };
+    req.session.charDraft = { name: name?.trim() || 'One with no name', race_id: Number(race_id) };
     res.json({ ok: true });
 }
 
-// GET /api/create_char/step2  -> list of classes (409 if step 1 wasn't done)
 export async function getStep2(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
     if (!req.session.charDraft) return res.status(409).json({ error: 'Start with step 1' });
 
-    const classes = await pool.query(
-        "SELECT id, name, primary_stat, hitpoint_die, img_url, description FROM classes ORDER BY name"
-    );
-    res.json(classes.rows);
+    res.json(await listClasses());
 }
 
-// POST /api/create_char/step2   body: { class_id, subclass_id }
+// GET /api/create_char/subclasses/:classId  (moved here from the old EJS charController)
+export async function selectSubclass(req, res) {
+    if (!req.session.userId) {
+        return res.status(401).json({ error: 'Not Logged In' });
+    }
+
+    try {
+        res.json(await listSubclassesForClass(Number(req.params.classId)));
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Could not load subclasses' });
+    }
+}
+
 export async function step2Submit(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
     if (!req.session.charDraft) return res.status(409).json({ error: 'Start with step 1' });
@@ -42,11 +55,7 @@ export async function step2Submit(req, res) {
     const { class_id, subclass_id } = req.body;
     if (!class_id || !subclass_id) return res.status(400).json({ error: 'Class and Subclass Required' });
 
-    const check = await pool.query(
-        "SELECT 1 FROM sub_classes WHERE id = $1 and class_id = $2",
-        [Number(subclass_id), Number(class_id)]
-    );
-    if (check.rows.length === 0) {
+    if (!(await subclassBelongsToClass(Number(subclass_id), Number(class_id)))) {
         return res.status(400).json({ error: 'that subclass does not belong to that class' });
     }
 
@@ -55,7 +64,6 @@ export async function step2Submit(req, res) {
     res.json({ ok: true });
 }
 
-// GET /api/create_char/step3  -> { rolls } (409 if step 2 wasn't done)
 export function getStep3(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
     const draft = req.session.charDraft;
@@ -65,7 +73,24 @@ export function getStep3(req, res) {
     res.json({ rolls: draft.rolls });
 }
 
-// POST /api/create_char/step3   body: { plus2, plus1 }  -> { id } of the new character
+// POST /api/create_char/roll/:stat  (moved here from the old EJS charController)
+export function rollStat(req, res) {
+    if (!req.session.userId) {
+        return res.status(401).json({ error: "Not Logged In" });
+    }
+    const draft = req.session.charDraft;
+    if (!draft) return res.status(400).json({ error: "No Character in progress" });
+
+    const stat = req.params.stat;
+    if (!STATS.includes(stat)) return res.status(400).json({ error: "Invalid Stat" });
+
+    draft.rolls = draft.rolls ?? {};
+    if (draft.rolls[stat] === undefined) {       // only roll the first time
+        draft.rolls[stat] = rollStatValue();
+    }
+    res.json({ stat, value: draft.rolls[stat] });
+}
+
 export async function step3Submit(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
     const draft = req.session.charDraft;
@@ -87,24 +112,20 @@ export async function step3Submit(req, res) {
     final[plus2] += 2;
     final[plus1] += 1;
 
-    const classResult = await pool.query(`SELECT hitpoint_die FROM classes WHERE id = $1`, [draft.class_id]);
-    const hitDie = classResult.rows[0]?.hitpoint_die;
+    const hitDie = await getHitDie(draft.class_id);
     if (!hitDie) return res.status(400).json({ error: 'Class not found' });
 
     const baseHealth = Math.floor(Math.random() * hitDie) + 1;
     const conMod = Math.floor(final.con / 2) - 5;
     const maxHp = Math.max(1, baseHealth + conMod);
 
-    const { rows } = await pool.query(
-        `INSERT INTO characters
-           (user_id, name, race_id, class_id, subclass_id,
-            str, dex, con, "int", wis, cha, luc, spd, plus2_stat, plus1_stat, max_hp, current_hp)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)
-         RETURNING id`,
-        [req.session.userId, draft.name, draft.race_id, draft.class_id, draft.subclass_id,
-         final.str, final.dex, final.con, final.int, final.wis, final.cha, final.luc, final.spd,
-         plus2, plus1, maxHp, maxHp]
-    );
+    const id = await createCharacter(req.session.userId, draft, final, plus2, plus1, maxHp);
     delete req.session.charDraft; // the draft is saved, so throw it away
-    res.json({ id: rows[0].id });
+    res.json({ id });
+}
+
+export function clearDraft(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    delete req.session.charDraft;
+    res.json({ ok: true });
 }

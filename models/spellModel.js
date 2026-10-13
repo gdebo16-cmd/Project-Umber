@@ -1,0 +1,95 @@
+// All spell database reads and writes live here. Change a query once and every controller gets it.
+import pool from '../db.js';
+
+// Every learned spell for a character, with the details the sheet, Spell Book and details box need
+export async function getLearnedSpells(charId) {
+    const { rows } = await pool.query(
+        `SELECT s.id, s.name, s.base_level, s.base_damage_dice, s.opponent_save_roll, s.attack_type, s.base_to_hit_modifier, 
+                s.range, s.duration, s.casting_time, s.focus_level, s.base_description AS description,
+                st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name,
+                COALESCE((SELECT json_agg(json_build_object('cast_level', u.cast_level, 'damage_dice', u.damage_dice, 'heal_dice', u.heal_dice, 'extra_targets', u.extra_targets) ORDER BY u.cast_level)
+                          FROM spell_upcasts u WHERE u.spell_id = s.id), '[]') AS upcasts,
+                cs.is_learned, cs.is_prepared, cs.is_action
+         FROM character_spells cs
+         JOIN spells s ON s.id = cs.spell_id
+         LEFT JOIN spell_state st ON st.id = s.state_id
+         LEFT JOIN spell_alignment al ON al.id = s.alignment_id
+         LEFT JOIN spell_element el ON el.id = s.element_id
+         WHERE cs.character_id = $1 AND cs.is_learned
+         ORDER BY s.base_level, s.name`,
+        [charId]
+    );
+    return rows;
+}
+
+// Every spell (Spell Book list), with the same detail fields + names as getLearnedSpells so the details box works there too
+export async function getAllSpells() {
+    const { rows } = await pool.query(
+        `SELECT s.id, s.name, s.base_level, s.base_damage_dice, s.opponent_save_roll, s.attack_type, s.base_to_hit_modifier, 
+                s.range, s.duration, s.casting_time, s.focus_level, s.base_description AS description,
+                st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name,
+                COALESCE((SELECT json_agg(json_build_object('cast_level', u.cast_level, 'damage_dice', u.damage_dice, 'heal_dice', u.heal_dice, 'extra_targets', u.extra_targets) ORDER BY u.cast_level)
+                          FROM spell_upcasts u WHERE u.spell_id = s.id), '[]') AS upcasts
+         FROM spells s
+         LEFT JOIN spell_state st ON st.id = s.state_id
+         LEFT JOIN spell_alignment al ON al.id = s.alignment_id
+         LEFT JOIN spell_element el ON el.id = s.element_id
+         ORDER BY s.base_level, s.name`
+    );
+    return rows;
+}
+
+export async function getSpellsForCharacter(classId, subclassId, level) {
+    const { rows } = await pool.query(
+        `SELECT s.*, s.base_description AS description, MIN(cs.min_level) AS unlock_level,
+                st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name
+         FROM class_spells cs
+         JOIN spells s ON s.id = cs.spell_id
+         LEFT JOIN spell_state st ON st.id = s.state_id
+         LEFT JOIN spell_alignment al ON al.id = s.alignment_id
+         LEFT JOIN spell_element el ON el.id = s.element_id
+         WHERE cs.class_id = $1 AND (cs.subclass_id IS NULL OR cs.subclass_id = $2) AND cs.min_level <= $3
+         GROUP BY s.id, st.name, al."Name", el.name
+         ORDER BY s.base_level, s.name`,
+        [classId, subclassId, level]
+    );
+    return rows;
+}
+// ---------- spell writes ----------
+
+// If the row already exists (UNIQUE character_id + spell_id), just mark it learned
+export async function learnSpell(charId, spellId) {
+    await pool.query(
+        `INSERT INTO character_spells (character_id, spell_id, is_learned)
+        VALUES ($1, $2, true)
+        ON CONFLICT (character_id, spell_id) DO UPDATE SET is_learned = true`,
+        [charId, spellId]
+    );
+}
+
+export async function unlearnSpell(charId, spellId) {
+    await pool.query(
+        `DELETE FROM character_spells WHERE character_id = $1 AND spell_id = $2`,
+        [charId, spellId]
+    );
+}
+
+// Flip is_prepared on a learned spell. Returns rows changed (0 = not learned)
+export async function setPrepared(charId, spellId, value) {
+    const { rowCount } = await pool.query(
+        `UPDATE character_spells SET is_prepared = $3
+        WHERE character_id = $1 AND spell_id = $2 AND is_learned`,
+        [charId, spellId, value]
+    );
+    return rowCount;
+}
+
+// Flip is_action on a learned spell. Returns rows changed (0 = not learned)
+export async function setAction(charId, spellId, value) {
+    const { rowCount } = await pool.query(
+        `UPDATE character_spells SET is_action = $3
+        WHERE character_id = $1 AND spell_id = $2 AND is_learned`,
+        [charId, spellId, value]
+    );
+    return rowCount;
+}

@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import ItemShop from './ItemShop';
 import { sendJson } from '../../utils/api';
+import { useCharacter } from '../CharacterContext';
 
 // The Inventory tab on the sheet: what you own, with Equip / Unequip buttons.
 // After each click the server sends back the new list, and the parent swaps it in,
 // so Armor Class and Actions update right away.
-function InventoryTab({ characterId, ownedArmor, ownedWeapons, onArmorChange, onWeaponsChange }) {
+function InventoryTab() {
+    const { character, ownedArmor, ownedWeapons, setOwnedArmor, setOwnedWeapons } = useCharacter();
+    const characterId = character.id;
     const [error, setError] = useState('');
     const [browsing, setBrowsing] = useState(false); // true while the shop list is showing
     const base = `/api/characters/${characterId}/inventory`;
@@ -13,7 +16,7 @@ function InventoryTab({ characterId, ownedArmor, ownedWeapons, onArmorChange, on
     const armorAction = async (armorId, action) => {
         try {
             const data = await sendJson(`${base}/armor/${action}`, 'POST', { armor_id: armorId });
-            onArmorChange(data.ownedArmor);
+            setOwnedArmor(data.ownedArmor);
             setError('');
         } catch (err) {
             setError(err.message);
@@ -23,7 +26,7 @@ function InventoryTab({ characterId, ownedArmor, ownedWeapons, onArmorChange, on
     const weaponAction = async (weaponId, action) => {
         try {
             const data = await sendJson(`${base}/weapon/${action}`, 'POST', { weapon_id: weaponId });
-            onWeaponsChange(data.ownedWeapons);
+            setOwnedWeapons(data.ownedWeapons);
             setError('');
         } catch (err) {
             setError(err.message);
@@ -36,8 +39,8 @@ function InventoryTab({ characterId, ownedArmor, ownedWeapons, onArmorChange, on
         try {
             const res = await fetch(`/api/characters/${characterId}`);
             const data = await res.json();
-            onArmorChange(data.ownedArmor);
-            onWeaponsChange(data.ownedWeapons);
+            setOwnedArmor(data.ownedArmor);
+            setOwnedWeapons(data.ownedWeapons);
         } catch (err) {
             setError(err.message);
         }

@@ -16,7 +16,7 @@ const TABS = [
     { id: 'level_9', label: 'Level 9' },
 ];
 
-function SpellBook({ characterId, onDone }) {
+function SpellBook({ characterId, onDone, onOpenSpell }) {
     const { data, setData, loading, error } = useFetch(`/api/characters/${characterId}/spellbook`);
     const [tab, setTab] = useState('level_0');
     const [saveError, setSaveError] = useState('');
@@ -52,6 +52,9 @@ const changeSpell = async (spellId, action) => {
     if (error) return <p>Failure is upon us: {error}</p>;
 
     const { spells, learnedIds } = data;
+    // the server only sends spells the character can cast, so the highest level present is the highest tab to show
+    const maxLevel = Math.max(0, ...spells.map((s) => s.base_level));
+    const visibleTabs = TABS.filter((t) => Number(t.id.split('_')[1]) <= maxLevel);
     return (
         <>
         <section className="title-tile">
@@ -61,14 +64,14 @@ const changeSpell = async (spellId, action) => {
         </section>
             
             <section className='panel-shell spell-book-tabs'>
-                <TabList tabs={TABS} active={tab} onChange={setTab} prefix='spell-' />
+                <TabList tabs={visibleTabs} active={tab} onChange={setTab} prefix='spell-' />
                 
                 <article role='tabpanel' id='spell-panel-level_0' className='action-tile spell-panel' aria-labelledby='spell-tab-level_0' hidden={tab !== 'level_0'}>
                     <h3 className='action-title cap-top'>Low Level Spells</h3>
                     <ul className='action-list spellList'>
                         {spells.filter(s => s.base_level === 0).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span>
+                                <button type='button' className='action-label spellName spell-name-button hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button>
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -79,7 +82,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spellList'>
                         {spells.filter(s => s.base_level === 1).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span>
+                                <button type='button' className='action-label spellName spell-name-button hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button>
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -90,7 +93,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spellList'>
                         {spells.filter(s => s.base_level === 2).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
+                                <button type='button' className='action-label spellName spell-name-button hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -101,7 +104,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spellList'>
                         {spells.filter(s => s.base_level === 3).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
+                                <button type='button' className='action-label spellName spell-name-button hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -112,7 +115,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spellList'>
                         {spells.filter(s => s.base_level === 4).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
+                                <button type='button' className='action-label spellName spell-name-button hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -123,7 +126,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spellList'>
                         {spells.filter(s => s.base_level === 5).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
+                                <button type='button' className='action-label spellName spell-name-button hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}  
                             </li>
                         ))}
@@ -134,7 +137,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spellList'>
                         {spells.filter(s => s.base_level === 6).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
+                                <button type='button' className='action-label spellName spell-name-button hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -145,7 +148,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spellList'>
                         {spells.filter(s => s.base_level === 7).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
+                                <button type='button' className='action-label spellName spell-name-button hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -156,7 +159,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spellList'>
                         {spells.filter(s => s.base_level === 8).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
+                                <button type='button' className='action-label spellName spell-name-button hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -167,7 +170,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spellList'>
                         {spells.filter(s => s.base_level === 9).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
+                                <button type='button' className='action-label spellName spell-name-button hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}

@@ -12,7 +12,7 @@ function HomePage() {
     const deleteCharacter = async (e, ch) => {
         e.preventDefault();   // the button sits inside the card's link, so don't follow the link
         e.stopPropagation();
-        if (!window.confirm(`Delete ${ch.name}? This cannot be undone.`)) return;
+        if (!window.confirm(`Do you want to delete ${ch.name}? This cannot be undone.`)) return;
 
         const res = await fetch(`/api/characters/${ch.id}`, { method: 'DELETE' });
         if (res.ok) {
@@ -21,10 +21,18 @@ function HomePage() {
         }
     };
 
+    const deleteDraft = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!window.confirm('Delete this unfinished character?')) return;
+        const res = await fetch('/api/create_char/draft', { method: 'DELETE' });
+        if (res.ok) setData((prev) => ({ ...prev, draft: null }));
+    };
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Failure is upon us: {error}</p>;
 
-    const { username, characters } = data;
+    const { username, characters, draft } = data;
 
     return (
         <>
@@ -34,22 +42,24 @@ function HomePage() {
             </header>
 
             <main>
-                <section id="currentCharacters" className="mainBlock tile">
-                    <h3 className="topTile">Current Characters</h3>
-                    <article className="bottomTile" id="characterList">
+                <section id="current-character-container" className="container">
+                    <article className="title" id="current-character-title">
+                        <h2 className="title-text">Current Characters</h2>
+                    </article>
+                    <article className="tile" id="current-character-tile">
                         {characters.length === 0 ? (
                             <p>No Characters Available</p>
                         ) : (
-                            <ul id="currentCharacterContainer">
+                            <ul className="tile-list" id="current-character-list">
                                 {characters.map((ch) => (
-                                    <li key={ch.id} className="currentCharacterItem">
+                                    <li key={ch.id} className='character-tile' id={`character-tile-${ch.id}`}>
                                         <Link to={`/characters/${ch.id}`} className="char-tile">
-                                            <h3 className="currentCharacterName">{ch.name}</h3>
-                                            <img className="currentCharacterImage" src="/utils/defaultimg.png" alt="Character Image" />
-                                            <p className="currentCharacterRace">Race: {ch.race}</p>
-                                            <p className="currentCharacterClass">Class: {ch.class}</p>
-                                            <p className="currentCharacterSubclass">Sub-class: {ch.subclass}</p>
-                                            <button type="button" className="deleteButton" onClick={(e) => deleteCharacter(e, ch)}>Delete</button>
+                                            <h3 className="character-name">{ch.name}</h3>
+                                            <img className="character-image" src="/utils/defaultimg.png" alt="Character Image" />
+                                            <p className="character-race">Race: {ch.race}</p>
+                                            <p className="character-class">Class: {ch.class}</p>
+                                            <p className="character-subclass">Sub-class: {ch.subclass}</p>
+                                            <button type="button" className="character-delete-button" onClick={(e) => deleteCharacter(e, ch)}>Delete</button>
                                         </Link>
                                     </li>
                                 ))}
@@ -57,16 +67,35 @@ function HomePage() {
                         )}
                     </article>
                 </section>
-                <section id="currentCampaign" className="mainBlock tile">
-                    <h3 className="topTile">Current Campaigns</h3>
-                    <article className="bottomTile" id="campaignList">
-                        <p>No Campaigns Planned</p>
+                <section id="current-campaign-container" className="container">
+                    <article className="title" id="current-campaign-title">
+                        <h2 className="title-text">Current Campaigns</h2>
+                    </article>
+                    <article className="tile" id="current-campaign-list">
+                        <p className="tile-text">No Campaigns Planned</p>
                     </article>
                 </section>
-                <section id="unfinishedCharacters" className="mainBlock tile">
-                    <h3 className="topTile">Unfinished Work</h3>
-                    <article className="bottomTile" id="unfinishedList">
-                        <p>Youre All Caught Up!</p>
+                <section id="unfinished-character-container" className="container">
+                    <article className="title" id="unfinished-character-title">
+                        <h2 className="title-text">Unfinished Work</h2>
+                    </article>
+                    <article className="tile" id="unfinished-character-list">
+                        <ul className="tile-list" id="unfinished-character-list">
+                        {draft ? (
+                            <li key={draft.id} className='character-tile' id={`character-tile-${draft.id}`}>
+                                <Link to={draft.subclass_id ? '/create_char/step3' : '/create_char/step2'} className='char-tile'>
+                                    <h3 className='character-name'>{draft.name || 'One with no name'}</h3>
+                                    <img className='character-image' src='/utils/defaultimg.png' alt='Character Image' />
+                                    <p className='character-race'>Race: {draft.race || 'Undecided'}</p>
+                                    <p className='character-class'>Class: {draft.class || 'Undecided'}</p>
+                                    <p className='character-subclass'>Sub-class: {draft.subclass || 'Undecided'}</p>
+                                    <button type='button' className='character-delete-button' onClick={deleteDraft}>Delete</button>
+                                </Link>
+                            </li>
+                        ) : (
+                            <p className='tile-text'>You are all caught up!</p>
+                        )}
+                        </ul>
                     </article>
                 </section>
             </main>

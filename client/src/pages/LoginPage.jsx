@@ -29,26 +29,26 @@ function LoginPage() {
             </header>
 
             <main>
-                <section id="formContainer">
-                    <article id="formTitle">
+                <section className="formContainer">
+                    <article className="formTitle">
                         <h2 id="titleText">Welcome to Your Legend</h2>
                     </article>
-                    <form className="formContainer" onSubmit={submit}>
-                        <article className="formSectionContainer tile" id="userNameContainer">
-                            <label id="userNameLabel" className="topTile" htmlFor="userName">Enter Username</label>
-                            <input className="bottomTile" type="text" id="userName" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                    <form onSubmit={submit}>
+                        <article className="formSectionContainer userNameContainer">
+                            <label id="userNameLabel" className="signinLabel" htmlFor="userName">Enter Username</label>
+                            <input className="signinValue" type="text" id="userName" value={username} onChange={(e) => setUsername(e.target.value)} required />
                         </article>
 
-                        <article className="formSectionContainer tile" id="passwordContainer">
-                            <label id="passwordLabel" className="topTile" htmlFor="password">Enter Password</label>
-                            <input className="bottomTile" type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                        <article className="formSectionContainer passwordContainer ">
+                            <label id="passwordLabel" className="signinLabel" htmlFor="password">Enter Password</label>
+                            <input className="signinValue" type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                         </article>
 
                         {error && <p>{error}</p>}
 
-                        <article className="formSectionContainer" id="buttonContainer">
-                            <button id="submit" className="formButton" type="submit">Login</button>
-                            <Link to="/register" className="formButton" id="newUser">Create New User</Link>
+                        <article className="formSectionContainer buttonContainer">
+                            <button id="loginButton" className="formButton" type="submit">Login</button>
+                            <Link to="/register" className="formButton" id="newUserButton">Create New User</Link>
                         </article>
                     </form>
                 </section>

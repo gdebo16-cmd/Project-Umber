@@ -1,6 +1,7 @@
-// Login, register, logout, "who am I", home page list, and account settings — as JSON for React.
+// Login, register, logout, "who am I", home page list, and account settings as JSON for React. Queries live in models/.
 import bcrypt from "bcryptjs";
-import pool from "../db.js";
+import * as Users from '../models/userModel.js';
+import { listCharactersForUser } from '../models/characterModel.js';
 
 // GET /api/me  -> { id, username } or 401
 export function me(req, res) {
@@ -15,8 +16,7 @@ export async function login(req, res) {
         return res.status(400).json({ error: 'Username and Password are required' });
     }
 
-    const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
-    const user = result.rows[0];
+    const user = await Users.findUserByUsername(username);
     if (!user || !(await bcrypt.compare(password, user.password_hash))) {
         return res.status(401).json({ error: 'Invalid Username and/or Password' });
     }
@@ -33,18 +33,12 @@ export async function register(req, res) {
         return res.status(400).json({ error: 'Username and Password Required to sign up.' });
     }
 
-    const existing = await pool.query('SELECT id FROM users WHERE username = $1', [username]);
-    if (existing.rows.length > 0) {
+    if (await Users.usernameExists(username)) {
         return res.status(409).json({ error: `${username} is already registered` });
     }
 
     const hash = await bcrypt.hash(password, 12);
-    const result = await pool.query(
-        `INSERT INTO users (username, password_hash, name, email) VALUES ($1, $2, $3, $4) RETURNING id, username, created_at`,
-        [username, hash, name, email || null]
-    );
-
-    const user = result.rows[0];
+    const user = await Users.createUser(username, hash, name, email || null);
     req.session.userId = user.id;
     req.session.username = user.username;
     res.json({ id: user.id, username: user.username });
@@ -55,32 +49,19 @@ export function logout(req, res) {
     req.session.destroy(() => res.json({ ok: true }));
 }
 
-// GET /api/home  -> { username, characters }
+// GET /api/home  -> { username, characters, draft }
 export async function home(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
 
-    const result = await pool.query(
-        `SELECT ch.id, ch.name,
-                r.name AS race,
-                c.name AS class,
-                sc.name AS subclass
-        FROM characters ch
-        LEFT JOIN races r ON ch.race_id = r.id
-        LEFT JOIN classes c ON ch.class_id = c.id
-        LEFT JOIN sub_classes sc ON ch.subclass_id = sc.id
-        WHERE ch.user_id = $1
-        ORDER BY ch.created_at DESC`,
-        [req.session.userId]
-    );
-    res.json({ username: req.session.username, characters: result.rows });
+    const characters = await listCharactersForUser(req.session.userId);
+    res.json({ username: req.session.username, characters, draft: req.session.charDraft || null });
 }
 
 // GET /api/settings  -> { username, email }
 export async function getSettings(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
 
-    const result = await pool.query('SELECT username, email FROM users WHERE id = $1', [req.session.userId]);
-    const user = result.rows[0];
+    const user = await Users.getSettings(req.session.userId);
     if (!user) return res.status(401).json({ error: 'Not logged in' });
     res.json({ username: user.username ?? '', email: user.email ?? '' });
 }
@@ -90,19 +71,32 @@ export async function updateSettings(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
     const { username, email, password } = req.body;
 
-    if (password && password.trim() !== '') {
-        const hash = await bcrypt.hash(password, 12);
-        await pool.query(
-            'UPDATE users SET username = $1, email = $2, password_hash = $3 WHERE id = $4',
-            [username, email, hash, req.session.userId]
-        );
-    } else {
-        await pool.query(
-            'UPDATE users SET username = $1, email = $2 WHERE id = $3',
-            [username, email, req.session.userId]
-        );
-    }
+    const hash = password && password.trim() !== '' ? await bcrypt.hash(password, 12) : null;
+    await Users.updateSettings(req.session.userId, username, email, hash);
 
     req.session.username = username;
     res.json({ username, email });
+}
+
+// GET /api/profile  -> { name, username, email, created_at, site_theme, character_count }
+export async function getProfile(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    try {
+        const user = await Users.getProfile(req.session.userId);
+        if (!user) return res.status(401).json({ error: 'Not logged in' });
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+// PUT /api/profile   body: { name, site_theme }
+export async function updateProfile(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const { name, site_theme } = req.body;
+    try {
+        res.json(await Users.updateProfile(req.session.userId, name?.trim() || null, site_theme || null));
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 }
