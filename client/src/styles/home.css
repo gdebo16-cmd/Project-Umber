@@ -983,3 +983,22 @@ li:hover .dropDown {
         display: none;
     }
 }
+
+
+/* Title bar: logo on the left half, title on the right half, accent line under the title */
+#siteTitle {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    justify-items: center;
+}
+
+#siteTitle .titleLogo {
+    justify-self: center;
+}
+
+#siteTitle h1 {
+    text-align: center;
+    padding-bottom: 0.35rem;
+    border-bottom: 3px solid var(--accent);
+}
