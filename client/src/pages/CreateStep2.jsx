@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router';
 import useFetch from '../hooks/useFetch';
 import usePageStyle from '../hooks/usePageStyle';
 import createCss from '../styles/char_create.css?inline';
 import { sendJson } from '../utils/api';
 import CreateDescription from './CreateDescription';
+import StepNav from './StepNav';
 
 // Replaces views/create_char_step2.ejs (step 2: class and subclass)
 // Builds what the description box shows for a class: dropdown sections + feature tree
@@ -31,9 +32,12 @@ function CreateStep2() {
     const [subclassId, setSubclassId] = useState('');
     const [shown, setShown] = useState(null); // what the description box shows
     const [saveError, setSaveError] = useState('');
+    const { data: draft } = useFetch('/api/create_char/draft');
 
-    const changeClass = async (e) => {
-        const id = e.target.value;
+    const changeClass = (e) => loadClass(e.target.value);
+
+    // shared by picking a class and by refilling a saved draft
+    const loadClass = async (id, savedSubclassId) => {
         const picked = classes.find((c) => String(c.id) === id);
         setClassId(id);
         setSubclassId('');
@@ -48,12 +52,15 @@ function CreateStep2() {
         const subs = await res.json();
         setSubclasses(subs);
         setShown(classShown(picked, subs));
+
+        const savedSub = savedSubclassId && subs.find((s) => String(s.id) === String(savedSubclassId));
+        if (savedSub) showSubclass(savedSub);
     };
 
-    const changeSubclass = (e) => {
-        const id = e.target.value;
-        const picked = subclasses.find((s) => String(s.id) === id);
-        setSubclassId(id);
+    const changeSubclass = (e) => showSubclass(subclasses.find((s) => String(s.id) === e.target.value));
+
+    const showSubclass = (picked) => {
+        setSubclassId(String(picked.id));
         const extras = [
             picked.armor_proficiencies && `Armor: ${picked.armor_proficiencies}`,
             picked.weapon_proficiencies && `Weapons: ${picked.weapon_proficiencies}`,
@@ -70,6 +77,12 @@ function CreateStep2() {
             features: picked.features,
         });
     };
+
+    // coming back from step 3: refill class and subclass from the draft
+    useEffect(() => {
+        if (classes && draft?.class_id) loadClass(String(draft.class_id), draft.subclass_id);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [classes, draft]);
 
     const submit = async (e) => {
         e.preventDefault();
@@ -90,9 +103,12 @@ function CreateStep2() {
             <header id="topContainer">
                 <h1 id="siteTitle">Create Character</h1>
                 <h2 id="formTitle">Step 2 of 3 — Class and Subclass</h2>
+                <StepNav back="/create_char" forward={draft?.subclass_id ? '/create_char/step3' : null} />
+                
             </header>
-
+            
             <main>
+            
                 <section id="formContainer">
                     <form className="formContainer" onSubmit={submit}>
                         <article id="classContainer" className="formSectionContainer tile">
@@ -124,6 +140,7 @@ function CreateStep2() {
                         {saveError && <p>{saveError}</p>}
                         <article id="buttonContainer" className="formSectionContainer">
                             <button id="submit" type="submit">Next: Abilities</button>
+                            <Link id="mobileCancel" to="/home">Cancel</Link>
                         </article>
                     </form>
                 </section>

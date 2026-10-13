@@ -26,40 +26,41 @@ function RegisterPage() {
 
     return (
         <>
-            <header id="topContainer">
-                <h1 id="siteTitle">Eldrid Tales</h1>
+            <header id="siteTitle">
+                <img src="/Logo.png" alt="Eldrid Tales Logo" className="titleLogo" />
+                <h1>Eldrid Tales</h1>
             </header>
 
             <main>
-                <section id="formContainer">
-                    <article id="formTitle">
+                <section className="formContainer">
+                    <article className="formTitle">
                         <h2 id="titleText">Create Your Legend</h2>
                     </article>
-                    <form className="formContainer" onSubmit={submit}>
-                        <article className="formSectionContainer tile" id="userNameContainer">
-                            <label id="userNameLabel" className="topTile" htmlFor="userName">Username</label>
-                            <input className="bottomTile" type="text" id="userName" name="username" value={form.username} onChange={update} required />
+                    <form onSubmit={submit}>
+                        <article className=" formSectionContainer userNameContainer">
+                            <label className="signinLabel" htmlFor="userName">Username</label>
+                            <input className="signinValue" type="text" name="username" value={form.username} onChange={update} required />
                         </article>
 
-                        <article className="formSectionContainer tile" id="passwordContainer">
-                            <label id="passwordLabel" className="topTile" htmlFor="password">Password</label>
-                            <input className="bottomTile" type="password" id="password" name="password" value={form.password} onChange={update} required />
+                        <article className="formSectionContainer passwordContainer">
+                            <label id="passwordLabel" className="signinLabel" htmlFor="password">Password</label>
+                            <input className="signinValue" type="password" name="password" value={form.password} onChange={update} required />
                         </article>
 
-                        <article className="formSectionContainer tile" id="emailContainer">
-                            <label id="emailLabel" className="topTile" htmlFor="email">Email</label>
-                            <input className="bottomTile" type="email" id="email" name="email" value={form.email} onChange={update} />
+                        <article className="formSectionContainer emailContainer">
+                            <label id="emailLabel" className="signinLabel" htmlFor="email">Email</label>
+                            <input className="signinValue" id="emailValue" type="email" name="email" value={form.email} onChange={update} />
                         </article>
 
-                        <article className="formSectionContainer tile" id="nameContainer">
-                            <label id="nameLabel" className="topTile" htmlFor="name">Display Name</label>
-                            <input className="bottomTile" type="text" id="name" name="name" value={form.name} onChange={update} />
+                        <article className="formSectionContainer nameContainer">
+                            <label className="signinLabel" id="nameLabel" htmlFor="name">Display Name</label>
+                            <input className="signinValue" id="nameValue" type="text" name="name" value={form.name} onChange={update} />
                         </article>
-
+        
                         {error && <p>{error}</p>}
 
-                        <article className="formSectionContainer tile" id="regButtonContainer">
-                            <button className="formButton" id="submit" type="submit">Create Account</button>
+                        <article className="formSectionContainer buttonContainer">
+                            <button className="formButton" type="submit">Create Account</button>
                         </article>
                     </form>
                 </section>

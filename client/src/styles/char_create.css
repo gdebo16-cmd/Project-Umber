@@ -9,7 +9,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     font-family: "Cinzel Decorative", serif;
-    font-weight: 700;
+    font-weight: var(--fontW2);
     font-style: normal;
     max-height: 2160px;
     max-width: 3840px;
@@ -269,13 +269,82 @@ header {
 
 
 
+/* Back / Forward buttons under the step title (all screen sizes) */
+#stepNav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
+.stepNavButton {
+    flex: 1;
+    text-align: center;
+    background-color: var(--bg-color-1);
+    color: var(--txt-color-1);
+    box-shadow: var(--bs1);
+    border: none;
+    border-radius: 0;
+    margin: 0;
+    padding: 0.4rem 1rem;
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 700;
+    cursor: pointer;
+}
+.stepNavButton:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+#mobileCancel {
+    display: none;
+}
+
 @media (max-width: 768px) {
+    #mobileCancel {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        margin-top: 1rem;
+        padding: 3%;
+        border-radius: var(--tile);
+        border: var(--tileBorder);
+        backdrop-filter: var(--backdrop);
+        background-color: var(--bgc-top);
+        color: var(--txt-color-1);
+        box-shadow: var(--bs1);
+        font-family: "Cinzel Decorative", serif;
+        font-weight: 700;
+        text-align: center;
+        text-decoration: none;
+        transition: all 0.5s ease;
+    }
+    footer {
+        display: none !important;
+    }
     main {
         grid-template-columns: repeat(1, 1fr);
         grid-template-rows: auto 1fr;
         grid-template-areas:
             'a'
             'b';
+    }
+
+
+    #treeSection {
+        scrollbar-width: none;
+    }
+
+    #submit {
+        width: 100%;
+        padding: 4%;
+        border-radius: var(--tile);
+        border: var(--tileBorder);
+        backdrop-filter: var(--backdrop);
+        background-color: var(--bgc-top);
+        color: var(--txt-color-1);
     }
 
     #section3Title {
@@ -287,10 +356,11 @@ header {
 #TraitsSection {
     margin-top: 0.5rem;
     padding: var(--pad2);
-    border-radius: var(--lowrad);
-    background-color: var(--bgc-low);
+    border-radius: var(--tile);
+    border: var(--tileBorder);
+    backdrop-filter: var(--backdrop);
+    background-color: var(--bgc-top);
     color: var(--txt-color-1);
-    backdrop-filter: var(--blur1);
     box-shadow: var(--bs1);
 }
     #TraitsSection p {
@@ -326,6 +396,8 @@ header {
         height: auto;
         margin: 0;
         box-sizing: border-box;
+        background-color: var(--bgc-low);
+        border: var(--tileBorder);
     }
 
 /* Class basics text keeps its line breaks */
@@ -335,10 +407,11 @@ header {
 #treeSection {
     margin-top: 0.5rem;
     padding: var(--pad2);
-    border-radius: var(--lowrad);
-    background-color: var(--bgc-low);
+    border-radius: var(--tile);
+    border: var(--tileBorder);
+    backdrop-filter: var(--backdrop);
+    background-color: var(--bgc-top);
     color: var(--txt-color-1);
-    backdrop-filter: var(--blur1);
     box-shadow: var(--bs1);
     max-height: 24rem;
     overflow-y: auto;
@@ -361,13 +434,12 @@ header {
 
 /* Class info dropdowns: same look as the feature tree */
 #classInfoSection {
-    margin-top: 0.5rem;
     padding: var(--pad2);
     border-radius: var(--lowrad);
     background-color: var(--bgc-low);
     color: var(--txt-color-1);
     backdrop-filter: var(--blur1);
-    box-shadow: var(--bs1);
+    
 }
     #classInfoSection details { border-bottom: 1px solid currentColor; }
     #classInfoSection details:last-child { border-bottom: none; }

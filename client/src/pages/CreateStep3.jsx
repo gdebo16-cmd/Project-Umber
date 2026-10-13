@@ -5,9 +5,10 @@ import usePageStyle from '../hooks/usePageStyle';
 import createCss from '../styles/char_create.css?inline';
 import { sendJson } from '../utils/api';
 import { STATS } from '../utils/stats';
+import StepNav from './StepNav';
 
 // Replaces views/create_char_step3.ejs (step 3: roll abilities, pick +2 and +1)
-// The server does the rolling and remembers each roll, so you can't reroll by refreshing.
+// The server does the rolling and remembers each roll; clicking a stat again rerolls it.
 function CreateStep3() {
     usePageStyle(createCss);
     const navigate = useNavigate();
@@ -55,6 +56,7 @@ function CreateStep3() {
             <header id="topContainer">
                 <h1 id="siteTitle">Create Character</h1>
                 <h2 id="formTitle">Step 3 of 3 — Abilities</h2>
+                <StepNav back="/create_char/step2" forward={null} />
             </header>
             <main>
                 <section id="section3Title">
@@ -80,7 +82,6 @@ function CreateStep3() {
                                         id="rollBtn"
                                         type="button"
                                         className="bottomTile rollBtn"
-                                        disabled={rolls[s.key] !== undefined}
                                         onClick={() => roll(s.key)}
                                     >
                                         {rolls[s.key] ?? 'roll'}
@@ -93,12 +94,13 @@ function CreateStep3() {
 
                         <article id="buttonContainer" className="formSectionContainer">
                             <button id="submit" className="formButton" type="submit">Create Character</button>
+                            <Link id="mobileCancel" to="/home">Cancel</Link>
                         </article>
                     </form>
                 </section>
             </main>
             <footer>
-                <Link id="homeLink" to="/home">Cancel</Link>
+                
             </footer>
         </>
     );

@@ -4,7 +4,7 @@ import './styles/global.css'
 import App from './App.jsx'
 
 // Put the saved color scheme back on the page (same as theme.js did)
-document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+document.documentElement.setAttribute('data-theme', localStorage.getItem('siteTheme') || 'default');
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

@@ -4,7 +4,6 @@ import usePageStyle from '../hooks/usePageStyle';
 import homeCss from '../styles/home.css?inline';
 import SiteNav from '../components/SiteNav';
 
-// Replaces views/home.ejs
 function HomePage() {
     usePageStyle(homeCss);
     const { data, setData, loading, error } = useFetch('/api/home');
@@ -36,11 +35,11 @@ function HomePage() {
 
     return (
         <>
-            <header id="topContainer">
-                <h1 id="siteTitle">Welcome {username}, To Eldridia</h1>
-                <SiteNav />
+            <header id="siteTitle">
+                <img src="/Logo.png" alt="Eldrid Tales Logo" className="titleLogo" />
+                <h1>Welcome {username}!</h1>
             </header>
-
+            <SiteNav />
             <main>
                 <section id="current-character-container" className="container">
                     <article className="title" id="current-character-title">
@@ -67,7 +66,7 @@ function HomePage() {
                         )}
                     </article>
                 </section>
-                <section id="current-campaign-container" className="container">
+                <section id="current-campaign-container" className="container" hidden>
                     <article className="title" id="current-campaign-title">
                         <h2 className="title-text">Current Campaigns</h2>
                     </article>
@@ -79,7 +78,7 @@ function HomePage() {
                     <article className="title" id="unfinished-character-title">
                         <h2 className="title-text">Unfinished Work</h2>
                     </article>
-                    <article className="tile" id="unfinished-character-list">
+                    <article className="tile" id="unfinished-character-tile">
                         <ul className="tile-list" id="unfinished-character-list">
                         {draft ? (
                             <li key={draft.id} className='character-tile' id={`character-tile-${draft.id}`}>

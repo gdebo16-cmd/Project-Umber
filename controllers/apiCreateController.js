@@ -23,8 +23,23 @@ export function step1Submit(req, res) {
     const { name, race_id } = req.body;
     if (!race_id) return res.status(400).json({ error: 'Race Select Required' });
 
-    req.session.charDraft = { name: name?.trim() || 'One with no name', race_id: Number(race_id) };
+    // update the draft instead of replacing it, so going back to step 1 keeps the class picks
+    req.session.charDraft = { ...req.session.charDraft, name: name?.trim() || 'One with no name', race_id: Number(race_id) };
     res.json({ ok: true });
+}
+
+// GET /api/create_char/draft  (so the Back/Forward buttons can refill earlier steps)
+export function getDraft(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const draft = req.session.charDraft;
+    if (!draft) return res.json(null);
+    res.json({
+        name: draft.name,
+        race_id: draft.race_id,
+        class_id: draft.class_id ?? null,
+        subclass_id: draft.subclass_id ?? null,
+        hasRolls: !!draft.rolls && Object.keys(draft.rolls).length > 0,
+    });
 }
 
 export async function getStep2(req, res) {
@@ -85,9 +100,7 @@ export function rollStat(req, res) {
     if (!STATS.includes(stat)) return res.status(400).json({ error: "Invalid Stat" });
 
     draft.rolls = draft.rolls ?? {};
-    if (draft.rolls[stat] === undefined) {       // only roll the first time
-        draft.rolls[stat] = rollStatValue();
-    }
+    draft.rolls[stat] = rollStatValue(); // re-rollable: every click rolls again
     res.json({ stat, value: draft.rolls[stat] });
 }
 

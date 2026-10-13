@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import useFetch from '../hooks/useFetch';
 import usePageStyle from '../hooks/usePageStyle';
 import createCss from '../styles/char_create.css?inline';
 import { sendJson } from '../utils/api';
 import CreateDescription from './CreateDescription';
+import StepNav from './StepNav';
 
 // Replaces views/create_char.ejs (step 1: name and race)
 function CreateStep1() {
@@ -14,6 +15,21 @@ function CreateStep1() {
     const [name, setName] = useState('');
     const [raceId, setRaceId] = useState('');
     const [saveError, setSaveError] = useState('');
+    const [hasSavedRace, setHasSavedRace] = useState(false); // lets Forward work once step 1 was saved
+
+    // coming back from a later step: refill name and race from the draft
+    useEffect(() => {
+        fetch('/api/create_char/draft')
+            .then((res) => res.json())
+            .then((draft) => {
+                if (!draft) return;
+                setName(draft.name === 'One with no name' ? '' : draft.name ?? '');
+                if (draft.race_id) {
+                    setRaceId(String(draft.race_id));
+                    setHasSavedRace(true);
+                }
+            });
+    }, []);
 
     const submit = async (e) => {
         e.preventDefault();
@@ -36,6 +52,7 @@ function CreateStep1() {
             <header id="topContainer">
                 <h1 id="siteTitle">Create Character</h1>
                 <h2 id="formTitle">Step 1 of 3 — Name and race</h2>
+                <StepNav back={null} forward={hasSavedRace ? '/create_char/step2' : null} />
             </header>
 
             <main>
@@ -57,13 +74,14 @@ function CreateStep1() {
                         {saveError && <p>{saveError}</p>}
                         <article id="buttonContainer" className="formSectionContainer">
                             <button id="submit" type="submit">Next: Class</button>
+                            <Link id="mobileCancel" to="/home">Cancel</Link>
                         </article>
                     </form>
                 </section>
                 <CreateDescription item={race && { img: race.img_url, name: race.name, text: race.traits, race }} />
             </main>
             <footer>
-                <Link id="homeLink" to="/home">Home</Link>
+                
             </footer>
         </>
     );

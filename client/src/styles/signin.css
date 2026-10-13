@@ -284,11 +284,15 @@ select {
     margin: 0;
     font-style: var(--fontS1);
     font-weight: var(--fontW1);
-    color: var(--txt-color-1);
+    color: var(--title-color);
     background-color: var(--bg-color-1);
     border-radius: var(--tile);
     border: var(--tileBorder);
     box-shadow: var(--bs2);
+}
+
+h1 {
+    color: var(--title-color);
 }
 
 .formContainer {
@@ -329,7 +333,7 @@ select {
     box-shadow: var(--bs2);
 }
 
-.userNameContainer, .passwordContainer {
+.userNameContainer, .passwordContainer, .emailContainer, .nameContainer {
     min-width: 0;
     text-align: center;
     display: flex;
@@ -365,6 +369,15 @@ select {
     box-shadow: var(--bs2);
     padding: 5%;
     margin: 0;
+    transition: transform .2s ease;
+}
+
+.formButton:hover {
+    transform: scale(1.03);
+}
+
+.formButton:active {
+    transform: scale(0.97);
 }
 
 .signinLabel {
@@ -393,11 +406,19 @@ select {
     background-color: var(--bg-color-3);
     border-radius: var(--lowrad);
     border: var(--tileBorder);
+    box-shadow: var(--bs2);
 }
 
 .signinValue {
-    border: none;
+    color: var(--txt-color-1);
+    font-family: inherit;
     background-color: var(--bg-color-5);
+}
+
+.signinValue[type="password"], #password, .signinValue[name="password"] {
+    font-family: system-ui, Arial, sans-serif;
+    font-variant: normal;
+    text-transform: none;
 }
 
 .signinValue:-webkit-autofill,
@@ -423,44 +444,98 @@ footer {
 
 
 
-
-@keyframes roll {
-    0% {
-        box-shadow: 2px 2px 15px rgb(252, 235, 140);
-        transform: box-shadow rotate(0deg);
-    }
-
-    25% {
-        box-shadow: 2px 2px 25px rgb(250, 226, 89);
-        transform: box-shadow rotate(90deg);
-    }
-
-    50% {
-        box-shadow: 2px 2px 35px rgb(249, 235, 156);
-        transform: box-shadow rotate(180deg);
-    }
-
-    75% {
-        box-shadow: 2px 2px 25px rgb(250, 241, 190);
-        transform: box-shadow rotate(270deg);
-    }
-
-    100% {
-        box-shadow: 2px 2px 15px rgb(249, 249, 249);
-        transform: box-shadow rotate(360deg);
-    }
-}
-
 @media (max-width: 992px) {
-
+    
 }
 
 @media (max-width: 768px) {
-    
+    .formContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 90%;
+        max-width: 420px;
+        margin: 5% auto;
+        height: auto;
+        align-self: center;
+        gap: 1.5rem;
+    }
+    .formTitle, .userNameContainer, .passwordContainer, .emailContainer, .nameContainer, .buttonContainer {
+        margin: 0;
+    }
+    .signinValue {
+        width: 100%;
+        min-width: 0;
+    }
+    .buttonContainer {
+        gap: 4%;
+    }
+    .formButton {
+        flex: 1;
+    }
 
+    main {
+       backdrop-filter: var(--blur3);
+       grid-template-rows: 1fr;
+       grid-template-areas: none;
+       align-content: center;
+       flex: 1;
+       min-height: 0;
+       overflow-y: auto;   
+    }
+
+    .buttonContainer {
+        gap: 4%;
+        align-items: stretch;
+    }
+
+    .formButton {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font: inherit;
+    }
+
+    .titleLogo {
+        width: 100%;
+        max-width: 100px;
+        height: 100%;
+        max-height: 100px;
+        margin: 0;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+    }
+
+    #siteTitle {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+        font-weight: var(--fontW1);
+        font-style: var(--fontStyle);
+        color: var(--txt-color-1);
+        background-color: var(--bg-color-1);
+        border-radius: var(--tile);
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+        margin: 0;
+        padding: 1%;
+    }
+
+    footer {
+        justify-content: center;
+    }
 }
 
 
 @media (max-width: 576px) {
 
+}
+
+#loginLink {
+    color: var(--txt-color-1);
 }

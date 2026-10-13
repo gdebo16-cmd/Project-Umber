@@ -24,13 +24,15 @@ function LoginPage() {
 
     return (
         <>
-            <header id="topContainer">
-                <h1 id="siteTitle">Eldrid Tales</h1>
+            <header id="siteTitle">
+            <img src="/Logo.png" alt="Eldrid Tales Logo" className="titleLogo" />
+            <h1>Eldrid Tales</h1>
             </header>
 
             <main>
                 <section className="formContainer">
                     <article className="formTitle">
+                        
                         <h2 id="titleText">Welcome to Your Legend</h2>
                     </article>
                     <form onSubmit={submit}>

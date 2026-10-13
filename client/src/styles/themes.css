@@ -150,6 +150,29 @@
 
 :root, 
 
+[data-theme="default"] {
+    --healColor: rgba(46, 79, 46, 0.712);
+    --damageColor:  rgba(79, 46, 46, 0.712);
+    --bgc-bubble-send: rgb(26, 29, 72);
+    --bgc-bubble-receive: rgb(116, 94, 212);
+    --bgc-orb: rgb(64, 71, 175);
+    --bg-color-5: rgb(66, 12, 166);
+    --bg-color-4: rgba(71, 52, 139, 0.356);
+    --bg-color-3: rgba(74, 60, 199, 0.678);
+    --bg-color-2: rgba(66, 53, 130, 0.483);
+    --bg-color-1: rgba(109, 83, 222, 0.72);
+    --title-color: rgba(255, 178, 46, 0.756);
+    --txt-color-1: rgba(255, 255, 255, 0.756);
+    --bordercolor: rgba(160, 150, 180, 0.565);
+    --bgc-top: rgba(64, 72, 175, 0.72);
+    --bgc-low: rgba(46, 31, 133, 0.466);
+    --accent: rgb(245, 188, 103);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(2px) saturate(150%);
+    --blur3: blur(5px) saturate(150%);
+    --background: url('/utils/colorsketch.png');
+}
+
 [data-theme="purple"] {
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor:  rgba(79, 46, 46, 0.712);

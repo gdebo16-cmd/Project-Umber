@@ -4,13 +4,13 @@ const THEMES = ['green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'l
 
 // The "Color scheme" dropdown. Saves your pick in localStorage like theme.js did.
 function ThemePicker() {
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const [theme, setTheme] = useState(localStorage.getItem('siteTheme') || 'default');
 
     const change = (e) => {
         const next = e.target.value;
         setTheme(next);
         document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
+        localStorage.setItem('siteTheme', next);
     };
 
     return (

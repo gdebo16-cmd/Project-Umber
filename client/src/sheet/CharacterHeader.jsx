@@ -4,7 +4,8 @@ function CharacterHeader({ character }) {
     return (
         <header>
             <section id='siteTitle'>
-                <h1>Eldrid Tales</h1>
+              <img src="/Logo.png" alt="Eldrid Tales Logo" className="titleLogo" id='logo' />
+              
             </section>
             <section id='characterHeader'>
                 <h2 id='characterName'>{character.name} - Level: {character.level}</h2>

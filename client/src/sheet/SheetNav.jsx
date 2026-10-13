@@ -1,5 +1,4 @@
 import { Link } from 'react-router';
-import ThemePicker from '../components/ThemePicker';
 import LogoutLink from '../components/LogoutLink';
 
 // The menu at the top of the character sheet (same links as character.ejs)
@@ -8,18 +7,10 @@ function SheetNav({ characterId }) {
         <nav id="navBox">
             <ul id="navContainer">
                 <Link id="homeNav" className="drop-button navButton hover-grow" to="/home">home</Link>
-                <ThemePicker />
 
                 <li id="characterNav" className="navButton">Characters
                     <ul className="dropDown" id="characterDropdown">
                         <Link id="createCharacter" className="drop-button characterDropdownButton" to="/create_char">Create Character</Link>
-                        <Link id="characterList" className="drop-button characterDropdownButton" to="/char_list">Character List</Link>
-                    </ul>
-                </li>
-
-                <li id="campaignNav" className="navButton">Character Editor
-                    <ul className="dropDown" id="campaignDropdown">
-                        <Link id="charSheetEdit" className="drop-button campaignDropdownButton" to={`/characters/${characterId}/edit`}>Edit Character</Link>
                     </ul>
                 </li>
 
@@ -28,6 +19,12 @@ function SheetNav({ characterId }) {
                         <Link id="profile" className="drop-button settingsDropdownButton" to="/profile">Profile</Link>
                         <Link id="settings" className="drop-button settingsDropdownButton" to="/settings">Settings</Link>
                         <LogoutLink />
+                    </ul>
+                </li>
+
+                <li id="campaignNav" className="navButton">Character Editor
+                    <ul className="dropDown" id="campaignDropdown">
+                        <Link id="charSheetEdit" className="drop-button campaignDropdownButton" to={`/characters/${characterId}/edit`}>Edit Character</Link>
                     </ul>
                 </li>
             </ul>
