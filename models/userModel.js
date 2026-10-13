@@ -3,12 +3,12 @@ import pool from '../db.js';
 
 // whole user row (incl. password_hash) for login, or undefined
 export async function findUserByUsername(username) {
-    const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+    const result = await pool.query('SELECT * FROM users WHERE LOWER(username) = LOWER($1)', [username]);
     return result.rows[0];
 }
 
 export async function usernameExists(username) {
-    const existing = await pool.query('SELECT id FROM users WHERE username = $1', [username]);
+    const existing = await pool.query('SELECT id FROM users WHERE LOWER(username) = LOWER($1)', [username]);
     return existing.rows.length > 0;
 }
 

@@ -10,13 +10,21 @@ import { getEditCharacter, editNameAndRace, editClass, editLevel, editAbilities 
 import { getRaces, step1Submit, getStep2, step2Submit, getStep3, step3Submit, clearDraft, rollStat, selectSubclass } from '../controllers/apiCreateController.js';
 import { getSpellbook, learnSpell, unlearnSpell, prepareSpell, unprepareSpell, setAction, removeAction } from '../controllers/apiSpellController.js';
 
+import { rateLimit } from 'express-rate-limit';
+
+const loginLimiter = rateLimit({
+    windowsMs: 15 * 60 * 1000,
+    limit: 5,
+    message: { error: 'Too many attempts. Please try again in 15 minutes.'}
+});
+
 const router = Router();
 
 // login / account
+router.post('/login', loginLimiter, login);
+router.post('/register', loginLimiter, register);
 router.get('/me', me);
-router.post('/login', login);
 router.post('/logout', logout);
-router.post('/register', register);
 router.get('/home', home);
 router.get('/settings', getSettings);
 router.put('/settings', updateSettings);
