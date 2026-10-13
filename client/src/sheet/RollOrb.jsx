@@ -18,7 +18,9 @@ function RollOrb({ open, label, onToggle }) {
         if (!drag.current) return;
         const dx = e.clientX - drag.current.startX;
         const dy = e.clientY - drag.current.startY;
-        if (Math.abs(dx) > 4 || Math.abs(dy) > 4) drag.current.moved = true;
+        // Fingers wiggle a few pixels during a tap, so only count it as a drag past 10px
+        if (Math.abs(dx) > 10 || Math.abs(dy) > 10) drag.current.moved = true;
+        if (!drag.current.moved) return; // still a tap: do not nudge the orb
         setPosition({ left: drag.current.left + dx, top: drag.current.top + dy });
     };
 
@@ -44,6 +46,7 @@ function RollOrb({ open, label, onToggle }) {
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
+            onPointerCancel={onPointerUp}
         >
             <div className="roll-orb-face" aria-hidden="true"></div>
             <div className="roll-orb__panel" hidden={!open}>
