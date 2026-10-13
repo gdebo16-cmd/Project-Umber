@@ -478,7 +478,7 @@ header {
 
 @media (max-width: 768px) {
     /* A fixed layer behind everything, sized to the LARGEST viewport so it runs under the status bar and Safari's toolbar */
-    body::before {
+    html::before { /* on html, because body's backdrop-filter would trap a fixed layer */
         content: '';
         position: fixed;
         top: 0;
