@@ -844,3 +844,48 @@ li:hover .dropDown {
         padding-bottom: max(1%, env(safe-area-inset-bottom));
     }
 }
+
+
+/* Mobile v2: card stays inside Current Characters; background reaches every screen edge */
+@media (max-width: 768px) {
+    #current-character-container,
+    #unfinished-character-container {
+        height: auto;
+        min-height: 0;
+    }
+
+    #current-character-tile,
+    #unfinished-character-tile {
+        height: auto;
+        max-height: none;
+        overflow: visible;
+    }
+
+    .char-tile {
+        height: auto;
+        grid-template-rows: auto repeat(3, minmax(2.5rem, auto)); /* rows grow to fit text */
+    }
+}
+
+
+@media (max-width: 768px) {
+    /* A fixed layer behind everything, sized to the LARGEST viewport so it runs under the status bar and Safari's toolbar */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100lvh;
+        z-index: -1;
+        background-image: var(--background);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        pointer-events: none;
+    }
+
+    body {
+        background-image: none; /* the fixed layer above replaces it */
+    }
+}
