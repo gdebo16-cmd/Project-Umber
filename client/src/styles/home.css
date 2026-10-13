@@ -1016,3 +1016,20 @@ li:hover .dropDown {
 #siteTitle h1 {
     justify-self: start;
 }
+
+
+/* Title bar: logo + title centered together as one group */
+#siteTitle {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+#siteTitle .titleLogo,
+#siteTitle h1 {
+    justify-self: auto;
+    flex: 0 1 auto;
+    min-width: 0;
+}
