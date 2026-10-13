@@ -1,49 +1,78 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // The floating orb that shows your last roll. Drag it anywhere; tap it to open or close.
 // "open" and "label" come from CharacterSheet, so any roll on the sheet can pop it open.
+// Touch (phones) and mouse (computers) are handled separately, because iPhone Safari
+// is unreliable with pointer events on a fixed element.
 function RollOrb({ open, label, onToggle }) {
     const [position, setPosition] = useState(null); // { left, top } once you've dragged it
     const [dragging, setDragging] = useState(false);
-    const drag = useRef(null); // where the drag started (a ref, because it doesn't need to redraw)
+    const orbRef = useRef(null);
+    const drag = useRef(null); // where the drag started
+    const toggleRef = useRef(onToggle);
+    toggleRef.current = onToggle;
 
-    const onPointerDown = (e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        drag.current = { startX: e.clientX, startY: e.clientY, left: rect.left, top: rect.top, moved: false };
-        e.currentTarget.setPointerCapture(e.pointerId);
+    // shared helpers for both touch and mouse
+    const start = (x, y) => {
+        const rect = orbRef.current.getBoundingClientRect();
+        drag.current = { startX: x, startY: y, left: rect.left, top: rect.top, moved: false };
         setDragging(true);
     };
-
-    const onPointerMove = (e) => {
+    const move = (x, y) => {
         if (!drag.current) return;
-        const dx = e.clientX - drag.current.startX;
-        const dy = e.clientY - drag.current.startY;
+        const dx = x - drag.current.startX;
+        const dy = y - drag.current.startY;
         // Fingers wiggle a few pixels during a tap, so only count it as a drag past 10px
         if (Math.abs(dx) > 10 || Math.abs(dy) > 10) drag.current.moved = true;
-        if (!drag.current.moved) return; // still a tap: do not nudge the orb
+        if (!drag.current.moved) return;
         setPosition({ left: drag.current.left + dx, top: drag.current.top + dy });
     };
-
-    const justDragged = useRef(false); // set after a real drag so the click that follows is ignored
-
-    // Pointer events only handle dragging. iOS can cancel pointer events mid-tap,
-    // so the open/close toggle lives in onClick, which Safari always fires for a tap.
-    const onPointerUp = () => {
+    const end = () => {
         if (!drag.current) return;
-        justDragged.current = drag.current.moved;
+        const wasDrag = drag.current.moved;
         drag.current = null;
         setDragging(false);
+        if (!wasDrag) toggleRef.current(); // a tap, not a drag
     };
 
-    const onClick = () => {
-        if (justDragged.current) { justDragged.current = false; return; } // that was a drag
-        onToggle();
+    // Touch: native listeners so we can call preventDefault (stops page scroll and the extra click)
+    useEffect(() => {
+        const el = orbRef.current;
+        const onTouchStart = (e) => { e.preventDefault(); const t = e.touches[0]; start(t.clientX, t.clientY); };
+        const onTouchMove = (e) => { e.preventDefault(); const t = e.touches[0]; move(t.clientX, t.clientY); };
+        const onTouchEnd = (e) => { e.preventDefault(); end(); };
+        const onTouchCancel = () => { if (drag.current) { drag.current = null; setDragging(false); } };
+        el.addEventListener('touchstart', onTouchStart, { passive: false });
+        el.addEventListener('touchmove', onTouchMove, { passive: false });
+        el.addEventListener('touchend', onTouchEnd, { passive: false });
+        el.addEventListener('touchcancel', onTouchCancel);
+        return () => {
+            el.removeEventListener('touchstart', onTouchStart);
+            el.removeEventListener('touchmove', onTouchMove);
+            el.removeEventListener('touchend', onTouchEnd);
+            el.removeEventListener('touchcancel', onTouchCancel);
+        };
+    }, []);
+
+    // Mouse: follow the mouse on the whole window so fast drags don't slip off the orb
+    const onMouseDown = (e) => {
+        if (e.button !== 0) return;
+        start(e.clientX, e.clientY);
+        const onMove = (ev) => move(ev.clientX, ev.clientY);
+        const onUp = () => {
+            window.removeEventListener('mousemove', onMove);
+            window.removeEventListener('mouseup', onUp);
+            end();
+        };
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('mouseup', onUp);
     };
 
     const classes = ['roll-orb', open && 'is-open', dragging && 'is-dragging'].filter(Boolean).join(' ');
 
     return (
         <div
+            ref={orbRef}
             id="rollOrb"
             className={classes}
             role="button"
@@ -51,11 +80,8 @@ function RollOrb({ open, label, onToggle }) {
             aria-expanded={open}
             aria-label="Open Roll Panel"
             style={position ? { left: `${position.left}px`, top: `${position.top}px` } : undefined}
-            onPointerDown={onPointerDown}
-            onPointerMove={onPointerMove}
-            onPointerUp={onPointerUp}
-            onPointerCancel={onPointerUp}
-            onClick={onClick}
+            onMouseDown={onMouseDown}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); } }}
         >
             <div className="roll-orb-face" aria-hidden="true"></div>
             <div className="roll-orb__panel" hidden={!open}>
