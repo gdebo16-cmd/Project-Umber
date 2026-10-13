@@ -721,3 +721,14 @@ footer {
         display: none;
     }
 }
+
+
+/* Mobile: no bottom fade, the picture runs to the bottom edge */
+@media (max-width: 768px) {
+    html::after {
+        background: linear-gradient(to bottom,
+            var(--bgc-title, rgb(65, 37, 157)) 0,
+            var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
+            transparent calc(env(safe-area-inset-top) + 4rem));
+    }
+}
