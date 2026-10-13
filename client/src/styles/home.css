@@ -811,7 +811,7 @@ li:hover .dropDown {
     
         #current-character-container,
         #unfinished-character-container {
-            max-height: 50%;
+            max-height: 80%;
             min-height: 0;
             overflow: none;
         }
