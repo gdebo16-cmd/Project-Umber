@@ -52,11 +52,6 @@ body {
     scrollbar-width: none;
 }
 
-img {
-    border-radius: var(--rad1);
-    border: var(--tileBorder);
-    box-shadow: var(--bs2);
-}
 
 select { 
     color: var(--txt-color-1);
@@ -103,6 +98,42 @@ header {
     padding: 0;
 }
 
+.titleLogo {
+    width: 100%;
+    max-width: 100px;
+    height: 100%;
+    max-height: 100px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+}
+
+#siteTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: var(--fontW1);
+    font-style: var(--fontStyle);
+    color: var(--txt-color-1);
+    background-color: var(--bg-color-1);
+    border-radius: var(--tile);
+    border: var(--tileBorder);
+    box-shadow: var(--bs2);
+    margin: 0;
+}
+
+h1 {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 4px;
+    text-underline-offset: 14px;
+    text-decoration-style: solid;
+
+    
+}
 
 
 #navBox {
@@ -228,13 +259,6 @@ li:hover .dropDown {
 }
 
 
-.tile {
-}
-
-.value {
-
-}
-
 .micro-tile {
     display: flex;
     flex-direction: column;
@@ -280,7 +304,7 @@ select {
 
 #siteTitle {
     text-align: center;
-    padding: 5%;
+    padding: 0.75rem;
     margin: 0;
     font-style: var(--fontS1);
     font-weight: var(--fontW1);
@@ -526,6 +550,14 @@ footer {
         padding: 1%;
     }
 
+    h1 {
+        text-decoration: underline;
+        text-decoration-color: var(--accent);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 10px;
+        text-decoration-style: solid;
+    }
+
     footer {
         justify-content: center;
     }
@@ -538,4 +570,9 @@ footer {
 
 #loginLink {
     color: var(--txt-color-1);
+}
+
+
+#siteTitle h1 {
+    margin: 0; /* drop the browser's default h1 spacing */
 }

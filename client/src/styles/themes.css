@@ -391,3 +391,8 @@
     --damageColor:  rgba(39, 96, 252, 0.712);
     --background: url('/utils/frozenmap1.png');
 }
+
+/* stop white showing around the page on phones (notch area, overscroll) */
+html {
+    background-color: var(--bg-color-1);
+}
