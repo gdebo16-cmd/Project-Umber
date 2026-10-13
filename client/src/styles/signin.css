@@ -576,3 +576,19 @@ footer {
 #siteTitle h1 {
     margin: 0; /* drop the browser's default h1 spacing */
 }
+
+/* Mobile: header, title and nav run edge to edge with no seams or rounded corners */
+@media (max-width: 768px) {
+    header,
+    #siteTitle,
+    #navBox,
+    #navContainer {
+        border: none;
+        border-radius: 0;
+        margin: 0;
+    }
+
+    #siteTitle {
+        box-shadow: none;
+    }
+}
