@@ -1914,6 +1914,13 @@
         opacity: 0.8;
     }
 
+    /* "Subclass unlocks at level 3" under the locked subclass dropdown */
+    .page-sheet body.subpage .pick-hint {
+        margin: 0.25rem 0 0;
+        font-size: 0.85em;
+        opacity: 0.8;
+    }
+
     .page-sheet body.subpage .inv-list {
         margin: 0;
         padding: 0;

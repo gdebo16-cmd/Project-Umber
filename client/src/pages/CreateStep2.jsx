@@ -10,6 +10,9 @@ import Loader from '../components/Loader';
 
 // Replaces views/create_char_step2.ejs (step 2: class and subclass)
 // Builds what the description box shows for a class: dropdown sections + feature tree
+const SUBCLASS_LEVEL = 3; // matches models/characterModel.js
+const LEVELS = Array.from({ length: 30 }, (_, i) => i + 1); // 1 through 30, same as the editor
+
 function classSections(c, subs) {
     return [
         { label: 'Description', body: c.description },
@@ -31,6 +34,8 @@ function CreateStep2() {
     const [classId, setClassId] = useState('');
     const [subclasses, setSubclasses] = useState([]);
     const [subclassId, setSubclassId] = useState('');
+    const [level, setLevel] = useState(1);
+    const subLocked = level < SUBCLASS_LEVEL;
     const [shown, setShown] = useState(null); // what the description box shows
     const [saveError, setSaveError] = useState('');
     const [skillPicks, setSkillPicks] = useState([]);
@@ -40,7 +45,8 @@ function CreateStep2() {
     const changeClass = (e) => loadClass(e.target.value);
 
     // shared by picking a class and by refilling a saved draft
-    const loadClass = async (id, savedSubclassId, savedSkills) => {
+    const loadClass = async (id, savedSubclassId, savedSkills, savedLevel) => {
+        if (savedLevel) setLevel(savedLevel);
         const picked = classes.find((c) => String(c.id) === id);
         setClassId(id);
         setSubclassId('');
@@ -62,6 +68,16 @@ function CreateStep2() {
 
         const savedSub = savedSubclassId && subs.find((s) => String(s.id) === String(savedSubclassId));
         if (savedSub) showSubclass(savedSub);
+    };
+
+    // below SUBCLASS_LEVEL there is no subclass, so drop any pick
+    const changeLevel = (e) => {
+        const n = Number(e.target.value);
+        setLevel(n);
+        if (n < SUBCLASS_LEVEL) {
+            setSubclassId('');
+            if (picked) setShown(classShown(picked, subclasses));
+        }
     };
 
     const changeSubclass = (e) => showSubclass(subclasses.find((s) => String(s.id) === e.target.value));
@@ -87,7 +103,7 @@ function CreateStep2() {
 
     // coming back from step 3: refill class and subclass from the draft
     useEffect(() => {
-        if (classes && draft?.class_id) loadClass(String(draft.class_id), draft.subclass_id, draft.skill_picks);
+        if (classes && draft?.class_id) loadClass(String(draft.class_id), draft.subclass_id, draft.skill_picks, draft.level);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [classes, draft]);
 
@@ -96,7 +112,8 @@ function CreateStep2() {
         try {
             await sendJson('/api/create_char/step2', 'POST', {
                 class_id: classId,
-                subclass_id: subclassId,
+                subclass_id: subLocked ? null : subclassId,
+                level,
                 skills: skillPicks,
             });
             navigate('/create_char/step3');
@@ -114,7 +131,7 @@ function CreateStep2() {
             <header id="topContainer">
                 <h1 id="site-title">Create Character</h1>
                 <h2 id="form-title">Step 2 of 3 — Class and Subclass</h2>
-                <StepNav back="/create_char" forward={draft?.subclass_id ? '/create_char/step3' : null} />
+                <StepNav back="/create_char" forward={draft?.class_id ? '/create_char/step3' : null} />
                 
             </header>
             
@@ -122,6 +139,15 @@ function CreateStep2() {
             
                 <section id="form-container">
                     <form className="form-container" onSubmit={submit}>
+                        <article id="level-container" className="form-section tile pick-tile">
+                            <label className="topTile" htmlFor="level">Select Level</label>
+                            <select className="bottomTile level-select" id="level" value={level} onChange={changeLevel} required>
+                                {LEVELS.map((n) => (
+                                    <option key={n} value={n} className="level-option">{n}</option>
+                                ))}
+                            </select>
+                        </article>
+
                         <article id="class-container" className="form-section tile pick-tile">
                             <label className="topTile" htmlFor="class_id">Select Class</label>
                             <select className="bottomTile class-select" id="class_id" value={classId} onChange={changeClass} required>
@@ -139,14 +165,15 @@ function CreateStep2() {
                                 id="subclass_id"
                                 value={subclassId}
                                 onChange={changeSubclass}
-                                required
-                                disabled={subclasses.length === 0}
+                                required={!subLocked}
+                                disabled={subLocked || subclasses.length === 0}
                             >
-                                <option value="" disabled className="subclass-option">Select a Subclass</option>
+                                <option value="" disabled className="subclass-option">{subLocked ? 'No Subclass yet' : 'Select a Subclass'}</option>
                                 {subclasses.map((s) => (
                                     <option key={s.id} value={s.id} className="subclass-option">{s.name}</option>
                                 ))}
                             </select>
+                            {subLocked && <p className="pick-hint">Subclass unlocks at level {SUBCLASS_LEVEL}</p>}
                         </article>
                         {picked && picked.skill_choice_count > 0 && (
                         <article id="skill-container" className="form-section tile pick-tile">

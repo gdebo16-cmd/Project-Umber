@@ -645,3 +645,11 @@
     }
 }
 
+@layer pages {
+    /* "Subclass unlocks at level 3" under the locked subclass dropdown */
+    .page-create .pick-hint {
+        margin: 0.25rem 0 0;
+        font-size: 0.85em;
+        opacity: 0.8;
+    }
+}

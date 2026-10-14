@@ -2,7 +2,7 @@
 // Uses the session "draft locker" (req.session.charDraft) until step 3 saves it.
 import { listRaces } from '../models/raceModel.js';
 import { listClasses, getHitDie, listSubclassesForClass, subclassBelongsToClass, getClassSkills } from '../models/classModel.js';
-import { createCharacter } from '../models/characterModel.js';
+import { createCharacter, SUBCLASS_LEVEL, MAX_LEVEL } from '../models/characterModel.js';
 
 const STATS = ["str", "dex", "con", "int", "wis", "cha", "luc", "spd"];
 
@@ -38,6 +38,7 @@ export function getDraft(req, res) {
         race_id: draft.race_id,
         class_id: draft.class_id ?? null,
         subclass_id: draft.subclass_id ?? null,
+        level: draft.level ?? 1,
         skill_picks: draft.skill_picks ?? [],
         skill_proficiencies: draft.skill_proficiencies ?? [],
         hasRolls: !!draft.rolls && Object.keys(draft.rolls).length > 0,
@@ -70,9 +71,18 @@ export async function step2Submit(req, res) {
     if (!req.session.charDraft) return res.status(409).json({ error: 'Start with step 1' });
 
     const { class_id, subclass_id } = req.body;
-    if (!class_id || !subclass_id) return res.status(400).json({ error: 'Class and Subclass Required' });
+    const level = Number(req.body.level ?? 1);
+    if (!Number.isInteger(level) || level < 1 || level > MAX_LEVEL) {
+        return res.status(400).json({ error: `Level must be an integer from 1 to ${MAX_LEVEL}` });
+    }
+    if (!class_id) return res.status(400).json({ error: 'Class Required' });
+    // subclass only from SUBCLASS_LEVEL up: required there, not allowed below it
+    if (level < SUBCLASS_LEVEL && subclass_id) {
+        return res.status(400).json({ error: `Subclass unlocks at level ${SUBCLASS_LEVEL}` });
+    }
+    if (level >= SUBCLASS_LEVEL && !subclass_id) return res.status(400).json({ error: 'Subclass Required' });
 
-    if (!(await subclassBelongsToClass(Number(subclass_id), Number(class_id)))) {
+    if (subclass_id && !(await subclassBelongsToClass(Number(subclass_id), Number(class_id)))) {
         return res.status(400).json({ error: 'that subclass does not belong to that class' });
     }
 
@@ -97,7 +107,8 @@ export async function step2Submit(req, res) {
     }
 
     req.session.charDraft.class_id = Number(class_id);
-    req.session.charDraft.subclass_id = Number(subclass_id);
+    req.session.charDraft.subclass_id = subclass_id ? Number(subclass_id) : null;
+    req.session.charDraft.level = level;
     req.session.charDraft.skill_picks = skills; // what the dropdowns show when coming back
     req.session.charDraft.skill_proficiencies = [...fixed, ...skills]; // what gets saved at step 3
     res.json({ ok: true });
@@ -106,7 +117,7 @@ export async function step2Submit(req, res) {
 export function getStep3(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
     const draft = req.session.charDraft;
-    if (!draft || !draft.subclass_id) return res.status(409).json({ error: 'Start with step 1' });
+    if (!draft || !draft.class_id) return res.status(409).json({ error: 'Start with step 1' });
 
     draft.rolls = draft.rolls ?? {};
     res.json({ rolls: draft.rolls });
@@ -131,7 +142,7 @@ export function rollStat(req, res) {
 export async function step3Submit(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
     const draft = req.session.charDraft;
-    if (!draft || !draft.subclass_id) return res.status(409).json({ error: 'Start with step 1' });
+    if (!draft || !draft.class_id) return res.status(409).json({ error: 'Start with step 1' });
 
     const { plus2, plus1 } = req.body;
     if (!STATS.includes(plus2) || !STATS.includes(plus1)) {
@@ -154,7 +165,9 @@ export async function step3Submit(req, res) {
 
     const baseHealth = Math.floor(Math.random() * hitDie) + 1;
     const conMod = Math.floor(final.con / 2) - 5;
-    const maxHp = Math.max(1, baseHealth + conMod);
+    // same per-level gain as the editor's level change: hit die / 2 + 1 + CON mod, at least 1
+    const perLvl = Math.max(1, Math.floor(hitDie / 2) + 1 + conMod);
+    const maxHp = Math.max(1, baseHealth + conMod + ((draft.level ?? 1) - 1) * perLvl);
 
     const id = await createCharacter(req.session.userId, draft, final, plus2, plus1, maxHp);
     delete req.session.charDraft; // the draft is saved, so throw it away

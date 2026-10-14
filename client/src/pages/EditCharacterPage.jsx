@@ -7,14 +7,12 @@ import TabList from '../components/TabList';
 import EditNameForm from './edit/EditNameForm';
 import EditClassForm from './edit/EditClassForm';
 import EditAbilitiesForm from './edit/EditAbilitiesForm';
-import EditLevelForm from './edit/EditLevelForm';
 import Loader from '../components/Loader';
 
 const TABS = [
     { id: 'name', label: 'Name and Race' },
-    { id: 'class', label: 'Class and Subclass' },
+    { id: 'class', label: 'Class and Level' },
     { id: 'abilities', label: 'Abilities' },
-    { id: 'level', label: 'Character Level' },
 ];
 
 // Replaces views/charEdit.ejs. Each tab is its own small form component in pages/edit/.
@@ -48,18 +46,13 @@ function EditCharacterPage() {
                     </article>
 
                     <article role="tabpanel" id="edit-panel-class" className="edit-panel" aria-labelledby="edit-tab-class" hidden={tab !== 'class'}>
-                        <h2 className="title-tile">Class and Subclass</h2>
+                        <h2 className="title-tile">Class, Subclass and Level</h2>
                         <EditClassForm character={character} classes={classes} subClasses={subClasses} onSaved={onSaved} />
                     </article>
 
                     <article role="tabpanel" id="edit-panel-abilities" className="edit-panel" aria-labelledby="edit-tab-abilities" hidden={tab !== 'abilities'}>
                         <h2 className="title-tile">Abilities</h2>
                         <EditAbilitiesForm character={character} onSaved={onSaved} />
-                    </article>
-
-                    <article role="tabpanel" id="edit-panel-level" className="edit-panel" aria-labelledby="edit-tab-level" hidden={tab !== 'level'}>
-                        <h2 className="title-tile">Character Level</h2>
-                        <EditLevelForm character={character} onSaved={onSaved} />
                     </article>
                 </section>
             </main>

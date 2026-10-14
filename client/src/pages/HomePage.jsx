@@ -89,7 +89,7 @@ function HomePage() {
                         <ul className="tile-list" id="unfinished-character-list">
                         {draft ? (
                             <li key={draft.id} className='character-tile' id={`character-tile-${draft.id}`}>
-                                <Link to={draft.subclass_id ? '/create_char/step3' : '/create_char/step2'} className='char-tile'>
+                                <Link to={draft.class_id ? '/create_char/step3' : '/create_char/step2'} className='char-tile'>
                                     <h3 className='character-name'>{draft.name || 'One with no name'}</h3>
                                     <img className='character-image' src='/default-character.png' alt='Character Image' />
                                     <p className='character-race'>Race: {draft.race || 'Undecided'}</p>

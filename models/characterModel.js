@@ -1,6 +1,10 @@
 // Character database reads and writes: sheet data, hp, levels, stats, create/delete.
 import pool from '../db.js';
 
+// a character can only have a subclass from this level up (creator + editor check this too)
+export const SUBCLASS_LEVEL = 3;
+export const MAX_LEVEL = 30;
+
 // true if this character belongs to the logged-in user
 export async function ownsCharacter(charId, userId) {
     const { rows } = await pool.query(
@@ -78,12 +82,12 @@ export async function createCharacter(userId, draft, final, plus2, plus1, maxHp)
         `INSERT INTO characters
            (user_id, name, race_id, class_id, subclass_id,
             str, dex, con, "int", wis, cha, luc, spd, plus2_stat, plus1_stat, max_hp, current_hp,
-            skill_proficiencies)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
+            skill_proficiencies, level)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)
          RETURNING id`,
         [userId, draft.name, draft.race_id, draft.class_id, draft.subclass_id,
          final.str, final.dex, final.con, final.int, final.wis, final.cha, final.luc, final.spd,
-         plus2, plus1, maxHp, maxHp, draft.skill_proficiencies ?? []]
+         plus2, plus1, maxHp, maxHp, draft.skill_proficiencies ?? [], draft.level ?? 1]
     );
     return rows[0].id;
 }
@@ -163,10 +167,16 @@ export async function getLevelInfo(charId, userId) {
     return rows[0];
 }
 
+// Dropping below SUBCLASS_LEVEL clears the subclass and its feature picks
 export async function updateLevel(charId, userId, level, newMax) {
     await pool.query(
         `UPDATE characters
-            SET level = $1, max_hp = $2, current_hp = LEAST(current_hp, $2)
+            SET level = $1, max_hp = $2, current_hp = LEAST(current_hp, $2),
+                feature_choices = CASE WHEN $1::int < ${SUBCLASS_LEVEL} THEN
+                        (SELECT COALESCE(jsonb_object_agg(k, v), '{}'::jsonb)
+                           FROM jsonb_each(feature_choices) AS e(k, v) WHERE k NOT LIKE 'subclass:%')
+                    ELSE feature_choices END,
+                subclass_id = CASE WHEN $1::int < ${SUBCLASS_LEVEL} THEN NULL ELSE subclass_id END
           WHERE id = $3 AND user_id = $4`,
         [level, newMax, charId, userId]
     );

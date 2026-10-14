@@ -34,11 +34,22 @@ export async function editClass(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
     const charId = Number(req.params.id);
     const class_id = Number(req.body.class_id);
-    const subclass_id = Number(req.body.subclass_id);
+    const subclass_id = req.body.subclass_id ? Number(req.body.subclass_id) : null;
 
-    const subClassId = await getSubclassClassId(subclass_id);
-    if (subClassId === undefined || Number(subClassId) !== class_id) {
-        return res.status(400).json({ error: 'Subclass does not match class' });
+    // subclass only from SUBCLASS_LEVEL up (checked against the saved level)
+    const ch = await Characters.getLevelInfo(charId, req.session.userId);
+    if (!ch) return res.status(404).json({ error: 'Character not found' });
+    const level = Number(ch.level) || 1;
+    if (level < Characters.SUBCLASS_LEVEL && subclass_id) {
+        return res.status(400).json({ error: `Subclass unlocks at level ${Characters.SUBCLASS_LEVEL}` });
+    }
+    if (level >= Characters.SUBCLASS_LEVEL && !subclass_id) return res.status(400).json({ error: 'Pick a subclass' });
+
+    if (subclass_id) {
+        const subClassId = await getSubclassClassId(subclass_id);
+        if (subClassId === undefined || Number(subClassId) !== class_id) {
+            return res.status(400).json({ error: 'Subclass does not match class' });
+        }
     }
 
     await Characters.updateClass(charId, req.session.userId, class_id, subclass_id);
@@ -78,6 +89,7 @@ export async function editFeatureChoice(req, res) {
 
 // POST /api/characters/:id/edit/level   body: { level }
 // Each level adds (hit die / 2 + 1 + CON mod), at least 1.
+// Going below SUBCLASS_LEVEL clears the subclass and its feature picks (in updateLevel).
 export async function editLevel(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
     const charId = Number(req.params.id);
