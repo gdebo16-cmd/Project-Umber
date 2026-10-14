@@ -1026,3 +1026,22 @@ footer {
         height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
     }
 }
+
+/* Mobile: tabs sit under the nav and the picked panel stretches to the bottom */
+@media (max-width: 768px) {
+    main {
+        justify-content: flex-start;
+    }
+
+    main > .container.tab-active {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    main > .container.tab-active > .tile {
+        flex: 1;
+        max-height: none;
+    }
+}
