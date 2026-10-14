@@ -2061,3 +2061,11 @@ body.subpage .invList {
             transparent calc(env(safe-area-inset-top) + 4rem));
     }
 }
+
+
+/* Mobile: Safari tints its bottom toolbar from the page background color, so don't paint one there */
+@media (max-width: 768px) {
+    html {
+        background-color: transparent !important;
+    }
+}
