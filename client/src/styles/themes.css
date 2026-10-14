@@ -1129,4 +1129,9 @@
     html[data-theme="light-glass"] .page-sheet .btn-action {
         color: rgb(110, 170, 255);
     }
+
+    /* light-glass: thin dark outline so the light blue text reads on light glass */
+    html[data-theme="light-glass"] body {
+        text-shadow: -1px -1px 0 rgba(20, 40, 80, 0.85), 1px -1px 0 rgba(20, 40, 80, 0.85), -1px 1px 0 rgba(20, 40, 80, 0.85), 1px 1px 0 rgba(20, 40, 80, 0.85);
+    }
 }
