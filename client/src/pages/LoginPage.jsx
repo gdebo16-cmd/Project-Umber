@@ -6,7 +6,7 @@ import { sendJson } from '../utils/api';
 
 // Replaces Public/signin.html
 function LoginPage() {
-    usePageStyle(signinCss);
+    usePageStyle(signinCss, null, 'page-signin');
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');

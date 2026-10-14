@@ -1,6 +1,7 @@
 // The picture + description box under the create-character forms.
 // "item" is whatever was picked last ({ img, name, text }), or null to hide the box.
-function CreateDescription({ item }) {
+// renderFeature(f) is optional: extra UI under a feature (the Character Editor uses it for choice dropdowns).
+function CreateDescription({ item, renderFeature }) {
     return (
         <section id="desc-container" className="tile" hidden={!item}>
             {item && (
@@ -40,7 +41,10 @@ function CreateDescription({ item }) {
                                 <details key={lvl}>
                                     <summary>Level {lvl}</summary>
                                     {item.features.filter((f) => f.level === lvl).map((f) => (
-                                        <p key={f.name}><strong>{f.name}:</strong> {f.description}</p>
+                                        <div key={f.key ?? f.id ?? f.name} className="feature-entry">
+                                            <p><strong>{f.name}:</strong> {f.description}</p>
+                                            {renderFeature?.(f)}
+                                        </div>
                                     ))}
                                 </details>
                             ))}

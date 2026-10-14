@@ -1,4 +1,4 @@
-import { modOf, signed, d20 } from '../utils/math';
+import { modOf, signed, d20, proficiencyBonus } from '../utils/math';
 import { SKILLS } from '../utils/stats';
 
 // Skill value = modifier of its first stat + modifier of its second stat.
@@ -9,11 +9,14 @@ function Skills({ character, onRoll }) {
                 <p className="container-title tile-top" id="skills-title">Skills</p>
                 {SKILLS.map((skill) => {
                     const [a, b] = skill.stats;
-                    const value = modOf(character[a]) + modOf(character[b]);
+                    // proficient skills (class picks + fixed) add the proficiency bonus
+                    const proficient = (character.skill_proficiencies ?? []).includes(skill.name);
+                    const value = modOf(character[a]) + modOf(character[b]) + (proficient ? proficiencyBonus(character.level ?? 1) : 0);
                     return (
                         <article
                             key={skill.id}
-                            className="tile skill-tile hover-grow"
+                            className={`tile skill-tile hover-grow${proficient ? ' is-proficient' : ''}`}
+                            title={proficient ? 'Proficient' : undefined}
                             id={`${skill.id}-container`}
                             onClick={() => onRoll(`${skill.name} check: ${d20() + value}`)}
                         >

@@ -11,7 +11,7 @@ import Loader from '../components/Loader';
 // Replaces views/create_char_step3.ejs (step 3: roll abilities, pick +2 and +1)
 // The server does the rolling and remembers each roll; clicking a stat again rerolls it.
 function CreateStep3() {
-    usePageStyle(createCss);
+    usePageStyle(createCss, null, 'page-create');
     const navigate = useNavigate();
     const { data, setData, loading, error } = useFetch('/api/create_char/step3');
     const [plus2, setPlus2] = useState('');

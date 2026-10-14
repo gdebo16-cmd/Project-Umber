@@ -13,7 +13,7 @@ export async function ownsCharacter(charId, userId) {
 // Full sheet row (with race/class/subclass names) or undefined
 export async function getSheetCharacter(charId, userId) {
     const { rows } = await pool.query(
-        `SELECT ch.*, r.name AS race_name, cl.name AS class_name, cl.hitpoint_die, cl.primary_stat AS spell_stat, NULLIF(concat_ws(', ', cl.armor_proficiencies, s.armor_proficiencies), '') AS armor_proficiencies, NULLIF(concat_ws(', ', cl.weapon_proficiencies, s.weapon_proficiencies), '') AS weapon_proficiencies, NULLIF(concat_ws(', ', cl.tool_proficiencies, s.tool_proficiencies), '') AS tool_proficiencies, s.name AS subclass_name
+        `SELECT ch.*, r.name AS race_name, cl.name AS class_name, cl.hitpoint_die, cl.primary_stat AS spell_stat, NULLIF(concat_ws(', ', cl.armor_proficiencies, s.armor_proficiencies), '') AS armor_proficiencies, NULLIF(concat_ws(', ', cl.weapon_proficiencies, s.weapon_proficiencies), '') AS weapon_proficiencies, NULLIF(concat_ws(', ', cl.tool_proficiencies, s.tool_proficiencies), '') AS tool_proficiencies, s.name AS subclass_name, r.base_speed AS race_base_speed
         FROM characters ch
         LEFT JOIN races r ON r.id = ch.race_id
         LEFT JOIN classes cl ON cl.id = ch.class_id
@@ -77,12 +77,13 @@ export async function createCharacter(userId, draft, final, plus2, plus1, maxHp)
     const { rows } = await pool.query(
         `INSERT INTO characters
            (user_id, name, race_id, class_id, subclass_id,
-            str, dex, con, "int", wis, cha, luc, spd, plus2_stat, plus1_stat, max_hp, current_hp)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)
+            str, dex, con, "int", wis, cha, luc, spd, plus2_stat, plus1_stat, max_hp, current_hp,
+            skill_proficiencies)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
          RETURNING id`,
         [userId, draft.name, draft.race_id, draft.class_id, draft.subclass_id,
          final.str, final.dex, final.con, final.int, final.wis, final.cha, final.luc, final.spd,
-         plus2, plus1, maxHp, maxHp]
+         plus2, plus1, maxHp, maxHp, draft.skill_proficiencies ?? []]
     );
     return rows[0].id;
 }
@@ -91,7 +92,8 @@ export async function createCharacter(userId, draft, final, plus2, plus1, maxHp)
 
 export async function getEditCharacter(charId, userId) {
     const { rows } = await pool.query(
-        `SELECT id, name, race_id, class_id, subclass_id, level, str, dex, con, "int", wis, cha, luc, spd
+        `SELECT id, name, race_id, class_id, subclass_id, level, str, dex, con, "int", wis, cha, luc, spd,
+                skill_proficiencies, feature_choices
          FROM characters WHERE id = $1 AND user_id = $2`,
         [charId, userId]
     );
@@ -107,8 +109,45 @@ export async function updateNameAndRace(charId, userId, name, raceId) {
 
 export async function updateClass(charId, userId, classId, subclassId) {
     await pool.query(
-        `UPDATE characters SET class_id = $1, subclass_id = $2 WHERE id = $3 AND user_id = $4`,
+        // changing class resets skills to the new class's fixed skills (old picks may not be valid)
+        `UPDATE characters
+            SET skill_proficiencies = CASE WHEN class_id IS DISTINCT FROM $1
+                    THEN COALESCE((SELECT skill_fixed FROM classes WHERE id = $1), '{}')
+                    ELSE skill_proficiencies END,
+                -- class change clears all feature picks; subclass change clears only subclass picks
+                feature_choices = CASE
+                    WHEN class_id IS DISTINCT FROM $1 THEN '{}'::jsonb
+                    WHEN subclass_id IS DISTINCT FROM $2 THEN
+                        (SELECT COALESCE(jsonb_object_agg(k, v), '{}'::jsonb)
+                           FROM jsonb_each(feature_choices) AS e(k, v) WHERE k NOT LIKE 'subclass:%')
+                    ELSE feature_choices END,
+                class_id = $1, subclass_id = $2
+          WHERE id = $3 AND user_id = $4`,
         [classId, subclassId, charId, userId]
+    );
+}
+
+// One class/subclass feature as it applies to this character (only if it belongs to the
+// character's current class or subclass). source is 'class' or 'subclass'. Or undefined.
+export async function getCharacterFeature(charId, userId, source, featureId) {
+    const table = source === 'class' ? 'class_features' : 'subclass_features';
+    const ownerCol = source === 'class' ? 'class_id' : 'subclass_id';
+    const { rows } = await pool.query(
+        `SELECT f.id, f.name, f.level, f.options, f.choice_count, ch.level AS char_level
+           FROM ${table} f
+           JOIN characters ch ON ch.${ownerCol} = f.${ownerCol}
+          WHERE f.id = $1 AND ch.id = $2 AND ch.user_id = $3`,
+        [featureId, charId, userId]
+    );
+    return rows[0];
+}
+
+// Set one feature pick: feature_choices[key] = values (array)
+export async function setFeatureChoice(charId, userId, key, values) {
+    await pool.query(
+        `UPDATE characters SET feature_choices = feature_choices || jsonb_build_object($1::text, $2::jsonb)
+          WHERE id = $3 AND user_id = $4`,
+        [key, JSON.stringify(values), charId, userId]
     );
 }
 

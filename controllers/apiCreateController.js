@@ -1,7 +1,7 @@
 // Character creation (3 steps) as JSON for React. Queries live in models/.
 // Uses the session "draft locker" (req.session.charDraft) until step 3 saves it.
 import { listRaces } from '../models/raceModel.js';
-import { listClasses, getHitDie, listSubclassesForClass, subclassBelongsToClass } from '../models/classModel.js';
+import { listClasses, getHitDie, listSubclassesForClass, subclassBelongsToClass, getClassSkills } from '../models/classModel.js';
 import { createCharacter } from '../models/characterModel.js';
 
 const STATS = ["str", "dex", "con", "int", "wis", "cha", "luc", "spd"];
@@ -38,6 +38,8 @@ export function getDraft(req, res) {
         race_id: draft.race_id,
         class_id: draft.class_id ?? null,
         subclass_id: draft.subclass_id ?? null,
+        skill_picks: draft.skill_picks ?? [],
+        skill_proficiencies: draft.skill_proficiencies ?? [],
         hasRolls: !!draft.rolls && Object.keys(draft.rolls).length > 0,
     });
 }
@@ -74,8 +76,30 @@ export async function step2Submit(req, res) {
         return res.status(400).json({ error: 'that subclass does not belong to that class' });
     }
 
+    // class skills: exactly skill_choice_count picks, all from skill_options, no repeats, none already fixed
+    const rules = await getClassSkills(Number(class_id));
+    if (!rules) return res.status(400).json({ error: 'Class not found' });
+    const count = rules.skill_choice_count ?? 0;
+    const options = rules.skill_options ?? [];
+    const fixed = rules.skill_fixed ?? [];
+    const skills = req.body.skills ?? [];
+    if (!Array.isArray(skills) || skills.length !== count) {
+        return res.status(400).json({ error: `Pick exactly ${count} skill${count === 1 ? '' : 's'}` });
+    }
+    if (!skills.every((s) => typeof s === 'string' && options.includes(s))) {
+        return res.status(400).json({ error: 'One of those skills is not an option for this class' });
+    }
+    if (new Set(skills).size !== skills.length) {
+        return res.status(400).json({ error: 'Each skill can only be picked once' });
+    }
+    if (skills.some((s) => fixed.includes(s))) {
+        return res.status(400).json({ error: 'That skill is already given by your class' });
+    }
+
     req.session.charDraft.class_id = Number(class_id);
     req.session.charDraft.subclass_id = Number(subclass_id);
+    req.session.charDraft.skill_picks = skills; // what the dropdowns show when coming back
+    req.session.charDraft.skill_proficiencies = [...fixed, ...skills]; // what gets saved at step 3
     res.json({ ok: true });
 }
 

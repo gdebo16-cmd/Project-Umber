@@ -164,7 +164,7 @@
         --toprad: 1.25rem 1.25rem 0 0;
         --lowrad: 0 0 1.25rem 1.25rem;
         --tile: 1.25rem;
-        --backdrop: blur(8px) saturate(180%);
+        --backdrop: blur(15px) saturate(180%);
         --btnRad: 999px;
         --inputRad: .75rem;
     }
@@ -240,7 +240,7 @@
 }
 
 @layer overrides {
-    html[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .panel-shell, .title-tile) /* clash: kept at old specificity */ {
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .panel-shell, .title-tile) /* clash: kept at old specificity */ {
         border: var(--tileBorder);
     }
 }
@@ -252,13 +252,13 @@
 }
 
 @layer overrides {
-    html[data-display]:not([data-display='standard']) :is(button, .btn-form, .btn-nav, .btn-action, .damage-button, .btn-to-hit, .btn-spell-name, .btn-link, .btn-drop):not(.tile-top, .tile-bottom) /* clash: kept at old specificity */ {
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(button, .btn-form, .btn-nav, .btn-action, .damage-button, .btn-to-hit, .btn-spell-name, .btn-link, .btn-drop):not(.tile-top, .tile-bottom) /* clash: kept at old specificity */ {
         border-radius: var(--btnRad);
         box-shadow: var(--bs3);
         font-family: var(--fontF);
     }
 
-    html[data-display]:not([data-display='standard']) :is(input, select, textarea):not(.tile-top, .tile-bottom) /* clash: kept at old specificity */ {
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(input, select, textarea):not(.tile-top, .tile-bottom) /* clash: kept at old specificity */ {
         border-radius: var(--inputRad);
         font-family: var(--fontF);
     }
@@ -271,7 +271,7 @@
 }
 
 @layer overrides {
-    html[data-display]:not([data-display='standard']) :is(#nav-box, .drop-down) /* clash: kept at old specificity */ {
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(#nav-box, .drop-down) /* clash: kept at old specificity */ {
         border-radius: var(--rad1);
     }
 }
@@ -286,7 +286,7 @@
 
 @layer overrides {
     /* Tile halves (label on top, value below) sit flush inside the tile: corners follow the tile, no doubled borders */
-    html[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .title-tile) /* clash: kept at old specificity */ {
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .title-tile) /* clash: kept at old specificity */ {
         overflow: clip;
     }
 }
@@ -298,7 +298,7 @@
 }
 
 @layer overrides {
-    html[data-display]:not([data-display='standard']) .tile-top /* clash: kept at old specificity */ {
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) .tile-top /* clash: kept at old specificity */ {
         border: none;
         border-radius: var(--tile) var(--tile) 0 0;
     }
@@ -312,7 +312,7 @@
 }
 
 @layer overrides {
-    html[data-display]:not([data-display='standard']) .tile-bottom /* clash: kept at old specificity */ {
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) .tile-bottom /* clash: kept at old specificity */ {
         border: none;
         border-radius: 0 0 var(--tile) var(--tile);
     }
@@ -335,24 +335,49 @@
         --healColor: rgba(46, 79, 46, 0.712);
         --damageColor: rgba(79, 46, 46, 0.712);
         --bgc-bubble-send: rgb(26, 29, 72);
-        --bgc-bubble-receive: rgb(116, 94, 212);
+        --bgc-bubble-receive: rgb(87, 65, 184);
         --bgc-orb: rgb(64, 71, 175);
         --bg-color-5: rgb(66, 12, 166);
         --bg-color-4: rgba(71, 52, 139, 0.356);
         --bg-color-3: rgba(74, 60, 199, 0.678);
-        --bg-color-2: rgba(66, 53, 130, 0.483);
+        --bg-color-2: rgba(84, 16, 16, 0.893);
+        --bg-color-1: rgba(109, 83, 222, 0.72);
+        --title-color: rgba(255, 182, 55, 0.756);
+        --txt-color-1: rgba(247, 220, 144, 0.998);
+        --bordercolor: rgba(248, 219, 147, 0.777);
+        --bgc-top: rgba(38, 12, 98, 0.908);
+        --bgc-low: rgba(93, 41, 41, 0.903);
+        --bgc-title: rgb(30, 22, 65);
+        --accent: rgb(245, 188, 103);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(1.5px) saturate(150%);
+        --blur3: blur(3px) saturate(150%);
+    }
+
+    [data-theme="prestige"] {
+        --healColor: rgba(46, 79, 46, 0.712);
+        --damageColor: rgba(79, 46, 46, 0.712);
+        --bgc-bubble-send: rgb(26, 29, 72);
+        --bgc-bubble-receive: rgb(87, 65, 184);
+        --bgc-orb: rgb(64, 71, 175);
+        --bg-color-5: rgb(66, 12, 166);
+        --bg-color-4: rgba(71, 52, 139, 0.356);
+        --bg-color-3: rgba(74, 60, 199, 0.678);
+        --bg-color-2: rgba(99, 78, 204, 0.736);
         --bg-color-1: rgba(109, 83, 222, 0.72);
         --title-color: rgba(255, 178, 46, 0.756);
         --txt-color-1: rgba(255, 255, 255, 0.756);
-        --bordercolor: rgba(160, 150, 180, 0.565);
-        --bgc-top: rgba(64, 72, 175, 0.72);
-        --bgc-low: rgba(46, 31, 133, 0.466);
+        --bordercolor: rgba(248, 219, 147, 0.777);
+        --bgc-top: rgba(44, 30, 106, 0.907);
+        --bgc-low: rgba(155, 118, 48, 0.466);
         --bgc-title: rgb(65, 37, 157);
         --accent: rgb(245, 188, 103);
         --blur1: blur(3px) saturate(150%);
         --blur2: blur(1.5px) saturate(150%);
         --blur3: blur(3px) saturate(150%);
     }
+
+    
 
     [data-theme="purple"] {
         --healColor: rgba(46, 79, 46, 0.712);
@@ -405,13 +430,13 @@
         --bg-color-5: rgb(28, 54, 33);
         --bg-color-4: rgba(41, 66, 43, 0.377);
         --bg-color-3: rgba(41, 66, 43, 0.678);
-        --bg-color-2: rgba(59, 110, 66, 0.24);
-        --bg-color-1: rgba(34, 53, 41, 0.548);
-        --txt-color-1: rgba(237, 243, 221, 0.822);
-        --bordercolor: rgba(150, 180, 154, 0.565);
-        --bgc-top: rgba(64, 104, 73, 0.72);
-        --bgc-low: rgba(51, 80, 48, 0.596);
-        --bgc-title: rgb(18, 41, 19);
+        --bg-color-2: rgba(7, 35, 11, 0.485);
+        --bg-color-1: rgba(48, 80, 52, 0.678);
+        --txt-color-1: rgba(220, 234, 182, 0.822);
+        --bordercolor: rgba(113, 252, 131, 0.744);
+        --bgc-top: rgba(29, 74, 30, 0.756);
+        --bgc-low: rgba(8, 24, 7, 0.651);
+        --bgc-title: rgba(10, 30, 11, 0.824);
         --accent: rgb(238, 224, 163);
         --blur1: blur(3px) saturate(150%);
         --blur2: blur(1.5px) saturate(150%);
@@ -446,13 +471,13 @@
         --bg-color-5: rgb(22, 42, 112);
         --bg-color-4: rgba(26, 55, 150, 0.37);
         --bg-color-3: rgba(16, 47, 146, 0.404);
-        --bg-color-2: rgba(59, 86, 209, 0.637);
+        --bg-color-2: rgba(35, 55, 143, 0.659);
         --bg-color-1: rgba(44, 62, 128, 0.72);
         --txt-color-1: rgba(232, 239, 250, 0.822);
-        --bordercolor: rgba(202, 218, 255, 0.565);
-        --bgc-top: rgba(33, 60, 184, 0.72);
-        --bgc-low: rgba(20, 44, 150, 0.486);
-        --bgc-title: rgb(19, 30, 100);
+        --bordercolor: rgba(172, 214, 255, 0.718);
+        --bgc-top: rgba(43, 72, 202, 0.78);
+        --bgc-low: rgba(36, 46, 88, 0.698);
+        --bgc-title: rgba(19, 30, 100, 0.774);
         --accent: rgb(163, 238, 238);
         --blur1: blur(3px) saturate(150%);
         --blur2: blur(1.5px) saturate(150%);
@@ -488,13 +513,13 @@
         --bg-color-5: rgb(92, 18, 18);
         --bg-color-4: rgba(112, 20, 20, 0.356);
         --bg-color-3: rgba(126, 35, 35, 0.678);
-        --bg-color-2: rgba(88, 28, 28, 0.67);
+        --bg-color-2: rgba(49, 1, 1, 0.805);
         --bg-color-1: rgba(65, 9, 9, 0.72);
-        --txt-color-1: rgba(250, 232, 232, 0.822);
-        --bordercolor: rgba(252, 199, 199, 0.565);
-        --bgc-top: rgba(131, 39, 39, 0.72);
-        --bgc-low: rgba(97, 26, 26, 0.397);
-        --bgc-title: rgb(67, 19, 19);
+        --txt-color-1: rgba(251, 205, 98, 0.877);
+        --bordercolor: rgba(252, 170, 170, 0.721);
+        --bgc-top: rgba(67, 18, 18, 0.783);
+        --bgc-low: rgba(42, 21, 21, 0.77);
+        --bgc-title: rgba(61, 6, 6, 0.91);
         --accent: rgb(252, 226, 187);
         --blur1: blur(3px) saturate(150%);
         --blur2: blur(3px) saturate(150%);
@@ -533,11 +558,11 @@
         --bg-color-2: rgba(129, 83, 22, 0.67);
         --bg-color-1: rgba(65, 45, 9, 0.72);
         --txt-color-1: rgba(250, 232, 232, 0.822);
-        --bordercolor: rgba(252, 225, 199, 0.565);
-        --bgc-top: rgba(202, 136, 60, 0.72);
-        --bgc-low: rgba(145, 99, 39, 0.459);
-        --bgc-title: rgb(52, 37, 18);
-        --accent: rgb(252, 226, 187);
+        --bordercolor: rgba(250, 222, 146, 0.767);
+        --bgc-top: rgba(198, 117, 25, 0.72);
+        --bgc-low: rgba(110, 73, 25, 0.459);
+        --bgc-title: rgba(52, 37, 18, 0.776);
+        --accent: rgb(253, 98, 55);
         --blur1: blur(3px) saturate(150%);
         --blur2: blur(3px) saturate(150%);
     }
@@ -572,14 +597,14 @@
         --bg-color-5: rgb(120, 102, 22);
         --bg-color-4: rgba(172, 149, 24, 0.432);
         --bg-color-3: rgba(160, 148, 42, 0.678);
-        --bg-color-2: rgba(192, 169, 41, 0.67);
+        --bg-color-2: rgba(124, 93, 9, 0.67);
         --bg-color-1: rgba(124, 114, 67, 0.72);
         --txt-color-1: rgba(250, 250, 232, 0.822);
         --bordercolor: rgba(252, 247, 199, 0.565);
-        --bgc-top: rgba(209, 183, 35, 0.72);
-        --bgc-low: rgba(148, 136, 68, 0.452);
-        --bgc-title: rgb(0, 0, 0);
-        --accent: rgb(208, 252, 187);
+        --bgc-top: rgba(210, 171, 43, 0.826);
+        --bgc-low: rgba(74, 56, 6, 0.671);
+        --bgc-title: rgba(50, 37, 11, 0.71);
+        --accent: rgb(198, 147, 53);
         --blur1: blur(3px) saturate(150%);
         --blur2: blur(3px) saturate(150%);
     }
@@ -614,13 +639,13 @@
         --bg-color-5: rgb(18, 18, 18);
         --bg-color-4: rgba(0, 0, 0, 0.466);
         --bg-color-3: rgba(0, 0, 0, 0.466);
-        --bg-color-2: rgba(36, 35, 35, 0.67);
+        --bg-color-2: rgba(9, 8, 8, 0.74);
         --bg-color-1: rgba(0, 0, 0, 0.452);
-        --txt-color-1: rgba(255, 255, 255, 0.822);
-        --bordercolor: rgba(255, 255, 255, 0.74);
-        --bgc-top: rgba(0, 0, 0, 0.958);
-        --bgc-low: rgba(5, 5, 5, 0.466);
-        --bgc-title: rgb(0, 0, 0);
+        --txt-color-1: rgb(94, 91, 105);
+        --bordercolor: rgba(22, 21, 21, 0.74);
+        --bgc-top: rgba(0, 0, 0, 0.883);
+        --bgc-low: rgba(0, 0, 0, 0.614);
+        --bgc-title: rgba(0, 0, 0, 0.756);
         --accent: rgb(252, 196, 112);
         --healColor: rgba(140, 184, 140, 0.384);
         --damageColor: rgba(48, 37, 37, 0.712);
@@ -662,16 +687,16 @@
         --bg-color-5: rgb(245, 236, 214);
         --bg-color-4: rgba(255, 255, 255, 0.062);
         --bg-color-3: rgba(255, 230, 184, 0.781);
-        --bg-color-2: rgba(253, 249, 242, 0.829);
+        --bg-color-2: rgba(252, 202, 116, 0.669);
         --bg-color-1: rgba(238, 232, 216, 0.74);
-        --txt-color-1: rgba(0, 0, 0, 0.678);
+        --txt-color-1: rgb(82, 57, 23);
         --title-text: rgb(255, 255, 255);
         --text-color-2: rgba(255, 255, 255, 0.986);
         --bordercolor: rgb(255, 228, 179);
-        --bgc-top: rgba(255, 255, 255, 0.918);
-        --bgc-low: rgba(255, 255, 255, 0.486);
-        --bgc-title: rgb(254, 238, 200);
-        --accent: rgb(145, 100, 3);
+        --bgc-top: rgba(255, 254, 252, 0.753);
+        --bgc-low: rgba(196, 167, 132, 0.627);
+        --bgc-title: rgba(203, 177, 121, 0.591);
+        --accent: rgb(255, 255, 255);
         --blur1: blur(3px) saturate(150%);
         --blur2: blur(1.5px) saturate(150%);
     }
@@ -704,14 +729,14 @@
         --bg-color-5: rgb(71, 55, 55);
         --bg-color-4: rgba(78, 71, 71, 0.459);
         --bg-color-3: rgba(3, 3, 3, 0.678);
-        --bg-color-2: rgba(119, 42, 42, 0.67);
+        --bg-color-2: rgba(39, 8, 8, 0.776);
         --bg-color-1: rgba(65, 9, 9, 0.72);
-        --txt-color-1: rgba(228, 43, 11, 0.822);
-        --bordercolor: rgba(252, 199, 199, 0.565);
-        --bgc-top: rgba(82, 37, 25, 0.72);
-        --bgc-low: rgba(0, 0, 0, 0.72);
-        --bgc-title: rgb(67, 22, 22);
-        --accent: rgb(252, 226, 187);
+        --txt-color-1: rgb(251, 126, 0);
+        --bordercolor: rgba(254, 119, 88, 0.459);
+        --bgc-top: rgba(38, 11, 11, 0.851);
+        --bgc-low: rgba(0, 0, 0, 0.805);
+        --bgc-title: rgba(9, 5, 5, 0.615);
+        --accent: rgb(8, 7, 7);
         --blur1: blur(3px) saturate(150%);
         --blur2: blur(3px) saturate(150%);
         --healColor: rgba(253, 249, 227, 0.685);
@@ -743,16 +768,16 @@
         --bgc-bubble-send: rgb(20, 83, 112);
         --bgc-bubble-receive: rgb(155, 220, 245);
         --bgc-orb: rgb(104, 161, 175);
-        --bg-color-5: rgb(16, 66, 90);
-        --bg-color-4: rgba(155, 220, 245, 0.438);
-        --bg-color-3: rgba(20, 83, 112, 0.678);
-        --bg-color-2: rgba(22, 99, 129, 0.67);
-        --bg-color-1: rgba(26, 79, 92, 0.72);
-        --txt-color-1: rgba(232, 250, 247, 0.822);
-        --bordercolor: rgba(208, 248, 241, 0.801);
-        --bgc-top: rgba(168, 221, 245, 0.486);
-        --bgc-low: rgba(92, 125, 138, 0.534);
-        --bgc-title: rgba(71, 102, 115, 0.977);
+        --bg-color-5: rgb(133, 194, 222);
+        --bg-color-4: rgba(153, 187, 200, 0.438);
+        --bg-color-3: rgba(36, 130, 173, 0.678);
+        --bg-color-2: rgba(142, 223, 255, 0.72);
+        --bg-color-1: rgba(84, 156, 174, 0.72);
+        --txt-color-1: rgb(0, 80, 94);
+        --bordercolor: rgba(208, 244, 255, 0.888);
+        --bgc-top: rgba(106, 196, 238, 0.579);
+        --bgc-low: rgba(167, 212, 244, 0.623);
+        --bgc-title: rgba(69, 121, 143, 0.679);
         --accent: rgb(252, 226, 187);
         --blur1: blur(3px) saturate(150%);
         --blur2: blur(0) saturate(150%);
@@ -824,7 +849,7 @@
 }
 
 @layer overrides {
-    html[data-theme="neon"] :is(button, .btn-form, .btn-nav, .btn-action):hover /* clash: kept at old specificity */ {
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-theme="neon"] :is(button, .btn-form, .btn-nav, .btn-action):hover /* clash: kept at old specificity */ {
         box-shadow: var(--neonGlow);
     }
 }
@@ -1016,12 +1041,12 @@
 
 @layer overrides {
     /* middle nav buttons stay square like the rest of the nav bar; the ends keep their page-defined corners */
-    html[data-display]:not([data-display='standard']) :is(#character-nav, #campaign-nav) /* clash: kept at old specificity */ {
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(#character-nav, #campaign-nav) /* clash: kept at old specificity */ {
         border-radius: 0;
     }
 
     /* nav borders follow each display's border style */
-    html[data-display]:not([data-display='standard']) #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) /* clash: kept at old specificity */ {
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) /* clash: kept at old specificity */ {
         border: var(--tileBorder);
     }
 }
@@ -1046,12 +1071,12 @@
 }
 
 @layer overrides {
-    html[data-display='neon'] #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) /* clash: kept at old specificity */ {
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display='neon'] #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) /* clash: kept at old specificity */ {
         box-shadow: var(--glow);
     }
 
     /* Home tabs: round only the top corners, on every display style */
-    html[data-display] .home-tabs button.home-tab.home-tab:not(.tile-top) /* clash: kept at old specificity */ {
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display] .home-tabs button.home-tab.home-tab:not(.tile-top) /* clash: kept at old specificity */ {
         border-radius: var(--tile, .75rem) var(--tile, .75rem) 0 0;
     }
 }
@@ -1065,7 +1090,7 @@
 }
 @layer overrides {
     /* Condition lists inside the Conditions tile: no shadow, in every display style */
-    :is(#conditions-list-1, #conditions-list-2, #conditions-list-3) /* clash: kept at old specificity */ {
+    :is(:is(.page-sheet, .page-home, .page-signin, .page-create), :is(.page-sheet, .page-home, .page-signin, .page-create) *):is(#conditions-list-1, #conditions-list-2, #conditions-list-3) /* clash: kept at old specificity */ {
         box-shadow: none;
     }
 }

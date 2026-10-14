@@ -6,7 +6,7 @@ import ItemShop from '../sheet/actions/ItemShop';
 // Replaces views/inventory.ejs. The list itself lives in ItemShop,
 // which the character sheet's Inventory tab also uses.
 function InventoryPage() {
-    usePageStyle(sheetCss, 'subpage');
+    usePageStyle(sheetCss, 'subpage', 'page-sheet');
     const { id } = useParams();
     const navigate = useNavigate();
 

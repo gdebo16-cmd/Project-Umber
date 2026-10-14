@@ -27,7 +27,7 @@ const SHEET_TABS = [
 ];
 
 function CharacterSheet() {
-    usePageStyle(sheetCss);
+    usePageStyle(sheetCss, null, 'page-sheet');
     const { id } = useParams();
     const { data, setData, loading, error } = useFetch(`/api/characters/${id}`);
     const [sheetTab, setSheetTab] = useState('stats');
@@ -55,6 +55,8 @@ function CharacterSheet() {
 
     const { character, ownedArmor, ownedWeapons, learnedSpells = [], actionFeatures = [] } = data;
     const hp = character.current_hp;
+    // Distance: (race base speed + Speed stat) scaled by how healthy you are
+    const distance = Math.round(((character.race_base_speed ?? 0) + (character.spd ?? 0)) * (character.max_hp ? hp / character.max_hp : 1));
 
     const spendSlot = (lvl) => {
         if (lvl === 0) return true;
@@ -138,7 +140,7 @@ function CharacterSheet() {
                 <section role="tabpanel" id="sheet-panel-stats" className="sheet-panel" hidden={sheetTab !== 'stats'}>
                     <section className="container" id="stat-container">
                         {STATS.map((s) => (
-                            <StatBox key={s.key} label={s.label} score={character[s.key]} onRoll={showRoll} />
+                            <StatBox key={s.key} label={s.label} score={character[s.key]} bottom={s.key === 'spd' ? distance : undefined} onRoll={showRoll} />
                         ))}
                     </section>
                     <Skills character={character} onRoll={showRoll} />

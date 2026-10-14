@@ -3,18 +3,18 @@
 @layer pages {
     /* ---------- reset / base ---------- */
 
-    *,
-    *::before,
-    *::after {
+    :is(.page-sheet, .page-sheet *),
+    :is(.page-sheet, .page-sheet *)::before,
+    :is(.page-sheet, .page-sheet *)::after {
         box-sizing: border-box;
     }
 
-    html {
+    html.page-sheet {
         max-width: var(--maxW);
         overflow-x: var(--ofX1);
     }
 
-    body {
+    .page-sheet body {
         width: var(--w1);
         max-width: 3840px;
         overflow-x: var(--ofX1);
@@ -38,7 +38,7 @@
         color: var(--txt-color-1);
     }
 
-    pre {
+    .page-sheet pre {
         display: none;
         max-width: var(--maxW);
         overflow-x: auto;
@@ -49,14 +49,15 @@
         font-size: var(--fontS3);
     }
 
-    ul,
-    li,
-    a {
+    .page-sheet ul,
+    .page-sheet li,
+    .page-sheet a {
         list-style: none;
         text-decoration: none;
+        color: var(--txt-color-1);
     }
 
-    option {
+    .page-sheet option {
         background-color: var(--bg-color-5);
         color: var(--txt-color-1);
         border: var(--tileBorder);
@@ -77,13 +78,13 @@
 
     /* ---------- header / nav ---------- */
 
-    header {
+    .page-sheet header {
         z-index: 1;
         position: relative;
         flex-shrink: 0;
     }
 
-    #site-title {
+    .page-sheet #site-title {
         background-color: var(--bg-color-3);
         color: var(--txt-color-1);
         text-align: center;
@@ -91,7 +92,7 @@
         margin: var(--mar1);
     }
 
-    #character-header {
+    .page-sheet #character-header {
         width: var(--w1);
         max-width: var(--maxW);
         min-width: var(--minW1);
@@ -102,9 +103,9 @@
         background-color: var(--bg-color-2);
     }
 
-    #character-name,
-    #character-race,
-    #character-class {
+    .page-sheet #character-name,
+    .page-sheet #character-race,
+    .page-sheet #character-class {
         font-size: var(--fontS2);
         text-align: center;
         padding: var(--pad2);
@@ -115,21 +116,21 @@
         backdrop-filter: var(--blur2);
     }
 
-    #character-name {
+    .page-sheet #character-name {
         flex-grow: 3;
     }
 
-    #character-race,
-    #character-class {
+    .page-sheet #character-race,
+    .page-sheet #character-class {
         flex-grow: 2;
     }
 
-    #nav-box {
+    .page-sheet #nav-box {
         border-radius: var(--lowrad);
         box-shadow: var(--bs2);
     }
 
-    #nav-container {
+    .page-sheet #nav-container {
         background-color: var(--bg-color-3);
         border-radius: var(--lowrad);
         margin: var(--mar1);
@@ -141,28 +142,28 @@
         align-items: stretch;
     }
 
-    #home-nav,
-    #theme-nav,
-    #character-nav,
-    #campaign-nav,
-    #settings-nav {
+    .page-sheet #home-nav,
+    .page-sheet #theme-nav,
+    .page-sheet #character-nav,
+    .page-sheet #campaign-nav,
+    .page-sheet #settings-nav {
         min-width: var(--minW1);
         flex: 1;
         backdrop-filter: var(--blur2);
     }
 
-    .btn-nav {
+    .page-sheet .btn-nav {
         border: var(--tileBorder);
         background-color: var(--bg-color-2);
         padding: var(--pad2);
         color: var(--txt-color-1);
     }
 
-    #home-nav {
+    .page-sheet #home-nav {
         border-radius: 0 0 0 10px;
     }
 
-    #theme-nav {
+    .page-sheet #theme-nav {
         flex: 1;
         display: flex;
         flex-direction: row;
@@ -173,7 +174,7 @@
         box-sizing: border-box;
     }
 
-    #theme-nav label {
+    .page-sheet #theme-nav label {
         /* Keep for a11y; do not take layout space (select is the visible control) */
         position: absolute;
         width: 1px;
@@ -187,13 +188,13 @@
 }
 
 @layer overrides {
-    #theme-nav label /* clash: kept at old specificity */ {
+    .page-sheet #theme-nav label /* clash: kept at old specificity */ {
         border: var(--border1);
     }
 }
 
 @layer pages {
-    #theme-nav select {
+    .page-sheet #theme-nav select {
         box-sizing: border-box;
         width: var(--w1);
         height: var(--h1);
@@ -216,38 +217,38 @@
         -moz-appearance: none;
     }
 
-    #theme-nav select.tile-bottom {
+    .page-sheet #theme-nav select.tile-bottom {
         background-color: transparent;
     }
 }
 
 @layer overrides {
-    #theme-nav select.tile-bottom /* clash: kept at old specificity */ {
+    .page-sheet #theme-nav select.tile-bottom /* clash: kept at old specificity */ {
         border-radius: inherit;
         border: var(--border1);
     }
 }
 
 @layer pages {
-    #settings-nav {
+    .page-sheet #settings-nav {
         border-radius: 0;
     }
 }
 
 @layer overrides {
-    #nav-container > :last-child /* clash: kept at old specificity */ {
+    .page-sheet #nav-container > :last-child /* clash: kept at old specificity */ {
         border-radius: 0 0 10px 0;
     }
 }
 
 @layer pages {
-    #character-nav,
-    #campaign-nav,
-    #settings-nav {
+    .page-sheet #character-nav,
+    .page-sheet #campaign-nav,
+    .page-sheet #settings-nav {
         position: relative;
     }
 
-    .drop-down {
+    .page-sheet .drop-down {
         display: flex;
         flex-direction: column;
         position: absolute;
@@ -265,7 +266,7 @@
         border-radius: var(--tile);
     }
 
-    .title-logo {
+    .page-sheet .title-logo {
         width: 100%;
         max-width: 100px;
         height: 100%;
@@ -276,7 +277,7 @@
         box-shadow: none;
     }
 
-    li:hover .drop-down {
+    .page-sheet li:hover .drop-down {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
@@ -284,9 +285,9 @@
         box-shadow: var(--bs2);
     }
 
-    .btn-drop-character,
-    .btn-drop-campaign,
-    .btn-drop-settings {
+    .page-sheet .btn-drop-character,
+    .page-sheet .btn-drop-campaign,
+    .page-sheet .btn-drop-settings {
         color: var(--txt-drop-1);
         padding: 14%;
         display: flex;
@@ -299,13 +300,13 @@
         box-shadow: var(--bs2);
     }
 
-    #settings-nav .drop-down {
+    .page-sheet #settings-nav .drop-down {
         left: 50%;
         right: auto;
         transform: translateX(-50%);
     }
 
-    #campaign-nav .drop-down {
+    .page-sheet #campaign-nav .drop-down {
         left: auto;
         right: 0;
         transform: none;
@@ -317,11 +318,11 @@
 
     /* ---------- layout ---------- */
 
-    .sheet-tabs {
+    .page-sheet .sheet-tabs {
         display: none !important;
     }
 
-    main {
+    .page-sheet main {
         width: var(--w1);
         max-width: var(--maxW);
         min-width: var(--minW1);
@@ -361,7 +362,7 @@
 
     /* ---------- stat tiles ---------- */
 
-    .tile {
+    .page-sheet .tile {
         border-bottom: none;
         border-right: none;
         text-align: center;
@@ -373,7 +374,7 @@
         width: var(--w1);
     }
 
-    #stat-container {
+    .page-sheet #stat-container {
         grid-area: B;
         display: flex;
         flex-direction: row;
@@ -383,7 +384,7 @@
         background-color: var(--bg-color-4);
     }
 
-    .stat-tile {
+    .page-sheet .stat-tile {
         flex: 1 1 0;
         cursor: pointer;
         container-type: size;
@@ -394,13 +395,13 @@
         overflow: var(--ofX1);
     }
 
-    #stat-container .stat-tile-label,
-    #stat-container .stat-tile-modifier,
-    #stat-container .stat-tile-value {
+    .page-sheet #stat-container .stat-tile-label,
+    .page-sheet #stat-container .stat-tile-modifier,
+    .page-sheet #stat-container .stat-tile-value {
         margin: var(--mar1);
     }
 
-    #stat-container .stat-tile-value {
+    .page-sheet #stat-container .stat-tile-value {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -409,14 +410,14 @@
 }
 
 @layer overrides {
-    #stat-container .stat-tile-value /* clash: kept at old specificity */ {
+    .page-sheet #stat-container .stat-tile-value /* clash: kept at old specificity */ {
         border-radius: 50% 50% 0 0;
         overflow: var(--ofX1);
     }
 }
 
 @layer pages {
-    #stat-container .stat-tile-label {
+    .page-sheet #stat-container .stat-tile-label {
         font-size: clamp(0.6rem, 15cqh, 0.85rem);
         display: flex;
         align-items: center;
@@ -426,14 +427,14 @@
 }
 
 @layer overrides {
-    #stat-container .stat-tile-label /* clash: kept at old specificity */ {
+    .page-sheet #stat-container .stat-tile-label /* clash: kept at old specificity */ {
         overflow: var(--ofX1);
         border-radius: 0 0 50% 50%;
     }
 }
 
 @layer pages {
-    #stat-container .stat-tile-modifier {
+    .page-sheet #stat-container .stat-tile-modifier {
         font-size: clamp(0.8rem, 26cqh, 1.45rem);
         display: flex;
         align-items: center;
@@ -443,22 +444,22 @@
 }
 
 @layer overrides {
-    #stat-container .stat-tile-modifier /* clash: kept at old specificity */ {
+    .page-sheet #stat-container .stat-tile-modifier /* clash: kept at old specificity */ {
         overflow: var(--ofX1);
     }
 }
 
 @layer pages {
-    #armor-class-container {
+    .page-sheet #armor-class-container {
         grid-area: F;
     }
 
-    #initiative-container {
+    .page-sheet #initiative-container {
         grid-area: G;
     }
 
-    #armor-class-tile-container,
-    #initiative-tile-container {
+    .page-sheet #armor-class-tile-container,
+    .page-sheet #initiative-tile-container {
         display: grid;
         grid-template-rows: 1fr 2fr;
         height: var(--h1);
@@ -467,8 +468,8 @@
         cursor: pointer;
     }
 
-    .armor-class-tile,
-    .initiative-tile {
+    .page-sheet .armor-class-tile,
+    .page-sheet .initiative-tile {
         container-type: size;
         border: var(--tileBorder);
         text-align: center;
@@ -478,8 +479,8 @@
         min-height: var(--minH1);
     }
 
-    #armor-class-tile-label,
-    #initiative-tile-label {
+    .page-sheet #armor-class-tile-label,
+    .page-sheet #initiative-tile-label {
         margin: var(--mar1);
         display: flex;
         align-items: center;
@@ -490,15 +491,15 @@
 }
 
 @layer overrides {
-    #armor-class-tile-label,
-    #initiative-tile-label /* clash: kept at old specificity */ {
+    .page-sheet #armor-class-tile-label,
+    .page-sheet #initiative-tile-label /* clash: kept at old specificity */ {
         overflow: var(--ofX1);
     }
 }
 
 @layer pages {
-    #armor-class-tile-value,
-    #initiative-tile-value {
+    .page-sheet #armor-class-tile-value,
+    .page-sheet #initiative-tile-value {
         margin: var(--mar1);
         display: flex;
         align-items: center;
@@ -511,8 +512,8 @@
 }
 
 @layer overrides {
-    #armor-class-tile-value,
-    #initiative-tile-value /* clash: kept at old specificity */ {
+    .page-sheet #armor-class-tile-value,
+    .page-sheet #initiative-tile-value /* clash: kept at old specificity */ {
         overflow: var(--ofX1);
     }
 }
@@ -520,7 +521,7 @@
 @layer pages {
     /* ---------- skills ---------- */
 
-    .skills-container {
+    .page-sheet .skills-container {
         grid-area: E;
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -532,7 +533,7 @@
         border-radius: var(--tile);
     }
 
-    #skills-title {
+    .page-sheet #skills-title {
         grid-column: 1 / -1;
         grid-row: 1;
         flex-shrink: 0;
@@ -551,13 +552,13 @@
 }
 
 @layer overrides {
-    #skills-title /* clash: kept at old specificity */ {
+    .page-sheet #skills-title /* clash: kept at old specificity */ {
         border: var(--tileBorder);
     }
 }
 
 @layer pages {
-    .skill-tile {
+    .page-sheet .skill-tile {
         display: grid;
         grid-template-rows: 1fr 1fr;
         grid-template-columns: 1fr;
@@ -568,8 +569,8 @@
         overflow: var(--ofX1);
     }
 
-    .skill-label,
-    .skill-value {
+    .page-sheet .skill-label,
+    .page-sheet .skill-value {
         padding: 0.2rem 0.25rem;
         margin: var(--mar1);
         display: flex;
@@ -578,18 +579,25 @@
         overflow: var(--ofX1);
     }
 
-    .skill-label {
+    .page-sheet .skill-label {
         font-size: clamp(0.5rem, 18cqh, 1rem);
         line-height: 1.15;
     }
 
-    .skill-value {
+    .page-sheet .skill-value {
         font-size: clamp(0.8rem, 32cqh, 1.2rem);
+    }
+
+    /* proficient skill: small dot before the name */
+    .page-sheet .skill-tile.is-proficient .skill-label::before {
+        content: "\25CF";
+        font-size: 0.6em;
+        margin-right: 0.3em;
     }
 
     /* ---------- health ---------- */
 
-    .health-container {
+    .page-sheet .health-container {
         grid-area: C;
         border-radius: var(--tile);
         box-shadow: var(--bs2);
@@ -605,7 +613,7 @@
         background-color: var(--bg-color-4);
     }
 
-    .health-button-tile {
+    .page-sheet .health-button-tile {
         grid-area: a;
         display: grid;
         grid-template-rows: repeat(3, minmax(0, 1fr));
@@ -616,15 +624,15 @@
         font-style: var(--fontStyle);
     }
 
-    .current-hp-tile {
+    .page-sheet .current-hp-tile {
         grid-area: b;
     }
 
-    .max-hp-tile {
+    .page-sheet .max-hp-tile {
         grid-area: c;
     }
 
-    .hp-bar-tile {
+    .page-sheet .hp-bar-tile {
         grid-area: d;
         min-height: var(--minH1);
         height: 60%;
@@ -635,12 +643,12 @@
         margin: 0 2%;
     }
 
-    #hp-bar-fill {
+    .page-sheet #hp-bar-fill {
         height: var(--h1);
         background: #3cb371;
     }
 
-    .button-tile-component {
+    .page-sheet .button-tile-component {
         min-width: var(--minW1);
         font-family: inherit;
         font-size: clamp(0.55rem, min(18cqh, 14cqi), 1rem);
@@ -650,24 +658,24 @@
         text-overflow: ellipsis;
     }
 
-    .button-component {
+    .page-sheet .button-component {
         border: var(--border1);
         color: var(--txtC1);
         overflow: var(--ofX1);
         cursor: pointer;
     }
 
-    #heal-button {
+    .page-sheet #heal-button {
         border-radius: 10px 0 0 0;
         background-color: var(--healColor);
     }
 
-    #damage-button {
+    .page-sheet #damage-button {
         background-color: var(--damageColor);
         border-radius: 0 0 0 10px;
     }
 
-    #hp-input {
+    .page-sheet #hp-input {
         color: var(--txt-color-1);
         background-color: transparent;
         text-align: center;
@@ -677,20 +685,20 @@
 }
 
 @layer overrides {
-    #hp-input /* clash: kept at old specificity */ {
+    .page-sheet #hp-input /* clash: kept at old specificity */ {
         border: var(--border1);
     }
 }
 
 @layer pages {
-    #hp-input::-webkit-outer-spin-button,
-    #hp-input::-webkit-inner-spin-button {
+    .page-sheet #hp-input::-webkit-outer-spin-button,
+    .page-sheet #hp-input::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: var(--mar1);
     }
 
-    .current-hp-tile,
-    .max-hp-tile {
+    .page-sheet .current-hp-tile,
+    .page-sheet .max-hp-tile {
         display: grid;
         grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
         min-width: var(--minW1);
@@ -699,7 +707,7 @@
         overflow: var(--ofX1);
     }
 
-    .hp-label-component {
+    .page-sheet .hp-label-component {
         text-align: center;
         font-size: clamp(0.55rem, min(18cqh, 12cqi), 1rem);
         line-height: 1.1;
@@ -714,7 +722,7 @@
         overflow: var(--ofX1);
     }
 
-    .hp-value-component {
+    .page-sheet .hp-value-component {
         font-size: clamp(0.7rem, min(30cqh, 22cqi), 1.5rem);
         text-align: center;
         margin: var(--mar1);
@@ -726,7 +734,7 @@
         overflow: var(--ofX1);
     }
 
-    #current-hp-value--fallen {
+    .page-sheet #current-hp-value--fallen {
         font-size: clamp(0.5rem, min(14cqh, 11cqi), 0.9rem);
         line-height: 1.1;
         overflow-wrap: anywhere;
@@ -734,7 +742,7 @@
 
     /* ---------- conditions ---------- */
 
-    .condition-container {
+    .page-sheet .condition-container {
         grid-area: I;
         border-radius: var(--tile);
         border: var(--tileBorder);
@@ -745,12 +753,12 @@
         container-type: size;
     }
 
-    .condition-container > * {
+    .page-sheet .condition-container > * {
         min-height: var(--minH1);
         max-height: var(--h1);
     }
 
-    #condition-title {
+    .page-sheet #condition-title {
         font-size: clamp(0.7rem, 22cqh, 1rem);
         padding: 0.35rem;
         margin: var(--mar1);
@@ -762,13 +770,13 @@
 }
 
 @layer overrides {
-    #condition-title /* clash: kept at old specificity */ {
+    .page-sheet #condition-title /* clash: kept at old specificity */ {
         overflow: var(--ofX1);
     }
 }
 
 @layer pages {
-    .condition-tile {
+    .page-sheet .condition-tile {
         font-size: clamp(0.7rem, 12cqh, 0.95rem);
         margin-top: var(--mar1);
         padding: 0.35rem 0.6rem;
@@ -786,9 +794,9 @@
         scrollbar-color: rgba(255,255,255,0.35) transparent;
     }
 
-    #conditions-list-1,
-    #conditions-list-2,
-    #conditions-list-3 {
+    .page-sheet #conditions-list-1,
+    .page-sheet #conditions-list-2,
+    .page-sheet #conditions-list-3 {
         display: grid;
         grid-template-columns: auto minmax(0, 1fr);
         grid-auto-flow: row dense;
@@ -800,8 +808,8 @@
         text-align: left;
     }
 
-    #conditions-list-1 > .condition-checkbox,
-    #conditions-list-2 > .condition-checkbox {
+    .page-sheet #conditions-list-1 > .condition-checkbox,
+    .page-sheet #conditions-list-2 > .condition-checkbox {
         grid-column: 1;
         margin: var(--mar1);
         width: 1em;
@@ -809,8 +817,8 @@
         cursor: pointer;
     }
 
-    #conditions-list-1 > label,
-    #conditions-list-2 > label {
+    .page-sheet #conditions-list-1 > label,
+    .page-sheet #conditions-list-2 > label {
         grid-column: 2;
         justify-self: start;
         min-width: var(--minW1);
@@ -822,8 +830,8 @@
 }
 
 @layer overrides {
-    #conditions-list-1 > label,
-    #conditions-list-2 > label /* clash: kept at old specificity */ {
+    .page-sheet #conditions-list-1 > label,
+    .page-sheet #conditions-list-2 > label /* clash: kept at old specificity */ {
         overflow: var(--ofX1);
     }
 }
@@ -831,7 +839,7 @@
 @layer pages {
     /* Exhaustion: own row under both columns, full width: label | slider | value */
 
-    #conditions-list-3 {
+    .page-sheet #conditions-list-3 {
         grid-column: 1 / -1;
         display: grid;
         grid-template-columns: auto minmax(0, 1fr) auto;
@@ -842,24 +850,24 @@
         text-align: left;
     }
 
-    .exhausted-component {
+    .page-sheet .exhausted-component {
         width: 100%;
         min-width: var(--minW1);
         margin: var(--mar1);
     }
 
-    #conditions-list-3 output {
+    .page-sheet #conditions-list-3 output {
         min-width: 2ch;
         text-align: right;
     }
 
-    #condition-checkbox {
+    .page-sheet #condition-checkbox {
         cursor: pointer;
     }
 
     /* ---------- actions / spells / tabs ---------- */
 
-    .action-container {
+    .page-sheet .action-container {
         grid-area: H;
         min-height: var(--minH1);
         height: var(--h1);
@@ -874,7 +882,7 @@
         box-shadow: var(--bs2);
     }
 
-    .action-tab-list {
+    .page-sheet .action-tab-list {
         display: flex;
         justify-content: space-around;
         align-items: stretch;
@@ -894,14 +902,14 @@
 
     /* the whole bar holding both tabs */
 
-    .spells-tab .action-tab-list {
+    .page-sheet .spells-tab .action-tab-list {
         border-radius: var(--toprad);
         gap: 0.25rem;
         margin: 0 0.5rem;
         padding: 0.5rem;
     }
 
-    .spells-panel {
+    .page-sheet .spells-panel {
         margin: 0 0.5rem;
         padding: 0.5rem;
         border-radius: var(--lowrad);
@@ -909,18 +917,18 @@
 
     /* each tab button */
 
-    .spells-tab [role="tab"] {
+    .page-sheet .spells-tab [role="tab"] {
         padding: 0.5rem 1rem;
     }
 
     /* the tab that's currently open */
 
-    .spells-tab [role="tab"][aria-selected="true"] {
+    .page-sheet .spells-tab [role="tab"][aria-selected="true"] {
         color: var(--accent);
         background-color: var(--bgc-low);
     }
 
-    .spell-slot-checkbox {
+    .page-sheet .spell-slot-checkbox {
         appearance: none;
 
         /* turn off the browser's default box */
@@ -938,7 +946,7 @@
 
     /* when the box is checked (slot used) */
 
-    .spell-slot-checkbox:checked {
+    .page-sheet .spell-slot-checkbox:checked {
         background-color: var(--accent);
         box-shadow: 0 0 6px var(--accent);
 
@@ -947,11 +955,11 @@
 
     /* when you hover over one */
 
-    .spell-slot-checkbox:hover {
+    .page-sheet .spell-slot-checkbox:hover {
         box-shadow: 0 0 4px var(--accent);
     }
 
-    [role="tab"] {
+    :is(.page-sheet, .page-sheet *)[role="tab"] {
         padding: 0.5rem 1rem;
         cursor: pointer;
         width: var(--w1);
@@ -963,7 +971,7 @@
         background-color: var(--bg-color-4);
     }
 
-    [role="tab"][aria-selected="true"] {
+    :is(.page-sheet, .page-sheet *)[role="tab"][aria-selected="true"] {
         font-weight: var(--fontW1);
         border-top: none;
         border-left: none;
@@ -972,19 +980,19 @@
 }
 
 @layer overrides {
-    [role="tab"][aria-selected="true"] /* clash: kept at old specificity */ {
+    :is(.page-sheet, .page-sheet *)[role="tab"][aria-selected="true"] /* clash: kept at old specificity */ {
         box-shadow: var(--shadowInner);
     }
 }
 
 @layer pages {
-    [role="tabpanel"] {
+    :is(.page-sheet, .page-sheet *)[role="tabpanel"] {
         height: var(--h1);
         background-color: var(--bgc-low);
     }
 
-    .action-container > [role="tabpanel"],
-    .panel-shell > [role="tabpanel"] {
+    .page-sheet .action-container > [role="tabpanel"],
+    .page-sheet .panel-shell > [role="tabpanel"] {
         min-height: 0;
         height: auto;
         max-height: 100%;
@@ -995,12 +1003,12 @@
         /* scrolls by wheel/touch, no visible bar */
     }
 
-    .action-container > [role="tabpanel"]::-webkit-scrollbar,
-    .panel-shell > [role="tabpanel"]::-webkit-scrollbar {
+    .page-sheet .action-container > [role="tabpanel"]::-webkit-scrollbar,
+    .page-sheet .panel-shell > [role="tabpanel"]::-webkit-scrollbar {
         display: none;
     }
 
-    #panel-actions {
+    .page-sheet #panel-actions {
         display: flex;
         flex-direction: column;
         gap: 0.75rem;
@@ -1008,25 +1016,25 @@
 
     /* Only hide panels inside action / subpage shells â€” never .sheet-panel on desktop */
 
-    .action-container > [role="tabpanel"][hidden],
-    .panel-shell > [role="tabpanel"][hidden] {
+    .page-sheet .action-container > [role="tabpanel"][hidden],
+    .page-sheet .panel-shell > [role="tabpanel"][hidden] {
         display: none !important;
     }
 
-    .spell-book-tabs {
+    .page-sheet .spell-book-tabs {
         border: var(--tileBorder);
         border-radius: var(--tile);
         box-shadow: var(--bs2);
     }
 
-    .action-tile {
+    .page-sheet .action-tile {
         max-height: var(--h1);
         border: var(--tileBorder);
         border-top: none;
         padding: 0.5rem;
     }
 
-    .action-item.spell-slot {
+    .page-sheet .action-item.spell-slot {
         /* both classes, so this beats the plain .action-item rule further down */
         display: flex;
         flex-direction: column;
@@ -1049,12 +1057,12 @@
 
 
 
-    .spell-list {
+    .page-sheet .spell-list {
         display: flex;
         gap: 0.75rem;
     }
 
-    .action-title {
+    .page-sheet .action-title {
         text-align: left;
         background-color: var(--bgc-top);
         border-radius: var(--toprad);
@@ -1063,7 +1071,7 @@
         margin: 0;
     }
 
-    .action-list {
+    .page-sheet .action-list {
         display: flex;
         flex-direction: column;
         gap: 0.4rem;
@@ -1071,7 +1079,7 @@
         margin: 0 0.5rem;
     }
 
-    .action-item {
+    .page-sheet .action-item {
         border: var(--tileBorder);
         border-radius: var(--tile);
         box-shadow: var(--bs2);
@@ -1083,14 +1091,14 @@
         align-items: center;
     }
 
-    .action-button-container {
+    .page-sheet .action-button-container {
         display: flex;
         gap: 0.125rem;
         align-self: stretch;
         flex-direction: row;
     }
 
-    .btn-action {
+    .page-sheet .btn-action {
         flex: 1;
         align-self: stretch;
         background-color: var(--accent);
@@ -1100,13 +1108,13 @@
         margin: 0;
     }
 
-    .btn-action:hover {
+    .page-sheet .btn-action:hover {
         background-color: var(--bg-color-2);
         color: var(--accent);
         cursor: pointer;
     }
 
-    .title-tile {
+    .page-sheet .title-tile {
         display: flex;
         margin: 1%;
         flex-direction: column;
@@ -1119,13 +1127,13 @@
         text-align: center;
     }
 
-    .action-tab-title {
+    .page-sheet .action-tab-title {
         border-radius: var(--toprad);
         background-color: var(--bgc-top);
         margin: 0;
     }
 
-    .btn-link {
+    .page-sheet .btn-link {
         border: none;
         text-align: right;
         border-radius: var(--lowrad);
@@ -1140,12 +1148,12 @@
 
     /* ---------- inventory ---------- */
 
-    .learned-spell {
+    .page-sheet .learned-spell {
         text-align: right;
         margin-right: 1%;
     }
 
-    em {
+    .page-sheet em {
         color: var(--accent);
         margin-left: 1%;
         flex: 1 1 32%;
@@ -1159,7 +1167,7 @@
 
     /* ---------- roll orb ---------- */
 
-    .roll-orb {
+    .page-sheet .roll-orb {
         position: fixed;
         left: 1rem;
         top: 50%;
@@ -1174,7 +1182,7 @@
         touch-action: none;
     }
 
-    .roll-orb-panel {
+    .page-sheet .roll-orb-panel {
         position: relative;
 
         /* lets the tail be placed relative to the bubble */
@@ -1189,7 +1197,7 @@
         margin: 4%;
     }
 
-    .roll-orb-panel::after {
+    .page-sheet .roll-orb-panel::after {
         content: '';
         position: absolute;
         bottom: -0.6rem;
@@ -1199,47 +1207,47 @@
         border-color: var(--bgc-bubble-send) transparent;
     }
 
-    .roll-orb.is-open {
+    .page-sheet .roll-orb.is-open {
         width: 18rem;
         height: 16rem;
         border-radius: 0.5rem;
         cursor: default;
     }
 
-    .roll-orb.is-dragging {
+    .page-sheet .roll-orb.is-dragging {
         cursor: grabbing;
     }
 
-    .roll-orb.is-open .roll-orb-face {
+    .page-sheet .roll-orb.is-open .roll-orb-face {
         display: none;
     }
 
-    .roll-orb:not(.is-open) .roll-orb-panel {
+    .page-sheet .roll-orb:not(.is-open) .roll-orb-panel {
         display: none;
     }
 
     /* ---------- overflow guard ---------- */
 
-    main > *,
-    .sheet-panel,
-    #stat-container,
-    .health-container,
-    .skills-container,
-    #armor-class-container,
-    #initiative-container,
-    .action-container,
-    .condition-container,
-    #skills-container,
-    .condition-tile {
+    .page-sheet main > *,
+    .page-sheet .sheet-panel,
+    .page-sheet #stat-container,
+    .page-sheet .health-container,
+    .page-sheet .skills-container,
+    .page-sheet #armor-class-container,
+    .page-sheet #initiative-container,
+    .page-sheet .action-container,
+    .page-sheet .condition-container,
+    .page-sheet #skills-container,
+    .page-sheet .condition-tile {
         min-width: 0;
         max-width: 100%;
         min-height: 0;
     }
 
-    .skill-label,
-    .skill-value,
-    #stat-container .stat-tile-label,
-    #stat-container .stat-tile-value {
+    .page-sheet .skill-label,
+    .page-sheet .skill-value,
+    .page-sheet #stat-container .stat-tile-label,
+    .page-sheet #stat-container .stat-tile-value {
         overflow-wrap: anywhere;
         word-break: break-word;
     }
@@ -1252,20 +1260,20 @@
            without border-box, flex items that refuse to shrink, or fixed
            grid tracks). */
 
-        html,
-        body,
-        header,
-        #site-title,
-        #nav-box,
-        #character-header,
-        #nav-container,
-        main {
+        html.page-sheet,
+        .page-sheet body,
+        .page-sheet header,
+        .page-sheet #site-title,
+        .page-sheet #nav-box,
+        .page-sheet #character-header,
+        .page-sheet #nav-container,
+        .page-sheet main {
             max-width: 100%;
             min-width: 0;
             box-sizing: border-box;
         }
 
-        body {
+        .page-sheet body {
             height: auto;
             max-height: none;
             width: 100%;
@@ -1276,7 +1284,7 @@
         /* Header: three cells share one row; text may shrink/wrap so "Wizard" stays on-screen.
            (Old rule set width:100% on EACH cell = three full widths side by side.) */
 
-        #character-header {
+        .page-sheet #character-header {
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
@@ -1286,9 +1294,9 @@
             box-sizing: border-box;
         }
 
-        #character-name,
-        #character-race,
-        #character-class {
+        .page-sheet #character-name,
+        .page-sheet #character-race,
+        .page-sheet #character-class {
             flex: 1 1 0;
             width: auto;
             max-width: 100%;
@@ -1304,7 +1312,7 @@
 
         /* Nav: equal share; wrap to a second row when five labels cannot fit one line */
 
-        #nav-container {
+        .page-sheet #nav-container {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
@@ -1315,11 +1323,11 @@
             margin-bottom: 1%;
         }
 
-        #home-nav,
-        #theme-nav,
-        #character-nav,
-        #campaign-nav,
-        #settings-nav {
+        .page-sheet #home-nav,
+        .page-sheet #theme-nav,
+        .page-sheet #character-nav,
+        .page-sheet #campaign-nav,
+        .page-sheet #settings-nav {
             flex: 1 1 0;
             min-width: 0;
             max-width: 100%;
@@ -1332,11 +1340,11 @@
             padding: 0.4rem 0.25rem;
         }
 
-        #home-nav {
+        .page-sheet #home-nav {
             border-radius: 0;
         }
 
-        #nav-container > #campaign-nav {
+        .page-sheet #nav-container > #campaign-nav {
 
             /* own row on mobile: round both bottom corners */
         }
@@ -1344,26 +1352,26 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-    #nav-container > #campaign-nav /* clash: kept at old specificity */ {
+    .page-sheet #nav-container > #campaign-nav /* clash: kept at old specificity */ {
             border-radius: 0 0 10px 10px;
     }
     }
 }
 @layer pages {
     @media (max-width: 768px) {
-        #theme-nav {
+        .page-sheet #theme-nav {
             /* Stay matched to sibling nav buttons (padding already set above) */
             padding: 0.4rem 0.25rem;
         }
 
-        #theme-nav select {
+        .page-sheet #theme-nav select {
             min-width: 0;
             max-width: 100%;
             font-size: inherit;
         }
 
-        .drop-down,
-        #campaign-nav .drop-down {
+        .page-sheet .drop-down,
+        .page-sheet #campaign-nav .drop-down {
             left: 0;
             right: 0;
             width: auto;
@@ -1374,7 +1382,7 @@
             /* undo the desktop centering shift, which pushes it off-screen here */
         }
 
-        main {
+        .page-sheet main {
             display: flex;
             flex-direction: column;
             width: 100%;
@@ -1392,7 +1400,7 @@
             box-sizing: border-box;
         }
 
-        .sheet-tabs {
+        .page-sheet .sheet-tabs {
             display: flex !important;
             flex-direction: row;
             flex-wrap: wrap;
@@ -1404,7 +1412,7 @@
             border-radius: 10px 10px 0 0;
         }
 
-        .sheet-tabs [role="tab"] {
+        .page-sheet .sheet-tabs [role="tab"] {
             width: auto;
             flex: 1 1 0;
             min-width: 0;
@@ -1413,23 +1421,23 @@
 
         /* close the gap between the tab bar and the open panel */
 
-        .sheet-tabs {
+        .page-sheet .sheet-tabs {
             margin-bottom: -8px;
 
             /* cancels main's 8px gap */
         }
 
-        .sheet-panel > :first-child {
+        .page-sheet .sheet-panel > :first-child {
             margin-top: 0;
             border-top-left-radius: 0;
             border-top-right-radius: 0;
         }
 
-        .sheet-panel[hidden] {
+        .page-sheet .sheet-panel[hidden] {
             display: none !important;
         }
 
-        .sheet-panel {
+        .page-sheet .sheet-panel {
             width: 100%;
             max-width: 100%;
             min-width: 0;
@@ -1437,13 +1445,13 @@
             box-sizing: border-box;
         }
 
-        #stat-container,
-        .health-container,
-        .skills-container,
-        #armor-class-container,
-        #initiative-container,
-        .action-container,
-        .condition-container {
+        .page-sheet #stat-container,
+        .page-sheet .health-container,
+        .page-sheet .skills-container,
+        .page-sheet #armor-class-container,
+        .page-sheet #initiative-container,
+        .page-sheet .action-container,
+        .page-sheet .condition-container {
             width: 100%;
             max-width: 100%;
             min-width: 0;
@@ -1452,7 +1460,7 @@
 
         /* Base stats: true 4Ã—2 grid that cannot spill past the viewport */
 
-        #stat-container {
+        .page-sheet #stat-container {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
             grid-auto-rows: auto;
@@ -1464,12 +1472,12 @@
 
         /* Conditions (mobile): keep the 2-column checkbox grid, slider row spans both */
 
-        .condition-container {
+        .page-sheet .condition-container {
             grid-template-rows: auto auto;
             gap: 0.75rem;
         }
 
-        .condition-tile {
+        .page-sheet .condition-tile {
             grid-template-columns: repeat(2, minmax(0, 1fr));
 
             /* two checkbox columns */
@@ -1483,9 +1491,9 @@
             /* even vertical spacing */
         }
 
-        #conditions-list-1,
-        #conditions-list-2,
-        #conditions-list-3 {
+        .page-sheet #conditions-list-1,
+        .page-sheet #conditions-list-2,
+        .page-sheet #conditions-list-3 {
             text-align: center;
             width: auto;
             grid-column: auto;
@@ -1496,19 +1504,19 @@
 
         /* same width for both checkbox groups so the boxes line up */
 
-        #conditions-list-1,
-        #conditions-list-2 {
+        .page-sheet #conditions-list-1,
+        .page-sheet #conditions-list-2 {
             width: 9em;
             grid-auto-rows: 1.6em;
         }
 
-        .condition-tile {
+        .page-sheet .condition-tile {
             font-size: 1.15rem;
 
             /* bigger condition text and boxes */
         }
 
-        #conditions-list-3 {
+        .page-sheet #conditions-list-3 {
             grid-column: 1 / -1;
 
             /* exhaustion bar spans the bottom */
@@ -1522,14 +1530,14 @@
             box-sizing: border-box;
         }
 
-        #exhausted-label {
+        .page-sheet #exhausted-label {
             grid-column: 1 / -1;
 
             /* label on its own line above the bar */
             justify-self: center;
         }
 
-        #exhausted-value {
+        .page-sheet #exhausted-value {
             width: 100%;
 
             /* bar stretches across the box */
@@ -1537,7 +1545,7 @@
             margin: 0;
         }
 
-        [role="tab"] {
+        :is(.page-sheet, .page-sheet *)[role="tab"] {
             flex: 1 1 auto;
             min-width: 0;
             padding: 0.5rem;
@@ -1551,23 +1559,23 @@
            size containment shrinks them to nearly nothing and text vanishes.
            Reset to normal, give sensible min-heights, let the page scroll. */
 
-        .stat-tile,
-        .skill-tile,
-        #armor-class-tile-container,
-        #initiative-tile-container,
-        .current-hp-tile,
-        .max-hp-tile,
-        .health-button-tile,
-        .condition-container,
-        .action-container,
-        .panel-shell {
+        .page-sheet .stat-tile,
+        .page-sheet .skill-tile,
+        .page-sheet #armor-class-tile-container,
+        .page-sheet #initiative-tile-container,
+        .page-sheet .current-hp-tile,
+        .page-sheet .max-hp-tile,
+        .page-sheet .health-button-tile,
+        .page-sheet .condition-container,
+        .page-sheet .action-container,
+        .page-sheet .panel-shell {
             container-type: normal;
             height: auto;
             max-height: none;
             min-height: 0;
         }
 
-        .stat-tile {
+        .page-sheet .stat-tile {
             flex: unset;
             width: auto;
             max-width: 100%;
@@ -1577,23 +1585,23 @@
             overflow: hidden;
         }
 
-        .skill-tile {
+        .page-sheet .skill-tile {
             min-height: 3.5rem;
             overflow: hidden;
             text-align: center;
         }
 
-        #armor-class-container,
-        #initiative-container,
-        .current-hp-tile,
-        .max-hp-tile,
-        .health-button-tile,
-        .condition-container {
+        .page-sheet #armor-class-container,
+        .page-sheet #initiative-container,
+        .page-sheet .current-hp-tile,
+        .page-sheet .max-hp-tile,
+        .page-sheet .health-button-tile,
+        .page-sheet .condition-container {
             min-height: 4.75rem;
             height: auto;
         }
 
-        #sheet-panel-actions {
+        .page-sheet #sheet-panel-actions {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             grid-template-rows: auto auto;
@@ -1608,54 +1616,54 @@
             /* space under the tabs, inside the panel */
         }
 
-        #armor-class-container {
+        .page-sheet #armor-class-container {
             grid-area: armorClass;
             height: 100%;
         }
 
-        #initiative-container {
+        .page-sheet #initiative-container {
             grid-area: initiative;
             height: 100%;
         }
 
-        #armor-class-container,
-        #initiative-container {
+        .page-sheet #armor-class-container,
+        .page-sheet #initiative-container {
             min-height: 6rem;
         }
 
-        .action-container {
+        .page-sheet .action-container {
             grid-area: actions;
             min-height: 14rem;
             overflow: hidden;
         }
 
-        .action-tab-list {
+        .page-sheet .action-tab-list {
             flex-direction: row;
             flex-wrap: nowrap;
         }
 
-        #armor-class-tile-container,
-        #initiative-tile-container {
+        .page-sheet #armor-class-tile-container,
+        .page-sheet #initiative-tile-container {
             min-height: 6rem;
             height: 100%;
 
             /* fill the grid cell */
         }
 
-        #skills-title {
+        .page-sheet #skills-title {
             padding: 0.35rem;
         }
     }
 }
 @layer overrides {
     @media (max-width: 768px) {
-    #skills-title /* clash: kept at old specificity */ {
+    .page-sheet #skills-title /* clash: kept at old specificity */ {
     }
     }
 }
 @layer pages {
     @media (max-width: 768px) {
-        .skills-container {
+        .page-sheet .skills-container {
             margin-top: 2%;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             grid-template-rows: auto repeat(3);
@@ -1667,13 +1675,13 @@
             box-sizing: border-box;
         }
 
-        .health-container {
+        .page-sheet .health-container {
             height: auto;
             min-height: 5rem;
             grid-template-rows: auto 10px;
         }
 
-        #sheet-panel-conditions {
+        .page-sheet #sheet-panel-conditions {
             display: flex;
             flex-direction: column;
             gap: 0.6rem;
@@ -1684,14 +1692,14 @@
             /* space under the tabs, inside the panel */
         }
 
-        #sheet-panel-conditions > .health-container,
-        #sheet-panel-conditions > .condition-container {
+        .page-sheet #sheet-panel-conditions > .health-container,
+        .page-sheet #sheet-panel-conditions > .condition-container {
             min-height: 12rem;
 
             /* taller tiles */
         }
 
-        #sheet-panel-conditions > .health-container {
+        .page-sheet #sheet-panel-conditions > .health-container {
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
             grid-template-rows: minmax(0, 1fr) auto;
@@ -1699,7 +1707,7 @@
             /* bar row grows to fit the thicker bar */
         }
 
-        .hp-bar-tile {
+        .page-sheet .hp-bar-tile {
             height: 1.25rem;
 
             /* thicker health bar on mobile */
@@ -1716,15 +1724,15 @@
 
     /* ---------- edit / inventory subpages ---------- */
 
-    body.subpage {
+    .page-sheet body.subpage {
         height: auto;
         max-height: none;
         overflow-x: hidden;
         overflow-y: auto;
     }
 
-    body.subpage main.subpage-main,
-    main.subpage-main {
+    .page-sheet body.subpage main.subpage-main,
+    .page-sheet main.subpage-main {
         display: flex;
         flex-direction: column;
         align-items: stretch;
@@ -1741,30 +1749,30 @@
         overflow: visible;
     }
 
-    body.subpage .panel-shell {
+    .page-sheet body.subpage .panel-shell {
         width: 100%;
         min-height: 60vh;
     }
 
-    body.subpage .action-tab-list {
+    .page-sheet body.subpage .action-tab-list {
         flex-shrink: 0;
     }
 
-    body.subpage .form-container {
+    .page-sheet body.subpage .form-container {
         display: flex;
         flex-direction: column;
         gap: 0.75rem;
     }
 
-    body.subpage .form-section {
+    .page-sheet body.subpage .form-section {
         display: flex;
         flex-direction: column;
         width: 100%;
     }
 
-    body.subpage .tile-bottom,
-    body.subpage select.tile-bottom,
-    body.subpage input.tile-bottom {
+    .page-sheet body.subpage .tile-bottom,
+    .page-sheet body.subpage select.tile-bottom,
+    .page-sheet body.subpage input.tile-bottom {
         width: 100%;
         padding: 0.5rem 0.75rem;
         border: var(--tileBorder);
@@ -1774,12 +1782,12 @@
         font: inherit;
     }
 
-    body.subpage .button-container {
+    .page-sheet body.subpage .button-container {
         align-items: center;
         margin-top: 0.5rem;
     }
 
-    body.subpage .btn-form {
+    .page-sheet body.subpage .btn-form {
         cursor: pointer;
         padding: 0.6rem 1.25rem;
         border: var(--tileBorder);
@@ -1790,24 +1798,108 @@
         box-shadow: var(--bs2);
     }
 
-    body.subpage .edit-stats {
+    .page-sheet body.subpage .edit-stats {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
         gap: 0.75rem;
     }
 
-    body.subpage .btn-roll {
+    .page-sheet body.subpage .btn-roll {
         cursor: pointer;
     }
 
-    body.subpage .inv-list {
+    /* editor Class tab: creator-style description box + feature tree (same look as char_create.css) */
+    .page-sheet body.subpage #desc-container {
+        display: flex;
+        flex-direction: column;
+        margin-top: 1rem;
+        border-radius: var(--rad2);
+    }
+
+    .page-sheet body.subpage #img-section {
+        width: 100%;
+    }
+
+    .page-sheet body.subpage #desc-img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        margin: 0;
+        background-color: var(--bgc-low);
+        border: var(--tileBorder);
+    }
+
+    .page-sheet body.subpage #class-info-section,
+    .page-sheet body.subpage #tree-section {
+        margin-top: 0.5rem;
+        padding: var(--pad2);
+        border-radius: var(--tile);
+        border: var(--tileBorder);
+        backdrop-filter: var(--backdrop);
+        background-color: var(--bgc-top);
+        color: var(--txt-color-1);
+        box-shadow: var(--bs1);
+    }
+
+    .page-sheet body.subpage #tree-section {
+        max-height: 24rem;
+        overflow-y: auto;
+    }
+
+    .page-sheet body.subpage :is(#class-info-section, #tree-section) details {
+        border-bottom: 1px solid currentColor;
+    }
+
+    .page-sheet body.subpage :is(#class-info-section, #tree-section) details:last-child {
+        border-bottom: none;
+    }
+
+    .page-sheet body.subpage :is(#class-info-section, #tree-section) summary {
+        cursor: pointer;
+        padding: 0.5rem 0;
+        font-family: "Cinzel Decorative", serif;
+        font-weight: 700;
+    }
+
+    .page-sheet body.subpage :is(#class-info-section, #tree-section) details p {
+        margin: 0 0 0.5rem 1rem;
+        line-height: 1.4;
+    }
+
+    .page-sheet body.subpage #class-info-section details p {
+        white-space: pre-line;
+    }
+
+    .page-sheet body.subpage .feature-choice {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0 0 0.75rem 1rem;
+    }
+
+    .page-sheet body.subpage .feature-choice select {
+        padding: 0.3rem 0.5rem;
+        border: var(--tileBorder);
+        border-radius: var(--tile, .75rem);
+        background-color: var(--bg-color-5);
+        color: var(--txt-color-1);
+        font: inherit;
+    }
+
+    .page-sheet body.subpage .feature-choice-note {
+        font-size: 0.85em;
+        opacity: 0.8;
+    }
+
+    .page-sheet body.subpage .inv-list {
         margin: 0;
         padding: 0;
     }
 
     @media (min-width: 769px) {
-        .sheet-panel,
-        .sheet-panel[hidden] {
+        .page-sheet .sheet-panel,
+        .page-sheet .sheet-panel[hidden] {
             display: contents !important;
         }
     }
@@ -1816,7 +1908,7 @@
        .panel-shell normally uses container-type: size, which makes it 0px tall
        when it sits inside another box whose height comes from its content. */
 
-    .action-container .item-shop {
+    .page-sheet .action-container .item-shop {
         container-type: normal;
         height: auto;
         min-height: 20rem;
@@ -1825,7 +1917,7 @@
 
     /* The spell book list when it opens inside the sheet's Spell Book tab (same fix as .item-shop). */
 
-    .action-container .spells-tab {
+    .page-sheet .action-container .spells-tab {
         container-type: normal;
         height: auto;
         min-height: 20rem;
@@ -1837,7 +1929,7 @@
     /* No padding on the top, right and bottom of the row, so the buttons can reach its edges.
        The left padding keeps the item name off the border. */
 
-    .action-item {
+    .page-sheet .action-item {
         padding: 0 0 0 0.75rem;
         min-height: 2.5rem;
         overflow: hidden;
@@ -1847,9 +1939,9 @@
 
     /* The button groups and the <form> wrappers stretch from the top of the row to the bottom */
 
-    .action-item > .action-button-container,
-    .action-item > form,
-    .action-button-container > form {
+    .page-sheet .action-item > .action-button-container,
+    .page-sheet .action-item > form,
+    .page-sheet .action-button-container > form {
         display: flex;
         align-self: stretch;
         margin: 0;
@@ -1857,15 +1949,15 @@
 
     /* The "Equipped" label sits centered next to the Unequip button */
 
-    .action-button-container > .equipped-item {
+    .page-sheet .action-button-container > .equipped-item {
         align-self: center;
         padding: 0 0.5rem;
     }
 
     /* A disabled action button (e.g. "Prepared"): greyed out and not clickable */
 
-    .btn-action:disabled,
-    .btn-action:disabled:hover {
+    .page-sheet .btn-action:disabled,
+    .page-sheet .btn-action:disabled:hover {
         background-color: grey;
         color: lightgrey;
         cursor: not-allowed;
@@ -1879,7 +1971,7 @@
 
     /* Four equal columns, so each one fills exactly a quarter of the bar */
 
-    .spell-stat-bar {
+    .page-sheet .spell-stat-bar {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 0.125rem;
@@ -1888,8 +1980,8 @@
 
     /* The button and the three stats share the same box, so they all sit level */
 
-    .spell-stat-bar > .btn-link,
-    .spell-stat-bar > .spell-stat {
+    .page-sheet .spell-stat-bar > .btn-link,
+    .page-sheet .spell-stat-bar > .spell-stat {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1904,11 +1996,11 @@
 
     /* Keep the bottom corners rounded on the outer two so the tile edge stays smooth */
 
-    .spell-stat-bar > :first-child {
+    .page-sheet .spell-stat-bar > :first-child {
         border-bottom-left-radius: 10px;
     }
 
-    .spell-stat-bar > :last-child {
+    .page-sheet .spell-stat-bar > :last-child {
         border-bottom-right-radius: 10px;
     }
 
@@ -1917,7 +2009,7 @@
     /* Fixed width + centered text, so To Hit, Save, Damage and Cast line up from row to row.
        Buttons also fill their wrapper top to bottom, with square corners so they sit flush. */
 
-    .action-item .btn-action {
+    .page-sheet .action-item .btn-action {
         align-self: stretch;
         min-width: 4.5rem;
         border-radius: 0;
@@ -1933,7 +2025,7 @@
 }
 
 @layer overrides {
-    .action-item .btn-action /* clash: kept at old specificity */ {
+    .page-sheet .action-item .btn-action /* clash: kept at old specificity */ {
         box-shadow: none;
     }
 }
@@ -1941,7 +2033,7 @@
 @layer pages {
     /* ---------- Spell details pop-up ---------- */
 
-    .btn-spell-name {
+    .page-sheet .btn-spell-name {
         background: none;
         border: none;
         padding: 0;
@@ -1951,12 +2043,12 @@
         cursor: pointer;
     }
 
-    .btn-spell-name:hover {
+    .page-sheet .btn-spell-name:hover {
         text-decoration: none;
         color: var(--accent);
     }
 
-    .spell-details {
+    .page-sheet .spell-details {
         position: fixed;
         top: 50%;
         left: 35%;
@@ -1973,7 +2065,7 @@
         box-shadow: var(--bs2);
     }
 
-    .details-container {
+    .page-sheet .details-container {
         display: flex;
         flex-direction: row;
         align-items: stretch;
@@ -1981,14 +2073,14 @@
         gap: .75rem;
     }
 
-    .combat-box {
+    .page-sheet .combat-box {
         flex: 1 1 0;
         display: flex;
         flex-direction: column;
         gap: .25rem;
     }
 
-    .spell-build-box {
+    .page-sheet .spell-build-box {
         min-width: 0;
         flex: 1 1 0;
         display: flex;
@@ -1998,13 +2090,13 @@
         text-align: right;
     }
 
-    .combat-box p,
-    .spell-build-box p {
+    .page-sheet .combat-box p,
+    .page-sheet .spell-build-box p {
         white-space: normal;
         overflow-wrap: anywhere;
     }
 
-    .spell-details-title {
+    .page-sheet .spell-details-title {
         text-align: center;
         margin: 0 2rem .75rem;
         padding: 0;
@@ -2013,9 +2105,9 @@
         color: var(--accent);
     }
 
-    .combat-box,
-    .spell-build-box,
-    .spell-description-box {
+    .page-sheet .combat-box,
+    .page-sheet .spell-build-box,
+    .page-sheet .spell-description-box {
         margin-top: .75rem;
         padding: .6rem .75rem;
         border: var(--tileBorder);
@@ -2023,12 +2115,12 @@
         background-color: var(--bg-color-2);
     }
 
-    .spell-details p {
+    .page-sheet .spell-details p {
         margin: .2rem 0;
         overflow-wrap: anywhere;
     }
 
-    .spell-details-close {
+    .page-sheet .spell-details-close {
         position: absolute;
         border: none;
         top: .5rem;
@@ -2043,36 +2135,36 @@
         cursor: pointer;
     }
 
-    .spell-details-close:hover {
+    .page-sheet .spell-details-close:hover {
         background-color: var(--bg-color-1);
     }
 
     /* ---------- Proficiencies Tab ---------- */
 
-    .tab-title {
+    .page-sheet .tab-title {
         text-align: center;
         margin: 2%;
         padding: 3%;
     }
 
-    .proficiency-list {
+    .page-sheet .proficiency-list {
         padding: 0;
         margin: 0;
     }
 
-    .proficiency-tile {
+    .page-sheet .proficiency-tile {
         border-top: var(--accent) solid 3px;
         margin: 2%;
         padding: 2%;
     }
 
-    .proficiency-title {
+    .page-sheet .proficiency-title {
         text-align: center;
     }
 
     /* Upcast level picker in Magical Actions */
 
-    .upcast-picker {
+    .page-sheet .upcast-picker {
         font: inherit;
         padding: 2px 4px;
         border-radius: 6px;
@@ -2083,11 +2175,11 @@
 
     /* The panel is a size container, so cqi = 1% of the panel's width */
 
-    #spells-panel-learned {
+    .page-sheet #spells-panel-learned {
         container-type: inline-size;
     }
 
-    #spells-panel-learned .action-item .btn-action {
+    .page-sheet #spells-panel-learned .action-item .btn-action {
         flex: 0 0 auto;
         width: clamp(4.25rem, 13cqi, 5rem);
 
@@ -2106,15 +2198,15 @@
 
     /* Spell Book level tabs: wrap onto a second row instead of overflowing (no sideways scroll needed) */
 
-    .spell-book-tabs .action-tab-list,
-    .spell-book-tabs .action-tab-list[role="tablist"] {
+    .page-sheet .spell-book-tabs .action-tab-list,
+    .page-sheet .spell-book-tabs .action-tab-list[role="tablist"] {
         flex-wrap: wrap;
         overflow: visible;
         max-width: 100%;
         box-sizing: border-box;
     }
 
-    .spell-book-tabs .action-tab-list [role="tab"] {
+    .page-sheet .spell-book-tabs .action-tab-list [role="tab"] {
         flex: 1 1 5.5rem;
         min-width: 0;
         white-space: nowrap;
@@ -2125,19 +2217,19 @@
     @media (max-width: 768px) {
         /* Mobile: same title / status bar / background treatment as the home page */
 
-        html {
+        html.page-sheet {
             padding-top: 0 !important;
 
             /* overrides the safe-area padding in index.html */
             background-color: var(--bgc-title, var(--bg-color-1));
         }
 
-        html::before,
-        html::after {
+        html.page-sheet::before,
+        html.page-sheet::after {
             height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
         }
 
-        html::before {
+        html.page-sheet::before {
             content: '';
             position: fixed;
             left: 0;
@@ -2152,7 +2244,7 @@
             background-repeat: no-repeat;
         }
 
-        html::after {
+        html.page-sheet::after {
             content: '';
             position: fixed;
             left: 0;
@@ -2173,15 +2265,15 @@
                 var(--bgc-title, rgb(65, 37, 157)) 100%);
         }
 
-        body {
+        .page-sheet body {
             background-image: none;
             min-height: 100lvh;
         }
 
         /* title bar is solid title color and reaches up under the status bar */
 
-        header,
-        #site-title {
+        .page-sheet header,
+        .page-sheet #site-title {
             margin: 0;
             border: none;
             border-radius: 0;
@@ -2189,26 +2281,26 @@
         }
 
 
-        footer {
+        .page-sheet footer {
             display: none;
         }
 
-        #site-title {
+        .page-sheet #site-title {
             background-color: var(--bgc-title, var(--bg-color-3));
             padding-top: calc(env(safe-area-inset-top) + 0.5rem);
         }
 
-        .rest-container {
+        .page-sheet .rest-container {
             display: flex;
             margin: .5rem;
         } 
 
-        .btn-rest {
+        .page-sheet .btn-rest {
             padding: 0.5rem 1rem;
             transition: transform 0.2s ease-in-out;
         }
 
-        .rest-choice {
+        .page-sheet .rest-choice {
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -2217,7 +2309,7 @@
             gap: .5rem;
         }
 
-        .btn-rest-choice {
+        .page-sheet .btn-rest-choice {
             flex: 1 1 0;
             min-width: 0;
             cursor: pointer;
@@ -2225,16 +2317,16 @@
             transition: transform 0.2s ease-in-out;
         }
 
-        .btn-rest-choice:active {
+        .page-sheet .btn-rest-choice:active {
             transform: scale(0.9);
         }
 
-        .btn-rest:active {
+        .page-sheet .btn-rest:active {
             transform: scale(0.9);
         }
     
 
-       .spell-details {
+       .page-sheet .spell-details {
             width: 100%;
             transform: none;
             border-radius: var(--toprad);
@@ -2246,20 +2338,20 @@
             animation: slide 0.3s ease-out;
         }
 
-        .details-container {
+        .page-sheet .details-container {
             flex-direction: row;
             font-weight: 400;
             font-size: 0.8rem;
         }
 
-        .spell-build-box {
+        .page-sheet .spell-build-box {
             text-align: left;
             font-weight: 400;
             width: 40%;
             font-size: 0.8rem;
         }
 
-        .spell-description-box {
+        .page-sheet .spell-description-box {
             font-weight: 400;
             box-shadow: var(--bs1);
             font-size: 0.8rem;
@@ -2267,12 +2359,12 @@
 
     
 
-        #stat-container {
+        .page-sheet #stat-container {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
-        #nav-container > li:hover,
-        #nav-container > li:focus-within {
+        .page-sheet #nav-container > li:hover,
+        .page-sheet #nav-container > li:focus-within {
             z-index: 20;
         }
     }
@@ -2288,25 +2380,25 @@
     }
     /* Mobile fit: action rows and sheet tabs shrink instead of overflowing or clipping */
     @media (max-width: 768px) {
-        .action-item {
+        .page-sheet .action-item {
             gap: 0.35rem;
         }
 
         /* the name side takes what's left and wraps */
-        .action-item > :not(.action-button-container, form) {
+        .page-sheet .action-item > :not(.action-button-container, form) {
             flex: 1 1 auto;
             min-width: 0;
             overflow-wrap: anywhere;
         }
 
-        .action-item > .action-button-container,
-        .action-item > form {
+        .page-sheet .action-item > .action-button-container,
+        .page-sheet .action-item > form {
             flex: 0 1 auto;
             min-width: 0;
         }
 
         /* buttons size to their label instead of a fixed 5.5rem each */
-        .action-item .btn-action {
+        .page-sheet .action-item .btn-action {
             flex: 0 0 auto;
             min-width: 3.25rem;
             padding: 0 0.4rem;
@@ -2316,14 +2408,14 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-    .action-item .btn-action /* clash: kept at old specificity */ {
+    .page-sheet .action-item .btn-action /* clash: kept at old specificity */ {
     }
     }
 }
 @layer pages {
     @media (max-width: 768px) {
         /* tabs: smaller text and padding so long labels like Proficiencies fit */
-        [role="tab"] {
+        :is(.page-sheet, .page-sheet *)[role="tab"] {
             min-width: 0;
             padding: 0.5rem 0.25rem;
             font-size: clamp(0.65rem, 3vw, 0.95rem);
@@ -2333,7 +2425,7 @@
     }
 
     /* Character Editor menu: shorter item (14% padding scales with the menu's width) */
-    #campaign-nav .btn-drop-campaign {
+    .page-sheet #campaign-nav .btn-drop-campaign {
         padding: 0.4rem 0.75rem;
         margin: 0.25rem;
     }

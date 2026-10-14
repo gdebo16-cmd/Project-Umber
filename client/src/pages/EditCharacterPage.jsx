@@ -19,7 +19,7 @@ const TABS = [
 
 // Replaces views/charEdit.ejs. Each tab is its own small form component in pages/edit/.
 function EditCharacterPage() {
-    usePageStyle(sheetCss, 'subpage');
+    usePageStyle(sheetCss, 'subpage', 'page-sheet');
     const { id } = useParams();
     const { data, setData, loading, error } = useFetch(`/api/characters/${id}/edit`);
     const [tab, setTab] = useState('name');
@@ -35,8 +35,8 @@ function EditCharacterPage() {
     return (
         <>
             <header>
-                <h1 id="editTitle">{character.name} - Character Editor</h1>
-                <p id="editLink"><Link to={`/characters/${character.id}`}>Back to character sheet</Link></p>
+                <h1 className='' id="site-title">{character.name} - Character Editor</h1>
+                <p className='btn-link' id="editLink"><Link to={`/characters/${character.id}`}>Back to character sheet</Link></p>
             </header>
             <main className="subpage-main">
                 <section className="panel-shell">

@@ -7,7 +7,7 @@ import SiteNav from '../components/SiteNav';
 import Loader from '../components/Loader';
 
 function HomePage() {
-    usePageStyle(homeCss);
+    usePageStyle(homeCss, null, 'page-home');
     const { data, setData, loading, error } = useFetch('/api/home');
     const [homeTab, setHomeTab] = useState('current'); // which section shows on mobile
 

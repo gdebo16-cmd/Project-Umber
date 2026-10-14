@@ -6,7 +6,7 @@ import { sendJson } from '../utils/api';
 
 // Replaces Public/registration.html
 function RegisterPage() {
-    usePageStyle(signinCss);
+    usePageStyle(signinCss, null, 'page-signin');
     const navigate = useNavigate();
     // one state object for the whole form
     const [form, setForm] = useState({ username: '', password: '', email: '', name: '' });

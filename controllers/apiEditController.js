@@ -45,6 +45,37 @@ export async function editClass(req, res) {
     res.json({ character: await Characters.getEditCharacter(charId, req.session.userId) });
 }
 
+// POST /api/characters/:id/edit/features   body: { source: 'class'|'subclass', feature_id, choices: [...] }
+// (a single { choice: 'x' } is accepted too). Saves one feature pick into characters.feature_choices
+// under the key "<source>:<feature_id>". The feature must belong to the character's saved
+// class/subclass, be unlocked at its level, and every pick must be one of the feature's options.
+export async function editFeatureChoice(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const charId = Number(req.params.id);
+    const { source, feature_id } = req.body;
+    if (source !== 'class' && source !== 'subclass') return res.status(400).json({ error: 'source must be class or subclass' });
+    const featureId = Number(feature_id);
+    if (!Number.isInteger(featureId)) return res.status(400).json({ error: 'feature_id is required' });
+
+    const f = await Characters.getCharacterFeature(charId, req.session.userId, source, featureId);
+    if (!f) return res.status(404).json({ error: 'That feature is not part of this character\'s class or subclass' });
+    if (!f.options?.length) return res.status(400).json({ error: `${f.name} has no choices` });
+    if (Number(f.level) > Number(f.char_level)) {
+        return res.status(400).json({ error: `${f.name} unlocks at level ${f.level}` });
+    }
+
+    const choices = Array.isArray(req.body.choices) ? req.body.choices : [req.body.choice];
+    const count = f.choice_count ?? 1;
+    if (choices.length !== count) return res.status(400).json({ error: `Pick exactly ${count} for ${f.name}` });
+    if (!choices.every((c) => typeof c === 'string' && f.options.includes(c))) {
+        return res.status(400).json({ error: `That is not an option for ${f.name}` });
+    }
+    if (new Set(choices).size !== choices.length) return res.status(400).json({ error: 'Each option can only be picked once' });
+
+    await Characters.setFeatureChoice(charId, req.session.userId, `${source}:${featureId}`, choices);
+    res.json({ character: await Characters.getEditCharacter(charId, req.session.userId) });
+}
+
 // POST /api/characters/:id/edit/level   body: { level }
 // Each level adds (hit die / 2 + 1 + CON mod), at least 1.
 export async function editLevel(req, res) {

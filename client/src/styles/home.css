@@ -1,7 +1,7 @@
 @import './themes.css';
 
 @layer pages {
-    main {
+    .page-home main {
         flex: 1;
         min-height: var(--minH1);
         margin: var(--mar1);
@@ -16,7 +16,7 @@
         justify-items: stretch;
     }
 
-    #profile-main {
+    .page-home #profile-main {
         display: flex;
         flex-direction: column;
         align-items: stretch;
@@ -27,25 +27,25 @@
         overscroll-behavior: contain;
     }
 
-    ul,
-    li,
-    a {
+    .page-home ul,
+    .page-home li,
+    .page-home a {
         list-style: none;
         text-decoration: none;
     }
 
-    *,
-    *::before,
-    *::after {
+    :is(.page-home, .page-home *),
+    :is(.page-home, .page-home *)::before,
+    :is(.page-home, .page-home *)::after {
         box-sizing: border-box;
     }
 
-    html {
+    html.page-home {
         max-width: var(--maxW);
         overflow-x: var(--ofX1);
     }
 
-    body {
+    .page-home body {
         width: var(--w1);
         backdrop-filter: var(--backdrop);
         max-width: 3840px;
@@ -71,16 +71,16 @@
         scrollbar-width: none;
     }
 
-    img {
+    .page-home img {
         border: var(--tileBorder);
     }
 
-    select {
+    .page-home select {
         color: var(--txt-color-1);
         border: none;
     }
 
-    option {
+    .page-home option {
         background-color: var(--bg-color-5);
         color: var(--txt-color-1);
         border: var(--tileBorder);
@@ -96,7 +96,7 @@
 
     /* ---------- header / nav ---------- */
 
-    header {
+    .page-home header {
         z-index: 1;
         position: relative;
         flex-shrink: 0;
@@ -105,7 +105,7 @@
         border: var(--tileBorder);
     }
 
-    .btn-drop {
+    .page-home .btn-drop {
         border: var(--accent);
         border-bottom: none;
         border-right: none;
@@ -113,12 +113,12 @@
         padding: 1.5%;
     }
 
-    #nav-box {
+    .page-home #nav-box {
         border-radius: var(--lowrad);
         box-shadow: var(--bs2);
     }
 
-    #nav-container {
+    .page-home #nav-container {
         border-radius: var(--lowrad);
         margin: 0;
         padding: var(--pad3);
@@ -129,15 +129,15 @@
         align-items: stretch;
     }
 
-    #home-nav,
-    #character-nav,
-    #campaign-nav,
-    #settings-nav {
+    .page-home #home-nav,
+    .page-home #character-nav,
+    .page-home #campaign-nav,
+    .page-home #settings-nav {
         min-width: var(--minW1);
         flex: 1;
     }
 
-    .btn-nav {
+    .page-home .btn-nav {
         background-color: var(--bg-color-2);
         padding: var(--pad2);
         color: var(--txt-color-1);
@@ -151,31 +151,31 @@
 }
 
 @layer overrides {
-    .btn-nav /* clash: kept at old specificity */ {
+    .page-home .btn-nav /* clash: kept at old specificity */ {
         border: var(--tileBorder);
     }
 }
 
 @layer pages {
-    #home-nav {
+    .page-home #home-nav {
         border-radius: 0 0 0 10px;
     }
 }
 
 @layer overrides {
-    #settings-nav /* clash: kept at old specificity */ {
+    .page-home #settings-nav /* clash: kept at old specificity */ {
         border-radius: 0 0 10px 0;
     }
 }
 
 @layer pages {
-    #character-nav,
-    #campaign-nav,
-    #settings-nav {
+    .page-home #character-nav,
+    .page-home #campaign-nav,
+    .page-home #settings-nav {
         position: relative;
     }
 
-    .drop-down {
+    .page-home .drop-down {
         display: flex;
         flex-direction: column;
         position: absolute;
@@ -195,7 +195,7 @@
         margin: var(--mar1);
     }
 
-    li:hover .drop-down {
+    .page-home li:hover .drop-down {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
@@ -203,9 +203,9 @@
         box-shadow: var(--bs2);
     }
 
-    .btn-drop-character,
-    .btn-drop-campaign,
-    .btn-drop-settings {
+    .page-home .btn-drop-character,
+    .page-home .btn-drop-campaign,
+    .page-home .btn-drop-settings {
         color: var(--txt-drop-1);
         padding: 14%;
         border: var(--tileBorder);
@@ -215,18 +215,18 @@
         box-shadow: var(--bs2);
     }
 
-    #settings-nav .drop-down {
+    .page-home #settings-nav .drop-down {
         left: auto;
         right: 0;
     }
 
-    #campaign-nav .drop-down {
+    .page-home #campaign-nav .drop-down {
         left: 50%;
         right: auto;
         transform: translateX(-50%);
     }
 
-    .container {
+    .page-home .container {
         background-color: var(--bg-color-1);
         margin: 2%;
         border-radius: var(--rad1);
@@ -234,11 +234,11 @@
         box-shadow: var(--bs2);
     }
 
-    .title {
+    .page-home .title {
         text-align: center;
     }
 
-    .profile-tile {
+    .page-home .profile-tile {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -249,7 +249,7 @@
         box-shadow: var(--bs3);
     }
 
-    .tile-label {
+    .page-home .tile-label {
         text-align: center;
         font-size: var(--fontS1);
         font-weight: var(--fontW1);
@@ -259,13 +259,13 @@
 }
 
 @layer overrides {
-    .tile-label /* clash: kept at old specificity */ {
+    .page-home .tile-label /* clash: kept at old specificity */ {
         border-radius: var(--toprad);
     }
 }
 
 @layer pages {
-    .tile-value {
+    .page-home .tile-value {
         text-align: center;
         font-size: var(--fontS1);
         font-weight: var(--fontW1);
@@ -275,7 +275,7 @@
 
 
 
-    .profile-tile {
+    .page-home .profile-tile {
         text-align: center;
         font-size: 120%;
         border: var(--tileBorder);
@@ -284,7 +284,7 @@
         margin: 5%;
     }
 
-    .profile-label {
+    .page-home .profile-label {
         border: var(--tileBorder);
         border-radius: var(--toprad);
         box-shadow: var(--bs2);
@@ -293,7 +293,7 @@
         font: inherit;
     }
 
-    .profile-value {
+    .page-home .profile-value {
         border: var(--tileBorder);
         box-shadow: var(--bs2);
         padding: 4%;
@@ -305,17 +305,17 @@
 }
 
 @layer overrides {
-    .profile-value /* clash: kept at old specificity */ {
+    .page-home .profile-value /* clash: kept at old specificity */ {
         border-radius: var(--lowrad);
     }
 }
 
 @layer pages {
-    #password {
+    .page-home #password {
         background-color: var(--bgc-low);
     }
 
-    .profile-button {
+    .page-home .profile-button {
         border: var(--tileBorder);
         background-color: var(--bg-color-1);
         color: var(--txt-color-1);
@@ -326,7 +326,7 @@
 }
 
 @layer overrides {
-    .profile-button /* clash: kept at old specificity */ {
+    .page-home .profile-button /* clash: kept at old specificity */ {
         border-radius: var(--rad2);
     }
 }
@@ -340,7 +340,7 @@
 
 
 @layer pages {
-    #current-character-container {
+    .page-home #current-character-container {
         display: flex;
         flex-direction: column;
         min-height: 0;
@@ -348,7 +348,7 @@
         /* lets the section stay its grid size so the list inside can scroll */
     }
 
-    #current-character-tile {
+    .page-home #current-character-tile {
         display: flex;
         flex-direction: column;
         flex: 1;
@@ -361,33 +361,33 @@
         scrollbar-color: transparent transparent;
     }
 
-    #current-character-tile:hover {
+    .page-home #current-character-tile:hover {
         scrollbar-color: rgba(255, 255, 255, 0.45) transparent;
     }
 
-    #current-character-tile::-webkit-scrollbar {
+    .page-home #current-character-tile::-webkit-scrollbar {
         width: 6px;
     }
 
-    #current-character-tile::-webkit-scrollbar-track {
+    .page-home #current-character-tile::-webkit-scrollbar-track {
         background: transparent;
     }
 
-    #current-character-tile::-webkit-scrollbar-thumb {
+    .page-home #current-character-tile::-webkit-scrollbar-thumb {
         background: transparent;
         border-radius: 999px;
     }
 
-    #current-character-tile:hover::-webkit-scrollbar-thumb {
+    .page-home #current-character-tile:hover::-webkit-scrollbar-thumb {
         background: rgba(255, 255, 255, 0.45);
     }
 
-    .tile-list {
+    .page-home .tile-list {
         padding: 2%;
         margin: 2%;
     }
 
-    .char-tile {
+    .page-home .char-tile {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         grid-template-rows: repeat(4, 1fr);
@@ -405,7 +405,7 @@
         border: var(--tileBorder);
     }
 
-    .character-name {
+    .page-home .character-name {
         grid-area: a;
         display: flex;
         justify-content: start;
@@ -418,7 +418,7 @@
         background-color: var(--bgc-top);
     }
 
-    .character-image {
+    .page-home .character-image {
         grid-area: d;
         width: 100%;
         height: 100%;
@@ -430,7 +430,7 @@
         z-index: 1;
     }
 
-    .character-race {
+    .page-home .character-race {
         grid-area: b;
         display: flex;
         align-items: center;
@@ -442,7 +442,7 @@
         backdrop-filter: var(--blur1);
     }
 
-    .character-class {
+    .page-home .character-class {
         grid-area: c;
         display: flex;
         align-items: center;
@@ -454,7 +454,7 @@
         backdrop-filter: var(--blur1);
     }
 
-    .character-subclass {
+    .page-home .character-subclass {
         grid-area: e;
         display: flex;
         align-items: center;
@@ -467,7 +467,7 @@
         border-radius: 0 0 10px 0;
     }
 
-    .character-delete-button {
+    .page-home .character-delete-button {
         grid-area: f;
         text-align: center;
         margin: var(--mar1);
@@ -482,25 +482,25 @@
 }
 
 @layer overrides {
-    .character-delete-button /* clash: kept at old specificity */ {
+    .page-home .character-delete-button /* clash: kept at old specificity */ {
         border-radius: 0 10px 0 0;
     }
 }
 
 @layer pages {
-    .character-delete-button:hover {
+    .page-home .character-delete-button:hover {
         background-color: var(--damageColor);
         color: var(--txt-color-1);
         transform: scale(1.05);
     }
 
-    #footer-text,
-    #home-link {
+    .page-home #footer-text,
+    .page-home #home-link {
         margin-left: 2%;
         margin-right: 2%;
     }
 
-    #home-link {
+    .page-home #home-link {
         color: white;
         text-decoration: none;
         height: 100%;
@@ -508,17 +508,17 @@
         transition: all 0.5s ease;
     }
 
-    #home-link:hover {
+    .page-home #home-link:hover {
         transform: scale(1.05);
     }
 
-    #form-container {
+    .page-home #form-container {
         grid-area: a;
         margin: 5%;
         border-radius: var(--rad2);
     }
 
-    #form-title {
+    .page-home #form-title {
         text-align: center;
         display: flex;
         flex-direction: column;
@@ -528,26 +528,26 @@
         border-radius: var(--rad1);
     }
 
-    .form-container {
+    .page-home .form-container {
         display: flex;
         flex-direction: column;
         gap: 2.5%;
     }
 
-    .form-section {
+    .page-home .form-section {
         display: flex;
         flex-direction: column;
         gap: 2.5%;
     }
 
-    #user-name-container,
-    #password-container,
-    #email-container {
+    .page-home #user-name-container,
+    .page-home #password-container,
+    .page-home #email-container {
         margin-top: 1%;
         margin-bottom: 1%;
     }
 
-    .btn-form {
+    .page-home .btn-form {
         font-family: "Cinzel Decorative", serif;
         font-weight: 700;
         font-style: normal;
@@ -559,16 +559,16 @@
         backdrop-filter: var(--blur1);
     }
 
-    .btn-form:hover {
+    .page-home .btn-form:hover {
         transform: scale(1.05);
         animation: roll 1.5s ease-in-out infinite;
     }
 
-    input {
+    .page-home input {
         border: none;
     }
 
-    #site-title {
+    .page-home #site-title {
         display: flex;
         font-size: var(--fontS1);
         flex-direction: row;
@@ -585,11 +585,11 @@
         margin: 0;
     }
 
-    h1 {
+    .page-home h1 {
         color: var(--title-color);
     }
 
-    .title-logo {
+    .page-home .title-logo {
         width: 100%;
         max-width: 100px;
         height: 100%;
@@ -600,7 +600,7 @@
         box-shadow: none;
     }
 
-    footer {
+    .page-home footer {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -614,7 +614,7 @@
     }
 
     @media (max-width: 768px) {
-        main {
+        .page-home main {
             display: flex;
             text-align: center;
             flex-direction: column;
@@ -624,27 +624,27 @@
 
 
 
-        #current-character-tile {
+        .page-home #current-character-tile {
             max-height: 20rem;
         }
 
-        #current-character-tile,
-        #current-campaign-list,
-        #unfinished-character-tile {
+        .page-home #current-character-tile,
+        .page-home #current-campaign-list,
+        .page-home #unfinished-character-tile {
             min-height: 12rem;
             box-sizing: border-box;
         }
 
 
 
-        .profile-tile {
+        .page-home .profile-tile {
             border: var(--tileBorder);
             border-radius: var(--tile);
             box-shadow: var(--bs2);
             margin: 5%;
         }
 
-        .profile-label {
+        .page-home .profile-label {
             border: var(--tileBorder);
             border-radius: var(--toprad);
             box-shadow: var(--bs2);
@@ -653,7 +653,7 @@
             font: inherit;
         }
 
-        .profile-value {
+        .page-home .profile-value {
             border: var(--tileBorder);
             box-shadow: var(--bs2);
             padding: 4%;
@@ -666,14 +666,14 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-    .profile-value /* clash: kept at old specificity */ {
+    .page-home .profile-value /* clash: kept at old specificity */ {
             border-radius: var(--lowrad);
     }
     }
 }
 @layer pages {
     @media (max-width: 768px) {
-        .profile-button {
+        .page-home .profile-button {
             border: var(--tileBorder);
             background-color: var(--bg-color-1);
             color: var(--txt-color-1);
@@ -685,14 +685,14 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-    .profile-button /* clash: kept at old specificity */ {
+    .page-home .profile-button /* clash: kept at old specificity */ {
             border-radius: var(--rad2);
     }
     }
 }
 @layer pages {
     @media (max-width: 768px) {
-        #site-title {
+        .page-home #site-title {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -702,12 +702,12 @@
             background-color: var(--bgc-title);
         }
 
-        #nav-container {
+        .page-home #nav-container {
             box-shadow: var(--bs2);
             border-radius: 0;
         }
 
-        .btn-nav {
+        .page-home .btn-nav {
             font-size: 0.85rem;
             display: flex;
             align-items: center;
@@ -719,14 +719,14 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-    .btn-nav /* clash: kept at old specificity */ {
+    .page-home .btn-nav /* clash: kept at old specificity */ {
             border: 2px solid var(--bordercolor);
     }
     }
 }
 @layer pages {
     @media (max-width: 768px) {
-        #home-link {
+        .page-home #home-link {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -736,50 +736,50 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-        #nav-box,
-        #nav-container,
-        .btn-nav,
-        #home-nav,
-        #settings-nav /* clash: kept at old specificity */ {
+        .page-home #nav-box,
+        .page-home #nav-container,
+        .page-home .btn-nav,
+        .page-home #home-nav,
+        .page-home #settings-nav /* clash: kept at old specificity */ {
             border-radius: 0;
     }
     }
 }
 @layer pages {
     @media (max-width: 768px) {
-        #home-link:hover {
+        .page-home #home-link:hover {
             transform: scale(1.05);
         }
 
-        #home-link:active {
+        .page-home #home-link:active {
             transform: scale(0.95);
             color: var(--accent);
         }
 
-        #site-title h1 {
+        .page-home #site-title h1 {
             font-size: clamp(1.75rem, 8vw, 5rem);
             line-height: 1;
             margin: 0;
         }
 
-        header,
-        #site-title,
-        #nav-box,
-        #nav-container {
+        .page-home header,
+        .page-home #site-title,
+        .page-home #nav-box,
+        .page-home #nav-container {
             border: none;
             border-radius: 0;
             margin: 0;
         }
 
-        #site-title {
+        .page-home #site-title {
             box-shadow: none;
         }
 
-        html {
+        html.page-home {
             padding-top: 0 !important;
         }
 
-        html::after {
+        html.page-home::after {
             content: '';
             position: fixed;
             left: 0;
@@ -795,15 +795,15 @@
                 var(--status-solid, rgb(109, 83, 222)) 100%);
         }
 
-        #current-character-container,
-        #unfinished-character-container {
+        .page-home #current-character-container,
+        .page-home #unfinished-character-container {
             max-height: 100%;
             min-height: 0;
             overflow: none;
         }
 
-        #current-character-tile,
-        #unfinished-character-tile {
+        .page-home #current-character-tile,
+        .page-home #unfinished-character-tile {
             height: auto;
             max-height: 100%;
             display: flex;
@@ -815,34 +815,34 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-    #current-character-tile,
-        #unfinished-character-tile /* clash: kept at old specificity */ {
+    .page-home #current-character-tile,
+        .page-home #unfinished-character-tile /* clash: kept at old specificity */ {
             overflow: none;
     }
     }
 }
 @layer pages {
     @media (max-width: 768px) {
-        .char-tile {
+        .page-home .char-tile {
             height: auto;
             grid-template-rows: auto repeat(3, minmax(2.5rem, auto));
 
             /* rows grow to fit text */
         }
 
-        .tile-list {
+        .page-home .tile-list {
             margin: 0;
             padding: 2%;
             box-sizing: border-box;
             width: 100%;
         }
 
-        .character-tile {
+        .page-home .character-tile {
             min-width: 0;
             max-width: 100%;
         }
 
-        .char-tile {
+        .page-home .char-tile {
             grid-template-columns: repeat(5, minmax(0, 1fr));
 
             /* columns can shrink below their text width */
@@ -853,27 +853,27 @@
             overflow: none;
         }
 
-        .tile-list,
-        .character-tile,
-        .char-tile {
+        .page-home .tile-list,
+        .page-home .character-tile,
+        .page-home .char-tile {
             flex-shrink: 0;
             height: auto;
             min-height: max-content;
         }
 
-        header {
+        .page-home header {
             padding-top: 0;
 
             /* the empty strip came from padding on the see-through header */
         }
 
-        #site-title {
+        .page-home #site-title {
             padding-top: calc(env(safe-area-inset-top) + 0.5rem);
 
             /* title color fills the status bar area */
         }
 
-        body {
+        .page-home body {
             height: auto;
             max-height: none;
             min-height: 100lvh;
@@ -881,35 +881,35 @@
             /* full screen, including under Safari's toolbar */
         }
 
-        footer {
+        .page-home footer {
             padding-bottom: calc(env(safe-area-inset-bottom) + 0.75rem);
 
             /* footer color fills the home-bar area */
         }
 
-        body {
+        .page-home body {
             height: 100dvh;
 
             /* the real visible height on phones, unlike 100vh */
             max-height: 100dvh;
         }
 
-        header {
+        .page-home header {
             padding-top: env(safe-area-inset-top);
         }
 
-        footer {
+        .page-home footer {
             padding-bottom: max(1%, env(safe-area-inset-bottom));
         }
 
-        .char-tile .character-name {
+        .page-home .char-tile .character-name {
             font-size: clamp(0.9rem, 4.5vw, 1.25rem);
         }
 
-        .char-tile .character-race,
-        .char-tile .character-class,
-        .char-tile .character-subclass,
-        .char-tile .character-delete-button {
+        .page-home .char-tile .character-race,
+        .page-home .char-tile .character-class,
+        .page-home .char-tile .character-subclass,
+        .page-home .char-tile .character-delete-button {
             font-size: clamp(0.65rem, 3.2vw, 0.95rem);
             overflow: hidden;
         }
@@ -918,32 +918,32 @@
 
     /* Home tabs: hidden on desktop, on mobile they switch between the two sections */
 
-    .home-tabs {
+    .page-home .home-tabs {
         display: none;
     }
 
     /* Mobile: no footer */
 
     @media (max-width: 768px) {
-        footer {
+        .page-home footer {
             display: none;
         }
     }
 
     /* Title bar: logo on the left half, title on the right half, accent line under the title */
 
-    #site-title {
+    .page-home #site-title {
         display: grid !important;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         align-items: center;
         justify-items: center;
     }
 
-    #site-title .title-logo {
+    .page-home #site-title .title-logo {
         justify-self: center;
     }
 
-    #site-title h1 {
+    .page-home #site-title h1 {
         text-align: center;
         padding-bottom: 0.35rem;
         border-bottom: 3px solid var(--accent);
@@ -951,21 +951,21 @@
 
     /* Title bar: logo and title meet in the middle, evenly spaced */
 
-    #site-title {
+    .page-home #site-title {
         column-gap: 1rem;
     }
 
-    #site-title .title-logo {
+    .page-home #site-title .title-logo {
         justify-self: end;
     }
 
-    #site-title h1 {
+    .page-home #site-title h1 {
         justify-self: start;
     }
 
     /* Title bar: logo + title centered together as one group */
 
-    #site-title {
+    .page-home #site-title {
         display: flex !important;
         flex-direction: row;
         justify-content: center;
@@ -973,8 +973,8 @@
         gap: 1rem;
     }
 
-    #site-title .title-logo,
-    #site-title h1 {
+    .page-home #site-title .title-logo,
+    .page-home #site-title h1 {
         justify-self: auto;
         flex: 0 1 auto;
         min-width: 0;
@@ -985,11 +985,11 @@
     @media (max-width: 768px) {
         /* Mobile: iOS Safari colors its bar from what is painted at the top, so paint a solid title-color strip there */
 
-        html {
+        html.page-home {
             background-color: var(--bgc-title, var(--bg-color-1));
         }
 
-        html::after {
+        html.page-home::after {
             background: linear-gradient(to bottom,
                 var(--bgc-title, rgb(65, 37, 157)) 0,
                 var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
@@ -998,13 +998,13 @@
                 var(--bgc-title, rgb(65, 37, 157)) 100%);
         }
 
-        .home-tabs {
+        .page-home .home-tabs {
             display: flex;
             gap: 0;
             margin: 0.75rem 2% 0;
         }
 
-        .home-tab {
+        .page-home .home-tab {
             flex: 1;
             padding: 0.6rem 0.25rem;
             font: inherit;
@@ -1019,37 +1019,37 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-    .home-tab /* clash: kept at old specificity */ {
+    .page-home .home-tab /* clash: kept at old specificity */ {
             border-radius: 10px 10px 0 0;
     }
     }
 }
 @layer pages {
     @media (max-width: 768px) {
-        .home-tab.is-active {
+        .page-home .home-tab.is-active {
             background-color: var(--bgc-top);
             color: var(--accent);
         }
 
         /* only the picked section shows; the tab already names it, so drop its title bar */
 
-        main > .container:not(.is-active) {
+        .page-home main > .container:not(.is-active) {
             display: none !important;
         }
 
-        main > .container.is-active {
+        .page-home main > .container.is-active {
             margin-top: 0 !important;
             border-top-left-radius: 0;
             border-top-right-radius: 0;
         }
 
-        main > .container.is-active > .title {
+        .page-home main > .container.is-active > .title {
             display: none;
         }
 
         /* Mobile: no bottom fade, the picture runs to the bottom edge */
 
-        html::after {
+        html.page-home::after {
             background: linear-gradient(to bottom,
                 var(--bgc-title, rgb(65, 37, 157)) 0,
                 var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
@@ -1058,8 +1058,8 @@
 
         /* Mobile: stretch the background picture past the bottom so it fills behind Safari's bottom bar */
 
-        html::before,
-        html::after {
+        html.page-home::before,
+        html.page-home::after {
             height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
         }
     }
@@ -1067,18 +1067,18 @@
 
     /* Mobile: tabs sit under the nav and the picked panel stretches to the bottom */
     @media (max-width: 768px) {
-        main {
+        .page-home main {
             justify-content: flex-start;
         }
 
-        main > .container.is-active {
+        .page-home main > .container.is-active {
             flex: 1;
             display: flex;
             flex-direction: column;
             min-height: 0;
         }
 
-        main > .container.is-active > .tile {
+        .page-home main > .container.is-active > .tile {
             flex: 1;
             max-height: none;
         }

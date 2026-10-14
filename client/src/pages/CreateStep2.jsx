@@ -25,7 +25,7 @@ function classShown(c, subs) {
 }
 
 function CreateStep2() {
-    usePageStyle(createCss);
+    usePageStyle(createCss, null, 'page-create');
     const navigate = useNavigate();
     const { data: classes, loading, error } = useFetch('/api/create_char/step2');
     const [classId, setClassId] = useState('');
@@ -40,11 +40,14 @@ function CreateStep2() {
     const changeClass = (e) => loadClass(e.target.value);
 
     // shared by picking a class and by refilling a saved draft
-    const loadClass = async (id, savedSubclassId) => {
+    const loadClass = async (id, savedSubclassId, savedSkills) => {
         const picked = classes.find((c) => String(c.id) === id);
         setClassId(id);
         setSubclassId('');
-        setSkillPicks(Array(picked.skill_choice_count ?? 0).fill(''));
+        const blank = Array(picked.skill_choice_count ?? 0).fill('');
+        // refill saved picks only if they still fit this class
+        const fits = savedSkills?.length === blank.length && savedSkills.every((s) => picked.skill_options?.includes(s));
+        setSkillPicks(fits ? [...savedSkills] : blank);
         setShown(classShown(picked, []));
 
         // load this class's subclasses (same as char_step2.js did)
@@ -84,14 +87,18 @@ function CreateStep2() {
 
     // coming back from step 3: refill class and subclass from the draft
     useEffect(() => {
-        if (classes && draft?.class_id) loadClass(String(draft.class_id), draft.subclass_id);
+        if (classes && draft?.class_id) loadClass(String(draft.class_id), draft.subclass_id, draft.skill_picks);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [classes, draft]);
 
     const submit = async (e) => {
         e.preventDefault();
         try {
-            await sendJson('/api/create_char/step2', 'POST', { class_id: classId, subclass_id: subclassId });
+            await sendJson('/api/create_char/step2', 'POST', {
+                class_id: classId,
+                subclass_id: subclassId,
+                skills: skillPicks,
+            });
             navigate('/create_char/step3');
         } catch (err) {
             setSaveError(err.message);
