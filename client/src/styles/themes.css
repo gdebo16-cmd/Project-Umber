@@ -71,7 +71,7 @@
     --lowrad: 0 0 .5rem .5rem;
     --padTop: 1.5rem;
     --padLow: 1.5rem;
-    --tile: 1.5rem;
+    --tile: .5rem;
     --marTop: 0;
     --marLow: 0;
     --section-gap: 0.75rem;
@@ -112,8 +112,8 @@
     --mar2: 1%;
     --shadowInner: inset 6px 6px 8px #000000a9,
         inset -1px -1px 5px #00000079;
-    --toprad: .25rem .25rem 0 0;
-    --lowrad: 0 0 .25rem .25rem;
+    --toprad: .5rem .5rem 0 0;
+    --lowrad: 0 0 .5rem .5rem;
     --padTop: .5rem;
     --padLow: .5rem;
     --tile: .5rem;
@@ -228,7 +228,7 @@
 
 html[data-display]:not([data-display='standard']) :is(.formSectionContainer, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .panel-shell, .title-tile) {
     border: var(--tileBorder);
-    border-radius: var(--rad1);
+    border-radius: var(--tile);
     box-shadow: var(--bs2);
     backdrop-filter: var(--backdrop);
     -webkit-backdrop-filter: var(--backdrop);
@@ -264,14 +264,14 @@ html[data-display]:not([data-display='standard']) :is(.formSectionContainer, .ti
 
 html[data-display]:not([data-display='standard']) .cap-top {
     border: none;
-    border-radius: var(--toprad);
+    border-radius: var(--tile) var(--tile) 0 0;
     box-shadow: none;
 }
 
 html[data-display]:not([data-display='standard']) .cap-bottom {
     border: none;
     border-top: var(--tileBorder);
-    border-radius: var(--lowrad);
+    border-radius: 0 0 var(--tile) var(--tile);
     box-shadow: none;
 }
 
@@ -718,4 +718,20 @@ body {
     html[data-background="yellow"] { --background: url('/eldrid-bg-yellow-mobile-1440x2560.webp'); }
     html[data-background="dark"] { --background: url('/eldrid-bg-dark-mobile-1440x2560.webp'); }
     html[data-background="neon"] { --background: url('/eldrid-bg-neon-mobile-1440x2560.webp'); }
+}
+
+/* middle nav buttons stay square like the rest of the nav bar; the ends keep their page-defined corners */
+html[data-display]:not([data-display='standard']) :is(#characterNav, #campaignNav) {
+    border-radius: 0;
+}
+
+/* nav borders follow each display's border style */
+html[data-display]:not([data-display='standard']) #navContainer :is(.navButton, #homeNav, #characterNav, #campaignNav, #settingsNav) {
+    border: var(--tileBorder);
+}
+html[data-display]:not([data-display='standard']) #navContainer > :not(:first-child) {
+    border-left: none;
+}
+html[data-display='compact'] #navContainer :is(.navButton, #homeNav, #characterNav, #campaignNav, #settingsNav) {
+    border: none;
 }
