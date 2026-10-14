@@ -21,6 +21,10 @@ function RequireLogin() {
                         localStorage.setItem('siteBackground', p.site_background);
                         document.documentElement.setAttribute('data-background', p.site_background);
                     }
+                    if (p?.site_display) {
+                        localStorage.setItem('siteDisplay', p.site_display);
+                        document.documentElement.setAttribute('data-display', p.site_display);
+                    }
                 }
                 setStatus(res.ok ? 'yes' : 'no');
             })

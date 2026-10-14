@@ -1,7 +1,5 @@
 @import './themes.css';
 
-
-
 body {
     background-image: var(--background);
     background-size: cover;
@@ -22,229 +20,222 @@ body {
 main {
     flex: 1;
     display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: auto 1fr;
-        grid-template-areas:
-            'a b b b'
-            'a b b b';
-        place-items: center;
-        align-items: stretch;
-        justify-items: stretch;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'a b b b'
+        'a b b b';
+    place-items: center;
+    align-items: stretch;
+    justify-items: stretch;
     margin: 0;
-        backdrop-filter: var(--blur1);
-        
+    backdrop-filter: var(--blur1);
 }
 
 header {
     z-index: 1;
     position: relative;
-    
 }
-    #siteTitle {
-        background-color: var(--bgc-top);
-        color: var(--txt-color-1);
-        text-align: center;
-        padding: 2%;
-        margin: 0;   
-    }
 
-    #formTitle {
-        background-color: var(--bgc-low);
-        color: var(--txt-color-1);
-        text-align: center;
-        padding: 1%;
-        margin: 0;
-    }
-            
-    .tile {
-        display: flex;
-        flex-direction: column;
-    }
+#siteTitle {
+    background-color: var(--bgc-top);
+    color: var(--txt-color-1);
+    text-align: center;
+    padding: 2%;
+    margin: 0;
+}
 
-        .topTile {
-            text-align: center;
-                color: var(--txt-color-1);
-                background-color: var(--bgc-top);
-                border-radius: var(--toprad);
-                margin: var(--marTop);
-                backdrop-filter: var(--blur1);
-                padding: var(--padTop);
-        }
+#formTitle {
+    background-color: var(--bgc-low);
+    color: var(--txt-color-1);
+    text-align: center;
+    padding: 1%;
+    margin: 0;
+}
 
-        .bottomTile {
-            text-align: center;
-                color: var(--txt-color-1);
-                background-color: var(--bgc-low);
-                border-radius: var(--lowrad);
-                margin: var(--marLow);
-                backdrop-filter: var(--blur1);
-                padding: 4%;
-                font-size: 120%;
-        }
+.tile {
+    display: flex;
+    flex-direction: column;
+}
 
-      
+.topTile {
+    text-align: center;
+    color: var(--txt-color-1);
+    background-color: var(--bgc-top);
+    border-radius: var(--toprad);
+    margin: var(--marTop);
+    backdrop-filter: var(--blur1);
+    padding: var(--padTop);
+}
 
-        #formContainer {
-            grid-area: a;
-            display: flex;
-                flex-direction: column;
-                justify-content: center;
-            margin: 5%;
-            border-radius: var(--rad2);
-        }
+.bottomTile {
+    text-align: center;
+    color: var(--txt-color-1);
+    background-color: var(--bgc-low);
+    border-radius: var(--lowrad);
+    margin: var(--marLow);
+    backdrop-filter: var(--blur1);
+    padding: 4%;
+    font-size: 120%;
+}
 
-        #descContainer {
-            grid-area: b;
-            display: flex;
-                flex-direction: column;
-                justify-content: center;
-            margin: 5%;
-            border-radius: var(--rad2);
-        }
-
-            .formSectionContainer {
-                margin-top: 5%;
-                margin-bottom: 5%;
-            }
-         
-
-        .formButton {
-            font-family: "Cinzel Decorative", serif;
-            font-weight: 700;
-            font-style: normal;
-            
-            transition: all 0.5s ease;
-            
-                background-color: var(--bg-color-1);
-                color: var(--txt-color-1);
-                padding: var(--pad2);
-                border-radius: var(--rad2);
-                backdrop-filter: var(--blur1);
-        }
-            .formButton:hover {
-                transform: scale(1.05);
-                animation: roll 1.5s ease-in-out infinite;
-            }
-
-        select {
-            padding: 15px;
-            text-align: center;
-            border: none;
-                border-radius: var(--lowrad);
-                background-color: var(--bgc-low);
-                color: var(--txt-color-1);
-        }
-        label {
-
-            padding: 5px;
-            text-align: center;
-            border-radius: var(--toprad);
-            background-color: var(--bgc-top);
-        }
-        
-            #raceSelectContainer, #charNameContainer {   
-                display: flex;
-                flex-direction: column;
-                margin-bottom: 4%;
-                    box-shadow: var(--bs1);
-                    border-radius: var(--tile);
-            }
-
-            #buttonContainer {
-                display: flex;
-                flex-direction: column;
-                text-align: center;
-                justify-content: center;
-            }
-
-                #name {
-                    border: none;
-                }
-
-
-                #submit {
-                    border: none;
-                    padding: var(--pad);
-                    border-radius: 5px;
-                    background-color: var(--bg-color-1);
-                    color: var(--txt-color-1);
-                    box-shadow: var(--bs1);
-                    transition: all 0.5s ease;
-                    font: inherit;
-                    font-style: normal;
-                    width: 100%;
-                    padding: 3%;
-                }
-                    #submit:hover {
-                        transform: scale(1.05);
-                        animation: roll 1.5s ease-in-out infinite;
-                    }
-
-    
-            #descImg {
-                max-width: 100%;
-                height: auto;
-                display: block;
-                border-radius: 15px 15px 0 0;
-            }
-            
-            #descText {
-                padding: var(--pad2);
-                white-space: pre-line;
-                
-            }
-            footer {  
-                display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                padding: var(--pad);
-                margin: 0;
-                width: auto;
-                left: 0;
-                right: 0;
-                    background-color: var(--bg-color-1);
-                    color: var(--txt-color-1);
-                    box-shadow: var(--bs1);
-            
-            }
-            
-            #footerText, #homeLink {
-                margin-left: 2%;
-                margin-right: 2%;
-            }
-            
-            #homeLink {
-                color: var(--txt-color-1);
-                text-decoration: none;
-                height: 100%;
-                margin-right: 1%;
-                transition: all 0.5s ease;
-            }
-            #homeLink:hover {
-                transform: scale(1.05);
-            } 
-
-
- #section3Title {
+#formContainer {
     grid-area: a;
     display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    margin: 5%;
+    border-radius: var(--rad2);
+}
+
+#descContainer {
+    grid-area: b;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 5%;
+    border-radius: var(--rad2);
+}
+
+.formSectionContainer {
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.formButton {
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 700;
+    font-style: normal;
+    transition: all 0.5s ease;
+    background-color: var(--bg-color-1);
+    color: var(--txt-color-1);
+    padding: var(--pad2);
+    border-radius: var(--rad2);
+    backdrop-filter: var(--blur1);
+}
+
+.formButton:hover {
+    transform: scale(1.05);
+    animation: roll 1.5s ease-in-out infinite;
+}
+
+select {
+    padding: 15px;
+    text-align: center;
+    border: none;
+    border-radius: var(--lowrad);
+    background-color: var(--bgc-low);
+    color: var(--txt-color-1);
+}
+
+label {
+    padding: 5px;
+    text-align: center;
+    border-radius: var(--toprad);
+    background-color: var(--bgc-top);
+}
+
+#raceSelectContainer,
+#charNameContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4%;
+    box-shadow: var(--bs1);
+    border-radius: var(--tile);
+}
+
+#buttonContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}
+
+#name {
+    border: none;
+}
+
+#submit {
+    border: none;
+    border-radius: 5px;
+    background-color: var(--bg-color-1);
+    color: var(--txt-color-1);
+    box-shadow: var(--bs1);
+    transition: all 0.5s ease;
+    font: inherit;
+    font-style: normal;
+    width: 100%;
+    padding: 3%;
+}
+
+#submit:hover {
+    transform: scale(1.05);
+    animation: roll 1.5s ease-in-out infinite;
+}
+
+#descImg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 15px 15px 0 0;
+}
+
+#descText {
+    padding: var(--pad2);
+    white-space: pre-line;
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: var(--pad);
+    margin: 0;
+    width: auto;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-color-1);
+    color: var(--txt-color-1);
+    box-shadow: var(--bs1);
+}
+
+#footerText,
+#homeLink {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+#homeLink {
+    color: var(--txt-color-1);
+    text-decoration: none;
+    height: 100%;
+    margin-right: 1%;
+    transition: all 0.5s ease;
+}
+
+#homeLink:hover {
+    transform: scale(1.05);
+}
+
+#section3Title {
+    grid-area: a;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
     margin: 5%;
     background-color: var(--bgc-top);
     color: var(--txt-color-1);
     border-radius: var(--rad2);
- }
+}
 
 #formContainerStep3 {
-        grid-area: b;
-        display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-        margin: 5%;
-        border-radius: var(--rad2);
-    }
+    grid-area: b;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 5%;
+    border-radius: var(--rad2);
+}
 
 #baseStatContainer {
     display: flex;
@@ -253,23 +244,20 @@ header {
     gap: 1%;
     margin: 1%;
     border-radius: var(--rad2);
-    }
+}
 
-    #baseStatContainer > .tile {
-        flex: 1 1 20%;
-        min-width: 7rem;
-        box-sizing: border-box;
-    }
+#baseStatContainer > .tile {
+    flex: 1 1 20%;
+    min-width: 7rem;
+    box-sizing: border-box;
+}
 
-    #rollBtn {
-        border: none;
-    }
-
-
-
-
+#rollBtn {
+    border: none;
+}
 
 /* Back / Forward buttons under the step title (all screen sizes) */
+
 #stepNav {
     display: flex;
     flex-direction: row;
@@ -279,6 +267,7 @@ header {
     margin: 0;
     box-sizing: border-box;
 }
+
 .stepNavButton {
     flex: 1;
     text-align: center;
@@ -293,6 +282,7 @@ header {
     font-weight: 700;
     cursor: pointer;
 }
+
 .stepNavButton:disabled {
     opacity: 0.4;
     cursor: default;
@@ -301,6 +291,139 @@ header {
 #mobileCancel {
     display: none;
 }
+
+/* Race traits under the description box */
+
+#TraitsSection {
+    margin-top: 0.5rem;
+    padding: var(--pad2);
+    border-radius: var(--tile);
+    border: var(--tileBorder);
+    backdrop-filter: var(--backdrop);
+    background-color: var(--bgc-top);
+    color: var(--txt-color-1);
+    box-shadow: var(--bs1);
+}
+
+#TraitsSection p {
+    margin: 0.35rem 0;
+    line-height: 1.4;
+    white-space: normal;
+}
+
+#TraitsSection p:first-child {
+    text-align: center;
+    font-weight: 700;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid currentColor;
+}
+
+#TraitsSection strong {
+    font-family: "Cinzel Decorative", serif;
+}
+
+/* Each trait is its own category, split by lines */
+
+#TraitsSection p {
+    margin: 0;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid currentColor;
+}
+
+#TraitsSection p:last-child {
+    border-bottom: none;
+}
+
+/* Portrait matches the text box width */
+
+#ImgSection {
+    width: 100%;
+}
+
+#descImg {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: var(--bgc-low);
+    border: var(--tileBorder);
+}
+
+/* Class basics text keeps its line breaks */
+
+#text {
+    white-space: pre-line;
+}
+
+/* Class feature tree: one clickable row per level */
+
+#treeSection {
+    margin-top: 0.5rem;
+    padding: var(--pad2);
+    border-radius: var(--tile);
+    border: var(--tileBorder);
+    backdrop-filter: var(--backdrop);
+    background-color: var(--bgc-top);
+    color: var(--txt-color-1);
+    box-shadow: var(--bs1);
+    max-height: 24rem;
+    overflow-y: auto;
+}
+
+#treeSection details {
+    border-bottom: 1px solid currentColor;
+}
+
+#treeSection details:last-child {
+    border-bottom: none;
+}
+
+#treeSection summary {
+    cursor: pointer;
+    padding: 0.5rem 0;
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 700;
+}
+
+#treeSection details p {
+    margin: 0 0 0.5rem 1rem;
+    line-height: 1.4;
+    white-space: normal;
+}
+
+/* Class info dropdowns: same look as the feature tree */
+
+#classInfoSection {
+    padding: var(--pad2);
+    border-radius: var(--lowrad);
+    background-color: var(--bgc-low);
+    color: var(--txt-color-1);
+    backdrop-filter: var(--blur1);
+}
+
+#classInfoSection details {
+    border-bottom: 1px solid currentColor;
+}
+
+#classInfoSection details:last-child {
+    border-bottom: none;
+}
+
+#classInfoSection summary {
+    cursor: pointer;
+    padding: 0.5rem 0;
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 700;
+}
+
+#classInfoSection details p {
+    margin: 0 0 0.5rem 1rem;
+    line-height: 1.4;
+    white-space: pre-line;
+}
+
+/*  ===== Mobile (max-width: 768px), consolidated =====  */
 
 @media (max-width: 768px) {
     #mobileCancel {
@@ -321,17 +444,17 @@ header {
         text-decoration: none;
         transition: all 0.5s ease;
     }
+
     footer {
         display: none !important;
     }
+
     main {
         grid-template-columns: repeat(1, 1fr);
         grid-template-rows: auto 1fr;
-        grid-template-areas:
-            'a'
+        grid-template-areas: 'a'
             'b';
     }
-
 
     #treeSection {
         scrollbar-width: none;
@@ -350,120 +473,19 @@ header {
     #section3Title {
         display: none;
     }
-}
 
-/* Race traits under the description box */
-#TraitsSection {
-    margin-top: 0.5rem;
-    padding: var(--pad2);
-    border-radius: var(--tile);
-    border: var(--tileBorder);
-    backdrop-filter: var(--backdrop);
-    background-color: var(--bgc-top);
-    color: var(--txt-color-1);
-    box-shadow: var(--bs1);
-}
-    #TraitsSection p {
-        margin: 0.35rem 0;
-        line-height: 1.4;
-        white-space: normal;
-    }
-    #TraitsSection p:first-child {
-        text-align: center;
-        font-weight: 700;
-        padding-bottom: 0.35rem;
-        border-bottom: 1px solid currentColor;
-    }
-    #TraitsSection strong {
-        font-family: "Cinzel Decorative", serif;
-    }
+    /* Mobile: header and footer hug the screen edges. Fill the notch / home-bar areas with their own color instead of empty space */
 
-/* Each trait is its own category, split by lines */
-    #TraitsSection p {
-        margin: 0;
-        padding: 0.5rem 0;
-        border-bottom: 1px solid currentColor;
-    }
-    #TraitsSection p:last-child {
-        border-bottom: none;
-    }
-
-/* Portrait matches the text box width */
-    #ImgSection { width: 100%; }
-    #descImg {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        margin: 0;
-        box-sizing: border-box;
-        background-color: var(--bgc-low);
-        border: var(--tileBorder);
-    }
-
-/* Class basics text keeps its line breaks */
-    #text { white-space: pre-line; }
-
-/* Class feature tree: one clickable row per level */
-#treeSection {
-    margin-top: 0.5rem;
-    padding: var(--pad2);
-    border-radius: var(--tile);
-    border: var(--tileBorder);
-    backdrop-filter: var(--backdrop);
-    background-color: var(--bgc-top);
-    color: var(--txt-color-1);
-    box-shadow: var(--bs1);
-    max-height: 24rem;
-    overflow-y: auto;
-}
-    #treeSection details {
-        border-bottom: 1px solid currentColor;
-    }
-    #treeSection details:last-child { border-bottom: none; }
-    #treeSection summary {
-        cursor: pointer;
-        padding: 0.5rem 0;
-        font-family: "Cinzel Decorative", serif;
-        font-weight: 700;
-    }
-    #treeSection details p {
-        margin: 0 0 0.5rem 1rem;
-        line-height: 1.4;
-        white-space: normal;
-    }
-
-/* Class info dropdowns: same look as the feature tree */
-#classInfoSection {
-    padding: var(--pad2);
-    border-radius: var(--lowrad);
-    background-color: var(--bgc-low);
-    color: var(--txt-color-1);
-    backdrop-filter: var(--blur1);
-    
-}
-    #classInfoSection details { border-bottom: 1px solid currentColor; }
-    #classInfoSection details:last-child { border-bottom: none; }
-    #classInfoSection summary {
-        cursor: pointer;
-        padding: 0.5rem 0;
-        font-family: "Cinzel Decorative", serif;
-        font-weight: 700;
-    }
-    #classInfoSection details p {
-        margin: 0 0 0.5rem 1rem;
-        line-height: 1.4;
-        white-space: pre-line;
-    }
-
-
-/* Mobile: header and footer hug the screen edges. Fill the notch / home-bar areas with their own color instead of empty space */
-@media (max-width: 768px) {
     html {
-        padding-top: 0 !important; /* overrides the safe-area padding in index.html */
+        padding-top: 0 !important;
+
+        /* overrides the safe-area padding in index.html */
     }
 
     body {
-        min-height: 100dvh; /* the real visible height on phones, unlike 100vh */
+        min-height: 100dvh;
+
+        /* the real visible height on phones, unlike 100vh */
     }
 
     header {
@@ -473,12 +495,11 @@ header {
     footer {
         padding-bottom: max(1%, env(safe-area-inset-bottom));
     }
-}
 
-
-@media (max-width: 768px) {
     /* A fixed layer behind everything, sized to the LARGEST viewport so it runs under the status bar and Safari's toolbar */
-    html::before { /* on html, because body's backdrop-filter would trap a fixed layer */
+
+    html::before {
+        /* on html, because body's backdrop-filter would trap a fixed layer */
         content: '';
         position: fixed;
         top: 0;
@@ -494,31 +515,27 @@ header {
     }
 
     body {
-        background-image: none; /* the fixed layer above replaces it */
+        background-image: none;
+
+        /* the fixed layer above replaces it */
     }
-}
 
+    /* Mobile: stretch the fixed background up under the status bar so no bare band shows */
 
-/* Mobile: stretch the fixed background up under the status bar so no bare band shows */
-@media (max-width: 768px) {
     html::before {
         top: calc(-1 * env(safe-area-inset-top));
         height: calc(100lvh + env(safe-area-inset-top));
     }
-}
 
+    /* Mobile: zoom the background so the dark bar baked into the top of the image is cropped off */
 
-/* Mobile: zoom the background so the dark bar baked into the top of the image is cropped off */
-@media (max-width: 768px) {
     html::before {
         background-size: auto 120%;
         background-position: center bottom;
     }
-}
 
+    /* Mobile: soft fade at the top and bottom edges into the status bar color */
 
-/* Mobile: soft fade at the top and bottom edges into the status bar color */
-@media (max-width: 768px) {
     html::after {
         content: '';
         position: fixed;
@@ -534,11 +551,9 @@ header {
             transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
             var(--status-solid, rgb(109, 83, 222)) 100%);
     }
-}
 
+    /* Mobile: iOS Safari colors its bar from what is painted at the top, so paint a solid title-color strip there */
 
-/* Mobile: iOS Safari colors its bar from what is painted at the top, so paint a solid title-color strip there */
-@media (max-width: 768px) {
     html {
         background-color: var(--bgc-title, var(--bg-color-1));
     }
@@ -551,30 +566,24 @@ header {
             transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
             var(--bgc-title, rgb(65, 37, 157)) 100%);
     }
-}
 
+    /* Mobile: no footer */
 
-/* Mobile: no footer */
-@media (max-width: 768px) {
     footer {
         display: none;
     }
-}
 
+    /* Mobile: no bottom fade, the picture runs to the bottom edge */
 
-/* Mobile: no bottom fade, the picture runs to the bottom edge */
-@media (max-width: 768px) {
     html::after {
         background: linear-gradient(to bottom,
             var(--bgc-title, rgb(65, 37, 157)) 0,
             var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
             transparent calc(env(safe-area-inset-top) + 4rem));
     }
-}
 
+    /* Mobile: stretch the background picture past the bottom so it fills behind Safari's bottom bar */
 
-/* Mobile: stretch the background picture past the bottom so it fills behind Safari's bottom bar */
-@media (max-width: 768px) {
     html::before,
     html::after {
         height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);

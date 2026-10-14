@@ -44,7 +44,7 @@ export async function updateSettings(userId, username, email, hash) {
 
 export async function getProfile(userId) {
     const result = await pool.query(
-        `SELECT u.name, u.username, u.email, u.created_at, u.site_theme, u.site_background,
+        `SELECT u.name, u.username, u.email, u.created_at, u.site_theme, u.site_background, u.site_display,
                 (SELECT COUNT(*)::int FROM characters c WHERE c.user_id = u.id) AS character_count
          FROM users u
          WHERE u.id = $1`,
@@ -54,10 +54,10 @@ export async function getProfile(userId) {
 }
 
 // null name/theme = keep the old value
-export async function updateProfile(userId, name, siteTheme, siteBackground = null) {
+export async function updateProfile(userId, name, siteTheme, siteBackground = null, siteDisplay = null) {
     const result = await pool.query(
-        'UPDATE users SET name = COALESCE($1, name), site_theme = COALESCE($2, site_theme), site_background = COALESCE($4, site_background) WHERE id = $3 RETURNING name, username, email, created_at, site_theme, site_background',
-        [name, siteTheme, userId, siteBackground]
+        'UPDATE users SET name = COALESCE($1, name), site_theme = COALESCE($2, site_theme), site_background = COALESCE($4, site_background), site_display = COALESCE($5, site_display) WHERE id = $3 RETURNING name, username, email, created_at, site_theme, site_background, site_display',
+        [name, siteTheme, userId, siteBackground, siteDisplay]
     );
     return result.rows[0];
 }

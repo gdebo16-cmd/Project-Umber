@@ -1,9 +1,14 @@
 /* Shared theme + display variables. Pulled in by home.css, charSheet.css and signin.css via @import. */
 
 :root,
-
 [data-display='standard'] {
     --tileBorder: 1px solid var(--bordercolor);
+    --bs3: none;
+    --backdrop: none;
+    --glow: none;
+    --btnRad: var(--rad2);
+    --inputRad: var(--rad2);
+    --letterSp: normal;
     --rad1: .80rem;
     --rad2: .35rem;
     --bs1: 2px 2px 15px black;
@@ -13,8 +18,8 @@
     --pad3: 0;
     --mar1: 0;
     --mar2: 2%;
-    --shadowInner: inset 6px 6px 8px #000000a9, 
-                   inset -1px -1px 5px #00000079;
+    --shadowInner: inset 6px 6px 8px #000000a9,
+        inset -1px -1px 5px #00000079;
     --toprad: 10px 10px 0 0;
     --lowrad: 0 0 10px 10px;
     --padTop: 3%;
@@ -23,7 +28,6 @@
     --marTop: 0;
     --marLow: 0;
     --section-gap: 0.75rem;
-
     --fontF: "Cinzel Decorative", serif;
     --fontW1: 700;
     --fontW2: 400;
@@ -61,8 +65,8 @@
     --pad3: 0;
     --mar1: 0;
     --mar2: 1%;
-    --shadowInner: inset 6px 6px 8px #000000a9, 
-                   inset -1px -1px 5px #00000079;
+    --shadowInner: inset 6px 6px 8px #000000a9,
+        inset -1px -1px 5px #00000079;
     --toprad: 1.5rem 1.5rem 0 0;
     --lowrad: 0 0 1.5rem 1.5rem;
     --padTop: 1.5rem;
@@ -95,21 +99,19 @@
     --ofY2: auto;
     --border1: none;
 }
-    
+
 [data-display='neon'] {
-    --tileBorder:3px double var(--bgc-bubble-receive);
+    --tileBorder: 3px double var(--bgc-bubble-receive);
     --rad1: .25rem;
     --rad2: .125rem;
     --bs1: 2px 2px 5px black;
-    --bs2: 2px 2px 9px black;
-    --bs3: 2px 2px 5px black;
     --pad1: 2.5%;
     --pad2: 1.5%;
     --pad3: 0;
     --mar1: 0;
     --mar2: 1%;
-    --shadowInner: inset 6px 6px 8px #000000a9, 
-                   inset -1px -1px 5px #00000079;
+    --shadowInner: inset 6px 6px 8px #000000a9,
+        inset -1px -1px 5px #00000079;
     --toprad: .5rem .5rem 0 0;
     --lowrad: 0 0 .5rem .5rem;
     --padTop: .5rem;
@@ -145,14 +147,129 @@
     --bs2: var(--glow);
     --glow: 2px 2px 15px var(--bgc-bubble-receive);
     --backdrop: blur(10px) saturate(190%);
-    
 }
 
-:root, 
+/* ---------- extra display styles: shape / spacing / borders / shadows / fonts only (no colors) ---------- */
 
+[data-display='glass'] {
+    --tileBorder: 1px solid rgba(255, 255, 255, 0.25);
+    --rad1: 1.25rem;
+    --rad2: .75rem;
+    --bs1: 0 8px 32px rgba(0, 0, 0, 0.35);
+    --bs2: 0 4px 16px rgba(0, 0, 0, 0.3);
+    --bs3: 0 2px 8px rgba(0, 0, 0, 0.25);
+    --toprad: 1.25rem 1.25rem 0 0;
+    --lowrad: 0 0 1.25rem 1.25rem;
+    --tile: 1.25rem;
+    --backdrop: blur(14px) saturate(180%);
+    --btnRad: 999px;
+    --inputRad: .75rem;
+}
+
+[data-display='parchment'] {
+    --tileBorder: 2px solid var(--bordercolor);
+    --rad1: .2rem;
+    --rad2: .1rem;
+    --bs1: 3px 4px 0 rgba(0, 0, 0, 0.55);
+    --bs2: 2px 3px 0 rgba(0, 0, 0, 0.5);
+    --bs3: 1px 2px 0 rgba(0, 0, 0, 0.45);
+    --toprad: .2rem .2rem 0 0;
+    --lowrad: 0 0 .2rem .2rem;
+    --tile: .2rem;
+    --fontF: "Cinzel", "Cinzel Decorative", Georgia, serif;
+    --fontW1: 600;
+    --btnRad: .15rem;
+    --inputRad: .1rem;
+    --letterSp: .03em;
+}
+
+[data-display='minimal'] {
+    --tileBorder: 1px solid var(--bordercolor);
+    --rad1: .4rem;
+    --rad2: .25rem;
+    --bs1: none;
+    --bs2: none;
+    --bs3: none;
+    --shadowInner: none;
+    --toprad: .4rem .4rem 0 0;
+    --lowrad: 0 0 .4rem .4rem;
+    --tile: .4rem;
+    --section-gap: 1rem;
+    --fontF: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --fontW1: 600;
+    --fontS2: 120%;
+    --fontS3: 140%;
+    --btnRad: .3rem;
+    --inputRad: .25rem;
+}
+
+[data-display='bold'] {
+    --tileBorder: 3px solid var(--bordercolor);
+    --rad1: 1rem;
+    --rad2: .6rem;
+    --bs1: 4px 6px 18px rgba(0, 0, 0, 0.8);
+    --bs2: 3px 4px 12px rgba(0, 0, 0, 0.75);
+    --bs3: 2px 3px 8px rgba(0, 0, 0, 0.7);
+    --toprad: 1rem 1rem 0 0;
+    --lowrad: 0 0 1rem 1rem;
+    --tile: 1rem;
+    --section-gap: 1rem;
+    --fontW1: 900;
+    --fontW2: 700;
+    --fontS2: 140%;
+    --fontS3: 175%;
+    --btnRad: .6rem;
+    --inputRad: .5rem;
+    --letterSp: .02em;
+}
+
+/* Shared per-display rules: applied the same way on every page (all page stylesheets import this file).
+   'standard' has no rules here, so the default look is unchanged. */
+
+html[data-display]:not([data-display='standard']) :is(.formSectionContainer, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .panel-shell, .title-tile) {
+    border: var(--tileBorder);
+    border-radius: var(--rad1);
+    box-shadow: var(--bs2);
+    backdrop-filter: var(--backdrop);
+    -webkit-backdrop-filter: var(--backdrop);
+}
+
+html[data-display]:not([data-display='standard']) :is(button, .formButton, .navButton, .action-button, .damage-button, .to-hit-button, .spell-name-button, .link-button, .drop-button) {
+    border-radius: var(--btnRad);
+    box-shadow: var(--bs3);
+    font-family: var(--fontF);
+    letter-spacing: var(--letterSp);
+}
+
+html[data-display]:not([data-display='standard']) :is(input, select, textarea) {
+    border-radius: var(--inputRad);
+    font-family: var(--fontF);
+}
+
+html[data-display]:not([data-display='standard']) :is(#navBox, .dropDown) {
+    border-radius: var(--rad1);
+    box-shadow: var(--bs2);
+}
+
+html[data-display]:not([data-display='standard']) :is(h1, h2, h3, .title, .tile-label) {
+    font-family: var(--fontF);
+    font-weight: var(--fontW1);
+    letter-spacing: var(--letterSp);
+}
+
+html[data-display='neon'] :is(.formSectionContainer, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box) {
+    box-shadow: var(--glow);
+}
+
+html[data-display='minimal'] :is(.formSectionContainer, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .panel-shell, .title-tile) {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+:root,
 [data-theme="default"] {
     --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor:  rgba(79, 46, 46, 0.712);
+    --damageColor: rgba(79, 46, 46, 0.712);
     --bgc-bubble-send: rgb(26, 29, 72);
     --bgc-bubble-receive: rgb(116, 94, 212);
     --bgc-orb: rgb(64, 71, 175);
@@ -171,12 +288,11 @@
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(2px) saturate(150%);
     --blur3: blur(5px) saturate(150%);
-  
 }
 
 [data-theme="purple"] {
     --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor:  rgba(79, 46, 46, 0.712);
+    --damageColor: rgba(79, 46, 46, 0.712);
     --bgc-bubble-send: rgb(26, 29, 72);
     --bgc-bubble-receive: rgb(116, 94, 212);
     --bgc-orb: rgb(64, 71, 175);
@@ -193,11 +309,11 @@
     --accent: rgb(245, 188, 103);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(2px) saturate(150%);
-   
 }
+
 [data-theme="green"] {
     --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor:  rgba(79, 46, 46, 0.712);
+    --damageColor: rgba(79, 46, 46, 0.712);
     --bgc-bubble-send: rgb(20, 57, 50);
     --bgc-bubble-receive: rgb(45, 140, 109);
     --bgc-orb: rgb(66, 156, 120);
@@ -214,12 +330,11 @@
     --accent: rgb(238, 224, 163);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(2px) saturate(150%);
-    
 }
 
 [data-theme="blue"] {
     --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor:  rgba(79, 46, 46, 0.712);
+    --damageColor: rgba(79, 46, 46, 0.712);
     --bgc-bubble-send: rgb(35, 60, 149);
     --bgc-bubble-receive: rgb(94, 135, 212);
     --bgc-orb: rgb(64, 112, 175);
@@ -236,12 +351,11 @@
     --accent: rgb(163, 238, 238);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(2px) saturate(150%);
-   
 }
 
 [data-theme="red"] {
     --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor:  rgba(79, 46, 46, 0.712);
+    --damageColor: rgba(79, 46, 46, 0.712);
     --bgc-bubble-send: rgb(72, 26, 26);
     --bgc-bubble-receive: rgb(212, 94, 94);
     --bgc-orb: rgb(175, 64, 64);
@@ -258,13 +372,11 @@
     --accent: rgb(252, 226, 187);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(5px) saturate(150%);
-   
 }
-
 
 [data-theme="orange"] {
     --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor:  rgba(79, 46, 46, 0.712);
+    --damageColor: rgba(79, 46, 46, 0.712);
     --bgc-bubble-send: rgb(72, 43, 26);
     --bgc-bubble-receive: rgb(212, 141, 94);
     --bgc-orb: rgb(175, 118, 64);
@@ -278,15 +390,14 @@
     --bgc-top: rgba(202, 136, 60, 0.72);
     --bgc-low: rgba(145, 99, 39, 0.459);
     --bgc-title: rgb(52, 37, 18);
-    --accent: rgb(252, 226, 187);       
+    --accent: rgb(252, 226, 187);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(5px) saturate(150%);
-  
 }
 
 [data-theme="yellow"] {
     --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor:  rgba(79, 46, 46, 0.712);
+    --damageColor: rgba(79, 46, 46, 0.712);
     --bgc-bubble-send: rgb(72, 62, 26);
     --bgc-bubble-receive: rgb(212, 206, 94);
     --bgc-orb: rgb(175, 147, 64);
@@ -303,12 +414,9 @@
     --accent: rgb(208, 252, 187);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(5px) saturate(150%);
-   
 }
 
 [data-theme="dark"] {
-    --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor:  rgba(79, 46, 46, 0.712);
     --bgc-bubble-send: rgb(0, 0, 0);
     --bgc-bubble-receive: rgb(43, 43, 43);
     --bgc-orb: rgb(107, 107, 107);
@@ -324,17 +432,16 @@
     --bgc-title: rgb(0, 0, 0);
     --accent: rgb(252, 196, 112);
     --healColor: rgba(140, 184, 140, 0.384);
-    --damageColor:  rgba(48, 37, 37, 0.712);
-    --shadowInner: inset 4px 4px 15px #ffeacea9, 
-                   inset 0px 0px 5px #ffeacea9;
+    --damageColor: rgba(48, 37, 37, 0.712);
+    --shadowInner: inset 4px 4px 15px #ffeacea9,
+        inset 0px 0px 5px #ffeacea9;
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(5px) saturate(150%);
-   
 }
 
 [data-theme="light"] {
     --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor:  rgba(79, 46, 46, 0.712);
+    --damageColor: rgba(79, 46, 46, 0.712);
     --bgc-bubble-send: rgb(249, 232, 200);
     --bgc-bubble-receive: rgb(255, 255, 255);
     --bgc-orb: rgb(63, 59, 49);
@@ -353,12 +460,9 @@
     --accent: rgb(145, 100, 3);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(2px) saturate(150%);
-    
 }
 
 [data-theme="hellfire"] {
-    --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor:  rgba(79, 46, 46, 0.712);
     --bgc-bubble-send: rgb(82, 37, 25);
     --bgc-bubble-receive: rgb(138, 67, 47);
     --bgc-orb: rgb(104, 51, 33);
@@ -368,7 +472,7 @@
     --bg-color-2: rgba(119, 42, 42, 0.67);
     --bg-color-1: rgba(65, 9, 9, 0.72);
     --txt-color-1: rgba(228, 43, 11, 0.822);
-    --bordercolor:  rgba(252, 199, 199, 0.565);
+    --bordercolor: rgba(252, 199, 199, 0.565);
     --bgc-top: rgba(82, 37, 25, 0.72);
     --bgc-low: rgba(0, 0, 0, 0.72);
     --bgc-title: rgb(67, 22, 22);
@@ -376,13 +480,10 @@
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(5px) saturate(150%);
     --healColor: rgba(253, 249, 227, 0.685);
-    --damageColor:  rgba(65, 56, 56, 0.712);
- 
+    --damageColor: rgba(65, 56, 56, 0.712);
 }
 
 [data-theme="frozen"] {
-    --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor:  rgba(79, 46, 46, 0.712);
     --bgc-bubble-send: rgb(20, 83, 112);
     --bgc-bubble-receive: rgb(155, 220, 245);
     --bgc-orb: rgb(104, 161, 175);
@@ -400,36 +501,47 @@
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(0) saturate(150%);
     --healColor: rgba(109, 188, 253, 0.63);
-    --damageColor:  rgba(39, 96, 252, 0.712);
-   
+    --damageColor: rgba(39, 96, 252, 0.712);
 }
 
 [data-theme="neon"] {
-    --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor:  rgba(79, 46, 46, 0.712);
-    --bgc-bubble-send: rgb(20, 83, 112);
-    --bgc-bubble-receive: rgb(155, 220, 245);
-    --bgc-orb: rgb(104, 161, 175);
-    --bg-color-5: rgb(16, 66, 90);
-    --bg-color-4: rgba(155, 220, 245, 0.438);
-    --bg-color-3: rgba(20, 83, 112, 0.678);
-    --bg-color-2: rgba(22, 99, 129, 0.67);
-    --bg-color-1: rgba(26, 79, 92, 0.72);
-    --txt-color-1: rgba(232, 250, 247, 0.822);
-    --bordercolor: rgba(208, 248, 241, 0.801);
-    --bgc-top: rgba(168, 221, 245, 0.486);
-    --bgc-low: rgba(92, 125, 138, 0.534);
-    --bgc-title: rgba(71, 102, 115, 0.977);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(0) saturate(150%);
-    --healColor: rgba(109, 188, 253, 0.63);
-    --damageColor:  rgba(39, 96, 252, 0.712);
-   
+    --healColor: rgba(0, 255, 200, 0.35);
+    --damageColor: rgba(255, 40, 140, 0.4);
+    --bgc-bubble-send: rgb(18, 8, 40);
+    --bgc-bubble-receive: rgb(255, 60, 200);
+    --bgc-orb: rgb(0, 229, 255);
+    --bg-color-5: rgb(14, 6, 32);
+    --bg-color-4: rgba(30, 10, 60, 0.45);
+    --bg-color-3: rgba(20, 6, 45, 0.72);
+    --bg-color-2: rgba(40, 12, 80, 0.55);
+    --bg-color-1: rgba(10, 4, 28, 0.72);
+    --title-color: rgb(0, 240, 255);
+    --txt-color-1: rgba(240, 235, 255, 0.95);
+    --bordercolor: rgba(255, 70, 210, 0.75);
+    --bgc-top: rgba(36, 8, 70, 0.78);
+    --bgc-low: rgba(8, 4, 24, 0.6);
+    --bgc-title: rgb(10, 3, 26);
+    --accent: rgb(0, 240, 255);
+    --blur1: blur(6px) saturate(170%);
+    --blur2: blur(3px) saturate(170%);
+    --blur3: blur(6px) saturate(170%);
+    --shadowInner: inset 4px 4px 12px rgba(255, 60, 200, 0.35),
+        inset -1px -1px 6px rgba(0, 240, 255, 0.35);
+    --neonGlow: 0 0 4px rgba(255, 60, 200, 0.9), 0 0 12px rgba(255, 60, 200, 0.55);
+    --neonTextGlow: 0 0 3px rgba(0, 240, 255, 0.9), 0 0 10px rgba(0, 240, 255, 0.5);
 }
 
-:root, 
+/* neon color scheme glows (colors only; shape comes from data-display) */
 
+html[data-theme="neon"] :is(h1, h2, h3, .title, .tile-label, .cap-top, .action-title) {
+    text-shadow: var(--neonTextGlow);
+}
+
+html[data-theme="neon"] :is(button, .formButton, .navButton, .action-button):hover {
+    box-shadow: var(--neonGlow);
+}
+
+:root,
 [data-background="default"] {
     --background: url('/utils/colorsketch.png');
 }
@@ -442,7 +554,7 @@
     --background: url('/eldrid-bg-purple-3840.webp');
 }
 
-[data-background="blue"] { 
+[data-background="blue"] {
     --background: url('/eldrid-bg-blue-3840.webp');
 }
 
@@ -482,11 +594,13 @@
     --background: url('/eldrid-bg-neon-3840.webp');
 }
 
-
 /* stop white showing around the page on phones (notch area, overscroll) */
+
 html {
     background-color: var(--bg-color-1);
-    background-image: var(--background); /* same image as body, so it reaches the screen curves */
+    background-image: var(--background);
+
+    /* same image as body, so it reaches the screen curves */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -494,6 +608,7 @@ html {
 }
 
 /* iPhone: stop Safari from enlarging text on its own, and never allow sideways scrolling */
+
 html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
@@ -502,16 +617,6 @@ html {
 html,
 body {
     overflow-x: hidden;
-}
-
-
-/* Mobile: iOS Safari zooms into any field under 16px, so keep fields at 16px or more */
-@media (max-width: 768px) {
-    input,
-    select,
-    textarea {
-        font-size: max(16px, 1em) !important;
-    }
 }
 
 .loader {
@@ -523,36 +628,76 @@ body {
     min-height: 60vh;
     color: var(--bgc-bubble-receive);
 }
+
 .loader-ring {
     width: 3.5rem;
     height: 3.5rem;
     border-radius: 50%;
     background: conic-gradient(from 0deg, #333 0%, red 70%, #333 100%);
     -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
-            mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
     filter: blur(1px);
     animation: loader-spin 0.9s linear infinite,
-               loader-rainbow 3s linear infinite;
+        loader-rainbow 3s linear infinite;
 }
+
 @keyframes loader-spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
+
 @keyframes loader-rainbow {
-    from { filter: blur(1px) hue-rotate(0deg); }
-    to   { filter: blur(1px) hue-rotate(360deg); }
+    from {
+        filter: blur(1px) hue-rotate(0deg);
+    }
+
+    to {
+        filter: blur(1px) hue-rotate(360deg);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .loader-ring { animation: loader-pulse 1.5s ease-in-out infinite; }
+    .loader-ring {
+        animation: loader-pulse 1.5s ease-in-out infinite;
+    }
 }
+
 @keyframes loader-pulse {
-    50% { opacity: 0.4; }
+    50% {
+        opacity: 0.4;
+    }
 }
-/* phones: lighter glass blur so the background picture shows through */
+
+/*  ===== Mobile (max-width: 768px), consolidated =====  */
+
 @media (max-width: 768px) {
-    html[data-theme], html {
+    /* Mobile: iOS Safari zooms into any field under 16px, so keep fields at 16px or more */
+
+    input,
+    select,
+    textarea {
+        font-size: max(16px, 1em) !important;
+    }
+
+    /* phones: lighter glass blur so the background picture shows through */
+
+    html[data-theme],
+    html {
         --blur1: blur(1.5px) saturate(140%);
         --blur2: blur(1px) saturate(140%);
         --blur3: blur(1.5px) saturate(140%);
     }
+}
+
+/* phones: portrait crops of each background */
+@media (max-width: 768px) {
+    html[data-background="green"] { --background: url('/eldrid-bg-green-mobile-1440x2560.webp'); }
+    html[data-background="purple"] { --background: url('/eldrid-bg-purple-mobile-1440x2560.webp'); }
+    html[data-background="blue"] { --background: url('/eldrid-bg-blue-mobile-1440x2560.webp'); }
+    html[data-background="red"] { --background: url('/eldrid-bg-red-mobile-1440x2560.webp'); }
+    html[data-background="orange"] { --background: url('/eldrid-bg-orange-mobile-1440x2560.webp'); }
+    html[data-background="yellow"] { --background: url('/eldrid-bg-yellow-mobile-1440x2560.webp'); }
+    html[data-background="dark"] { --background: url('/eldrid-bg-dark-mobile-1440x2560.webp'); }
+    html[data-background="neon"] { --background: url('/eldrid-bg-neon-mobile-1440x2560.webp'); }
 }

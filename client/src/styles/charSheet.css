@@ -2,7 +2,9 @@
 
 /* ---------- reset / base ---------- */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
@@ -15,7 +17,9 @@ body {
     width: var(--w1);
     max-width: 3840px;
     overflow-x: var(--ofX1);
-    overflow-y: auto; /* safety: scroll if a tile min-height needs more room */
+    overflow-y: auto;
+
+    /* safety: scroll if a tile min-height needs more room */
     background-image: var(--background);
     background-size: cover;
     background-position: center;
@@ -44,7 +48,9 @@ pre {
     font-size: var(--fontS3);
 }
 
-ul, li, a {
+ul,
+li,
+a {
     list-style: none;
     text-decoration: none;
 }
@@ -62,6 +68,7 @@ option {
 }
 
 /* Shared press/hover grow. Same 1.03 scale the old per-selector rules used. */
+
 .hover-grow {
     transition: transform .5s ease;
 }
@@ -218,12 +225,12 @@ header {
     -webkit-appearance: none;
     -moz-appearance: none;
 }
+
 #themeNav select.cap-bottom {
     background-color: transparent;
     border-radius: inherit;
     border: var(--border1);
 }
-
 
 #settingsNav {
     border-radius: 0;
@@ -255,22 +262,18 @@ header {
     transition: all 1s ease;
     padding: 0;
     border-radius: var(--tile);
-
-
-    
 }
 
 .titleLogo {
     width: 100%;
-        max-width: 100px;
-        height: 100%;
-        max-height: 100px;
-        margin: 0;
-        padding: 0;
-        border: none;
-        box-shadow: none;
+    max-width: 100px;
+    height: 100%;
+    max-height: 100px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
 }
-
 
 li:hover .dropDown {
     opacity: 1;
@@ -293,8 +296,6 @@ li:hover .dropDown {
     margin: 3%;
     font-size: 90%;
     box-shadow: var(--bs2);
-
-
 }
 
 #settingsNav .dropDown {
@@ -326,22 +327,24 @@ main {
     min-height: var(--minH1);
     flex: 1 1 auto;
     overflow-x: var(--ofX1);
-    overflow-y: var(--ofY1); /* safety net with body */
+    overflow-y: var(--ofY1);
+
+    /* safety net with body */
     display: grid;
     grid-template-columns: repeat(8, 1fr);
+
     /* 7 rows: B, mid, skills x3, saves x2. Actions (H) spans skills+saves
        so it ends level with the bottom of saving throws and stays tall. */
-    grid-template-rows:
-        minmax(0, 0.85fr)
+    grid-template-rows: minmax(0, 0.85fr)
         minmax(0, 0.95fr)
         minmax(0, 1.2fr)
         minmax(0, 1.2fr)
         minmax(0, 1.2fr)
         minmax(0, 1.2fr)
         minmax(0, 1.2fr);
+
     /* H and E share the bottom block: skills span full actions height (no saves) */
-    grid-template-areas:
-        "B B B B B B B B"
+    grid-template-areas: "B B B B B B B B"
         "I I I F G C C C"
         "H H H H E E E E"
         "H H H H E E E E"
@@ -357,25 +360,17 @@ main {
 
 /* ---------- stat tiles ---------- */
 
-
 .tile {
     border-bottom: none;
     border-right: none;
     text-align: center;
-    
-   
-    
     border: var(--tileBorder);
     border-radius: var(--tile);
     box-shadow: var(--bs2);
-
     color: var(--txt-color-1);
-    
     min-width: var(--minW1);
     width: var(--w1);
-    
 }
-
 
 #stat-container {
     grid-area: B;
@@ -383,7 +378,6 @@ main {
     flex-direction: row;
     width: var(--w1);
     gap: 8px;
-    
     margin-top: 1%;
     background-color: var(--bg-color-4);
 }
@@ -392,14 +386,11 @@ main {
     flex: 1 1 0;
     cursor: pointer;
     container-type: size;
-    
     display: grid;
     grid-template-rows: 1fr 2fr 1fr;
-    
     height: var(--h1);
     min-height: var(--minH1);
     overflow: var(--ofX1);
-    
 }
 
 #stat-tile-label,
@@ -446,7 +437,6 @@ main {
 
 #armor-class-tile-container,
 #initiative-tile-container {
-
     display: grid;
     grid-template-rows: 1fr 2fr;
     height: var(--h1);
@@ -466,8 +456,6 @@ main {
     min-height: var(--minH1);
 }
 
-
-
 #armor-class-tile-label,
 #initiative-tile-label {
     margin: var(--mar1);
@@ -477,7 +465,6 @@ main {
     min-height: var(--minH1);
     font-size: clamp(0.5rem, 13cqh, 1rem);
     overflow: var(--ofX1);
-
 }
 
 #armor-class-tile-value,
@@ -493,8 +480,6 @@ main {
     overflow: var(--ofX1);
 }
 
-
-
 /* ---------- skills ---------- */
 
 .skills-container {
@@ -507,7 +492,6 @@ main {
     height: var(--h1);
     cursor: pointer;
     border-radius: var(--tile);
-    
 }
 
 #skills-title {
@@ -523,12 +507,10 @@ main {
     font-size: clamp(0.75rem, 4.5cqi, 1.05rem);
     overflow: var(--ofX1);
     background-color: var(--bgc-top);
-    border-radius: var(--tile);
     text-align: center;
     box-shadow: var(--bs1);
     border-radius: var(--tile);
 }
-
 
 .skill-tile {
     display: grid;
@@ -541,9 +523,8 @@ main {
     overflow: var(--ofX1);
 }
 
-
 .skill-label,
-.skill-value { 
+.skill-value {
     padding: 0.2rem 0.25rem;
     margin: var(--mar1);
     display: flex;
@@ -551,10 +532,12 @@ main {
     align-items: center;
     overflow: var(--ofX1);
 }
+
 .skill-label {
     font-size: clamp(0.5rem, 18cqh, 1rem);
     line-height: 1.15;
 }
+
 .skill-value {
     font-size: clamp(0.8rem, 32cqh, 1.2rem);
 }
@@ -566,26 +549,21 @@ main {
     border-radius: var(--tile);
     box-shadow: var(--bs2);
     border: var(--tileBorder);
-
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-rows: minmax(0, 1fr) minmax(6px, 12%);
-    grid-template-areas:
-        "a b c"
+    grid-template-areas: "a b c"
         "d d d";
     height: var(--h1);
     min-height: var(--minH1);
     overflow: var(--ofX1);
-
     background-color: var(--bg-color-4);
 }
 
 .health-button-tile {
     grid-area: a;
-    
     display: grid;
     grid-template-rows: repeat(3, minmax(0, 1fr));
-
     container-type: size;
     overflow: var(--ofX1);
     font-family: var(--fontF1);
@@ -601,7 +579,6 @@ main {
     grid-area: c;
 }
 
-
 .hp-bar-tile {
     grid-area: d;
     min-height: var(--minH1);
@@ -611,13 +588,12 @@ main {
     border-radius: var(--rad1);
     overflow: var(--ofX1);
     margin: 0 2%;
-  }
-  
-  #hp-bar-fill {
+}
+
+#hp-bar-fill {
     height: var(--h1);
     background: #3cb371;
-  }
-
+}
 
 .button-tile-component {
     min-width: var(--minW1);
@@ -640,15 +616,11 @@ main {
     border-radius: 10px 0 0 0;
     background-color: var(--healColor);
 }
-    
 
 #damage-button {
     background-color: var(--damageColor);
     border-radius: 0 0 0 10px;
-    
-    
-    
-}   
+}
 
 #hp-input {
     border: var(--border1);
@@ -657,14 +629,13 @@ main {
     text-align: center;
     appearance: textfield;
     -moz-appearance: textfield;
-    
 }
+
 #hp-input::-webkit-outer-spin-button,
 #hp-input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: var(--mar1);
 }
-
 
 .current-hp-tile,
 .max-hp-tile {
@@ -679,7 +650,7 @@ main {
 .hp-label-component {
     text-align: center;
     font-size: clamp(0.55rem, min(18cqh, 12cqi), 1rem);
-    line-height: 1.1;   
+    line-height: 1.1;
     background-color: var(--bgc-top);
     padding-top: 4%;
     padding-bottom: 4%;
@@ -696,7 +667,7 @@ main {
     text-align: center;
     margin: var(--mar1);
     background-color: var(--bgc-low);
-    display: flex;  
+    display: flex;
     align-items: center;
     justify-content: center;
     min-height: var(--minH1);
@@ -721,10 +692,10 @@ main {
     overflow: var(--ofX1);
     container-type: size;
 }
+
 .condition-container > * {
     min-height: var(--minH1);
     max-height: var(--h1);
-    
 }
 
 #condition-title {
@@ -748,7 +719,6 @@ main {
     column-gap: 0.75rem;
     row-gap: 0.2rem;
     align-content: start;
-
     min-height: var(--minH1);
     max-height: var(--h1);
     overflow-x: var(--ofX1);
@@ -756,8 +726,6 @@ main {
     scrollbar-width: thin;
     scrollbar-color: rgba(255,255,255,0.35) transparent;
 }
-
-
 
 #conditions-list-1,
 #conditions-list-2,
@@ -769,7 +737,6 @@ main {
     align-items: center;
     column-gap: 0.45em;
     min-width: var(--minW1);
-    
     font-size: 0.85em;
     text-align: left;
 }
@@ -796,6 +763,7 @@ main {
 }
 
 /* Exhaustion: own row under both columns, full width: label | slider | value */
+
 #conditions-list-3 {
     grid-column: 1 / -1;
     display: grid;
@@ -824,11 +792,9 @@ main {
 
 /* ---------- actions / spells / tabs ---------- */
 
-
-
 .action-container {
     grid-area: H;
-    min-height: var(--minH1);  
+    min-height: var(--minH1);
     height: var(--h1);
     max-height: var(--h1);
     display: grid;
@@ -839,7 +805,6 @@ main {
     font-style: var(--fontStyle);
     border-radius: 15px;
     box-shadow: var(--bs2);
-    
 }
 
 .action-tab-list {
@@ -858,10 +823,10 @@ main {
     overflow: auto;
     scrollbar-width: none;
     scrollbar-color: rgba(255,255,255,0.35) transparent;
-    
 }
 
 /* the whole bar holding both tabs */
+
 .spells-tab .action-tab-list {
     border-radius: var(--toprad);
     gap: 0.25rem;
@@ -871,45 +836,53 @@ main {
 
 .spells-panel {
     margin: 0 0.5rem;
-    padding:  0.5rem;
+    padding: 0.5rem;
     border-radius: var(--lowrad);
 }
 
 /* each tab button */
+
 .spells-tab [role="tab"] {
     padding: 0.5rem 1rem;
-    
 }
 
 /* the tab that's currently open */
+
 .spells-tab [role="tab"][aria-selected="true"] {
     color: var(--accent);
     background-color: var(--bgc-low);
 }
 
 .spell-slot-checkbox {
-    appearance: none;          /* turn off the browser's default box */
+    appearance: none;
+
+    /* turn off the browser's default box */
     width: 1.1rem;
     height: 1.1rem;
     margin: .35rem 0.25rem;
     border: 2px solid var(--accent);
-    border-radius: 50%;        /* round, like a gem. Use 3px for a square */
+    border-radius: 50%;
+
+    /* round, like a gem. Use 3px for a square */
     background-color: transparent;
     cursor: pointer;
     transition: background-color 0.2s, box-shadow 0.2s;
 }
 
 /* when the box is checked (slot used) */
+
 .spell-slot-checkbox:checked {
     background-color: var(--accent);
-    box-shadow: 0 0 6px var(--accent);   /* a little glow */
+    box-shadow: 0 0 6px var(--accent);
+
+    /* a little glow */
 }
 
 /* when you hover over one */
+
 .spell-slot-checkbox:hover {
     box-shadow: 0 0 4px var(--accent);
 }
-
 
 [role="tab"] {
     padding: 0.5rem 1rem;
@@ -921,7 +894,6 @@ main {
     border-right: none;
     color: var(--txt-color-1);
     background-color: var(--bg-color-4);
-    
 }
 
 [role="tab"][aria-selected="true"] {
@@ -937,7 +909,6 @@ main {
     background-color: var(--bgc-low);
 }
 
-
 .action-container > [role="tabpanel"],
 .panel-shell > [role="tabpanel"] {
     min-height: 0;
@@ -945,7 +916,9 @@ main {
     max-height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    scrollbar-width: none; /* scrolls by wheel/touch, no visible bar */
+    scrollbar-width: none;
+
+    /* scrolls by wheel/touch, no visible bar */
 }
 
 .action-container > [role="tabpanel"]::-webkit-scrollbar,
@@ -957,10 +930,10 @@ main {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    
 }
 
 /* Only hide panels inside action / subpage shells â€” never .sheet-panel on desktop */
+
 .action-container > [role="tabpanel"][hidden],
 .panel-shell > [role="tabpanel"][hidden] {
     display: none !important;
@@ -977,18 +950,24 @@ main {
     border: var(--tileBorder);
     border-top: none;
     padding: 0.5rem;
-    
 }
 
-.action-item.spell-slot {   /* both classes, so this beats the plain .action-item rule further down */
+.action-item.spell-slot {
+    /* both classes, so this beats the plain .action-item rule further down */
     display: flex;
     flex-direction: column;
-    align-items: stretch;   /* title and list both go full width */
-    gap: .5rem;                 /* no space between them */
-    padding: 0;             /* drop the .action-item padding */
-    border: none;           /* drop the extra frame around both */
+    align-items: stretch;
+
+    /* title and list both go full width */
+    gap: .5rem;
+
+    /* no space between them */
+    padding: 0;
+
+    /* drop the .action-item padding */
+
+    /* drop the extra frame around both */
     background: none;
-    box-shadow: none;
     overflow: var(--ofX1);
     border: var(--tileBorder);
     box-shadow: var(--bs2);
@@ -996,14 +975,16 @@ main {
 
 .spell-slot > .spell-list {
     margin: 0;
-    border-top: none;       /* so the title and list don't draw a double line */
-    min-height: 1.5rem; 
-        /* empty levels still show a small box */
+    border-top: none;
+
+    /* so the title and list don't draw a double line */
+    min-height: 1.5rem;
+
+    /* empty levels still show a small box */
 }
 
 .spellList {
     display: flex;
-    
     gap: 0.75rem;
 }
 
@@ -1022,7 +1003,6 @@ main {
     gap: 0.4rem;
     padding: 0.3rem;
     margin: 0 0.5rem;
-    
 }
 
 .action-item {
@@ -1039,23 +1019,20 @@ main {
 
 .action-button-container {
     display: flex;
-    flex-direction: row;
     gap: 0.125rem;
     align-self: stretch;
     flex-direction: row;
-    
 }
 
 .action-button {
     flex: 1;
-    align-self: stretch; 
-    background-color: var(--accent); 
+    align-self: stretch;
+    background-color: var(--accent);
     border: var(--tileBorder);
     border-radius: var(--rad2);
     box-shadow: var(--bs2);
     margin: 0;
 }
-
 
 .action-button:hover {
     background-color: var(--bg-color-2);
@@ -1075,6 +1052,7 @@ main {
     background-color: var(--bgc-low);
     text-align: center;
 }
+
 .action-tab-title {
     border-radius: var(--toprad);
     background-color: var(--bgc-top);
@@ -1094,15 +1072,7 @@ main {
     font-style: var(--fontStyle);
 }
 
-
-
-
-
-
-
 /* ---------- inventory ---------- */
-
-
 
 .learnedSpell {
     text-align: right;
@@ -1155,11 +1125,15 @@ em {
 }
 
 .roll-orb__panel {
-    position: relative;          /* lets the tail be placed relative to the bubble */
+    position: relative;
+
+    /* lets the tail be placed relative to the bubble */
     display: inline-block;
     padding: 0.75rem 1rem;
     background-color: var(--bgc-bubble-send);
-    border-radius: 1rem 1rem 1rem .5rem;         /* the rounded box */
+    border-radius: 1rem 1rem 1rem .5rem;
+
+    /* the rounded box */
     max-width: 20rem;
     width: 60%;
     margin: 4%;
@@ -1229,6 +1203,7 @@ main > *,
        wider than the screen (the usual culprits are width:100% + padding
        without border-box, flex items that refuse to shrink, or fixed
        grid tracks). */
+
     html,
     body,
     header,
@@ -1252,6 +1227,7 @@ main > *,
 
     /* Header: three cells share one row; text may shrink/wrap so "Wizard" stays on-screen.
        (Old rule set width:100% on EACH cell = three full widths side by side.) */
+
     #characterHeader {
         display: flex;
         flex-direction: row;
@@ -1279,6 +1255,7 @@ main > *,
     }
 
     /* Nav: equal share; wrap to a second row when five labels cannot fit one line */
+
     #navContainer {
         display: flex;
         flex-direction: row;
@@ -1299,6 +1276,7 @@ main > *,
         min-width: 0;
         max-width: 100%;
         box-sizing: border-box;
+
         /* ~3 per row â†’ second row for the leftover buttons */
         flex-basis: 30%;
         white-space: nowrap;
@@ -1311,7 +1289,9 @@ main > *,
     }
 
     #navContainer > #campaignNav {
-        border-radius: 0 0 10px 10px; /* own row on mobile: round both bottom corners */
+        border-radius: 0 0 10px 10px;
+
+        /* own row on mobile: round both bottom corners */
     }
 
     #themeNav {
@@ -1332,7 +1312,9 @@ main > *,
         width: auto;
         max-width: 100%;
         box-sizing: border-box;
-        transform: none; /* undo the desktop centering shift, which pushes it off-screen here */
+        transform: none;
+
+        /* undo the desktop centering shift, which pushes it off-screen here */
     }
 
     main {
@@ -1373,8 +1355,11 @@ main > *,
     }
 
     /* close the gap between the tab bar and the open panel */
+
     .sheet-tabs {
-        margin-bottom: -8px; /* cancels main's 8px gap */
+        margin-bottom: -8px;
+
+        /* cancels main's 8px gap */
     }
 
     .sheet-panel > :first-child {
@@ -1410,6 +1395,7 @@ main > *,
     }
 
     /* Base stats: true 4Ã—2 grid that cannot spill past the viewport */
+
     #stat-container {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1421,17 +1407,24 @@ main > *,
     }
 
     /* Conditions (mobile): keep the 2-column checkbox grid, slider row spans both */
+
     .condition-container {
         grid-template-rows: auto auto;
         gap: 0.75rem;
     }
 
     .condition-tile {
-        grid-template-columns: repeat(2, minmax(0, 1fr)); /* two checkbox columns */
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        /* two checkbox columns */
         gap: 0.5rem 0.75rem;
         padding: 0.5rem 0;
-        justify-items: center; /* center each group */
-        align-content: space-evenly; /* even vertical spacing */
+        justify-items: center;
+
+        /* center each group */
+        align-content: space-evenly;
+
+        /* even vertical spacing */
     }
 
     #conditions-list-1,
@@ -1439,11 +1432,14 @@ main > *,
     #conditions-list-3 {
         text-align: center;
         width: auto;
-        grid-column: auto; /* no spanning, stay in the single row */
+        grid-column: auto;
+
+        /* no spanning, stay in the single row */
         min-width: 0;
     }
 
     /* same width for both checkbox groups so the boxes line up */
+
     #conditions-list-1,
     #conditions-list-2 {
         width: 9em;
@@ -1451,13 +1447,19 @@ main > *,
     }
 
     .condition-tile {
-        font-size: 1.15rem; /* bigger condition text and boxes */
+        font-size: 1.15rem;
+
+        /* bigger condition text and boxes */
     }
 
     #conditions-list-3 {
-        grid-column: 1 / -1; /* exhaustion bar spans the bottom */
+        grid-column: 1 / -1;
+
+        /* exhaustion bar spans the bottom */
         width: 100%;
-        grid-template-columns: minmax(0, 1fr) auto; /* bar, then the number */
+        grid-template-columns: minmax(0, 1fr) auto;
+
+        /* bar, then the number */
         grid-auto-rows: auto;
         row-gap: 0.25em;
         padding: 0 0.75rem;
@@ -1465,12 +1467,16 @@ main > *,
     }
 
     #exhausted-label {
-        grid-column: 1 / -1; /* label on its own line above the bar */
+        grid-column: 1 / -1;
+
+        /* label on its own line above the bar */
         justify-self: center;
     }
 
     #exhausted-value {
-        width: 100%; /* bar stretches across the box */
+        width: 100%;
+
+        /* bar stretches across the box */
         justify-self: stretch;
         margin: 0;
     }
@@ -1488,6 +1494,7 @@ main > *,
        so that works. On mobile, tiles only grow from their content â€” so
        size containment shrinks them to nearly nothing and text vanishes.
        Reset to normal, give sensible min-heights, let the page scroll. */
+
     .stat-tile,
     .skill-tile,
     #armor-class-tile-container,
@@ -1534,26 +1541,32 @@ main > *,
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-template-rows: auto auto;
-        grid-template-areas:
-            "armorClass initiative"
+        grid-template-areas: "armorClass initiative"
             "actions actions";
         column-gap: 0.75rem;
-        row-gap: 0.35rem; /* tighter space above the actions tile */
-        padding-top: 0.75rem; /* space under the tabs, inside the panel */
+        row-gap: 0.35rem;
+
+        /* tighter space above the actions tile */
+        padding-top: 0.75rem;
+
+        /* space under the tabs, inside the panel */
     }
 
     #armor-class-container {
         grid-area: armorClass;
         height: 100%;
     }
+
     #initiative-container {
         grid-area: initiative;
         height: 100%;
     }
+
     #armor-class-container,
     #initiative-container {
         min-height: 6rem;
     }
+
     .action-container {
         grid-area: actions;
         min-height: 14rem;
@@ -1568,12 +1581,13 @@ main > *,
     #armor-class-tile-container,
     #initiative-tile-container {
         min-height: 6rem;
-        height: 100%; /* fill the grid cell */
+        height: 100%;
+
+        /* fill the grid cell */
     }
 
     #skills-title {
-       padding: 0.35rem;
-       
+        padding: 0.35rem;
     }
 
     .skills-container {
@@ -1597,26 +1611,38 @@ main > *,
     #sheet-panel-conditions {
         display: flex;
         flex-direction: column;
-        gap: 0.6rem; /* slight space between health and conditions */
-        padding-top: 0.75rem; /* space under the tabs, inside the panel */
+        gap: 0.6rem;
+
+        /* slight space between health and conditions */
+        padding-top: 0.75rem;
+
+        /* space under the tabs, inside the panel */
     }
 
     #sheet-panel-conditions > .health-container,
     #sheet-panel-conditions > .condition-container {
-        min-height: 12rem; /* taller tiles */
+        min-height: 12rem;
+
+        /* taller tiles */
     }
 
     #sheet-panel-conditions > .health-container {
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
-        grid-template-rows: minmax(0, 1fr) auto; /* bar row grows to fit the thicker bar */
+        grid-template-rows: minmax(0, 1fr) auto;
+
+        /* bar row grows to fit the thicker bar */
     }
 
     .hp-bar-tile {
-        height: 1.25rem; /* thicker health bar on mobile */
+        height: 1.25rem;
+
+        /* thicker health bar on mobile */
         min-height: 1.25rem;
         align-self: center;
-        margin: 0.6rem auto; /* centered in its row */
+        margin: 0.6rem auto;
+
+        /* centered in its row */
         width: 96%;
         justify-self: center;
     }
@@ -1718,13 +1744,12 @@ body.subpage .invList {
     .sheet-panel[hidden] {
         display: contents !important;
     }
-
 }
-
 
 /* The shop list when it opens inside the sheet's Inventory tab.
    .panel-shell normally uses container-type: size, which makes it 0px tall
    when it sits inside another box whose height comes from its content. */
+
 .action-container .item-shop {
     container-type: normal;
     height: auto;
@@ -1733,6 +1758,7 @@ body.subpage .invList {
 }
 
 /* The spell book list when it opens inside the sheet's Spell Book tab (same fix as .item-shop). */
+
 .action-container .spell-book,
 .action-container .spells-tab {
     container-type: normal;
@@ -1741,17 +1767,21 @@ body.subpage .invList {
     margin-top: 0.5rem;
 }
 
-
 /* ---------- action buttons fill the end of each row ---------- */
+
 /* No padding on the top, right and bottom of the row, so the buttons can reach its edges.
    The left padding keeps the item name off the border. */
+
 .action-item {
     padding: 0 0 0 0.75rem;
     min-height: 2.5rem;
-    overflow: hidden;            /* clips the buttons to the row's rounded corners */
+    overflow: hidden;
+
+    /* clips the buttons to the row's rounded corners */
 }
 
 /* The button groups and the <form> wrappers stretch from the top of the row to the bottom */
+
 .action-item > .action-button-container,
 .action-item > form,
 .action-button-container > form {
@@ -1761,23 +1791,29 @@ body.subpage .invList {
 }
 
 /* The "Equipped" label sits centered next to the Unequip button */
+
 .action-button-container > .equipped-item {
     align-self: center;
     padding: 0 0.5rem;
 }
 
 /* A disabled action button (e.g. "Prepared"): greyed out and not clickable */
+
 .action-button:disabled,
 .action-button:disabled:hover {
     background-color: grey;
     color: lightgrey;
     cursor: not-allowed;
     opacity: 0.6;
-    transform: none;   /* stop the hover-grow effect */
+    transform: none;
+
+    /* stop the hover-grow effect */
 }
 
 /* ---------- Spell Book header: Consult the Scrolls + 3 stats ---------- */
+
 /* Four equal columns, so each one fills exactly a quarter of the bar */
+
 .spell-stat-bar {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1786,6 +1822,7 @@ body.subpage .invList {
 }
 
 /* The button and the three stats share the same box, so they all sit level */
+
 .spell-stat-bar > .link-button,
 .spell-stat-bar > .spell-stat {
     display: flex;
@@ -1801,12 +1838,20 @@ body.subpage .invList {
 }
 
 /* Keep the bottom corners rounded on the outer two so the tile edge stays smooth */
-.spell-stat-bar > :first-child { border-bottom-left-radius: 10px; }
-.spell-stat-bar > :last-child  { border-bottom-right-radius: 10px; }
+
+.spell-stat-bar > :first-child {
+    border-bottom-left-radius: 10px;
+}
+
+.spell-stat-bar > :last-child {
+    border-bottom-right-radius: 10px;
+}
 
 /* ---------- Every button in an action/spell row is the same size ---------- */
+
 /* Fixed width + centered text, so To Hit, Save, Damage and Cast line up from row to row.
    Buttons also fill their wrapper top to bottom, with square corners so they sit flush. */
+
 .action-item .action-button {
     align-self: stretch;
     min-width: 4.5rem;
@@ -1823,6 +1868,7 @@ body.subpage .invList {
 }
 
 /* ---------- Spell details pop-up ---------- */
+
 .spell-name-button {
     background: none;
     border: none;
@@ -1832,8 +1878,9 @@ body.subpage .invList {
     text-align: left;
     cursor: pointer;
 }
-.spell-name-button:hover { 
-    text-decoration: none; 
+
+.spell-name-button:hover {
+    text-decoration: none;
     color: var(--accent);
 }
 
@@ -1907,6 +1954,7 @@ body.subpage .invList {
     margin: .2rem 0;
     overflow-wrap: anywhere;
 }
+
 .spell-details-close {
     position: absolute;
     border: none;
@@ -1921,7 +1969,10 @@ body.subpage .invList {
     line-height: 1;
     cursor: pointer;
 }
-.spell-details-close:hover { background-color: var(--bg-color-1); }
+
+.spell-details-close:hover {
+    background-color: var(--bg-color-1);
+}
 
 /* ---------- Proficiencies Tab ---------- */
 
@@ -1945,7 +1996,9 @@ body.subpage .invList {
 .proficiency-title {
     text-align: center;
 }
+
 /* Upcast level picker in Magical Actions */
+
 .upcast-picker {
     font: inherit;
     padding: 2px 4px;
@@ -1954,23 +2007,32 @@ body.subpage .invList {
 }
 
 /* ---------- Learned Spells: smaller buttons, text scales with them ---------- */
+
 /* The panel is a size container, so cqi = 1% of the panel's width */
+
 #spells-panel-learned {
     container-type: inline-size;
 }
 
 #spells-panel-learned .action-item .action-button {
     flex: 0 0 auto;
-    width: clamp(4.25rem, 13cqi, 5rem);            /* all three buttons share one width that follows the panel */
+    width: clamp(4.25rem, 13cqi, 5rem);
+
+    /* all three buttons share one width that follows the panel */
     min-width: 0;
-    font-size: clamp(0.65rem, 2.2cqi, 0.85rem);    /* text shrinks and grows with the panel */
+    font-size: clamp(0.65rem, 2.2cqi, 0.85rem);
+
+    /* text shrinks and grows with the panel */
     padding: 0.2rem 0.4rem;
-    white-space: normal !important;                /* long labels like "Remove Action" wrap onto two lines */
+    white-space: normal !important;
+
+    /* long labels like "Remove Action" wrap onto two lines */
     line-height: 1.1;
     text-align: center;
 }
 
 /* Spell Book level tabs: wrap onto a second row instead of overflowing (no sideways scroll needed) */
+
 .spell-book-tabs .action-tab-list,
 .spell-book-tabs .action-tab-list[role="tablist"] {
     flex-wrap: wrap;
@@ -1978,17 +2040,22 @@ body.subpage .invList {
     max-width: 100%;
     box-sizing: border-box;
 }
-    .spell-book-tabs .action-tab-list [role="tab"] {
-        flex: 1 1 5.5rem;
-        min-width: 0;
-        white-space: nowrap;
-    }
 
+.spell-book-tabs .action-tab-list [role="tab"] {
+    flex: 1 1 5.5rem;
+    min-width: 0;
+    white-space: nowrap;
+}
 
-/* Mobile: same title / status bar / background treatment as the home page */
+/*  ===== Mobile (max-width: 768px), consolidated =====  */
+
 @media (max-width: 768px) {
+    /* Mobile: same title / status bar / background treatment as the home page */
+
     html {
-        padding-top: 0 !important; /* overrides the safe-area padding in index.html */
+        padding-top: 0 !important;
+
+        /* overrides the safe-area padding in index.html */
         background-color: var(--bgc-title, var(--bg-color-1));
     }
 
@@ -1998,6 +2065,7 @@ body.subpage .invList {
     }
 
     /* title bar is solid title color and reaches up under the status bar */
+
     header,
     #siteTitle {
         margin: 0;
@@ -2012,6 +2080,7 @@ body.subpage .invList {
     }
 
     /* fixed background picture, zoomed so the dark bar at the top of the image is cropped */
+
     html::before {
         content: '';
         position: fixed;
@@ -2028,6 +2097,7 @@ body.subpage .invList {
     }
 
     /* solid strip under the status bar, then soft fades at the top and bottom edges */
+
     html::after {
         content: '';
         position: fixed;
@@ -2052,31 +2122,25 @@ body.subpage .invList {
     #stat-container {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-}
 
+    /* Mobile: no bottom fade, the picture runs to the bottom edge */
 
-/* Mobile: no bottom fade, the picture runs to the bottom edge */
-@media (max-width: 768px) {
     html::after {
         background: linear-gradient(to bottom,
             var(--bgc-title, rgb(65, 37, 157)) 0,
             var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
             transparent calc(env(safe-area-inset-top) + 4rem));
     }
-}
 
+    /* Mobile: stretch the background picture past the bottom so it fills behind Safari's bottom bar */
 
-/* Mobile: stretch the background picture past the bottom so it fills behind Safari's bottom bar */
-@media (max-width: 768px) {
     html::before,
     html::after {
         height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
     }
 
-    
-
     #navContainer > li:hover,
     #navContainer > li:focus-within {
-    z-index: 20;
-}
+        z-index: 20;
+    }
 }

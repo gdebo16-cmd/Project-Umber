@@ -6,7 +6,7 @@ import { sendJson } from '../utils/api';
 
 
 const THEMES = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen', 'neon'];
-const DISPLAYS = ['standard', 'compact', 'neon'];
+const DISPLAYS = ['standard', 'compact', 'neon', 'glass', 'parchment', 'minimal', 'bold'];
 const BACKGROUNDS = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen', 'neon'];
 
 function ProfilePage() {
@@ -54,7 +54,7 @@ const pickBackground = async(e) => {
                         </article>
                         <article className="formSectionContainer profile-tile" id="profile-email-container">
                             <label id="display-label" className="tile-label cap-top" htmlFor="display-select">Display</label>
-                            <select className="tile-value cap-bottom" id="display-select" aria-label="Display" onChange={pickDisplay}>
+                            <select className="tile-value cap-bottom" id="display-select" aria-label="Display" defaultValue={localStorage.getItem('siteDisplay') || 'standard'} onChange={pickDisplay}>
                                 {DISPLAYS.map((d) => (
                                 <option className='option' id={`display-option-${d}`} key={d} value={d}>{d[0].toUpperCase() + d.slice(1)}</option>
                                 ))}

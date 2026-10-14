@@ -90,12 +90,12 @@ export async function getProfile(req, res) {
     }
 }
 
-// PUT /api/profile   body: { name, site_theme, site_background }
+// PUT /api/profile   body: { name, site_theme, site_background, site_display }
 export async function updateProfile(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
-    const { name, site_theme, site_background } = req.body;
+    const { name, site_theme, site_background, site_display } = req.body;
     try {
-        res.json(await Users.updateProfile(req.session.userId, name?.trim() || null, site_theme || null, site_background || null));
+        res.json(await Users.updateProfile(req.session.userId, name?.trim() || null, site_theme || null, site_background || null, site_display || null));
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

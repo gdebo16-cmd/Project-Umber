@@ -1,6 +1,7 @@
 /* React puts every page inside <div id="root">.
    "display: contents" makes that div invisible to the layout, so your
    header / main / footer act like direct children of <body>, just like the EJS pages. */
+
 #root {
     display: contents;
 }
