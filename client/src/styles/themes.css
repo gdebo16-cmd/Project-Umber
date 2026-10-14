@@ -689,14 +689,14 @@
         --bg-color-3: rgba(255, 230, 184, 0.781);
         --bg-color-2: rgba(252, 202, 116, 0.669);
         --bg-color-1: rgba(238, 232, 216, 0.74);
-        --txt-color-1: rgb(59, 134, 246);
-        --title-text: rgb(59, 134, 246);
-        --text-color-2: rgb(59, 134, 246);
+        --txt-color-1: rgb(110, 170, 255);
+        --title-text: rgb(110, 170, 255);
+        --text-color-2: rgb(110, 170, 255);
         --bordercolor: rgb(255, 228, 179);
         --bgc-top: rgba(255, 254, 252, 0.753);
         --bgc-low: rgba(196, 167, 132, 0.627);
         --bgc-title: rgba(203, 177, 121, 0.591);
-        --accent: rgb(59, 134, 246);
+        --accent: rgb(110, 170, 255);
         --blur1: blur(3px) saturate(150%);
         --blur2: blur(1.5px) saturate(150%);
     }
@@ -1121,8 +1121,8 @@
     /* light-glass: open tab glows light blue */
     html[data-theme="light-glass"] :is([role="tab"][aria-selected="true"], .home-tab.is-active) {
         color: rgb(255, 255, 255);
-        background-color: rgb(140, 195, 255);
-        box-shadow: 0 0 12px 3px rgba(140, 195, 255, 0.85), var(--shadowInner);
+        background-color: rgb(185, 220, 255);
+        box-shadow: 0 0 12px 3px rgba(185, 220, 255, 0.9), var(--shadowInner);
     }
 
     /* light-glass: blue accent buttons get white text so it stays readable */
