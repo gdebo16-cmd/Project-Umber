@@ -4,6 +4,7 @@ import useFetch from '../hooks/useFetch';
 import usePageStyle from '../hooks/usePageStyle';
 import homeCss from '../styles/home.css?inline';
 import SiteNav from '../components/SiteNav';
+import Loader from '../components/Loader';
 
 function HomePage() {
     usePageStyle(homeCss);
@@ -30,8 +31,8 @@ function HomePage() {
         if (res.ok) setData((prev) => ({ ...prev, draft: null }));
     };
 
-    if (loading) return <p>Loading...</p>;
     if (error) return <p>Failure is upon us: {error}</p>;
+    if (loading) return <Loader text='Summoning your stories...'/>;
 
     const { username, characters, draft } = data;
 

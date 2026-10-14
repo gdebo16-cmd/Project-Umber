@@ -16,6 +16,7 @@ import RollOrb from './RollOrb';
 import { CharacterContext } from './CharacterContext';
 import { STATS } from '../utils/stats';
 import { getSpellSlots } from '../utils/spellSlots';
+import Loader from '../components/Loader';
 
 // Mobile only: the three big tabs at the top. On desktop the CSS shows all three panels at once.
 const SHEET_TABS = [
@@ -45,7 +46,7 @@ function CharacterSheet() {
         setOrbOpen(true);
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <Loader />;
     if (error) return <p>Failure is upon us: {error}</p>;
 
     const { character, ownedArmor, ownedWeapons, learnedSpells = [], actionFeatures = [] } = data;

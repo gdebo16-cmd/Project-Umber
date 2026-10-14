@@ -2,6 +2,7 @@ import { useState } from 'react';
 import useFetch from '../../hooks/useFetch';
 import TabList from '../../components/TabList';
 import { sendJson } from '../../utils/api';
+import Loader from '../../components/Loader';
 
 const TABS = [
     { id: 'level_0', label: 'Low Level' },
@@ -48,7 +49,7 @@ const changeSpell = async (spellId, action) => {
         )
     );
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loader />;
     if (error) return <p>Failure is upon us: {error}</p>;
 
     const { spells, learnedIds } = data;

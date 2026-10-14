@@ -6,6 +6,7 @@ import createCss from '../styles/char_create.css?inline';
 import { sendJson } from '../utils/api';
 import CreateDescription from './CreateDescription';
 import StepNav from './StepNav';
+import Loader from '../components/Loader';
 
 // Replaces views/create_char.ejs (step 1: name and race)
 function CreateStep1() {
@@ -41,7 +42,7 @@ function CreateStep1() {
         }
     };
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loader />;
     if (error) return <p>Failure is upon us: {error}</p>;
 
     // the race that's picked right now, for the description box

@@ -6,6 +6,7 @@ import createCss from '../styles/char_create.css?inline';
 import { sendJson } from '../utils/api';
 import CreateDescription from './CreateDescription';
 import StepNav from './StepNav';
+import Loader from '../components/Loader';
 
 // Replaces views/create_char_step2.ejs (step 2: class and subclass)
 // Builds what the description box shows for a class: dropdown sections + feature tree
@@ -94,7 +95,7 @@ function CreateStep2() {
         }
     };
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loader />;
     // 409 means step 1 wasn't done yet, so go back to it (the EJS page redirected too)
     if (error) return error.includes('409') ? <Navigate to="/create_char" replace /> : <p>Failure is upon us: {error}</p>;
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import useFetch from '../../hooks/useFetch';
 import TabList from '../../components/TabList';
 import { sendJson } from '../../utils/api';
+import Loader from '../../components/Loader';
 
 const TABS = [
     { id: 'armor', label: 'Armor' },
@@ -44,7 +45,7 @@ function ItemShop({ characterId, onDone }) {
         )
     );
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loader />;
     if (error) return <p>Failure is upon us: {error}</p>;
 
     const { armor, weapons, ownedArmorIds, ownedWeaponIds } = data;

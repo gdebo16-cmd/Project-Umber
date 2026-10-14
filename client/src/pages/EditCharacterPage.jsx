@@ -8,6 +8,7 @@ import EditNameForm from './edit/EditNameForm';
 import EditClassForm from './edit/EditClassForm';
 import EditAbilitiesForm from './edit/EditAbilitiesForm';
 import EditLevelForm from './edit/EditLevelForm';
+import Loader from '../components/Loader';
 
 const TABS = [
     { id: 'name', label: 'Name and Race' },
@@ -26,7 +27,7 @@ function EditCharacterPage() {
     // every form calls this with the saved character the server sends back
     const onSaved = (character) => setData((prev) => ({ ...prev, character }));
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loader />;
     if (error) return <p>Failure is upon us: {error}</p>;
 
     const { character, races, classes, subClasses } = data;

@@ -6,6 +6,7 @@ import createCss from '../styles/char_create.css?inline';
 import { sendJson } from '../utils/api';
 import { STATS } from '../utils/stats';
 import StepNav from './StepNav';
+import Loader from '../components/Loader';
 
 // Replaces views/create_char_step3.ejs (step 3: roll abilities, pick +2 and +1)
 // The server does the rolling and remembers each roll; clicking a stat again rerolls it.
@@ -36,7 +37,7 @@ function CreateStep3() {
         }
     };
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loader />;
     if (error) return error.includes('409') ? <Navigate to="/create_char" replace /> : <p>Failure is upon us: {error}</p>;
 
     const { rolls } = data;

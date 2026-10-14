@@ -18,10 +18,27 @@
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Eldrid Tales" />
+    <style>
+      html, body { margin: 0; background: rgb(65, 37, 157); }
+      .boot-loader { position: fixed; inset: 0; display: grid; place-items: center; }
+      .boot-ring {
+        width: 3.5rem; height: 3.5rem; border-radius: 50%;
+        background: conic-gradient(#333 0%, red 70%, #333 100%);
+        -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
+                mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
+        animation: boot-spin 0.9s linear infinite, boot-hue 3s linear infinite;
+      }
+      @keyframes boot-spin { to { transform: rotate(360deg); } }
+      @keyframes boot-hue { from { filter: blur(1px) hue-rotate(0deg); } to { filter: blur(1px) hue-rotate(360deg); } }
+    </style>
     <title>Eldrid Tales</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="boot-loader"><div class="boot-ring">
+               
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
