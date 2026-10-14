@@ -62,7 +62,7 @@ const pickBackground = async(e) => {
                         </article>
                         <article className="formSectionContainer profile-tile" id="profile-background-container">
                             <label id="background-label" className="tile-label cap-top" htmlFor="background-select">Background</label>
-                            <select className="tile-value cap-bottom" id="background-select" aria-label="Background" onChange={pickBackground}>
+                            <select className="tile-value cap-bottom" id="background-select" aria-label="Background" defaultValue={localStorage.getItem('siteBackground') || 'default'} onChange={pickBackground}>
                                 {BACKGROUNDS.map((b) => (
                                 <option className='option' id={`background-option-${b}`} key={b} value={b}>{b[0].toUpperCase() + b.slice(1)}</option>
                                 ))}

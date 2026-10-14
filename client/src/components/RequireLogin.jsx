@@ -9,7 +9,21 @@ function RequireLogin() {
 
     useEffect(() => {
         fetch('/api/me')
-            .then((res) => setStatus(res.ok ? 'yes' : 'no'))
+            .then(async (res) => {
+                if (res.ok) {
+                    // pull the saved theme and background from the account so they follow you to any device
+                    const p = await fetch('/api/profile').then((r) => (r.ok ? r.json() : null)).catch(() => null);
+                    if (p?.site_theme) {
+                        localStorage.setItem('siteTheme', p.site_theme);
+                        document.documentElement.setAttribute('data-theme', p.site_theme);
+                    }
+                    if (p?.site_background) {
+                        localStorage.setItem('siteBackground', p.site_background);
+                        document.documentElement.setAttribute('data-background', p.site_background);
+                    }
+                }
+                setStatus(res.ok ? 'yes' : 'no');
+            })
             .catch(() => setStatus('no'));
     }, []);
 
