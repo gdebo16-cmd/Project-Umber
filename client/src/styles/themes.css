@@ -467,15 +467,15 @@
 }
 
 [data-background="light"] {
-    --background: url('/utils/mapblack1.png');
+    --background: url('/utils/mapwhite1.png');
 }
 
 [data-background="hellfire"] {
-    --background: url('/utils/mapblack1.png');
+    --background: url('/utils/hellfiremap.png');
 }
 
 [data-background="frozen"] {
-    --background: url('/utils/mapblack1.png');
+    --background: url('/utils/frozenmap1.png');
 }
 
 [data-background="neon"] {
@@ -547,4 +547,12 @@ body {
 }
 @keyframes loader-pulse {
     50% { opacity: 0.4; }
+}
+/* phones: lighter glass blur so the background picture shows through */
+@media (max-width: 768px) {
+    html[data-theme], html {
+        --blur1: blur(1.5px) saturate(140%);
+        --blur2: blur(1px) saturate(140%);
+        --blur3: blur(1.5px) saturate(140%);
+    }
 }
