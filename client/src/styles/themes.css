@@ -752,3 +752,9 @@ html[data-display='neon'] #navContainer :is(.navButton, #homeNav, #characterNav,
 html[data-display] .home-tabs button.home-tab.home-tab:not(.cap-top) {
     border-radius: var(--tile, .75rem) var(--tile, .75rem) 0 0;
 }
+
+/* Text-only buttons (spell and feature names, links) get no shadow, so the words don't look outlined */
+html[data-display] :is(.spell-name-button, .link-button) {
+    box-shadow: none !important;
+    text-shadow: none;
+}

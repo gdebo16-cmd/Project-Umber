@@ -2059,27 +2059,10 @@ body.subpage .invList {
         background-color: var(--bgc-title, var(--bg-color-1));
     }
 
-    body {
-        background-image: none;
-        min-height: 100lvh;
+    html::before,
+    html::after {
+        height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
     }
-
-    /* title bar is solid title color and reaches up under the status bar */
-
-    header,
-    #siteTitle {
-        margin: 0;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-    }
-
-    #siteTitle {
-        background-color: var(--bgc-title, var(--bg-color-3));
-        padding-top: calc(env(safe-area-inset-top) + 0.5rem);
-    }
-
-    /* fixed background picture, zoomed so the dark bar at the top of the image is cropped */
 
     html::before {
         content: '';
@@ -2096,8 +2079,6 @@ body.subpage .invList {
         background-repeat: no-repeat;
     }
 
-    /* solid strip under the status bar, then soft fades at the top and bottom edges */
-
     html::after {
         content: '';
         position: fixed;
@@ -2108,6 +2089,10 @@ body.subpage .invList {
         z-index: -1;
         pointer-events: none;
         background: linear-gradient(to bottom,
+        var(--bgc-title, rgb(65, 37, 157)) 0,
+        var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
+        transparent calc(env(safe-area-inset-top) + 4rem));
+        background: linear-gradient(to bottom,
             var(--bgc-title, rgb(65, 37, 157)) 0,
             var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
             transparent calc(env(safe-area-inset-top) + 4rem),
@@ -2115,32 +2100,116 @@ body.subpage .invList {
             var(--bgc-title, rgb(65, 37, 157)) 100%);
     }
 
+    body {
+        background-image: none;
+        min-height: 100lvh;
+    }
+
+    /* title bar is solid title color and reaches up under the status bar */
+
+    header,
+    #siteTitle {
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+
     footer {
         display: none;
     }
+
+    #siteTitle {
+        background-color: var(--bgc-title, var(--bg-color-3));
+        padding-top: calc(env(safe-area-inset-top) + 0.5rem);
+    }
+
+   .spell-details {
+        width: 100%;
+        transform: none;
+        border-radius: var(--toprad);
+        max-height: 70dvh;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        animation: slide 0.3s ease-out;
+    }
+
+    .details-container {
+        flex-direction: row;
+        font-weight: 400;
+        font-size: 0.8rem;
+    }
+
+    .spell-build-box {
+        text-align: left;
+        font-weight: 400;
+        width: 40%;
+        font-size: 0.8rem;
+    }
+
+    .spell-description-box {
+        font-weight: 400;
+        box-shadow: var(--bs1);
+        font-size: 0.8rem;
+    }
+
+    
 
     #stat-container {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    /* Mobile: no bottom fade, the picture runs to the bottom edge */
-
-    html::after {
-        background: linear-gradient(to bottom,
-            var(--bgc-title, rgb(65, 37, 157)) 0,
-            var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
-            transparent calc(env(safe-area-inset-top) + 4rem));
-    }
-
-    /* Mobile: stretch the background picture past the bottom so it fills behind Safari's bottom bar */
-
-    html::before,
-    html::after {
-        height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
-    }
-
     #navContainer > li:hover,
     #navContainer > li:focus-within {
         z-index: 20;
+    }
+}
+
+
+@keyframes slide {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+/* Mobile fit: action rows and sheet tabs shrink instead of overflowing or clipping */
+@media (max-width: 768px) {
+    .action-item {
+        gap: 0.35rem;
+    }
+
+    /* the name side takes what's left and wraps */
+    .action-item > :not(.action-button-container, form) {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .action-item > .action-button-container,
+    .action-item > form {
+        flex: 0 1 auto;
+        min-width: 0;
+    }
+
+    /* buttons size to their label instead of a fixed 5.5rem each */
+    .action-item .action-button {
+        flex: 0 0 auto;
+        min-width: 3.25rem;
+        padding: 0 0.4rem;
+        font-size: clamp(0.7rem, 3.2vw, 0.9rem);
+    }
+
+    /* tabs: smaller text and padding so long labels like Proficiencies fit */
+    [role="tab"] {
+        min-width: 0;
+        padding: 0.5rem 0.25rem;
+        font-size: clamp(0.65rem, 3vw, 0.95rem);
+        overflow-wrap: anywhere;
+        text-align: center;
     }
 }

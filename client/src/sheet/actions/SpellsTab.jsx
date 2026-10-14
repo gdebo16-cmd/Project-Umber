@@ -6,6 +6,7 @@ import TabList from '../../components/TabList';
 import { getSpellSlots } from '../../utils/spellSlots';
 import { modOf, signed, proficiencyBonus, rollDice, d20 } from '../../utils/math';
 import { useCharacter } from '../CharacterContext';
+import { createPortal } from 'react-dom';
 
 
 const SPELL_TABS = [
@@ -95,7 +96,7 @@ function SpellsTab() {
     };
 
     // the details popup, shared by the spell lists and the Spell Book
-    const spellDetails = openSpell && (
+    const spellDetails = openSpell && createPortal(
                 <article className="spell-details">
                     <button type='button' className='spell-details-close' onClick={() => setOpenSpell(null)}>X</button>
                     <h3 className='spell-details-title'>{openSpell.name}</h3>
@@ -116,8 +117,8 @@ function SpellsTab() {
                      </article> 
                      <article className='spell-build-box-content'>
                             <p>State: <strong>{openSpell.state_name ? `${openSpell.state_name}.` : ''}</strong></p>
-                            <p>Alignment: <strong>{openSpell.alignment_name ? `${openSpell.alignment_name}.` : ''}</strong></p>
                             <p>Element: <strong>{openSpell.element_name ? `${openSpell.element_name}.` : ''}</strong></p>
+                            <p>Alignment: <strong>{openSpell.alignment_name ? `${openSpell.alignment_name}.` : ''}</strong></p>
                         </article>
                     </section>
                     </section>
@@ -125,7 +126,7 @@ function SpellsTab() {
                         <p> <strong>Description:</strong> {openSpell.description}</p>
                     </section>
                 </article>
-    );
+    , document.body);
 
     if (browsing) {
         return (<>

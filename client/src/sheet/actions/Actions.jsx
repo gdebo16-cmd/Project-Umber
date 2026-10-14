@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { modOf, signed, healthInit, rollDice, d20, proficiencyBonus } from '../../utils/math';
 import { useCharacter } from '../CharacterContext';
 import { getSpellSlots } from '../../utils/spellSlots';
+import { createPortal } from 'react-dom';
 
 // Your equipped weapons plus Fists. Each has a To Hit button and a Damage button.
 function Actions() {
@@ -230,7 +231,7 @@ function Actions() {
                     ))}
                 </ul>
             </li>
-            {openItem && (
+            {openItem && createPortal(
                 <article className="spell-details">
                     <button type='button' className='spell-details-close' onClick={() => setOpenItem(null)}>X</button>
                     <h3 className='spell-details-title'>{openItem.data.name}</h3>
@@ -254,7 +255,7 @@ function Actions() {
                                 </section>
                             </section>
                             <section className="spell-description-box">
-                                <p><strong>Description:</strong> {openItem.data.description}</p>
+                                <p><strong>Description:</strong> <br /> {openItem.data.description}</p>
                             </section>
                         </>
                     )}
@@ -265,22 +266,22 @@ function Actions() {
                                 <section className="combat-box">
                                     <article className="combat-box-title"><h4>Spell Details</h4></article>
                                     <article className="combat-box-content">
-                                        <p>Range: <strong>{openItem.data.range ? `${openItem.data.range} ft.` : ''}</strong></p>
-                                        <p>Duration: <strong>{Number(openItem.data.duration) === 0 ? 'instant' : `${openItem.data.duration} turns.`}</strong></p>
-                                        <p>Cast Time: <strong>{openItem.data.casting_time ? `${openItem.data.casting_time} turn(s).` : ''}</strong></p>
+                                        <p>Range: <strong>{openItem.data.range ? `${openItem.data.range} ft` : 'Reach'}</strong></p>
+                                        <p>Duration: <strong>{Number(openItem.data.duration) === 0 ? 'instant' : `${openItem.data.duration} turns`}</strong></p>
+                                        <p>Cast Time: <strong>{openItem.data.casting_time ? `${openItem.data.casting_time} turn(s)` : ''}</strong></p>
                                     </article>
                                 </section>
                                 <section className="spell-build-box">
                                     <article className="spell-build-box-title"><h4>Incantation</h4></article>
                                     <article className="spell-build-box-content">
-                                        <p>State: <strong>{openItem.data.state_name ? `${openItem.data.state_name}.` : ''}</strong></p>
-                                        <p>Alignment: <strong>{openItem.data.alignment_name ? `${openItem.data.alignment_name}.` : ''}</strong></p>
-                                        <p>Element: <strong>{openItem.data.element_name ? `${openItem.data.element_name}.` : ''}</strong></p>
+                                        <p>State: <strong>{openItem.data.state_name ? `${openItem.data.state_name}` : ''}</strong></p> 
+                                        <p>Element: <strong>{openItem.data.element_name ? `${openItem.data.element_name}` : ''}</strong></p>
+                                        <p>Alignment: <strong>{openItem.data.alignment_name ? `${openItem.data.alignment_name}` : ''}</strong></p>
                                     </article>
                                 </section>
                             </section>
                             <section className="spell-description-box">
-                                <p><strong>Description:</strong> {openItem.data.description}</p>
+                                <p><strong>Description:</strong> <br /> {openItem.data.description}</p>
                             </section>
                         </>
                     )}
@@ -302,11 +303,8 @@ function Actions() {
                         </section>
                     )}
                 </article>
-                )}
-                    
-                
+                , document.body)}
         </ul>
     );
 }
-
 export default Actions;
