@@ -749,6 +749,6 @@ html[data-display='neon'] #navContainer :is(.navButton, #homeNav, #characterNav,
 }
 
 /* Home tabs: round only the top corners, on every display style */
-html[data-display] .home-tabs button.home-tab {
+html[data-display] .home-tabs button.home-tab.home-tab:not(.cap-top) {
     border-radius: var(--tile, .75rem) var(--tile, .75rem) 0 0;
 }
