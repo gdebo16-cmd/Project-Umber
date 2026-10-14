@@ -5,7 +5,7 @@ import SiteNav from '../components/SiteNav';
 import { sendJson } from '../utils/api';
 
 
-const THEMES = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen', 'neon', 'glass-green', 'glass-blue', 'glass-red', 'glass-orange', 'glass-yellow', 'glass-fire', 'dark-glass', 'light-glass', 'frozen-glass'];
+const THEMES = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen', 'neon', 'prestige', 'glass-green', 'glass-blue', 'glass-red', 'glass-orange', 'glass-yellow', 'glass-fire', 'dark-glass', 'light-glass', 'frozen-glass'];
 // 'glass-blue' -> 'Glass Blue'
 const pretty = (s) => s.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
 const DISPLAYS = ['standard', 'compact', 'neon', 'glass', 'parchment', 'minimal', 'bold'];
