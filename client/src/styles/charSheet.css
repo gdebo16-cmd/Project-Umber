@@ -1917,6 +1917,7 @@ body.subpage .invList {
 }
 
 .spell-build-box {
+    min-width: 0;
     flex: 1 1 0;
     display: flex;
     flex-direction: column;
@@ -1927,8 +1928,8 @@ body.subpage .invList {
 
 .combat-box p,
 .spell-build-box p {
-    white-space: nowrap;
-    overflow-wrap: normal;
+    white-space: normal;
+    overflow-wrap: anywhere;
 }
 
 .spell-details-title {
