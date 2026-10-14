@@ -171,7 +171,7 @@
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(2px) saturate(150%);
     --blur3: blur(5px) saturate(150%);
-    --background: url('/utils/colorsketch.png');
+  
 }
 
 [data-theme="purple"] {
@@ -193,7 +193,7 @@
     --accent: rgb(245, 188, 103);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(2px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
+   
 }
 [data-theme="green"] {
     --healColor: rgba(46, 79, 46, 0.712);
@@ -214,7 +214,7 @@
     --accent: rgb(238, 224, 163);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(2px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
+    
 }
 
 [data-theme="blue"] {
@@ -236,7 +236,7 @@
     --accent: rgb(163, 238, 238);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(2px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
+   
 }
 
 [data-theme="red"] {
@@ -258,7 +258,7 @@
     --accent: rgb(252, 226, 187);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(5px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
+   
 }
 
 
@@ -281,7 +281,7 @@
     --accent: rgb(252, 226, 187);       
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(5px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
+  
 }
 
 [data-theme="yellow"] {
@@ -303,7 +303,7 @@
     --accent: rgb(208, 252, 187);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(5px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
+   
 }
 
 [data-theme="dark"] {
@@ -329,7 +329,7 @@
                    inset 0px 0px 5px #ffeacea9;
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(5px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
+   
 }
 
 [data-theme="light"] {
@@ -353,7 +353,7 @@
     --accent: rgb(145, 100, 3);
     --blur1: blur(5px) saturate(150%);
     --blur2: blur(2px) saturate(150%);
-    --background: url('/utils/mapwhite1.png');
+    
 }
 
 [data-theme="hellfire"] {
@@ -377,7 +377,7 @@
     --blur2: blur(5px) saturate(150%);
     --healColor: rgba(253, 249, 227, 0.685);
     --damageColor:  rgba(65, 56, 56, 0.712);
-    --background: url('/utils/hellfiremap.png');
+ 
 }
 
 [data-theme="frozen"] {
@@ -401,8 +401,87 @@
     --blur2: blur(0) saturate(150%);
     --healColor: rgba(109, 188, 253, 0.63);
     --damageColor:  rgba(39, 96, 252, 0.712);
-    --background: url('/utils/frozenmap1.png');
+   
 }
+
+[data-theme="neon"] {
+    --healColor: rgba(46, 79, 46, 0.712);
+    --damageColor:  rgba(79, 46, 46, 0.712);
+    --bgc-bubble-send: rgb(20, 83, 112);
+    --bgc-bubble-receive: rgb(155, 220, 245);
+    --bgc-orb: rgb(104, 161, 175);
+    --bg-color-5: rgb(16, 66, 90);
+    --bg-color-4: rgba(155, 220, 245, 0.438);
+    --bg-color-3: rgba(20, 83, 112, 0.678);
+    --bg-color-2: rgba(22, 99, 129, 0.67);
+    --bg-color-1: rgba(26, 79, 92, 0.72);
+    --txt-color-1: rgba(232, 250, 247, 0.822);
+    --bordercolor: rgba(208, 248, 241, 0.801);
+    --bgc-top: rgba(168, 221, 245, 0.486);
+    --bgc-low: rgba(92, 125, 138, 0.534);
+    --bgc-title: rgba(71, 102, 115, 0.977);
+    --accent: rgb(252, 226, 187);
+    --blur1: blur(5px) saturate(150%);
+    --blur2: blur(0) saturate(150%);
+    --healColor: rgba(109, 188, 253, 0.63);
+    --damageColor:  rgba(39, 96, 252, 0.712);
+   
+}
+
+:root, 
+
+[data-background="default"] {
+    --background: url('/utils/colorsketch.png');
+}
+
+[data-background="green"] {
+    --background: url('/eldrid-bg-green-3840.webp');
+}
+
+[data-background="purple"] {
+    --background: url('/eldrid-bg-purple-3840.webp');
+}
+
+[data-background="blue"] { 
+    --background: url('/eldrid-bg-blue-3840.webp');
+}
+
+[data-background="red"] {
+    --background: url('/eldrid-bg-red-3840.webp');
+}
+
+[data-background="orange"] {
+    --background: url('/eldrid-bg-orange-3840.webp');
+}
+
+[data-background="yellow"] {
+    --background: url('/eldrid-bg-yellow-3840.webp');
+}
+
+[data-background="dark"] {
+    --background: url('/eldrid-bg-dark-3840.webp');
+}
+
+[data-background="dark-map"] {
+    --background: url('/utils/mapblack1.png');
+}
+
+[data-background="light"] {
+    --background: url('/utils/mapblack1.png');
+}
+
+[data-background="hellfire"] {
+    --background: url('/utils/mapblack1.png');
+}
+
+[data-background="frozen"] {
+    --background: url('/utils/mapblack1.png');
+}
+
+[data-background="neon"] {
+    --background: url('/utils/mapblack1.png');
+}
+
 
 /* stop white showing around the page on phones (notch area, overscroll) */
 html {

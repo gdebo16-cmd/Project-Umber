@@ -13,7 +13,7 @@ import { getSpellbook, learnSpell, unlearnSpell, prepareSpell, unprepareSpell, s
 import { rateLimit } from 'express-rate-limit';
 
 const loginLimiter = rateLimit({
-    windowsMs: 15 * 60 * 1000,
+    windowMs: 15 * 60 * 1000,
     limit: 5,
     message: { error: 'Too many attempts. Please try again in 15 minutes.'}
 });

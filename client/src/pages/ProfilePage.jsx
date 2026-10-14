@@ -5,8 +5,9 @@ import SiteNav from '../components/SiteNav';
 import { sendJson } from '../utils/api';
 
 
-const THEMES = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen'];
+const THEMES = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen', 'neon'];
 const DISPLAYS = ['standard', 'compact', 'neon'];
+const BACKGROUNDS = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen', 'neon'];
 
 function ProfilePage() {
     usePageStyle(homeCss);
@@ -25,6 +26,13 @@ const pickDisplay = async(e) => {
     document.documentElement.setAttribute('data-display', next);
     localStorage.setItem('siteDisplay', next);
     await sendJson('/api/profile', 'PUT', { site_display: next });
+};
+
+const pickBackground = async(e) => {
+    const next = e.target.value;
+    document.documentElement.setAttribute('data-background', next);
+    localStorage.setItem('siteBackground', next);
+    await sendJson('/api/profile', 'PUT', { site_background: next });
 };
 
     return (
@@ -49,6 +57,14 @@ const pickDisplay = async(e) => {
                             <select className="tile-value cap-bottom" id="display-select" aria-label="Display" onChange={pickDisplay}>
                                 {DISPLAYS.map((d) => (
                                 <option className='option' id={`display-option-${d}`} key={d} value={d}>{d[0].toUpperCase() + d.slice(1)}</option>
+                                ))}
+                            </select>
+                        </article>
+                        <article className="formSectionContainer profile-tile" id="profile-background-container">
+                            <label id="background-label" className="tile-label cap-top" htmlFor="background-select">Background</label>
+                            <select className="tile-value cap-bottom" id="background-select" aria-label="Background" onChange={pickBackground}>
+                                {BACKGROUNDS.map((b) => (
+                                <option className='option' id={`background-option-${b}`} key={b} value={b}>{b[0].toUpperCase() + b.slice(1)}</option>
                                 ))}
                             </select>
                         </article>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const THEMES = ['green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen'];
+const THEMES = ['green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen', 'neon'];
 
 // The "Color scheme" dropdown. Saves your pick in localStorage like theme.js did.
 function ThemePicker() {
