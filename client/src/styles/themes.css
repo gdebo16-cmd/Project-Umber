@@ -424,3 +424,13 @@ html,
 body {
     overflow-x: hidden;
 }
+
+
+/* Mobile: iOS Safari zooms into any field under 16px, so keep fields at 16px or more */
+@media (max-width: 768px) {
+    input,
+    select,
+    textarea {
+        font-size: max(16px, 1em) !important;
+    }
+}
