@@ -425,7 +425,8 @@
         max-height: none;
         object-fit: cover;
         align-self: stretch;
-        border: 4px solid var(--tileBorder);
+        outline: 5px ridge var(--tileBorder);
+        
         border-radius: 0 0 0 10px;
         z-index: 1;
     }
@@ -720,7 +721,7 @@
 @layer overrides {
     @media (max-width: 768px) {
     .page-home .btn-nav /* clash: kept at old specificity */ {
-            border: 2px solid var(--bordercolor);
+            border: 1px solid var(--bordercolor);
     }
     }
 }

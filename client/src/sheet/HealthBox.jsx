@@ -22,7 +22,7 @@ function HealthBox({ id, hp, max, onHpChange }) {
     };
 
     return (
-        <section className='container health-container' id='health-container'>
+        <section className={`container health-container ${hp <= max / 4 ? 'very_hurt' : hp <= max / 2 ? 'hurt' : ''}` } id='health-container'>
             <article className='tile health-button-tile'>
                 <button type='button' id='heal-button' className='tile-component button-tile-component button-component hover-grow' onClick={() => change('heal')}>Heal</button>
                 <input type='number' id='hp-input' className='tile-component button-tile-component input-component' min='0' value={amount} onChange={(e) => setAmount(e.target.value)} />
@@ -37,7 +37,8 @@ function HealthBox({ id, hp, max, onHpChange }) {
                 <p className='tile-component value-component hp-value-component' id='max-hp-value'>{max}</p>
             </article>
             <article className='hp-bar-tile'>
-                <div className='tile-component bar-component' id='hp-bar-fill' style={{ width: `${Math.min(100, Math.max(0, max ? (hp / max) * 100 : 0))}%` }}></div>
+                <div className={`tile-component bar-component ${hp <= max / 4 ? 'very_hurt' : hp <= max / 2 ? 'hurt' : ''}` } id='hp-bar-fill' style={{ width: `${Math.min(100, Math.max(0, max ? (hp / max) * 100 : 0))}%` }}>
+                </div>
             </article>
         </section>
     );

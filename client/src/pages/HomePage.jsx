@@ -61,7 +61,7 @@ function HomePage() {
                                     <li key={ch.id} className='character-tile' id={`character-tile-${ch.id}`}>
                                         <Link to={`/characters/${ch.id}`} className="char-tile">
                                             <h3 className="character-name">{ch.name}</h3>
-                                            <img className="character-image" src="/utils/defaultimg.png" alt="Character Image" />
+                                            <img className="character-image" src="/default-character.png" alt="Character Image" />
                                             <p className="character-race">Race: {ch.race}</p>
                                             <p className="character-class">Class: {ch.class}</p>
                                             <p className="character-subclass">Sub-class: {ch.subclass}</p>
@@ -91,7 +91,7 @@ function HomePage() {
                             <li key={draft.id} className='character-tile' id={`character-tile-${draft.id}`}>
                                 <Link to={draft.subclass_id ? '/create_char/step3' : '/create_char/step2'} className='char-tile'>
                                     <h3 className='character-name'>{draft.name || 'One with no name'}</h3>
-                                    <img className='character-image' src='/utils/defaultimg.png' alt='Character Image' />
+                                    <img className='character-image' src='/default-character.png' alt='Character Image' />
                                     <p className='character-race'>Race: {draft.race || 'Undecided'}</p>
                                     <p className='character-class'>Class: {draft.class || 'Undecided'}</p>
                                     <p className='character-subclass'>Sub-class: {draft.subclass || 'Undecided'}</p>

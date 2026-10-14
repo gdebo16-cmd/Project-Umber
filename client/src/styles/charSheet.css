@@ -648,6 +648,26 @@
         background: #3cb371;
     }
 
+    .page-sheet #hp-bar-fill.very_hurt {
+        background: #ff0000;
+    }
+
+    .page-sheet #hp-bar-fill.hurt{
+        background: #ffa500;
+    }
+
+    .page-sheet .health-container {
+        background: #07220fdb;
+    }
+
+    .page-sheet .health-container.very_hurt {
+        background: #320505a2;
+    }
+
+    .page-sheet .health-container.hurt {
+        background: #725913b1;
+    }
+
     .page-sheet .button-tile-component {
         min-width: var(--minW1);
         font-family: inherit;
@@ -999,6 +1019,8 @@
         overflow-y: auto;
         overflow-x: hidden;
         scrollbar-width: none;
+        border-radius: var(--lowrad);
+        border: var(--tileBorder);
 
         /* scrolls by wheel/touch, no visible bar */
     }
