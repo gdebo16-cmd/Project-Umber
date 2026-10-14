@@ -67,8 +67,8 @@
     --mar2: 1%;
     --shadowInner: inset 6px 6px 8px #000000a9,
         inset -1px -1px 5px #00000079;
-    --toprad: 1.5rem 1.5rem 0 0;
-    --lowrad: 0 0 1.5rem 1.5rem;
+    --toprad: .5rem .5rem 0 0;
+    --lowrad: 0 0 .5rem .5rem;
     --padTop: 1.5rem;
     --padLow: 1.5rem;
     --tile: 1.5rem;
@@ -112,8 +112,8 @@
     --mar2: 1%;
     --shadowInner: inset 6px 6px 8px #000000a9,
         inset -1px -1px 5px #00000079;
-    --toprad: .5rem .5rem 0 0;
-    --lowrad: 0 0 .5rem .5rem;
+    --toprad: .25rem .25rem 0 0;
+    --lowrad: 0 0 .25rem .25rem;
     --padTop: .5rem;
     --padLow: .5rem;
     --tile: .5rem;
@@ -146,7 +146,7 @@
     --bs3: var(--glow);
     --bs2: var(--glow);
     --glow: 2px 2px 15px var(--bgc-bubble-receive);
-    --backdrop: blur(10px) saturate(190%);
+    --backdrop: blur(6px) saturate(190%);
 }
 
 /* ---------- extra display styles: shape / spacing / borders / shadows / fonts only (no colors) ---------- */
@@ -161,7 +161,7 @@
     --toprad: 1.25rem 1.25rem 0 0;
     --lowrad: 0 0 1.25rem 1.25rem;
     --tile: 1.25rem;
-    --backdrop: blur(14px) saturate(180%);
+    --backdrop: blur(8px) saturate(180%);
     --btnRad: 999px;
     --inputRad: .75rem;
 }
@@ -234,14 +234,14 @@ html[data-display]:not([data-display='standard']) :is(.formSectionContainer, .ti
     -webkit-backdrop-filter: var(--backdrop);
 }
 
-html[data-display]:not([data-display='standard']) :is(button, .formButton, .navButton, .action-button, .damage-button, .to-hit-button, .spell-name-button, .link-button, .drop-button) {
+html[data-display]:not([data-display='standard']) :is(button, .formButton, .navButton, .action-button, .damage-button, .to-hit-button, .spell-name-button, .link-button, .drop-button):not(.cap-top, .cap-bottom) {
     border-radius: var(--btnRad);
     box-shadow: var(--bs3);
     font-family: var(--fontF);
     letter-spacing: var(--letterSp);
 }
 
-html[data-display]:not([data-display='standard']) :is(input, select, textarea) {
+html[data-display]:not([data-display='standard']) :is(input, select, textarea):not(.cap-top, .cap-bottom) {
     border-radius: var(--inputRad);
     font-family: var(--fontF);
 }
@@ -255,6 +255,24 @@ html[data-display]:not([data-display='standard']) :is(h1, h2, h3, .title, .tile-
     font-family: var(--fontF);
     font-weight: var(--fontW1);
     letter-spacing: var(--letterSp);
+}
+
+/* Tile halves (label on top, value below) sit flush inside the tile: corners follow the tile, no doubled borders */
+html[data-display]:not([data-display='standard']) :is(.formSectionContainer, .tile, .tile-component, .profile-tile, .action-tile, .title-tile) {
+    overflow: clip;
+}
+
+html[data-display]:not([data-display='standard']) .cap-top {
+    border: none;
+    border-radius: var(--toprad);
+    box-shadow: none;
+}
+
+html[data-display]:not([data-display='standard']) .cap-bottom {
+    border: none;
+    border-top: var(--tileBorder);
+    border-radius: var(--lowrad);
+    box-shadow: none;
 }
 
 html[data-display='neon'] :is(.formSectionContainer, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box) {
@@ -285,9 +303,9 @@ html[data-display='minimal'] :is(.formSectionContainer, .tile, .tile-component, 
     --bgc-low: rgba(46, 31, 133, 0.466);
     --bgc-title: rgb(65, 37, 157);
     --accent: rgb(245, 188, 103);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(2px) saturate(150%);
-    --blur3: blur(5px) saturate(150%);
+    --blur1: blur(3px) saturate(150%);
+    --blur2: blur(1.5px) saturate(150%);
+    --blur3: blur(3px) saturate(150%);
 }
 
 [data-theme="purple"] {
@@ -307,8 +325,8 @@ html[data-display='minimal'] :is(.formSectionContainer, .tile, .tile-component, 
     --bgc-low: rgba(46, 31, 133, 0.466);
     --bgc-title: rgb(46, 30, 102);
     --accent: rgb(245, 188, 103);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(2px) saturate(150%);
+    --blur1: blur(3px) saturate(150%);
+    --blur2: blur(1.5px) saturate(150%);
 }
 
 [data-theme="green"] {
@@ -328,8 +346,8 @@ html[data-display='minimal'] :is(.formSectionContainer, .tile, .tile-component, 
     --bgc-low: rgba(51, 80, 48, 0.596);
     --bgc-title: rgb(18, 41, 19);
     --accent: rgb(238, 224, 163);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(2px) saturate(150%);
+    --blur1: blur(3px) saturate(150%);
+    --blur2: blur(1.5px) saturate(150%);
 }
 
 [data-theme="blue"] {
@@ -349,8 +367,8 @@ html[data-display='minimal'] :is(.formSectionContainer, .tile, .tile-component, 
     --bgc-low: rgba(20, 44, 150, 0.486);
     --bgc-title: rgb(19, 30, 100);
     --accent: rgb(163, 238, 238);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(2px) saturate(150%);
+    --blur1: blur(3px) saturate(150%);
+    --blur2: blur(1.5px) saturate(150%);
 }
 
 [data-theme="red"] {
@@ -370,8 +388,8 @@ html[data-display='minimal'] :is(.formSectionContainer, .tile, .tile-component, 
     --bgc-low: rgba(97, 26, 26, 0.397);
     --bgc-title: rgb(67, 19, 19);
     --accent: rgb(252, 226, 187);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(5px) saturate(150%);
+    --blur1: blur(3px) saturate(150%);
+    --blur2: blur(3px) saturate(150%);
 }
 
 [data-theme="orange"] {
@@ -391,8 +409,8 @@ html[data-display='minimal'] :is(.formSectionContainer, .tile, .tile-component, 
     --bgc-low: rgba(145, 99, 39, 0.459);
     --bgc-title: rgb(52, 37, 18);
     --accent: rgb(252, 226, 187);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(5px) saturate(150%);
+    --blur1: blur(3px) saturate(150%);
+    --blur2: blur(3px) saturate(150%);
 }
 
 [data-theme="yellow"] {
@@ -412,8 +430,8 @@ html[data-display='minimal'] :is(.formSectionContainer, .tile, .tile-component, 
     --bgc-low: rgba(148, 136, 68, 0.452);
     --bgc-title: rgb(0, 0, 0);
     --accent: rgb(208, 252, 187);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(5px) saturate(150%);
+    --blur1: blur(3px) saturate(150%);
+    --blur2: blur(3px) saturate(150%);
 }
 
 [data-theme="dark"] {
@@ -435,8 +453,8 @@ html[data-display='minimal'] :is(.formSectionContainer, .tile, .tile-component, 
     --damageColor: rgba(48, 37, 37, 0.712);
     --shadowInner: inset 4px 4px 15px #ffeacea9,
         inset 0px 0px 5px #ffeacea9;
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(5px) saturate(150%);
+    --blur1: blur(3px) saturate(150%);
+    --blur2: blur(3px) saturate(150%);
 }
 
 [data-theme="light"] {
@@ -458,8 +476,8 @@ html[data-display='minimal'] :is(.formSectionContainer, .tile, .tile-component, 
     --bgc-low: rgba(255, 255, 255, 0.486);
     --bgc-title: rgb(254, 238, 200);
     --accent: rgb(145, 100, 3);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(2px) saturate(150%);
+    --blur1: blur(3px) saturate(150%);
+    --blur2: blur(1.5px) saturate(150%);
 }
 
 [data-theme="hellfire"] {
@@ -477,8 +495,8 @@ html[data-display='minimal'] :is(.formSectionContainer, .tile, .tile-component, 
     --bgc-low: rgba(0, 0, 0, 0.72);
     --bgc-title: rgb(67, 22, 22);
     --accent: rgb(252, 226, 187);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(5px) saturate(150%);
+    --blur1: blur(3px) saturate(150%);
+    --blur2: blur(3px) saturate(150%);
     --healColor: rgba(253, 249, 227, 0.685);
     --damageColor: rgba(65, 56, 56, 0.712);
 }
@@ -498,7 +516,7 @@ html[data-display='minimal'] :is(.formSectionContainer, .tile, .tile-component, 
     --bgc-low: rgba(92, 125, 138, 0.534);
     --bgc-title: rgba(71, 102, 115, 0.977);
     --accent: rgb(252, 226, 187);
-    --blur1: blur(5px) saturate(150%);
+    --blur1: blur(3px) saturate(150%);
     --blur2: blur(0) saturate(150%);
     --healColor: rgba(109, 188, 253, 0.63);
     --damageColor: rgba(39, 96, 252, 0.712);
@@ -684,9 +702,9 @@ body {
 
     html[data-theme],
     html {
-        --blur1: blur(1.5px) saturate(140%);
-        --blur2: blur(1px) saturate(140%);
-        --blur3: blur(1.5px) saturate(140%);
+        --blur1: blur(0.75px) saturate(140%);
+        --blur2: blur(0.5px) saturate(140%);
+        --blur3: blur(0.75px) saturate(140%);
     }
 }
 
