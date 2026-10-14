@@ -573,9 +573,10 @@ header {
 }
 
 
-/* Mobile: Safari tints its bottom toolbar from the page background color, so don't paint one there */
+/* Mobile: stretch the background picture past the bottom so it fills behind Safari's bottom bar */
 @media (max-width: 768px) {
-    html {
-        background-color: transparent !important;
+    html::before,
+    html::after {
+        height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
     }
 }
