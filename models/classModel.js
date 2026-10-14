@@ -4,7 +4,7 @@ import pool from '../db.js';
 export async function listClasses() {
     const { rows } = await pool.query(
         `SELECT c.id, c.name, c.primary_stat, c.hitpoint_die, c.img_url, c.description,
-               c.spellcasting, c.spellcasting_stat, c.armor_proficiencies, c.weapon_proficiencies, c.tool_proficiencies,
+               c.spellcasting, c.spellcasting_stat, c.armor_proficiencies, c.weapon_proficiencies, c.tool_proficiencies, c.saving_throws, c.skill_choice_count, c.skill_options, c.skill_fixed,
                (SELECT json_agg(json_build_object('level', f.level, 'name', f.name, 'description', f.description)
                         ORDER BY f.level, f.sort_order)
                 FROM class_features f WHERE f.class_id = c.id) AS features

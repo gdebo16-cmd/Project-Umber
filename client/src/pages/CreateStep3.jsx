@@ -55,34 +55,34 @@ function CreateStep3() {
     return (
         <>
             <header id="topContainer">
-                <h1 id="siteTitle">Create Character</h1>
-                <h2 id="formTitle">Step 3 of 3 — Abilities</h2>
+                <h1 id="site-title">Create Character</h1>
+                <h2 id="form-title">Step 3 of 3 — Abilities</h2>
                 <StepNav back="/create_char/step2" forward={null} />
             </header>
             <main>
-                <section id="section3Title">
+                <section id="section3-title">
                     <h2>Roll for your Abilities</h2>
                 </section>
-                <section id="formContainerStep3">
-                    <form className="formContainer" onSubmit={submit}>
-                        <article id="plus2Container" className="formSectionContainer tile">
+                <section id="form-container-step3">
+                    <form className="form-container" onSubmit={submit}>
+                        <article id="plus2Container" className="form-section tile">
                             <label className="topTile" htmlFor="plus2">+2 bonus</label>
                             {statSelect('plus2', plus2, setPlus2, 'Select a +2 stat')}
                         </article>
 
-                        <article id="plus1Container" className="formSectionContainer tile">
+                        <article id="plus1Container" className="form-section tile">
                             <label className="topTile" htmlFor="plus1">+1 bonus</label>
                             {statSelect('plus1', plus1, setPlus1, 'Select a +1 stat')}
                         </article>
 
-                        <article id="baseStatContainer" className="formSectionContainer">
+                        <article id="base-stat-container" className="form-section">
                             {STATS.map((s) => (
-                                <article key={s.key} id="baseStatItemContainer" className="formSectionContainer tile">
+                                <article key={s.key} id="baseStatItemContainer" className="form-section tile">
                                     <span className="topTile">{s.label}</span>
                                     <button
-                                        id="rollBtn"
+                                        id="roll-button"
                                         type="button"
-                                        className="bottomTile rollBtn"
+                                        className="bottomTile btn-roll"
                                         onClick={() => roll(s.key)}
                                     >
                                         {rolls[s.key] ?? 'roll'}
@@ -93,9 +93,9 @@ function CreateStep3() {
 
                         {saveError && <p>{saveError}</p>}
 
-                        <article id="buttonContainer" className="formSectionContainer">
-                            <button id="submit" className="formButton" type="submit">Create Character</button>
-                            <Link id="mobileCancel" to="/home">Cancel</Link>
+                        <article id="button-container" className="form-section">
+                            <button id="submit" className="btn-form" type="submit">Create Character</button>
+                            <Link id="mobile-cancel" to="/home">Cancel</Link>
                         </article>
                     </form>
                 </section>

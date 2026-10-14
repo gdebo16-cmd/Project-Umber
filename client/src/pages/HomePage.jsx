@@ -38,17 +38,17 @@ function HomePage() {
 
     return (
         <>
-            <header id="siteTitle">
-                <img src="/Logo.png" alt="Eldrid Tales Logo" className="titleLogo" />
+            <header id="site-title">
+                <img src="/Logo.png" alt="Eldrid Tales Logo" className="title-logo" />
                 <h1>Welcome {username}!</h1>
             </header>
             <SiteNav />
             <main>
                 <nav className="home-tabs">
-                    <button type="button" className={homeTab === 'current' ? 'home-tab active' : 'home-tab'} onClick={() => setHomeTab('current')}>Current Characters</button>
-                    <button type="button" className={homeTab === 'unfinished' ? 'home-tab active' : 'home-tab'} onClick={() => setHomeTab('unfinished')}>Unfinished Work</button>
+                    <button type="button" className={homeTab === 'current' ? 'home-tab is-active' : 'home-tab'} onClick={() => setHomeTab('current')}>Current Characters</button>
+                    <button type="button" className={homeTab === 'unfinished' ? 'home-tab is-active' : 'home-tab'} onClick={() => setHomeTab('unfinished')}>Unfinished Work</button>
                 </nav>
-                <section id="current-character-container" className={homeTab === 'current' ? 'container tab-active' : 'container'}>
+                <section id="current-character-container" className={homeTab === 'current' ? 'container is-active' : 'container'}>
                     <article className="title" id="current-character-title">
                         <h2 className="title-text">Current Characters</h2>
                     </article>
@@ -81,7 +81,7 @@ function HomePage() {
                         <p className="tile-text">No Campaigns Planned</p>
                     </article>
                 </section>
-                <section id="unfinished-character-container" className={homeTab === 'unfinished' ? 'container tab-active' : 'container'}>
+                <section id="unfinished-character-container" className={homeTab === 'unfinished' ? 'container is-active' : 'container'}>
                     <article className="title" id="unfinished-character-title">
                         <h2 className="title-text">Unfinished Work</h2>
                     </article>
@@ -106,7 +106,7 @@ function HomePage() {
                 </section>
             </main>
             <footer>
-                <p id="footerText">copyrite Eldrid Tales LLC</p>
+                <p id="footer-text">copyrite Eldrid Tales LLC</p>
             </footer>
         </>
     );

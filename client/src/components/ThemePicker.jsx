@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-const THEMES = ['green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen', 'neon'];
+const THEMES = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen', 'neon', 'glass-green', 'glass-blue', 'glass-red', 'glass-orange', 'glass-yellow', 'glass-fire', 'dark-glass', 'light-glass', 'frozen-glass'];
+// 'glass-blue' -> 'Glass Blue'
+const pretty = (s) => s.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
 
 // The "Color scheme" dropdown. Saves your pick in localStorage like theme.js did.
 function ThemePicker() {
@@ -14,11 +16,11 @@ function ThemePicker() {
     };
 
     return (
-        <article className="navButton" id="themeNav">
-            <label className="cap-top" htmlFor="theme-select">Color scheme</label>
-            <select className="cap-bottom" id="theme-select" aria-label="Color scheme" value={theme} onChange={change}>
+        <article className="btn-nav" id="theme-nav">
+            <label className="tile-top" htmlFor="theme-select">Color scheme</label>
+            <select className="tile-bottom" id="theme-select" aria-label="Color scheme" value={theme} onChange={change}>
                 {THEMES.map((t) => (
-                    <option key={t} value={t}>{t[0].toUpperCase() + t.slice(1)}</option>
+                    <option key={t} value={t}>{pretty(t)}</option>
                 ))}
             </select>
         </article>

@@ -33,6 +33,8 @@ function CreateStep2() {
     const [subclassId, setSubclassId] = useState('');
     const [shown, setShown] = useState(null); // what the description box shows
     const [saveError, setSaveError] = useState('');
+    const [skillPicks, setSkillPicks] = useState([]);
+    const picked = classes?.find((c) => String(c.id) === classId);
     const { data: draft } = useFetch('/api/create_char/draft');
 
     const changeClass = (e) => loadClass(e.target.value);
@@ -42,6 +44,7 @@ function CreateStep2() {
         const picked = classes.find((c) => String(c.id) === id);
         setClassId(id);
         setSubclassId('');
+        setSkillPicks(Array(picked.skill_choice_count ?? 0).fill(''));
         setShown(classShown(picked, []));
 
         // load this class's subclasses (same as char_step2.js did)
@@ -102,53 +105,81 @@ function CreateStep2() {
     return (
         <>
             <header id="topContainer">
-                <h1 id="siteTitle">Create Character</h1>
-                <h2 id="formTitle">Step 2 of 3 — Class and Subclass</h2>
+                <h1 id="site-title">Create Character</h1>
+                <h2 id="form-title">Step 2 of 3 — Class and Subclass</h2>
                 <StepNav back="/create_char" forward={draft?.subclass_id ? '/create_char/step3' : null} />
                 
             </header>
             
             <main>
             
-                <section id="formContainer">
-                    <form className="formContainer" onSubmit={submit}>
-                        <article id="classContainer" className="formSectionContainer tile">
+                <section id="form-container">
+                    <form className="form-container" onSubmit={submit}>
+                        <article id="class-container" className="form-section tile pick-tile">
                             <label className="topTile" htmlFor="class_id">Select Class</label>
-                            <select className="bottomTile" id="class_id" value={classId} onChange={changeClass} required>
-                                <option value="" disabled>Select your Class</option>
+                            <select className="bottomTile class-select" id="class_id" value={classId} onChange={changeClass} required>
+                                <option value="" disabled className="class-option">Select your Class</option>
                                 {classes.map((c) => (
-                                    <option key={c.id} value={c.id}>{c.name}</option>
+                                    <option key={c.id} value={c.id} className="class-option">{c.name}</option>
                                 ))}
                             </select>
                         </article>
 
-                        <article id="subClassContainer" className="formSectionContainer tile">
+                        <article id="sub-class-container" className="form-section tile pick-tile">
                             <label className="topTile" htmlFor="subclass_id">Select Subclass</label>
                             <select
-                                className="bottomTile"
+                                className="bottomTile subclass-select"
                                 id="subclass_id"
                                 value={subclassId}
                                 onChange={changeSubclass}
                                 required
                                 disabled={subclasses.length === 0}
                             >
-                                <option value="" disabled>Select a Subclass</option>
+                                <option value="" disabled className="subclass-option">Select a Subclass</option>
                                 {subclasses.map((s) => (
-                                    <option key={s.id} value={s.id}>{s.name}</option>
+                                    <option key={s.id} value={s.id} className="subclass-option">{s.name}</option>
                                 ))}
                             </select>
                         </article>
+                        {picked && picked.skill_choice_count > 0 && (
+                        <article id="skill-container" className="form-section tile pick-tile">
+                            <label className="topTile">Choose {picked.skill_choice_count} Skills</label>
+                            {picked.skill_fixed?.length > 0 && (
+                                <p className="bottomTile skill-pick-select">Always proficient: {picked.skill_fixed.join(', ')}</p>
+                            )}
+                            {skillPicks.map((choice, i) => (
+                                <select
+                                    key={i}
+                                    className="bottomTile skill-pick-select"
+                                    value={choice}
+                                    required
+                                    onChange={(e) => {
+                                        const next = [...skillPicks];
+                                        next[i] = e.target.value;
+                                        setSkillPicks(next);
+                                    }}
+                                >
+                                    <option value="" disabled className="skill-pick-option">Pick a skill</option>
+                                    {picked.skill_options
+                                        .filter((s) => s === choice || !skillPicks.includes(s))
+                                        .map((s) => (
+                                            <option key={s} value={s} className="skill-pick-option">{s}</option>
+                                        ))}
+                                </select>
+                            ))}
+                        </article>
+                        )}
                         {saveError && <p>{saveError}</p>}
-                        <article id="buttonContainer" className="formSectionContainer">
+                        <article id="button-container" className="form-section">
                             <button id="submit" type="submit">Next: Abilities</button>
-                            <Link id="mobileCancel" to="/home">Cancel</Link>
+                            <Link id="mobile-cancel" to="/home">Cancel</Link>
                         </article>
                     </form>
                 </section>
                 <CreateDescription item={shown} />
             </main>
             <footer>
-                <Link id="homeLink" to="/home">Cancel</Link>
+                <Link id="home-link" to="/home">Cancel</Link>
             </footer>
         </>
     );

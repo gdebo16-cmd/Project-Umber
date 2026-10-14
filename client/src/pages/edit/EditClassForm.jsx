@@ -23,26 +23,26 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
     };
 
     return (
-        <form className="formContainer" onSubmit={submit}>
-            <article className="formSectionContainer">
-                <label className="cap-top" htmlFor="class_id">Select Class</label>
-                <select className="cap-bottom" id="class_id" value={classId} onChange={changeClass} required>
+        <form className="form-container" onSubmit={submit}>
+            <article className="form-section">
+                <label className="tile-top" htmlFor="class_id">Select Class</label>
+                <select className="tile-bottom" id="class_id" value={classId} onChange={changeClass} required>
                     {classes.map((c) => (
                         <option key={c.id} value={c.id}>{c.name}</option>
                     ))}
                 </select>
             </article>
-            <article className="formSectionContainer">
-                <label className="cap-top" htmlFor="subclass_id">Select Subclass</label>
-                <select className="cap-bottom" id="subclass_id" value={subclassId} onChange={(e) => setSubclassId(Number(e.target.value))} required>
+            <article className="form-section">
+                <label className="tile-top" htmlFor="subclass_id">Select Subclass</label>
+                <select className="tile-bottom" id="subclass_id" value={subclassId} onChange={(e) => setSubclassId(Number(e.target.value))} required>
                     {subsForClass.map((s) => (
                         <option key={s.id} value={s.id}>{s.name}</option>
                     ))}
                 </select>
             </article>
             {message && <p>{message}</p>}
-            <article className="formSectionContainer buttonContainer">
-                <button className="formButton" type="submit">Save Changes</button>
+            <article className="form-section button-container">
+                <button className="btn-form" type="submit">Save Changes</button>
             </article>
         </form>
     );

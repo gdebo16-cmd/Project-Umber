@@ -17,6 +17,7 @@ import { CharacterContext } from './CharacterContext';
 import { STATS } from '../utils/stats';
 import { getSpellSlots } from '../utils/spellSlots';
 import Loader from '../components/Loader';
+import RestButton from './RestButton';
 
 // Mobile only: the three big tabs at the top. On desktop the CSS shows all three panels at once.
 const SHEET_TABS = [
@@ -33,7 +34,10 @@ function CharacterSheet() {
     const [rollLabel, setRollLabel] = useState(''); // what the roll orb shows
     const [orbOpen, setOrbOpen] = useState(false);
     const [usedSlots, setUsedSlots] = useState({});
-    // Children call these to change the data everything else reads from
+    const [conditions, setConditions] = useState({});
+    const [exhaustion, setExhaustion] = useState(0);
+
+
     const setHp = (newHp) =>
         setData((prev) => ({ ...prev, character: { ...prev.character, current_hp: newHp } }));
     const setOwnedArmor = (ownedArmor) => setData((prev) => ({ ...prev, ownedArmor }));
@@ -61,6 +65,41 @@ function CharacterSheet() {
         return true;
     };
 
+    const rest = async (type) => {
+        const pct = type === 'long' ? 1 : 0.2 + Math.random() * 0.4;
+        
+        const healAmount = Math.round((character.max_hp - hp) * pct);
+        if (healAmount > 0) {
+            const res = await fetch(`/api/characters/${character.id}/hp`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'heal' , amount: healAmount 
+                }),
+
+            });
+            if (res.ok) setHp((await res.json()).current_hp);
+    }
+
+    const newSlots = {};
+    for (const [lvl, used] of Object.entries(usedSlots)) {
+        newSlots[lvl] = used - Math.round(used * pct);
+    }
+    setUsedSlots(newSlots);
+
+    const newConditions = {};
+    for (const [name, on] of Object.entries(conditions)) {
+        newConditions[name] = on && Math.random() >= pct;
+    }
+    setConditions(newConditions);
+    setExhaustion(exhaustion - Math.round(exhaustion * pct));
+
+    return Math.round(pct * 100);
+};
+
+    
     // Everything the Actions panel tabs share. They read it with useCharacter() instead of props.
     const sheetData = {
         character,
@@ -76,6 +115,11 @@ function CharacterSheet() {
         usedSlots,
         setUsedSlots,
         spendSlot,
+        conditions,
+        setConditions,
+        exhaustion,
+        setExhaustion,
+        rest,
     };
 
     return (
@@ -107,8 +151,10 @@ function CharacterSheet() {
                 </section>
 
                 <section role="tabpanel" id="sheet-panel-conditions" className="sheet-panel" hidden={sheetTab !== 'conditions'}>
+                    <RestButton />
                     <HealthBox id={character.id} hp={hp} max={character.max_hp} onHpChange={setHp} />
                     <Conditions />
+                    
                 </section>
             </main>
             <RollOrb open={orbOpen} label={rollLabel} onToggle={() => setOrbOpen((o) => !o)} />

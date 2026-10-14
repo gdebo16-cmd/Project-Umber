@@ -4,19 +4,19 @@ import LogoutLink from './LogoutLink';
 // The menu on the home and settings pages (same links as home.ejs)
 function SiteNav() {
     return (
-        <nav id="navBox">
-            <ul id="navContainer">
-                <Link id="homeNav" className="navButton" to="/home">home</Link>
+        <nav id="nav-box">
+            <ul id="nav-container">
+                <Link id="home-nav" className="btn-nav" to="/home">home</Link>
 
-                <li id="characterNav" className="navButton">Characters
-                    <ul className="dropDown" id="characterDropdown">
-                        <Link id="createCharacter" className="characterDropdownButton" to="/create_char">Create Character</Link>
+                <li id="character-nav" className="btn-nav">Characters
+                    <ul className="drop-down" id="characterDropdown">
+                        <Link id="createCharacter" className="btn-drop-character" to="/create_char">Create Character</Link>
                     </ul>
                 </li>
-                <li id="settingsNav" className="navButton">Settings
-                    <ul className="dropDown" id="settingsDropdown">
-                        <Link id="profile" className="settingsDropdownButton" to="/profile">Profile</Link>
-                        <Link id="settings" className="settingsDropdownButton" to="/settings">Settings</Link>
+                <li id="settings-nav" className="btn-nav">Settings
+                    <ul className="drop-down" id="settingsDropdown">
+                        <Link id="profile" className="btn-drop-settings" to="/profile">Profile</Link>
+                        <Link id="settings" className="btn-drop-settings" to="/settings">Settings</Link>
                         <LogoutLink />
                     </ul>
                 </li>

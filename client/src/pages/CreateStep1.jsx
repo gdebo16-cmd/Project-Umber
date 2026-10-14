@@ -51,19 +51,19 @@ function CreateStep1() {
     return (
         <>
             <header id="topContainer">
-                <h1 id="siteTitle">Create Character</h1>
-                <h2 id="formTitle">Step 1 of 3 — Name and race</h2>
+                <h1 id="site-title">Create Character</h1>
+                <h2 id="form-title">Step 1 of 3 — Name and race</h2>
                 <StepNav back={null} forward={hasSavedRace ? '/create_char/step2' : null} />
             </header>
 
             <main>
-                <section id="formContainer">
-                    <form className="formContainer" onSubmit={submit}>
-                        <article id="charNameContainer" className="formSectionContainer tile">
+                <section id="form-container">
+                    <form className="form-container" onSubmit={submit}>
+                        <article id="char-name-container" className="form-section tile">
                             <label className="topTile" htmlFor="name">Character name</label>
                             <input className="bottomTile" type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="One with no name"  />
                         </article>
-                        <article id="raceSelectContainer" className="formSectionContainer tile">
+                        <article id="race-select-container" className="form-section tile">
                             <label className="topTile" htmlFor="race_id">Race</label>
                             <select className="bottomTile" id="race_id" value={raceId} onChange={(e) => setRaceId(e.target.value)} required>
                                 <option value="" disabled>Select your Race</option>
@@ -73,9 +73,9 @@ function CreateStep1() {
                             </select>
                         </article>
                         {saveError && <p>{saveError}</p>}
-                        <article id="buttonContainer" className="formSectionContainer">
+                        <article id="button-container" className="form-section">
                             <button id="submit" type="submit">Next: Class</button>
-                            <Link id="mobileCancel" to="/home">Cancel</Link>
+                            <Link id="mobile-cancel" to="/home">Cancel</Link>
                         </article>
                     </form>
                 </section>

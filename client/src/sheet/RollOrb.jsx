@@ -10,7 +10,7 @@ function RollOrb({ open, label, onToggle }) {
     const orbRef = useRef(null);
     const drag = useRef(null); // where the drag started
     const toggleRef = useRef(onToggle);
-    toggleRef.current = onToggle;
+    useEffect(() => { toggleRef.current = onToggle; }, [onToggle]); // keep the latest toggle without writing a ref during render
 
     // shared helpers for both touch and mouse
     const start = (x, y) => {
@@ -84,10 +84,10 @@ function RollOrb({ open, label, onToggle }) {
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); } }}
         >
             <div className="roll-orb-face" aria-hidden="true"></div>
-            <div className="roll-orb__panel" hidden={!open}>
-                <p className="roll-orb__label">{label}</p>
-                <p className="roll-orb__total"></p>
-                <p className="roll-orb__detail"></p>
+            <div className="roll-orb-panel" hidden={!open}>
+                <p className="roll-orb-label">{label}</p>
+                <p className="roll-orb-total"></p>
+                <p className="roll-orb-detail"></p>
             </div>
         </div>
     );

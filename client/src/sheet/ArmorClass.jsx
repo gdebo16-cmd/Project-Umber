@@ -12,8 +12,8 @@ function ArmorClass({ character, ownedArmor }) {
     return (
         <section className='container' id='armor-class-container'>
             <article className='tile armor-class-tile' id='armor-class-tile-container'>
-                <p className='tile-component label-component cap-top' id='armor-class-tile-label'>Armor Class</p>
-                <p className='tile-component value-component cap-bottom' id='armor-class-tile-value'>{ac}</p>
+                <p className='tile-component label-component tile-top' id='armor-class-tile-label'>Armor Class</p>
+                <p className='tile-component value-component tile-bottom' id='armor-class-tile-value'>{ac}</p>
             </article>
         </section>
     );

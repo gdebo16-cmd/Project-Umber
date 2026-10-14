@@ -35,12 +35,12 @@ function ItemShop({ characterId, onDone }) {
             <>
                 <em className="ownedItem">Owned</em>
                 <form className="removeItemForm" onSubmit={(e) => { e.preventDefault(); changeItem(kind, itemId, 'remove'); }}>
-                    <button type="submit" id="remove-item-button" className="action-button hover-grow">Remove</button>
+                    <button type="submit" id="remove-item-button" className="btn-action hover-grow">Remove</button>
                 </form>
             </>
         ) : (
             <form className="addItemForm" onSubmit={(e) => { e.preventDefault(); changeItem(kind, itemId, 'add'); }}>
-                <button type="submit" id="add-item-button" className="action-button hover-grow">Add</button>
+                <button type="submit" id="add-item-button" className="btn-action hover-grow">Add</button>
             </form>
         )
     );
@@ -53,8 +53,8 @@ function ItemShop({ characterId, onDone }) {
     return (
         <>
             <section className="title-tile">
-                <h3 className="action-title cap-top">Item Shop</h3>
-                <button type="button" className="link-button hover-grow" onClick={onDone}>Done browsing</button>
+                <h3 className="action-title tile-top">Item Shop</h3>
+                <button type="button" className="btn-link hover-grow" onClick={onDone}>Done browsing</button>
                 {saveError && <p>{saveError}</p>}
             </section>
             
@@ -62,10 +62,10 @@ function ItemShop({ characterId, onDone }) {
             <TabList tabs={TABS} active={tab} onChange={setTab} prefix="inv-" />
 
             <article role="tabpanel" id="inv-panel-armor" className="action-tile inv-panel" aria-labelledby="inv-tab-armor" hidden={tab !== 'armor'}>
-                <h3 className="action-title cap-top">Armor</h3>
-                <ul className="action-list invList">
+                <h3 className="action-title tile-top">Armor</h3>
+                <ul className="action-list inv-list">
                     {armor.map((a) => (
-                        <li key={a.id} className="action-item invListItem">
+                        <li key={a.id} className="action-item inv-list-item">
                             {a.name} ({a.armor_type}, {a.ac_bonus} AC)
                             {itemButton('armor', a.id, ownedArmorIds.includes(Number(a.id)))}
                         </li>
@@ -74,10 +74,10 @@ function ItemShop({ characterId, onDone }) {
             </article>
 
             <article role="tabpanel" id="inv-panel-weapons" className="action-tile inv-panel" aria-labelledby="inv-tab-weapons" hidden={tab !== 'weapons'}>
-                <h3 className="action-title cap-top">Weapons</h3>
-                <ul className="action-list invList">
+                <h3 className="action-title tile-top">Weapons</h3>
+                <ul className="action-list inv-list">
                     {weapons.map((w) => (
-                        <li key={w.id} className="action-item invListItem">
+                        <li key={w.id} className="action-item inv-list-item">
                             {w.name} ({w.category}, {w.damage_dice}, {w.rarity}, {w.attack_bonus} Attack Bonus)
                             {itemButton('weapon', w.id, ownedWeaponIds.includes(Number(w.id)))}
                         </li>

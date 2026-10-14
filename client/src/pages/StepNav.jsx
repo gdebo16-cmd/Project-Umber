@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router';
 function StepNav({ back, forward }) {
     const navigate = useNavigate();
     return (
-        <nav id="stepNav">
-            <button type="button" className="stepNavButton" disabled={!back} onClick={() => navigate(back)}>Back</button>
-            <button type="button" className="stepNavButton" disabled={!forward} onClick={() => navigate(forward)}>Forward</button>
+        <nav id="step-nav">
+            <button type="button" className="btn-step" disabled={!back} onClick={() => navigate(back)}>Back</button>
+            <button type="button" className="btn-step" disabled={!forward} onClick={() => navigate(forward)}>Forward</button>
         </nav>
     );
 }

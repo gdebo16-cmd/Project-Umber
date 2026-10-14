@@ -1,760 +1,1093 @@
-/* Shared theme + display variables. Pulled in by home.css, charSheet.css and signin.css via @import. */
+@layer base, components, displays, pages, overrides;
 
-:root,
-[data-display='standard'] {
-    --tileBorder: 1px solid var(--bordercolor);
-    --bs3: none;
-    --backdrop: none;
-    --glow: none;
-    --btnRad: var(--rad2);
-    --inputRad: var(--rad2);
-    --letterSp: normal;
-    --rad1: .80rem;
-    --rad2: .35rem;
-    --bs1: 2px 2px 15px black;
-    --bs2: 2px 2px 10px black;
-    --pad1: .25%;
-    --pad2: 1%;
-    --pad3: 0;
-    --mar1: 0;
-    --mar2: 2%;
-    --shadowInner: inset 6px 6px 8px #000000a9,
-        inset -1px -1px 5px #00000079;
-    --toprad: 10px 10px 0 0;
-    --lowrad: 0 0 10px 10px;
-    --padTop: 3%;
-    --padLow: 2%;
-    --tile: 10px;
-    --marTop: 0;
-    --marLow: 0;
-    --section-gap: 0.75rem;
-    --fontF: "Cinzel Decorative", serif;
-    --fontW1: 700;
-    --fontW2: 400;
-    --fontStyle: normal;
-    --fontS1: 100%;
-    --fontS2: 130%;
-    --fontS3: 160%;
-    --w1: 100%;
-    --w2: 100vw;
-    --h1: 100%;
-    --h2: 100vh;
-    --maxW: 100%;
-    --maxH1: 100%;
-    --maxH2: 100vh;
-    --minW1: 0;
-    --minW2: 0;
-    --minH1: 0;
-    --minH2: 0;
-    --ofX1: hidden;
-    --ofX2: hidden;
-    --ofY1: auto;
-    --ofY2: auto;
-    --border1: none;
-}
+@layer base {
+    /* Shared theme + display variables. Pulled in by home.css, charSheet.css and signin.css via @import. */
 
-[data-display='compact'] {
-    --tileBorder: none;
-    --rad1: .5rem;
-    --rad2: .25rem;
-    --bs1: 2px 2px 5px black;
-    --bs2: 2px 2px 9px black;
-    --bs3: 2px 2px 5px black;
-    --pad1: 2.5%;
-    --pad2: 1.5%;
-    --pad3: 0;
-    --mar1: 0;
-    --mar2: 1%;
-    --shadowInner: inset 6px 6px 8px #000000a9,
-        inset -1px -1px 5px #00000079;
-    --toprad: .5rem .5rem 0 0;
-    --lowrad: 0 0 .5rem .5rem;
-    --padTop: 1.5rem;
-    --padLow: 1.5rem;
-    --tile: .5rem;
-    --marTop: 0;
-    --marLow: 0;
-    --section-gap: 0.75rem;
-    --fontF: "Cinzel Decorative", serif;
-    --fontW1: 700;
-    --fontW2: 400;
-    --fontStyle: normal;
-    --fontS1: 100%;
-    --fontS2: 130%;
-    --fontS3: 150%;
-    --w1: 100%;
-    --w2: 100vw;
-    --h1: 100%;
-    --h2: 100vh;
-    --maxW: 100%;
-    --maxH1: 100%;
-    --maxH2: 100vh;
-    --minW1: 0;
-    --minW2: 0;
-    --minH1: 0;
-    --minH2: 0;
-    --ofX1: hidden;
-    --ofX2: hidden;
-    --ofY1: auto;
-    --ofY2: auto;
-    --border1: none;
-}
+    :root,
+    [data-display='standard'] {
+        --tileBorder: 1px solid var(--bordercolor);
+        --bs3: none;
+        --backdrop: none;
+        --glow: none;
+        --btnRad: var(--rad2);
+        --inputRad: var(--rad2);
+        --letterSp: normal;
+        --rad1: .80rem;
+        --rad2: .35rem;
+        --bs1: 2px 2px 15px black;
+        --bs2: 2px 2px 10px black;
+        --pad1: .25%;
+        --pad2: 1%;
+        --pad3: 0;
+        --mar1: 0;
+        --mar2: 2%;
+        --shadowInner: inset 6px 6px 8px #000000a9,
+            inset -1px -1px 5px #00000079;
+        --toprad: 10px 10px 0 0;
+        --lowrad: 0 0 10px 10px;
+        --padTop: 3%;
+        --padLow: 2%;
+        --tile: 10px;
+        --marTop: 0;
+        --marLow: 0;
+        --section-gap: 0.75rem;
+        --fontF: "Cinzel Decorative", serif;
+        --fontW1: 700;
+        --fontW2: 400;
+        --fontStyle: normal;
+        --fontS1: 100%;
+        --fontS2: 130%;
+        --fontS3: 160%;
+        --w1: 100%;
+        --w2: 100vw;
+        --h1: 100%;
+        --h2: 100vh;
+        --maxW: 100%;
+        --maxH1: 100%;
+        --maxH2: 100vh;
+        --minW1: 0;
+        --minW2: 0;
+        --minH1: 0;
+        --minH2: 0;
+        --ofX1: hidden;
+        --ofX2: hidden;
+        --ofY1: auto;
+        --ofY2: auto;
+        --border1: none;
+    }
 
-[data-display='neon'] {
-    --tileBorder: 3px double var(--bgc-bubble-receive);
-    --rad1: .25rem;
-    --rad2: .125rem;
-    --bs1: 2px 2px 5px black;
-    --pad1: 2.5%;
-    --pad2: 1.5%;
-    --pad3: 0;
-    --mar1: 0;
-    --mar2: 1%;
-    --shadowInner: inset 6px 6px 8px #000000a9,
-        inset -1px -1px 5px #00000079;
-    --toprad: .5rem .5rem 0 0;
-    --lowrad: 0 0 .5rem .5rem;
-    --padTop: .5rem;
-    --padLow: .5rem;
-    --tile: .5rem;
-    --marTop: 0;
-    --marLow: 0;
-    --section-gap: 0.75rem;
-    --fontF: "Cinzel Decorative", serif;
-    --fontW1: 700;
-    --fontW2: 400;
-    --fontStyle: normal;
-    --fontS1: 100%;
-    --fontS2: 130%;
-    --fontS3: 150%;
-    --w1: 100%;
-    --w2: 100vw;
-    --h1: 100%;
-    --h2: 100vh;
-    --maxW: 100%;
-    --maxH1: 100%;
-    --maxH2: 100vh;
-    --minW1: 0;
-    --minW2: 0;
-    --minH1: 0;
-    --minH2: 0;
-    --ofX1: hidden;
-    --ofX2: hidden;
-    --ofY1: auto;
-    --ofY2: auto;
-    --border1: none;
-    --bs3: var(--glow);
-    --bs2: var(--glow);
-    --glow: 2px 2px 15px var(--bgc-bubble-receive);
-    --backdrop: blur(6px) saturate(190%);
-}
+    [data-display='compact'] {
+        --tileBorder: none;
+        --rad1: .5rem;
+        --rad2: .25rem;
+        --bs1: 2px 2px 5px black;
+        --bs2: 2px 2px 9px black;
+        --bs3: 2px 2px 5px black;
+        --pad1: 2.5%;
+        --pad2: 1.5%;
+        --pad3: 0;
+        --mar1: 0;
+        --mar2: 1%;
+        --shadowInner: inset 6px 6px 8px #000000a9,
+            inset -1px -1px 5px #00000079;
+        --toprad: .5rem .5rem 0 0;
+        --lowrad: 0 0 .5rem .5rem;
+        --padTop: 1.5rem;
+        --padLow: 1.5rem;
+        --tile: .5rem;
+        --marTop: 0;
+        --marLow: 0;
+        --section-gap: 0.75rem;
+        --fontF: "Cinzel Decorative", serif;
+        --fontW1: 700;
+        --fontW2: 400;
+        --fontStyle: normal;
+        --fontS1: 100%;
+        --fontS2: 130%;
+        --fontS3: 150%;
+        --w1: 100%;
+        --w2: 100vw;
+        --h1: 100%;
+        --h2: 100vh;
+        --maxW: 100%;
+        --maxH1: 100%;
+        --maxH2: 100vh;
+        --minW1: 0;
+        --minW2: 0;
+        --minH1: 0;
+        --minH2: 0;
+        --ofX1: hidden;
+        --ofX2: hidden;
+        --ofY1: auto;
+        --ofY2: auto;
+        --border1: none;
+    }
 
-/* ---------- extra display styles: shape / spacing / borders / shadows / fonts only (no colors) ---------- */
+    [data-display='neon'] {
+        --tileBorder: 3px double var(--bgc-bubble-receive);
+        --rad1: .25rem;
+        --rad2: .125rem;
+        --bs1: 2px 2px 5px black;
+        --pad1: 2.5%;
+        --pad2: 1.5%;
+        --pad3: 0;
+        --mar1: 0;
+        --mar2: 1%;
+        --shadowInner: inset 6px 6px 8px #000000a9,
+            inset -1px -1px 5px #00000079;
+        --toprad: .5rem .5rem 0 0;
+        --lowrad: 0 0 .5rem .5rem;
+        --padTop: .5rem;
+        --padLow: .5rem;
+        --tile: .5rem;
+        --marTop: 0;
+        --marLow: 0;
+        --section-gap: 0.75rem;
+        --fontF: "Cinzel Decorative", serif;
+        --fontW1: 700;
+        --fontW2: 400;
+        --fontStyle: normal;
+        --fontS1: 100%;
+        --fontS2: 130%;
+        --fontS3: 150%;
+        --w1: 100%;
+        --w2: 100vw;
+        --h1: 100%;
+        --h2: 100vh;
+        --maxW: 100%;
+        --maxH1: 100%;
+        --maxH2: 100vh;
+        --minW1: 0;
+        --minW2: 0;
+        --minH1: 0;
+        --minH2: 0;
+        --ofX1: hidden;
+        --ofX2: hidden;
+        --ofY1: auto;
+        --ofY2: auto;
+        --border1: none;
+        --bs3: var(--glow);
+        --bs2: var(--glow);
+        --glow: 2px 2px 15px var(--bgc-bubble-receive);
+        --backdrop: blur(6px) saturate(190%);
+    }
 
-[data-display='glass'] {
-    --tileBorder: 1px solid rgba(255, 255, 255, 0.25);
-    --rad1: 1.25rem;
-    --rad2: .75rem;
-    --bs1: 0 8px 32px rgba(0, 0, 0, 0.35);
-    --bs2: 0 4px 16px rgba(0, 0, 0, 0.3);
-    --bs3: 0 2px 8px rgba(0, 0, 0, 0.25);
-    --toprad: 1.25rem 1.25rem 0 0;
-    --lowrad: 0 0 1.25rem 1.25rem;
-    --tile: 1.25rem;
-    --backdrop: blur(8px) saturate(180%);
-    --btnRad: 999px;
-    --inputRad: .75rem;
-}
+    /* ---------- extra display styles: shape / spacing / borders / shadows / fonts only (no colors) ---------- */
 
-[data-display='parchment'] {
-    --tileBorder: 2px solid var(--bordercolor);
-    --rad1: .2rem;
-    --rad2: .1rem;
-    --bs1: 3px 4px 0 rgba(0, 0, 0, 0.55);
-    --bs2: 2px 3px 0 rgba(0, 0, 0, 0.5);
-    --bs3: 1px 2px 0 rgba(0, 0, 0, 0.45);
-    --toprad: .2rem .2rem 0 0;
-    --lowrad: 0 0 .2rem .2rem;
-    --tile: .2rem;
-    --fontF: "Cinzel", "Cinzel Decorative", Georgia, serif;
-    --fontW1: 600;
-    --btnRad: .15rem;
-    --inputRad: .1rem;
-    --letterSp: .03em;
-}
+    [data-display='glass'] {
+        --tileBorder: 1px solid rgba(255, 255, 255, 0.25);
+        --rad1: 1.25rem;
+        --rad2: .75rem;
+        --bs1: 0 8px 32px rgba(0, 0, 0, 0.35);
+        --bs2: 0 4px 16px rgba(0, 0, 0, 0.3);
+        --bs3: 0 2px 8px rgba(0, 0, 0, 0.25);
+        --toprad: 1.25rem 1.25rem 0 0;
+        --lowrad: 0 0 1.25rem 1.25rem;
+        --tile: 1.25rem;
+        --backdrop: blur(8px) saturate(180%);
+        --btnRad: 999px;
+        --inputRad: .75rem;
+    }
 
-[data-display='minimal'] {
-    --tileBorder: 1px solid var(--bordercolor);
-    --rad1: .4rem;
-    --rad2: .25rem;
-    --bs1: none;
-    --bs2: none;
-    --bs3: none;
-    --shadowInner: none;
-    --toprad: .4rem .4rem 0 0;
-    --lowrad: 0 0 .4rem .4rem;
-    --tile: .4rem;
-    --section-gap: 1rem;
-    --fontF: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    --fontW1: 600;
-    --fontS2: 120%;
-    --fontS3: 140%;
-    --btnRad: .3rem;
-    --inputRad: .25rem;
-}
+    [data-display='parchment'] {
+        --tileBorder: 2px solid var(--bordercolor);
+        --rad1: .2rem;
+        --rad2: .1rem;
+        --bs1: 3px 4px 0 rgba(0, 0, 0, 0.55);
+        --bs2: 2px 3px 0 rgba(0, 0, 0, 0.5);
+        --bs3: 1px 2px 0 rgba(0, 0, 0, 0.45);
+        --toprad: .2rem .2rem 0 0;
+        --lowrad: 0 0 .2rem .2rem;
+        --tile: .2rem;
+        --fontF: "Cinzel", "Cinzel Decorative", Georgia, serif;
+        --fontW1: 600;
+        --btnRad: .15rem;
+        --inputRad: .1rem;
+        --letterSp: .03em;
+    }
 
-[data-display='bold'] {
-    --tileBorder: 3px solid var(--bordercolor);
-    --rad1: 1rem;
-    --rad2: .6rem;
-    --bs1: 4px 6px 18px rgba(0, 0, 0, 0.8);
-    --bs2: 3px 4px 12px rgba(0, 0, 0, 0.75);
-    --bs3: 2px 3px 8px rgba(0, 0, 0, 0.7);
-    --toprad: 1rem 1rem 0 0;
-    --lowrad: 0 0 1rem 1rem;
-    --tile: 1rem;
-    --section-gap: 1rem;
-    --fontW1: 900;
-    --fontW2: 700;
-    --fontS2: 140%;
-    --fontS3: 175%;
-    --btnRad: .6rem;
-    --inputRad: .5rem;
-    --letterSp: .02em;
-}
+    [data-display='minimal'] {
+        --tileBorder: 1px solid var(--bordercolor);
+        --rad1: .4rem;
+        --rad2: .25rem;
+        --bs1: none;
+        --bs2: none;
+        --bs3: none;
+        --shadowInner: none;
+        --toprad: .4rem .4rem 0 0;
+        --lowrad: 0 0 .4rem .4rem;
+        --tile: .4rem;
+        --section-gap: 1rem;
+        --fontF: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        --fontW1: 600;
+        --fontS2: 120%;
+        --fontS3: 140%;
+        --btnRad: .3rem;
+        --inputRad: .25rem;
+    }
 
-/* Shared per-display rules: applied the same way on every page (all page stylesheets import this file).
-   'standard' has no rules here, so the default look is unchanged. */
-
-html[data-display]:not([data-display='standard']) :is(.formSectionContainer, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .panel-shell, .title-tile) {
-    border: var(--tileBorder);
-    border-radius: var(--tile);
-    box-shadow: var(--bs2);
-    backdrop-filter: var(--backdrop);
-    -webkit-backdrop-filter: var(--backdrop);
-}
-
-html[data-display]:not([data-display='standard']) :is(button, .formButton, .navButton, .action-button, .damage-button, .to-hit-button, .spell-name-button, .link-button, .drop-button):not(.cap-top, .cap-bottom) {
-    border-radius: var(--btnRad);
-    box-shadow: var(--bs3);
-    font-family: var(--fontF);
-    letter-spacing: var(--letterSp);
-}
-
-html[data-display]:not([data-display='standard']) :is(input, select, textarea):not(.cap-top, .cap-bottom) {
-    border-radius: var(--inputRad);
-    font-family: var(--fontF);
-}
-
-html[data-display]:not([data-display='standard']) :is(#navBox, .dropDown) {
-    border-radius: var(--rad1);
-    box-shadow: var(--bs2);
-}
-
-html[data-display]:not([data-display='standard']) :is(h1, h2, h3, .title, .tile-label) {
-    font-family: var(--fontF);
-    font-weight: var(--fontW1);
-    letter-spacing: var(--letterSp);
-}
-
-/* Tile halves (label on top, value below) sit flush inside the tile: corners follow the tile, no doubled borders */
-html[data-display]:not([data-display='standard']) :is(.formSectionContainer, .tile, .tile-component, .profile-tile, .action-tile, .title-tile) {
-    overflow: clip;
-}
-
-html[data-display]:not([data-display='standard']) .cap-top {
-    border: none;
-    border-radius: var(--tile) var(--tile) 0 0;
-    box-shadow: none;
-}
-
-html[data-display]:not([data-display='standard']) .cap-bottom {
-    border: none;
-    border-top: var(--tileBorder);
-    border-radius: 0 0 var(--tile) var(--tile);
-    box-shadow: none;
-}
-
-html[data-display='neon'] :is(.formSectionContainer, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box) {
-    box-shadow: var(--glow);
-}
-
-html[data-display='minimal'] :is(.formSectionContainer, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .panel-shell, .title-tile) {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-}
-
-:root,
-[data-theme="default"] {
-    --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor: rgba(79, 46, 46, 0.712);
-    --bgc-bubble-send: rgb(26, 29, 72);
-    --bgc-bubble-receive: rgb(116, 94, 212);
-    --bgc-orb: rgb(64, 71, 175);
-    --bg-color-5: rgb(66, 12, 166);
-    --bg-color-4: rgba(71, 52, 139, 0.356);
-    --bg-color-3: rgba(74, 60, 199, 0.678);
-    --bg-color-2: rgba(66, 53, 130, 0.483);
-    --bg-color-1: rgba(109, 83, 222, 0.72);
-    --title-color: rgba(255, 178, 46, 0.756);
-    --txt-color-1: rgba(255, 255, 255, 0.756);
-    --bordercolor: rgba(160, 150, 180, 0.565);
-    --bgc-top: rgba(64, 72, 175, 0.72);
-    --bgc-low: rgba(46, 31, 133, 0.466);
-    --bgc-title: rgb(65, 37, 157);
-    --accent: rgb(245, 188, 103);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(1.5px) saturate(150%);
-    --blur3: blur(3px) saturate(150%);
-}
-
-[data-theme="purple"] {
-    --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor: rgba(79, 46, 46, 0.712);
-    --bgc-bubble-send: rgb(26, 29, 72);
-    --bgc-bubble-receive: rgb(116, 94, 212);
-    --bgc-orb: rgb(64, 71, 175);
-    --bg-color-5: rgb(65, 27, 137);
-    --bg-color-4: rgba(71, 52, 139, 0.356);
-    --bg-color-3: rgba(74, 60, 199, 0.678);
-    --bg-color-2: rgba(68, 42, 196, 0.171);
-    --bg-color-1: rgba(109, 83, 222, 0.72);
-    --txt-color-1: rgba(255, 255, 255, 0.756);
-    --bordercolor: rgba(160, 150, 180, 0.565);
-    --bgc-top: rgba(64, 72, 175, 0.72);
-    --bgc-low: rgba(46, 31, 133, 0.466);
-    --bgc-title: rgb(46, 30, 102);
-    --accent: rgb(245, 188, 103);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(1.5px) saturate(150%);
-}
-
-[data-theme="green"] {
-    --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor: rgba(79, 46, 46, 0.712);
-    --bgc-bubble-send: rgb(20, 57, 50);
-    --bgc-bubble-receive: rgb(45, 140, 109);
-    --bgc-orb: rgb(66, 156, 120);
-    --bg-color-5: rgb(28, 54, 33);
-    --bg-color-4: rgba(41, 66, 43, 0.377);
-    --bg-color-3: rgba(41, 66, 43, 0.678);
-    --bg-color-2: rgba(59, 110, 66, 0.24);
-    --bg-color-1: rgba(34, 53, 41, 0.548);
-    --txt-color-1: rgba(237, 243, 221, 0.822);
-    --bordercolor: rgba(150, 180, 154, 0.565);
-    --bgc-top: rgba(64, 104, 73, 0.72);
-    --bgc-low: rgba(51, 80, 48, 0.596);
-    --bgc-title: rgb(18, 41, 19);
-    --accent: rgb(238, 224, 163);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(1.5px) saturate(150%);
-}
-
-[data-theme="blue"] {
-    --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor: rgba(79, 46, 46, 0.712);
-    --bgc-bubble-send: rgb(35, 60, 149);
-    --bgc-bubble-receive: rgb(94, 135, 212);
-    --bgc-orb: rgb(64, 112, 175);
-    --bg-color-5: rgb(22, 42, 112);
-    --bg-color-4: rgba(26, 55, 150, 0.37);
-    --bg-color-3: rgba(16, 47, 146, 0.404);
-    --bg-color-2: rgba(59, 86, 209, 0.637);
-    --bg-color-1: rgba(44, 62, 128, 0.72);
-    --txt-color-1: rgba(232, 239, 250, 0.822);
-    --bordercolor: rgba(202, 218, 255, 0.565);
-    --bgc-top: rgba(33, 60, 184, 0.72);
-    --bgc-low: rgba(20, 44, 150, 0.486);
-    --bgc-title: rgb(19, 30, 100);
-    --accent: rgb(163, 238, 238);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(1.5px) saturate(150%);
-}
-
-[data-theme="red"] {
-    --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor: rgba(79, 46, 46, 0.712);
-    --bgc-bubble-send: rgb(72, 26, 26);
-    --bgc-bubble-receive: rgb(212, 94, 94);
-    --bgc-orb: rgb(175, 64, 64);
-    --bg-color-5: rgb(92, 18, 18);
-    --bg-color-4: rgba(112, 20, 20, 0.356);
-    --bg-color-3: rgba(126, 35, 35, 0.678);
-    --bg-color-2: rgba(88, 28, 28, 0.67);
-    --bg-color-1: rgba(65, 9, 9, 0.72);
-    --txt-color-1: rgba(250, 232, 232, 0.822);
-    --bordercolor: rgba(252, 199, 199, 0.565);
-    --bgc-top: rgba(131, 39, 39, 0.72);
-    --bgc-low: rgba(97, 26, 26, 0.397);
-    --bgc-title: rgb(67, 19, 19);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(3px) saturate(150%);
-}
-
-[data-theme="orange"] {
-    --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor: rgba(79, 46, 46, 0.712);
-    --bgc-bubble-send: rgb(72, 43, 26);
-    --bgc-bubble-receive: rgb(212, 141, 94);
-    --bgc-orb: rgb(175, 118, 64);
-    --bg-color-5: rgb(110, 62, 14);
-    --bg-color-4: rgba(112, 72, 20, 0.39);
-    --bg-color-3: rgba(112, 72, 20, 0.678);
-    --bg-color-2: rgba(129, 83, 22, 0.67);
-    --bg-color-1: rgba(65, 45, 9, 0.72);
-    --txt-color-1: rgba(250, 232, 232, 0.822);
-    --bordercolor: rgba(252, 225, 199, 0.565);
-    --bgc-top: rgba(202, 136, 60, 0.72);
-    --bgc-low: rgba(145, 99, 39, 0.459);
-    --bgc-title: rgb(52, 37, 18);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(3px) saturate(150%);
-}
-
-[data-theme="yellow"] {
-    --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor: rgba(79, 46, 46, 0.712);
-    --bgc-bubble-send: rgb(72, 62, 26);
-    --bgc-bubble-receive: rgb(212, 206, 94);
-    --bgc-orb: rgb(175, 147, 64);
-    --bg-color-5: rgb(120, 102, 22);
-    --bg-color-4: rgba(172, 149, 24, 0.432);
-    --bg-color-3: rgba(160, 148, 42, 0.678);
-    --bg-color-2: rgba(192, 169, 41, 0.67);
-    --bg-color-1: rgba(124, 114, 67, 0.72);
-    --txt-color-1: rgba(250, 250, 232, 0.822);
-    --bordercolor: rgba(252, 247, 199, 0.565);
-    --bgc-top: rgba(209, 183, 35, 0.72);
-    --bgc-low: rgba(148, 136, 68, 0.452);
-    --bgc-title: rgb(0, 0, 0);
-    --accent: rgb(208, 252, 187);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(3px) saturate(150%);
-}
-
-[data-theme="dark"] {
-    --bgc-bubble-send: rgb(0, 0, 0);
-    --bgc-bubble-receive: rgb(43, 43, 43);
-    --bgc-orb: rgb(107, 107, 107);
-    --bg-color-5: rgb(18, 18, 18);
-    --bg-color-4: rgba(0, 0, 0, 0.466);
-    --bg-color-3: rgba(0, 0, 0, 0.466);
-    --bg-color-2: rgba(36, 35, 35, 0.67);
-    --bg-color-1: rgba(0, 0, 0, 0.452);
-    --txt-color-1: rgba(255, 255, 255, 0.822);
-    --bordercolor: rgba(255, 255, 255, 0.74);
-    --bgc-top: rgba(0, 0, 0, 0.958);
-    --bgc-low: rgba(5, 5, 5, 0.466);
-    --bgc-title: rgb(0, 0, 0);
-    --accent: rgb(252, 196, 112);
-    --healColor: rgba(140, 184, 140, 0.384);
-    --damageColor: rgba(48, 37, 37, 0.712);
-    --shadowInner: inset 4px 4px 15px #ffeacea9,
-        inset 0px 0px 5px #ffeacea9;
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(3px) saturate(150%);
-}
-
-[data-theme="light"] {
-    --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor: rgba(79, 46, 46, 0.712);
-    --bgc-bubble-send: rgb(249, 232, 200);
-    --bgc-bubble-receive: rgb(255, 255, 255);
-    --bgc-orb: rgb(63, 59, 49);
-    --bg-color-5: rgb(245, 236, 214);
-    --bg-color-4: rgba(255, 255, 255, 0.062);
-    --bg-color-3: rgba(255, 230, 184, 0.781);
-    --bg-color-2: rgba(253, 249, 242, 0.829);
-    --bg-color-1: rgba(238, 232, 216, 0.74);
-    --txt-color-1: rgba(0, 0, 0, 0.678);
-    --title-text: rgb(255, 255, 255);
-    --text-color-2: rgba(255, 255, 255, 0.986);
-    --bordercolor: rgb(255, 228, 179);
-    --bgc-top: rgba(255, 255, 255, 0.918);
-    --bgc-low: rgba(255, 255, 255, 0.486);
-    --bgc-title: rgb(254, 238, 200);
-    --accent: rgb(145, 100, 3);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(1.5px) saturate(150%);
-}
-
-[data-theme="hellfire"] {
-    --bgc-bubble-send: rgb(82, 37, 25);
-    --bgc-bubble-receive: rgb(138, 67, 47);
-    --bgc-orb: rgb(104, 51, 33);
-    --bg-color-5: rgb(71, 55, 55);
-    --bg-color-4: rgba(78, 71, 71, 0.459);
-    --bg-color-3: rgba(3, 3, 3, 0.678);
-    --bg-color-2: rgba(119, 42, 42, 0.67);
-    --bg-color-1: rgba(65, 9, 9, 0.72);
-    --txt-color-1: rgba(228, 43, 11, 0.822);
-    --bordercolor: rgba(252, 199, 199, 0.565);
-    --bgc-top: rgba(82, 37, 25, 0.72);
-    --bgc-low: rgba(0, 0, 0, 0.72);
-    --bgc-title: rgb(67, 22, 22);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(3px) saturate(150%);
-    --healColor: rgba(253, 249, 227, 0.685);
-    --damageColor: rgba(65, 56, 56, 0.712);
-}
-
-[data-theme="frozen"] {
-    --bgc-bubble-send: rgb(20, 83, 112);
-    --bgc-bubble-receive: rgb(155, 220, 245);
-    --bgc-orb: rgb(104, 161, 175);
-    --bg-color-5: rgb(16, 66, 90);
-    --bg-color-4: rgba(155, 220, 245, 0.438);
-    --bg-color-3: rgba(20, 83, 112, 0.678);
-    --bg-color-2: rgba(22, 99, 129, 0.67);
-    --bg-color-1: rgba(26, 79, 92, 0.72);
-    --txt-color-1: rgba(232, 250, 247, 0.822);
-    --bordercolor: rgba(208, 248, 241, 0.801);
-    --bgc-top: rgba(168, 221, 245, 0.486);
-    --bgc-low: rgba(92, 125, 138, 0.534);
-    --bgc-title: rgba(71, 102, 115, 0.977);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(0) saturate(150%);
-    --healColor: rgba(109, 188, 253, 0.63);
-    --damageColor: rgba(39, 96, 252, 0.712);
-}
-
-[data-theme="neon"] {
-    --healColor: rgba(0, 255, 200, 0.35);
-    --damageColor: rgba(255, 40, 140, 0.4);
-    --bgc-bubble-send: rgb(18, 8, 40);
-    --bgc-bubble-receive: rgb(255, 60, 200);
-    --bgc-orb: rgb(0, 229, 255);
-    --bg-color-5: rgb(14, 6, 32);
-    --bg-color-4: rgba(30, 10, 60, 0.45);
-    --bg-color-3: rgba(20, 6, 45, 0.72);
-    --bg-color-2: rgba(40, 12, 80, 0.55);
-    --bg-color-1: rgba(10, 4, 28, 0.72);
-    --title-color: rgb(0, 240, 255);
-    --txt-color-1: rgba(240, 235, 255, 0.95);
-    --bordercolor: rgba(255, 70, 210, 0.75);
-    --bgc-top: rgba(36, 8, 70, 0.78);
-    --bgc-low: rgba(8, 4, 24, 0.6);
-    --bgc-title: rgb(10, 3, 26);
-    --accent: rgb(0, 240, 255);
-    --blur1: blur(6px) saturate(170%);
-    --blur2: blur(3px) saturate(170%);
-    --blur3: blur(6px) saturate(170%);
-    --shadowInner: inset 4px 4px 12px rgba(255, 60, 200, 0.35),
-        inset -1px -1px 6px rgba(0, 240, 255, 0.35);
-    --neonGlow: 0 0 4px rgba(255, 60, 200, 0.9), 0 0 12px rgba(255, 60, 200, 0.55);
-    --neonTextGlow: 0 0 3px rgba(0, 240, 255, 0.9), 0 0 10px rgba(0, 240, 255, 0.5);
-}
-
-/* neon color scheme glows (colors only; shape comes from data-display) */
-
-html[data-theme="neon"] :is(h1, h2, h3, .title, .tile-label, .cap-top, .action-title) {
-    text-shadow: var(--neonTextGlow);
-}
-
-html[data-theme="neon"] :is(button, .formButton, .navButton, .action-button):hover {
-    box-shadow: var(--neonGlow);
-}
-
-:root,
-[data-background="default"] {
-    --background: url('/utils/colorsketch.png');
-}
-
-[data-background="green"] {
-    --background: url('/eldrid-bg-green-3840.webp');
-}
-
-[data-background="purple"] {
-    --background: url('/eldrid-bg-purple-3840.webp');
-}
-
-[data-background="blue"] {
-    --background: url('/eldrid-bg-blue-3840.webp');
-}
-
-[data-background="red"] {
-    --background: url('/eldrid-bg-red-3840.webp');
-}
-
-[data-background="orange"] {
-    --background: url('/eldrid-bg-orange-3840.webp');
-}
-
-[data-background="yellow"] {
-    --background: url('/eldrid-bg-yellow-3840.webp');
-}
-
-[data-background="dark"] {
-    --background: url('/eldrid-bg-dark-3840.webp');
-}
-
-[data-background="dark-map"] {
-    --background: url('/utils/mapblack1.png');
-}
-
-[data-background="light"] {
-    --background: url('/utils/mapwhite1.png');
-}
-
-[data-background="hellfire"] {
-    --background: url('/utils/hellfiremap.png');
-}
-
-[data-background="frozen"] {
-    --background: url('/utils/frozenmap1.png');
-}
-
-[data-background="neon"] {
-    --background: url('/eldrid-bg-neon-3840.webp');
-}
-
-/* stop white showing around the page on phones (notch area, overscroll) */
-
-html {
-    background-color: var(--bg-color-1);
-    background-image: var(--background);
-
-    /* same image as body, so it reaches the screen curves */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: 100%;
-}
-
-/* iPhone: stop Safari from enlarging text on its own, and never allow sideways scrolling */
-
-html {
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-}
-
-html,
-body {
-    overflow-x: hidden;
-}
-
-.loader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    min-height: 60vh;
-    color: var(--bgc-bubble-receive);
-}
-
-.loader-ring {
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 50%;
-    background: conic-gradient(from 0deg, #333 0%, red 70%, #333 100%);
-    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
-    mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
-    filter: blur(1px);
-    animation: loader-spin 0.9s linear infinite,
-        loader-rainbow 3s linear infinite;
-}
-
-@keyframes loader-spin {
-    to {
-        transform: rotate(360deg);
+    [data-display='bold'] {
+        --tileBorder: 3px solid var(--bordercolor);
+        --rad1: 1rem;
+        --rad2: .6rem;
+        --bs1: 4px 6px 18px rgba(0, 0, 0, 0.8);
+        --bs2: 3px 4px 12px rgba(0, 0, 0, 0.75);
+        --bs3: 2px 3px 8px rgba(0, 0, 0, 0.7);
+        --toprad: 1rem 1rem 0 0;
+        --lowrad: 0 0 1rem 1rem;
+        --tile: 1rem;
+        --section-gap: 1rem;
+        --fontW1: 900;
+        --fontW2: 700;
+        --fontS2: 140%;
+        --fontS3: 175%;
+        --btnRad: .6rem;
+        --inputRad: .5rem;
+        --letterSp: .02em;
     }
 }
 
-@keyframes loader-rainbow {
-    from {
-        filter: blur(1px) hue-rotate(0deg);
-    }
+@layer displays {
+    /* Shared per-display rules: applied the same way on every page (all page stylesheets import this file).
+       'standard' has no rules here, so the default look is unchanged. */
 
-    to {
-        filter: blur(1px) hue-rotate(360deg);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .loader-ring {
-        animation: loader-pulse 1.5s ease-in-out infinite;
+    html[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .panel-shell, .title-tile) {
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        backdrop-filter: var(--backdrop);
+        -webkit-backdrop-filter: var(--backdrop);
     }
 }
 
-@keyframes loader-pulse {
-    50% {
-        opacity: 0.4;
+@layer overrides {
+    html[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .panel-shell, .title-tile) /* clash: kept at old specificity */ {
+        border: var(--tileBorder);
     }
 }
 
-/*  ===== Mobile (max-width: 768px), consolidated =====  */
+@layer displays {
+    html[data-display]:not([data-display='standard']) :is(button, .btn-form, .btn-nav, .btn-action, .damage-button, .btn-to-hit, .btn-spell-name, .btn-link, .btn-drop):not(.tile-top, .tile-bottom) {
+        letter-spacing: var(--letterSp);
+    }
+}
 
-@media (max-width: 768px) {
-    /* Mobile: iOS Safari zooms into any field under 16px, so keep fields at 16px or more */
-
-    input,
-    select,
-    textarea {
-        font-size: max(16px, 1em) !important;
+@layer overrides {
+    html[data-display]:not([data-display='standard']) :is(button, .btn-form, .btn-nav, .btn-action, .damage-button, .btn-to-hit, .btn-spell-name, .btn-link, .btn-drop):not(.tile-top, .tile-bottom) /* clash: kept at old specificity */ {
+        border-radius: var(--btnRad);
+        box-shadow: var(--bs3);
+        font-family: var(--fontF);
     }
 
-    /* phones: lighter glass blur so the background picture shows through */
+    html[data-display]:not([data-display='standard']) :is(input, select, textarea):not(.tile-top, .tile-bottom) /* clash: kept at old specificity */ {
+        border-radius: var(--inputRad);
+        font-family: var(--fontF);
+    }
+}
 
-    html[data-theme],
+@layer displays {
+    html[data-display]:not([data-display='standard']) :is(#nav-box, .drop-down) {
+        box-shadow: var(--bs2);
+    }
+}
+
+@layer overrides {
+    html[data-display]:not([data-display='standard']) :is(#nav-box, .drop-down) /* clash: kept at old specificity */ {
+        border-radius: var(--rad1);
+    }
+}
+
+@layer displays {
+    html[data-display]:not([data-display='standard']) :is(h1, h2, h3, .title, .tile-label) {
+        font-family: var(--fontF);
+        font-weight: var(--fontW1);
+        letter-spacing: var(--letterSp);
+    }
+}
+
+@layer overrides {
+    /* Tile halves (label on top, value below) sit flush inside the tile: corners follow the tile, no doubled borders */
+    html[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .title-tile) /* clash: kept at old specificity */ {
+        overflow: clip;
+    }
+}
+
+@layer displays {
+    html[data-display]:not([data-display='standard']) .tile-top {
+        box-shadow: none;
+    }
+}
+
+@layer overrides {
+    html[data-display]:not([data-display='standard']) .tile-top /* clash: kept at old specificity */ {
+        border: none;
+        border-radius: var(--tile) var(--tile) 0 0;
+    }
+}
+
+@layer displays {
+    html[data-display]:not([data-display='standard']) .tile-bottom {
+        border-top: var(--tileBorder);
+        box-shadow: none;
+    }
+}
+
+@layer overrides {
+    html[data-display]:not([data-display='standard']) .tile-bottom /* clash: kept at old specificity */ {
+        border: none;
+        border-radius: 0 0 var(--tile) var(--tile);
+    }
+}
+
+@layer displays {
+    html[data-display='neon'] :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box) {
+        box-shadow: var(--glow);
+    }
+
+    html[data-display='minimal'] :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .panel-shell, .title-tile) {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+}
+
+@layer base {
+    :root,
+    [data-theme="default"] {
+        --healColor: rgba(46, 79, 46, 0.712);
+        --damageColor: rgba(79, 46, 46, 0.712);
+        --bgc-bubble-send: rgb(26, 29, 72);
+        --bgc-bubble-receive: rgb(116, 94, 212);
+        --bgc-orb: rgb(64, 71, 175);
+        --bg-color-5: rgb(66, 12, 166);
+        --bg-color-4: rgba(71, 52, 139, 0.356);
+        --bg-color-3: rgba(74, 60, 199, 0.678);
+        --bg-color-2: rgba(66, 53, 130, 0.483);
+        --bg-color-1: rgba(109, 83, 222, 0.72);
+        --title-color: rgba(255, 178, 46, 0.756);
+        --txt-color-1: rgba(255, 255, 255, 0.756);
+        --bordercolor: rgba(160, 150, 180, 0.565);
+        --bgc-top: rgba(64, 72, 175, 0.72);
+        --bgc-low: rgba(46, 31, 133, 0.466);
+        --bgc-title: rgb(65, 37, 157);
+        --accent: rgb(245, 188, 103);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(1.5px) saturate(150%);
+        --blur3: blur(3px) saturate(150%);
+    }
+
+    [data-theme="purple"] {
+        --healColor: rgba(46, 79, 46, 0.712);
+        --damageColor: rgba(79, 46, 46, 0.712);
+        --bgc-bubble-send: rgb(26, 29, 72);
+        --bgc-bubble-receive: rgb(116, 94, 212);
+        --bgc-orb: rgb(64, 71, 175);
+        --bg-color-5: rgb(65, 27, 137);
+        --bg-color-4: rgba(71, 52, 139, 0.356);
+        --bg-color-3: rgba(74, 60, 199, 0.678);
+        --bg-color-2: rgba(68, 42, 196, 0.171);
+        --bg-color-1: rgba(109, 83, 222, 0.72);
+        --txt-color-1: rgba(255, 255, 255, 0.756);
+        --bordercolor: rgba(160, 150, 180, 0.565);
+        --bgc-top: rgba(64, 72, 175, 0.72);
+        --bgc-low: rgba(46, 31, 133, 0.466);
+        --bgc-title: rgb(46, 30, 102);
+        --accent: rgb(245, 188, 103);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(1.5px) saturate(150%);
+    }
+
+    [data-theme="green"] {
+        --healColor: rgba(46, 79, 46, 0.712);
+        --damageColor: rgba(79, 46, 46, 0.712);
+        --bgc-bubble-send: rgb(20, 57, 50);
+        --bgc-bubble-receive: rgb(45, 140, 109);
+        --bgc-orb: rgb(66, 156, 120);
+        --bg-color-5: rgb(28, 54, 33);
+        --bg-color-4: rgba(20, 34, 22, 0.814);
+        --bg-color-3: rgba(41, 66, 43, 0.841);
+        --bg-color-2: rgba(32, 61, 36, 0.851);
+        --bg-color-1: rgba(34, 53, 41, 0.879);
+        --txt-color-1: rgba(237, 243, 221, 0.822);
+        --bordercolor: rgba(150, 180, 154, 0.565);
+        --bgc-top: rgba(64, 104, 73, 0.915);
+        --bgc-low: rgba(51, 80, 48, 0.897);
+        --bgc-title: rgb(18, 41, 19);
+        --accent: rgb(238, 224, 163);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(1.5px) saturate(150%);
+    }
+
+    [data-theme="glass-green"] {
+        --healColor: rgba(46, 79, 46, 0.712);
+        --damageColor: rgba(79, 46, 46, 0.712);
+        --bgc-bubble-send: rgb(20, 57, 50);
+        --bgc-bubble-receive: rgb(45, 140, 109);
+        --bgc-orb: rgb(66, 156, 120);
+        --bg-color-5: rgb(28, 54, 33);
+        --bg-color-4: rgba(41, 66, 43, 0.377);
+        --bg-color-3: rgba(41, 66, 43, 0.678);
+        --bg-color-2: rgba(59, 110, 66, 0.24);
+        --bg-color-1: rgba(34, 53, 41, 0.548);
+        --txt-color-1: rgba(237, 243, 221, 0.822);
+        --bordercolor: rgba(150, 180, 154, 0.565);
+        --bgc-top: rgba(64, 104, 73, 0.72);
+        --bgc-low: rgba(51, 80, 48, 0.596);
+        --bgc-title: rgb(18, 41, 19);
+        --accent: rgb(238, 224, 163);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(1.5px) saturate(150%);
+    }
+
+    [data-theme="blue"] {
+        --healColor: rgba(46, 79, 46, 0.712);
+        --damageColor: rgba(79, 46, 46, 0.712);
+        --bgc-bubble-send: rgb(35, 60, 149);
+        --bgc-bubble-receive: rgb(94, 135, 212);
+        --bgc-orb: rgb(64, 112, 175);
+        --bg-color-5: rgb(22, 42, 112);
+        --bg-color-4: rgba(18, 25, 47, 0.8);
+        --bg-color-3: rgba(28, 47, 110, 0.828);
+        --bg-color-2: rgba(89, 111, 206, 0.809);
+        --bg-color-1: rgba(33, 46, 94, 0.922);
+        --txt-color-1: rgba(232, 239, 250, 0.822);
+        --bordercolor: rgba(202, 218, 255, 0.565);
+        --bgc-top: rgba(27, 47, 138, 0.919);
+        --bgc-low: rgba(24, 30, 57, 0.906);
+        --bgc-title: rgb(19, 30, 100);
+        --accent: rgb(163, 238, 238);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(1.5px) saturate(150%);
+    }
+    [data-theme="glass-blue"] {
+        --healColor: rgba(46, 79, 46, 0.712);
+        --damageColor: rgba(79, 46, 46, 0.712);
+        --bgc-bubble-send: rgb(35, 60, 149);
+        --bgc-bubble-receive: rgb(94, 135, 212);
+        --bgc-orb: rgb(64, 112, 175);
+        --bg-color-5: rgb(22, 42, 112);
+        --bg-color-4: rgba(26, 55, 150, 0.37);
+        --bg-color-3: rgba(16, 47, 146, 0.404);
+        --bg-color-2: rgba(59, 86, 209, 0.637);
+        --bg-color-1: rgba(44, 62, 128, 0.72);
+        --txt-color-1: rgba(232, 239, 250, 0.822);
+        --bordercolor: rgba(202, 218, 255, 0.565);
+        --bgc-top: rgba(33, 60, 184, 0.72);
+        --bgc-low: rgba(20, 44, 150, 0.486);
+        --bgc-title: rgb(19, 30, 100);
+        --accent: rgb(163, 238, 238);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(1.5px) saturate(150%);
+    }
+
+    [data-theme="red"] {
+        --healColor: rgba(46, 79, 46, 0.712);
+        --damageColor: rgba(79, 46, 46, 0.712);
+        --bgc-bubble-send: rgb(72, 26, 26);
+        --bgc-bubble-receive: rgb(212, 94, 94);
+        --bgc-orb: rgb(175, 64, 64);
+        --bg-color-5: rgb(92, 18, 18);
+        --bg-color-4: rgba(112, 20, 20, 0.88);
+        --bg-color-3: rgba(126, 35, 35, 0.885);
+        --bg-color-2: rgba(88, 28, 28, 0.929);
+        --bg-color-1: rgba(65, 9, 9, 0.922);
+        --txt-color-1: rgba(250, 232, 232, 0.822);
+        --bordercolor: rgba(252, 199, 199, 0.565);
+        --bgc-top: rgba(131, 39, 39, 0.953);
+        --bgc-low: rgba(59, 20, 20, 0.923);
+        --bgc-title: rgb(67, 19, 19);
+        --accent: rgb(252, 226, 187);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(3px) saturate(150%);
+    }
+
+    [data-theme="glass-red"] {
+        --healColor: rgba(46, 79, 46, 0.712);
+        --damageColor: rgba(79, 46, 46, 0.712);
+        --bgc-bubble-send: rgb(72, 26, 26);
+        --bgc-bubble-receive: rgb(212, 94, 94);
+        --bgc-orb: rgb(175, 64, 64);
+        --bg-color-5: rgb(92, 18, 18);
+        --bg-color-4: rgba(112, 20, 20, 0.356);
+        --bg-color-3: rgba(126, 35, 35, 0.678);
+        --bg-color-2: rgba(88, 28, 28, 0.67);
+        --bg-color-1: rgba(65, 9, 9, 0.72);
+        --txt-color-1: rgba(250, 232, 232, 0.822);
+        --bordercolor: rgba(252, 199, 199, 0.565);
+        --bgc-top: rgba(131, 39, 39, 0.72);
+        --bgc-low: rgba(97, 26, 26, 0.397);
+        --bgc-title: rgb(67, 19, 19);
+        --accent: rgb(252, 226, 187);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(3px) saturate(150%);
+    }
+
+    [data-theme="orange"] {
+        --healColor: rgba(46, 79, 46, 0.712);
+        --damageColor: rgba(79, 46, 46, 0.712);
+        --bgc-bubble-send: rgb(72, 43, 26);
+        --bgc-bubble-receive: rgb(212, 141, 94);
+        --bgc-orb: rgb(175, 118, 64);
+        --bg-color-5: rgb(110, 62, 14);
+        --bg-color-4: rgba(134, 81, 13, 0.872);
+        --bg-color-3: rgba(115, 71, 12, 0.894);
+        --bg-color-2: rgba(192, 114, 13, 0.881);
+        --bg-color-1: rgba(89, 60, 7, 0.903);
+        --txt-color-1: rgba(250, 232, 232, 0.822);
+        --bordercolor: rgba(252, 225, 199, 0.565);
+        --bgc-top: rgba(155, 96, 29, 0.962);
+        --bgc-low: rgba(74, 46, 9, 0.938);
+        --bgc-title: rgb(52, 37, 18);
+        --accent: rgb(255, 199, 56);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(3px) saturate(150%);
+    }
+
+    [data-theme="glass-orange"] {
+        --healColor: rgba(46, 79, 46, 0.712);
+        --damageColor: rgba(79, 46, 46, 0.712);
+        --bgc-bubble-send: rgb(72, 43, 26);
+        --bgc-bubble-receive: rgb(212, 141, 94);
+        --bgc-orb: rgb(175, 118, 64);
+        --bg-color-5: rgb(110, 62, 14);
+        --bg-color-4: rgba(112, 72, 20, 0.39);
+        --bg-color-3: rgba(112, 72, 20, 0.678);
+        --bg-color-2: rgba(129, 83, 22, 0.67);
+        --bg-color-1: rgba(65, 45, 9, 0.72);
+        --txt-color-1: rgba(250, 232, 232, 0.822);
+        --bordercolor: rgba(252, 225, 199, 0.565);
+        --bgc-top: rgba(202, 136, 60, 0.72);
+        --bgc-low: rgba(145, 99, 39, 0.459);
+        --bgc-title: rgb(52, 37, 18);
+        --accent: rgb(252, 226, 187);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(3px) saturate(150%);
+    }
+
+    [data-theme="yellow"] {
+        --healColor: rgba(46, 79, 46, 0.712);
+        --damageColor: rgba(79, 46, 46, 0.712);
+        --bgc-bubble-send: rgb(72, 62, 26);
+        --bgc-bubble-receive: rgb(212, 206, 94);
+        --bgc-orb: rgb(175, 147, 64);
+        --bg-color-5: rgb(120, 102, 22);
+        --bg-color-4: rgba(172, 149, 24, 0.432);
+        --bg-color-3: rgba(160, 148, 42, 0.678);
+        --bg-color-2: rgba(206, 179, 23, 0.895);
+        --bg-color-1: rgba(124, 114, 67, 0.72);
+        --txt-color-1: rgba(250, 250, 232, 0.822);
+        --bordercolor: rgba(252, 247, 199, 0.565);
+        --bgc-top: rgba(158, 126, 7, 0.902);
+        --bgc-low: rgba(67, 56, 20, 0.895);
+        --bgc-title: rgb(49, 43, 18);
+        --accent: rgb(142, 33, 23);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(3px) saturate(150%);
+    }
+
+    [data-theme="glass-yellow"] {
+        --healColor: rgba(46, 79, 46, 0.712);
+        --damageColor: rgba(79, 46, 46, 0.712);
+        --bgc-bubble-send: rgb(72, 62, 26);
+        --bgc-bubble-receive: rgb(212, 206, 94);
+        --bgc-orb: rgb(175, 147, 64);
+        --bg-color-5: rgb(120, 102, 22);
+        --bg-color-4: rgba(172, 149, 24, 0.432);
+        --bg-color-3: rgba(160, 148, 42, 0.678);
+        --bg-color-2: rgba(192, 169, 41, 0.67);
+        --bg-color-1: rgba(124, 114, 67, 0.72);
+        --txt-color-1: rgba(250, 250, 232, 0.822);
+        --bordercolor: rgba(252, 247, 199, 0.565);
+        --bgc-top: rgba(209, 183, 35, 0.72);
+        --bgc-low: rgba(148, 136, 68, 0.452);
+        --bgc-title: rgb(0, 0, 0);
+        --accent: rgb(208, 252, 187);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(3px) saturate(150%);
+    }
+
+    [data-theme="dark"] {
+        --bgc-bubble-send: rgb(0, 0, 0);
+        --bgc-bubble-receive: rgb(43, 43, 43);
+        --bgc-orb: rgb(107, 107, 107);
+        --bg-color-5: rgb(18, 18, 18);
+        --bg-color-4: rgba(0, 0, 0, 0.466);
+        --bg-color-3: rgba(0, 0, 0, 0.466);
+        --bg-color-2: rgba(15, 15, 15, 0.917);
+        --bg-color-1: rgba(0, 0, 0, 0.452);
+        --txt-color-1: rgba(255, 255, 255, 0.822);
+        --bordercolor: rgba(29, 29, 29, 0.519);
+        --bgc-top: rgba(0, 0, 0, 0.992);
+        --bgc-low: rgba(5, 5, 5, 0.854);
+        --bgc-title: rgb(0, 0, 0);
+        --accent: rgb(252, 196, 112);
+        --healColor: rgba(140, 184, 140, 0.384);
+        --damageColor: rgba(48, 37, 37, 0.712);
+        --shadowInner: inset 4px 4px 15px #ffeacea9,
+            inset 0px 0px 5px #ffeacea9;
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(3px) saturate(150%);
+    }
+
+    [data-theme="dark-glass"] {
+        --bgc-bubble-send: rgb(0, 0, 0);
+        --bgc-bubble-receive: rgb(43, 43, 43);
+        --bgc-orb: rgb(107, 107, 107);
+        --bg-color-5: rgb(18, 18, 18);
+        --bg-color-4: rgba(0, 0, 0, 0.466);
+        --bg-color-3: rgba(0, 0, 0, 0.466);
+        --bg-color-2: rgba(36, 35, 35, 0.67);
+        --bg-color-1: rgba(0, 0, 0, 0.452);
+        --txt-color-1: rgba(255, 255, 255, 0.822);
+        --bordercolor: rgba(255, 255, 255, 0.74);
+        --bgc-top: rgba(0, 0, 0, 0.958);
+        --bgc-low: rgba(5, 5, 5, 0.466);
+        --bgc-title: rgb(0, 0, 0);
+        --accent: rgb(252, 196, 112);
+        --healColor: rgba(140, 184, 140, 0.384);
+        --damageColor: rgba(48, 37, 37, 0.712);
+        --shadowInner: inset 4px 4px 15px #ffeacea9,
+            inset 0px 0px 5px #ffeacea9;
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(3px) saturate(150%);
+    }
+
+    [data-theme="light"] {
+        --healColor: rgba(46, 79, 46, 0.712);
+        --damageColor: rgba(79, 46, 46, 0.712);
+        --bgc-bubble-send: rgb(249, 232, 200);
+        --bgc-bubble-receive: rgb(255, 255, 255);
+        --bgc-orb: rgb(63, 59, 49);
+        --bg-color-5: rgb(245, 236, 214);
+        --bg-color-4: rgba(255, 255, 255, 0.062);
+        --bg-color-3: rgba(255, 230, 184, 0.781);
+        --bg-color-2: rgba(218, 190, 143, 0.942);
+        --bg-color-1: rgba(238, 232, 216, 0.74);
+        --txt-color-1: rgba(0, 0, 0, 0.678);
+        --title-text: rgb(255, 255, 255);
+        --text-color-2: rgba(255, 255, 255, 0.986);
+        --bordercolor: rgba(209, 153, 48, 0.679);
+        --bgc-top: rgba(245, 241, 238, 0.935);
+        --bgc-low: rgb(240, 221, 189);
+        --bgc-title: rgb(254, 242, 216);
+        --accent: rgb(145, 100, 3);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(1.5px) saturate(150%);
+    }
+
+    [data-theme="light-glass"] {
+        --healColor: rgba(46, 79, 46, 0.712);
+        --damageColor: rgba(79, 46, 46, 0.712);
+        --bgc-bubble-send: rgb(249, 232, 200);
+        --bgc-bubble-receive: rgb(255, 255, 255);
+        --bgc-orb: rgb(63, 59, 49);
+        --bg-color-5: rgb(245, 236, 214);
+        --bg-color-4: rgba(255, 255, 255, 0.062);
+        --bg-color-3: rgba(255, 230, 184, 0.781);
+        --bg-color-2: rgba(253, 249, 242, 0.829);
+        --bg-color-1: rgba(238, 232, 216, 0.74);
+        --txt-color-1: rgba(0, 0, 0, 0.678);
+        --title-text: rgb(255, 255, 255);
+        --text-color-2: rgba(255, 255, 255, 0.986);
+        --bordercolor: rgb(255, 228, 179);
+        --bgc-top: rgba(255, 255, 255, 0.918);
+        --bgc-low: rgba(255, 255, 255, 0.486);
+        --bgc-title: rgb(254, 238, 200);
+        --accent: rgb(145, 100, 3);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(1.5px) saturate(150%);
+    }
+
+    [data-theme="hellfire"] {
+        --bgc-bubble-send: rgb(82, 37, 25);
+        --bgc-bubble-receive: rgb(138, 67, 47);
+        --bgc-orb: rgb(104, 51, 33);
+        --bg-color-5: rgb(71, 55, 55);
+        --bg-color-4: rgba(78, 71, 71, 0.845);
+        --bg-color-3: rgba(3, 3, 3, 0.843);
+        --bg-color-2: rgba(77, 11, 11, 0.882);
+        --bg-color-1: rgba(65, 9, 9, 0.875);
+        --txt-color-1: rgb(255, 129, 32);
+        --bordercolor: rgba(8, 3, 3, 0.738);
+        --bgc-top: rgba(53, 12, 1, 0.883);
+        --bgc-low: rgba(0, 0, 0, 0.854);
+        --bgc-title: rgb(67, 22, 22);
+        --accent: rgb(252, 226, 187);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(3px) saturate(150%);
+        --healColor: rgba(253, 249, 227, 0.685);
+        --damageColor: rgba(65, 56, 56, 0.712);
+    }
+
+    [data-theme="glass-fire"] {
+        --bgc-bubble-send: rgb(82, 37, 25);
+        --bgc-bubble-receive: rgb(138, 67, 47);
+        --bgc-orb: rgb(104, 51, 33);
+        --bg-color-5: rgb(71, 55, 55);
+        --bg-color-4: rgba(78, 71, 71, 0.459);
+        --bg-color-3: rgba(3, 3, 3, 0.678);
+        --bg-color-2: rgba(119, 42, 42, 0.67);
+        --bg-color-1: rgba(65, 9, 9, 0.72);
+        --txt-color-1: rgba(228, 43, 11, 0.822);
+        --bordercolor: rgba(252, 199, 199, 0.565);
+        --bgc-top: rgba(82, 37, 25, 0.72);
+        --bgc-low: rgba(0, 0, 0, 0.72);
+        --bgc-title: rgb(67, 22, 22);
+        --accent: rgb(252, 226, 187);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(3px) saturate(150%);
+        --healColor: rgba(253, 249, 227, 0.685);
+        --damageColor: rgba(65, 56, 56, 0.712);
+    }
+
+    [data-theme="frozen"] {
+        --bgc-bubble-send: rgb(20, 83, 112);
+        --bgc-bubble-receive: rgb(155, 220, 245);
+        --bgc-orb: rgb(104, 161, 175);
+        --bg-color-5: rgb(16, 66, 90);
+        --bg-color-4: rgba(155, 220, 245, 0.893);
+        --bg-color-3: rgba(20, 83, 112, 0.806);
+        --bg-color-2: rgba(78, 193, 238, 0.867);
+        --bg-color-1: rgba(58, 111, 138, 0.872);
+        --txt-color-1: rgb(12, 43, 49);
+        --bordercolor: rgba(119, 221, 255, 0.885);
+        --bgc-top: rgba(168, 221, 245, 0.948);
+        --bgc-low: rgba(46, 84, 100, 0.856);
+        --bgc-title: rgba(71, 102, 115, 0.977);
+        --accent: rgb(252, 226, 187);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(0) saturate(150%);
+        --healColor: rgba(109, 188, 253, 0.63);
+        --damageColor: rgba(39, 96, 252, 0.712);
+    }
+
+    [data-theme="frozen-glass"] {
+        --bgc-bubble-send: rgb(20, 83, 112);
+        --bgc-bubble-receive: rgb(155, 220, 245);
+        --bgc-orb: rgb(104, 161, 175);
+        --bg-color-5: rgb(16, 66, 90);
+        --bg-color-4: rgba(155, 220, 245, 0.438);
+        --bg-color-3: rgba(20, 83, 112, 0.678);
+        --bg-color-2: rgba(22, 99, 129, 0.67);
+        --bg-color-1: rgba(26, 79, 92, 0.72);
+        --txt-color-1: rgba(232, 250, 247, 0.822);
+        --bordercolor: rgba(208, 248, 241, 0.801);
+        --bgc-top: rgba(168, 221, 245, 0.486);
+        --bgc-low: rgba(92, 125, 138, 0.534);
+        --bgc-title: rgba(71, 102, 115, 0.977);
+        --accent: rgb(252, 226, 187);
+        --blur1: blur(3px) saturate(150%);
+        --blur2: blur(0) saturate(150%);
+        --healColor: rgba(109, 188, 253, 0.63);
+        --damageColor: rgba(39, 96, 252, 0.712);
+    }
+
+    [data-theme="neon"] {
+        --healColor: rgba(0, 255, 200, 0.35);
+        --damageColor: rgba(255, 40, 140, 0.4);
+        --bgc-bubble-send: rgb(18, 8, 40);
+        --bgc-bubble-receive: rgb(255, 60, 200);
+        --bgc-orb: rgb(0, 229, 255);
+        --bg-color-5: rgb(14, 6, 32);
+        --bg-color-4: rgba(30, 10, 60, 0.45);
+        --bg-color-3: rgba(20, 6, 45, 0.72);
+        --bg-color-2: rgba(40, 12, 80, 0.55);
+        --bg-color-1: rgba(10, 4, 28, 0.72);
+        --title-color: rgb(0, 240, 255);
+        --txt-color-1: rgba(240, 235, 255, 0.95);
+        --bordercolor: rgba(255, 70, 210, 0.75);
+        --bgc-top: rgba(36, 8, 70, 0.78);
+        --bgc-low: rgba(8, 4, 24, 0.6);
+        --bgc-title: rgb(10, 3, 26);
+        --accent: rgb(0, 240, 255);
+        --blur1: blur(6px) saturate(170%);
+        --blur2: blur(3px) saturate(170%);
+        --blur3: blur(6px) saturate(170%);
+        --shadowInner: inset 4px 4px 12px rgba(255, 60, 200, 0.35),
+            inset -1px -1px 6px rgba(0, 240, 255, 0.35);
+        --neonGlow: 0 0 4px rgba(255, 60, 200, 0.9), 0 0 12px rgba(255, 60, 200, 0.55);
+        --neonTextGlow: 0 0 3px rgba(0, 240, 255, 0.9), 0 0 10px rgba(0, 240, 255, 0.5);
+    }
+
+    [data-theme="neon"] {
+        --healColor: rgba(0, 255, 200, 0.35);
+        --damageColor: rgba(255, 40, 140, 0.4);
+        --bgc-bubble-send: rgb(18, 8, 40);
+        --bgc-bubble-receive: rgb(255, 60, 200);
+        --bgc-orb: rgb(0, 229, 255);
+        --bg-color-5: rgb(14, 6, 32);
+        --bg-color-4: rgba(30, 10, 60, 0.45);
+        --bg-color-3: rgba(20, 6, 45, 0.72);
+        --bg-color-2: rgba(40, 12, 80, 0.55);
+        --bg-color-1: rgba(10, 4, 28, 0.72);
+        --title-color: rgb(0, 240, 255);
+        --txt-color-1: rgba(240, 235, 255, 0.95);
+        --bordercolor: rgba(255, 70, 210, 0.75);
+        --bgc-top: rgba(36, 8, 70, 0.78);
+        --bgc-low: rgba(8, 4, 24, 0.6);
+        --bgc-title: rgb(10, 3, 26);
+        --accent: rgb(0, 240, 255);
+        --blur1: blur(6px) saturate(170%);
+        --blur2: blur(3px) saturate(170%);
+        --blur3: blur(6px) saturate(170%);
+        --shadowInner: inset 4px 4px 12px rgba(255, 60, 200, 0.35),
+            inset -1px -1px 6px rgba(0, 240, 255, 0.35);
+        --neonGlow: 0 0 4px rgba(255, 60, 200, 0.9), 0 0 12px rgba(255, 60, 200, 0.55);
+        --neonTextGlow: 0 0 3px rgba(0, 240, 255, 0.9), 0 0 10px rgba(0, 240, 255, 0.5);
+    }
+}
+
+@layer displays {
+    /* neon color scheme glows (colors only; shape comes from data-display) */
+
+    html[data-theme="neon"] :is(h1, h2, h3, .title, .tile-label, .tile-top, .action-title) {
+        text-shadow: var(--neonTextGlow);
+    }
+}
+
+@layer overrides {
+    html[data-theme="neon"] :is(button, .btn-form, .btn-nav, .btn-action):hover /* clash: kept at old specificity */ {
+        box-shadow: var(--neonGlow);
+    }
+}
+
+@layer base {
+    :root,
+    [data-background="default"] {
+        --background: url('/colorsketch-eldrid-3840.webp');
+    }
+
+    [data-background="green"] {
+        --background: url('/eldrid-bg-green-3840.webp');
+    }
+
+    [data-background="purple"] {
+        --background: url('/eldrid-bg-purple-3840.webp');
+    }
+
+    [data-background="blue"] {
+        --background: url('/eldrid-bg-blue-3840.webp');
+    }
+
+    [data-background="red"] {
+        --background: url('/eldrid-bg-red-3840.webp');
+    }
+
+    [data-background="orange"] {
+        --background: url('/eldrid-bg-orange-3840.webp');
+    }
+
+    [data-background="yellow"] {
+        --background: url('/eldrid-bg-yellow-3840.webp');
+    }
+
+    [data-background="dark"] {
+        --background: url('/eldrid-bg-dark-3840.webp');
+    }
+
+    [data-background="dark-map"] {
+        --background: url('/utils/mapblack1.png');
+    }
+
+    [data-background="light-map"] {
+        --background: url('/utils/mapwhite1.png');
+    }
+
+    [data-background="light"] {
+        --background: url('/eldrid-bg-light-3840.webp');
+    }
+
+    [data-background="hellfire"] {
+        --background: url('/eldrid-bg-hellfire-3840.webp');
+    }
+
+    [data-background="hellfire-map"] {
+        --background: url('/utils/hellfiremap.png');
+    }
+
+    [data-background="frozen"] {
+        --background: url('/eldrid-bg-frozen-3840.webp');
+    }
+
+    [data-background="frozen-map"] {
+        --background: url('/utils/frozenmap1.png');
+    }
+
+    [data-background="neon"] {
+        --background: url('/eldrid-bg-neon-3840.webp');
+    }
+}
+
+@layer components {
+    /* stop white showing around the page on phones (notch area, overscroll) */
+
     html {
-        --blur1: blur(0.75px) saturate(140%);
-        --blur2: blur(0.5px) saturate(140%);
-        --blur3: blur(0.75px) saturate(140%);
+        background-color: var(--bg-color-1);
+        background-image: var(--background);
+
+        /* same image as body, so it reaches the screen curves */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100%;
+    }
+
+    /* iPhone: stop Safari from enlarging text on its own, and never allow sideways scrolling */
+
+    html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+    }
+
+    html,
+    body {
+        overflow-x: hidden;
+    }
+
+    .loader {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        min-height: 60vh;
+        color: var(--bgc-bubble-receive);
+    }
+
+    .loader-ring {
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 50%;
+        background: conic-gradient(from 0deg, #333 0%, red 70%, #333 100%);
+        -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
+        mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
+        filter: blur(1px);
+        animation: loader-spin 0.9s linear infinite,
+            loader-rainbow 3s linear infinite;
+    }
+
+    @keyframes loader-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes loader-rainbow {
+        from {
+            filter: blur(1px) hue-rotate(0deg);
+        }
+
+        to {
+            filter: blur(1px) hue-rotate(360deg);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .loader-ring {
+            animation: loader-pulse 1.5s ease-in-out infinite;
+        }
+    }
+
+    @keyframes loader-pulse {
+        50% {
+            opacity: 0.4;
+        }
+    }
+
+    /*  ===== Mobile (max-width: 768px), consolidated =====  */
+
+    @media (max-width: 768px) {
+        /* Mobile: iOS Safari zooms into any field under 16px, so keep fields at 16px or more */
+
+        input,
+        select,
+        textarea {
+            font-size: max(16px, 1em) !important;
+        }
+    }
+}
+@layer base {
+    @media (max-width: 768px) {
+        /* phones: lighter glass blur so the background picture shows through */
+
+        html[data-theme],
+        html {
+            --blur1: blur(0.75px) saturate(140%);
+            --blur2: blur(0.5px) saturate(140%);
+            --blur3: blur(0.75px) saturate(140%);
+        }
+    }
+
+
+    /* phones: portrait crops of each background */
+    @media (max-width: 768px) {
+        html[data-background="default"] { --background: url('/colorsketch-eldrid-mobile-1440x2560.webp'); }
+        html[data-background="green"] { --background: url('/eldrid-bg-green-mobile-1440x2560.webp'); }
+        html[data-background="purple"] { --background: url('/eldrid-bg-purple-mobile-1440x2560.webp'); }
+        html[data-background="blue"] { --background: url('/eldrid-bg-blue-mobile-1440x2560.webp'); }
+        html[data-background="red"] { --background: url('/eldrid-bg-red-mobile-1440x2560.webp'); }
+        html[data-background="orange"] { --background: url('/eldrid-bg-orange-mobile-1440x2560.webp'); }
+        html[data-background="yellow"] { --background: url('/eldrid-bg-yellow-mobile-1440x2560.webp'); }
+        html[data-background="dark"] { --background: url('/eldrid-bg-dark-mobile-1440x2560.webp'); }
+        html[data-background="neon"] { --background: url('/eldrid-bg-neon-mobile-1440x2560.webp'); }
+        html[data-background="light"] { --background: url('/eldrid-bg-light-mobile-1440x2560.webp'); }
+        html[data-background="hellfire"] { --background: url('/eldrid-bg-hellfire-mobile-1440x2560.webp'); }
+        html[data-background="frozen"] { --background: url('/eldrid-bg-frozen-mobile-1440x2560.webp'); }
     }
 }
 
-/* phones: portrait crops of each background */
-@media (max-width: 768px) {
-    html[data-background="green"] { --background: url('/eldrid-bg-green-mobile-1440x2560.webp'); }
-    html[data-background="purple"] { --background: url('/eldrid-bg-purple-mobile-1440x2560.webp'); }
-    html[data-background="blue"] { --background: url('/eldrid-bg-blue-mobile-1440x2560.webp'); }
-    html[data-background="red"] { --background: url('/eldrid-bg-red-mobile-1440x2560.webp'); }
-    html[data-background="orange"] { --background: url('/eldrid-bg-orange-mobile-1440x2560.webp'); }
-    html[data-background="yellow"] { --background: url('/eldrid-bg-yellow-mobile-1440x2560.webp'); }
-    html[data-background="dark"] { --background: url('/eldrid-bg-dark-mobile-1440x2560.webp'); }
-    html[data-background="neon"] { --background: url('/eldrid-bg-neon-mobile-1440x2560.webp'); }
+@layer overrides {
+    /* middle nav buttons stay square like the rest of the nav bar; the ends keep their page-defined corners */
+    html[data-display]:not([data-display='standard']) :is(#character-nav, #campaign-nav) /* clash: kept at old specificity */ {
+        border-radius: 0;
+    }
+
+    /* nav borders follow each display's border style */
+    html[data-display]:not([data-display='standard']) #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) /* clash: kept at old specificity */ {
+        border: var(--tileBorder);
+    }
+}
+@layer displays {
+    html[data-display]:not([data-display='standard']) #nav-container > :not(:first-child) {
+        border-left: none;
+    }
+    html[data-display='compact'] #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) {
+        border: none;
+    }
+
+    /* per-display nav borders */
+    html:is([data-display='glass'], [data-display='minimal']) #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) {
+        border: none;
+    }
+    html[data-display='bold'] #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) {
+        border: 3px solid var(--bordercolor);
+    }
+    html[data-display='neon'] #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) {
+        border: 1px solid var(--bgc-bubble-receive);
+    }
 }
 
-/* middle nav buttons stay square like the rest of the nav bar; the ends keep their page-defined corners */
-html[data-display]:not([data-display='standard']) :is(#characterNav, #campaignNav) {
-    border-radius: 0;
+@layer overrides {
+    html[data-display='neon'] #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) /* clash: kept at old specificity */ {
+        box-shadow: var(--glow);
+    }
+
+    /* Home tabs: round only the top corners, on every display style */
+    html[data-display] .home-tabs button.home-tab.home-tab:not(.tile-top) /* clash: kept at old specificity */ {
+        border-radius: var(--tile, .75rem) var(--tile, .75rem) 0 0;
+    }
 }
 
-/* nav borders follow each display's border style */
-html[data-display]:not([data-display='standard']) #navContainer :is(.navButton, #homeNav, #characterNav, #campaignNav, #settingsNav) {
-    border: var(--tileBorder);
+@layer displays {
+    /* Text-only buttons (spell and feature names, links) get no shadow, so the words don't look outlined */
+    html[data-display] :is(.btn-spell-name, .btn-link) {
+        box-shadow: none !important;
+        text-shadow: none;
+    }
 }
-html[data-display]:not([data-display='standard']) #navContainer > :not(:first-child) {
-    border-left: none;
-}
-html[data-display='compact'] #navContainer :is(.navButton, #homeNav, #characterNav, #campaignNav, #settingsNav) {
-    border: none;
-}
-
-/* per-display nav borders */
-html:is([data-display='glass'], [data-display='minimal']) #navContainer :is(.navButton, #homeNav, #characterNav, #campaignNav, #settingsNav) {
-    border: none;
-}
-html[data-display='bold'] #navContainer :is(.navButton, #homeNav, #characterNav, #campaignNav, #settingsNav) {
-    border: 3px solid var(--bordercolor);
-}
-html[data-display='neon'] #navContainer :is(.navButton, #homeNav, #characterNav, #campaignNav, #settingsNav) {
-    border: 1px solid var(--bgc-bubble-receive);
-    box-shadow: var(--glow);
+@layer overrides {
+    /* Condition lists inside the Conditions tile: no shadow, in every display style */
+    :is(#conditions-list-1, #conditions-list-2, #conditions-list-3) /* clash: kept at old specificity */ {
+        box-shadow: none;
+    }
 }
 
-/* Home tabs: round only the top corners, on every display style */
-html[data-display] .home-tabs button.home-tab.home-tab:not(.cap-top) {
-    border-radius: var(--tile, .75rem) var(--tile, .75rem) 0 0;
-}
+@layer components {
+    /* Shared base rules (moved here from home.css, signin.css and charSheet.css, where they were identical).
+       They sit at the end of themes.css, which is the same spot in the cascade they had right after each page's @import. */
+    .hover-grow {
+        transition: transform .5s ease;
+    }
 
-/* Text-only buttons (spell and feature names, links) get no shadow, so the words don't look outlined */
-html[data-display] :is(.spell-name-button, .link-button) {
-    box-shadow: none !important;
-    text-shadow: none;
+    .hover-grow:hover {
+        transform: scale(1.03);
+    }
+
+    .tile-top {
+        background-color: var(--bgc-top);
+        border-radius: var(--toprad);
+    }
+
+    .tile-bottom {
+        background-color: var(--bgc-low);
+        border-radius: var(--lowrad);
+    }
 }

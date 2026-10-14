@@ -68,15 +68,15 @@ function SpellsTab() {
             <>
                 {/* the first button you click spends the slot */}
                 {s.attack_type ? (
-                    <button type='button' className='action-button to-hit-button hover-grow' onClick={() => cast(`${who} casts ${s.name}! Chance to hit: ${d20() + toHit}!`)}>{signed(toHit)}</button>
+                    <button type='button' className='btn-action btn-to-hit hover-grow' onClick={() => cast(`${who} casts ${s.name}! Chance to hit: ${d20() + toHit}!`)}>{signed(toHit)}</button>
                 ) : s.opponent_save_roll ? (
-                    <button type='button' className='action-button to-hit-button hover-grow' onClick={() => cast(`${who} casts ${s.name}! Target mus make a ${s.opponent_save_roll} roll and beat a ${spellSave}!`)}>{s.opponent_save_roll} {spellSave}</button>
+                    <button type='button' className='btn-action btn-to-hit hover-grow' onClick={() => cast(`${who} casts ${s.name}! Target mus make a ${s.opponent_save_roll} roll and beat a ${spellSave}!`)}>{s.opponent_save_roll} {spellSave}</button>
                 ) : null}
                 {dice ? (
                     // with a to-hit/save button the damage is just a roll; without one, this button is the cast
-                    <button type='button' className='action-button damage-button hover-grow' onClick={() => hasFirst ? onRoll?.(damageText()) : cast(`${who} casts ${s.name}! ${damageText()}`)}>{dice}</button>
+                    <button type='button' className='btn-action damage-button hover-grow' onClick={() => hasFirst ? onRoll?.(damageText()) : cast(`${who} casts ${s.name}! ${damageText()}`)}>{dice}</button>
                 ) : (
-                    <button type='button' className='action-button damage-button hover-grow' onClick={() => cast(`${who} casts ${s.name}!`)}>Cast</button>
+                    <button type='button' className='btn-action damage-button hover-grow' onClick={() => cast(`${who} casts ${s.name}!`)}>Cast</button>
                 )}
             </>
         );
@@ -106,9 +106,9 @@ function SpellsTab() {
                         <h4>Spell Details</h4>
                      </article> 
                      <article className='combat-box-content'>
-                        <p>Range: <strong>{openSpell.range ? `${openSpell.range} ft.` : ''}</strong></p>
-                        <p>Duration: <strong>{Number(openSpell.duration) === 0 ? 'instant' : `${openSpell.duration} turns.`}</strong></p>
-                        <p>Cast Time: <strong>{openSpell.casting_time ? `${openSpell.casting_time} turn(s).` : ''}</strong></p>
+                        <p>Range: <strong>{openSpell.range ? `${openSpell.range} ft` : 'Reach'}</strong></p>
+                        <p>Duration: <strong>{Number(openSpell.duration) === 0 ? 'instant' : `${openSpell.duration} turns`}</strong></p>
+                        <p>Cast Time: <strong>{openSpell.casting_time ? `${openSpell.casting_time} turn(s)` : '1 turn(s)'}</strong></p>
                      </article>
                     </section>
                     <section className='spell-build-box'>
@@ -116,9 +116,9 @@ function SpellsTab() {
                         <h4>Incantation</h4>
                      </article> 
                      <article className='spell-build-box-content'>
-                            <p>State: <strong>{openSpell.state_name ? `${openSpell.state_name}.` : ''}</strong></p>
-                            <p>Element: <strong>{openSpell.element_name ? `${openSpell.element_name}.` : ''}</strong></p>
-                            <p>Alignment: <strong>{openSpell.alignment_name ? `${openSpell.alignment_name}.` : ''}</strong></p>
+                            <p>State: <strong>{openSpell.state_name ? `${openSpell.state_name}` : ''}</strong></p>
+                            <p>Element: <strong>{openSpell.element_name ? `${openSpell.element_name}` : ''}</strong></p>
+                            <p>Alignment: <strong>{openSpell.alignment_name ? `${openSpell.alignment_name}` : ''}</strong></p>
                         </article>
                     </section>
                     </section>
@@ -141,7 +141,7 @@ function SpellsTab() {
         <section className='title-tile'>
             <h2 className="action-tab-title" id="spell-title">Spell Book</h2>
             <article className="action-button-container spell-stat-bar">
-                <button type='button' className='link-button hover-grow' onClick={() => setBrowsing(true)}>Consult the Scrolls</button>
+                <button type='button' className='btn-link hover-grow' onClick={() => setBrowsing(true)}>Consult the Scrolls</button>
                 <p className="spell-stat">Primary Stat: {spellStat}</p>
                 <p className="spell-stat">Damage Bonus: {signed(spellAttack)} </p>
                 <p className="spell-stat">Target Save: {signed(spellSave)}</p>
@@ -155,13 +155,13 @@ function SpellsTab() {
 
             
         <article role="tabpanel" id="spells-panel-prepared" className="action-tile spells-panel" aria-labelledby="spells-tab-prepared" hidden={tab !== 'prepared'}>
-            <ul className="action-list spellList">
+            <ul className="action-list spell-list">
                 <li className="action-item spell-slot">
                     <span className="action-title">Low Level Spells</span>
                     <ul className="action-list">
                         {spellAtLevel(preparedSpells, 0).map((s) => (
                             <li className="action-item spell" key={s.id}>
-                                <button type='button' className='spell-name-button hover-grow' onClick={() => setOpenSpell(s)}>{s.name}</button>
+                                <button type='button' className='btn-spell-name hover-grow' onClick={() => setOpenSpell(s)}>{s.name}</button>
                                     <article className="action-button-container">{spellButtons(s, s.base_damage_dice)}</article>
                             </li>
                         ))}
@@ -179,13 +179,13 @@ function SpellsTab() {
                         <ul className="action-list">
                             {spellAtLevel(preparedSpells, i + 1).map((s) => (
                             <li className="action-item spell" key={s.id}>
-                                <button type='button' className='spell-name-button hover-grow' onClick={() => setOpenSpell(s)}>{s.name}</button>
+                                <button type='button' className='btn-spell-name hover-grow' onClick={() => setOpenSpell(s)}>{s.name}</button>
                                     <article className="action-button-container">{spellButtons(s, s.base_damage_dice)}</article>
                             </li>
                              ))}
                             {upcastsAtLevel(preparedSpells, i + 1).map((s) => (
                             <li className="action-item spell upcast-spell" key={s.upcastKey}>
-                                <button type='button' className='spell-name-button hover-grow' onClick={() => setOpenSpell(s)}>{s.name}</button>
+                                <button type='button' className='btn-spell-name hover-grow' onClick={() => setOpenSpell(s)}>{s.name}</button>
                                     <article className="action-button-container">{spellButtons(s, s.damage_dice || s.heal_dice)}</article>
                             </li>
                             ))}
@@ -198,21 +198,21 @@ function SpellsTab() {
                 {learnedSpells.length === 0 ? (
                     <p>You know nothing of magic.</p>
                 ) : (
-                    <ul className="action-list spellList">
+                    <ul className="action-list spell-list">
                     {learnedSpells.map((s) => (
                         <li className="action-item" key={s.id}>
                             {s.name} <br /> Level: {s.base_level}
                             <article className="action-button-container">
                             <form className="removeSpellForm" onSubmit={(e) => { e.preventDefault(); spellAction(s.id, 'unlearn'); }}>
-                                <button type="submit" id="unlearn-spell-button" className="action-button hover-grow">Unlearn</button>
+                                <button type="submit" id="unlearn-spell-button" className="btn-action hover-grow">Unlearn</button>
                             </form>
                             <form className="prepareSpellForm" onSubmit={(e) => { e.preventDefault(); spellAction(s.id, s.is_prepared ? 'unprepare' : 'prepare'); }}>
-                                <button type="submit" className="action-button hover-grow">
+                                <button type="submit" className="btn-action hover-grow">
                                     {s.is_prepared ? 'Unprepare' : 'Prepare'}
                                 </button>
                             </form>
                             <form className='setActionForm' onSubmit={(e) => { e.preventDefault(); spellAction(s.id, s.is_action ? 'removeAction' : 'setAction'); }}>
-                                <button type="submit" className="action-button hover-grow">
+                                <button type="submit" className="btn-action hover-grow">
                                     {s.is_action ? 'Remove Action' : 'Set Action'}
                                 </button>
                             </form>

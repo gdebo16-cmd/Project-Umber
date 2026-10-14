@@ -7,7 +7,7 @@ function Initiative({ character, hp, onRoll }) {
     return (
         <section className='container' id='initiative-container'>
             <article className='tile initiative-tile' id='initiative-tile-container' onClick={() => onRoll(`Initiative: ${d20() + init}`)}>
-                <p className='tile-component label-component cap-top' id='initiative-tile-label'>Initiative</p>
+                <p className='tile-component label-component tile-top' id='initiative-tile-label'>Initiative</p>
                 <p className='tile-component value-component' id='initiative-tile-value'>{signed(init)}</p>
             </article>
         </section>

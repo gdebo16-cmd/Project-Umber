@@ -1,1385 +1,1227 @@
 @import './themes.css';
 
-/* ---------- reset / base ---------- */
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-html {
-    max-width: var(--maxW);
-    overflow-x: var(--ofX1);
-}
-
-body {
-    width: var(--w1);
-    max-width: 3840px;
-    overflow-x: var(--ofX1);
-    overflow-y: auto;
-
-    /* safety: scroll if a tile min-height needs more room */
-    background-image: var(--background);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    font-family: var(--fontF);
-    font-weight: var(--fontW1);
-    font-style: var(--fontStyle);
-    height: var(--h2);
-    max-height: var(--maxH2);
-    min-height: var(--minH2);
-    margin: var(--mar1);
-    display: flex;
-    flex-direction: column;
-    color: var(--txt-color-1);
-}
-
-pre {
-    display: none;
-    max-width: var(--maxW);
-    overflow-x: auto;
-    white-space: pre-wrap;
-    word-break: break-word;
-    color: white;
-    backdrop-filter: var(--blur1);
-    font-size: var(--fontS3);
-}
-
-ul,
-li,
-a {
-    list-style: none;
-    text-decoration: none;
-}
-
-option {
-    background-color: var(--bg-color-1);
-    color: var(--txt-color-1);
-    border: var(--tileBorder);
-    padding: var(--pad3);
-    margin: var(--mar1);
-    text-align: center;
-    font-size: var(--fontS1);
-    font-weight: var(--fontW1);
-    font-style: var(--fontStyle);
-}
-
-/* Shared press/hover grow. Same 1.03 scale the old per-selector rules used. */
-
-.hover-grow {
-    transition: transform .5s ease;
-}
-
-.hover-grow:hover {
-    transform: scale(1.03);
-}
-
-/* Top cap / bottom cap used by inventory blocks and any tile that already
-   carried these exact declarations. Edit-page .topTile/.bottomTile are NOT
-   given the create-flow look here; those pages stay as they render today
-   unless an element also has the sheet classes below. */
-
-.cap-top {
-    background-color: var(--bgc-top);
-    border-radius: var(--toprad);
-}
-
-.cap-bottom {
-    background-color: var(--bgc-low);
-    border-radius: var(--lowrad);
-}
-
-/* ---------- header / nav ---------- */
-
-header {
-    z-index: 1;
-    position: relative;
-    flex-shrink: 0;
-}
-
-#siteTitle {
-    background-color: var(--bg-color-3);
-    color: var(--txt-color-1);
-    text-align: center;
-    padding: var(--pad1);
-    margin: var(--mar1);
-}
-
-#characterHeader {
-    width: var(--w1);
-    max-width: var(--maxW);
-    min-width: var(--minW1);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    color: var(--txt-color-1);
-    background-color: var(--bg-color-2);
-}
-
-#characterName,
-#characterRace,
-#characterClass {
-    font-size: var(--fontS2);
-    text-align: center;
-    padding: var(--pad2);
-    margin: var(--mar1);
-    border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
-    backdrop-filter: var(--blur2);
-}
-
-#characterName {
-    flex-grow: 3;
-}
-
-#characterRace,
-#characterClass {
-    flex-grow: 2;
-}
-
-#navBox {
-    border-radius: var(--lowrad);
-    box-shadow: var(--bs2);
-}
-
-#navContainer {
-    background-color: var(--bg-color-3);
-    border-radius: var(--lowrad);
-    margin: var(--mar1);
-    padding: var(--pad3);
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: stretch;
-}
-
-#homeNav,
-#themeNav,
-#characterNav,
-#campaignNav,
-#settingsNav {
-    min-width: var(--minW1);
-    flex: 1;
-    backdrop-filter: var(--blur2);
-}
-
-.navButton {
-    border: var(--tileBorder);
-    background-color: var(--bg-color-2);
-    padding: var(--pad2);
-    color: var(--txt-color-1);
-}
-
-#homeNav {
-    border-radius: 0 0 0 10px;
-}
-
-#themeNav {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: center;
-    min-width: var(--minW1);
-    position: relative;
-    box-sizing: border-box;
-}
-
-#themeNav label {
-    /* Keep for a11y; do not take layout space (select is the visible control) */
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: var(--pad3);
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: var(--border1);
-}
-
-#themeNav select {
-    box-sizing: border-box;
-    width: var(--w1);
-    height: var(--h1);
-    min-width: var(--minW1);
-    flex: 1 1 auto;
-    align-self: stretch;
-    margin: var(--mar1);
-    padding: var(--pad3);
-    border: var(--border1);
-    border-radius: inherit;
-    background-color: transparent;
-    color: inherit;
-    font: inherit;
-    line-height: inherit;
-    text-align: center;
-    text-align-last: center;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-
-#themeNav select.cap-bottom {
-    background-color: transparent;
-    border-radius: inherit;
-    border: var(--border1);
-}
-
-#settingsNav {
-    border-radius: 0;
-}
-
-#navContainer > :last-child {
-    border-radius: 0 0 10px 0;
-}
-
-#characterNav,
-#campaignNav,
-#settingsNav {
-    position: relative;
-}
-
-.dropDown {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    max-width: 100vw;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    z-index: 10;
-    background-color: var(--bg-color-5);
-    border: var(--tileBorder);
-    transition: all 1s ease;
-    padding: 0;
-    border-radius: var(--tile);
-}
-
-.titleLogo {
-    width: 100%;
-    max-width: 100px;
-    height: 100%;
-    max-height: 100px;
-    margin: 0;
-    padding: 0;
-    border: none;
-    box-shadow: none;
-}
-
-li:hover .dropDown {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    width: 100%;
-    box-shadow: var(--bs2);
-}
-
-.characterDropdownButton,
-.campaignDropdownButton,
-.settingsDropdownButton {
-    color: var(--txt-drop-1);
-    padding: 14%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: var(--tile);
-    border: var(--tileBorder);
-    margin: 3%;
-    font-size: 90%;
-    box-shadow: var(--bs2);
-}
-
-#settingsNav .dropDown {
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-}
-
-#campaignNav .dropDown {
-    left: auto;
-    right: 0;
-    transform: none;
-    background-color: var(--bg-color-2);
-    border: var(--accent);
-    box-shadow: var(--bs2);
-    color: var(--txt-color-1);
-}
-
-/* ---------- layout ---------- */
-
-.sheet-tabs {
-    display: none !important;
-}
-
-main {
-    width: var(--w1);
-    max-width: var(--maxW);
-    min-width: var(--minW1);
-    min-height: var(--minH1);
-    flex: 1 1 auto;
-    overflow-x: var(--ofX1);
-    overflow-y: var(--ofY1);
-
-    /* safety net with body */
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-
-    /* 7 rows: B, mid, skills x3, saves x2. Actions (H) spans skills+saves
-       so it ends level with the bottom of saving throws and stays tall. */
-    grid-template-rows: minmax(0, 0.85fr)
-        minmax(0, 0.95fr)
-        minmax(0, 1.2fr)
-        minmax(0, 1.2fr)
-        minmax(0, 1.2fr)
-        minmax(0, 1.2fr)
-        minmax(0, 1.2fr);
-
-    /* H and E share the bottom block: skills span full actions height (no saves) */
-    grid-template-areas: "B B B B B B B B"
-        "I I I F G C C C"
-        "H H H H E E E E"
-        "H H H H E E E E"
-        "H H H H E E E E"
-        "H H H H E E E E"
-        "H H H H E E E E";
-    gap: 0.5rem;
-    place-items: stretch;
-    align-items: stretch;
-    justify-items: stretch;
-    backdrop-filter: var(--blur1);
-}
-
-/* ---------- stat tiles ---------- */
-
-.tile {
-    border-bottom: none;
-    border-right: none;
-    text-align: center;
-    border: var(--tileBorder);
-    border-radius: var(--tile);
-    box-shadow: var(--bs2);
-    color: var(--txt-color-1);
-    min-width: var(--minW1);
-    width: var(--w1);
-}
-
-#stat-container {
-    grid-area: B;
-    display: flex;
-    flex-direction: row;
-    width: var(--w1);
-    gap: 8px;
-    margin-top: 1%;
-    background-color: var(--bg-color-4);
-}
-
-.stat-tile {
-    flex: 1 1 0;
-    cursor: pointer;
-    container-type: size;
-    display: grid;
-    grid-template-rows: 1fr 2fr 1fr;
-    height: var(--h1);
-    min-height: var(--minH1);
-    overflow: var(--ofX1);
-}
-
-#stat-tile-label,
-#stat-tile-modifier,
-#stat-tile-value {
-    margin: var(--mar1);
-}
-
-#stat-tile-value {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--minH1);
-    border-radius: 50% 50% 0 0;
-    overflow: var(--ofX1);
-}
-
-#stat-tile-label {
-    font-size: clamp(0.6rem, 15cqh, 0.85rem);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--minH1);
-    overflow: var(--ofX1);
-    border-radius: 0 0 50% 50%;
-}
-
-#stat-tile-modifier {
-    font-size: clamp(0.8rem, 26cqh, 1.45rem);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--minH1);
-    overflow: var(--ofX1);
-}
-
-#armor-class-container {
-    grid-area: F;
-}
-
-#initiative-container {
-    grid-area: G;
-}
-
-#armor-class-tile-container,
-#initiative-tile-container {
-    display: grid;
-    grid-template-rows: 1fr 2fr;
-    height: var(--h1);
-    min-height: var(--minH1);
-    container-type: size;
-    cursor: pointer;
-}
-
-.armor-class-tile,
-.initiative-tile {
-    container-type: size;
-    border: var(--tileBorder);
-    text-align: center;
-    border-radius: var(--tile);
-    box-shadow: var(--bs2);
-    height: var(--h1);
-    min-height: var(--minH1);
-}
-
-#armor-class-tile-label,
-#initiative-tile-label {
-    margin: var(--mar1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--minH1);
-    font-size: clamp(0.5rem, 13cqh, 1rem);
-    overflow: var(--ofX1);
-}
-
-#armor-class-tile-value,
-#initiative-tile-value {
-    margin: var(--mar1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--bgc-low);
-    border-radius: 0 0 10px 10px;
-    min-height: var(--minH1);
-    font-size: clamp(0.85rem, 30cqh, 1.55rem);
-    overflow: var(--ofX1);
-}
-
-/* ---------- skills ---------- */
-
-.skills-container {
-    grid-area: E;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: auto repeat(6, minmax(0, 1fr));
-    grid-auto-flow: column;
-    gap: 0.35rem;
-    height: var(--h1);
-    cursor: pointer;
-    border-radius: var(--tile);
-}
-
-#skills-title {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    flex-shrink: 0;
-    border: var(--tileBorder);
-    margin: var(--mar1);
-    container-type: inline-size;
-    padding: 0.35rem 0.6rem;
-    line-height: 1.2;
-    height: var(--h1);
-    font-size: clamp(0.75rem, 4.5cqi, 1.05rem);
-    overflow: var(--ofX1);
-    background-color: var(--bgc-top);
-    text-align: center;
-    box-shadow: var(--bs1);
-    border-radius: var(--tile);
-}
-
-.skill-tile {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr;
-    border-radius: var(--tile);
-    container-type: size;
-    cursor: pointer;
-    box-shadow: var(--bs2);
-    overflow: var(--ofX1);
-}
-
-.skill-label,
-.skill-value {
-    padding: 0.2rem 0.25rem;
-    margin: var(--mar1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: var(--ofX1);
-}
-
-.skill-label {
-    font-size: clamp(0.5rem, 18cqh, 1rem);
-    line-height: 1.15;
-}
-
-.skill-value {
-    font-size: clamp(0.8rem, 32cqh, 1.2rem);
-}
-
-/* ---------- health ---------- */
-
-.health-container {
-    grid-area: C;
-    border-radius: var(--tile);
-    box-shadow: var(--bs2);
-    border: var(--tileBorder);
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: minmax(0, 1fr) minmax(6px, 12%);
-    grid-template-areas: "a b c"
-        "d d d";
-    height: var(--h1);
-    min-height: var(--minH1);
-    overflow: var(--ofX1);
-    background-color: var(--bg-color-4);
-}
-
-.health-button-tile {
-    grid-area: a;
-    display: grid;
-    grid-template-rows: repeat(3, minmax(0, 1fr));
-    container-type: size;
-    overflow: var(--ofX1);
-    font-family: var(--fontF1);
-    font-weight: var(--fontW1);
-    font-style: var(--fontStyle);
-}
-
-.current-hp-tile {
-    grid-area: b;
-}
-
-.max-hp-tile {
-    grid-area: c;
-}
-
-.hp-bar-tile {
-    grid-area: d;
-    min-height: var(--minH1);
-    height: 60%;
-    align-self: center;
-    background: #444;
-    border-radius: var(--rad1);
-    overflow: var(--ofX1);
-    margin: 0 2%;
-}
-
-#hp-bar-fill {
-    height: var(--h1);
-    background: #3cb371;
-}
-
-.button-tile-component {
-    min-width: var(--minW1);
-    font-family: inherit;
-    font-size: clamp(0.55rem, min(18cqh, 14cqi), 1rem);
-    padding: 0 4%;
-    white-space: nowrap;
-    overflow: var(--ofX1);
-    text-overflow: ellipsis;
-}
-
-.button-component {
-    border: var(--border1);
-    color: var(--txtC1);
-    overflow: var(--ofX1);
-    cursor: pointer;
-}
-
-#heal-button {
-    border-radius: 10px 0 0 0;
-    background-color: var(--healColor);
-}
-
-#damage-button {
-    background-color: var(--damageColor);
-    border-radius: 0 0 0 10px;
-}
-
-#hp-input {
-    border: var(--border1);
-    color: var(--txt-color-1);
-    background-color: transparent;
-    text-align: center;
-    appearance: textfield;
-    -moz-appearance: textfield;
-}
-
-#hp-input::-webkit-outer-spin-button,
-#hp-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: var(--mar1);
-}
-
-.current-hp-tile,
-.max-hp-tile {
-    display: grid;
-    grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
-    min-width: var(--minW1);
-    min-height: var(--minH1);
-    container-type: size;
-    overflow: var(--ofX1);
-}
-
-.hp-label-component {
-    text-align: center;
-    font-size: clamp(0.55rem, min(18cqh, 12cqi), 1rem);
-    line-height: 1.1;
-    background-color: var(--bgc-top);
-    padding-top: 4%;
-    padding-bottom: 4%;
-    margin: var(--mar1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--minH1);
-    overflow: var(--ofX1);
-}
-
-.hp-value-component {
-    font-size: clamp(0.7rem, min(30cqh, 22cqi), 1.5rem);
-    text-align: center;
-    margin: var(--mar1);
-    background-color: var(--bgc-low);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--minH1);
-    overflow: var(--ofX1);
-}
-
-#current-hp-value--fallen {
-    font-size: clamp(0.5rem, min(14cqh, 11cqi), 0.9rem);
-    line-height: 1.1;
-    overflow-wrap: anywhere;
-}
-
-/* ---------- conditions ---------- */
-
-.condition-container {
-    grid-area: I;
-    border-radius: var(--tile);
-    border: var(--tileBorder);
-    box-shadow: var(--bs2);
-    display: grid;
-    grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
-    overflow: var(--ofX1);
-    container-type: size;
-}
-
-.condition-container > * {
-    min-height: var(--minH1);
-    max-height: var(--h1);
-}
-
-#condition-title {
-    font-size: clamp(0.7rem, 22cqh, 1rem);
-    padding: 0.35rem;
-    margin: var(--mar1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--minH1);
-    overflow: var(--ofX1);
-}
-
-.condition-tile {
-    font-size: clamp(0.7rem, 12cqh, 0.95rem);
-    margin-top: var(--mar1);
-    padding: 0.35rem 0.6rem;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: min-content;
-    column-gap: 0.75rem;
-    row-gap: 0.2rem;
-    align-content: start;
-    min-height: var(--minH1);
-    max-height: var(--h1);
-    overflow-x: var(--ofX1);
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255,255,255,0.35) transparent;
-}
-
-#conditions-list-1,
-#conditions-list-2,
-#conditions-list-3 {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-auto-flow: row dense;
-    grid-auto-rows: 1.4em;
-    align-items: center;
-    column-gap: 0.45em;
-    min-width: var(--minW1);
-    font-size: 0.85em;
-    text-align: left;
-}
-
-#conditions-list-1 > .condition-checkbox,
-#conditions-list-2 > .condition-checkbox {
-    grid-column: 1;
-    margin: var(--mar1);
-    width: 1em;
-    height: 1em;
-    cursor: pointer;
-}
-
-#conditions-list-1 > label,
-#conditions-list-2 > label {
-    grid-column: 2;
-    justify-self: start;
-    min-width: var(--minW1);
-    max-width: var(--w1);
-    overflow: var(--ofX1);
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-/* Exhaustion: own row under both columns, full width: label | slider | value */
-
-#conditions-list-3 {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: center;
-    column-gap: 0.5em;
-    min-width: var(--minW1);
-    font-size: 0.85em;
-    text-align: left;
-}
-
-.exhausted-component {
-    width: 100%;
-    min-width: var(--minW1);
-    margin: var(--mar1);
-}
-
-#conditions-list-3 output {
-    min-width: 2ch;
-    text-align: right;
-}
-
-#condition-checkbox {
-    cursor: pointer;
-}
-
-/* ---------- actions / spells / tabs ---------- */
-
-.action-container {
-    grid-area: H;
-    min-height: var(--minH1);
-    height: var(--h1);
-    max-height: var(--h1);
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-    align-items: start;
-    font-family: var(--fontF1);
-    font-weight: var(--fontW2);
-    font-style: var(--fontStyle);
-    border-radius: 15px;
-    box-shadow: var(--bs2);
-}
-
-.action-tab-list {
-    display: flex;
-    justify-content: space-around;
-    align-items: stretch;
-    gap: 0.5rem;
-    background-color: var(--bgc-top);
-    border-radius: var(--toprad);
-    border: var(--tileBorder);
-    height: auto;
-    min-height: var(--minH1);
-    padding: 0.5rem;
-    margin: var(--mar1);
-    box-shadow: var(--bs2);
-    overflow: auto;
-    scrollbar-width: none;
-    scrollbar-color: rgba(255,255,255,0.35) transparent;
-}
-
-/* the whole bar holding both tabs */
-
-.spells-tab .action-tab-list {
-    border-radius: var(--toprad);
-    gap: 0.25rem;
-    margin: 0 0.5rem;
-    padding: 0.5rem;
-}
-
-.spells-panel {
-    margin: 0 0.5rem;
-    padding: 0.5rem;
-    border-radius: var(--lowrad);
-}
-
-/* each tab button */
-
-.spells-tab [role="tab"] {
-    padding: 0.5rem 1rem;
-}
-
-/* the tab that's currently open */
-
-.spells-tab [role="tab"][aria-selected="true"] {
-    color: var(--accent);
-    background-color: var(--bgc-low);
-}
-
-.spell-slot-checkbox {
-    appearance: none;
-
-    /* turn off the browser's default box */
-    width: 1.1rem;
-    height: 1.1rem;
-    margin: .35rem 0.25rem;
-    border: 2px solid var(--accent);
-    border-radius: 50%;
-
-    /* round, like a gem. Use 3px for a square */
-    background-color: transparent;
-    cursor: pointer;
-    transition: background-color 0.2s, box-shadow 0.2s;
-}
-
-/* when the box is checked (slot used) */
-
-.spell-slot-checkbox:checked {
-    background-color: var(--accent);
-    box-shadow: 0 0 6px var(--accent);
-
-    /* a little glow */
-}
-
-/* when you hover over one */
-
-.spell-slot-checkbox:hover {
-    box-shadow: 0 0 4px var(--accent);
-}
-
-[role="tab"] {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    width: var(--w1);
-    border-radius: var(--rad1);
-    border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
-    color: var(--txt-color-1);
-    background-color: var(--bg-color-4);
-}
-
-[role="tab"][aria-selected="true"] {
-    font-weight: var(--fontW1);
-    box-shadow: var(--shadowInner);
-    border-top: none;
-    border-left: none;
-    color: var(--accent);
-}
-
-[role="tabpanel"] {
-    height: var(--h1);
-    background-color: var(--bgc-low);
-}
-
-.action-container > [role="tabpanel"],
-.panel-shell > [role="tabpanel"] {
-    min-height: 0;
-    height: auto;
-    max-height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-width: none;
-
-    /* scrolls by wheel/touch, no visible bar */
-}
-
-.action-container > [role="tabpanel"]::-webkit-scrollbar,
-.panel-shell > [role="tabpanel"]::-webkit-scrollbar {
-    display: none;
-}
-
-#panel-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-/* Only hide panels inside action / subpage shells â€” never .sheet-panel on desktop */
-
-.action-container > [role="tabpanel"][hidden],
-.panel-shell > [role="tabpanel"][hidden] {
-    display: none !important;
-}
-
-.spell-book-tabs {
-    border: var(--tileBorder);
-    border-radius: var(--tile);
-    box-shadow: var(--bs2);
-}
-
-.action-tile {
-    max-height: var(--h1);
-    border: var(--tileBorder);
-    border-top: none;
-    padding: 0.5rem;
-}
-
-.action-item.spell-slot {
-    /* both classes, so this beats the plain .action-item rule further down */
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-
-    /* title and list both go full width */
-    gap: .5rem;
-
-    /* no space between them */
-    padding: 0;
-
-    /* drop the .action-item padding */
-
-    /* drop the extra frame around both */
-    background: none;
-    overflow: var(--ofX1);
-    border: var(--tileBorder);
-    box-shadow: var(--bs2);
-}
-
-.spell-slot > .spell-list {
-    margin: 0;
-    border-top: none;
-
-    /* so the title and list don't draw a double line */
-    min-height: 1.5rem;
-
-    /* empty levels still show a small box */
-}
-
-.spellList {
-    display: flex;
-    gap: 0.75rem;
-}
-
-.action-title {
-    text-align: left;
-    background-color: var(--bgc-top);
-    border-radius: var(--toprad);
-    padding: 0.6rem;
-    border-bottom: none;
-    margin: 0;
-}
-
-.action-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    padding: 0.3rem;
-    margin: 0 0.5rem;
-}
-
-.action-item {
-    border: var(--tileBorder);
-    border-radius: var(--tile);
-    box-shadow: var(--bs2);
-    background-color: var(--bgc-low);
-    margin-bottom: 0.5rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.action-button-container {
-    display: flex;
-    gap: 0.125rem;
-    align-self: stretch;
-    flex-direction: row;
-}
-
-.action-button {
-    flex: 1;
-    align-self: stretch;
-    background-color: var(--accent);
-    border: var(--tileBorder);
-    border-radius: var(--rad2);
-    box-shadow: var(--bs2);
-    margin: 0;
-}
-
-.action-button:hover {
-    background-color: var(--bg-color-2);
-    color: var(--accent);
-    cursor: pointer;
-}
-
-.title-tile {
-    display: flex;
-    margin: 1%;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
-    border: var(--tileBorder);
-    border-radius: var(--tile);
-    box-shadow: var(--bs2);
-    background-color: var(--bgc-low);
-    text-align: center;
-}
-
-.action-tab-title {
-    border-radius: var(--toprad);
-    background-color: var(--bgc-top);
-    margin: 0;
-}
-
-.link-button {
-    border: none;
-    text-align: right;
-    border-radius: var(--lowrad);
-    background-color: var(--bgc-low);
-    padding: 2%;
-    margin: 0;
-    color: var(--txt-color-1);
-    font-family: var(--fontF1);
-    font-weight: var(--fontW1);
-    font-style: var(--fontStyle);
-}
-
-/* ---------- inventory ---------- */
-
-.learnedSpell {
-    text-align: right;
-    margin-right: 1%;
-}
-
-em {
-    color: var(--accent);
-    margin-left: 1%;
-    flex: 1 1 32%;
-}
-
-.addItemButton,
-.removeItemButton {
-    border: var(--tileBorder);
-    background-color: var(--bgc-low);
-    border-radius: var(--tile);
-    cursor: pointer;
-    color: var(--txt-color-1);
-}
-
-.removeItemButton {
-    padding: 15%;
-    margin: 0;
-    flex: 1 1 32%;
-}
-
-.addItemButton:hover,
-.removeItemButton:hover {
-    background-color: var(--bgc-top);
-    color: var(--accent);
-    cursor: pointer;
-}
-
-/* ---------- roll orb ---------- */
-
-.roll-orb {
-    position: fixed;
-    left: 1rem;
-    top: 50%;
-    z-index: 1000;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    background-color: var(--bgc-orb);
-    border: var(--tileBorder);
-    cursor: grab;
-    user-select: none;
-    touch-action: none;
-}
-
-.roll-orb__panel {
-    position: relative;
-
-    /* lets the tail be placed relative to the bubble */
-    display: inline-block;
-    padding: 0.75rem 1rem;
-    background-color: var(--bgc-bubble-send);
-    border-radius: 1rem 1rem 1rem .5rem;
-
-    /* the rounded box */
-    max-width: 20rem;
-    width: 60%;
-    margin: 4%;
-}
-
-.roll-orb__panel::after {
-    content: '';
-    position: absolute;
-    bottom: -0.6rem;
-    left: .5rem;
-    border-width: 0.6rem 0.6rem 0 0;
-    border-style: solid;
-    border-color: var(--bgc-bubble-send) transparent;
-}
-
-.roll-orb.is-open {
-    width: 18rem;
-    height: 16rem;
-    border-radius: 0.5rem;
-    cursor: default;
-}
-
-.roll-orb.is-dragging {
-    cursor: grabbing;
-}
-
-.roll-orb.is-open .roll-orb-face {
-    display: none;
-}
-
-.roll-orb:not(.is-open) .roll-orb__panel {
-    display: none;
-}
-
-/* ---------- overflow guard ---------- */
-
-main > *,
-.sheet-panel,
-#stat-container,
-.health-container,
-.skills-container,
-#armor-class-container,
-#initiative-container,
-.action-container,
-.condition-container,
-.gear,
-#healthContainer,
-#skills-container,
-.condition-tile {
-    min-width: 0;
-    max-width: 100%;
-    min-height: 0;
-}
-
-.skill-label,
-.skill-value,
-#stat-tile-label,
-#stat-tile-value {
-    overflow-wrap: anywhere;
-    word-break: break-word;
-}
-
-/* ---------- breakpoints ---------- */
-
-@media (max-width: 768px) {
-    /* Keep the page inside the viewport: no child may invent a width
-       wider than the screen (the usual culprits are width:100% + padding
-       without border-box, flex items that refuse to shrink, or fixed
-       grid tracks). */
-
-    html,
-    body,
-    header,
-    #siteTitle,
-    #navBox,
-    #characterHeader,
-    #navContainer,
-    main {
-        max-width: 100%;
-        min-width: 0;
+@layer pages {
+    /* ---------- reset / base ---------- */
+
+    *,
+    *::before,
+    *::after {
         box-sizing: border-box;
+    }
+
+    html {
+        max-width: var(--maxW);
+        overflow-x: var(--ofX1);
     }
 
     body {
-        height: auto;
-        max-height: none;
-        width: 100%;
-        overflow-x: hidden;
+        width: var(--w1);
+        max-width: 3840px;
+        overflow-x: var(--ofX1);
         overflow-y: auto;
-    }
 
-    /* Header: three cells share one row; text may shrink/wrap so "Wizard" stays on-screen.
-       (Old rule set width:100% on EACH cell = three full widths side by side.) */
-
-    #characterHeader {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-    }
-
-    #characterName,
-    #characterRace,
-    #characterClass {
-        flex: 1 1 0;
-        width: auto;
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-        font-size: clamp(0.65rem, 3.2vw, 1.05rem);
-        padding: 0.35rem 0.25rem;
-        overflow-wrap: anywhere;
-        word-break: break-word;
-        white-space: normal;
-        hyphens: auto;
-    }
-
-    /* Nav: equal share; wrap to a second row when five labels cannot fit one line */
-
-    #navContainer {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-        margin-bottom: 1%;
-    }
-
-    #homeNav,
-    #themeNav,
-    #characterNav,
-    #campaignNav,
-    #settingsNav {
-        flex: 1 1 0;
-        min-width: 0;
-        max-width: 100%;
-        box-sizing: border-box;
-
-        /* ~3 per row â†’ second row for the leftover buttons */
-        flex-basis: 30%;
-        white-space: nowrap;
-        font-size: clamp(0.65rem, 2.8vw, 0.95rem);
-        padding: 0.4rem 0.25rem;
-    }
-
-    #homeNav {
-        border-radius: 0;
-    }
-
-    #navContainer > #campaignNav {
-        border-radius: 0 0 10px 10px;
-
-        /* own row on mobile: round both bottom corners */
-    }
-
-    #themeNav {
-        /* Stay matched to sibling nav buttons (padding already set above) */
-        padding: 0.4rem 0.25rem;
-    }
-
-    #themeNav select {
-        min-width: 0;
-        max-width: 100%;
-        font-size: inherit;
-    }
-
-    .dropDown,
-    #campaignNav .dropDown {
-        left: 0;
-        right: 0;
-        width: auto;
-        max-width: 100%;
-        box-sizing: border-box;
-        transform: none;
-
-        /* undo the desktop centering shift, which pushes it off-screen here */
-    }
-
-    main {
+        /* safety: scroll if a tile min-height needs more room */
+        background-image: var(--background);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: var(--fontF);
+        font-weight: var(--fontW1);
+        font-style: var(--fontStyle);
+        height: var(--h2);
+        max-height: var(--maxH2);
+        min-height: var(--minH2);
+        margin: var(--mar1);
         display: flex;
         flex-direction: column;
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        min-height: 0;
-        flex: none;
-        gap: 8px;
-        grid-template-areas: none;
-        grid-template-columns: none;
-        grid-template-rows: none;
-        overflow-x: hidden;
-        overflow-y: visible;
-        height: auto;
-        box-sizing: border-box;
+        color: var(--txt-color-1);
     }
 
-    .sheet-tabs {
-        display: flex !important;
+    pre {
+        display: none;
+        max-width: var(--maxW);
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+        color: white;
+        backdrop-filter: var(--blur1);
+        font-size: var(--fontS3);
+    }
+
+    ul,
+    li,
+    a {
+        list-style: none;
+        text-decoration: none;
+    }
+
+    option {
+        background-color: var(--bg-color-5);
+        color: var(--txt-color-1);
+        border: var(--tileBorder);
+        padding: var(--pad3);
+        margin: var(--mar1);
+        text-align: center;
+        font-size: var(--fontS1);
+        font-weight: var(--fontW1);
+        font-style: var(--fontStyle);
+    }
+
+    /* Shared press/hover grow. Same 1.03 scale the old per-selector rules used. */
+
+    /* Top cap / bottom cap used by inventory blocks and any tile that already
+       carried these exact declarations. Edit-page .topTile/.bottomTile are NOT
+       given the create-flow look here; those pages stay as they render today
+       unless an element also has the sheet classes below. */
+
+    /* ---------- header / nav ---------- */
+
+    header {
+        z-index: 1;
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    #site-title {
+        background-color: var(--bg-color-3);
+        color: var(--txt-color-1);
+        text-align: center;
+        padding: var(--pad1);
+        margin: var(--mar1);
+    }
+
+    #character-header {
+        width: var(--w1);
+        max-width: var(--maxW);
+        min-width: var(--minW1);
+        display: flex;
         flex-direction: row;
-        flex-wrap: wrap;
+        justify-content: space-between;
+        color: var(--txt-color-1);
+        background-color: var(--bg-color-2);
+    }
+
+    #character-name,
+    #character-race,
+    #character-class {
+        font-size: var(--fontS2);
+        text-align: center;
+        padding: var(--pad2);
+        margin: var(--mar1);
+        border: var(--tileBorder);
+        border-bottom: none;
+        border-right: none;
+        backdrop-filter: var(--blur2);
+    }
+
+    #character-name {
+        flex-grow: 3;
+    }
+
+    #character-race,
+    #character-class {
+        flex-grow: 2;
+    }
+
+    #nav-box {
+        border-radius: var(--lowrad);
+        box-shadow: var(--bs2);
+    }
+
+    #nav-container {
+        background-color: var(--bg-color-3);
+        border-radius: var(--lowrad);
+        margin: var(--mar1);
+        padding: var(--pad3);
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+    }
+
+    #home-nav,
+    #theme-nav,
+    #character-nav,
+    #campaign-nav,
+    #settings-nav {
+        min-width: var(--minW1);
+        flex: 1;
+        backdrop-filter: var(--blur2);
+    }
+
+    .btn-nav {
+        border: var(--tileBorder);
+        background-color: var(--bg-color-2);
+        padding: var(--pad2);
+        color: var(--txt-color-1);
+    }
+
+    #home-nav {
+        border-radius: 0 0 0 10px;
+    }
+
+    #theme-nav {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: center;
+        min-width: var(--minW1);
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    #theme-nav label {
+        /* Keep for a11y; do not take layout space (select is the visible control) */
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: var(--pad3);
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+    }
+}
+
+@layer overrides {
+    #theme-nav label /* clash: kept at old specificity */ {
+        border: var(--border1);
+    }
+}
+
+@layer pages {
+    #theme-nav select {
+        box-sizing: border-box;
+        width: var(--w1);
+        height: var(--h1);
+        min-width: var(--minW1);
+        flex: 1 1 auto;
+        align-self: stretch;
+        margin: var(--mar1);
+        padding: var(--pad3);
+        border: var(--border1);
+        border-radius: inherit;
+        background-color: transparent;
+        color: inherit;
+        font: inherit;
+        line-height: inherit;
+        text-align: center;
+        text-align-last: center;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+
+    #theme-nav select.tile-bottom {
+        background-color: transparent;
+    }
+}
+
+@layer overrides {
+    #theme-nav select.tile-bottom /* clash: kept at old specificity */ {
+        border-radius: inherit;
+        border: var(--border1);
+    }
+}
+
+@layer pages {
+    #settings-nav {
+        border-radius: 0;
+    }
+}
+
+@layer overrides {
+    #nav-container > :last-child /* clash: kept at old specificity */ {
+        border-radius: 0 0 10px 0;
+    }
+}
+
+@layer pages {
+    #character-nav,
+    #campaign-nav,
+    #settings-nav {
+        position: relative;
+    }
+
+    .drop-down {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        max-width: 100vw;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        z-index: 10;
+        background-color: var(--bg-color-5);
+        border: var(--tileBorder);
+        transition: all 1s ease;
+        padding: 0;
+        border-radius: var(--tile);
+    }
+
+    .title-logo {
         width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        border-bottom: var(--tileBorder);
-        box-sizing: border-box;
-        border-radius: 10px 10px 0 0;
+        max-width: 100px;
+        height: 100%;
+        max-height: 100px;
+        margin: 0;
+        padding: 0;
+        border: none;
+        box-shadow: none;
     }
 
-    .sheet-tabs [role="tab"] {
-        width: auto;
-        flex: 1 1 0;
-        min-width: 0;
-        box-sizing: border-box;
+    li:hover .drop-down {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        width: 100%;
+        box-shadow: var(--bs2);
     }
 
-    /* close the gap between the tab bar and the open panel */
+    .btn-drop-character,
+    .btn-drop-campaign,
+    .btn-drop-settings {
+        color: var(--txt-drop-1);
+        padding: 14%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: var(--tile);
+        border: var(--tileBorder);
+        margin: 3%;
+        font-size: 90%;
+        box-shadow: var(--bs2);
+    }
+
+    #settings-nav .drop-down {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+
+    #campaign-nav .drop-down {
+        left: auto;
+        right: 0;
+        transform: none;
+        background-color: var(--bg-color-5);
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+        color: var(--txt-color-1);
+    }
+
+    /* ---------- layout ---------- */
 
     .sheet-tabs {
-        margin-bottom: -8px;
-
-        /* cancels main's 8px gap */
-    }
-
-    .sheet-panel > :first-child {
-        margin-top: 0;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-    }
-
-    .sheet-panel[hidden] {
         display: none !important;
     }
 
-    .sheet-panel {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        overflow-x: hidden;
-        box-sizing: border-box;
+    main {
+        width: var(--w1);
+        max-width: var(--maxW);
+        min-width: var(--minW1);
+        min-height: var(--minH1);
+        flex: 1 1 auto;
+        overflow-x: var(--ofX1);
+        overflow-y: var(--ofY1);
+
+        /* safety net with body */
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+
+        /* 7 rows: B, mid, skills x3, saves x2. Actions (H) spans skills+saves
+           so it ends level with the bottom of saving throws and stays tall. */
+        grid-template-rows: minmax(0, 0.85fr)
+            minmax(0, 0.95fr)
+            minmax(0, 1.2fr)
+            minmax(0, 1.2fr)
+            minmax(0, 1.2fr)
+            minmax(0, 1.2fr)
+            minmax(0, 1.2fr);
+
+        /* H and E share the bottom block: skills span full actions height (no saves) */
+        grid-template-areas: "B B B B B B B B"
+            "I I I F G C C C"
+            "H H H H E E E E"
+            "H H H H E E E E"
+            "H H H H E E E E"
+            "H H H H E E E E"
+            "H H H H E E E E";
+        gap: 0.5rem;
+        place-items: stretch;
+        align-items: stretch;
+        justify-items: stretch;
+        backdrop-filter: var(--blur1);
     }
 
+    /* ---------- stat tiles ---------- */
+
+    .tile {
+        border-bottom: none;
+        border-right: none;
+        text-align: center;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        color: var(--txt-color-1);
+        min-width: var(--minW1);
+        width: var(--w1);
+    }
+
+    #stat-container {
+        grid-area: B;
+        display: flex;
+        flex-direction: row;
+        width: var(--w1);
+        gap: 8px;
+        margin-top: 1%;
+        background-color: var(--bg-color-4);
+    }
+
+    .stat-tile {
+        flex: 1 1 0;
+        cursor: pointer;
+        container-type: size;
+        display: grid;
+        grid-template-rows: 1fr 2fr 1fr;
+        height: var(--h1);
+        min-height: var(--minH1);
+        overflow: var(--ofX1);
+    }
+
+    #stat-container .stat-tile-label,
+    #stat-container .stat-tile-modifier,
+    #stat-container .stat-tile-value {
+        margin: var(--mar1);
+    }
+
+    #stat-container .stat-tile-value {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+    }
+}
+
+@layer overrides {
+    #stat-container .stat-tile-value /* clash: kept at old specificity */ {
+        border-radius: 50% 50% 0 0;
+        overflow: var(--ofX1);
+    }
+}
+
+@layer pages {
+    #stat-container .stat-tile-label {
+        font-size: clamp(0.6rem, 15cqh, 0.85rem);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+    }
+}
+
+@layer overrides {
+    #stat-container .stat-tile-label /* clash: kept at old specificity */ {
+        overflow: var(--ofX1);
+        border-radius: 0 0 50% 50%;
+    }
+}
+
+@layer pages {
+    #stat-container .stat-tile-modifier {
+        font-size: clamp(0.8rem, 26cqh, 1.45rem);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+    }
+}
+
+@layer overrides {
+    #stat-container .stat-tile-modifier /* clash: kept at old specificity */ {
+        overflow: var(--ofX1);
+    }
+}
+
+@layer pages {
+    #armor-class-container {
+        grid-area: F;
+    }
+
+    #initiative-container {
+        grid-area: G;
+    }
+
+    #armor-class-tile-container,
+    #initiative-tile-container {
+        display: grid;
+        grid-template-rows: 1fr 2fr;
+        height: var(--h1);
+        min-height: var(--minH1);
+        container-type: size;
+        cursor: pointer;
+    }
+
+    .armor-class-tile,
+    .initiative-tile {
+        container-type: size;
+        border: var(--tileBorder);
+        text-align: center;
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        height: var(--h1);
+        min-height: var(--minH1);
+    }
+
+    #armor-class-tile-label,
+    #initiative-tile-label {
+        margin: var(--mar1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        font-size: clamp(0.5rem, 13cqh, 1rem);
+    }
+}
+
+@layer overrides {
+    #armor-class-tile-label,
+    #initiative-tile-label /* clash: kept at old specificity */ {
+        overflow: var(--ofX1);
+    }
+}
+
+@layer pages {
+    #armor-class-tile-value,
+    #initiative-tile-value {
+        margin: var(--mar1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--bgc-low);
+        border-radius: 0 0 10px 10px;
+        min-height: var(--minH1);
+        font-size: clamp(0.85rem, 30cqh, 1.55rem);
+    }
+}
+
+@layer overrides {
+    #armor-class-tile-value,
+    #initiative-tile-value /* clash: kept at old specificity */ {
+        overflow: var(--ofX1);
+    }
+}
+
+@layer pages {
+    /* ---------- skills ---------- */
+
+    .skills-container {
+        grid-area: E;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: auto repeat(6, minmax(0, 1fr));
+        grid-auto-flow: column;
+        gap: 0.35rem;
+        height: var(--h1);
+        cursor: pointer;
+        border-radius: var(--tile);
+    }
+
+    #skills-title {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        flex-shrink: 0;
+        margin: var(--mar1);
+        container-type: inline-size;
+        padding: 0.35rem 0.6rem;
+        line-height: 1.2;
+        height: var(--h1);
+        font-size: clamp(0.75rem, 4.5cqi, 1.05rem);
+        overflow: var(--ofX1);
+        background-color: var(--bgc-top);
+        text-align: center;
+        box-shadow: var(--bs1);
+        border-radius: var(--tile);
+    }
+}
+
+@layer overrides {
+    #skills-title /* clash: kept at old specificity */ {
+        border: var(--tileBorder);
+    }
+}
+
+@layer pages {
+    .skill-tile {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr;
+        border-radius: var(--tile);
+        container-type: size;
+        cursor: pointer;
+        box-shadow: var(--bs2);
+        overflow: var(--ofX1);
+    }
+
+    .skill-label,
+    .skill-value {
+        padding: 0.2rem 0.25rem;
+        margin: var(--mar1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: var(--ofX1);
+    }
+
+    .skill-label {
+        font-size: clamp(0.5rem, 18cqh, 1rem);
+        line-height: 1.15;
+    }
+
+    .skill-value {
+        font-size: clamp(0.8rem, 32cqh, 1.2rem);
+    }
+
+    /* ---------- health ---------- */
+
+    .health-container {
+        grid-area: C;
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        border: var(--tileBorder);
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: minmax(0, 1fr) minmax(6px, 12%);
+        grid-template-areas: "a b c"
+            "d d d";
+        height: var(--h1);
+        min-height: var(--minH1);
+        overflow: var(--ofX1);
+        background-color: var(--bg-color-4);
+    }
+
+    .health-button-tile {
+        grid-area: a;
+        display: grid;
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        container-type: size;
+        overflow: var(--ofX1);
+        font-family: var(--fontF1);
+        font-weight: var(--fontW1);
+        font-style: var(--fontStyle);
+    }
+
+    .current-hp-tile {
+        grid-area: b;
+    }
+
+    .max-hp-tile {
+        grid-area: c;
+    }
+
+    .hp-bar-tile {
+        grid-area: d;
+        min-height: var(--minH1);
+        height: 60%;
+        align-self: center;
+        background: #444;
+        border-radius: var(--rad1);
+        overflow: var(--ofX1);
+        margin: 0 2%;
+    }
+
+    #hp-bar-fill {
+        height: var(--h1);
+        background: #3cb371;
+    }
+
+    .button-tile-component {
+        min-width: var(--minW1);
+        font-family: inherit;
+        font-size: clamp(0.55rem, min(18cqh, 14cqi), 1rem);
+        padding: 0 4%;
+        white-space: nowrap;
+        overflow: var(--ofX1);
+        text-overflow: ellipsis;
+    }
+
+    .button-component {
+        border: var(--border1);
+        color: var(--txtC1);
+        overflow: var(--ofX1);
+        cursor: pointer;
+    }
+
+    #heal-button {
+        border-radius: 10px 0 0 0;
+        background-color: var(--healColor);
+    }
+
+    #damage-button {
+        background-color: var(--damageColor);
+        border-radius: 0 0 0 10px;
+    }
+
+    #hp-input {
+        color: var(--txt-color-1);
+        background-color: transparent;
+        text-align: center;
+        appearance: textfield;
+        -moz-appearance: textfield;
+    }
+}
+
+@layer overrides {
+    #hp-input /* clash: kept at old specificity */ {
+        border: var(--border1);
+    }
+}
+
+@layer pages {
+    #hp-input::-webkit-outer-spin-button,
+    #hp-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: var(--mar1);
+    }
+
+    .current-hp-tile,
+    .max-hp-tile {
+        display: grid;
+        grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
+        min-width: var(--minW1);
+        min-height: var(--minH1);
+        container-type: size;
+        overflow: var(--ofX1);
+    }
+
+    .hp-label-component {
+        text-align: center;
+        font-size: clamp(0.55rem, min(18cqh, 12cqi), 1rem);
+        line-height: 1.1;
+        background-color: var(--bgc-top);
+        padding-top: 4%;
+        padding-bottom: 4%;
+        margin: var(--mar1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        overflow: var(--ofX1);
+    }
+
+    .hp-value-component {
+        font-size: clamp(0.7rem, min(30cqh, 22cqi), 1.5rem);
+        text-align: center;
+        margin: var(--mar1);
+        background-color: var(--bgc-low);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        overflow: var(--ofX1);
+    }
+
+    #current-hp-value--fallen {
+        font-size: clamp(0.5rem, min(14cqh, 11cqi), 0.9rem);
+        line-height: 1.1;
+        overflow-wrap: anywhere;
+    }
+
+    /* ---------- conditions ---------- */
+
+    .condition-container {
+        grid-area: I;
+        border-radius: var(--tile);
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+        display: grid;
+        grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
+        overflow: var(--ofX1);
+        container-type: size;
+    }
+
+    .condition-container > * {
+        min-height: var(--minH1);
+        max-height: var(--h1);
+    }
+
+    #condition-title {
+        font-size: clamp(0.7rem, 22cqh, 1rem);
+        padding: 0.35rem;
+        margin: var(--mar1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+    }
+}
+
+@layer overrides {
+    #condition-title /* clash: kept at old specificity */ {
+        overflow: var(--ofX1);
+    }
+}
+
+@layer pages {
+    .condition-tile {
+        font-size: clamp(0.7rem, 12cqh, 0.95rem);
+        margin-top: var(--mar1);
+        padding: 0.35rem 0.6rem;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-auto-rows: min-content;
+        column-gap: 0.75rem;
+        row-gap: 0.2rem;
+        align-content: start;
+        min-height: var(--minH1);
+        max-height: var(--h1);
+        overflow-x: var(--ofX1);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255,255,255,0.35) transparent;
+    }
+
+    #conditions-list-1,
+    #conditions-list-2,
+    #conditions-list-3 {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        grid-auto-flow: row dense;
+        grid-auto-rows: 1.4em;
+        align-items: center;
+        column-gap: 0.45em;
+        min-width: var(--minW1);
+        font-size: 0.85em;
+        text-align: left;
+    }
+
+    #conditions-list-1 > .condition-checkbox,
+    #conditions-list-2 > .condition-checkbox {
+        grid-column: 1;
+        margin: var(--mar1);
+        width: 1em;
+        height: 1em;
+        cursor: pointer;
+    }
+
+    #conditions-list-1 > label,
+    #conditions-list-2 > label {
+        grid-column: 2;
+        justify-self: start;
+        min-width: var(--minW1);
+        max-width: var(--w1);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+}
+
+@layer overrides {
+    #conditions-list-1 > label,
+    #conditions-list-2 > label /* clash: kept at old specificity */ {
+        overflow: var(--ofX1);
+    }
+}
+
+@layer pages {
+    /* Exhaustion: own row under both columns, full width: label | slider | value */
+
+    #conditions-list-3 {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        column-gap: 0.5em;
+        min-width: var(--minW1);
+        font-size: 0.85em;
+        text-align: left;
+    }
+
+    .exhausted-component {
+        width: 100%;
+        min-width: var(--minW1);
+        margin: var(--mar1);
+    }
+
+    #conditions-list-3 output {
+        min-width: 2ch;
+        text-align: right;
+    }
+
+    #condition-checkbox {
+        cursor: pointer;
+    }
+
+    /* ---------- actions / spells / tabs ---------- */
+
+    .action-container {
+        grid-area: H;
+        min-height: var(--minH1);
+        height: var(--h1);
+        max-height: var(--h1);
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+        align-items: start;
+        font-family: var(--fontF1);
+        font-weight: var(--fontW2);
+        font-style: var(--fontStyle);
+        border-radius: 15px;
+        box-shadow: var(--bs2);
+    }
+
+    .action-tab-list {
+        display: flex;
+        justify-content: space-around;
+        align-items: stretch;
+        gap: 0.5rem;
+        background-color: var(--bgc-top);
+        border-radius: var(--toprad);
+        border: var(--tileBorder);
+        height: auto;
+        min-height: var(--minH1);
+        padding: 0.5rem;
+        margin: var(--mar1);
+        box-shadow: var(--bs2);
+        overflow: auto;
+        scrollbar-width: none;
+        scrollbar-color: rgba(255,255,255,0.35) transparent;
+    }
+
+    /* the whole bar holding both tabs */
+
+    .spells-tab .action-tab-list {
+        border-radius: var(--toprad);
+        gap: 0.25rem;
+        margin: 0 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .spells-panel {
+        margin: 0 0.5rem;
+        padding: 0.5rem;
+        border-radius: var(--lowrad);
+    }
+
+    /* each tab button */
+
+    .spells-tab [role="tab"] {
+        padding: 0.5rem 1rem;
+    }
+
+    /* the tab that's currently open */
+
+    .spells-tab [role="tab"][aria-selected="true"] {
+        color: var(--accent);
+        background-color: var(--bgc-low);
+    }
+
+    .spell-slot-checkbox {
+        appearance: none;
+
+        /* turn off the browser's default box */
+        width: 1.1rem;
+        height: 1.1rem;
+        margin: .35rem 0.25rem;
+        border: 2px solid var(--accent);
+        border-radius: 50%;
+
+        /* round, like a gem. Use 3px for a square */
+        background-color: transparent;
+        cursor: pointer;
+        transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    /* when the box is checked (slot used) */
+
+    .spell-slot-checkbox:checked {
+        background-color: var(--accent);
+        box-shadow: 0 0 6px var(--accent);
+
+        /* a little glow */
+    }
+
+    /* when you hover over one */
+
+    .spell-slot-checkbox:hover {
+        box-shadow: 0 0 4px var(--accent);
+    }
+
+    [role="tab"] {
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        width: var(--w1);
+        border-radius: var(--rad1);
+        border: var(--tileBorder);
+        border-bottom: none;
+        border-right: none;
+        color: var(--txt-color-1);
+        background-color: var(--bg-color-4);
+    }
+
+    [role="tab"][aria-selected="true"] {
+        font-weight: var(--fontW1);
+        border-top: none;
+        border-left: none;
+        color: var(--accent);
+    }
+}
+
+@layer overrides {
+    [role="tab"][aria-selected="true"] /* clash: kept at old specificity */ {
+        box-shadow: var(--shadowInner);
+    }
+}
+
+@layer pages {
+    [role="tabpanel"] {
+        height: var(--h1);
+        background-color: var(--bgc-low);
+    }
+
+    .action-container > [role="tabpanel"],
+    .panel-shell > [role="tabpanel"] {
+        min-height: 0;
+        height: auto;
+        max-height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: none;
+
+        /* scrolls by wheel/touch, no visible bar */
+    }
+
+    .action-container > [role="tabpanel"]::-webkit-scrollbar,
+    .panel-shell > [role="tabpanel"]::-webkit-scrollbar {
+        display: none;
+    }
+
+    #panel-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    /* Only hide panels inside action / subpage shells â€” never .sheet-panel on desktop */
+
+    .action-container > [role="tabpanel"][hidden],
+    .panel-shell > [role="tabpanel"][hidden] {
+        display: none !important;
+    }
+
+    .spell-book-tabs {
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+    }
+
+    .action-tile {
+        max-height: var(--h1);
+        border: var(--tileBorder);
+        border-top: none;
+        padding: 0.5rem;
+    }
+
+    .action-item.spell-slot {
+        /* both classes, so this beats the plain .action-item rule further down */
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        /* title and list both go full width */
+        gap: .5rem;
+
+        /* no space between them */
+        padding: 0;
+
+        /* drop the .action-item padding */
+
+        /* drop the extra frame around both */
+        background: none;
+        overflow: var(--ofX1);
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+    }
+
+
+
+    .spell-list {
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    .action-title {
+        text-align: left;
+        background-color: var(--bgc-top);
+        border-radius: var(--toprad);
+        padding: 0.6rem;
+        border-bottom: none;
+        margin: 0;
+    }
+
+    .action-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        padding: 0.3rem;
+        margin: 0 0.5rem;
+    }
+
+    .action-item {
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        background-color: var(--bgc-low);
+        margin-bottom: 0.5rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .action-button-container {
+        display: flex;
+        gap: 0.125rem;
+        align-self: stretch;
+        flex-direction: row;
+    }
+
+    .btn-action {
+        flex: 1;
+        align-self: stretch;
+        background-color: var(--accent);
+        border: var(--tileBorder);
+        border-radius: var(--rad2);
+        box-shadow: var(--bs2);
+        margin: 0;
+    }
+
+    .btn-action:hover {
+        background-color: var(--bg-color-2);
+        color: var(--accent);
+        cursor: pointer;
+    }
+
+    .title-tile {
+        display: flex;
+        margin: 1%;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        background-color: var(--bgc-low);
+        text-align: center;
+    }
+
+    .action-tab-title {
+        border-radius: var(--toprad);
+        background-color: var(--bgc-top);
+        margin: 0;
+    }
+
+    .btn-link {
+        border: none;
+        text-align: right;
+        border-radius: var(--lowrad);
+        background-color: var(--bgc-low);
+        padding: 2%;
+        margin: 0;
+        color: var(--txt-color-1);
+        font-family: var(--fontF1);
+        font-weight: var(--fontW1);
+        font-style: var(--fontStyle);
+    }
+
+    /* ---------- inventory ---------- */
+
+    .learned-spell {
+        text-align: right;
+        margin-right: 1%;
+    }
+
+    em {
+        color: var(--accent);
+        margin-left: 1%;
+        flex: 1 1 32%;
+    }
+
+
+
+
+
+
+
+    /* ---------- roll orb ---------- */
+
+    .roll-orb {
+        position: fixed;
+        left: 1rem;
+        top: 50%;
+        z-index: 1000;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        background-color: var(--bgc-orb);
+        border: var(--tileBorder);
+        cursor: grab;
+        user-select: none;
+        touch-action: none;
+    }
+
+    .roll-orb-panel {
+        position: relative;
+
+        /* lets the tail be placed relative to the bubble */
+        display: inline-block;
+        padding: 0.75rem 1rem;
+        background-color: var(--bgc-bubble-send);
+        border-radius: 1rem 1rem 1rem .5rem;
+
+        /* the rounded box */
+        max-width: 20rem;
+        width: 60%;
+        margin: 4%;
+    }
+
+    .roll-orb-panel::after {
+        content: '';
+        position: absolute;
+        bottom: -0.6rem;
+        left: .5rem;
+        border-width: 0.6rem 0.6rem 0 0;
+        border-style: solid;
+        border-color: var(--bgc-bubble-send) transparent;
+    }
+
+    .roll-orb.is-open {
+        width: 18rem;
+        height: 16rem;
+        border-radius: 0.5rem;
+        cursor: default;
+    }
+
+    .roll-orb.is-dragging {
+        cursor: grabbing;
+    }
+
+    .roll-orb.is-open .roll-orb-face {
+        display: none;
+    }
+
+    .roll-orb:not(.is-open) .roll-orb-panel {
+        display: none;
+    }
+
+    /* ---------- overflow guard ---------- */
+
+    main > *,
+    .sheet-panel,
     #stat-container,
     .health-container,
     .skills-container,
@@ -1387,830 +1229,1112 @@ main > *,
     #initiative-container,
     .action-container,
     .condition-container,
-    .gear {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-    }
-
-    /* Base stats: true 4Ã—2 grid that cannot spill past the viewport */
-
-    #stat-container {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        grid-auto-rows: auto;
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-    }
-
-    /* Conditions (mobile): keep the 2-column checkbox grid, slider row spans both */
-
-    .condition-container {
-        grid-template-rows: auto auto;
-        gap: 0.75rem;
-    }
-
+    #skills-container,
     .condition-tile {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-
-        /* two checkbox columns */
-        gap: 0.5rem 0.75rem;
-        padding: 0.5rem 0;
-        justify-items: center;
-
-        /* center each group */
-        align-content: space-evenly;
-
-        /* even vertical spacing */
-    }
-
-    #conditions-list-1,
-    #conditions-list-2,
-    #conditions-list-3 {
-        text-align: center;
-        width: auto;
-        grid-column: auto;
-
-        /* no spanning, stay in the single row */
         min-width: 0;
-    }
-
-    /* same width for both checkbox groups so the boxes line up */
-
-    #conditions-list-1,
-    #conditions-list-2 {
-        width: 9em;
-        grid-auto-rows: 1.6em;
-    }
-
-    .condition-tile {
-        font-size: 1.15rem;
-
-        /* bigger condition text and boxes */
-    }
-
-    #conditions-list-3 {
-        grid-column: 1 / -1;
-
-        /* exhaustion bar spans the bottom */
-        width: 100%;
-        grid-template-columns: minmax(0, 1fr) auto;
-
-        /* bar, then the number */
-        grid-auto-rows: auto;
-        row-gap: 0.25em;
-        padding: 0 0.75rem;
-        box-sizing: border-box;
-    }
-
-    #exhausted-label {
-        grid-column: 1 / -1;
-
-        /* label on its own line above the bar */
-        justify-self: center;
-    }
-
-    #exhausted-value {
-        width: 100%;
-
-        /* bar stretches across the box */
-        justify-self: stretch;
-        margin: 0;
-    }
-
-    [role="tab"] {
-        flex: 1 1 auto;
-        min-width: 0;
-        padding: 0.5rem;
-        font-size: 0.85rem;
-    }
-
-    /* --- mobile: undo size containment that collapses tiles ---
-       container-type: size makes a box ignore its children's height when
-       laying out. On desktop the sheet grid gives every tile a real height,
-       so that works. On mobile, tiles only grow from their content â€” so
-       size containment shrinks them to nearly nothing and text vanishes.
-       Reset to normal, give sensible min-heights, let the page scroll. */
-
-    .stat-tile,
-    .skill-tile,
-    #armor-class-tile-container,
-    #initiative-tile-container,
-    .current-hp-tile,
-    .max-hp-tile,
-    .health-button-tile,
-    .condition-container,
-    .action-container,
-    .panel-shell {
-        container-type: normal;
-        height: auto;
-        max-height: none;
+        max-width: 100%;
         min-height: 0;
     }
 
-    .stat-tile {
-        flex: unset;
-        width: auto;
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-        min-height: 5.5rem;
-        overflow: hidden;
+    .skill-label,
+    .skill-value,
+    #stat-container .stat-tile-label,
+    #stat-container .stat-tile-value {
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
-    .skill-tile {
-        min-height: 3.5rem;
-        overflow: hidden;
-        text-align: center;
+    /* ---------- breakpoints ---------- */
+
+    @media (max-width: 768px) {
+        /* Keep the page inside the viewport: no child may invent a width
+           wider than the screen (the usual culprits are width:100% + padding
+           without border-box, flex items that refuse to shrink, or fixed
+           grid tracks). */
+
+        html,
+        body,
+        header,
+        #site-title,
+        #nav-box,
+        #character-header,
+        #nav-container,
+        main {
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: auto;
+            max-height: none;
+            width: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* Header: three cells share one row; text may shrink/wrap so "Wizard" stays on-screen.
+           (Old rule set width:100% on EACH cell = three full widths side by side.) */
+
+        #character-header {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+
+        #character-name,
+        #character-race,
+        #character-class {
+            flex: 1 1 0;
+            width: auto;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+            font-size: clamp(0.65rem, 3.2vw, 1.05rem);
+            padding: 0.35rem 0.25rem;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            white-space: normal;
+            hyphens: auto;
+        }
+
+        /* Nav: equal share; wrap to a second row when five labels cannot fit one line */
+
+        #nav-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+            margin-bottom: 1%;
+        }
+
+        #home-nav,
+        #theme-nav,
+        #character-nav,
+        #campaign-nav,
+        #settings-nav {
+            flex: 1 1 0;
+            min-width: 0;
+            max-width: 100%;
+            box-sizing: border-box;
+
+            /* ~3 per row â†’ second row for the leftover buttons */
+            flex-basis: 30%;
+            white-space: nowrap;
+            font-size: clamp(0.65rem, 2.8vw, 0.95rem);
+            padding: 0.4rem 0.25rem;
+        }
+
+        #home-nav {
+            border-radius: 0;
+        }
+
+        #nav-container > #campaign-nav {
+
+            /* own row on mobile: round both bottom corners */
+        }
+    }
+}
+@layer overrides {
+    @media (max-width: 768px) {
+    #nav-container > #campaign-nav /* clash: kept at old specificity */ {
+            border-radius: 0 0 10px 10px;
+    }
+    }
+}
+@layer pages {
+    @media (max-width: 768px) {
+        #theme-nav {
+            /* Stay matched to sibling nav buttons (padding already set above) */
+            padding: 0.4rem 0.25rem;
+        }
+
+        #theme-nav select {
+            min-width: 0;
+            max-width: 100%;
+            font-size: inherit;
+        }
+
+        .drop-down,
+        #campaign-nav .drop-down {
+            left: 0;
+            right: 0;
+            width: auto;
+            max-width: 100%;
+            box-sizing: border-box;
+            transform: none;
+
+            /* undo the desktop centering shift, which pushes it off-screen here */
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            min-height: 0;
+            flex: none;
+            gap: 8px;
+            grid-template-areas: none;
+            grid-template-columns: none;
+            grid-template-rows: none;
+            overflow-x: hidden;
+            overflow-y: visible;
+            height: auto;
+            box-sizing: border-box;
+        }
+
+        .sheet-tabs {
+            display: flex !important;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            border-bottom: var(--tileBorder);
+            box-sizing: border-box;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .sheet-tabs [role="tab"] {
+            width: auto;
+            flex: 1 1 0;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+
+        /* close the gap between the tab bar and the open panel */
+
+        .sheet-tabs {
+            margin-bottom: -8px;
+
+            /* cancels main's 8px gap */
+        }
+
+        .sheet-panel > :first-child {
+            margin-top: 0;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        .sheet-panel[hidden] {
+            display: none !important;
+        }
+
+        .sheet-panel {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        #stat-container,
+        .health-container,
+        .skills-container,
+        #armor-class-container,
+        #initiative-container,
+        .action-container,
+        .condition-container {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+
+        /* Base stats: true 4Ã—2 grid that cannot spill past the viewport */
+
+        #stat-container {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-auto-rows: auto;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+
+        /* Conditions (mobile): keep the 2-column checkbox grid, slider row spans both */
+
+        .condition-container {
+            grid-template-rows: auto auto;
+            gap: 0.75rem;
+        }
+
+        .condition-tile {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+
+            /* two checkbox columns */
+            gap: 0.5rem 0.75rem;
+            padding: 0.5rem 0;
+            justify-items: center;
+
+            /* center each group */
+            align-content: space-evenly;
+
+            /* even vertical spacing */
+        }
+
+        #conditions-list-1,
+        #conditions-list-2,
+        #conditions-list-3 {
+            text-align: center;
+            width: auto;
+            grid-column: auto;
+
+            /* no spanning, stay in the single row */
+            min-width: 0;
+        }
+
+        /* same width for both checkbox groups so the boxes line up */
+
+        #conditions-list-1,
+        #conditions-list-2 {
+            width: 9em;
+            grid-auto-rows: 1.6em;
+        }
+
+        .condition-tile {
+            font-size: 1.15rem;
+
+            /* bigger condition text and boxes */
+        }
+
+        #conditions-list-3 {
+            grid-column: 1 / -1;
+
+            /* exhaustion bar spans the bottom */
+            width: 100%;
+            grid-template-columns: minmax(0, 1fr) auto;
+
+            /* bar, then the number */
+            grid-auto-rows: auto;
+            row-gap: 0.25em;
+            padding: 0 0.75rem;
+            box-sizing: border-box;
+        }
+
+        #exhausted-label {
+            grid-column: 1 / -1;
+
+            /* label on its own line above the bar */
+            justify-self: center;
+        }
+
+        #exhausted-value {
+            width: 100%;
+
+            /* bar stretches across the box */
+            justify-self: stretch;
+            margin: 0;
+        }
+
+        [role="tab"] {
+            flex: 1 1 auto;
+            min-width: 0;
+            padding: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        /* --- mobile: undo size containment that collapses tiles ---
+           container-type: size makes a box ignore its children's height when
+           laying out. On desktop the sheet grid gives every tile a real height,
+           so that works. On mobile, tiles only grow from their content â€” so
+           size containment shrinks them to nearly nothing and text vanishes.
+           Reset to normal, give sensible min-heights, let the page scroll. */
+
+        .stat-tile,
+        .skill-tile,
+        #armor-class-tile-container,
+        #initiative-tile-container,
+        .current-hp-tile,
+        .max-hp-tile,
+        .health-button-tile,
+        .condition-container,
+        .action-container,
+        .panel-shell {
+            container-type: normal;
+            height: auto;
+            max-height: none;
+            min-height: 0;
+        }
+
+        .stat-tile {
+            flex: unset;
+            width: auto;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+            min-height: 5.5rem;
+            overflow: hidden;
+        }
+
+        .skill-tile {
+            min-height: 3.5rem;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #armor-class-container,
+        #initiative-container,
+        .current-hp-tile,
+        .max-hp-tile,
+        .health-button-tile,
+        .condition-container {
+            min-height: 4.75rem;
+            height: auto;
+        }
+
+        #sheet-panel-actions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-rows: auto auto;
+            grid-template-areas: "armorClass initiative"
+                "actions actions";
+            column-gap: 0.75rem;
+            row-gap: 0.35rem;
+
+            /* tighter space above the actions tile */
+            padding-top: 0.75rem;
+
+            /* space under the tabs, inside the panel */
+        }
+
+        #armor-class-container {
+            grid-area: armorClass;
+            height: 100%;
+        }
+
+        #initiative-container {
+            grid-area: initiative;
+            height: 100%;
+        }
+
+        #armor-class-container,
+        #initiative-container {
+            min-height: 6rem;
+        }
+
+        .action-container {
+            grid-area: actions;
+            min-height: 14rem;
+            overflow: hidden;
+        }
+
+        .action-tab-list {
+            flex-direction: row;
+            flex-wrap: nowrap;
+        }
+
+        #armor-class-tile-container,
+        #initiative-tile-container {
+            min-height: 6rem;
+            height: 100%;
+
+            /* fill the grid cell */
+        }
+
+        #skills-title {
+            padding: 0.35rem;
+        }
+    }
+}
+@layer overrides {
+    @media (max-width: 768px) {
+    #skills-title /* clash: kept at old specificity */ {
+    }
+    }
+}
+@layer pages {
+    @media (max-width: 768px) {
+        .skills-container {
+            margin-top: 2%;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-rows: auto repeat(3);
+            grid-auto-rows: minmax(3.5rem, auto);
+            height: auto;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+
+        .health-container {
+            height: auto;
+            min-height: 5rem;
+            grid-template-rows: auto 10px;
+        }
+
+        #sheet-panel-conditions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+
+            /* slight space between health and conditions */
+            padding-top: 0.75rem;
+
+            /* space under the tabs, inside the panel */
+        }
+
+        #sheet-panel-conditions > .health-container,
+        #sheet-panel-conditions > .condition-container {
+            min-height: 12rem;
+
+            /* taller tiles */
+        }
+
+        #sheet-panel-conditions > .health-container {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            grid-template-rows: minmax(0, 1fr) auto;
+
+            /* bar row grows to fit the thicker bar */
+        }
+
+        .hp-bar-tile {
+            height: 1.25rem;
+
+            /* thicker health bar on mobile */
+            min-height: 1.25rem;
+            align-self: center;
+            margin: 0.6rem auto;
+
+            /* centered in its row */
+            width: 96%;
+            justify-self: center;
+        }
     }
 
-    #armor-class-container,
-    #initiative-container,
-    .current-hp-tile,
-    .max-hp-tile,
-    .health-button-tile,
-    .condition-container {
-        min-height: 4.75rem;
+
+    /* ---------- edit / inventory subpages ---------- */
+
+    body.subpage {
         height: auto;
+        max-height: none;
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 
-    #sheet-panel-actions {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-template-rows: auto auto;
-        grid-template-areas: "armorClass initiative"
-            "actions actions";
-        column-gap: 0.75rem;
-        row-gap: 0.35rem;
-
-        /* tighter space above the actions tile */
-        padding-top: 0.75rem;
-
-        /* space under the tabs, inside the panel */
-    }
-
-    #armor-class-container {
-        grid-area: armorClass;
-        height: 100%;
-    }
-
-    #initiative-container {
-        grid-area: initiative;
-        height: 100%;
-    }
-
-    #armor-class-container,
-    #initiative-container {
-        min-height: 6rem;
-    }
-
-    .action-container {
-        grid-area: actions;
-        min-height: 14rem;
-        overflow: hidden;
-    }
-
-    .action-tab-list {
-        flex-direction: row;
-        flex-wrap: nowrap;
-    }
-
-    #armor-class-tile-container,
-    #initiative-tile-container {
-        min-height: 6rem;
-        height: 100%;
-
-        /* fill the grid cell */
-    }
-
-    #skills-title {
-        padding: 0.35rem;
-    }
-
-    .skills-container {
-        margin-top: 2%;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        grid-template-rows: auto repeat(3);
-        grid-auto-rows: minmax(3.5rem, auto);
-        height: auto;
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-    }
-
-    .health-container {
-        height: auto;
-        min-height: 5rem;
-        grid-template-rows: auto 10px;
-    }
-
-    #sheet-panel-conditions {
+    body.subpage main.subpage-main,
+    main.subpage-main {
         display: flex;
         flex-direction: column;
-        gap: 0.6rem;
-
-        /* slight space between health and conditions */
-        padding-top: 0.75rem;
-
-        /* space under the tabs, inside the panel */
+        align-items: stretch;
+        justify-content: flex-start;
+        grid-template-columns: none;
+        grid-template-rows: none;
+        grid-template-areas: none;
+        place-items: stretch;
+        width: min(960px, 100%);
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 1rem;
+        gap: 1rem;
+        overflow: visible;
     }
 
-    #sheet-panel-conditions > .health-container,
-    #sheet-panel-conditions > .condition-container {
-        min-height: 12rem;
-
-        /* taller tiles */
-    }
-
-    #sheet-panel-conditions > .health-container {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        grid-template-rows: minmax(0, 1fr) auto;
-
-        /* bar row grows to fit the thicker bar */
-    }
-
-    .hp-bar-tile {
-        height: 1.25rem;
-
-        /* thicker health bar on mobile */
-        min-height: 1.25rem;
-        align-self: center;
-        margin: 0.6rem auto;
-
-        /* centered in its row */
-        width: 96%;
-        justify-self: center;
-    }
-}
-
-/* ---------- edit / inventory subpages ---------- */
-
-body.subpage {
-    height: auto;
-    max-height: none;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-body.subpage main.subpage-main,
-main.subpage-main {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    grid-template-columns: none;
-    grid-template-rows: none;
-    grid-template-areas: none;
-    place-items: stretch;
-    width: min(960px, 100%);
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 1rem;
-    gap: 1rem;
-    overflow: visible;
-}
-
-body.subpage .panel-shell {
-    width: 100%;
-    min-height: 60vh;
-}
-
-body.subpage .action-tab-list {
-    flex-shrink: 0;
-}
-
-body.subpage .formContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-body.subpage .formSectionContainer {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-body.subpage .cap-bottom,
-body.subpage select.cap-bottom,
-body.subpage input.cap-bottom {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    border: var(--tileBorder);
-    border-radius: var(--lowrad);
-    background-color: var(--bg-color-2);
-    color: var(--txt-color-1);
-    font: inherit;
-}
-
-body.subpage .buttonContainer {
-    align-items: center;
-    margin-top: 0.5rem;
-}
-
-body.subpage .formButton {
-    cursor: pointer;
-    padding: 0.6rem 1.25rem;
-    border: var(--tileBorder);
-    border-radius: var(--tile);
-    background-color: var(--bgc-top);
-    color: var(--accent);
-    font: inherit;
-    box-shadow: var(--bs2);
-}
-
-body.subpage .edit-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 0.75rem;
-}
-
-body.subpage .rollBtn {
-    cursor: pointer;
-}
-
-body.subpage .invList {
-    margin: 0;
-    padding: 0;
-}
-
-@media (min-width: 769px) {
-    .sheet-panel,
-    .sheet-panel[hidden] {
-        display: contents !important;
-    }
-}
-
-/* The shop list when it opens inside the sheet's Inventory tab.
-   .panel-shell normally uses container-type: size, which makes it 0px tall
-   when it sits inside another box whose height comes from its content. */
-
-.action-container .item-shop {
-    container-type: normal;
-    height: auto;
-    min-height: 20rem;
-    margin-top: 0.5rem;
-}
-
-/* The spell book list when it opens inside the sheet's Spell Book tab (same fix as .item-shop). */
-
-.action-container .spell-book,
-.action-container .spells-tab {
-    container-type: normal;
-    height: auto;
-    min-height: 20rem;
-    margin-top: 0.5rem;
-}
-
-/* ---------- action buttons fill the end of each row ---------- */
-
-/* No padding on the top, right and bottom of the row, so the buttons can reach its edges.
-   The left padding keeps the item name off the border. */
-
-.action-item {
-    padding: 0 0 0 0.75rem;
-    min-height: 2.5rem;
-    overflow: hidden;
-
-    /* clips the buttons to the row's rounded corners */
-}
-
-/* The button groups and the <form> wrappers stretch from the top of the row to the bottom */
-
-.action-item > .action-button-container,
-.action-item > form,
-.action-button-container > form {
-    display: flex;
-    align-self: stretch;
-    margin: 0;
-}
-
-/* The "Equipped" label sits centered next to the Unequip button */
-
-.action-button-container > .equipped-item {
-    align-self: center;
-    padding: 0 0.5rem;
-}
-
-/* A disabled action button (e.g. "Prepared"): greyed out and not clickable */
-
-.action-button:disabled,
-.action-button:disabled:hover {
-    background-color: grey;
-    color: lightgrey;
-    cursor: not-allowed;
-    opacity: 0.6;
-    transform: none;
-
-    /* stop the hover-grow effect */
-}
-
-/* ---------- Spell Book header: Consult the Scrolls + 3 stats ---------- */
-
-/* Four equal columns, so each one fills exactly a quarter of the bar */
-
-.spell-stat-bar {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.125rem;
-    align-items: stretch;
-}
-
-/* The button and the three stats share the same box, so they all sit level */
-
-.spell-stat-bar > .link-button,
-.spell-stat-bar > .spell-stat {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 0;
-    padding: 0.5rem 0.25rem;
-    min-height: 2.5rem;
-    box-sizing: border-box;
-    background-color: var(--bgc-low);
-    border-radius: 0;
-}
-
-/* Keep the bottom corners rounded on the outer two so the tile edge stays smooth */
-
-.spell-stat-bar > :first-child {
-    border-bottom-left-radius: 10px;
-}
-
-.spell-stat-bar > :last-child {
-    border-bottom-right-radius: 10px;
-}
-
-/* ---------- Every button in an action/spell row is the same size ---------- */
-
-/* Fixed width + centered text, so To Hit, Save, Damage and Cast line up from row to row.
-   Buttons also fill their wrapper top to bottom, with square corners so they sit flush. */
-
-.action-item .action-button {
-    align-self: stretch;
-    min-width: 4.5rem;
-    border-radius: 0;
-    box-shadow: none;
-    flex: 0 0 5.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 0 0.25rem;
-    white-space: nowrap;
-    font: inherit;
-}
-
-/* ---------- Spell details pop-up ---------- */
-
-.spell-name-button {
-    background: none;
-    border: none;
-    padding: 0;
-    font: inherit;
-    color: inherit;
-    text-align: left;
-    cursor: pointer;
-}
-
-.spell-name-button:hover {
-    text-decoration: none;
-    color: var(--accent);
-}
-
-.spell-details {
-    position: fixed;
-    top: 50%;
-    left: 35%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
-    width: min(38rem, 90vw);
-    max-height: 80vh;
-    overflow-y: auto;
-    padding: 1.5rem 1.25rem 1.25rem;
-    background-color: var(--bg-color-5);
-    backdrop-filter: blur(8px);
-    border: var(--tileBorder);
-    border-radius: var(--rad1);
-    box-shadow: var(--bs2);
-}
-
-.details-container {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    flex-wrap: nowrap;
-    gap: .75rem;
-}
-
-.combat-box {
-    flex: 1 1 0;
-    display: flex;
-    flex-direction: column;
-    gap: .25rem;
-}
-
-.spell-build-box {
-    min-width: 0;
-    flex: 1 1 0;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    gap: .25rem;
-    text-align: right;
-}
-
-.combat-box p,
-.spell-build-box p {
-    white-space: normal;
-    overflow-wrap: anywhere;
-}
-
-.spell-details-title {
-    text-align: center;
-    margin: 0 2rem .75rem;
-    padding: 0;
-    font-size: 1.5rem;
-    font-weight: var(--fontW1);
-    color: var(--accent);
-}
-
-.combat-box,
-.spell-build-box,
-.spell-description-box {
-    margin-top: .75rem;
-    padding: .6rem .75rem;
-    border: var(--tileBorder);
-    border-radius: var(--rad1);
-    background-color: var(--bg-color-2);
-}
-
-.spell-details p {
-    margin: .2rem 0;
-    overflow-wrap: anywhere;
-}
-
-.spell-details-close {
-    position: absolute;
-    border: none;
-    top: .5rem;
-    right: .5rem;
-    width: 1.75rem;
-    height: 1.75rem;
-    border-radius: 50%;
-    background: transparent;
-    color: inherit;
-    font-weight: bold;
-    line-height: 1;
-    cursor: pointer;
-}
-
-.spell-details-close:hover {
-    background-color: var(--bg-color-1);
-}
-
-/* ---------- Proficiencies Tab ---------- */
-
-.tab-title {
-    text-align: center;
-    margin: 2%;
-    padding: 3%;
-}
-
-.proficiency-list {
-    padding: 0;
-    margin: 0;
-}
-
-.proficiency-tile {
-    border-top: var(--accent) solid 3px;
-    margin: 2%;
-    padding: 2%;
-}
-
-.proficiency-title {
-    text-align: center;
-}
-
-/* Upcast level picker in Magical Actions */
-
-.upcast-picker {
-    font: inherit;
-    padding: 2px 4px;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-/* ---------- Learned Spells: smaller buttons, text scales with them ---------- */
-
-/* The panel is a size container, so cqi = 1% of the panel's width */
-
-#spells-panel-learned {
-    container-type: inline-size;
-}
-
-#spells-panel-learned .action-item .action-button {
-    flex: 0 0 auto;
-    width: clamp(4.25rem, 13cqi, 5rem);
-
-    /* all three buttons share one width that follows the panel */
-    min-width: 0;
-    font-size: clamp(0.65rem, 2.2cqi, 0.85rem);
-
-    /* text shrinks and grows with the panel */
-    padding: 0.2rem 0.4rem;
-    white-space: normal !important;
-
-    /* long labels like "Remove Action" wrap onto two lines */
-    line-height: 1.1;
-    text-align: center;
-}
-
-/* Spell Book level tabs: wrap onto a second row instead of overflowing (no sideways scroll needed) */
-
-.spell-book-tabs .action-tab-list,
-.spell-book-tabs .action-tab-list[role="tablist"] {
-    flex-wrap: wrap;
-    overflow: visible;
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
-.spell-book-tabs .action-tab-list [role="tab"] {
-    flex: 1 1 5.5rem;
-    min-width: 0;
-    white-space: nowrap;
-}
-
-/*  ===== Mobile (max-width: 768px), consolidated =====  */
-
-@media (max-width: 768px) {
-    /* Mobile: same title / status bar / background treatment as the home page */
-
-    html {
-        padding-top: 0 !important;
-
-        /* overrides the safe-area padding in index.html */
-        background-color: var(--bgc-title, var(--bg-color-1));
-    }
-
-    html::before,
-    html::after {
-        height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
-    }
-
-    html::before {
-        content: '';
-        position: fixed;
-        left: 0;
+    body.subpage .panel-shell {
         width: 100%;
-        top: calc(-1 * env(safe-area-inset-top));
-        height: calc(100lvh + env(safe-area-inset-top));
-        z-index: -1;
-        pointer-events: none;
-        background-image: var(--background);
-        background-size: auto 120%;
-        background-position: center bottom;
-        background-repeat: no-repeat;
+        min-height: 60vh;
     }
 
-    html::after {
-        content: '';
-        position: fixed;
-        left: 0;
+    body.subpage .action-tab-list {
+        flex-shrink: 0;
+    }
+
+    body.subpage .form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    body.subpage .form-section {
+        display: flex;
+        flex-direction: column;
         width: 100%;
-        top: calc(-1 * env(safe-area-inset-top));
-        height: calc(100lvh + env(safe-area-inset-top));
-        z-index: -1;
-        pointer-events: none;
-        background: linear-gradient(to bottom,
-        var(--bgc-title, rgb(65, 37, 157)) 0,
-        var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
-        transparent calc(env(safe-area-inset-top) + 4rem));
-        background: linear-gradient(to bottom,
-            var(--bgc-title, rgb(65, 37, 157)) 0,
-            var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
-            transparent calc(env(safe-area-inset-top) + 4rem),
-            transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
-            var(--bgc-title, rgb(65, 37, 157)) 100%);
     }
 
-    body {
-        background-image: none;
-        min-height: 100lvh;
+    body.subpage .tile-bottom,
+    body.subpage select.tile-bottom,
+    body.subpage input.tile-bottom {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        border: var(--tileBorder);
+        border-radius: var(--lowrad);
+        background-color: var(--bg-color-5);
+        color: var(--txt-color-1);
+        font: inherit;
     }
 
-    /* title bar is solid title color and reaches up under the status bar */
+    body.subpage .button-container {
+        align-items: center;
+        margin-top: 0.5rem;
+    }
 
-    header,
-    #siteTitle {
+    body.subpage .btn-form {
+        cursor: pointer;
+        padding: 0.6rem 1.25rem;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        background-color: var(--bgc-top);
+        color: var(--accent);
+        font: inherit;
+        box-shadow: var(--bs2);
+    }
+
+    body.subpage .edit-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.75rem;
+    }
+
+    body.subpage .btn-roll {
+        cursor: pointer;
+    }
+
+    body.subpage .inv-list {
         margin: 0;
-        border: none;
+        padding: 0;
+    }
+
+    @media (min-width: 769px) {
+        .sheet-panel,
+        .sheet-panel[hidden] {
+            display: contents !important;
+        }
+    }
+
+    /* The shop list when it opens inside the sheet's Inventory tab.
+       .panel-shell normally uses container-type: size, which makes it 0px tall
+       when it sits inside another box whose height comes from its content. */
+
+    .action-container .item-shop {
+        container-type: normal;
+        height: auto;
+        min-height: 20rem;
+        margin-top: 0.5rem;
+    }
+
+    /* The spell book list when it opens inside the sheet's Spell Book tab (same fix as .item-shop). */
+
+    .action-container .spells-tab {
+        container-type: normal;
+        height: auto;
+        min-height: 20rem;
+        margin-top: 0.5rem;
+    }
+
+    /* ---------- action buttons fill the end of each row ---------- */
+
+    /* No padding on the top, right and bottom of the row, so the buttons can reach its edges.
+       The left padding keeps the item name off the border. */
+
+    .action-item {
+        padding: 0 0 0 0.75rem;
+        min-height: 2.5rem;
+        overflow: hidden;
+
+        /* clips the buttons to the row's rounded corners */
+    }
+
+    /* The button groups and the <form> wrappers stretch from the top of the row to the bottom */
+
+    .action-item > .action-button-container,
+    .action-item > form,
+    .action-button-container > form {
+        display: flex;
+        align-self: stretch;
+        margin: 0;
+    }
+
+    /* The "Equipped" label sits centered next to the Unequip button */
+
+    .action-button-container > .equipped-item {
+        align-self: center;
+        padding: 0 0.5rem;
+    }
+
+    /* A disabled action button (e.g. "Prepared"): greyed out and not clickable */
+
+    .btn-action:disabled,
+    .btn-action:disabled:hover {
+        background-color: grey;
+        color: lightgrey;
+        cursor: not-allowed;
+        opacity: 0.6;
+        transform: none;
+
+        /* stop the hover-grow effect */
+    }
+
+    /* ---------- Spell Book header: Consult the Scrolls + 3 stats ---------- */
+
+    /* Four equal columns, so each one fills exactly a quarter of the bar */
+
+    .spell-stat-bar {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.125rem;
+        align-items: stretch;
+    }
+
+    /* The button and the three stats share the same box, so they all sit level */
+
+    .spell-stat-bar > .btn-link,
+    .spell-stat-bar > .spell-stat {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin: 0;
+        padding: 0.5rem 0.25rem;
+        min-height: 2.5rem;
+        box-sizing: border-box;
+        background-color: var(--bgc-low);
         border-radius: 0;
+    }
+
+    /* Keep the bottom corners rounded on the outer two so the tile edge stays smooth */
+
+    .spell-stat-bar > :first-child {
+        border-bottom-left-radius: 10px;
+    }
+
+    .spell-stat-bar > :last-child {
+        border-bottom-right-radius: 10px;
+    }
+
+    /* ---------- Every button in an action/spell row is the same size ---------- */
+
+    /* Fixed width + centered text, so To Hit, Save, Damage and Cast line up from row to row.
+       Buttons also fill their wrapper top to bottom, with square corners so they sit flush. */
+
+    .action-item .btn-action {
+        align-self: stretch;
+        min-width: 4.5rem;
+        border-radius: 0;
+        flex: 0 0 5.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 0.25rem;
+        white-space: nowrap;
+        font: inherit;
+    }
+}
+
+@layer overrides {
+    .action-item .btn-action /* clash: kept at old specificity */ {
         box-shadow: none;
     }
+}
 
+@layer pages {
+    /* ---------- Spell details pop-up ---------- */
 
-    footer {
-        display: none;
+    .btn-spell-name {
+        background: none;
+        border: none;
+        padding: 0;
+        font: inherit;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
     }
 
-    #siteTitle {
-        background-color: var(--bgc-title, var(--bg-color-3));
-        padding-top: calc(env(safe-area-inset-top) + 0.5rem);
+    .btn-spell-name:hover {
+        text-decoration: none;
+        color: var(--accent);
     }
 
-   .spell-details {
-        width: 100%;
-        transform: none;
-        border-radius: var(--toprad);
-        max-height: 70dvh;
-        top: auto;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        animation: slide 0.3s ease-out;
+    .spell-details {
+        position: fixed;
+        top: 50%;
+        left: 35%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+        width: min(38rem, 90vw);
+        max-height: 80vh;
+        overflow-y: auto;
+        padding: 1.5rem 1.25rem 1.25rem;
+        background-color: var(--bg-color-5);
+        backdrop-filter: blur(8px);
+        border: var(--tileBorder);
+        border-radius: var(--rad1);
+        box-shadow: var(--bs2);
     }
 
     .details-container {
+        display: flex;
         flex-direction: row;
-        font-weight: 400;
-        font-size: 0.8rem;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        gap: .75rem;
+    }
+
+    .combat-box {
+        flex: 1 1 0;
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
     }
 
     .spell-build-box {
-        text-align: left;
-        font-weight: 400;
-        width: 40%;
-        font-size: 0.8rem;
+        min-width: 0;
+        flex: 1 1 0;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: .25rem;
+        text-align: right;
     }
 
-    .spell-description-box {
-        font-weight: 400;
-        box-shadow: var(--bs1);
-        font-size: 0.8rem;
+    .combat-box p,
+    .spell-build-box p {
+        white-space: normal;
+        overflow-wrap: anywhere;
     }
+
+    .spell-details-title {
+        text-align: center;
+        margin: 0 2rem .75rem;
+        padding: 0;
+        font-size: 1.5rem;
+        font-weight: var(--fontW1);
+        color: var(--accent);
+    }
+
+    .combat-box,
+    .spell-build-box,
+    .spell-description-box {
+        margin-top: .75rem;
+        padding: .6rem .75rem;
+        border: var(--tileBorder);
+        border-radius: var(--rad1);
+        background-color: var(--bg-color-2);
+    }
+
+    .spell-details p {
+        margin: .2rem 0;
+        overflow-wrap: anywhere;
+    }
+
+    .spell-details-close {
+        position: absolute;
+        border: none;
+        top: .5rem;
+        right: .5rem;
+        width: 1.75rem;
+        height: 1.75rem;
+        border-radius: 50%;
+        background: transparent;
+        color: inherit;
+        font-weight: bold;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    .spell-details-close:hover {
+        background-color: var(--bg-color-1);
+    }
+
+    /* ---------- Proficiencies Tab ---------- */
+
+    .tab-title {
+        text-align: center;
+        margin: 2%;
+        padding: 3%;
+    }
+
+    .proficiency-list {
+        padding: 0;
+        margin: 0;
+    }
+
+    .proficiency-tile {
+        border-top: var(--accent) solid 3px;
+        margin: 2%;
+        padding: 2%;
+    }
+
+    .proficiency-title {
+        text-align: center;
+    }
+
+    /* Upcast level picker in Magical Actions */
+
+    .upcast-picker {
+        font: inherit;
+        padding: 2px 4px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    /* ---------- Learned Spells: smaller buttons, text scales with them ---------- */
+
+    /* The panel is a size container, so cqi = 1% of the panel's width */
+
+    #spells-panel-learned {
+        container-type: inline-size;
+    }
+
+    #spells-panel-learned .action-item .btn-action {
+        flex: 0 0 auto;
+        width: clamp(4.25rem, 13cqi, 5rem);
+
+        /* all three buttons share one width that follows the panel */
+        min-width: 0;
+        font-size: clamp(0.65rem, 2.2cqi, 0.85rem);
+
+        /* text shrinks and grows with the panel */
+        padding: 0.2rem 0.4rem;
+        white-space: normal !important;
+
+        /* long labels like "Remove Action" wrap onto two lines */
+        line-height: 1.1;
+        text-align: center;
+    }
+
+    /* Spell Book level tabs: wrap onto a second row instead of overflowing (no sideways scroll needed) */
+
+    .spell-book-tabs .action-tab-list,
+    .spell-book-tabs .action-tab-list[role="tablist"] {
+        flex-wrap: wrap;
+        overflow: visible;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .spell-book-tabs .action-tab-list [role="tab"] {
+        flex: 1 1 5.5rem;
+        min-width: 0;
+        white-space: nowrap;
+    }
+
+    /*  ===== Mobile (max-width: 768px), consolidated =====  */
+
+    @media (max-width: 768px) {
+        /* Mobile: same title / status bar / background treatment as the home page */
+
+        html {
+            padding-top: 0 !important;
+
+            /* overrides the safe-area padding in index.html */
+            background-color: var(--bgc-title, var(--bg-color-1));
+        }
+
+        html::before,
+        html::after {
+            height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
+        }
+
+        html::before {
+            content: '';
+            position: fixed;
+            left: 0;
+            width: 100%;
+            top: calc(-1 * env(safe-area-inset-top));
+            height: calc(100lvh + env(safe-area-inset-top));
+            z-index: -1;
+            pointer-events: none;
+            background-image: var(--background);
+            background-size: auto 120%;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+        }
+
+        html::after {
+            content: '';
+            position: fixed;
+            left: 0;
+            width: 100%;
+            top: calc(-1 * env(safe-area-inset-top));
+            height: calc(100lvh + env(safe-area-inset-top));
+            z-index: -1;
+            pointer-events: none;
+            background: linear-gradient(to bottom,
+            var(--bgc-title, rgb(65, 37, 157)) 0,
+            var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
+            transparent calc(env(safe-area-inset-top) + 4rem));
+            background: linear-gradient(to bottom,
+                var(--bgc-title, rgb(65, 37, 157)) 0,
+                var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
+                transparent calc(env(safe-area-inset-top) + 4rem),
+                transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
+                var(--bgc-title, rgb(65, 37, 157)) 100%);
+        }
+
+        body {
+            background-image: none;
+            min-height: 100lvh;
+        }
+
+        /* title bar is solid title color and reaches up under the status bar */
+
+        header,
+        #site-title {
+            margin: 0;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+
+        footer {
+            display: none;
+        }
+
+        #site-title {
+            background-color: var(--bgc-title, var(--bg-color-3));
+            padding-top: calc(env(safe-area-inset-top) + 0.5rem);
+        }
+
+        .rest-container {
+            display: flex;
+            margin: .5rem;
+        } 
+
+        .btn-rest {
+            padding: 0.5rem 1rem;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .rest-choice {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: .5rem;
+        }
+
+        .btn-rest-choice {
+            flex: 1 1 0;
+            min-width: 0;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .btn-rest-choice:active {
+            transform: scale(0.9);
+        }
+
+        .btn-rest:active {
+            transform: scale(0.9);
+        }
+    
+
+       .spell-details {
+            width: 100%;
+            transform: none;
+            border-radius: var(--toprad);
+            max-height: 70dvh;
+            top: auto;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            animation: slide 0.3s ease-out;
+        }
+
+        .details-container {
+            flex-direction: row;
+            font-weight: 400;
+            font-size: 0.8rem;
+        }
+
+        .spell-build-box {
+            text-align: left;
+            font-weight: 400;
+            width: 40%;
+            font-size: 0.8rem;
+        }
+
+        .spell-description-box {
+            font-weight: 400;
+            box-shadow: var(--bs1);
+            font-size: 0.8rem;
+        }
 
     
 
-    #stat-container {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        #stat-container {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        #nav-container > li:hover,
+        #nav-container > li:focus-within {
+            z-index: 20;
+        }
     }
 
-    #navContainer > li:hover,
-    #navContainer > li:focus-within {
-        z-index: 20;
+
+    @keyframes slide {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+    /* Mobile fit: action rows and sheet tabs shrink instead of overflowing or clipping */
+    @media (max-width: 768px) {
+        .action-item {
+            gap: 0.35rem;
+        }
+
+        /* the name side takes what's left and wraps */
+        .action-item > :not(.action-button-container, form) {
+            flex: 1 1 auto;
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .action-item > .action-button-container,
+        .action-item > form {
+            flex: 0 1 auto;
+            min-width: 0;
+        }
+
+        /* buttons size to their label instead of a fixed 5.5rem each */
+        .action-item .btn-action {
+            flex: 0 0 auto;
+            min-width: 3.25rem;
+            padding: 0 0.4rem;
+            font-size: clamp(0.7rem, 3.2vw, 0.9rem);
+        }
     }
 }
-
-
-@keyframes slide {
-    from {
-        transform: translateY(100%);
+@layer overrides {
+    @media (max-width: 768px) {
+    .action-item .btn-action /* clash: kept at old specificity */ {
     }
-    to {
-        transform: translateY(0);
     }
 }
-/* Mobile fit: action rows and sheet tabs shrink instead of overflowing or clipping */
-@media (max-width: 768px) {
-    .action-item {
-        gap: 0.35rem;
+@layer pages {
+    @media (max-width: 768px) {
+        /* tabs: smaller text and padding so long labels like Proficiencies fit */
+        [role="tab"] {
+            min-width: 0;
+            padding: 0.5rem 0.25rem;
+            font-size: clamp(0.65rem, 3vw, 0.95rem);
+            overflow-wrap: anywhere;
+            text-align: center;
+        }
     }
 
-    /* the name side takes what's left and wraps */
-    .action-item > :not(.action-button-container, form) {
-        flex: 1 1 auto;
-        min-width: 0;
-        overflow-wrap: anywhere;
-    }
-
-    .action-item > .action-button-container,
-    .action-item > form {
-        flex: 0 1 auto;
-        min-width: 0;
-    }
-
-    /* buttons size to their label instead of a fixed 5.5rem each */
-    .action-item .action-button {
-        flex: 0 0 auto;
-        min-width: 3.25rem;
-        padding: 0 0.4rem;
-        font-size: clamp(0.7rem, 3.2vw, 0.9rem);
-    }
-
-    /* tabs: smaller text and padding so long labels like Proficiencies fit */
-    [role="tab"] {
-        min-width: 0;
-        padding: 0.5rem 0.25rem;
-        font-size: clamp(0.65rem, 3vw, 0.95rem);
-        overflow-wrap: anywhere;
-        text-align: center;
+    /* Character Editor menu: shorter item (14% padding scales with the menu's width) */
+    #campaign-nav .btn-drop-campaign {
+        padding: 0.4rem 0.75rem;
+        margin: 0.25rem;
     }
 }

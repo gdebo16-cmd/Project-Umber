@@ -12,22 +12,22 @@ function EditNameForm({ character, races, onSaved }) {
     };
 
     return (
-        <form className="formContainer" onSubmit={submit}>
-            <article className="formSectionContainer">
-                <label className="cap-top" htmlFor="name">Name</label>
-                <input className="cap-bottom" type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required autoFocus />
+        <form className="form-container" onSubmit={submit}>
+            <article className="form-section">
+                <label className="tile-top" htmlFor="name">Name</label>
+                <input className="tile-bottom" type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required autoFocus />
             </article>
-            <article className="formSectionContainer">
-                <label className="cap-top" htmlFor="race_id">Select Race</label>
-                <select className="cap-bottom" id="race_id" value={raceId} onChange={(e) => setRaceId(Number(e.target.value))} required>
+            <article className="form-section">
+                <label className="tile-top" htmlFor="race_id">Select Race</label>
+                <select className="tile-bottom" id="race_id" value={raceId} onChange={(e) => setRaceId(Number(e.target.value))} required>
                     {races.map((r) => (
                         <option key={r.id} value={r.id}>{r.name}</option>
                     ))}
                 </select>
             </article>
             {message && <p>{message}</p>}
-            <article className="formSectionContainer buttonContainer">
-                <button className="formButton" type="submit">Save Changes</button>
+            <article className="form-section button-container">
+                <button className="btn-form" type="submit">Save Changes</button>
             </article>
         </form>
     );

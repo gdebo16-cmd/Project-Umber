@@ -9,38 +9,38 @@ function ProficienciesTab() {
 
     return (
         <>
-            <h2 className="tab-title" id="proficiency-title">Proficiencies</h2>
+            <h2 className="tab-title">Proficiencies</h2>
             <ul className="proficiency-list" id="proficienciesList">
-                <li className="proficiencyItem">
+                <li className="proficiency-item">
                     <article className="proficiency-tile">
-                        <h3 className="proficiencyTitle" id="proficiencyTitle">Armor Proficiency</h3>
-                        <ul className="proficiencyList">
+                        <h3 className="proficiency-title">Armor Proficiency</h3>
+                        <ul className="proficiency-list">
                             {(character.armor_proficiencies ?? '').split(',').filter(Boolean).map((p) => {
                                 return (
                                     <li key={p}>
-                                        <p className="proficiencyValue" id="proficiencyValue">- {p}</p>
+                                        <p className="proficiency-value">- {p}</p>
                                     </li>
                                 )})}
             </ul>
                     </article>
                     <article className= "proficiency-tile">
-                        <h3 className="proficiencyTitle" id="proficiencyTitle">Weapon Proficiency</h3>
-                        <ul className="proficiencyList">
+                        <h3 className="proficiency-title">Weapon Proficiency</h3>
+                        <ul className="proficiency-list">
                             {(character.weapon_proficiencies ?? '').split(',').filter(Boolean).map((p) => {
                                 return (
                                     <li key={p}>
-                                        <p className="proficiencyValue" id="proficiencyValue">- {p}</p>
+                                        <p className="proficiency-value">- {p}</p>
                                     </li>
                                 )})}
                         </ul>
                     </article>
                     <article className="proficiency-tile">
-                        <h3 className="proficiencyTitle" id="proficiencyTitle">Tool Proficiency</h3>
-                        <ul className="proficiencyList">
+                        <h3 className="proficiency-title">Tool Proficiency</h3>
+                        <ul className="proficiency-list">
                             {(character.tool_proficiencies ?? '').split(',').filter(Boolean).map((p) => {
                                 return (
                                     <li key={p}>
-                                        <p className="proficiencyValue" id="proficiencyValue">- {p}</p>
+                                        <p className="proficiency-value">- {p}</p>
                                     </li>
                                 )})}
                         </ul>

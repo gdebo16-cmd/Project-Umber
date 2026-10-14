@@ -1,591 +1,647 @@
 @import './themes.css';
 
-body {
-    background-image: var(--background);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    font-family: "Cinzel Decorative", serif;
-    font-weight: var(--fontW2);
-    font-style: normal;
-    max-height: 2160px;
-    max-width: 3840px;
-    min-height: 100vh;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
+@layer pages {
+    body {
+        background-image: var(--background);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: "Cinzel Decorative", serif;
+        font-weight: var(--fontW2);
+        font-style: normal;
+        max-height: 2160px;
+        max-width: 3840px;
+        min-height: 100vh;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: auto 1fr;
+        grid-template-areas: 'a b b b'
+            'a b b b';
+        place-items: center;
+        align-items: stretch;
+        justify-items: stretch;
+        margin: 0;
+        backdrop-filter: var(--blur1);
+    }
+
+    header {
+        z-index: 1;
+        position: relative;
+    }
+
+    #site-title {
+        background-color: var(--bgc-top);
+        color: var(--txt-color-1);
+        text-align: center;
+        padding: 2%;
+        margin: 0;
+    }
+
+    #form-title {
+        background-color: var(--bgc-low);
+        color: var(--txt-color-1);
+        text-align: center;
+        padding: 1%;
+        margin: 0;
+    }
+
+    .tile {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .topTile {
+        text-align: center;
+        color: var(--txt-color-1);
+        background-color: var(--bgc-top);
+        border-radius: var(--toprad);
+        margin: var(--marTop);
+        backdrop-filter: var(--blur1);
+        padding: var(--padTop);
+    }
+
+    .bottomTile {
+        text-align: center;
+        color: var(--txt-color-1);
+        background-color: var(--bgc-low);
+        margin: var(--marLow);
+        backdrop-filter: var(--blur1);
+        padding: 4%;
+        font-size: 120%;
+    }
 }
 
-main {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto 1fr;
-    grid-template-areas: 'a b b b'
-        'a b b b';
-    place-items: center;
-    align-items: stretch;
-    justify-items: stretch;
-    margin: 0;
-    backdrop-filter: var(--blur1);
+@layer overrides {
+    .bottomTile /* clash: kept at old specificity */ {
+        border-radius: var(--lowrad);
+    }
 }
 
-header {
-    z-index: 1;
-    position: relative;
+@layer pages {
+    #form-container {
+        grid-area: a;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 5%;
+        border-radius: var(--rad2);
+    }
+
+    #desc-container {
+        grid-area: b;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 5%;
+        border-radius: var(--rad2);
+    }
+
+    .form-section {
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
+
+    .btn-form {
+        font-family: "Cinzel Decorative", serif;
+        font-weight: 700;
+        font-style: normal;
+        transition: all 0.5s ease;
+        background-color: var(--bg-color-1);
+        color: var(--txt-color-1);
+        padding: var(--pad2);
+        border-radius: var(--rad2);
+        backdrop-filter: var(--blur1);
+    }
+
+    .btn-form:hover {
+        transform: scale(1.05);
+        animation: roll 1.5s ease-in-out infinite;
+    }
+
+    select {
+        padding: 15px;
+        text-align: center;
+        border: none;
+        background-color: var(--bgc-low);
+        color: var(--txt-color-1);
+    }
 }
 
-#siteTitle {
-    background-color: var(--bgc-top);
-    color: var(--txt-color-1);
-    text-align: center;
-    padding: 2%;
-    margin: 0;
+@layer overrides {
+    select /* clash: kept at old specificity */ {
+        border-radius: var(--lowrad);
+    }
 }
 
-#formTitle {
-    background-color: var(--bgc-low);
-    color: var(--txt-color-1);
-    text-align: center;
-    padding: 1%;
-    margin: 0;
+@layer pages {
+    label {
+        padding: 5px;
+        text-align: center;
+        background-color: var(--bgc-top);
+    }
 }
 
-.tile {
-    display: flex;
-    flex-direction: column;
+@layer overrides {
+    label /* clash: kept at old specificity */ {
+        border-radius: var(--toprad);
+    }
 }
 
-.topTile {
-    text-align: center;
-    color: var(--txt-color-1);
-    background-color: var(--bgc-top);
-    border-radius: var(--toprad);
-    margin: var(--marTop);
-    backdrop-filter: var(--blur1);
-    padding: var(--padTop);
-}
+@layer pages {
+    #race-select-container,
+    #char-name-container {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 4%;
+        box-shadow: var(--bs1);
+        border-radius: var(--tile);
+    }
 
-.bottomTile {
-    text-align: center;
-    color: var(--txt-color-1);
-    background-color: var(--bgc-low);
-    border-radius: var(--lowrad);
-    margin: var(--marLow);
-    backdrop-filter: var(--blur1);
-    padding: 4%;
-    font-size: 120%;
-}
+    #button-container {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+    }
 
-#formContainer {
-    grid-area: a;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 5%;
-    border-radius: var(--rad2);
-}
+    #name {
+        border: none;
+    }
 
-#descContainer {
-    grid-area: b;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 5%;
-    border-radius: var(--rad2);
-}
-
-.formSectionContainer {
-    margin-top: 5%;
-    margin-bottom: 5%;
-}
-
-.formButton {
-    font-family: "Cinzel Decorative", serif;
-    font-weight: 700;
-    font-style: normal;
-    transition: all 0.5s ease;
-    background-color: var(--bg-color-1);
-    color: var(--txt-color-1);
-    padding: var(--pad2);
-    border-radius: var(--rad2);
-    backdrop-filter: var(--blur1);
-}
-
-.formButton:hover {
-    transform: scale(1.05);
-    animation: roll 1.5s ease-in-out infinite;
-}
-
-select {
-    padding: 15px;
-    text-align: center;
-    border: none;
-    border-radius: var(--lowrad);
-    background-color: var(--bgc-low);
-    color: var(--txt-color-1);
-}
-
-label {
-    padding: 5px;
-    text-align: center;
-    border-radius: var(--toprad);
-    background-color: var(--bgc-top);
-}
-
-#raceSelectContainer,
-#charNameContainer {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 4%;
-    box-shadow: var(--bs1);
-    border-radius: var(--tile);
-}
-
-#buttonContainer {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-}
-
-#name {
-    border: none;
-}
-
-#submit {
-    border: none;
-    border-radius: 5px;
-    background-color: var(--bg-color-1);
-    color: var(--txt-color-1);
-    box-shadow: var(--bs1);
-    transition: all 0.5s ease;
-    font: inherit;
-    font-style: normal;
-    width: 100%;
-    padding: 3%;
-}
-
-#submit:hover {
-    transform: scale(1.05);
-    animation: roll 1.5s ease-in-out infinite;
-}
-
-#descImg {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 15px 15px 0 0;
-}
-
-#descText {
-    padding: var(--pad2);
-    white-space: pre-line;
-}
-
-footer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: var(--pad);
-    margin: 0;
-    width: auto;
-    left: 0;
-    right: 0;
-    background-color: var(--bg-color-1);
-    color: var(--txt-color-1);
-    box-shadow: var(--bs1);
-}
-
-#footerText,
-#homeLink {
-    margin-left: 2%;
-    margin-right: 2%;
-}
-
-#homeLink {
-    color: var(--txt-color-1);
-    text-decoration: none;
-    height: 100%;
-    margin-right: 1%;
-    transition: all 0.5s ease;
-}
-
-#homeLink:hover {
-    transform: scale(1.05);
-}
-
-#section3Title {
-    grid-area: a;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    margin: 5%;
-    background-color: var(--bgc-top);
-    color: var(--txt-color-1);
-    border-radius: var(--rad2);
-}
-
-#formContainerStep3 {
-    grid-area: b;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    margin: 5%;
-    border-radius: var(--rad2);
-}
-
-#baseStatContainer {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    gap: 1%;
-    margin: 1%;
-    border-radius: var(--rad2);
-}
-
-#baseStatContainer > .tile {
-    flex: 1 1 20%;
-    min-width: 7rem;
-    box-sizing: border-box;
-}
-
-#rollBtn {
-    border: none;
-}
-
-/* Back / Forward buttons under the step title (all screen sizes) */
-
-#stepNav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 0;
-    width: 100%;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-.stepNavButton {
-    flex: 1;
-    text-align: center;
-    background-color: var(--bg-color-1);
-    color: var(--txt-color-1);
-    box-shadow: var(--bs1);
-    border: none;
-    border-radius: 0;
-    margin: 0;
-    padding: 0.4rem 1rem;
-    font-family: "Cinzel Decorative", serif;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.stepNavButton:disabled {
-    opacity: 0.4;
-    cursor: default;
-}
-
-#mobileCancel {
-    display: none;
-}
-
-/* Race traits under the description box */
-
-#TraitsSection {
-    margin-top: 0.5rem;
-    padding: var(--pad2);
-    border-radius: var(--tile);
-    border: var(--tileBorder);
-    backdrop-filter: var(--backdrop);
-    background-color: var(--bgc-top);
-    color: var(--txt-color-1);
-    box-shadow: var(--bs1);
-}
-
-#TraitsSection p {
-    margin: 0.35rem 0;
-    line-height: 1.4;
-    white-space: normal;
-}
-
-#TraitsSection p:first-child {
-    text-align: center;
-    font-weight: 700;
-    padding-bottom: 0.35rem;
-    border-bottom: 1px solid currentColor;
-}
-
-#TraitsSection strong {
-    font-family: "Cinzel Decorative", serif;
-}
-
-/* Each trait is its own category, split by lines */
-
-#TraitsSection p {
-    margin: 0;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid currentColor;
-}
-
-#TraitsSection p:last-child {
-    border-bottom: none;
-}
-
-/* Portrait matches the text box width */
-
-#ImgSection {
-    width: 100%;
-}
-
-#descImg {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    margin: 0;
-    box-sizing: border-box;
-    background-color: var(--bgc-low);
-    border: var(--tileBorder);
-}
-
-/* Class basics text keeps its line breaks */
-
-#text {
-    white-space: pre-line;
-}
-
-/* Class feature tree: one clickable row per level */
-
-#treeSection {
-    margin-top: 0.5rem;
-    padding: var(--pad2);
-    border-radius: var(--tile);
-    border: var(--tileBorder);
-    backdrop-filter: var(--backdrop);
-    background-color: var(--bgc-top);
-    color: var(--txt-color-1);
-    box-shadow: var(--bs1);
-    max-height: 24rem;
-    overflow-y: auto;
-}
-
-#treeSection details {
-    border-bottom: 1px solid currentColor;
-}
-
-#treeSection details:last-child {
-    border-bottom: none;
-}
-
-#treeSection summary {
-    cursor: pointer;
-    padding: 0.5rem 0;
-    font-family: "Cinzel Decorative", serif;
-    font-weight: 700;
-}
-
-#treeSection details p {
-    margin: 0 0 0.5rem 1rem;
-    line-height: 1.4;
-    white-space: normal;
-}
-
-/* Class info dropdowns: same look as the feature tree */
-
-#classInfoSection {
-    padding: var(--pad2);
-    border-radius: var(--lowrad);
-    background-color: var(--bgc-low);
-    color: var(--txt-color-1);
-    backdrop-filter: var(--blur1);
-}
-
-#classInfoSection details {
-    border-bottom: 1px solid currentColor;
-}
-
-#classInfoSection details:last-child {
-    border-bottom: none;
-}
-
-#classInfoSection summary {
-    cursor: pointer;
-    padding: 0.5rem 0;
-    font-family: "Cinzel Decorative", serif;
-    font-weight: 700;
-}
-
-#classInfoSection details p {
-    margin: 0 0 0.5rem 1rem;
-    line-height: 1.4;
-    white-space: pre-line;
-}
-
-/*  ===== Mobile (max-width: 768px), consolidated =====  */
-
-@media (max-width: 768px) {
-    #mobileCancel {
-        display: block;
-        box-sizing: border-box;
+    #submit {
+        border: none;
+        background-color: var(--bg-color-1);
+        color: var(--txt-color-1);
+        transition: all 0.5s ease;
+        font: inherit;
+        font-style: normal;
         width: 100%;
-        margin-top: 1rem;
         padding: 3%;
+    }
+}
+
+@layer overrides {
+    #submit /* clash: kept at old specificity */ {
+        border-radius: 5px;
+        box-shadow: var(--bs1);
+    }
+}
+
+@layer pages {
+    #submit:hover {
+        transform: scale(1.05);
+        animation: roll 1.5s ease-in-out infinite;
+    }
+
+    #desc-img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 15px 15px 0 0;
+    }
+
+
+
+    footer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: var(--pad);
+        margin: 0;
+        width: auto;
+        left: 0;
+        right: 0;
+        background-color: var(--bg-color-1);
+        color: var(--txt-color-1);
+        box-shadow: var(--bs1);
+    }
+
+    #footer-text,
+    #home-link {
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+
+    #home-link {
+        color: var(--txt-color-1);
+        text-decoration: none;
+        height: 100%;
+        margin-right: 1%;
+        transition: all 0.5s ease;
+    }
+
+    #home-link:hover {
+        transform: scale(1.05);
+    }
+
+    #section3-title {
+        grid-area: a;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        margin: 5%;
+        background-color: var(--bgc-top);
+        color: var(--txt-color-1);
+        border-radius: var(--rad2);
+    }
+
+    #form-container-step3 {
+        grid-area: b;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        margin: 5%;
+        border-radius: var(--rad2);
+    }
+
+    #base-stat-container {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        gap: 1%;
+        margin: 1%;
+        border-radius: var(--rad2);
+    }
+
+    #base-stat-container > .tile {
+        flex: 1 1 20%;
+        min-width: 7rem;
+        box-sizing: border-box;
+    }
+
+    #roll-button {
+        border: none;
+    }
+
+    /* Back / Forward buttons under the step title (all screen sizes) */
+
+    #step-nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 0;
+        width: 100%;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .btn-step {
+        flex: 1;
+        text-align: center;
+        background-color: var(--bg-color-1);
+        color: var(--txt-color-1);
+        box-shadow: var(--bs1);
+        border: none;
+        margin: 0;
+        padding: 0.4rem 1rem;
+        font-family: "Cinzel Decorative", serif;
+        font-weight: 700;
+        cursor: pointer;
+    }
+}
+
+@layer overrides {
+    .btn-step /* clash: kept at old specificity */ {
+        border-radius: 0;
+    }
+}
+
+@layer pages {
+    .btn-step:disabled {
+        opacity: 0.4;
+        cursor: default;
+    }
+
+    #mobile-cancel {
+        display: none;
+    }
+
+    /* Race traits under the description box */
+
+    #traits-section {
+        margin-top: 0.5rem;
+        padding: var(--pad2);
         border-radius: var(--tile);
         border: var(--tileBorder);
         backdrop-filter: var(--backdrop);
         background-color: var(--bgc-top);
         color: var(--txt-color-1);
         box-shadow: var(--bs1);
-        font-family: "Cinzel Decorative", serif;
-        font-weight: 700;
+    }
+
+    #traits-section p {
+        margin: 0.35rem 0;
+        line-height: 1.4;
+        white-space: normal;
+    }
+
+    #traits-section p:first-child {
         text-align: center;
-        text-decoration: none;
-        transition: all 0.5s ease;
+        font-weight: 700;
+        padding-bottom: 0.35rem;
+        border-bottom: 1px solid currentColor;
     }
 
-    footer {
-        display: none !important;
+    #traits-section strong {
+        font-family: "Cinzel Decorative", serif;
     }
 
-    main {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-rows: auto 1fr;
-        grid-template-areas: 'a'
-            'b';
+    /* Each trait is its own category, split by lines */
+
+    #traits-section p {
+        margin: 0;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid currentColor;
     }
 
-    #treeSection {
-        scrollbar-width: none;
+    #traits-section p:last-child {
+        border-bottom: none;
     }
 
-    #submit {
+    /* Portrait matches the text box width */
+
+    #img-section {
         width: 100%;
-        padding: 4%;
+    }
+
+    #desc-img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        margin: 0;
+        box-sizing: border-box;
+        background-color: var(--bgc-low);
+        border: var(--tileBorder);
+    }
+
+    /* Class basics text keeps its line breaks */
+
+    #text {
+        white-space: pre-line;
+    }
+
+    /* Class feature tree: one clickable row per level */
+
+    #tree-section {
+        margin-top: 0.5rem;
+        padding: var(--pad2);
         border-radius: var(--tile);
         border: var(--tileBorder);
         backdrop-filter: var(--backdrop);
         background-color: var(--bgc-top);
         color: var(--txt-color-1);
+        box-shadow: var(--bs1);
+        max-height: 24rem;
+        overflow-y: auto;
     }
 
-    #section3Title {
-        display: none;
+    #tree-section details {
+        border-bottom: 1px solid currentColor;
     }
 
-    /* Mobile: header and footer hug the screen edges. Fill the notch / home-bar areas with their own color instead of empty space */
-
-    html {
-        padding-top: 0 !important;
-
-        /* overrides the safe-area padding in index.html */
+    #tree-section details:last-child {
+        border-bottom: none;
     }
 
-    body {
-        min-height: 100dvh;
-
-        /* the real visible height on phones, unlike 100vh */
+    #tree-section summary {
+        cursor: pointer;
+        padding: 0.5rem 0;
+        font-family: "Cinzel Decorative", serif;
+        font-weight: 700;
     }
 
-    header {
-        padding-top: env(safe-area-inset-top);
+    #tree-section details p {
+        margin: 0 0 0.5rem 1rem;
+        line-height: 1.4;
+        white-space: normal;
     }
 
-    footer {
-        padding-bottom: max(1%, env(safe-area-inset-bottom));
+    /* Class info dropdowns: same look as the feature tree */
+
+    #class-info-section {
+        padding: var(--pad2);
+        border-radius: var(--lowrad);
+        background-color: var(--bgc-low);
+        color: var(--txt-color-1);
+        backdrop-filter: var(--blur1);
     }
 
-    /* A fixed layer behind everything, sized to the LARGEST viewport so it runs under the status bar and Safari's toolbar */
-
-    html::before {
-        /* on html, because body's backdrop-filter would trap a fixed layer */
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100lvh;
-        z-index: -1;
-        background-image: var(--background);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        pointer-events: none;
+    #class-info-section details {
+        border-bottom: 1px solid currentColor;
     }
 
-    body {
-        background-image: none;
-
-        /* the fixed layer above replaces it */
+    #class-info-section details:last-child {
+        border-bottom: none;
     }
 
-    /* Mobile: stretch the fixed background up under the status bar so no bare band shows */
-
-    html::before {
-        top: calc(-1 * env(safe-area-inset-top));
-        height: calc(100lvh + env(safe-area-inset-top));
+    #class-info-section summary {
+        cursor: pointer;
+        padding: 0.5rem 0;
+        font-family: "Cinzel Decorative", serif;
+        font-weight: 700;
     }
 
-    /* Mobile: zoom the background so the dark bar baked into the top of the image is cropped off */
-
-    html::before {
-        background-size: auto 120%;
-        background-position: center bottom;
+    #class-info-section details p {
+        margin: 0 0 0.5rem 1rem;
+        line-height: 1.4;
+        white-space: pre-line;
     }
 
-    /* Mobile: soft fade at the top and bottom edges into the status bar color */
+    /*  ===== Mobile (max-width: 768px), consolidated =====  */
 
-    html::after {
-        content: '';
-        position: fixed;
-        left: 0;
-        width: 100%;
-        top: calc(-1 * env(safe-area-inset-top));
-        height: calc(100lvh + env(safe-area-inset-top));
-        z-index: -1;
-        pointer-events: none;
-        background: linear-gradient(to bottom,
-            var(--status-solid, rgb(109, 83, 222)) 0,
-            transparent calc(env(safe-area-inset-top) + 4rem),
-            transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
-            var(--status-solid, rgb(109, 83, 222)) 100%);
-    }
+    @media (max-width: 768px) {
+        #mobile-cancel {
+            display: block;
+            box-sizing: border-box;
+            width: 100%;
+            margin-top: 1rem;
+            padding: 3%;
+            border-radius: var(--tile);
+            border: var(--tileBorder);
+            backdrop-filter: var(--backdrop);
+            background-color: var(--bgc-top);
+            color: var(--txt-color-1);
+            box-shadow: var(--bs1);
+            font-family: "Cinzel Decorative", serif;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.5s ease;
+        }
 
-    /* Mobile: iOS Safari colors its bar from what is painted at the top, so paint a solid title-color strip there */
+        footer {
+            display: none !important;
+        }
 
-    html {
-        background-color: var(--bgc-title, var(--bg-color-1));
-    }
+        main {
+            grid-template-columns: repeat(1, 1fr);
+            grid-template-rows: auto 1fr;
+            grid-template-areas: 'a'
+                'b';
+        }
 
-    html::after {
-        background: linear-gradient(to bottom,
-            var(--bgc-title, rgb(65, 37, 157)) 0,
-            var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
-            transparent calc(env(safe-area-inset-top) + 4rem),
-            transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
-            var(--bgc-title, rgb(65, 37, 157)) 100%);
-    }
+        #tree-section {
+            scrollbar-width: none;
+        }
 
-    /* Mobile: no footer */
-
-    footer {
-        display: none;
-    }
-
-    /* Mobile: no bottom fade, the picture runs to the bottom edge */
-
-    html::after {
-        background: linear-gradient(to bottom,
-            var(--bgc-title, rgb(65, 37, 157)) 0,
-            var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
-            transparent calc(env(safe-area-inset-top) + 4rem));
-    }
-
-    /* Mobile: stretch the background picture past the bottom so it fills behind Safari's bottom bar */
-
-    html::before,
-    html::after {
-        height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
+        #submit {
+            width: 100%;
+            padding: 4%;
+            border: var(--tileBorder);
+            backdrop-filter: var(--backdrop);
+            background-color: var(--bgc-top);
+            color: var(--txt-color-1);
+        }
     }
 }
+@layer overrides {
+    @media (max-width: 768px) {
+    #submit /* clash: kept at old specificity */ {
+            border-radius: var(--tile);
+    }
+    }
+}
+@layer pages {
+    @media (max-width: 768px) {
+ 
+        .pick-tile {
+            background-color: var(--bg-color-1);
+        }
+
+        .pick-tile select { 
+            background-color: var(--bg-color-1);
+        }
+
+        .pick-tile option {
+            background-color: var(--bg-color-1);
+        
+        }
+  
+
+
+        /* Mobile: header and footer hug the screen edges. Fill the notch / home-bar areas with their own color instead of empty space */
+
+        html {
+            padding-top: 0 !important;
+
+            /* overrides the safe-area padding in index.html */
+        }
+
+        body {
+            min-height: 100dvh;
+
+            /* the real visible height on phones, unlike 100vh */
+        }
+
+        header {
+            padding-top: env(safe-area-inset-top);
+        }
+
+        footer {
+            padding-bottom: max(1%, env(safe-area-inset-bottom));
+        }
+
+        /* A fixed layer behind everything, sized to the LARGEST viewport so it runs under the status bar and Safari's toolbar */
+
+        html::before {
+            /* on html, because body's backdrop-filter would trap a fixed layer */
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100lvh;
+            z-index: -1;
+            background-image: var(--background);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            pointer-events: none;
+        }
+
+        body {
+            background-image: none;
+
+            /* the fixed layer above replaces it */
+        }
+
+        /* Mobile: stretch the fixed background up under the status bar so no bare band shows */
+
+        html::before {
+            top: calc(-1 * env(safe-area-inset-top));
+            height: calc(100lvh + env(safe-area-inset-top));
+        }
+
+        /* Mobile: zoom the background so the dark bar baked into the top of the image is cropped off */
+
+        html::before {
+            background-size: auto 120%;
+            background-position: center bottom;
+        }
+
+        /* Mobile: soft fade at the top and bottom edges into the status bar color */
+
+        html::after {
+            content: '';
+            position: fixed;
+            left: 0;
+            width: 100%;
+            top: calc(-1 * env(safe-area-inset-top));
+            height: calc(100lvh + env(safe-area-inset-top));
+            z-index: -1;
+            pointer-events: none;
+            background: linear-gradient(to bottom,
+                var(--status-solid, rgb(109, 83, 222)) 0,
+                transparent calc(env(safe-area-inset-top) + 4rem),
+                transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
+                var(--status-solid, rgb(109, 83, 222)) 100%);
+        }
+
+        /* Mobile: iOS Safari colors its bar from what is painted at the top, so paint a solid title-color strip there */
+
+        html {
+            background-color: var(--bgc-title, var(--bg-color-1));
+        }
+
+        html::after {
+            background: linear-gradient(to bottom,
+                var(--bgc-title, rgb(65, 37, 157)) 0,
+                var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
+                transparent calc(env(safe-area-inset-top) + 4rem),
+                transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
+                var(--bgc-title, rgb(65, 37, 157)) 100%);
+        }
+
+        /* Mobile: no footer */
+
+        footer {
+            display: none;
+        }
+
+        /* Mobile: no bottom fade, the picture runs to the bottom edge */
+
+        html::after {
+            background: linear-gradient(to bottom,
+                var(--bgc-title, rgb(65, 37, 157)) 0,
+                var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
+                transparent calc(env(safe-area-inset-top) + 4rem));
+        }
+
+        /* Mobile: stretch the background picture past the bottom so it fills behind Safari's bottom bar */
+
+        html::before,
+        html::after {
+            height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
+        }
+    }
+}
+

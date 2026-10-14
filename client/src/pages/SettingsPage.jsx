@@ -35,40 +35,40 @@ function SettingsPage() {
 
     return (
         <>
-            <header id="siteTitle">
-                <img src="/Logo.png" alt="Eldrid Tales Logo" className="titleLogo" />
+            <header id="site-title">
+                <img src="/Logo.png" alt="Eldrid Tales Logo" className="title-logo" />
                 <h1>Account Settings</h1>
             </header>
             <SiteNav />
             <main id="profile-main">
                 <section>
                     <form onSubmit={submit}>
-                        <article className="formSectionContainer profile-tile" id="profile-username-container">
+                        <article className="form-section profile-tile" id="profile-username-container">
                             <label className="profile-label" htmlFor="username">Username</label>
                             <input className="profile-value" type="text" id="username" name="username" value={form.username} onChange={update} />
                         </article>
 
-                        <article className="formSectionContainer profile-tile" id="profile-email-container">
+                        <article className="form-section profile-tile" id="profile-email-container">
                             <label className="profile-label" htmlFor="email">Email</label>
                             <input className="profile-value" type="email" id="email" name="email" value={form.email} onChange={update} />
                         </article>
 
-                        <article className="formSectionContainer profile-tile" id="profile-password-container">
+                        <article className="form-section profile-tile" id="profile-password-container">
                             <label className="profile-label" htmlFor="password">Password</label>
                             <input className="profile-value" type="password" id="password" name="password" value={form.password} onChange={update} />
                         </article>
 
                         {message && <p>{message}</p>}
 
-                        <article className="formSectionContainer profile-tile" id="profile-submit-container">
+                        <article className="form-section profile-tile" id="profile-submit-container">
                             <button className="profile-button" id="submit" type="submit">Update Account</button>
                         </article>
                     </form>
                 </section>
             </main>
             <footer>
-                <Link id="homeLink" to="/home">Back to home</Link>
-                <p id="footerText">copyrite Eldrid Tales LLC</p>
+                <Link id="home-link" to="/home">Back to home</Link>
+                <p id="footer-text">copyrite Eldrid Tales LLC</p>
             </footer>
         </>
     );

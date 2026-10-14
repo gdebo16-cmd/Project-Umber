@@ -4,27 +4,27 @@ import LogoutLink from '../components/LogoutLink';
 // The menu at the top of the character sheet (same links as character.ejs)
 function SheetNav({ characterId }) {
     return (
-        <nav id="navBox">
-            <ul id="navContainer">
-                <Link id="homeNav" className="drop-button navButton hover-grow" to="/home">home</Link>
+        <nav id="nav-box">
+            <ul id="nav-container">
+                <Link id="home-nav" className="btn-drop btn-nav hover-grow" to="/home">home</Link>
 
-                <li id="characterNav" className="navButton">Characters
-                    <ul className="dropDown" id="characterDropdown">
-                        <Link id="createCharacter" className="drop-button characterDropdownButton" to="/create_char">Create Character</Link>
+                <li id="character-nav" className="btn-nav">Characters
+                    <ul className="drop-down" id="characterDropdown">
+                        <Link id="createCharacter" className="btn-drop btn-drop-character" to="/create_char">Create Character</Link>
                     </ul>
                 </li>
 
-                <li id="settingsNav" className="navButton">Settings
-                    <ul className="dropDown" id="settingsDropdown">
-                        <Link id="profile" className="drop-button settingsDropdownButton" to="/profile">Profile</Link>
-                        <Link id="settings" className="drop-button settingsDropdownButton" to="/settings">Settings</Link>
+                <li id="settings-nav" className="btn-nav">Settings
+                    <ul className="drop-down" id="settingsDropdown">
+                        <Link id="profile" className="btn-drop btn-drop-settings" to="/profile">Profile</Link>
+                        <Link id="settings" className="btn-drop btn-drop-settings" to="/settings">Settings</Link>
                         <LogoutLink />
                     </ul>
                 </li>
 
-                <li id="campaignNav" className="navButton">Character Editor
-                    <ul className="dropDown" id="campaignDropdown">
-                        <Link id="charSheetEdit" className="drop-button campaignDropdownButton" to={`/characters/${characterId}/edit`}>Edit Character</Link>
+                <li id="campaign-nav" className="btn-nav">Character Editor
+                    <ul className="drop-down" id="campaignDropdown">
+                        <Link id="charSheetEdit" className="btn-drop btn-drop-campaign" to={`/characters/${characterId}/edit`}>Edit Character</Link>
                     </ul>
                 </li>
             </ul>

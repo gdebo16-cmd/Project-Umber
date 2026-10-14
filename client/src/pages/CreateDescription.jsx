@@ -2,11 +2,11 @@
 // "item" is whatever was picked last ({ img, name, text }), or null to hide the box.
 function CreateDescription({ item }) {
     return (
-        <section id="descContainer" className="tile" hidden={!item}>
+        <section id="desc-container" className="tile" hidden={!item}>
             {item && (
                 <article id="descArticle">
-                    <section id="ImgSection">
-                      <img id="descImg" className="topTile" src={item.img} alt={item.name} />
+                    <section id="img-section">
+                      <img id="desc-img" className="topTile" src={item.img} alt={item.name} />
                     </section>
                     {!item.hideTitle && <section id="titleSection">
                       <h3 id="title" className="bottomTile">{item.name}</h3>
@@ -16,7 +16,7 @@ function CreateDescription({ item }) {
                           <p id="text" className="bottomTile">{item.text}</p>
                         </section>
                     )}
-                    {item.race && (<section id="TraitsSection">
+                    {item.race && (<section id="traits-section">
                         <p>Type: {item.race.creature_type} | Size: {item.race.size} | Speed: {item.race.base_speed} ft</p>
                         {item.race.dark_vision && <p>Darkvision</p>}
                         {item.race.resistances && <p>Resistances: {item.race.resistances}</p>}
@@ -25,7 +25,7 @@ function CreateDescription({ item }) {
                         ))}
                     </section>)}
                     {item.sections && (
-                        <section id="classInfoSection">
+                        <section id="class-info-section">
                             {item.sections.map((s) => (
                                 <details key={s.label}>
                                     <summary>{s.label}</summary>
@@ -35,7 +35,7 @@ function CreateDescription({ item }) {
                         </section>
                     )}
                     {item.features && (
-                        <section id="treeSection">
+                        <section id="tree-section">
                             {[...new Set(item.features.map((f) => f.level))].map((lvl) => (
                                 <details key={lvl}>
                                     <summary>Level {lvl}</summary>

@@ -24,39 +24,39 @@ function LoginPage() {
 
     return (
         <>
-            <header id="siteTitle">
-            <img src="/Logo.png" alt="Eldrid Tales Logo" className="titleLogo" />
+            <header id="site-title">
+            <img src="/Logo.png" alt="Eldrid Tales Logo" className="title-logo" />
             <h1>Eldrid Tales</h1>
             </header>
 
             <main>
-                <section className="formContainer">
-                    <article className="formTitle">
+                <section className="form-container">
+                    <article className="form-title">
                         
                         <h2 id="titleText">Welcome to Your Legend</h2>
                     </article>
                     <form onSubmit={submit}>
-                        <article className="formSectionContainer userNameContainer">
-                            <label id="userNameLabel" className="signinLabel" htmlFor="userName">Enter Username</label>
-                            <input className="signinValue" type="text" id="userName" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                        <article className="form-section user-name-container">
+                            <label id="userNameLabel" className="signin-label" htmlFor="userName">Enter Username</label>
+                            <input className="signin-value" type="text" id="userName" value={username} onChange={(e) => setUsername(e.target.value)} required />
                         </article>
 
-                        <article className="formSectionContainer passwordContainer ">
-                            <label id="passwordLabel" className="signinLabel" htmlFor="password">Enter Password</label>
-                            <input className="signinValue" type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                        <article className="form-section password-container ">
+                            <label id="passwordLabel" className="signin-label" htmlFor="password">Enter Password</label>
+                            <input className="signin-value" type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                         </article>
 
                         {error && <p>{error}</p>}
 
-                        <article className="formSectionContainer buttonContainer">
-                            <button id="loginButton" className="formButton" type="submit">Login</button>
-                            <Link to="/register" className="formButton" id="newUserButton">Create New User</Link>
+                        <article className="form-section button-container">
+                            <button id="loginButton" className="btn-form" type="submit">Login</button>
+                            <Link to="/register" className="btn-form" id="newUserButton">Create New User</Link>
                         </article>
                     </form>
                 </section>
             </main>
             <footer>
-                <p id="footerText">© 2026 Eldrid Tales. All rights reserved.</p>
+                <p id="footer-text">© 2026 Eldrid Tales. All rights reserved.</p>
             </footer>
         </>
     );

@@ -19,20 +19,20 @@ function EditAbilitiesForm({ character, onSaved }) {
     };
 
     return (
-        <form className="formContainer" onSubmit={submit}>
+        <form className="form-container" onSubmit={submit}>
             <article id="statsContainer" className="edit-stats">
                 {STATS.map((s) => (
-                    <article key={s.key} className="formSectionContainer">
-                        <span className="cap-top">{s.label}</span>
-                        <button type="button" className="cap-bottom rollBtn" onClick={() => reroll(s.key)}>
+                    <article key={s.key} className="form-section">
+                        <span className="tile-top">{s.label}</span>
+                        <button type="button" className="tile-bottom btn-roll" onClick={() => reroll(s.key)}>
                             {scores[s.key] ?? 'roll'}
                         </button>
                     </article>
                 ))}
             </article>
             {message && <p>{message}</p>}
-            <article className="formSectionContainer buttonContainer">
-                <button className="formButton" type="submit">Save Changes</button>
+            <article className="form-section button-container">
+                <button className="btn-form" type="submit">Save Changes</button>
             </article>
         </form>
     );

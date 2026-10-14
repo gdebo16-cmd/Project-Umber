@@ -92,18 +92,18 @@ function Actions() {
     return (
         // Same shape as the Spells and Inventory tabs: one list of groups,
         // each group = a title on top + its list of rows underneath
-        <ul className="action-list spellList">
+        <ul className="action-list spell-list">
             <li className="action-item spell-slot">
                 <span className="action-title" id="physical-actions-title">Physical Actions</span>
                 <ul className="action-list" id="physical-actions-list">
                     {actions.map((a) => (
                         <li key={a.key} className="action-item spell">
-                            <button type="button" className="spell-name-button hover-grow" onClick={() => setOpenItem({ kind: 'weapon', data: a })}>
+                            <button type="button" className="btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'weapon', data: a })}>
                                     {a.name}
                                 </button>
                             <div className="action-button-container">
-                                <button type="button" className="action-button to-hit-button hover-grow" onClick={() => rollHit(a)}>{signed(a.hit ?? toHit)}</button>
-                                <button type="button" className="action-button damage-button hover-grow" onClick={() => rollDamage(a)}>{a.dice}{a.dmgMod ? signed(a.dmgMod) : ''}</button>
+                                <button type="button" className="btn-action btn-to-hit hover-grow" onClick={() => rollHit(a)}>{signed(a.hit ?? toHit)}</button>
+                                <button type="button" className="btn-action damage-button hover-grow" onClick={() => rollDamage(a)}>{a.dice}{a.dmgMod ? signed(a.dmgMod) : ''}</button>
                             </div>
                         </li>
                     ))}
@@ -118,25 +118,25 @@ function Actions() {
                     ) : (
                         actionSpellsList.map((s) => (
                             <li key={s.id} className="action-item spell">
-                                <button type="button" className="spell-name-button hover-grow" onClick={() => setOpenItem({ kind: 'spell', data: s })}>
+                                <button type="button" className="btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'spell', data: s })}>
                                     {s.name}
                                 </button>
 
                                 <div className="action-button-container">
                                     {s.attack_type ? (
-                                        <button type='button' className='action-button to-hit-button hover-grow'
+                                        <button type='button' className='btn-action btn-to-hit hover-grow'
                                         onClick={() => onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}! ...Chance to hit... ${d20() + spellToHit + (s.base_to_hit_modifier || 0)}!`))}>
                                             {signed(spellToHit + (s.base_to_hit_modifier || 0))}
                                         </button>
                                     ) : s.opponent_save_roll ? (
-                                        <button type='button' className='action-button to-hit-button hover-grow' onClick={() => onCastClick(s, () => castSpell(s, `Target must make a ${s.opponent_save_roll} roll and roll higher than a ${spellSave}`))}>{s.opponent_save_roll} {spellSave}</button>
+                                        <button type='button' className='btn-action btn-to-hit hover-grow' onClick={() => onCastClick(s, () => castSpell(s, `Target must make a ${s.opponent_save_roll} roll and roll higher than a ${spellSave}`))}>{s.opponent_save_roll} {spellSave}</button>
                                     ) : null}
 
                                     {(s.base_damage_dice) ? (
                                         // with a to-hit/save button the damage is just a roll; without one, this button is the cast
-                                        <button type="button" className="action-button damage-button hover-grow" onClick={() => (s.attack_type || s.opponent_save_roll) ? rollDamage({ dice: diceAt(s, castLevels[s.id] ?? s.base_level), dmgMod: s.dmgMod || 0 }) : onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}! Damage dealt: ${Math.max(0, rollDice(s.base_damage_dice) + (s.dmgMod || 0))}`))}>{diceAt(s, castLevels[s.id] ?? s.base_level)}{s.dmgMod ? signed(s.dmgMod) : ''}</button>
+                                        <button type="button" className="btn-action damage-button hover-grow" onClick={() => (s.attack_type || s.opponent_save_roll) ? rollDamage({ dice: diceAt(s, castLevels[s.id] ?? s.base_level), dmgMod: s.dmgMod || 0 }) : onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}! Damage dealt: ${Math.max(0, rollDice(s.base_damage_dice) + (s.dmgMod || 0))}`))}>{diceAt(s, castLevels[s.id] ?? s.base_level)}{s.dmgMod ? signed(s.dmgMod) : ''}</button>
                                     ) : (
-                                        <button type='button' className='action-button damage-button hover-grow' onClick={() => onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}!`))}>Cast</button>
+                                        <button type='button' className='btn-action damage-button hover-grow' onClick={() => onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}!`))}>Cast</button>
                                     )}
 
                                     {/* Level picker: shows after clicking a leveled spell's cast button */}
@@ -162,17 +162,17 @@ function Actions() {
                 <ul className="action-list" id="physical-actions-list">
                     {bonusFeatures.map((f) => (
                             <li key={`${f.source}-${f.id}`} className="action-item spell">
-                                <button type="button" className="spell-name-button hover-grow" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
+                                <button type="button" className="btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
                                     {f.name}
                                 </button>
                                 <div className="action-button-container">
                                     {f.dice && (
-                                        <button type="button" className="action-button damage-button hover-grow"
+                                        <button type="button" className="btn-action damage-button hover-grow"
                                             onClick={() => onRoll(`${character.name} uses ${f.name}! Rolled: ${rollDice(f.dice)}`)}>
                                             {f.dice}
                                         </button>
                                     )}
-                                    <button type="button" className="action-button damage-button hover-grow"
+                                    <button type="button" className="btn-action damage-button hover-grow"
                                         onClick={() => onRoll(`${character.name} uses ${f.name}!`)}>
                                         Use
                                     </button>
@@ -187,17 +187,17 @@ function Actions() {
                 <ul className="action-list" id="reactions-list">
                     {reactionFeatures.map((f) => (
                             <li key={`${f.source}-${f.id}`} className="action-item spell">
-                                <button type="button" className="spell-name-button hover-grow" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
+                                <button type="button" className="btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
                                     {f.name}
                                 </button>
                                 <div className="action-button-container">
                                     {f.dice && (
-                                        <button type="button" className="action-button damage-button hover-grow"
+                                        <button type="button" className="btn-action damage-button hover-grow"
                                             onClick={() => onRoll(`${character.name} uses ${f.name}! Rolled: ${rollDice(f.dice)}`)}>
                                             {f.dice}
                                         </button>
                                     )}
-                                    <button type="button" className="action-button damage-button hover-grow"
+                                    <button type="button" className="btn-action damage-button hover-grow"
                                         onClick={() => onRoll(`${character.name} uses ${f.name}!`)}>
                                         Use
                                     </button>
@@ -212,17 +212,17 @@ function Actions() {
                 <ul className="action-list" id="feature-actions-list">
                     {actionFeatures.map((f) => (
                         <li key={`${f.source}-${f.id}`} className="action-item spell">
-                            <button type="button" className="spell-name-button hover-grow" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
+                            <button type="button" className="btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
                                 {f.name}
                             </button>
                             <div className="action-button-container">
                                 {f.dice && (
-                                    <button type="button" className="action-button damage-button hover-grow"
+                                    <button type="button" className="btn-action damage-button hover-grow"
                                         onClick={() => onRoll(`${character.name} uses ${f.name}! Rolled: ${rollDice(f.dice)}`)}>
                                         {f.dice}
                                     </button>
                                 )}
-                                <button type="button" className="action-button damage-button hover-grow"
+                                <button type="button" className="btn-action damage-button hover-grow"
                                     onClick={() => onRoll(`${character.name} uses ${f.name}!`)}>
                                     Use
                                 </button>
