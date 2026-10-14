@@ -187,8 +187,6 @@ header {
     position: absolute;
     top: 100%;
     left: 0;
-    width: 200px;
-    max-width: 90vw;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -207,16 +205,21 @@ li:hover .dropDown {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+    width: 100%;
+    box-shadow: var(--bs2);
 }
 
 .characterDropdownButton,
 .campaignDropdownButton,
 .settingsDropdownButton {
     border: var(--accent);
-    border-bottom: none;
-    border-right: none;
     color: var(--txt-drop-1);
-    padding: 1.5%;
+    padding: 14%;
+    border: var(--tileBorder);
+    border-radius: var(--tile);
+    margin: 3%;
+    font-size: 90%;
+    box-shadow: var(--bs2);
 }
 
 #settingsNav .dropDown {
@@ -811,7 +814,7 @@ li:hover .dropDown {
     
         #current-character-container,
         #unfinished-character-container {
-            max-height: 80%;
+            max-height: 100%;
             min-height: 0;
             overflow: none;
         }
