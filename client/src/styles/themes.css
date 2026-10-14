@@ -735,3 +735,15 @@ html[data-display]:not([data-display='standard']) #navContainer > :not(:first-ch
 html[data-display='compact'] #navContainer :is(.navButton, #homeNav, #characterNav, #campaignNav, #settingsNav) {
     border: none;
 }
+
+/* per-display nav borders */
+html:is([data-display='glass'], [data-display='minimal']) #navContainer :is(.navButton, #homeNav, #characterNav, #campaignNav, #settingsNav) {
+    border: none;
+}
+html[data-display='bold'] #navContainer :is(.navButton, #homeNav, #characterNav, #campaignNav, #settingsNav) {
+    border: 3px solid var(--bordercolor);
+}
+html[data-display='neon'] #navContainer :is(.navButton, #homeNav, #characterNav, #campaignNav, #settingsNav) {
+    border: 1px solid var(--bgc-bubble-receive);
+    box-shadow: var(--glow);
+}
