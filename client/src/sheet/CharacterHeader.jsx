@@ -10,7 +10,7 @@ function CharacterHeader({ character }) {
             <section id='character-header'>
                 <h2 id='character-name'>{character.name} - Level: {character.level}</h2>
                 <p id='character-race'>{character.race_name}</p>
-                <p id='character-class'>{character.class_name} - {character.subclass_name}</p>
+                <p id='character-class'>{character.class_name}{character.subclass_name ?  - ${character.subclass_name}` : ''}</p>
             </section>
             <SheetNav characterId={character.id} />
         </header>
