@@ -33,6 +33,18 @@ function SettingsPage() {
         }
     };
 
+    // the browser's confirm popup has to say OK before anything is deleted
+    const deleteAccount = async () => {
+        const ok = window.confirm('Delete your profile? This permanently removes your account, characters and campaigns. This cannot be undone.');
+        if (!ok) return;
+        try {
+            await sendJson('/api/settings', 'DELETE');
+            window.location.href = '/'; // full reload so the app forgets the old login
+        } catch (err) {
+            setMessage(err.message);
+        }
+    };
+
     return (
         <>
             <header id="site-title">
@@ -64,6 +76,10 @@ function SettingsPage() {
                             <button className="profile-button" id="submit" type="submit">Update Account</button>
                         </article>
                     </form>
+
+                    <article className="form-section profile-tile" id="profile-delete-container">
+                        <button className="profile-button" id="delete-account" type="button" onClick={deleteAccount}>Delete Profile</button>
+                    </article>
                 </section>
             </main>
             <footer>

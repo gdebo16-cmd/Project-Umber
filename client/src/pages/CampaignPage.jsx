@@ -26,6 +26,9 @@ function CampaignPage() {
             <main>
                 <section id="campaign-info">
                     <h2 className="title-text"> <em>Campaign:</em> <br />{campaign.name}</h2>
+                    {campaign.campaign_img_url
+                        ? <img className="campaign-image" src={campaign.campaign_img_url} alt={`${campaign.name} picture`} />
+                        : <div className="campaign-image" role="img" aria-label={`${campaign.name} picture`} />}
                     <p className="campaign-description"> <em>Description:</em> <br /> {campaign.description}</p>
                 </section>
             </main>

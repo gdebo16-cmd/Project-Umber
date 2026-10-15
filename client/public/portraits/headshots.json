@@ -435,6 +435,26 @@
     "group": "Race"
   },
   {
+    "file": "race-lumenwing.png",
+    "label": "Lumenwing",
+    "group": "Race"
+  },
+  {
+    "file": "race-graniar.png",
+    "label": "Graniar",
+    "group": "Race"
+  },
+  {
+    "file": "race-corvani.png",
+    "label": "Corvani",
+    "group": "Race"
+  },
+  {
+    "file": "race-lupine.png",
+    "label": "Lupine",
+    "group": "Race"
+  },
+  {
       "file": "mix-cindral-evoker.png",
       "label": "Cindral Evoker",
       "group": "Mixed"
@@ -708,5 +728,60 @@
       "file": "mix-wyrdling-lancer.png",
       "label": "Wyrdling Lancer",
       "group": "Mixed"
-    }
+    },
+  {
+    "file": "mix-corvani-assassin.png",
+    "label": "Corvani Assassin",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-corvani-fate.png",
+    "label": "Corvani Fate",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-corvani-necromancer.png",
+    "label": "Corvani Necromancer",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-corvani-scholar.png",
+    "label": "Corvani Scholar",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-graniar-ironhide.png",
+    "label": "Graniar Ironhide",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-graniar-knight.png",
+    "label": "Graniar Knight",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-graniar-pugilist.png",
+    "label": "Graniar Pugilist",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-lumenwing-green.png",
+    "label": "Lumenwing Green",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-lumenwing-lightbearer.png",
+    "label": "Lumenwing Lightbearer",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-lumenwing-priest.png",
+    "label": "Lumenwing Priest",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-lumenwing-songsmith.png",
+    "label": "Lumenwing Songsmith",
+    "group": "Mixed"
+  }
 ]

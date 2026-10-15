@@ -2,6 +2,7 @@
 import bcrypt from "bcryptjs";
 import * as Users from '../models/userModel.js';
 import { listCharactersForUser } from '../models/characterModel.js';
+import { listCampaigns } from '../models/campaignModel.js';
 
 // GET /api/me  -> { id, username } or 401
 export function me(req, res) {
@@ -54,7 +55,8 @@ export async function home(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
 
     const characters = await listCharactersForUser(req.session.userId);
-    res.json({ username: req.session.username, characters, draft: req.session.charDraft || null });
+    const campaigns = await listCampaigns(req.session.userId);
+    res.json({ username: req.session.username, characters, campaigns, draft: req.session.charDraft || null });
 }
 
 // GET /api/settings  -> { username, email }
@@ -99,4 +101,13 @@ export async function updateProfile(req, res) {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+}
+
+// DELETE /api/settings  -> deletes the logged-in account, then logs out
+export async function deleteAccount(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+
+    const deleted = await Users.deleteUser(req.session.userId);
+    if (!deleted) return res.status(404).json({ error: 'Account not found' });
+    req.session.destroy(() => res.json({ ok: true }));
 }

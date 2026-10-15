@@ -11,6 +11,17 @@ function RollOrb({ open, label, onToggle }) {
     const drag = useRef(null); // where the drag started
     const toggleRef = useRef(onToggle);
     useEffect(() => { toggleRef.current = onToggle; }, [onToggle]); // keep the latest toggle without writing a ref during render
+    const [flip, setFlip] = useState({ left: false, up: false }); // which way the open panel grows
+
+    // When it opens (or moves), check which half of the screen the orb is in.
+    // Right half: grow to the left. Bottom half: grow upward. That keeps the panel on screen.
+    useEffect(() => {
+        if (!open || !orbRef.current) return;
+        const rect = orbRef.current.getBoundingClientRect();
+        const centerX = rect.left + 24; // the closed orb is 3rem (48px) wide, so +24 is its middle
+        const centerY = rect.top + 24;
+        setFlip({ left: centerX > window.innerWidth / 2, up: centerY > window.innerHeight / 2 });
+    }, [open, position]);
 
     // shared helpers for both touch and mouse
     const start = (x, y) => {
@@ -68,7 +79,7 @@ function RollOrb({ open, label, onToggle }) {
         window.addEventListener('mouseup', onUp);
     };
 
-    const classes = ['roll-orb', 'btn-round', open && 'is-open', dragging && 'is-dragging'].filter(Boolean).join(' ');
+    const classes = ['roll-orb', 'btn-round', open && 'is-open', dragging && 'is-dragging', open && flip.left && 'opens-left', open && flip.up && 'opens-up'].filter(Boolean).join(' ');
 
     return (
         <div
@@ -79,7 +90,7 @@ function RollOrb({ open, label, onToggle }) {
             tabIndex={0}
             aria-expanded={open}
             aria-label="Open Roll Panel"
-            style={position ? { left: `${position.left}px`, top: `${position.top}px` } : undefined}
+            style={position ? { left: `${position.left}px`, top: `${position.top}px`, right: 'auto' } : undefined}
             onMouseDown={onMouseDown}
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); } }}
         >

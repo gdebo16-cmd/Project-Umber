@@ -971,7 +971,16 @@ main {
 
 .action-item {
     border: var(--tileBorder);
-    border-radius: var(--tile);
+    border-radius: var(--tile);width: 100%;
+    height: 100%;
+    max-height: none;
+    object-fit: cover;
+    align-self: stretch;
+    border: var(--glassBorder);
+    outline: 5px ridge var(--tileBorder);
+    
+    border-radius: var(--radCornerBL);
+    z-index: 1;
     box-shadow: var(--bs2);
     background-color: var(--bgc-low);
     margin-bottom: 0.5rem;
@@ -1024,8 +1033,10 @@ em {
 
 .roll-orb {
     position: fixed;
-    left: 1rem;
-    top: 50%;
+    /* starts in the top-right corner, mirroring the portrait on the left */
+    right: 1rem;
+    left: auto;
+    top: calc(env(safe-area-inset-top, 0px) + 1rem);
     z-index: 1000;
     width: 3rem;
     height: 3rem;
@@ -1066,6 +1077,20 @@ em {
     height: 16rem;
     border-radius: 0.5rem;
     cursor: default;
+}
+
+/* open near the right or bottom edge: grow the other way so it stays on screen.
+   The orb's corner stays put; the box just shifts back by its own size minus the 3rem orb. */
+.roll-orb.opens-left {
+    translate: calc(-100% + 3rem) 0;
+}
+
+.roll-orb.opens-up {
+    translate: 0 calc(-100% + 3rem);
+}
+
+.roll-orb.opens-left.opens-up {
+    translate: calc(-100% + 3rem) calc(-100% + 3rem);
 }
 
 .roll-orb.is-dragging {
@@ -1321,6 +1346,7 @@ main > *,
     .condition-container {
         grid-template-rows: auto auto;
         gap: 0.75rem;
+        position: relative;      /* the banner portrait is placed against this row */
     }
 
     .condition-tile {
@@ -2071,45 +2097,81 @@ main.subpage-main {
     margin: 0.25rem;
 }
 
-/* ---------- sheet header portrait ---------- */
+/* ---------- sheet header portrait (sits inside the name box) ---------- */
 #character-header {
     align-items: stretch;
 }
 
+#character-name {
+    position: relative;          /* the portrait is placed against this box's edge */
+    padding-left: 4rem;          /* room for the portrait so the name never runs under it */
+    padding-right: 4rem;         /* matching space keeps the name centered */
+}
+
 #character-header .character-portrait {
-    flex: 0 0 auto;
-    align-self: stretch;
+    position: absolute;
+    top: 0;
+    left: 0;                     /* flush against the name box's left border */
     width: 3.5rem;
     height: 3.5rem;
-    margin: var(--mar1);
-    
+    margin: 0;
     object-fit: cover;
-    /* border + blur come from .header-cell; the padding lets the header color frame the picture */
     box-sizing: border-box;
-    padding: 0.25rem;
+    border: none;
+    padding: 0;
+    background: none;
     border-radius: 0 0 1.25rem 1.25rem;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
-@media (max-width: 768px) {
-    /* the fixed RollOrb lives on the left edge, so the portrait moves to the right end */
-    #character-header .character-portrait {
-        order: 1;
-        width: 2.5rem;
-        height: 2.5rem;
-        
-    }
-
-    /* the portrait is the last item in the row here, so it gets the row's right edge */
-    #character-header > .header-cell:last-child {
-        border-right: none;
-    }
-
-    #character-header .character-portrait {
-        border-right: var(--tileBorder);
-    }
+/* the phone copy of the portrait (in the logo row) stays hidden on desktop */
+.title-portrait {
+    display: none;
 }
 
+@media (max-width: 768px) {
+    /* phones: the portrait moves up into the logo row, left of the logo, about the logo's size */
+    #site-title {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 0.75rem;
+        position: relative;      /* the banner portrait is placed against this row */
+    }
+
+    .title-portrait {
+        display: block;
+        position: absolute;      /* hangs from the very top like a banner */
+        top: 0;
+        left: 1rem;              /* out toward the left edge; the logo stays centered */
+        width: 100px;            /* same max size as .title-logo */
+        max-width: 25vw;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 0 0 50% 50%;   /* fully rounded bottom, no flat edge */
+        box-sizing: border-box;
+        border: var(--tileBorder);   /* thin frame, same line as the tiles */
+        border-top: none;            /* top stays flush like a banner */
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    #site-title .title-logo {
+        width: 100px;
+        max-width: 25vw;
+        height: auto;
+    }
+
+    /* the portrait inside the name box is hidden, so the name gets its normal padding back */
+    #character-header .character-portrait {
+        display: none;
+    }
+
+    #character-name {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
+}
 /* ===== overrides: kept last in the file so they win ===== */
 
 #stat-container .stat-tile-value /* clash: kept at old specificity */ {

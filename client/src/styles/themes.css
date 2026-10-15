@@ -739,66 +739,82 @@
 :root,
 [data-background="default"] {
     --background: url('/colorsketch-eldrid-3840.webp');
+    --background-desktop: url('/colorsketch-eldrid-3840.webp');
 }
 
 [data-background="green"] {
     --background: url('/eldrid-bg-green-3840.webp');
+    --background-desktop: url('/eldrid-bg-green-3840.webp');
 }
 
 [data-background="purple"] {
     --background: url('/eldrid-bg-purple-3840.webp');
+    --background-desktop: url('/eldrid-bg-purple-3840.webp');
 }
 
 [data-background="blue"] {
     --background: url('/eldrid-bg-blue-3840.webp');
+    --background-desktop: url('/eldrid-bg-blue-3840.webp');
 }
 
 [data-background="red"] {
     --background: url('/eldrid-bg-red-3840.webp');
+    --background-desktop: url('/eldrid-bg-red-3840.webp');
 }
 
 [data-background="orange"] {
     --background: url('/eldrid-bg-orange-3840.webp');
+    --background-desktop: url('/eldrid-bg-orange-3840.webp');
 }
 
 [data-background="yellow"] {
     --background: url('/eldrid-bg-yellow-3840.webp');
+    --background-desktop: url('/eldrid-bg-yellow-3840.webp');
 }
 
 [data-background="dark"] {
     --background: url('/eldrid-bg-dark-3840.webp');
+    --background-desktop: url('/eldrid-bg-dark-3840.webp');
 }
 
 [data-background="dark-map"] {
     --background: url('/utils/mapblack1.png');
+    --background-desktop: url('/utils/mapblack1.png');
 }
 
 [data-background="light-map"] {
     --background: url('/utils/mapwhite1.png');
+    --background-desktop: url('/utils/mapwhite1.png');
 }
 
 [data-background="light"] {
     --background: url('/eldrid-bg-light-3840.webp');
+    --background-desktop: url('/eldrid-bg-light-3840.webp');
 }
 
 [data-background="hellfire"] {
     --background: url('/eldrid-bg-hellfire-3840.webp');
+    --background-desktop: url('/eldrid-bg-hellfire-3840.webp');
 }
 
 [data-background="hellfire-map"] {
     --background: url('/utils/hellfiremap.png');
+    --background-desktop: url('/utils/hellfiremap.png');
 }
 
 [data-background="frozen"] {
     --background: url('/eldrid-bg-frozen-3840.webp');
+    --background-desktop: url('/eldrid-bg-frozen-3840.webp');
 }
 
 [data-background="frozen-map"] {
     --background: url('/utils/frozenmap1.png');
+    --background-desktop: url('/utils/frozenmap1.png');
 }
 
 [data-background="neon"] {
     --background: url('/eldrid-bg-neon-3840.webp');
+    --background-desktop: url('/eldrid-bg-neon-3840.webp');
 }
 
 @media (max-width: 768px) {

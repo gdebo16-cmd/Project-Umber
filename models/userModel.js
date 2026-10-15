@@ -61,3 +61,21 @@ export async function updateProfile(userId, name, siteTheme, siteBackground = nu
     );
     return result.rows[0];
 }
+
+// delete a user and everything they own. Characters don't cascade on their own,
+// so remove them first (their armor/weapons/spells DO cascade), then the user (campaigns cascade).
+export async function deleteUser(userId) {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+        await client.query('DELETE FROM characters WHERE user_id = $1', [userId]);
+        const result = await client.query('DELETE FROM users WHERE id = $1', [userId]);
+        await client.query('COMMIT');
+        return result.rowCount;
+    } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+    } finally {
+        client.release();
+    }
+}

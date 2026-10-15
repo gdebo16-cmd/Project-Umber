@@ -3,6 +3,7 @@
 import { listRaces, listSubraces, checkSubrace } from '../models/raceModel.js';
 import { listClasses, getHitDie, listSubclassesForClass, subclassBelongsToClass, getClassSkills } from '../models/classModel.js';
 import { createCharacter, checkFeatureChoices, SUBCLASS_LEVEL, MAX_LEVEL } from '../models/characterModel.js';
+import { listStartingGear, addWeapon, equipWeapon, addArmor, equipArmor } from '../models/inventoryModel.js';
 
 const STATS = ["str", "dex", "con", "int", "wis", "cha", "luc", "spd"];
 
@@ -51,6 +52,8 @@ export function getDraft(req, res) {
         skill_picks: draft.skill_picks ?? [],
         feature_choices: draft.feature_choices ?? {},
         skill_proficiencies: draft.skill_proficiencies ?? [],
+        weapon_id: draft.weapon_id ?? null,
+        armor_id: draft.armor_id ?? null,
         hasRolls: !!draft.rolls && Object.keys(draft.rolls).length > 0,
     });
 }
@@ -60,6 +63,22 @@ export async function getStep2(req, res) {
     if (!req.session.charDraft) return res.status(409).json({ error: 'Start with step 1' });
 
     res.json(await listClasses());
+}
+
+// GET /api/create_char/gear?classId=&subclassId=&level=
+// Starting weapons and armor this class (+ subclass) is proficient with, common items only
+export async function getStartingGear(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const classId = Number(req.query.classId);
+    if (!Number.isInteger(classId) || classId < 1) return res.status(400).json({ error: 'Class Required' });
+    const subclassId = req.query.subclassId ? Number(req.query.subclassId) : null;
+    const level = Number(req.query.level ?? 1);
+    try {
+        res.json(await listStartingGear(classId, subclassId, Number.isInteger(level) ? level : 1));
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Could not load starting gear' });
+    }
 }
 
 // GET /api/create_char/subclasses/:classId  (moved here from the old EJS charController)
@@ -120,12 +139,25 @@ export async function step2Submit(req, res) {
     const picked = await checkFeatureChoices(Number(class_id), subclass_id ? Number(subclass_id) : null, level, req.body.feature_choices);
     if (picked.error) return res.status(400).json({ error: picked.error });
 
+    // starting gear: weapon required, armor optional; both must be on this class's list
+    const gear = await listStartingGear(Number(class_id), subclass_id ? Number(subclass_id) : null, level);
+    const weaponId = Number(req.body.weapon_id);
+    if (!gear.weapons.some((w) => w.id === weaponId)) {
+        return res.status(400).json({ error: 'Pick a starting weapon your class can use' });
+    }
+    const armorId = req.body.armor_id ? Number(req.body.armor_id) : null;
+    if (armorId && !gear.armor.some((a) => a.id === armorId)) {
+        return res.status(400).json({ error: 'Your class cannot wear that armor' });
+    }
+
     req.session.charDraft.class_id = Number(class_id);
     req.session.charDraft.subclass_id = subclass_id ? Number(subclass_id) : null;
     req.session.charDraft.level = level;
     req.session.charDraft.feature_choices = picked.choices;
     req.session.charDraft.skill_picks = skills; // what the dropdowns show when coming back
     req.session.charDraft.skill_proficiencies = [...fixed, ...skills]; // what gets saved at step 3
+    req.session.charDraft.weapon_id = weaponId;
+    req.session.charDraft.armor_id = armorId;
     res.json({ ok: true });
 }
 
@@ -185,8 +217,25 @@ export async function step3Submit(req, res) {
     const maxHp = Math.max(1, baseHealth + conMod + ((draft.level ?? 1) - 1) * perLvl);
 
     const id = await createCharacter(req.session.userId, draft, final, plus2, plus1, maxHp);
+
+    // starting gear picked at step 2: add it to the inventory and equip it
+    let gearError = null;
+    try {
+        if (draft.weapon_id) {
+            await addWeapon(id, draft.weapon_id);
+            await equipWeapon(id, draft.weapon_id);
+        }
+        if (draft.armor_id) {
+            await addArmor(id, draft.armor_id);
+            await equipArmor(id, draft.armor_id);
+        }
+    } catch (err) {
+        console.error('starting gear failed for character', id, err);
+        gearError = 'Your character was saved, but the starting gear could not be added. Add it from the Inventory page.';
+    }
+
     delete req.session.charDraft; // the draft is saved, so throw it away
-    res.json({ id });
+    res.json(gearError ? { id, gearError } : { id });
 }
 
 export function clearDraft(req, res) {

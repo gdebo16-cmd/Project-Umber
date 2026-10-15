@@ -97,7 +97,9 @@ function HomePage() {
                                     <li key={camp.id} className='campaign-tile' id={`campaign-tile-${camp.id}`}>
                                         <Link to={`/campaign/${camp.id}`} className='camp-tile'>
                                             <h3 className="campaign-name">{camp.name}</h3>
-                                            <img className="campaign-image" src={camp.image_url ?? '/default-campaign.png'} alt="Campaign Image" />
+                                            {camp.campaign_img_url
+                                                ? <img className="campaign-image" src={camp.campaign_img_url} alt={`${camp.name} picture`} />
+                                                : <div className="campaign-image" role="img" aria-label={`${camp.name} picture`} />}
                                             <p className="campaign-description">{camp.description}</p>
                                             <button type="button" className="campaign-delete-button" onClick={(e) => deleteCampaign(e, camp)}>Delete</button>
                                         </Link>

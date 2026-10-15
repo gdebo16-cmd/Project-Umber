@@ -30,7 +30,8 @@ function CreateStep3() {
     const submit = async (e) => {
         e.preventDefault();
         try {
-            await sendJson('/api/create_char/step3', 'POST', { plus2, plus1 });
+            const saved = await sendJson('/api/create_char/step3', 'POST', { plus2, plus1 });
+            if (saved.gearError) window.alert(saved.gearError);
             navigate('/home');
         } catch (err) {
             setSaveError(err.message);

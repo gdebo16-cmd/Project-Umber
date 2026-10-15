@@ -4,10 +4,10 @@ import {
     getCharacter, updateHp, deleteCharacter,
     equipArmor, unequipArmor, equipWeapon, unequipWeapon,
 } from '../controllers/apiController.js';
-import { me, login, logout, register, home, getSettings, updateSettings, getProfile, updateProfile } from '../controllers/apiUserController.js';
+import { me, login, logout, register, home, getSettings, updateSettings, getProfile, updateProfile, deleteAccount } from '../controllers/apiUserController.js';
 import { getInventory, addArmor, addWeapon, removeArmor, removeWeapon } from '../controllers/apiInventoryController.js';
 import { getEditCharacter, editNameAndRace, editClass, editLevel, editAbilities, editFeatureChoice, editPortrait } from '../controllers/apiEditController.js';
-import { getRaces, getSubraces, step1Submit, getStep2, step2Submit, getStep3, step3Submit, clearDraft, getDraft, rollStat, selectSubclass } from '../controllers/apiCreateController.js';
+import { getRaces, getSubraces, step1Submit, getStep2, step2Submit, getStep3, step3Submit, clearDraft, getDraft, rollStat, selectSubclass, getStartingGear } from '../controllers/apiCreateController.js';
 import { getSpellbook, learnSpell, unlearnSpell, prepareSpell, unprepareSpell, setAction, removeAction } from '../controllers/apiSpellController.js';
 import { createCampaign, deleteCampaign, getCampaign, updateCampaign, listCampaigns } from '../controllers/apiCampaignController.js';
 
@@ -29,6 +29,7 @@ router.post('/logout', logout);
 router.get('/home', home);
 router.get('/settings', getSettings);
 router.put('/settings', updateSettings);
+router.delete('/settings', deleteAccount);
 router.get('/profile', getProfile);
 router.put('/profile', updateProfile);
 
@@ -39,6 +40,7 @@ router.post('/create_char/step1', step1Submit);
 router.get('/create_char/step2', getStep2);
 router.post('/create_char/step2', step2Submit);
 router.get('/create_char/subclasses/:classId', selectSubclass);
+router.get('/create_char/gear', getStartingGear);
 router.get('/create_char/step3', getStep3);
 router.post('/create_char/step3', step3Submit);
 router.get('/create_char/draft', getDraft);

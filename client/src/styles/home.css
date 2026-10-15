@@ -4,9 +4,9 @@ main {
     margin: var(--mar1);
     overflow: var(--ofX2);
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
-    grid-template-areas: 'b c';
+    grid-template-areas: 'b c d';
     place-items: center;
     align-items: stretch;
     justify-items: stretch;
@@ -437,11 +437,20 @@ li:hover .drop-down {
     border-radius: var(--tile);
     box-shadow: var(--bs2);
     margin: var(--mar1);
+    width: var(--w1);
+    height: auto;           /* grows to fit the 16:9 campaign image */
+    min-height: 0;
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-template-areas: 'a b'
-                         'c d';
+    margin: 2% 0;
+    max-height: none;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    grid-template-areas: 'b d'
+                         'b a'
+                         'b a'
+                         'c c'
+                         'c c'
+                         'c c';
 }
 
 .campaign-name {
@@ -455,20 +464,27 @@ li:hover .drop-down {
     margin: var(--mar1);
     padding: var(--pad1);
     border-radius: var(--radCornerTL);
+    border: var(--tileBorder);
 }
 
 .campaign-image {
     grid-area: b;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--txt-color-1);
-    background-color: var(--bgc-top);
-    margin: var(--mar1);
-    padding: var(--pad1);
-    border-radius: var(--radCornerTR);
-    overflow: hidden;
+
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;   /* keeps a wide, visible shape */
+    max-height: none;
+    object-fit: cover;
+    align-self: stretch;
     border: var(--tileBorder);
+    z-index: 1;
+    color: var(--txt-color-1);
+    /* no picture set: show the desktop version of the current background */
+    background-image: var(--background-desktop, var(--background));
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px 0 0 0;
+    overflow: hidden;
 }
 
 .campaign-description {
@@ -480,7 +496,7 @@ li:hover .drop-down {
     background-color: var(--bgc-low);
     margin: var(--mar1);
     padding: var(--pad1);
-    border-radius: var(--radCornerBL);
+    border-radius: var(--lowrad);
     overflow: hidden;
     border: var(--tileBorder);
 }
@@ -493,7 +509,8 @@ li:hover .drop-down {
     backdrop-filter: var(--blur1);
     transition: all 0.5s ease;
     font: inherit;
-    border-radius: var(--radCornerBR);
+    overflow: hidden;
+    border-radius: 0 10px 0 0;
 }
 
 .campaign-delete-button:hover {

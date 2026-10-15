@@ -35,6 +35,17 @@ export async function listWeaponsForCharacter(classId, subclassId, level) {
 return rows;
 }
 
+// Starting gear for character creation: same proficiency filter as above,
+// but only common, non-unique items (no +1s or named weapons).
+export async function listStartingGear(classId, subclassId, level) {
+    const armor = (await listArmorForCharacter(classId, subclassId, level))
+        .filter((a) => (a.rarity ?? 'common') === 'common');
+    const weapons = (await listWeaponsForCharacter(classId, subclassId, level))
+        .filter((w) => (w.rarity ?? 'common') === 'common' && !w.is_unique);
+    const byName = (x, y) => x.name.localeCompare(y.name);
+    return { armor: armor.sort(byName), weapons: weapons.sort(byName) };
+}
+
 // ---------- owned items ----------
 
 export async function getOwnedArmor(charId) {

@@ -42,6 +42,9 @@ function CreateStep2() {
     const [saveError, setSaveError] = useState('');
     const [skillPicks, setSkillPicks] = useState([]);
     const [picks, setPicks] = useState({}); // feature choices, same shape as characters.feature_choices
+    const [gear, setGear] = useState({ armor: [], weapons: [] }); // starting gear this class can use
+    const [weaponId, setWeaponId] = useState('');
+    const [armorId, setArmorId] = useState('');
     const picked = classes?.find((c) => String(c.id) === classId);
     const { data: draft } = useFetch('/api/create_char/draft');
 
@@ -107,9 +110,37 @@ function CreateStep2() {
 
     // coming back from step 3: refill class and subclass from the draft
     useEffect(() => {
-        if (classes && draft?.class_id) loadClass(String(draft.class_id), draft.subclass_id, draft.skill_picks, draft.level, draft.feature_choices);
+        if (classes && draft?.class_id) {
+            loadClass(String(draft.class_id), draft.subclass_id, draft.skill_picks, draft.level, draft.feature_choices);
+            setWeaponId(draft.weapon_id ? String(draft.weapon_id) : '');
+            setArmorId(draft.armor_id ? String(draft.armor_id) : '');
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [classes, draft]);
+
+    // starting gear: load once the class (and subclass, when unlocked) is picked
+    const gearSubId = subLocked ? '' : subclassId;
+    const gearReady = !!classId && (subLocked || !!subclassId);
+    useEffect(() => {
+        if (!gearReady) {
+            setGear({ armor: [], weapons: [] });
+            return;
+        }
+        let stale = false;
+        const qs = new URLSearchParams({ classId, level: String(level) });
+        if (gearSubId) qs.set('subclassId', gearSubId);
+        fetch('/api/create_char/gear?' + qs)
+            .then((r) => (r.ok ? r.json() : Promise.reject(new Error('could not load starting gear'))))
+            .then((g) => {
+                if (stale) return;
+                setGear(g);
+                // drop picks the new class / subclass can't use
+                setWeaponId((w) => (g.weapons.some((x) => String(x.id) === w) ? w : ''));
+                setArmorId((a) => (g.armor.some((x) => String(x.id) === a) ? a : ''));
+            })
+            .catch((err) => { if (!stale) setSaveError(err.message); });
+        return () => { stale = true; };
+    }, [classId, gearSubId, level, gearReady]);
 
     // class choices plus the picked subclass's choices, up to the picked level
     const pickedSub = subLocked ? undefined : subclasses.find((s) => String(s.id) === String(subclassId));
@@ -124,6 +155,8 @@ function CreateStep2() {
                 level,
                 skills: skillPicks,
                 feature_choices: keepPicks(picks, choiceList),
+                weapon_id: weaponId,
+                armor_id: armorId || null,
             });
             navigate('/create_char/step3');
         } catch (err) {
@@ -184,6 +217,28 @@ function CreateStep2() {
                             </select>
                             {subLocked && <p className="pick-hint">Subclass unlocks at level {SUBCLASS_LEVEL}</p>}
                         </article>
+                        {gearReady && (
+                        <article id="starting-weapon-container" className="form-section tile pick-tile">
+                            <label className="tile-top" htmlFor="weapon_id">Starting Weapon</label>
+                            <select className="tile-bottom weapon-select" id="weapon_id" value={weaponId} onChange={(e) => setWeaponId(e.target.value)} required>
+                                <option value="" disabled className="weapon-option">Select a Weapon</option>
+                                {gear.weapons.map((w) => (
+                                    <option key={w.id} value={w.id} className="weapon-option">{w.name} ({w.damage_dice} {w.damage_type})</option>
+                                ))}
+                            </select>
+                        </article>
+                        )}
+                        {gearReady && gear.armor.length > 0 && (
+                        <article id="starting-armor-container" className="form-section tile pick-tile">
+                            <label className="tile-top" htmlFor="armor_id">Starting Armor</label>
+                            <select className="tile-bottom armor-select" id="armor_id" value={armorId} onChange={(e) => setArmorId(e.target.value)}>
+                                <option value="" className="armor-option">No armor</option>
+                                {gear.armor.map((a) => (
+                                    <option key={a.id} value={a.id} className="armor-option">{a.name} ({a.armor_type})</option>
+                                ))}
+                            </select>
+                        </article>
+                        )}
                         {picked && picked.skill_choice_count > 0 && (
                         <article id="skill-container" className="form-section tile pick-tile">
                             <label className="tile-top">Choose {picked.skill_choice_count} Skills</label>
