@@ -23,7 +23,10 @@ export async function getSheetCharacter(charId, userId) {
         LEFT JOIN subraces sr ON sr.id = ch.subrace_id
         LEFT JOIN classes cl ON cl.id = ch.class_id
         LEFT JOIN sub_classes s ON s.id = ch.subclass_id
-        WHERE ch.id = $1 AND ch.user_id = $2`,
+        WHERE ch.id = $1 AND (ch.user_id = $2 OR EXISTS (
+            SELECT 1 FROM campaign_members pm
+            JOIN campaign_members dm ON dm.campaign_id = pm.campaign_id
+            WHERE pm.character_id = ch.id AND dm.user_id = $2 AND dm.role = 'dm'))`,
         [charId, userId]
     );
     return rows[0];

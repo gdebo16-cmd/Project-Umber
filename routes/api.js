@@ -9,7 +9,7 @@ import { getInventory, addArmor, addWeapon, removeArmor, removeWeapon } from '..
 import { getEditCharacter, editNameAndRace, editClass, editLevel, editAbilities, editFeatureChoice, editPortrait } from '../controllers/apiEditController.js';
 import { getRaces, getSubraces, step1Submit, getStep2, step2Submit, getStep3, step3Submit, clearDraft, getDraft, rollStat, selectSubclass, getStartingGear } from '../controllers/apiCreateController.js';
 import { getSpellbook, learnSpell, unlearnSpell, prepareSpell, unprepareSpell, setAction, removeAction } from '../controllers/apiSpellController.js';
-import { createCampaign, deleteCampaign, getCampaign, updateCampaign, listCampaigns } from '../controllers/apiCampaignController.js';
+import { createCampaign, deleteCampaign, getCampaign, updateCampaign, listCampaigns, joinCampaign, setCampaignCharacter } from '../controllers/apiCampaignController.js';
 
 import { rateLimit } from 'express-rate-limit';
 
@@ -84,9 +84,11 @@ router.post('/characters/:id/edit/features', editFeatureChoice);
 // campaign creation and deletion
 router.get('/campaigns', listCampaigns);
 router.post('/campaigns', createCampaign);
+router.post('/campaigns/join', joinCampaign);
 router.get('/campaigns/:id', getCampaign);
 router.patch('/campaigns/:id', updateCampaign);
 router.delete('/campaigns/:id', deleteCampaign);
+router.put('/campaigns/:id/character', setCampaignCharacter);
 
 
 // If any route above crashes, answer with JSON instead of an HTML error page.
