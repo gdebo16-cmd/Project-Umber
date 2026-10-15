@@ -37,10 +37,10 @@ function EditNameForm({ character, races, onSaved }) {
             className={portrait === url ? 'portrait-thumb is-selected' : 'portrait-thumb'}
             onClick={() => pickPortrait(url)}
             title={label}
+            aria-label={label}
             aria-pressed={portrait === url}
         >
             <img src={url ?? '/default-character.png'} alt={label} loading="lazy" />
-            <span className="portrait-label">{label}</span>
         </button>
     );
 
@@ -58,8 +58,8 @@ function EditNameForm({ character, races, onSaved }) {
                     ))}
                 </select>
             </article>
-            <article className="form-section portrait-picker">
-                <p className="tile-top">Character Portrait</p>
+            <details className="form-section portrait-picker">
+                <summary className="tile-top portrait-summary">Character Portrait</summary>
                 <div className="tile-bottom">
                     <div className="portrait-grid">{thumb(null, 'Default')}</div>
                     {portraits.length === 0 ? (
@@ -69,18 +69,18 @@ function EditNameForm({ character, races, onSaved }) {
                             const items = portraits.filter((p) => p.group === g);
                             if (items.length === 0) return null;
                             return (
-                                <div key={g} className="portrait-group">
-                                    <h3 className="portrait-group-title">{g}</h3>
+                                <details key={g} className="portrait-group" open>
+                                    <summary className="portrait-group-title">{g}</summary>
                                     <div className="portrait-grid">
                                         {items.map((p) => thumb(`/portraits/${p.file}`, p.label))}
                                     </div>
-                                </div>
+                                </details>
                             );
                         })
                     )}
                     {portraitSave.message && <p>{portraitSave.message}</p>}
                 </div>
-            </article>
+            </details>
             {message && <p>{message}</p>}
             <article className="form-section button-container">
                 <button className="btn-form" type="submit">Save Changes</button>

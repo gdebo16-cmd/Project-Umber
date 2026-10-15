@@ -2498,11 +2498,6 @@
         box-shadow: 0 0 6px var(--accent);
     }
 
-    .page-sheet body.subpage .portrait-label {
-        font-size: 0.7rem;
-        text-align: center;
-    }
-
     .page-sheet body.subpage .portrait-empty {
         margin: 0.5rem 0 0;
         font-size: 0.85rem;
@@ -2534,5 +2529,37 @@
             width: 2.5rem;
             height: 2.5rem;
         }
+    }
+}
+
+@layer pages {
+    /* collapsible portrait picker: arrow turns when open */
+    /* flex on <details> breaks open/close in iOS Safari, so keep the picker block-level */
+    .page-sheet body.subpage :is(details.portrait-picker, details.portrait-group) {
+        display: block;
+    }
+
+    .page-sheet body.subpage .portrait-summary {
+        display: block;
+    }
+
+    .page-sheet body.subpage :is(.portrait-summary, .portrait-group-title) {
+        cursor: pointer;
+        list-style: none;
+    }
+
+    .page-sheet body.subpage :is(.portrait-summary, .portrait-group-title)::-webkit-details-marker {
+        display: none;
+    }
+
+    .page-sheet body.subpage :is(.portrait-summary, .portrait-group-title)::before {
+        content: '\25B8';
+        display: inline-block;
+        margin-right: 0.4em;
+        transition: transform 0.2s;
+    }
+
+    .page-sheet body.subpage details[open] > :is(.portrait-summary, .portrait-group-title)::before {
+        transform: rotate(90deg);
     }
 }
