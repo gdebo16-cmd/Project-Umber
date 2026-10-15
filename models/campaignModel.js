@@ -20,7 +20,7 @@ export async function deleteCampaign(campId, userId) {
 
 export async function getCampaign(campId, userId) {
     const { rows } = await pool.query(
-        `SELECT id, name, description FROM campaigns WHERE id = $1 AND user_id = $2`,
+        `SELECT id, name, description, campaign_img_url FROM campaigns WHERE id = $1 AND user_id = $2`,
         [campId, userId]
     );
     return rows[0];
@@ -35,7 +35,7 @@ export async function updateCampaign(campId, userId, name, description) {
 
 export async function listCampaigns(userId) {
     const { rows } = await pool.query(
-        `SELECT id, name, description FROM campaigns WHERE user_id = $1
+        `SELECT id, name, description, campaign_img_url FROM campaigns WHERE user_id = $1
         ORDER BY created_at DESC`,
         [userId]
     );
