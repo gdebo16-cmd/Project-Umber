@@ -3,13 +3,13 @@ import { useState } from 'react';
 import { sendJson } from '../utils/api';
 import useFetch from '../hooks/useFetch';
 import usePageStyle from '../hooks/usePageStyle';
-import homeCss from '../styles/home.css?inline';
+import campaignPageCss from '../styles/campaignPage.css?inline';
 import Loader from '../components/Loader';
 import SiteNav from '../components/SiteNav';
 
 
 function CampaignPage() {
-    usePageStyle(homeCss);
+    usePageStyle(campaignPageCss);
     const {campId} = useParams();
     const {data, setData, loading, error} = useFetch(`/api/campaigns/${campId}`);
     const home = useFetch('/api/home');
@@ -41,31 +41,33 @@ function CampaignPage() {
             </header>
             <SiteNav />
             <main>
-                <section id="campaign-info">
-                    <h2 className="title-text"> <em>Campaign:</em> <br />{campaign.name}</h2>
+                <section className="campaign-tile">
+                    <h2 className="campaign-name"><strong>{campaign.name}</strong></h2>
                     {campaign.campaign_img_url
                         ? <img className="campaign-image" src={campaign.campaign_img_url} alt={`${campaign.name} picture`} />
                         : <div className="campaign-image" role="img" aria-label={`${campaign.name} picture`} />}
                     <p className="campaign-description"> <em>Description:</em> <br /> {campaign.description}</p>
+                    {campaign.role === 'dm' && <p className="campaign-invite">Invite code: {campaign.invite_code}</p>}
+                    <p className="player-selection">Player Selection:</p>
                     <select className="field" value={selectedId} onChange={chooseCharacter}>
                         <option value="" disabled>Choose a character</option>
                         {characters.map((ch) => (
-                            <option key={ch.id} value={ch.id}>{ch.name}</option>
+                            <option className="field-option" key={ch.id} value={ch.id}>{ch.name}</option>
                         ))}
                     </select>
-                    <ul className="campaign-members">
+                    <ul className="campaign-member-list">
                         {members.map((mem) => (
-                            <li key={mem.username}>
+                            <li className="campaign-member" key={mem.username}>
                                 {mem.username} ({mem.role}){' '}
                                 {mem.character_name
                                     ? (campaign.role === 'dm'
-                                        ? <Link to={`/characters/${mem.character_id}`}>as {mem.character_name}</Link>
+                                        ? <Link  to={`/characters/${mem.character_id}`}>as {mem.character_name}</Link>
                                         : `as ${mem.character_name}`)
                                     : 'has not picked a character'}
                             </li>
                         ))}
                     </ul>
-                    {campaign.role === 'dm' && <p className="campaign-invite">Invite code: {campaign.invite_code}</p>}
+                    
                 </section>
             </main>
             <footer>

@@ -5,6 +5,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [react()],
   server: {
+    host: true, // also listen on the Wi-Fi address so a phone can open it
     // Anything starting with these paths is passed to Express on port 3000
     proxy: {
       '/api': 'http://localhost:3000',

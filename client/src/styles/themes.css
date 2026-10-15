@@ -582,6 +582,7 @@
     --bgc-bubble-send: rgb(249, 232, 200);
     --bgc-bubble-receive: rgb(255, 255, 255);
     --bgc-orb: rgb(63, 59, 49);
+    --bg-color-5: rgb(196, 167, 132);
     --bg-color-4: rgba(255, 255, 255, 0.799);
     --bg-color-3: rgba(255, 230, 184, 0.781);
     --bg-color-2: rgba(252, 202, 116, 0.669);
@@ -709,7 +710,7 @@
     --neonTextGlow: 0 0 3px rgba(0, 240, 255, 0.9), 0 0 10px rgba(0, 240, 255, 0.5);
 }
 
-[data-theme="neon"] {
+[data-theme="neon-glass"] {
     --healColor: rgba(0, 255, 200, 0.35);
     --damageColor: rgba(255, 40, 140, 0.4);
     --bgc-bubble-send: rgb(18, 8, 40);

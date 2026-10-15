@@ -2143,7 +2143,7 @@ main.subpage-main {
     .title-portrait {
         display: block;
         position: absolute;      /* hangs from the very top like a banner */
-        top: 0;
+        top: env(safe-area-inset-top, 0px);   /* starts just under the phone status bar, out of Safari's blur */
         left: 1rem;              /* out toward the left edge; the logo stays centered */
         width: 100px;            /* same max size as .title-logo */
         max-width: 25vw;
