@@ -10,7 +10,7 @@ import Loader from '../components/Loader';
 
 // Replaces views/create_char.ejs (step 1: name and race)
 function CreateStep1() {
-    usePageStyle(createCss, null, 'page-create');
+    usePageStyle(createCss);
     const navigate = useNavigate();
     const { data: races, loading, error } = useFetch('/api/create_char/races');
     const [name, setName] = useState('');

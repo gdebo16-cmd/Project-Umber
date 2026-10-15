@@ -7,7 +7,7 @@ import SiteNav from '../components/SiteNav';
 import Loader from '../components/Loader';
 
 function HomePage() {
-    usePageStyle(homeCss, null, 'page-home');
+    usePageStyle(homeCss);
     const { data, setData, loading, error } = useFetch('/api/home');
     const [homeTab, setHomeTab] = useState('current'); // which section shows on mobile
 
@@ -23,6 +23,16 @@ function HomePage() {
         }
     };
 
+    const deleteCampaign = async (e, camp) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!window.confirm(`Do you want to delete ${camp.name}? This cannot be undone.`)) return;
+        const res = await fetch(`/api/campaigns/${camp.id}`, { method: 'DELETE' });
+        if (res.ok) {
+            setData((prev) => ({ ...prev, campaigns: prev.campaigns.filter((c) => c.id !== camp.id) }));
+        }
+    };
+
     const deleteDraft = async (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -34,7 +44,7 @@ function HomePage() {
     if (error) return <p>Failure is upon us: {error}</p>;
     if (loading) return <Loader text='Summoning your stories...'/>;
 
-    const { username, characters, draft } = data;
+    const { username, characters, campaigns, draft } = data;
 
     return (
         <>
@@ -46,6 +56,7 @@ function HomePage() {
             <main>
                 <nav className="home-tabs">
                     <button type="button" className={homeTab === 'current' ? 'home-tab is-active' : 'home-tab'} onClick={() => setHomeTab('current')}>Current Characters</button>
+                    <button type="button" className={homeTab === 'campaign' ? 'home-tab is-active' : 'home-tab'} onClick={() => setHomeTab('campaign')}>Current Campaigns</button>
                     <button type="button" className={homeTab === 'unfinished' ? 'home-tab is-active' : 'home-tab'} onClick={() => setHomeTab('unfinished')}>Unfinished Work</button>
                 </nav>
                 <section id="current-character-container" className={homeTab === 'current' ? 'container is-active' : 'container'}>
@@ -73,13 +84,29 @@ function HomePage() {
                         )}
                     </article>
                 </section>
-                <section id="current-campaign-container" className="container" hidden>
+                <section id="current-campaign-container" className={homeTab === 'campaign' ? 'container is-active' : 'container'}>
                     <article className="title" id="current-campaign-title">
                         <h2 className="title-text">Current Campaigns</h2>
                     </article>
                     <article className="char-list" id="current-campaign-list">
-                        <p className="tile-text">No Campaigns Planned</p>
+                        {campaigns.length === 0 ? (
+                            <p className='tile-text'>No Campaigns Planned</p>
+                        ) : (
+                            <ul className="tile-list" id="current-campaign-list">
+                                {campaigns.map((camp) => (
+                                    <li key={camp.id} className='campaign-tile' id={`campaign-tile-${camp.id}`}>
+                                        <Link to={`/campaign/${camp.id}`} className='camp-tile'>
+                                            <h3 className="campaign-name">{camp.name}</h3>
+                                            <img className="campaign-image" src={camp.image_url ?? '/default-campaign.png'} alt="Campaign Image" />
+                                            <p className="campaign-description">{camp.description}</p>
+                                            <button type="button" className="campaign-delete-button" onClick={(e) => deleteCampaign(e, camp)}>Delete</button>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                     </article>
+                    
                 </section>
                 <section id="unfinished-character-container" className={homeTab === 'unfinished' ? 'container is-active' : 'container'}>
                     <article className="title" id="unfinished-character-title">

@@ -1,624 +1,616 @@
-@import './themes.css';
+body {
+    background-image: var(--background);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: "Cinzel Decorative", serif;
+    font-weight: var(--fontW2);
+    font-style: normal;
+    max-height: 2160px;
+    max-width: 3840px;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
 
-@layer pages {
-    .page-create body {
+main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'a b b b'
+        'a b b b';
+    place-items: center;
+    align-items: stretch;
+    justify-items: stretch;
+    margin: 0;
+}
+
+header {
+    z-index: 1;
+    position: relative;
+}
+
+#site-title {
+    background-color: var(--bgc-top);
+    color: var(--txt-color-1);
+    text-align: center;
+    padding: 2%;
+    margin: 0;
+}
+
+#form-title {
+    background-color: var(--bgc-low);
+    color: var(--txt-color-1);
+    text-align: center;
+    padding: 1%;
+    margin: 0;
+}
+
+.tile {
+    display: flex;
+    flex-direction: column;
+}
+
+:is(.tile-top, .topTile) {
+    text-align: center;
+    color: var(--txt-color-1);
+    background-color: var(--bgc-top);
+    border-radius: var(--toprad);
+    margin: var(--marTop);
+    backdrop-filter: var(--blur1);
+    padding: var(--padTop);
+}
+
+:is(.tile-bottom, .bottomTile) {
+    text-align: center;
+    color: var(--txt-color-1);
+    background-color: var(--bgc-low);
+    margin: var(--marLow);
+    backdrop-filter: var(--blur1);
+    padding: 4%;
+    font-size: 120%;
+}
+
+:is(.tile-bottom, .bottomTile) {
+    border-radius: var(--lowrad);
+}
+
+#form-container {
+    grid-area: a;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 5%;
+    border-radius: var(--rad2);
+}
+
+#desc-container {
+    grid-area: b;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 5%;
+    border-radius: var(--rad2);
+}
+
+.form-section {
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.btn-form {
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 700;
+    font-style: normal;
+    transition: all 0.5s ease;
+    background-color: var(--bg-color-1);
+    color: var(--txt-color-1);
+    padding: var(--pad2);
+    border-radius: var(--rad2);
+    backdrop-filter: var(--blur1);
+}
+
+.btn-form:hover {
+    transform: scale(1.05);
+    animation: roll 1.5s ease-in-out infinite;
+}
+
+select {
+    padding: 15px;
+    text-align: center;
+    border: none;
+    background-color: var(--bgc-low);
+    color: var(--txt-color-1);
+}
+
+select {
+    border-radius: var(--lowrad);
+}
+
+label {
+    padding: 5px;
+    text-align: center;
+    background-color: var(--bgc-top);
+}
+
+label {
+    border-radius: var(--toprad);
+}
+
+#race-select-container,
+#char-name-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4%;
+    box-shadow: var(--bs1);
+    border-radius: var(--tile);
+}
+
+#button-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}
+
+#name {
+    border: none;
+}
+
+#submit {
+    border: none;
+    background-color: var(--bg-color-1);
+    color: var(--txt-color-1);
+    transition: all 0.5s ease;
+    font: inherit;
+    font-style: normal;
+    width: 100%;
+    padding: 3%;
+}
+
+#submit {
+    border-radius: 5px;
+    box-shadow: var(--bs1);
+}
+
+#submit:hover {
+    transform: scale(1.05);
+    animation: roll 1.5s ease-in-out infinite;
+}
+
+#desc-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 15px 15px 0 0;
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: var(--pad);
+    margin: 0;
+    width: auto;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-color-1);
+    color: var(--txt-color-1);
+    box-shadow: var(--bs1);
+}
+
+#footer-text,
+#home-link {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+#home-link {
+    color: var(--txt-color-1);
+    text-decoration: none;
+    height: 100%;
+    margin-right: 1%;
+    transition: all 0.5s ease;
+}
+
+#home-link:hover {
+    transform: scale(1.05);
+}
+
+#section3-title {
+    grid-area: a;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 5%;
+    background-color: var(--bgc-top);
+    color: var(--txt-color-1);
+    border-radius: var(--rad2);
+}
+
+#form-container-step3 {
+    grid-area: b;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 5%;
+    border-radius: var(--rad2);
+}
+
+#base-stat-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 1%;
+    margin: 1%;
+    border-radius: var(--rad2);
+}
+
+#base-stat-container > .tile {
+    flex: 1 1 20%;
+    min-width: 7rem;
+    box-sizing: border-box;
+}
+
+#roll-button {
+    border: none;
+}
+
+/* Back / Forward buttons under the step title (all screen sizes) */
+
+#step-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.btn-step {
+    flex: 1;
+    text-align: center;
+    background-color: var(--bg-color-1);
+    color: var(--txt-color-1);
+    box-shadow: var(--bs1);
+    border: none;
+    margin: 0;
+    padding: 0.4rem 1rem;
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-step:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+#mobile-cancel {
+    display: none;
+}
+
+/* Race traits under the description box */
+
+#traits-section {
+    margin-top: 0.5rem;
+    padding: var(--pad2);
+    border-radius: var(--tile);
+    border: var(--tileBorder);
+    backdrop-filter: var(--backdrop);
+    background-color: var(--bgc-top);
+    color: var(--txt-color-1);
+    box-shadow: var(--bs1);
+}
+
+#traits-section p {
+    margin: 0.35rem 0;
+    line-height: 1.4;
+    white-space: normal;
+}
+
+#traits-section p:first-child {
+    text-align: center;
+    font-weight: 700;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid currentColor;
+}
+
+#traits-section strong {
+    font-family: "Cinzel Decorative", serif;
+}
+
+/* Each trait is its own category, split by lines */
+
+#traits-section p {
+    margin: 0;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid currentColor;
+}
+
+#traits-section p:last-child {
+    border-bottom: none;
+}
+
+/* Portrait matches the text box width */
+
+#img-section {
+    width: 100%;
+}
+
+#desc-img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: var(--bgc-low);
+    border: var(--tileBorder);
+}
+
+/* Class basics text keeps its line breaks */
+
+#text {
+    white-space: pre-line;
+}
+
+/* Class feature tree: one clickable row per level */
+
+#tree-section {
+    margin-top: 0.5rem;
+    padding: var(--pad2);
+    border-radius: var(--tile);
+    border: var(--tileBorder);
+    backdrop-filter: var(--backdrop);
+    background-color: var(--bgc-top);
+    color: var(--txt-color-1);
+    box-shadow: var(--bs1);
+    max-height: 24rem;
+    overflow-y: auto;
+}
+
+#tree-section details {
+    border-bottom: 1px solid currentColor;
+}
+
+#tree-section details:last-child {
+    border-bottom: none;
+}
+
+#tree-section summary {
+    cursor: pointer;
+    padding: 0.5rem 0;
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 700;
+}
+
+#tree-section details p {
+    margin: 0 0 0.5rem 1rem;
+    line-height: 1.4;
+    white-space: normal;
+}
+
+/* Class info dropdowns: same look as the feature tree */
+
+#class-info-section {
+    padding: var(--pad2);
+    border-radius: var(--lowrad);
+    background-color: var(--bgc-low);
+    color: var(--txt-color-1);
+    backdrop-filter: var(--blur1);
+}
+
+#class-info-section details {
+    border-bottom: 1px solid currentColor;
+}
+
+#class-info-section details:last-child {
+    border-bottom: none;
+}
+
+#class-info-section summary {
+    cursor: pointer;
+    padding: 0.5rem 0;
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 700;
+}
+
+#class-info-section details p {
+    margin: 0 0 0.5rem 1rem;
+    line-height: 1.4;
+    white-space: pre-line;
+}
+
+/*  ===== Mobile (max-width: 768px), consolidated =====  */
+
+@media (max-width: 768px) {
+    #mobile-cancel {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        margin-top: 1rem;
+        padding: 3%;
+        border-radius: var(--tile);
+        border: var(--tileBorder);
+        backdrop-filter: var(--backdrop);
+        background-color: var(--bgc-top);
+        color: var(--txt-color-1);
+        box-shadow: var(--bs1);
+        font-family: "Cinzel Decorative", serif;
+        font-weight: 700;
+        text-align: center;
+        text-decoration: none;
+        transition: all 0.5s ease;
+    }
+
+    footer {
+        display: none !important;
+    }
+
+    main {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: auto 1fr;
+        grid-template-areas: 'a'
+            'b';
+    }
+
+    #tree-section {
+        scrollbar-width: none;
+    }
+
+    #submit {
+        width: 100%;
+        padding: 4%;
+        border: var(--tileBorder);
+        backdrop-filter: var(--backdrop);
+        background-color: var(--bgc-top);
+        color: var(--txt-color-1);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .pick-tile {
+        background-color: var(--bg-color-1);
+    }
+
+    .pick-tile select { 
+        background-color: var(--bg-color-1);
+    }
+
+    .pick-tile option {
+        background-color: var(--bg-color-1);
+    
+    }
+
+
+    /* Mobile: header and footer hug the screen edges. Fill the notch / home-bar areas with their own color instead of empty space */
+
+    body {
+        min-height: 100dvh;
+
+        /* the real visible height on phones, unlike 100vh */
+    }
+
+    header {
+        padding-top: env(safe-area-inset-top);
+    }
+
+    footer {
+        padding-bottom: max(1%, env(safe-area-inset-bottom));
+    }
+
+    /* A fixed layer behind everything, sized to the LARGEST viewport so it runs under the status bar and Safari's toolbar */
+
+    html::before {
+        /* on html, because body's backdrop-filter would trap a fixed layer */
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100lvh;
+        z-index: -1;
         background-image: var(--background);
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        background-attachment: fixed;
-        font-family: "Cinzel Decorative", serif;
-        font-weight: var(--fontW2);
-        font-style: normal;
-        max-height: 2160px;
-        max-width: 3840px;
-        min-height: 100vh;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
+        pointer-events: none;
     }
 
-    .page-create main {
-        flex: 1;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: auto 1fr;
-        grid-template-areas: 'a b b b'
-            'a b b b';
-        place-items: center;
-        align-items: stretch;
-        justify-items: stretch;
-        margin: 0;
+    body {
+        background-image: none;
+
+        /* the fixed layer above replaces it */
     }
 
-    .page-create header {
-        z-index: 1;
-        position: relative;
+    /* Mobile: stretch the fixed background up under the status bar so no bare band shows */
+
+    html::before {
+        top: calc(-1 * env(safe-area-inset-top));
+        height: calc(100lvh + env(safe-area-inset-top));
     }
 
-    .page-create #site-title {
-        background-color: var(--bgc-top);
-        color: var(--txt-color-1);
-        text-align: center;
-        padding: 2%;
-        margin: 0;
+    /* Mobile: zoom the background so the dark bar baked into the top of the image is cropped off */
+
+    html::before {
+        background-size: auto 120%;
+        background-position: center bottom;
     }
 
-    .page-create #form-title {
-        background-color: var(--bgc-low);
-        color: var(--txt-color-1);
-        text-align: center;
-        padding: 1%;
-        margin: 0;
-    }
+    /* Mobile: iOS Safari colors its bar from what is painted at the top, so paint a solid title-color strip there */
 
-    .page-create .tile {
-        display: flex;
-        flex-direction: column;
-    }
+    /* Mobile: no footer */
 
-    .page-create :is(.tile-top, .topTile) {
-        text-align: center;
-        color: var(--txt-color-1);
-        background-color: var(--bgc-top);
-        border-radius: var(--toprad);
-        margin: var(--marTop);
-        backdrop-filter: var(--blur1);
-        padding: var(--padTop);
-    }
-
-    .page-create :is(.tile-bottom, .bottomTile) {
-        text-align: center;
-        color: var(--txt-color-1);
-        background-color: var(--bgc-low);
-        margin: var(--marLow);
-        backdrop-filter: var(--blur1);
-        padding: 4%;
-        font-size: 120%;
-    }
-}
-
-@layer pages {
-    .page-create :is(.tile-bottom, .bottomTile) {
-        border-radius: var(--lowrad);
-    }
-}
-
-@layer pages {
-    .page-create #form-container {
-        grid-area: a;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin: 5%;
-        border-radius: var(--rad2);
-    }
-
-    .page-create #desc-container {
-        grid-area: b;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin: 5%;
-        border-radius: var(--rad2);
-    }
-
-    .page-create .form-section {
-        margin-top: 5%;
-        margin-bottom: 5%;
-    }
-
-    .page-create .btn-form {
-        font-family: "Cinzel Decorative", serif;
-        font-weight: 700;
-        font-style: normal;
-        transition: all 0.5s ease;
-        background-color: var(--bg-color-1);
-        color: var(--txt-color-1);
-        padding: var(--pad2);
-        border-radius: var(--rad2);
-        backdrop-filter: var(--blur1);
-    }
-
-    .page-create .btn-form:hover {
-        transform: scale(1.05);
-        animation: roll 1.5s ease-in-out infinite;
-    }
-
-    .page-create select {
-        padding: 15px;
-        text-align: center;
-        border: none;
-        background-color: var(--bgc-low);
-        color: var(--txt-color-1);
-    }
-}
-
-@layer pages {
-    .page-create select {
-        border-radius: var(--lowrad);
-    }
-}
-
-@layer pages {
-    .page-create label {
-        padding: 5px;
-        text-align: center;
-        background-color: var(--bgc-top);
-    }
-}
-
-@layer pages {
-    .page-create label {
-        border-radius: var(--toprad);
-    }
-}
-
-@layer pages {
-    .page-create #race-select-container,
-    .page-create #char-name-container {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 4%;
-        box-shadow: var(--bs1);
-        border-radius: var(--tile);
-    }
-
-    .page-create #button-container {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-        justify-content: center;
-    }
-
-    .page-create #name {
-        border: none;
-    }
-
-    .page-create #submit {
-        border: none;
-        background-color: var(--bg-color-1);
-        color: var(--txt-color-1);
-        transition: all 0.5s ease;
-        font: inherit;
-        font-style: normal;
-        width: 100%;
-        padding: 3%;
-    }
-}
-
-@layer pages {
-    .page-create #submit {
-        border-radius: 5px;
-        box-shadow: var(--bs1);
-    }
-}
-
-@layer pages {
-    .page-create #submit:hover {
-        transform: scale(1.05);
-        animation: roll 1.5s ease-in-out infinite;
-    }
-
-    .page-create #desc-img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-        border-radius: 15px 15px 0 0;
-    }
-
-    .page-create footer {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding: var(--pad);
-        margin: 0;
-        width: auto;
-        left: 0;
-        right: 0;
-        background-color: var(--bg-color-1);
-        color: var(--txt-color-1);
-        box-shadow: var(--bs1);
-    }
-
-    .page-create #footer-text,
-    .page-create #home-link {
-        margin-left: 2%;
-        margin-right: 2%;
-    }
-
-    .page-create #home-link {
-        color: var(--txt-color-1);
-        text-decoration: none;
-        height: 100%;
-        margin-right: 1%;
-        transition: all 0.5s ease;
-    }
-
-    .page-create #home-link:hover {
-        transform: scale(1.05);
-    }
-
-    .page-create #section3-title {
-        grid-area: a;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        margin: 5%;
-        background-color: var(--bgc-top);
-        color: var(--txt-color-1);
-        border-radius: var(--rad2);
-    }
-
-    .page-create #form-container-step3 {
-        grid-area: b;
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        margin: 5%;
-        border-radius: var(--rad2);
-    }
-
-    .page-create #base-stat-container {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: center;
-        gap: 1%;
-        margin: 1%;
-        border-radius: var(--rad2);
-    }
-
-    .page-create #base-stat-container > .tile {
-        flex: 1 1 20%;
-        min-width: 7rem;
-        box-sizing: border-box;
-    }
-
-    .page-create #roll-button {
-        border: none;
-    }
-
-    /* Back / Forward buttons under the step title (all screen sizes) */
-
-    .page-create #step-nav {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 0;
-        width: 100%;
-        margin: 0;
-        box-sizing: border-box;
-    }
-
-    .page-create .btn-step {
-        flex: 1;
-        text-align: center;
-        background-color: var(--bg-color-1);
-        color: var(--txt-color-1);
-        box-shadow: var(--bs1);
-        border: none;
-        margin: 0;
-        padding: 0.4rem 1rem;
-        font-family: "Cinzel Decorative", serif;
-        font-weight: 700;
-        cursor: pointer;
-    }
-}
-
-@layer pages {
-    .page-create .btn-step:disabled {
-        opacity: 0.4;
-        cursor: default;
-    }
-
-    .page-create #mobile-cancel {
+    footer {
         display: none;
     }
 
-    /* Race traits under the description box */
+    /* Mobile: stretch the background picture past the bottom so it fills behind Safari's bottom bar */
 
-    .page-create #traits-section {
-        margin-top: 0.5rem;
-        padding: var(--pad2);
+    html::before {
+        height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
+    }
+}
+
+/* "Subclass unlocks at level 3" under the locked subclass dropdown */
+.pick-hint {
+    margin: 0.25rem 0 0;
+    font-size: 0.85em;
+    opacity: 0.8;
+}
+
+/* ===== overrides: kept last in the file so they win ===== */
+
+@media (max-width: 768px) {
+#submit /* clash: kept at old specificity */ {
         border-radius: var(--tile);
-        border: var(--tileBorder);
-        backdrop-filter: var(--backdrop);
-        background-color: var(--bgc-top);
-        color: var(--txt-color-1);
-        box-shadow: var(--bs1);
-    }
-
-    .page-create #traits-section p {
-        margin: 0.35rem 0;
-        line-height: 1.4;
-        white-space: normal;
-    }
-
-    .page-create #traits-section p:first-child {
-        text-align: center;
-        font-weight: 700;
-        padding-bottom: 0.35rem;
-        border-bottom: 1px solid currentColor;
-    }
-
-    .page-create #traits-section strong {
-        font-family: "Cinzel Decorative", serif;
-    }
-
-    /* Each trait is its own category, split by lines */
-
-    .page-create #traits-section p {
-        margin: 0;
-        padding: 0.5rem 0;
-        border-bottom: 1px solid currentColor;
-    }
-
-    .page-create #traits-section p:last-child {
-        border-bottom: none;
-    }
-
-    /* Portrait matches the text box width */
-
-    .page-create #img-section {
-        width: 100%;
-    }
-
-    .page-create #desc-img {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        margin: 0;
-        box-sizing: border-box;
-        background-color: var(--bgc-low);
-        border: var(--tileBorder);
-    }
-
-    /* Class basics text keeps its line breaks */
-
-    .page-create #text {
-        white-space: pre-line;
-    }
-
-    /* Class feature tree: one clickable row per level */
-
-    .page-create #tree-section {
-        margin-top: 0.5rem;
-        padding: var(--pad2);
-        border-radius: var(--tile);
-        border: var(--tileBorder);
-        backdrop-filter: var(--backdrop);
-        background-color: var(--bgc-top);
-        color: var(--txt-color-1);
-        box-shadow: var(--bs1);
-        max-height: 24rem;
-        overflow-y: auto;
-    }
-
-    .page-create #tree-section details {
-        border-bottom: 1px solid currentColor;
-    }
-
-    .page-create #tree-section details:last-child {
-        border-bottom: none;
-    }
-
-    .page-create #tree-section summary {
-        cursor: pointer;
-        padding: 0.5rem 0;
-        font-family: "Cinzel Decorative", serif;
-        font-weight: 700;
-    }
-
-    .page-create #tree-section details p {
-        margin: 0 0 0.5rem 1rem;
-        line-height: 1.4;
-        white-space: normal;
-    }
-
-    /* Class info dropdowns: same look as the feature tree */
-
-    .page-create #class-info-section {
-        padding: var(--pad2);
-        border-radius: var(--lowrad);
-        background-color: var(--bgc-low);
-        color: var(--txt-color-1);
-        backdrop-filter: var(--blur1);
-    }
-
-    .page-create #class-info-section details {
-        border-bottom: 1px solid currentColor;
-    }
-
-    .page-create #class-info-section details:last-child {
-        border-bottom: none;
-    }
-
-    .page-create #class-info-section summary {
-        cursor: pointer;
-        padding: 0.5rem 0;
-        font-family: "Cinzel Decorative", serif;
-        font-weight: 700;
-    }
-
-    .page-create #class-info-section details p {
-        margin: 0 0 0.5rem 1rem;
-        line-height: 1.4;
-        white-space: pre-line;
-    }
-
-    /*  ===== Mobile (max-width: 768px), consolidated =====  */
-
-    @media (max-width: 768px) {
-        .page-create #mobile-cancel {
-            display: block;
-            box-sizing: border-box;
-            width: 100%;
-            margin-top: 1rem;
-            padding: 3%;
-            border-radius: var(--tile);
-            border: var(--tileBorder);
-            backdrop-filter: var(--backdrop);
-            background-color: var(--bgc-top);
-            color: var(--txt-color-1);
-            box-shadow: var(--bs1);
-            font-family: "Cinzel Decorative", serif;
-            font-weight: 700;
-            text-align: center;
-            text-decoration: none;
-            transition: all 0.5s ease;
-        }
-
-        .page-create footer {
-            display: none !important;
-        }
-
-        .page-create main {
-            grid-template-columns: repeat(1, 1fr);
-            grid-template-rows: auto 1fr;
-            grid-template-areas: 'a'
-                'b';
-        }
-
-        .page-create #tree-section {
-            scrollbar-width: none;
-        }
-
-        .page-create #submit {
-            width: 100%;
-            padding: 4%;
-            border: var(--tileBorder);
-            backdrop-filter: var(--backdrop);
-            background-color: var(--bgc-top);
-            color: var(--txt-color-1);
-        }
-    }
 }
-@layer overrides {
-    @media (max-width: 768px) {
-    .page-create #submit /* clash: kept at old specificity */ {
-            border-radius: var(--tile);
-    }
-    }
-}
-@layer pages {
-    @media (max-width: 768px) {
- 
-        .page-create .pick-tile {
-            background-color: var(--bg-color-1);
-        }
-
-        .page-create .pick-tile select { 
-            background-color: var(--bg-color-1);
-        }
-
-        .page-create .pick-tile option {
-            background-color: var(--bg-color-1);
-        
-        }
-  
-
-        /* Mobile: header and footer hug the screen edges. Fill the notch / home-bar areas with their own color instead of empty space */
-
-        .page-create body {
-            min-height: 100dvh;
-
-            /* the real visible height on phones, unlike 100vh */
-        }
-
-        .page-create header {
-            padding-top: env(safe-area-inset-top);
-        }
-
-        .page-create footer {
-            padding-bottom: max(1%, env(safe-area-inset-bottom));
-        }
-
-        /* A fixed layer behind everything, sized to the LARGEST viewport so it runs under the status bar and Safari's toolbar */
-
-        html.page-create::before {
-            /* on html, because body's backdrop-filter would trap a fixed layer */
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100lvh;
-            z-index: -1;
-            background-image: var(--background);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            pointer-events: none;
-        }
-
-        .page-create body {
-            background-image: none;
-
-            /* the fixed layer above replaces it */
-        }
-
-        /* Mobile: stretch the fixed background up under the status bar so no bare band shows */
-
-        html.page-create::before {
-            top: calc(-1 * env(safe-area-inset-top));
-            height: calc(100lvh + env(safe-area-inset-top));
-        }
-
-        /* Mobile: zoom the background so the dark bar baked into the top of the image is cropped off */
-
-        html.page-create::before {
-            background-size: auto 120%;
-            background-position: center bottom;
-        }
-
-        /* Mobile: iOS Safari colors its bar from what is painted at the top, so paint a solid title-color strip there */
-
-        /* Mobile: no footer */
-
-        .page-create footer {
-            display: none;
-        }
-
-        /* Mobile: stretch the background picture past the bottom so it fills behind Safari's bottom bar */
-
-        html.page-create::before {
-            height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
-        }
-    }
 }
 
-@layer pages {
-    /* "Subclass unlocks at level 3" under the locked subclass dropdown */
-    .page-create .pick-hint {
-        margin: 0.25rem 0 0;
-        font-size: 0.85em;
-        opacity: 0.8;
-    }
+/* Create page halves keep the display's half-tile corners (--toprad/--lowrad), as before the rename */
+html[data-display]:not([data-display='standard']) .tile-top {
+    border-radius: var(--toprad);
 }
 
-@layer overrides {
-    /* Create page halves keep the display's half-tile corners (--toprad/--lowrad), as before the rename */
-    html.page-create[data-display]:not([data-display='standard']) .tile-top {
-        border-radius: var(--toprad);
-    }
+html[data-display]:not([data-display='standard']) .tile-bottom {
+    border-radius: var(--lowrad);
+}
 
-    html.page-create[data-display]:not([data-display='standard']) .tile-bottom {
-        border-radius: var(--lowrad);
-    }
+/* Create page: the value half of a pick tile is also a form control, so on styled displays it keeps
+   the control corners/font instead of the plain tile-bottom corners.
+   (.topTile/.bottomTile above are only still used by CreateDescription.jsx, which the edit pages share.) */
+html[data-display]:not([data-display='standard']) :is(input, select, textarea).tile-bottom {
+    border-radius: var(--inputRad);
+    font-family: var(--fontF);
+}
 
-    /* Create page: the value half of a pick tile is also a form control, so on styled displays it keeps
-       the control corners/font instead of the plain tile-bottom corners.
-       (.topTile/.bottomTile above are only still used by CreateDescription.jsx, which the edit pages share.) */
-    html.page-create[data-display]:not([data-display='standard']) :is(input, select, textarea).tile-bottom {
-        border-radius: var(--inputRad);
-        font-family: var(--fontF);
-    }
+html[data-display]:not([data-display='standard']) button.tile-bottom {
+    border-radius: var(--btnRad);
+    box-shadow: var(--bs3);
+    font-family: var(--fontF);
+    letter-spacing: var(--letterSp);
+}
 
-    html.page-create[data-display]:not([data-display='standard']) button.tile-bottom {
+/* Styled displays: the submit button takes the display's button look (the #submit rules above set the standard look);
+   on phones it keeps the rounder corners from the mobile #submit rule */
+html[data-display]:not([data-display='standard']) #submit {
+    font-family: var(--fontF);
+    box-shadow: var(--bs3);
+}
+
+@media (min-width: 769px) {
+    html[data-display]:not([data-display='standard']) #submit {
         border-radius: var(--btnRad);
-        box-shadow: var(--bs3);
-        font-family: var(--fontF);
-        letter-spacing: var(--letterSp);
     }
+}
+
+/* Neon theme, standard display: the submit button glows on hover like every other button (the #submit rule above sets its own shadow) */
+html[data-theme="neon"][data-display="standard"] #submit:hover {
+    box-shadow: var(--neonGlow);
 }

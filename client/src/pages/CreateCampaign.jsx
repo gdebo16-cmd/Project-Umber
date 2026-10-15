@@ -7,7 +7,7 @@ import { sendJson } from '../utils/api';
 
 
 function CreateCampaign() {
-    usePageStyle(createCss, null, 'page-create');
+    usePageStyle(createCss);
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');

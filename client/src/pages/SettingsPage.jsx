@@ -7,7 +7,7 @@ import { sendJson } from '../utils/api';
 
 // Replaces views/settings.ejs
 function SettingsPage() {
-    usePageStyle(homeCss, null, 'page-home');
+    usePageStyle(homeCss);
     const [form, setForm] = useState({ username: '', email: '', password: '' });
     const [message, setMessage] = useState('');
 

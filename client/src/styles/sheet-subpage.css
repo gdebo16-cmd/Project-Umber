@@ -1,0 +1,312 @@
+/* Character-sheet subpages (Edit Character, Inventory). Loaded after charSheet.css, only on those pages. */
+
+/* ---------- edit / inventory subpages ---------- */
+
+body.subpage {
+    height: auto;
+    max-height: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+body.subpage main.subpage-main {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    grid-template-columns: none;
+    grid-template-rows: none;
+    grid-template-areas: none;
+    place-items: stretch;
+    width: min(960px, 100%);
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    gap: 1rem;
+    overflow: visible;
+}
+
+body.subpage .panel-shell {
+    width: 100%;
+    min-height: 60vh;
+}
+
+body.subpage .action-tab-list {
+    flex-shrink: 0;
+}
+
+body.subpage .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+body.subpage .form-section {
+    width: 100%;
+}
+
+body.subpage .tile-bottom,
+body.subpage select.tile-bottom,
+body.subpage input.tile-bottom {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: var(--tileBorder);
+    border-radius: var(--lowrad);
+    background-color: var(--bg-color-5);
+    color: var(--txt-color-1);
+    font: inherit;
+}
+
+body.subpage .button-container {
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+body.subpage .btn-form {
+    cursor: pointer;
+    padding: 0.6rem 1.25rem;
+    border: var(--tileBorder);
+    border-radius: var(--tile);
+    background-color: var(--bgc-top);
+    color: var(--accent);
+    font: inherit;
+    box-shadow: var(--bs2);
+}
+
+body.subpage .edit-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+}
+
+body.subpage .btn-roll {
+    cursor: pointer;
+}
+
+/* editor tile labels (STRENGTH, Name, Class...): centered with side padding so the rounded, clipped tile corner can't cut them off */
+body.subpage .form-section > .tile-top {
+    display: block;
+    padding: 0.4rem 0.75rem;
+    text-align: center;
+}
+
+/* editor Class tab: creator-style description box + feature tree (same look as char_create.css) */
+body.subpage #desc-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    border-radius: var(--rad2);
+}
+
+body.subpage #img-section {
+    width: 100%;
+}
+
+body.subpage #desc-img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+    background-color: var(--bgc-low);
+    border: var(--tileBorder);
+}
+
+body.subpage #class-info-section,
+body.subpage #tree-section {
+    margin-top: 0.5rem;
+    padding: var(--pad2);
+    border-radius: var(--tile);
+    border: var(--tileBorder);
+    backdrop-filter: var(--backdrop);
+    background-color: var(--bgc-top);
+    color: var(--txt-color-1);
+    box-shadow: var(--bs1);
+}
+
+body.subpage #tree-section {
+    max-height: 24rem;
+    overflow-y: auto;
+}
+
+body.subpage :is(#class-info-section, #tree-section) details {
+    border-bottom: 1px solid currentColor;
+}
+
+body.subpage :is(#class-info-section, #tree-section) details:last-child {
+    border-bottom: none;
+}
+
+body.subpage :is(#class-info-section, #tree-section) summary {
+    cursor: pointer;
+    padding: 0.5rem 0;
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 700;
+}
+
+body.subpage :is(#class-info-section, #tree-section) details p {
+    margin: 0 0 0.5rem 1rem;
+    line-height: 1.4;
+}
+
+body.subpage #class-info-section details p {
+    white-space: pre-line;
+}
+
+body.subpage .feature-choice {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 0.75rem 1rem;
+}
+
+body.subpage .feature-choice select {
+    padding: 0.3rem 0.5rem;
+    border: var(--tileBorder);
+    border-radius: var(--tile, .75rem);
+    background-color: var(--bg-color-5);
+    color: var(--txt-color-1);
+    font: inherit;
+}
+
+body.subpage .feature-choice-note {
+    font-size: 0.85em;
+    opacity: 0.8;
+}
+
+/* "Subclass unlocks at level 3" under the locked subclass dropdown */
+body.subpage .pick-hint {
+    margin: 0.25rem 0 0;
+    font-size: 0.85em;
+    opacity: 0.8;
+}
+
+body.subpage .inv-list {
+    margin: 0;
+    padding: 0;
+}
+
+/* ---------- editor portrait picker ---------- */
+body.subpage .portrait-group-title {
+    margin: 0.75rem 0 0.25rem;
+    font-size: 1rem;
+}
+
+body.subpage .portrait-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));
+    gap: 0.5rem;
+}
+
+body.subpage .portrait-thumb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.25rem;
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 0.5rem;
+    color: inherit;
+    cursor: pointer;
+}
+
+body.subpage .portrait-thumb img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 0.35rem;
+}
+
+body.subpage .portrait-thumb.is-selected {
+    border-color: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+}
+
+body.subpage .portrait-empty {
+    margin: 0.5rem 0 0;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* collapsible portrait picker: arrow turns when open */
+/* flex on <details> breaks open/close in iOS Safari, so keep the picker block-level */
+body.subpage :is(details.portrait-picker, details.portrait-group) {
+    display: block;
+}
+
+body.subpage .portrait-summary {
+    display: block;
+}
+
+body.subpage :is(.portrait-summary, .portrait-group-title) {
+    cursor: pointer;
+    list-style: none;
+}
+
+body.subpage :is(.portrait-summary, .portrait-group-title)::-webkit-details-marker {
+    display: none;
+}
+
+body.subpage :is(.portrait-summary, .portrait-group-title)::before {
+    content: '\25B8';
+    display: inline-block;
+    margin-right: 0.4em;
+    transition: transform 0.2s;
+}
+
+body.subpage details[open] > :is(.portrait-summary, .portrait-group-title)::before {
+    transform: rotate(90deg);
+}
+
+/* portrait picker: glass tile look under every display (same values as the glass display),
+   with <details> kept block-level so open/close still works on iPhone */
+html body.subpage details.form-section.portrait-picker {
+    display: block;
+    width: 100%;
+    border: var(--glassBorder);
+    border-radius: 1.25rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    overflow: clip;
+}
+
+/* header strip: same as the old <p class="tile-top"> */
+html body.subpage .portrait-picker > summary.tile-top.portrait-summary {
+    display: block;
+    margin: 0;
+    padding: 0.75rem;
+    text-align: center;
+    background-color: var(--bgc-top);
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+html body.subpage .portrait-picker > .tile-bottom {
+    border: none;
+    border-top: var(--glassBorder);
+    border-radius: 0 0 1.25rem 1.25rem;
+    box-shadow: none;
+}
+
+/* group titles: same as the old <h3 class="portrait-group-title"> */
+html body.subpage summary.portrait-group-title {
+    display: block;
+    margin: 0.75rem 0 0.25rem;
+    font-size: 1rem;
+    font-family: var(--fontF);
+    font-weight: bold;
+    letter-spacing: var(--letterSp);
+}
+
+html body.subpage .portrait-thumb {
+    border-radius: 0.75rem;
+}
+
+html body.subpage .portrait-thumb img {
+    border: var(--glassBorder);
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}

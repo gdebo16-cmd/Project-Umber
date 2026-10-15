@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router';
 import useFetch from '../hooks/useFetch';
 import usePageStyle from '../hooks/usePageStyle';
 import sheetCss from '../styles/charSheet.css?inline';
+import sheetSubpageCss from '../styles/sheet-subpage.css?inline';
 import TabList from '../components/TabList';
 import EditNameForm from './edit/EditNameForm';
 import EditClassForm from './edit/EditClassForm';
@@ -17,7 +18,7 @@ const TABS = [
 
 // Replaces views/charEdit.ejs. Each tab is its own small form component in pages/edit/.
 function EditCharacterPage() {
-    usePageStyle(sheetCss, 'subpage', 'page-sheet');
+    usePageStyle(sheetCss + sheetSubpageCss, 'subpage');
     const { id } = useParams();
     const { data, setData, loading, error } = useFetch(`/api/characters/${id}/edit`);
     const [tab, setTab] = useState('name');

@@ -1,4 +1,4 @@
-/* Shared element rules (retool phase 6). themes.css @imports this file, and every page stylesheet @imports themes.css.
+/* Shared element rules (retool phase 6). Loaded once for every page from main.jsx, right after themes.css.
 
    How displays work now:
      - Each [data-display] block in themes.css only SETS VARIABLES (--tile, --tileBorder, --bs2, --bs3,
@@ -25,231 +25,355 @@
    Layers: the 'displays' rules can be beaten by page CSS; the 'overrides' rules beat page CSS
    (they keep the specificity they had before the retool, so the look is unchanged). */
 
-@layer components {
-    .hover-grow {
-        transition: transform .5s ease;
-    }
+/* ===== shared element rules ===== */
 
-    .hover-grow:hover {
-        transform: scale(1.03);
-    }
+.hover-grow {
+    transition: transform .5s ease;
+}
 
-    /* TILE-TOP / TILE-BOTTOM, every display */
-    .tile-top {
-        background-color: var(--bgc-top);
-        border-radius: var(--toprad);
-    }
+.hover-grow:hover {
+    transform: scale(1.03);
+}
 
-    .tile-bottom {
-        background-color: var(--bgc-low);
-        border-radius: var(--lowrad);
-    }
+/* TILE-TOP / TILE-BOTTOM, every display */
+.tile-top {
+    background-color: var(--bgc-top);
+    border-radius: var(--toprad);
+}
 
-    /* HEADER CELL: one row of cells sharing edges (sheet header: name, race, class, portrait).
-       The row's background shows through; each cell draws top+left, the last one also the right edge. */
-    .header-cell {
-        border: var(--tileBorder);
-        border-bottom: none;
-        border-right: none;
-        backdrop-filter: var(--blur2);
-        -webkit-backdrop-filter: var(--blur2);
-        margin: var(--mar1);
-    }
+.tile-bottom {
+    background-color: var(--bgc-low);
+    border-radius: var(--lowrad);
+}
 
-    .header-cell:last-child {
-        border-right: var(--tileBorder);
-    }
+/* HEADER CELL: one row of cells sharing edges (sheet header: name, race, class, portrait).
+   The row's background shows through; each cell draws top+left, the last one also the right edge. */
+.header-cell {
+    border: var(--tileBorder);
+    border-bottom: none;
+    border-right: none;
+    backdrop-filter: var(--blur2);
+    -webkit-backdrop-filter: var(--blur2);
+    margin: var(--mar1);
+}
 
-    /* BUTTONS: .btn is the base (display looks come from the BUTTON rules below);
-       variants: .btn-nav (squared nav bar), .btn-action, .btn-link, .btn-round */
-    .btn-nav {
-        border: var(--tileBorder);
-        background-color: var(--bg-color-2);
-        padding: var(--pad2);
-        color: var(--txt-color-1);
-    }
+.header-cell:last-child {
+    border-right: var(--tileBorder);
+}
 
-    .btn-action {
-        flex: 1;
-        align-self: stretch;
-        background-color: var(--accent);
-        border: var(--tileBorder);
-        border-radius: var(--rad2);
-        box-shadow: var(--bs2);
-        margin: 0;
-    }
+/* BUTTONS: .btn is the base (display looks come from the BUTTON rules below);
+   variants: .btn-nav (squared nav bar), .btn-action, .btn-link, .btn-round */
+.btn-nav {
+    border: var(--tileBorder);
+    background-color: var(--bg-color-2);
+    padding: var(--pad2);
+    color: var(--txt-color-1);
+}
 
-    .btn-action:hover {
-        background-color: var(--bg-color-2);
-        color: var(--accent);
-        cursor: pointer;
-    }
+.btn-action {
+    flex: 1;
+    align-self: stretch;
+    background-color: var(--accent);
+    border: var(--tileBorder);
+    border-radius: var(--rad2);
+    box-shadow: var(--bs2);
+    margin: 0;
+}
 
-    .btn-link {
-        border: none;
-        text-align: right;
-        border-radius: var(--lowrad);
-        background-color: var(--bgc-low);
-        padding: 2%;
-        margin: 0;
-        color: var(--txt-color-1);
-        font-family: var(--fontF1);
-        font-weight: var(--fontW1);
-        font-style: var(--fontStyle);
-    }
+.btn-action:hover {
+    background-color: var(--bg-color-2);
+    color: var(--accent);
+    cursor: pointer;
+}
 
-    .btn-round {
-        border-radius: 50%;
-    }
+.btn-link {
+    border: none;
+    text-align: right;
+    border-radius: var(--lowrad);
+    background-color: var(--bgc-low);
+    padding: 2%;
+    margin: 0;
+    color: var(--txt-color-1);
+    font-family: var(--fontF1);
+    font-weight: var(--fontW1);
+    font-style: var(--fontStyle);
+}
 
-    /* FIELD: inputs and selects sit on their tile without a border of their own */
-    .field {
-        color: var(--txt-color-1);
-        border: none;
-    }
+.btn-round {
+    border-radius: 50%;
+}
 
-    /* FORM SECTION: label/control stacks (details.form-section stays display:block, see the iOS rule in charSheet.css) */
-    .form-section {
-        display: flex;
-        flex-direction: column;
-    }
+/* FIELD: inputs and selects sit on their tile without a border of their own */
+.field {
+    color: var(--txt-color-1);
+    border: none;
+}
 
-    /* TABS: every [role="tab"] button; the open one drops its top/left edge and sinks in */
-    [role="tab"] {
-        padding: 0.5rem 1rem;
-        cursor: pointer;
-        width: var(--w1);
-        border-radius: var(--rad1);
-        border: var(--tileBorder);
-        border-bottom: none;
-        border-right: none;
-        color: var(--txt-color-1);
-        background-color: var(--bg-color-4);
-    }
+/* FORM SECTION: label/control stacks (details.form-section stays display:block, see the iOS rule in charSheet.css) */
+.form-section {
+    display: flex;
+    flex-direction: column;
+}
 
-    [role="tab"][aria-selected="true"] {
-        font-weight: var(--fontW1);
-        border-top: none;
-        border-left: none;
-        color: var(--accent);
-        box-shadow: var(--shadowInner);
-    }
+/* TABS: every [role="tab"] button; the open one drops its top/left edge and sinks in */
+[role="tab"] {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    width: var(--w1);
+    border-radius: var(--rad1);
+    border: var(--tileBorder);
+    border-bottom: none;
+    border-right: none;
+    color: var(--txt-color-1);
+    background-color: var(--bg-color-4);
+}
 
-    /* PAGE: the main area blurs the background picture (signin sets its own on phones) */
-    html:is(.page-home, .page-create, .page-sheet) main {
-        backdrop-filter: var(--blur1);
-    }
+[role="tab"][aria-selected="true"] {
+    font-weight: var(--fontW1);
+    border-top: none;
+    border-left: none;
+    color: var(--accent);
+    box-shadow: var(--shadowInner);
+}
 
-    /* STATUS BAR (phones): solid title color under the status bar, fading out below it.
-       On html, because body's backdrop-filter would trap a fixed layer. */
-    @media (max-width: 768px) {
-        html:is(.page-home, .page-signin, .page-create, .page-sheet) {
-            padding-top: 0 !important; /* overrides the safe-area padding in index.html */
-            background-color: var(--bgc-title, var(--bg-color-1));
-        }
+/* PAGE: the main area blurs the background picture (signin turns it off on desktop and sets its own on phones) */
+main {
+    backdrop-filter: var(--blur1);
+}
 
-        html:is(.page-home, .page-signin, .page-create, .page-sheet)::after {
-            content: '';
-            position: fixed;
-            left: 0;
-            width: 100%;
-            top: calc(-1 * env(safe-area-inset-top));
-            height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
-            z-index: -1;
-            pointer-events: none;
-            background: linear-gradient(to bottom,
-                var(--bgc-title, var(--titleFallback)) 0,
-                var(--bgc-title, var(--titleFallback)) env(safe-area-inset-top),
-                transparent calc(env(safe-area-inset-top) + 4rem));
-        }
+/* iPhone: stop Safari from enlarging text on its own, and never allow sideways scrolling */
+
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+html,
+body {
+    overflow-x: hidden;
+}
+
+.loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    min-height: 60vh;
+    color: var(--bgc-bubble-receive);
+}
+
+.loader-ring {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, #333 0%, red 70%, #333 100%);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
+    filter: blur(1px);
+    animation: loader-spin 0.9s linear infinite,
+        loader-rainbow 3s linear infinite;
+}
+
+@keyframes loader-spin {
+    to {
+        transform: rotate(360deg);
     }
 }
 
-@layer displays {
-    /* SURFACE */
-    html[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .title-tile) {
-        border-radius: var(--tile);
-        box-shadow: var(--bs2);
-        backdrop-filter: var(--backdrop);
-        -webkit-backdrop-filter: var(--backdrop);
+@keyframes loader-rainbow {
+    from {
+        filter: blur(1px) hue-rotate(0deg);
     }
 
-    /* TILE-TOP / TILE-BOTTOM: halves sit flush inside the tile */
-    html[data-display]:not([data-display='standard']) .tile-top {
-        box-shadow: none;
-    }
-
-    html[data-display]:not([data-display='standard']) .tile-bottom {
-        border-top: var(--tileBorder);
-        box-shadow: none;
-    }
-
-    /* BUTTON */
-    html[data-display]:not([data-display='standard']) :is(button, .btn):not(.tile-top, .tile-bottom) {
-        letter-spacing: var(--letterSp);
-    }
-
-    /* NAV */
-    html[data-display]:not([data-display='standard']) :is(#nav-box, .drop-down) {
-        box-shadow: var(--bs2);
-    }
-
-    /* HEADING */
-    html[data-display]:not([data-display='standard']) :is(h1, h2, h3, .title, .tile-label) {
-        font-family: var(--fontF);
-        font-weight: var(--fontW1);
-        letter-spacing: var(--letterSp);
+    to {
+        filter: blur(1px) hue-rotate(360deg);
     }
 }
 
-@layer overrides {
-    /* SURFACE: one border style per display; contents clip to the rounded corners */
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .title-tile) {
-        border: var(--tileBorder);
+@media (prefers-reduced-motion: reduce) {
+    .loader-ring {
+        animation: loader-pulse 1.5s ease-in-out infinite;
+    }
+}
+
+@keyframes loader-pulse {
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/*  ===== Mobile (max-width: 768px), consolidated =====  */
+
+@media (max-width: 768px) {
+    /* Mobile: iOS Safari zooms into any field under 16px, so keep fields at 16px or more */
+
+    input,
+    select,
+    textarea {
+        font-size: max(16px, 1em) !important;
+    }
+}
+
+/* stop white showing around the page on phones (notch area, overscroll) */
+
+html {
+    background-color: var(--bg-color-1);
+    background-image: var(--background);
+
+    /* same image as body, so it reaches the screen curves */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100%;
+}
+
+/* STATUS BAR (phones): solid title color under the status bar, fading out below it.
+   On html, because body's backdrop-filter would trap a fixed layer. */
+@media (max-width: 768px) {
+    html {
+        padding-top: 0 !important; /* overrides the safe-area padding in index.html */
+        background-color: var(--bgc-title, var(--bg-color-1));
     }
 
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .title-tile) {
-        overflow: clip;
+    html::after {
+        content: '';
+        position: fixed;
+        left: 0;
+        width: 100%;
+        top: calc(-1 * env(safe-area-inset-top));
+        height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
+        z-index: -1;
+        pointer-events: none;
+        background: linear-gradient(to bottom,
+            var(--bgc-title, var(--titleFallback)) 0,
+            var(--bgc-title, var(--titleFallback)) env(safe-area-inset-top),
+            transparent calc(env(safe-area-inset-top) + 4rem));
     }
+}
 
-    /* home character lists scroll inside their container box */
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(#current-character-tile, #unfinished-character-tile) {
-        overflow-x: hidden;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }
+/* ===== display looks: the display condition sits in :where() so it adds no weight; a page rule on the same element still wins ===== */
 
-    /* TILE-TOP / TILE-BOTTOM: corners follow the tile, no doubled borders */
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) .tile-top {
-        border: none;
-        border-radius: var(--tile) var(--tile) 0 0;
-    }
+/* SURFACE */
+:where(html[data-display]:not([data-display='standard'])) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .title-tile) {
+    border-radius: var(--tile);
+    box-shadow: var(--bs2);
+    backdrop-filter: var(--backdrop);
+    -webkit-backdrop-filter: var(--backdrop);
+}
 
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) .tile-bottom {
-        border: none;
-        border-radius: 0 0 var(--tile) var(--tile);
-    }
+/* TILE-TOP / TILE-BOTTOM: halves sit flush inside the tile */
+:where(html[data-display]:not([data-display='standard'])) .tile-top {
+    box-shadow: none;
+}
 
-    /* BUTTON */
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(button, .btn):not(.tile-top, .tile-bottom) {
-        border-radius: var(--btnRad);
-        box-shadow: var(--bs3);
-        font-family: var(--fontF);
-    }
+:where(html[data-display]:not([data-display='standard'])) .tile-bottom {
+    border-top: var(--tileBorder);
+    box-shadow: none;
+}
 
-    /* INPUT */
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(input, select, textarea):not(.tile-top, .tile-bottom) {
-        border-radius: var(--inputRad);
-        font-family: var(--fontF);
-    }
+/* BUTTON */
+:where(html[data-display]:not([data-display='standard'])) :is(button, .btn):not(.tile-top, .tile-bottom) {
+    letter-spacing: var(--letterSp);
+}
 
-    /* NAV: box corners, and every nav button square with the display's border */
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(#nav-box, .drop-down) {
-        border-radius: var(--rad1);
-    }
+/* NAV */
+:where(html[data-display]:not([data-display='standard'])) :is(#nav-box, .drop-down) {
+    box-shadow: var(--bs2);
+}
 
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) #nav-container :is(.btn-nav, #campaign-nav) /* #campaign-nav: beats the sheet mobile corner rule */ {
-        border-radius: 0;
-        border: var(--tileBorder);
-    }
+/* HEADING */
+:where(html[data-display]:not([data-display='standard'])) :is(h1, h2, h3, .title, .tile-label) {
+    font-family: var(--fontF);
+    font-weight: var(--fontW1);
+    letter-spacing: var(--letterSp);
+}
+
+/* neon color scheme glows (colors only; shape comes from data-display) */
+
+html[data-theme="neon"] :is(h1, h2, h3, .title, .tile-label, .tile-top, .action-title) {
+    text-shadow: var(--neonTextGlow);
+}
+
+/* Text-only buttons (spell and feature names, links) get no shadow, so the words don't look outlined */
+html[data-display] :is(.btn-spell-name, .btn-link) {
+    box-shadow: none !important;
+    text-shadow: none;
+}
+
+html[data-display='neon'] #nav-container .btn-nav {
+    box-shadow: var(--glow);
+}
+
+/* ===== display overrides: these must beat page rules, so they keep the full html[data-display]... weight ===== */
+
+/* SURFACE: one border style per display; contents clip to the rounded corners */
+html[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .title-tile) {
+    border: var(--tileBorder);
+}
+
+html[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .title-tile) {
+    overflow: clip;
+}
+
+/* home character lists scroll inside their container box */
+html[data-display]:not([data-display='standard']) :is(#current-character-tile, #unfinished-character-tile) {
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* TILE-TOP / TILE-BOTTOM: corners follow the tile, no doubled borders */
+html[data-display]:not([data-display='standard']) .tile-top {
+    border: none;
+    border-radius: var(--tile) var(--tile) 0 0;
+}
+
+html[data-display]:not([data-display='standard']) .tile-bottom {
+    border: none;
+    border-radius: 0 0 var(--tile) var(--tile);
+}
+
+/* BUTTON */
+html[data-display]:not([data-display='standard']) :is(button, .btn):not(.tile-top, .tile-bottom) {
+    border-radius: var(--btnRad);
+    box-shadow: var(--bs3);
+    font-family: var(--fontF);
+}
+
+/* INPUT */
+html[data-display]:not([data-display='standard']) :is(input, select, textarea):not(.tile-top, .tile-bottom) {
+    border-radius: var(--inputRad);
+    font-family: var(--fontF);
+}
+
+/* NAV: box corners, and every nav button square with the display's border */
+html[data-display]:not([data-display='standard']) :is(#nav-box, .drop-down) {
+    border-radius: var(--rad1);
+}
+
+html[data-display]:not([data-display='standard']) #nav-container :is(.btn-nav, #campaign-nav) /* #campaign-nav: beats the sheet mobile corner rule */ {
+    border-radius: 0;
+    border: var(--tileBorder);
+}
+
+html[data-theme="neon"] :is(button, .btn-form, .btn-nav, .btn-action):hover {
+    box-shadow: var(--neonGlow);
+}
+
+/* Home tabs: round only the top corners, on every display style */
+html[data-display] .home-tabs button.home-tab.home-tab:not(.tile-top) /* clash: kept at old specificity */ {
+    border-radius: var(--tile, .75rem) var(--tile, .75rem) 0 0;
+}
+
+/* light-glass: open tab glows light blue */
+html[data-theme="light-glass"] :is([role="tab"][aria-selected="true"], .home-tab.is-active) {
+    color: rgb(255, 255, 255);
+    background-color: rgb(185, 220, 255);
+    box-shadow: 0 0 12px 3px rgba(185, 220, 255, 0.9), var(--shadowInner);
+}
+
+/* every theme: very soft text shadow for readability */
+html body {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }

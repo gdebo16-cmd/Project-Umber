@@ -7,7 +7,7 @@ import Loader from '../components/Loader';
 
 
 function CampaignList() {
-    usePageStyle(homeCss, null, 'page-home');
+    usePageStyle(homeCss);
     const { data, setData, loading, error } = useFetch('/api/campaigns');
 
     const deleteCampaign = async (e, camp) => {

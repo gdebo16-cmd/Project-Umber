@@ -12,7 +12,7 @@ const DISPLAYS = ['standard', 'compact', 'neon', 'glass', 'parchment', 'minimal'
 const BACKGROUNDS = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen', 'neon', 'dark-map', 'light-map', 'hellfire-map', 'frozen-map'];
 
 function ProfilePage() {
-    usePageStyle(homeCss, null, 'page-home');
+    usePageStyle(homeCss);
 
 
 

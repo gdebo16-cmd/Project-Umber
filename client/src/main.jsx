@@ -1,6 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles/global.css'
+import './styles/themes.css'
+import './styles/components.css'
 import App from './App.jsx'
 
 // Put the saved color scheme back on the page (same as theme.js did)

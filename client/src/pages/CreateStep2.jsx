@@ -30,7 +30,7 @@ function classShown(c, subs) {
 }
 
 function CreateStep2() {
-    usePageStyle(createCss, null, 'page-create');
+    usePageStyle(createCss);
     const navigate = useNavigate();
     const { data: classes, loading, error } = useFetch('/api/create_char/step2');
     const [classId, setClassId] = useState('');

@@ -1,2528 +1,2168 @@
-@import './themes.css';
+/* ---------- reset / base ---------- */
 
-@layer pages {
-    /* ---------- reset / base ---------- */
-
-    :is(.page-sheet, .page-sheet *),
-    :is(.page-sheet, .page-sheet *)::before,
-    :is(.page-sheet, .page-sheet *)::after {
-        box-sizing: border-box;
-    }
-
-    html.page-sheet {
-        max-width: var(--maxW);
-        overflow-x: var(--ofX1);
-    }
-
-    .page-sheet body {
-        width: var(--w1);
-        max-width: 3840px;
-        overflow-x: var(--ofX1);
-        overflow-y: auto;
-
-        /* safety: scroll if a tile min-height needs more room */
-        background-image: var(--background);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        font-family: var(--fontF);
-        font-weight: var(--fontW1);
-        font-style: var(--fontStyle);
-        height: var(--h2);
-        max-height: var(--maxH2);
-        min-height: var(--minH2);
-        margin: var(--mar1);
-        display: flex;
-        flex-direction: column;
-        color: var(--txt-color-1);
-    }
-
-    .page-sheet pre {
-        display: none;
-        max-width: var(--maxW);
-        overflow-x: auto;
-        white-space: pre-wrap;
-        word-break: break-word;
-        color: white;
-        backdrop-filter: var(--blur1);
-        font-size: var(--fontS3);
-    }
-
-    .page-sheet ul,
-    .page-sheet li,
-    .page-sheet a {
-        list-style: none;
-        text-decoration: none;
-        color: var(--txt-color-1);
-    }
-
-    .page-sheet option {
-        background-color: var(--bg-color-5);
-        color: var(--txt-color-1);
-        border: var(--tileBorder);
-        padding: var(--pad3);
-        margin: var(--mar1);
-        text-align: center;
-        font-size: var(--fontS1);
-        font-weight: var(--fontW1);
-        font-style: var(--fontStyle);
-    }
-
-    /* Shared press/hover grow. Same 1.03 scale the old per-selector rules used. */
-
-    /* Top cap / bottom cap used by inventory blocks and any tile that already
-       carried these exact declarations. Edit-page .topTile/.bottomTile are NOT
-       given the create-flow look here; those pages stay as they render today
-       unless an element also has the sheet classes below. */
-
-    /* ---------- header / nav ---------- */
-
-    .page-sheet header {
-        z-index: 1;
-        position: relative;
-        flex-shrink: 0;
-    }
-
-    .page-sheet #site-title {
-        background-color: var(--bg-color-3);
-        color: var(--txt-color-1);
-        text-align: center;
-        padding: var(--pad1);
-        margin: var(--mar1);
-    }
-
-    .page-sheet #character-header {
-        width: var(--w1);
-        max-width: var(--maxW);
-        min-width: var(--minW1);
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        color: var(--txt-color-1);
-        background-color: var(--bg-color-2);
-    }
-
-    .page-sheet #character-name,
-    .page-sheet #character-race,
-    .page-sheet #character-class {
-        font-size: var(--fontS2);
-        text-align: center;
-        padding: var(--pad2);
-        /* border, blur, margin: shared .header-cell (components.css) */
-    }
-
-    .page-sheet #character-name {
-        flex-grow: 3;
-    }
-
-    .page-sheet #character-race,
-    .page-sheet #character-class {
-        flex-grow: 2;
-    }
-
-    .page-sheet #nav-box {
-        border-radius: var(--lowrad);
-        box-shadow: var(--bs2);
-    }
-
-    .page-sheet #nav-container {
-        background-color: var(--bg-color-3);
-        border-radius: var(--lowrad);
-        margin: var(--mar1);
-        padding: var(--pad3);
-        text-align: center;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: stretch;
-    }
-
-    .page-sheet #home-nav,
-    .page-sheet #theme-nav,
-    .page-sheet #character-nav,
-    .page-sheet #campaign-nav,
-    .page-sheet #settings-nav {
-        min-width: var(--minW1);
-        flex: 1;
-        backdrop-filter: var(--blur2);
-    }
-
-    .page-sheet #home-nav {
-        border-radius: var(--radCornerBL);
-    }
-
-    .page-sheet #theme-nav {
-        flex: 1;
-        display: flex;
-        flex-direction: row;
-        align-items: stretch;
-        justify-content: center;
-        min-width: var(--minW1);
-        position: relative;
-        box-sizing: border-box;
-    }
-
-    .page-sheet #theme-nav label {
-        /* Keep for a11y; do not take layout space (select is the visible control) */
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: var(--pad3);
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-    }
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
-@layer pages {
-    .page-sheet #theme-nav label {
-        border: var(--border1);
-    }
+html {
+    max-width: var(--maxW);
+    overflow-x: var(--ofX1);
 }
 
-@layer pages {
-    .page-sheet #theme-nav select {
-        box-sizing: border-box;
-        width: var(--w1);
-        height: var(--h1);
-        min-width: var(--minW1);
-        flex: 1 1 auto;
-        align-self: stretch;
-        margin: var(--mar1);
-        padding: var(--pad3);
-        border: var(--border1);
-        border-radius: inherit;
-        background-color: transparent;
-        color: inherit;
-        font: inherit;
-        line-height: inherit;
-        text-align: center;
-        text-align-last: center;
-        cursor: pointer;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-    }
+body {
+    width: var(--w1);
+    max-width: 3840px;
+    overflow-x: var(--ofX1);
+    overflow-y: auto;
 
-    .page-sheet #theme-nav select.tile-bottom {
-        background-color: transparent;
-    }
+    /* safety: scroll if a tile min-height needs more room */
+    background-image: var(--background);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: var(--fontF);
+    font-weight: var(--fontW1);
+    font-style: var(--fontStyle);
+    height: var(--h2);
+    max-height: var(--maxH2);
+    min-height: var(--minH2);
+    margin: var(--mar1);
+    display: flex;
+    flex-direction: column;
+    color: var(--txt-color-1);
 }
 
-@layer pages {
-    .page-sheet #theme-nav select.tile-bottom {
-        border-radius: inherit;
-        border: var(--border1);
-    }
+pre {
+    display: none;
+    max-width: var(--maxW);
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: white;
+    backdrop-filter: var(--blur1);
+    font-size: var(--fontS3);
 }
 
-@layer pages {
-    .page-sheet #settings-nav {
-        border-radius: 0;
-    }
+ul,
+li,
+a {
+    list-style: none;
+    text-decoration: none;
+    color: var(--txt-color-1);
 }
 
-@layer pages {
-    .page-sheet #nav-container > :last-child {
-        border-radius: var(--radCornerBR);
-    }
+option {
+    background-color: var(--bg-color-5);
+    color: var(--txt-color-1);
+    border: var(--tileBorder);
+    padding: var(--pad3);
+    margin: var(--mar1);
+    text-align: center;
+    font-size: var(--fontS1);
+    font-weight: var(--fontW1);
+    font-style: var(--fontStyle);
 }
 
-@layer pages {
-    .page-sheet #character-nav,
-    .page-sheet #campaign-nav,
-    .page-sheet #settings-nav {
-        position: relative;
-    }
+/* Shared press/hover grow. Same 1.03 scale the old per-selector rules used. */
 
-    .page-sheet .drop-down {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        max-width: 100vw;
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        z-index: 10;
-        background-color: var(--bg-color-5);
-        border: var(--tileBorder);
-        transition: all 1s ease;
-        padding: 0;
-        border-radius: var(--tile);
-    }
+/* Top cap / bottom cap used by inventory blocks and any tile that already
+   carried these exact declarations. Edit-page .topTile/.bottomTile are NOT
+   given the create-flow look here; those pages stay as they render today
+   unless an element also has the sheet classes below. */
 
-    .page-sheet .title-logo {
-        width: 100%;
-        max-width: 100px;
-        height: 100%;
-        max-height: 100px;
-        margin: 0;
-        padding: 0;
-    }
+/* ---------- header / nav ---------- */
 
-    .page-sheet li:hover .drop-down {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-        width: 100%;
-        box-shadow: var(--bs2);
-    }
-
-    .page-sheet .btn-drop-character,
-    .page-sheet .btn-drop-campaign,
-    .page-sheet .btn-drop-settings {
-        color: var(--txt-drop-1);
-        padding: 14%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: var(--tile);
-        border: var(--tileBorder);
-        margin: 3%;
-        font-size: 90%;
-        box-shadow: var(--bs2);
-    }
-
-    .page-sheet #settings-nav .drop-down {
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%);
-    }
-
-    .page-sheet #campaign-nav .drop-down {
-        left: auto;
-        right: 0;
-        transform: none;
-        background-color: var(--bg-color-5);
-        border: var(--tileBorder);
-        box-shadow: var(--bs2);
-        color: var(--txt-color-1);
-    }
-
-    /* ---------- layout ---------- */
-
-    .page-sheet .sheet-tabs {
-        display: none !important;
-    }
-
-    .page-sheet main {
-        width: var(--w1);
-        max-width: var(--maxW);
-        min-width: var(--minW1);
-        min-height: var(--minH1);
-        flex: 1 1 auto;
-        overflow-x: var(--ofX1);
-        overflow-y: var(--ofY1);
-
-        /* safety net with body */
-        display: grid;
-        grid-template-columns: repeat(8, 1fr);
-
-        /* 7 rows: B, mid, skills x3, saves x2. Actions (H) spans skills+saves
-           so it ends level with the bottom of saving throws and stays tall. */
-        grid-template-rows: minmax(0, 0.85fr)
-            minmax(0, 0.95fr)
-            minmax(0, 1.2fr)
-            minmax(0, 1.2fr)
-            minmax(0, 1.2fr)
-            minmax(0, 1.2fr)
-            minmax(0, 1.2fr);
-
-        /* H and E share the bottom block: skills span full actions height (no saves) */
-        grid-template-areas: "B B B B B B B B"
-            "I I I F G C C C"
-            "H H H H E E E E"
-            "H H H H E E E E"
-            "H H H H E E E E"
-            "H H H H E E E E"
-            "H H H H E E E E";
-        gap: 0.5rem;
-        place-items: stretch;
-        align-items: stretch;
-        justify-items: stretch;
-    }
-
-    /* ---------- stat tiles ---------- */
-
-    .page-sheet .tile {
-        text-align: center;
-        border: var(--tileBorder);
-        border-radius: var(--tile);
-        box-shadow: var(--bs2);
-        color: var(--txt-color-1);
-        min-width: var(--minW1);
-        width: var(--w1);
-    }
-
-    /* cells inside an already-framed box (health, conditions): same text/size as .tile, no border/shadow */
-    .page-sheet .tile-cell {
-        text-align: center;
-        color: var(--txt-color-1);
-        min-width: var(--minW1);
-        width: var(--w1);
-    }
-
-    .page-sheet #stat-container {
-        grid-area: B;
-        display: flex;
-        flex-direction: row;
-        width: var(--w1);
-        gap: 8px;
-        margin-top: 1%;
-        background-color: var(--bg-color-4);
-    }
-
-    .page-sheet .stat-tile {
-        flex: 1 1 0;
-        cursor: pointer;
-        container-type: size;
-        display: grid;
-        grid-template-rows: 1fr 2fr 1fr;
-        height: var(--h1);
-        min-height: var(--minH1);
-        overflow: var(--ofX1);
-    }
-
-    .page-sheet #stat-container .stat-tile-label,
-    .page-sheet #stat-container .stat-tile-modifier,
-    .page-sheet #stat-container .stat-tile-value {
-        margin: var(--mar1);
-    }
-
-    .page-sheet #stat-container .stat-tile-value {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: var(--minH1);
-    }
+header {
+    z-index: 1;
+    position: relative;
+    flex-shrink: 0;
 }
 
-@layer overrides {
-    .page-sheet #stat-container .stat-tile-value /* clash: kept at old specificity */ {
-        border-radius: 50% 50% 0 0;
-        overflow: var(--ofX1);
-    }
+#site-title {
+    background-color: var(--bg-color-3);
+    color: var(--txt-color-1);
+    text-align: center;
+    padding: var(--pad1);
+    margin: var(--mar1);
 }
 
-@layer pages {
-    .page-sheet #stat-container .stat-tile-label {
-        font-size: clamp(0.6rem, 15cqh, 0.85rem);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: var(--minH1);
-    }
+#character-header {
+    width: var(--w1);
+    max-width: var(--maxW);
+    min-width: var(--minW1);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: var(--txt-color-1);
+    background-color: var(--bg-color-2);
 }
 
-@layer overrides {
-    .page-sheet #stat-container .stat-tile-label /* clash: kept at old specificity */ {
-        overflow: var(--ofX1);
-        border-radius: 0 0 50% 50%;
-    }
+#character-name,
+#character-race,
+#character-class {
+    font-size: var(--fontS2);
+    text-align: center;
+    padding: var(--pad2);
+    /* border, blur, margin: shared .header-cell (components.css) */
 }
 
-@layer pages {
-    .page-sheet #stat-container .stat-tile-modifier {
-        font-size: clamp(0.8rem, 26cqh, 1.45rem);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: var(--minH1);
-    }
+#character-name {
+    flex-grow: 3;
 }
 
-@layer overrides {
-    .page-sheet #stat-container .stat-tile-modifier /* clash: kept at old specificity */ {
-        overflow: var(--ofX1);
-    }
+#character-race,
+#character-class {
+    flex-grow: 2;
 }
 
-@layer pages {
-    .page-sheet #armor-class-container {
-        grid-area: F;
-    }
-
-    .page-sheet #initiative-container {
-        grid-area: G;
-    }
-
-    .page-sheet #armor-class-tile-container,
-    .page-sheet #initiative-tile-container {
-        display: grid;
-        grid-template-rows: 1fr 2fr;
-        height: var(--h1);
-        min-height: var(--minH1);
-        container-type: size;
-        cursor: pointer;
-    }
-
-    .page-sheet .armor-class-tile,
-    .page-sheet .initiative-tile {
-        /* border, corners, shadow, centering come from .page-sheet .tile */
-        container-type: size;
-        height: var(--h1);
-        min-height: var(--minH1);
-    }
-
-    .page-sheet #armor-class-tile-label,
-    .page-sheet #initiative-tile-label {
-        margin: var(--mar1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: var(--minH1);
-        font-size: clamp(0.5rem, 13cqh, 1rem);
-    }
+#nav-box {
+    border-radius: var(--lowrad);
+    box-shadow: var(--bs2);
 }
 
-@layer overrides {
-    .page-sheet #armor-class-tile-label,
-    .page-sheet #initiative-tile-label /* clash: kept at old specificity */ {
-        overflow: var(--ofX1);
-    }
+#nav-container {
+    background-color: var(--bg-color-3);
+    border-radius: var(--lowrad);
+    margin: var(--mar1);
+    padding: var(--pad3);
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
 }
 
-@layer pages {
-    .page-sheet #armor-class-tile-value,
-    .page-sheet #initiative-tile-value {
-        margin: var(--mar1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: var(--bgc-low);
-        border-radius: 0 0 10px 10px;
-        min-height: var(--minH1);
-        font-size: clamp(0.85rem, 30cqh, 1.55rem);
-    }
+#home-nav,
+#theme-nav,
+#character-nav,
+#campaign-nav,
+#settings-nav {
+    min-width: var(--minW1);
+    flex: 1;
+    backdrop-filter: var(--blur2);
 }
 
-@layer overrides {
-    .page-sheet #armor-class-tile-value,
-    .page-sheet #initiative-tile-value /* clash: kept at old specificity */ {
-        overflow: var(--ofX1);
-    }
+#home-nav {
+    border-radius: var(--radCornerBL);
 }
 
-@layer pages {
-    /* ---------- skills ---------- */
-
-    .page-sheet .skills-container {
-        grid-area: E;
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        grid-template-rows: auto repeat(6, minmax(0, 1fr));
-        grid-auto-flow: column;
-        gap: 0.35rem;
-        height: var(--h1);
-        cursor: pointer;
-        border-radius: var(--tile);
-    }
-
-    .page-sheet #skills-title {
-        grid-column: 1 / -1;
-        grid-row: 1;
-        flex-shrink: 0;
-        margin: var(--mar1);
-        container-type: inline-size;
-        padding: 0.35rem 0.6rem;
-        line-height: 1.2;
-        height: var(--h1);
-        font-size: clamp(0.75rem, 4.5cqi, 1.05rem);
-        overflow: var(--ofX1);
-        /* background comes from .tile-top */
-        text-align: center;
-        box-shadow: var(--bs1);
-        border-radius: var(--tile);
-    }
+#theme-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    min-width: var(--minW1);
+    position: relative;
+    box-sizing: border-box;
 }
 
-@layer overrides {
-    .page-sheet #skills-title /* clash: kept at old specificity */ {
-        border: var(--tileBorder);
-    }
+#theme-nav label {
+    /* Keep for a11y; do not take layout space (select is the visible control) */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: var(--pad3);
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
 }
 
-@layer pages {
-    .page-sheet .skill-tile {
-        display: grid;
-        grid-template-rows: 1fr 1fr;
-        grid-template-columns: 1fr;
-        /* corners and shadow come from .page-sheet .tile */
-        container-type: size;
-        cursor: pointer;
-        overflow: var(--ofX1);
-    }
-
-    .page-sheet .skill-label,
-    .page-sheet .skill-value {
-        padding: 0.2rem 0.25rem;
-        margin: var(--mar1);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: var(--ofX1);
-    }
-
-    .page-sheet .skill-label {
-        font-size: clamp(0.5rem, 18cqh, 1rem);
-        line-height: 1.15;
-    }
-
-    .page-sheet .skill-value {
-        font-size: clamp(0.8rem, 32cqh, 1.2rem);
-    }
-
-    /* proficient skill: small dot before the name */
-    .page-sheet .skill-tile.is-proficient .skill-label::before {
-        content: "\25CF";
-        font-size: 0.6em;
-        margin-right: 0.3em;
-    }
-
-    /* ---------- health ---------- */
-
-    .page-sheet .health-container {
-        grid-area: C;
-        border-radius: var(--tile);
-        box-shadow: var(--bs2);
-        border: var(--tileBorder);
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        grid-template-rows: minmax(0, 1fr) minmax(6px, 12%);
-        grid-template-areas: "a b c"
-            "d d d";
-        height: var(--h1);
-        min-height: var(--minH1);
-        overflow: var(--ofX1);
-        background-color: var(--bg-color-4);
-    }
-
-    .page-sheet .health-button-tile {
-        grid-area: a;
-        display: grid;
-        grid-template-rows: repeat(3, minmax(0, 1fr));
-        container-type: size;
-        overflow: var(--ofX1);
-        font-family: var(--fontF1);
-        font-weight: var(--fontW1);
-        font-style: var(--fontStyle);
-    }
-
-    .page-sheet .current-hp-tile {
-        grid-area: b;
-    }
-
-    .page-sheet .max-hp-tile {
-        grid-area: c;
-    }
-
-    .page-sheet .hp-bar-tile {
-        grid-area: d;
-        min-height: var(--minH1);
-        height: 60%;
-        align-self: center;
-        background: #444;
-        border-radius: var(--rad1);
-        overflow: var(--ofX1);
-        margin: 0 2%;
-    }
-
-    .page-sheet #hp-bar-fill {
-        height: var(--h1);
-        background: #3cb371;
-    }
-
-    .page-sheet #hp-bar-fill.very_hurt {
-        background: #ff0000;
-    }
-
-    .page-sheet #hp-bar-fill.hurt{
-        background: #ffa500;
-    }
-
-    .page-sheet .health-container {
-        background: #07220fdb;
-    }
-
-    .page-sheet .health-container.very_hurt {
-        background: #320505a2;
-    }
-
-    .page-sheet .health-container.hurt {
-        background: #725913b1;
-    }
-
-    .page-sheet .button-tile-component {
-        min-width: var(--minW1);
-        font-family: inherit;
-        font-size: clamp(0.55rem, min(18cqh, 14cqi), 1rem);
-        padding: 0 4%;
-        white-space: nowrap;
-        overflow: var(--ofX1);
-        text-overflow: ellipsis;
-    }
-
-    .page-sheet .button-component {
-        border: var(--border1);
-        color: var(--txtC1);
-        overflow: var(--ofX1);
-        cursor: pointer;
-    }
-
-    .page-sheet #heal-button {
-        border-radius: 10px 0 0 0;
-        background-color: var(--healColor);
-    }
-
-    .page-sheet #damage-button {
-        background-color: var(--damageColor);
-        border-radius: var(--radCornerBL);
-    }
-
-    .page-sheet #hp-input {
-        color: var(--txt-color-1);
-        background-color: transparent;
-        text-align: center;
-        appearance: textfield;
-        -moz-appearance: textfield;
-    }
+#theme-nav label {
+    border: var(--border1);
 }
 
-@layer overrides {
-    .page-sheet #hp-input /* clash: kept at old specificity */ {
-        border: var(--border1);
-    }
+#theme-nav select {
+    box-sizing: border-box;
+    width: var(--w1);
+    height: var(--h1);
+    min-width: var(--minW1);
+    flex: 1 1 auto;
+    align-self: stretch;
+    margin: var(--mar1);
+    padding: var(--pad3);
+    border: var(--border1);
+    border-radius: inherit;
+    background-color: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    text-align: center;
+    text-align-last: center;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
-@layer pages {
-    .page-sheet #hp-input::-webkit-outer-spin-button,
-    .page-sheet #hp-input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: var(--mar1);
-    }
-
-    .page-sheet .current-hp-tile,
-    .page-sheet .max-hp-tile {
-        display: grid;
-        grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
-        min-width: var(--minW1);
-        min-height: var(--minH1);
-        container-type: size;
-        overflow: var(--ofX1);
-    }
-
-    .page-sheet .hp-label-component {
-        text-align: center;
-        font-size: clamp(0.55rem, min(18cqh, 12cqi), 1rem);
-        line-height: 1.1;
-        background-color: var(--bgc-top);
-        padding-top: 4%;
-        padding-bottom: 4%;
-        margin: var(--mar1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: var(--minH1);
-        overflow: var(--ofX1);
-    }
-
-    .page-sheet .hp-value-component {
-        font-size: clamp(0.7rem, min(30cqh, 22cqi), 1.5rem);
-        text-align: center;
-        margin: var(--mar1);
-        background-color: var(--bgc-low);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: var(--minH1);
-        overflow: var(--ofX1);
-    }
-
-    .page-sheet #current-hp-value--fallen {
-        font-size: clamp(0.5rem, min(14cqh, 11cqi), 0.9rem);
-        line-height: 1.1;
-        overflow-wrap: anywhere;
-    }
-
-    /* ---------- conditions ---------- */
-
-    .page-sheet .condition-container {
-        grid-area: I;
-        border-radius: var(--tile);
-        border: var(--tileBorder);
-        box-shadow: var(--bs2);
-        display: grid;
-        grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
-        overflow: var(--ofX1);
-        container-type: size;
-    }
-
-    .page-sheet .condition-container > * {
-        min-height: var(--minH1);
-        max-height: var(--h1);
-    }
-
-    .page-sheet #condition-title {
-        font-size: clamp(0.7rem, 22cqh, 1rem);
-        padding: 0.35rem;
-        margin: var(--mar1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: var(--minH1);
-    }
+#theme-nav select.tile-bottom {
+    background-color: transparent;
 }
 
-@layer overrides {
-    .page-sheet #condition-title /* clash: kept at old specificity */ {
-        overflow: var(--ofX1);
-    }
+#theme-nav select.tile-bottom {
+    border-radius: inherit;
+    border: var(--border1);
 }
 
-@layer pages {
-    .page-sheet .condition-tile {
-        font-size: clamp(0.7rem, 12cqh, 0.95rem);
-        margin-top: var(--mar1);
-        padding: 0.35rem 0.6rem;
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-auto-rows: min-content;
-        column-gap: 0.75rem;
-        row-gap: 0.2rem;
-        align-content: start;
-        min-height: var(--minH1);
-        max-height: var(--h1);
-        overflow-x: var(--ofX1);
-        overflow-y: auto;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(255,255,255,0.35) transparent;
-    }
-
-    .page-sheet #conditions-list-1,
-    .page-sheet #conditions-list-2,
-    .page-sheet #conditions-list-3 {
-        display: grid;
-        grid-template-columns: auto minmax(0, 1fr);
-        grid-auto-flow: row dense;
-        grid-auto-rows: 1.4em;
-        align-items: center;
-        column-gap: 0.45em;
-        min-width: var(--minW1);
-        font-size: 0.85em;
-        text-align: left;
-    }
-
-    .page-sheet #conditions-list-1 > .condition-checkbox,
-    .page-sheet #conditions-list-2 > .condition-checkbox {
-        grid-column: 1;
-        margin: var(--mar1);
-        width: 1em;
-        height: 1em;
-        cursor: pointer;
-    }
-
-    .page-sheet #conditions-list-1 > label,
-    .page-sheet #conditions-list-2 > label {
-        grid-column: 2;
-        justify-self: start;
-        min-width: var(--minW1);
-        max-width: var(--w1);
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        cursor: pointer;
-    }
+#settings-nav {
+    border-radius: 0;
 }
 
-@layer pages {
-    .page-sheet #conditions-list-1 > label,
-    .page-sheet #conditions-list-2 > label {
-        overflow: var(--ofX1);
-    }
+#nav-container > :last-child {
+    border-radius: var(--radCornerBR);
 }
 
-@layer pages {
-    /* Exhaustion: own row under both columns, full width: label | slider | value */
-
-    .page-sheet #conditions-list-3 {
-        grid-column: 1 / -1;
-        display: grid;
-        grid-template-columns: auto minmax(0, 1fr) auto;
-        align-items: center;
-        column-gap: 0.5em;
-        min-width: var(--minW1);
-        font-size: 0.85em;
-        text-align: left;
-    }
-
-    .page-sheet .exhausted-component {
-        width: 100%;
-        min-width: var(--minW1);
-        margin: var(--mar1);
-    }
-
-    .page-sheet #conditions-list-3 output {
-        min-width: 2ch;
-        text-align: right;
-    }
-
-    .page-sheet #condition-checkbox {
-        cursor: pointer;
-    }
-
-    /* ---------- actions / spells / tabs ---------- */
-
-    .page-sheet .action-container {
-        grid-area: H;
-        min-height: var(--minH1);
-        height: var(--h1);
-        max-height: var(--h1);
-        display: grid;
-        grid-template-rows: auto minmax(0, 1fr);
-        align-items: start;
-        font-family: var(--fontF1);
-        font-weight: var(--fontW2);
-        font-style: var(--fontStyle);
-        border-radius: 15px;
-        box-shadow: var(--bs2);
-    }
-
-    .page-sheet .action-tab-list {
-        display: flex;
-        justify-content: space-around;
-        align-items: stretch;
-        gap: 0.5rem;
-        background-color: var(--bgc-top);
-        border-radius: var(--toprad);
-        border: var(--tileBorder);
-        height: auto;
-        min-height: var(--minH1);
-        padding: 0.5rem;
-        margin: var(--mar1);
-        box-shadow: var(--bs2);
-        overflow: auto;
-        scrollbar-width: none;
-        scrollbar-color: rgba(255,255,255,0.35) transparent;
-    }
-
-    /* the whole bar holding both tabs */
-
-    .page-sheet .spells-tab .action-tab-list {
-        border-radius: var(--toprad);
-        gap: 0.25rem;
-        margin: 0 0.5rem;
-        padding: 0.5rem;
-    }
-
-    .page-sheet .spells-panel {
-        margin: 0 0.5rem;
-        padding: 0.5rem;
-        border-radius: var(--lowrad);
-    }
-
-    /* each tab button (beats the narrower tab padding set for the action tab list) */
-
-    .page-sheet .spells-tab [role="tab"] {
-        padding: 0.5rem 1rem;
-    }
-
-    /* the tab that's currently open */
-
-    .page-sheet .spells-tab [role="tab"][aria-selected="true"] {
-        color: var(--accent);
-        background-color: var(--bgc-low);
-    }
-
-    .page-sheet .spell-slot-checkbox {
-        appearance: none;
-
-        /* turn off the browser's default box */
-        width: 1.1rem;
-        height: 1.1rem;
-        margin: .35rem 0.25rem;
-        border: 2px solid var(--accent);
-        border-radius: 50%;
-
-        /* round, like a gem. Use 3px for a square */
-        background-color: transparent;
-        cursor: pointer;
-        transition: background-color 0.2s, box-shadow 0.2s;
-    }
-
-    /* when the box is checked (slot used) */
-
-    .page-sheet .spell-slot-checkbox:checked {
-        background-color: var(--accent);
-        box-shadow: 0 0 6px var(--accent);
-
-        /* a little glow */
-    }
-
-    /* when you hover over one */
-
-    .page-sheet .spell-slot-checkbox:hover {
-        box-shadow: 0 0 4px var(--accent);
-    }
-
-    /* tab buttons: shared [role="tab"] rule in components.css */
+#character-nav,
+#campaign-nav,
+#settings-nav {
+    position: relative;
 }
 
-@layer pages {
-    :is(.page-sheet, .page-sheet *)[role="tabpanel"] {
-        height: var(--h1);
-        background-color: var(--bgc-low);
-    }
+.drop-down {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    max-width: 100vw;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 10;
+    background-color: var(--bg-color-5);
+    border: var(--tileBorder);
+    transition: all 1s ease;
+    padding: 0;
+    border-radius: var(--tile);
+}
 
-    .page-sheet .action-container > [role="tabpanel"],
-    .page-sheet .panel-shell > [role="tabpanel"] {
-        min-height: 0;
-        height: auto;
-        max-height: 100%;
-        overflow-y: auto;
-        overflow-x: hidden;
-        scrollbar-width: none;
-        border-radius: var(--lowrad);
-        border: var(--tileBorder);
+.title-logo {
+    width: 100%;
+    max-width: 100px;
+    height: 100%;
+    max-height: 100px;
+    margin: 0;
+    padding: 0;
+}
 
-        /* scrolls by wheel/touch, no visible bar */
-    }
+li:hover .drop-down {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    width: 100%;
+    box-shadow: var(--bs2);
+}
 
-    .page-sheet .action-container > [role="tabpanel"]::-webkit-scrollbar,
-    .page-sheet .panel-shell > [role="tabpanel"]::-webkit-scrollbar {
-        display: none;
-    }
+.btn-drop-character,
+.btn-drop-campaign,
+.btn-drop-settings {
+    color: var(--txt-drop-1);
+    padding: 14%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--tile);
+    border: var(--tileBorder);
+    margin: 3%;
+    font-size: 90%;
+    box-shadow: var(--bs2);
+}
 
-    .page-sheet #panel-actions {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-    }
+#settings-nav .drop-down {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+}
 
-    /* Only hide panels inside action / subpage shells â€” never .sheet-panel on desktop */
+#campaign-nav .drop-down {
+    left: auto;
+    right: 0;
+    transform: none;
+    background-color: var(--bg-color-5);
+    border: var(--tileBorder);
+    box-shadow: var(--bs2);
+    color: var(--txt-color-1);
+}
 
-    .page-sheet .action-container > [role="tabpanel"][hidden],
-    .page-sheet .panel-shell > [role="tabpanel"][hidden] {
-        display: none !important;
-    }
+/* ---------- layout ---------- */
 
-    .page-sheet .action-tile {
-        max-height: var(--h1);
-        border: var(--tileBorder);
-        border-top: none;
-        padding: 0.5rem;
-    }
+.sheet-tabs {
+    display: none !important;
+}
 
-    .page-sheet .action-item.spell-slot {
-        /* both classes, so this beats the plain .action-item rule further down */
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
+main {
+    width: var(--w1);
+    max-width: var(--maxW);
+    min-width: var(--minW1);
+    min-height: var(--minH1);
+    flex: 1 1 auto;
+    overflow-x: var(--ofX1);
+    overflow-y: var(--ofY1);
 
-        /* title and list both go full width */
-        gap: .5rem;
+    /* safety net with body */
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
 
-        /* no space between them */
-        padding: 0;
+    /* 7 rows: B, mid, skills x3, saves x2. Actions (H) spans skills+saves
+       so it ends level with the bottom of saving throws and stays tall. */
+    grid-template-rows: minmax(0, 0.85fr)
+        minmax(0, 0.95fr)
+        minmax(0, 1.2fr)
+        minmax(0, 1.2fr)
+        minmax(0, 1.2fr)
+        minmax(0, 1.2fr)
+        minmax(0, 1.2fr);
 
-        /* drop the .action-item padding */
+    /* H and E share the bottom block: skills span full actions height (no saves) */
+    grid-template-areas: "B B B B B B B B"
+        "I I I F G C C C"
+        "H H H H E E E E"
+        "H H H H E E E E"
+        "H H H H E E E E"
+        "H H H H E E E E"
+        "H H H H E E E E";
+    gap: 0.5rem;
+    place-items: stretch;
+    align-items: stretch;
+    justify-items: stretch;
+}
 
-        /* drop the extra frame around both */
-        background: none;
-        overflow: var(--ofX1);
-        border: var(--tileBorder);
-        box-shadow: var(--bs2);
-    }
+/* ---------- stat tiles ---------- */
 
-    .page-sheet .spell-list {
-        display: flex;
-        gap: 0.75rem;
-    }
+.tile {
+    text-align: center;
+    border: var(--tileBorder);
+    border-radius: var(--tile);
+    box-shadow: var(--bs2);
+    color: var(--txt-color-1);
+    min-width: var(--minW1);
+    width: var(--w1);
+}
 
-    .page-sheet .action-title {
-        text-align: left;
-        background-color: var(--bgc-top);
-        border-radius: var(--toprad);
-        padding: 0.6rem;
-        border-bottom: none;
-        margin: 0;
-    }
+/* cells inside an already-framed box (health, conditions): same text/size as .tile, no border/shadow */
+.tile-cell {
+    text-align: center;
+    color: var(--txt-color-1);
+    min-width: var(--minW1);
+    width: var(--w1);
+}
 
-    .page-sheet .action-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.4rem;
-        padding: 0.3rem;
-        margin: 0 0.5rem;
-    }
+#stat-container {
+    grid-area: B;
+    display: flex;
+    flex-direction: row;
+    width: var(--w1);
+    gap: 8px;
+    margin-top: 1%;
+    background-color: var(--bg-color-4);
+}
 
-    .page-sheet .action-item {
-        border: var(--tileBorder);
-        border-radius: var(--tile);
-        box-shadow: var(--bs2);
-        background-color: var(--bgc-low);
-        margin-bottom: 0.5rem;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
+.stat-tile {
+    flex: 1 1 0;
+    cursor: pointer;
+    container-type: size;
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
+    height: var(--h1);
+    min-height: var(--minH1);
+    overflow: var(--ofX1);
+}
 
-    .page-sheet .action-button-container {
-        display: flex;
-        gap: 0.125rem;
-        align-self: stretch;
-        flex-direction: row;
-    }
+#stat-container .stat-tile-label,
+#stat-container .stat-tile-modifier,
+#stat-container .stat-tile-value {
+    margin: var(--mar1);
+}
 
-    .page-sheet .title-tile {
-        display: flex;
-        margin: 1%;
-        flex-direction: column;
-        align-items: stretch;
-        justify-content: center;
-        border: var(--tileBorder);
-        border-radius: var(--tile);
-        box-shadow: var(--bs2);
-        background-color: var(--bgc-low);
-        text-align: center;
-    }
+#stat-container .stat-tile-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--minH1);
+}
 
-    .page-sheet .action-tab-title {
-        border-radius: var(--toprad);
-        background-color: var(--bgc-top);
-        margin: 0;
-    }
+#stat-container .stat-tile-label {
+    font-size: clamp(0.6rem, 15cqh, 0.85rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--minH1);
+}
 
-    /* ---------- inventory ---------- */
+#stat-container .stat-tile-modifier {
+    font-size: clamp(0.8rem, 26cqh, 1.45rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--minH1);
+}
 
-    .page-sheet .learned-spell {
-        text-align: right;
-        margin-right: 1%;
-    }
+#armor-class-container {
+    grid-area: F;
+}
 
-    .page-sheet em {
-        color: var(--accent);
-        margin-left: 1%;
-        flex: 1 1 32%;
-    }
+#initiative-container {
+    grid-area: G;
+}
 
-    /* ---------- roll orb ---------- */
+#armor-class-tile-container,
+#initiative-tile-container {
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    height: var(--h1);
+    min-height: var(--minH1);
+    container-type: size;
+    cursor: pointer;
+}
 
-    .page-sheet .roll-orb {
-        position: fixed;
-        left: 1rem;
-        top: 50%;
-        z-index: 1000;
-        width: 3rem;
-        height: 3rem;
-        background-color: var(--bgc-orb);
-        border: var(--tileBorder);
-        cursor: grab;
-        user-select: none;
-        touch-action: none;
-    }
+.armor-class-tile,
+.initiative-tile {
+    /* border, corners, shadow, centering come from .tile */
+    container-type: size;
+    height: var(--h1);
+    min-height: var(--minH1);
+}
 
-    .page-sheet .roll-orb-panel {
-        position: relative;
+#armor-class-tile-label,
+#initiative-tile-label {
+    margin: var(--mar1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--minH1);
+    font-size: clamp(0.5rem, 13cqh, 1rem);
+}
 
-        /* lets the tail be placed relative to the bubble */
-        display: inline-block;
-        padding: 0.75rem 1rem;
-        background-color: var(--bgc-bubble-send);
-        border-radius: 1rem 1rem 1rem .5rem;
+#armor-class-tile-value,
+#initiative-tile-value {
+    margin: var(--mar1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bgc-low);
+    border-radius: 0 0 10px 10px;
+    min-height: var(--minH1);
+    font-size: clamp(0.85rem, 30cqh, 1.55rem);
+}
 
-        /* the rounded box */
-        max-width: 20rem;
-        width: 60%;
-        margin: 4%;
-    }
+/* ---------- skills ---------- */
 
-    .page-sheet .roll-orb-panel::after {
-        content: '';
-        position: absolute;
-        bottom: -0.6rem;
-        left: .5rem;
-        border-width: 0.6rem 0.6rem 0 0;
-        border-style: solid;
-        border-color: var(--bgc-bubble-send) transparent;
-    }
+.skills-container {
+    grid-area: E;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto repeat(6, minmax(0, 1fr));
+    grid-auto-flow: column;
+    gap: 0.35rem;
+    height: var(--h1);
+    cursor: pointer;
+    border-radius: var(--tile);
+}
 
-    .page-sheet .roll-orb.is-open {
-        width: 18rem;
-        height: 16rem;
-        border-radius: 0.5rem;
-        cursor: default;
-    }
+#skills-title {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    flex-shrink: 0;
+    margin: var(--mar1);
+    container-type: inline-size;
+    padding: 0.35rem 0.6rem;
+    line-height: 1.2;
+    height: var(--h1);
+    font-size: clamp(0.75rem, 4.5cqi, 1.05rem);
+    overflow: var(--ofX1);
+    /* background comes from .tile-top */
+    text-align: center;
+    box-shadow: var(--bs1);
+    border-radius: var(--tile);
+}
 
-    .page-sheet .roll-orb.is-dragging {
-        cursor: grabbing;
-    }
+.skill-tile {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+    /* corners and shadow come from .tile */
+    container-type: size;
+    cursor: pointer;
+    overflow: var(--ofX1);
+}
 
-    .page-sheet .roll-orb.is-open .roll-orb-face {
-        display: none;
-    }
+.skill-label,
+.skill-value {
+    padding: 0.2rem 0.25rem;
+    margin: var(--mar1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: var(--ofX1);
+}
 
-    .page-sheet .roll-orb:not(.is-open) .roll-orb-panel {
-        display: none;
-    }
+.skill-label {
+    font-size: clamp(0.5rem, 18cqh, 1rem);
+    line-height: 1.15;
+}
 
-    /* ---------- overflow guard ---------- */
+.skill-value {
+    font-size: clamp(0.8rem, 32cqh, 1.2rem);
+}
 
-    .page-sheet main > *,
-    .page-sheet .sheet-panel,
-    .page-sheet #stat-container,
-    .page-sheet .health-container,
-    .page-sheet .skills-container,
-    .page-sheet #armor-class-container,
-    .page-sheet #initiative-container,
-    .page-sheet .action-container,
-    .page-sheet .condition-container,
-    .page-sheet #skills-container,
-    .page-sheet .condition-tile {
-        min-width: 0;
+/* proficient skill: small dot before the name */
+.skill-tile.is-proficient .skill-label::before {
+    content: "\25CF";
+    font-size: 0.6em;
+    margin-right: 0.3em;
+}
+
+/* ---------- health ---------- */
+
+.health-container {
+    grid-area: C;
+    border-radius: var(--tile);
+    box-shadow: var(--bs2);
+    border: var(--tileBorder);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: minmax(0, 1fr) minmax(6px, 12%);
+    grid-template-areas: "a b c"
+        "d d d";
+    height: var(--h1);
+    min-height: var(--minH1);
+    overflow: var(--ofX1);
+    background-color: var(--bg-color-4);
+}
+
+.health-button-tile {
+    grid-area: a;
+    display: grid;
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    container-type: size;
+    overflow: var(--ofX1);
+    font-family: var(--fontF1);
+    font-weight: var(--fontW1);
+    font-style: var(--fontStyle);
+}
+
+.current-hp-tile {
+    grid-area: b;
+}
+
+.max-hp-tile {
+    grid-area: c;
+}
+
+.hp-bar-tile {
+    grid-area: d;
+    min-height: var(--minH1);
+    height: 60%;
+    align-self: center;
+    background: #444;
+    border-radius: var(--rad1);
+    overflow: var(--ofX1);
+    margin: 0 2%;
+}
+
+#hp-bar-fill {
+    height: var(--h1);
+    background: #3cb371;
+}
+
+#hp-bar-fill.very_hurt {
+    background: #ff0000;
+}
+
+#hp-bar-fill.hurt{
+    background: #ffa500;
+}
+
+.health-container {
+    background: #07220fdb;
+}
+
+.health-container.very_hurt {
+    background: #320505a2;
+}
+
+.health-container.hurt {
+    background: #725913b1;
+}
+
+.button-tile-component {
+    min-width: var(--minW1);
+    font-family: inherit;
+    font-size: clamp(0.55rem, min(18cqh, 14cqi), 1rem);
+    padding: 0 4%;
+    white-space: nowrap;
+    overflow: var(--ofX1);
+    text-overflow: ellipsis;
+}
+
+.button-component {
+    border: var(--border1);
+    color: var(--txtC1);
+    overflow: var(--ofX1);
+    cursor: pointer;
+}
+
+#heal-button {
+    border-radius: 10px 0 0 0;
+    background-color: var(--healColor);
+}
+
+#damage-button {
+    background-color: var(--damageColor);
+    border-radius: var(--radCornerBL);
+}
+
+#hp-input {
+    color: var(--txt-color-1);
+    background-color: transparent;
+    text-align: center;
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+#hp-input::-webkit-outer-spin-button,
+#hp-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: var(--mar1);
+}
+
+.current-hp-tile,
+.max-hp-tile {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
+    min-width: var(--minW1);
+    min-height: var(--minH1);
+    container-type: size;
+    overflow: var(--ofX1);
+}
+
+.hp-label-component {
+    text-align: center;
+    font-size: clamp(0.55rem, min(18cqh, 12cqi), 1rem);
+    line-height: 1.1;
+    background-color: var(--bgc-top);
+    padding-top: 4%;
+    padding-bottom: 4%;
+    margin: var(--mar1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--minH1);
+    overflow: var(--ofX1);
+}
+
+.hp-value-component {
+    font-size: clamp(0.7rem, min(30cqh, 22cqi), 1.5rem);
+    text-align: center;
+    margin: var(--mar1);
+    background-color: var(--bgc-low);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--minH1);
+    overflow: var(--ofX1);
+}
+
+#current-hp-value--fallen {
+    font-size: clamp(0.5rem, min(14cqh, 11cqi), 0.9rem);
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+}
+
+/* ---------- conditions ---------- */
+
+.condition-container {
+    grid-area: I;
+    border-radius: var(--tile);
+    border: var(--tileBorder);
+    box-shadow: var(--bs2);
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
+    overflow: var(--ofX1);
+    container-type: size;
+}
+
+.condition-container > * {
+    min-height: var(--minH1);
+    max-height: var(--h1);
+}
+
+#condition-title {
+    font-size: clamp(0.7rem, 22cqh, 1rem);
+    padding: 0.35rem;
+    margin: var(--mar1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--minH1);
+}
+
+.condition-tile {
+    font-size: clamp(0.7rem, 12cqh, 0.95rem);
+    margin-top: var(--mar1);
+    padding: 0.35rem 0.6rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: min-content;
+    column-gap: 0.75rem;
+    row-gap: 0.2rem;
+    align-content: start;
+    min-height: var(--minH1);
+    max-height: var(--h1);
+    overflow-x: var(--ofX1);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.35) transparent;
+}
+
+#conditions-list-1,
+#conditions-list-2,
+#conditions-list-3 {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-auto-flow: row dense;
+    grid-auto-rows: 1.4em;
+    align-items: center;
+    column-gap: 0.45em;
+    min-width: var(--minW1);
+    font-size: 0.85em;
+    text-align: left;
+}
+
+#conditions-list-1 > .condition-checkbox,
+#conditions-list-2 > .condition-checkbox {
+    grid-column: 1;
+    margin: var(--mar1);
+    width: 1em;
+    height: 1em;
+    cursor: pointer;
+}
+
+#conditions-list-1 > label,
+#conditions-list-2 > label {
+    grid-column: 2;
+    justify-self: start;
+    min-width: var(--minW1);
+    max-width: var(--w1);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+#conditions-list-1 > label,
+#conditions-list-2 > label {
+    overflow: var(--ofX1);
+}
+
+/* Exhaustion: own row under both columns, full width: label | slider | value */
+
+#conditions-list-3 {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 0.5em;
+    min-width: var(--minW1);
+    font-size: 0.85em;
+    text-align: left;
+}
+
+.exhausted-component {
+    width: 100%;
+    min-width: var(--minW1);
+    margin: var(--mar1);
+}
+
+#conditions-list-3 output {
+    min-width: 2ch;
+    text-align: right;
+}
+
+#condition-checkbox {
+    cursor: pointer;
+}
+
+/* ---------- actions / spells / tabs ---------- */
+
+.action-container {
+    grid-area: H;
+    min-height: var(--minH1);
+    height: var(--h1);
+    max-height: var(--h1);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    align-items: start;
+    font-family: var(--fontF1);
+    font-weight: var(--fontW2);
+    font-style: var(--fontStyle);
+    border-radius: 15px;
+    box-shadow: var(--bs2);
+}
+
+.action-tab-list {
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+    gap: 0.5rem;
+    background-color: var(--bgc-top);
+    border-radius: var(--toprad);
+    border: var(--tileBorder);
+    height: auto;
+    min-height: var(--minH1);
+    padding: 0.5rem;
+    margin: var(--mar1);
+    box-shadow: var(--bs2);
+    overflow: auto;
+    scrollbar-width: none;
+    scrollbar-color: rgba(255,255,255,0.35) transparent;
+}
+
+/* the whole bar holding both tabs */
+
+.spells-tab .action-tab-list {
+    border-radius: var(--toprad);
+    gap: 0.25rem;
+    margin: 0 0.5rem;
+    padding: 0.5rem;
+}
+
+.spells-panel {
+    margin: 0 0.5rem;
+    padding: 0.5rem;
+    border-radius: var(--lowrad);
+}
+
+/* each tab button (beats the narrower tab padding set for the action tab list) */
+
+.spells-tab [role="tab"] {
+    padding: 0.5rem 1rem;
+}
+
+/* the tab that's currently open */
+
+.spells-tab [role="tab"][aria-selected="true"] {
+    color: var(--accent);
+    background-color: var(--bgc-low);
+}
+
+.spell-slot-checkbox {
+    appearance: none;
+
+    /* turn off the browser's default box */
+    width: 1.1rem;
+    height: 1.1rem;
+    margin: .35rem 0.25rem;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+
+    /* round, like a gem. Use 3px for a square */
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+/* when the box is checked (slot used) */
+
+.spell-slot-checkbox:checked {
+    background-color: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+
+    /* a little glow */
+}
+
+/* when you hover over one */
+
+.spell-slot-checkbox:hover {
+    box-shadow: 0 0 4px var(--accent);
+}
+
+/* tab buttons: shared [role="tab"] rule in components.css */
+
+[role="tabpanel"] {
+    height: var(--h1);
+    background-color: var(--bgc-low);
+}
+
+.action-container > [role="tabpanel"],
+.panel-shell > [role="tabpanel"] {
+    min-height: 0;
+    height: auto;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    border-radius: var(--lowrad);
+    border: var(--tileBorder);
+
+    /* scrolls by wheel/touch, no visible bar */
+}
+
+.action-container > [role="tabpanel"]::-webkit-scrollbar,
+.panel-shell > [role="tabpanel"]::-webkit-scrollbar {
+    display: none;
+}
+
+#panel-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Only hide panels inside action / subpage shells â€” never .sheet-panel on desktop */
+
+.action-container > [role="tabpanel"][hidden],
+.panel-shell > [role="tabpanel"][hidden] {
+    display: none !important;
+}
+
+.action-tile {
+    max-height: var(--h1);
+    border: var(--tileBorder);
+    border-top: none;
+    padding: 0.5rem;
+}
+
+.action-item.spell-slot {
+    /* both classes, so this beats the plain .action-item rule further down */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    /* title and list both go full width */
+    gap: .5rem;
+
+    /* no space between them */
+    padding: 0;
+
+    /* drop the .action-item padding */
+
+    /* drop the extra frame around both */
+    background: none;
+    overflow: var(--ofX1);
+    border: var(--tileBorder);
+    box-shadow: var(--bs2);
+}
+
+.spell-list {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.action-title {
+    text-align: left;
+    background-color: var(--bgc-top);
+    border-radius: var(--toprad);
+    padding: 0.6rem;
+    border-bottom: none;
+    margin: 0;
+}
+
+.action-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.3rem;
+    margin: 0 0.5rem;
+}
+
+.action-item {
+    border: var(--tileBorder);
+    border-radius: var(--tile);
+    box-shadow: var(--bs2);
+    background-color: var(--bgc-low);
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.action-button-container {
+    display: flex;
+    gap: 0.125rem;
+    align-self: stretch;
+    flex-direction: row;
+}
+
+.title-tile {
+    display: flex;
+    margin: 1%;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    border: var(--tileBorder);
+    border-radius: var(--tile);
+    box-shadow: var(--bs2);
+    background-color: var(--bgc-low);
+    text-align: center;
+}
+
+.action-tab-title {
+    border-radius: var(--toprad);
+    background-color: var(--bgc-top);
+    margin: 0;
+}
+
+/* ---------- inventory ---------- */
+
+.learned-spell {
+    text-align: right;
+    margin-right: 1%;
+}
+
+em {
+    color: var(--accent);
+    margin-left: 1%;
+    flex: 1 1 32%;
+}
+
+/* ---------- roll orb ---------- */
+
+.roll-orb {
+    position: fixed;
+    left: 1rem;
+    top: 50%;
+    z-index: 1000;
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--bgc-orb);
+    border: var(--tileBorder);
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+}
+
+.roll-orb-panel {
+    position: relative;
+
+    /* lets the tail be placed relative to the bubble */
+    display: inline-block;
+    padding: 0.75rem 1rem;
+    background-color: var(--bgc-bubble-send);
+    border-radius: 1rem 1rem 1rem .5rem;
+
+    /* the rounded box */
+    max-width: 20rem;
+    width: 60%;
+    margin: 4%;
+}
+
+.roll-orb-panel::after {
+    content: '';
+    position: absolute;
+    bottom: -0.6rem;
+    left: .5rem;
+    border-width: 0.6rem 0.6rem 0 0;
+    border-style: solid;
+    border-color: var(--bgc-bubble-send) transparent;
+}
+
+.roll-orb.is-open {
+    width: 18rem;
+    height: 16rem;
+    border-radius: 0.5rem;
+    cursor: default;
+}
+
+.roll-orb.is-dragging {
+    cursor: grabbing;
+}
+
+.roll-orb.is-open .roll-orb-face {
+    display: none;
+}
+
+.roll-orb:not(.is-open) .roll-orb-panel {
+    display: none;
+}
+
+/* ---------- overflow guard ---------- */
+
+main > *,
+.sheet-panel,
+#stat-container,
+.health-container,
+.skills-container,
+#armor-class-container,
+#initiative-container,
+.action-container,
+.condition-container,
+#skills-container,
+.condition-tile {
+    min-width: 0;
+    max-width: 100%;
+    min-height: 0;
+}
+
+.skill-label,
+.skill-value,
+#stat-container .stat-tile-label,
+#stat-container .stat-tile-value {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+/* ---------- breakpoints ---------- */
+
+@media (max-width: 768px) {
+    /* Keep the page inside the viewport: no child may invent a width
+       wider than the screen (the usual culprits are width:100% + padding
+       without border-box, flex items that refuse to shrink, or fixed
+       grid tracks). */
+
+    html,
+    body,
+    header,
+    #site-title,
+    #nav-box,
+    #character-header,
+    #nav-container,
+    main {
         max-width: 100%;
-        min-height: 0;
+        min-width: 0;
+        box-sizing: border-box;
     }
 
-    .page-sheet .skill-label,
-    .page-sheet .skill-value,
-    .page-sheet #stat-container .stat-tile-label,
-    .page-sheet #stat-container .stat-tile-value {
-        overflow-wrap: anywhere;
-        word-break: break-word;
-    }
-
-    /* ---------- breakpoints ---------- */
-
-    @media (max-width: 768px) {
-        /* Keep the page inside the viewport: no child may invent a width
-           wider than the screen (the usual culprits are width:100% + padding
-           without border-box, flex items that refuse to shrink, or fixed
-           grid tracks). */
-
-        html.page-sheet,
-        .page-sheet body,
-        .page-sheet header,
-        .page-sheet #site-title,
-        .page-sheet #nav-box,
-        .page-sheet #character-header,
-        .page-sheet #nav-container,
-        .page-sheet main {
-            max-width: 100%;
-            min-width: 0;
-            box-sizing: border-box;
-        }
-
-        .page-sheet body {
-            height: auto;
-            max-height: none;
-            width: 100%;
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
-
-        /* Header: three cells share one row; text may shrink/wrap so "Wizard" stays on-screen.
-           (Old rule set width:100% on EACH cell = three full widths side by side.) */
-
-        .page-sheet #character-header {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            width: 100%;
-            max-width: 100%;
-            min-width: 0;
-            box-sizing: border-box;
-        }
-
-        .page-sheet #character-name,
-        .page-sheet #character-race,
-        .page-sheet #character-class {
-            flex: 1 1 0;
-            width: auto;
-            max-width: 100%;
-            min-width: 0;
-            box-sizing: border-box;
-            font-size: clamp(0.65rem, 3.2vw, 1.05rem);
-            padding: 0.35rem 0.25rem;
-            overflow-wrap: anywhere;
-            word-break: break-word;
-            white-space: normal;
-            hyphens: auto;
-        }
-
-        /* Nav: equal share; wrap to a second row when five labels cannot fit one line */
-
-        .page-sheet #nav-container {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            width: 100%;
-            max-width: 100%;
-            min-width: 0;
-            box-sizing: border-box;
-            margin-bottom: 1%;
-        }
-
-        .page-sheet #home-nav,
-        .page-sheet #theme-nav,
-        .page-sheet #character-nav,
-        .page-sheet #campaign-nav,
-        .page-sheet #settings-nav {
-            flex: 1 1 0;
-            min-width: 0;
-            max-width: 100%;
-            box-sizing: border-box;
-
-            /* ~3 per row â†’ second row for the leftover buttons */
-            flex-basis: 30%;
-            white-space: nowrap;
-            font-size: clamp(0.65rem, 2.8vw, 0.95rem);
-            padding: 0.4rem 0.25rem;
-        }
-
-        .page-sheet #home-nav {
-            border-radius: 0;
-        }
-
-        .page-sheet #nav-container > #campaign-nav {
-
-            /* own row on mobile: round both bottom corners */
-        }
-    }
-}
-@layer overrides {
-    @media (max-width: 768px) {
-    .page-sheet #nav-container > #campaign-nav /* clash: kept at old specificity */ {
-            border-radius: 0 0 10px 10px;
-    }
-    }
-}
-@layer pages {
-    @media (max-width: 768px) {
-        .page-sheet #theme-nav {
-            /* Stay matched to sibling nav buttons (padding already set above) */
-            padding: 0.4rem 0.25rem;
-        }
-
-        .page-sheet #theme-nav select {
-            min-width: 0;
-            max-width: 100%;
-            font-size: inherit;
-        }
-
-        .page-sheet .drop-down,
-        .page-sheet #campaign-nav .drop-down {
-            left: 0;
-            right: 0;
-            width: auto;
-            max-width: 100%;
-            box-sizing: border-box;
-            transform: none;
-
-            /* undo the desktop centering shift, which pushes it off-screen here */
-        }
-
-        .page-sheet main {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 100%;
-            min-width: 0;
-            min-height: 0;
-            flex: none;
-            gap: 8px;
-            grid-template-areas: none;
-            grid-template-columns: none;
-            grid-template-rows: none;
-            overflow-x: hidden;
-            overflow-y: visible;
-            height: auto;
-            box-sizing: border-box;
-        }
-
-        .page-sheet .sheet-tabs {
-            display: flex !important;
-            flex-direction: row;
-            flex-wrap: wrap;
-            width: 100%;
-            max-width: 100%;
-            min-width: 0;
-            border-bottom: var(--tileBorder);
-            box-sizing: border-box;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .page-sheet .sheet-tabs [role="tab"] {
-            width: auto;
-            flex: 1 1 0;
-            min-width: 0;
-            box-sizing: border-box;
-        }
-
-        /* close the gap between the tab bar and the open panel */
-
-        .page-sheet .sheet-tabs {
-            margin-bottom: -8px;
-
-            /* cancels main's 8px gap */
-        }
-
-        .page-sheet .sheet-panel > :first-child {
-            margin-top: 0;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-        }
-
-        .page-sheet .sheet-panel[hidden] {
-            display: none !important;
-        }
-
-        .page-sheet .sheet-panel {
-            width: 100%;
-            max-width: 100%;
-            min-width: 0;
-            overflow-x: hidden;
-            box-sizing: border-box;
-        }
-
-        .page-sheet #stat-container,
-        .page-sheet .health-container,
-        .page-sheet .skills-container,
-        .page-sheet #armor-class-container,
-        .page-sheet #initiative-container,
-        .page-sheet .action-container,
-        .page-sheet .condition-container {
-            width: 100%;
-            max-width: 100%;
-            min-width: 0;
-            box-sizing: border-box;
-        }
-
-        /* Base stats: true 4Ã—2 grid that cannot spill past the viewport */
-
-        .page-sheet #stat-container {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            grid-auto-rows: auto;
-            width: 100%;
-            max-width: 100%;
-            min-width: 0;
-            box-sizing: border-box;
-        }
-
-        /* Conditions (mobile): keep the 2-column checkbox grid, slider row spans both */
-
-        .page-sheet .condition-container {
-            grid-template-rows: auto auto;
-            gap: 0.75rem;
-        }
-
-        .page-sheet .condition-tile {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-
-            /* two checkbox columns */
-            gap: 0.5rem 0.75rem;
-            padding: 0.5rem 0;
-            justify-items: center;
-
-            /* center each group */
-            align-content: space-evenly;
-
-            /* even vertical spacing */
-        }
-
-        .page-sheet #conditions-list-1,
-        .page-sheet #conditions-list-2,
-        .page-sheet #conditions-list-3 {
-            text-align: center;
-            width: auto;
-            grid-column: auto;
-
-            /* no spanning, stay in the single row */
-            min-width: 0;
-        }
-
-        /* same width for both checkbox groups so the boxes line up */
-
-        .page-sheet #conditions-list-1,
-        .page-sheet #conditions-list-2 {
-            width: 9em;
-            grid-auto-rows: 1.6em;
-        }
-
-        .page-sheet .condition-tile {
-            font-size: 1.15rem;
-
-            /* bigger condition text and boxes */
-        }
-
-        .page-sheet #conditions-list-3 {
-            grid-column: 1 / -1;
-
-            /* exhaustion bar spans the bottom */
-            width: 100%;
-            grid-template-columns: minmax(0, 1fr) auto;
-
-            /* bar, then the number */
-            grid-auto-rows: auto;
-            row-gap: 0.25em;
-            padding: 0 0.75rem;
-            box-sizing: border-box;
-        }
-
-        .page-sheet #exhausted-label {
-            grid-column: 1 / -1;
-
-            /* label on its own line above the bar */
-            justify-self: center;
-        }
-
-        .page-sheet #exhausted-value {
-            width: 100%;
-
-            /* bar stretches across the box */
-            justify-self: stretch;
-            margin: 0;
-        }
-
-        :is(.page-sheet, .page-sheet *)[role="tab"] {
-            flex: 1 1 auto;
-            min-width: 0;
-            padding: 0.5rem;
-            font-size: 0.85rem;
-        }
-
-        /* --- mobile: undo size containment that collapses tiles ---
-           container-type: size makes a box ignore its children's height when
-           laying out. On desktop the sheet grid gives every tile a real height,
-           so that works. On mobile, tiles only grow from their content â€” so
-           size containment shrinks them to nearly nothing and text vanishes.
-           Reset to normal, give sensible min-heights, let the page scroll. */
-
-        .page-sheet .stat-tile,
-        .page-sheet .skill-tile,
-        .page-sheet #armor-class-tile-container,
-        .page-sheet #initiative-tile-container,
-        .page-sheet .current-hp-tile,
-        .page-sheet .max-hp-tile,
-        .page-sheet .health-button-tile,
-        .page-sheet .condition-container,
-        .page-sheet .action-container,
-        .page-sheet .panel-shell {
-            container-type: normal;
-            height: auto;
-            max-height: none;
-            min-height: 0;
-        }
-
-        .page-sheet .stat-tile {
-            flex: unset;
-            width: auto;
-            max-width: 100%;
-            min-width: 0;
-            box-sizing: border-box;
-            min-height: 5.5rem;
-            overflow: hidden;
-        }
-
-        .page-sheet .skill-tile {
-            min-height: 3.5rem;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .page-sheet #armor-class-container,
-        .page-sheet #initiative-container,
-        .page-sheet .current-hp-tile,
-        .page-sheet .max-hp-tile,
-        .page-sheet .health-button-tile,
-        .page-sheet .condition-container {
-            min-height: 4.75rem;
-            height: auto;
-        }
-
-        .page-sheet #sheet-panel-actions {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            grid-template-rows: auto auto;
-            grid-template-areas: "armorClass initiative"
-                "actions actions";
-            column-gap: 0.75rem;
-            row-gap: 0.35rem;
-
-            /* tighter space above the actions tile */
-            padding-top: 0.75rem;
-
-            /* space under the tabs, inside the panel */
-        }
-
-        .page-sheet #armor-class-container {
-            grid-area: armorClass;
-            height: 100%;
-        }
-
-        .page-sheet #initiative-container {
-            grid-area: initiative;
-            height: 100%;
-        }
-
-        .page-sheet #armor-class-container,
-        .page-sheet #initiative-container {
-            min-height: 6rem;
-        }
-
-        .page-sheet .action-container {
-            grid-area: actions;
-            min-height: 14rem;
-            overflow: hidden;
-        }
-
-        .page-sheet .action-tab-list {
-            flex-direction: row;
-            flex-wrap: nowrap;
-        }
-
-        .page-sheet #armor-class-tile-container,
-        .page-sheet #initiative-tile-container {
-            min-height: 6rem;
-            height: 100%;
-
-            /* fill the grid cell */
-        }
-
-        .page-sheet #skills-title {
-            padding: 0.35rem;
-        }
-    }
-}
-@layer overrides {
-    @media (max-width: 768px) {
-    }
-}
-@layer pages {
-    @media (max-width: 768px) {
-        .page-sheet .skills-container {
-            margin-top: 2%;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            grid-template-rows: auto repeat(3);
-            grid-auto-rows: minmax(3.5rem, auto);
-            height: auto;
-            width: 100%;
-            max-width: 100%;
-            min-width: 0;
-            box-sizing: border-box;
-        }
-
-        .page-sheet .health-container {
-            height: auto;
-            min-height: 5rem;
-            grid-template-rows: auto 10px;
-        }
-
-        .page-sheet #sheet-panel-conditions {
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-
-            /* slight space between health and conditions */
-            padding-top: 0.75rem;
-
-            /* space under the tabs, inside the panel */
-        }
-
-        .page-sheet #sheet-panel-conditions > .health-container,
-        .page-sheet #sheet-panel-conditions > .condition-container {
-            min-height: 12rem;
-
-            /* taller tiles */
-        }
-
-        .page-sheet #sheet-panel-conditions > .health-container {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            grid-template-rows: minmax(0, 1fr) auto;
-
-            /* bar row grows to fit the thicker bar */
-        }
-
-        .page-sheet .hp-bar-tile {
-            height: 1.25rem;
-
-            /* thicker health bar on mobile */
-            min-height: 1.25rem;
-            align-self: center;
-            margin: 0.6rem auto;
-
-            /* centered in its row */
-            width: 96%;
-            justify-self: center;
-        }
-    }
-
-    /* ---------- edit / inventory subpages ---------- */
-
-    .page-sheet body.subpage {
+    body {
         height: auto;
         max-height: none;
+        width: 100%;
         overflow-x: hidden;
         overflow-y: auto;
     }
 
-    .page-sheet body.subpage main.subpage-main,
-    .page-sheet main.subpage-main {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        justify-content: flex-start;
-        grid-template-columns: none;
-        grid-template-rows: none;
-        grid-template-areas: none;
-        place-items: stretch;
-        width: min(960px, 100%);
-        max-width: 100%;
-        margin: 0 auto;
-        padding: 1rem;
-        gap: 1rem;
-        overflow: visible;
-    }
+    /* Header: three cells share one row; text may shrink/wrap so "Wizard" stays on-screen.
+       (Old rule set width:100% on EACH cell = three full widths side by side.) */
 
-    .page-sheet body.subpage .panel-shell {
-        width: 100%;
-        min-height: 60vh;
-    }
-
-    .page-sheet body.subpage .action-tab-list {
-        flex-shrink: 0;
-    }
-
-    .page-sheet body.subpage .form-container {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-
-    .page-sheet body.subpage .form-section {
-        width: 100%;
-    }
-
-    .page-sheet body.subpage .tile-bottom,
-    .page-sheet body.subpage select.tile-bottom,
-    .page-sheet body.subpage input.tile-bottom {
-        width: 100%;
-        padding: 0.5rem 0.75rem;
-        border: var(--tileBorder);
-        border-radius: var(--lowrad);
-        background-color: var(--bg-color-5);
-        color: var(--txt-color-1);
-        font: inherit;
-    }
-
-    .page-sheet body.subpage .button-container {
-        align-items: center;
-        margin-top: 0.5rem;
-    }
-
-    .page-sheet body.subpage .btn-form {
-        cursor: pointer;
-        padding: 0.6rem 1.25rem;
-        border: var(--tileBorder);
-        border-radius: var(--tile);
-        background-color: var(--bgc-top);
-        color: var(--accent);
-        font: inherit;
-        box-shadow: var(--bs2);
-    }
-
-    .page-sheet body.subpage .edit-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 0.75rem;
-    }
-
-    .page-sheet body.subpage .btn-roll {
-        cursor: pointer;
-    }
-
-    /* editor tile labels (STRENGTH, Name, Class...): centered with side padding so the rounded, clipped tile corner can't cut them off */
-    .page-sheet body.subpage .form-section > .tile-top {
-        display: block;
-        padding: 0.4rem 0.75rem;
-        text-align: center;
-    }
-
-    /* editor Class tab: creator-style description box + feature tree (same look as char_create.css) */
-    .page-sheet body.subpage #desc-container {
-        display: flex;
-        flex-direction: column;
-        margin-top: 1rem;
-        border-radius: var(--rad2);
-    }
-
-    .page-sheet body.subpage #img-section {
-        width: 100%;
-    }
-
-    .page-sheet body.subpage #desc-img {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        margin: 0;
-        background-color: var(--bgc-low);
-        border: var(--tileBorder);
-    }
-
-    .page-sheet body.subpage #class-info-section,
-    .page-sheet body.subpage #tree-section {
-        margin-top: 0.5rem;
-        padding: var(--pad2);
-        border-radius: var(--tile);
-        border: var(--tileBorder);
-        backdrop-filter: var(--backdrop);
-        background-color: var(--bgc-top);
-        color: var(--txt-color-1);
-        box-shadow: var(--bs1);
-    }
-
-    .page-sheet body.subpage #tree-section {
-        max-height: 24rem;
-        overflow-y: auto;
-    }
-
-    .page-sheet body.subpage :is(#class-info-section, #tree-section) details {
-        border-bottom: 1px solid currentColor;
-    }
-
-    .page-sheet body.subpage :is(#class-info-section, #tree-section) details:last-child {
-        border-bottom: none;
-    }
-
-    .page-sheet body.subpage :is(#class-info-section, #tree-section) summary {
-        cursor: pointer;
-        padding: 0.5rem 0;
-        font-family: "Cinzel Decorative", serif;
-        font-weight: 700;
-    }
-
-    .page-sheet body.subpage :is(#class-info-section, #tree-section) details p {
-        margin: 0 0 0.5rem 1rem;
-        line-height: 1.4;
-    }
-
-    .page-sheet body.subpage #class-info-section details p {
-        white-space: pre-line;
-    }
-
-    .page-sheet body.subpage .feature-choice {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 0.5rem;
-        margin: 0 0 0.75rem 1rem;
-    }
-
-    .page-sheet body.subpage .feature-choice select {
-        padding: 0.3rem 0.5rem;
-        border: var(--tileBorder);
-        border-radius: var(--tile, .75rem);
-        background-color: var(--bg-color-5);
-        color: var(--txt-color-1);
-        font: inherit;
-    }
-
-    .page-sheet body.subpage .feature-choice-note {
-        font-size: 0.85em;
-        opacity: 0.8;
-    }
-
-    /* "Subclass unlocks at level 3" under the locked subclass dropdown */
-    .page-sheet body.subpage .pick-hint {
-        margin: 0.25rem 0 0;
-        font-size: 0.85em;
-        opacity: 0.8;
-    }
-
-    .page-sheet body.subpage .inv-list {
-        margin: 0;
-        padding: 0;
-    }
-
-    @media (min-width: 769px) {
-        .page-sheet .sheet-panel,
-        .page-sheet .sheet-panel[hidden] {
-            display: contents !important;
-        }
-    }
-
-    /* The shop list when it opens inside the sheet's Inventory tab.
-       .panel-shell normally uses container-type: size, which makes it 0px tall
-       when it sits inside another box whose height comes from its content. */
-
-    .page-sheet .action-container .item-shop {
-        container-type: normal;
-        height: auto;
-        min-height: 20rem;
-        margin-top: 0.5rem;
-    }
-
-    /* The spell book list when it opens inside the sheet's Spell Book tab (same fix as .item-shop). */
-
-    .page-sheet .action-container .spells-tab {
-        container-type: normal;
-        height: auto;
-        min-height: 20rem;
-        margin-top: 0.5rem;
-    }
-
-    /* ---------- action buttons fill the end of each row ---------- */
-
-    /* No padding on the top, right and bottom of the row, so the buttons can reach its edges.
-       The left padding keeps the item name off the border. */
-
-    .page-sheet .action-item {
-        padding: 0 0 0 0.75rem;
-        min-height: 2.5rem;
-        overflow: hidden;
-
-        /* clips the buttons to the row's rounded corners */
-    }
-
-    /* The button groups and the <form> wrappers stretch from the top of the row to the bottom */
-
-    .page-sheet .action-item > .action-button-container,
-    .page-sheet .action-item > form,
-    .page-sheet .action-button-container > form {
-        display: flex;
-        align-self: stretch;
-        margin: 0;
-    }
-
-    /* The "Equipped" label sits centered next to the Unequip button */
-
-    .page-sheet .action-button-container > .equipped-item {
-        align-self: center;
-        padding: 0 0.5rem;
-    }
-
-    /* A disabled action button (e.g. "Prepared"): greyed out and not clickable */
-
-    .page-sheet .btn-action:disabled,
-    .page-sheet .btn-action:disabled:hover {
-        background-color: grey;
-        color: lightgrey;
-        cursor: not-allowed;
-        opacity: 0.6;
-        transform: none;
-
-        /* stop the hover-grow effect */
-    }
-
-    /* ---------- Spell Book header: Consult the Scrolls + 3 stats ---------- */
-
-    /* Four equal columns, so each one fills exactly a quarter of the bar */
-
-    .page-sheet .spell-stat-bar {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 0.125rem;
-        align-items: stretch;
-    }
-
-    /* The button and the three stats share the same box, so they all sit level */
-
-    .page-sheet .spell-stat-bar > .btn-link,
-    .page-sheet .spell-stat-bar > .spell-stat {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        margin: 0;
-        padding: 0.5rem 0.25rem;
-        min-height: 2.5rem;
-        box-sizing: border-box;
-        background-color: var(--bgc-low);
-        border-radius: 0;
-    }
-
-    /* Keep the bottom corners rounded on the outer two so the tile edge stays smooth */
-
-    .page-sheet .spell-stat-bar > :first-child {
-        border-bottom-left-radius: 10px;
-    }
-
-    .page-sheet .spell-stat-bar > :last-child {
-        border-bottom-right-radius: 10px;
-    }
-
-    /* ---------- Every button in an action/spell row is the same size ---------- */
-
-    /* Fixed width + centered text, so To Hit, Save, Damage and Cast line up from row to row.
-       Buttons also fill their wrapper top to bottom, with square corners so they sit flush. */
-
-    .page-sheet .action-item .btn-action {
-        align-self: stretch;
-        min-width: 4.5rem;
-        border-radius: 0;
-        flex: 0 0 5.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 0 0.25rem;
-        white-space: nowrap;
-        font: inherit;
-    }
-}
-
-@layer pages {
-    .page-sheet .action-item .btn-action {
-        box-shadow: none;
-    }
-}
-
-@layer pages {
-    /* ---------- Spell details pop-up ---------- */
-
-    .page-sheet .btn-spell-name {
-        background: none;
-        border: none;
-        padding: 0;
-        font: inherit;
-        color: inherit;
-        text-align: left;
-        cursor: pointer;
-    }
-
-    .page-sheet .btn-spell-name:hover {
-        text-decoration: none;
-        color: var(--accent);
-    }
-
-    .page-sheet .spell-details {
-        position: fixed;
-        top: 50%;
-        left: 35%;
-        transform: translate(-50%, -50%);
-        z-index: 100;
-        width: min(38rem, 90vw);
-        max-height: 80vh;
-        overflow-y: auto;
-        padding: 1.5rem 1.25rem 1.25rem;
-        background-color: var(--bg-color-5);
-        backdrop-filter: blur(8px);
-        border: var(--tileBorder);
-        border-radius: var(--rad1);
-        box-shadow: var(--bs2);
-    }
-
-    .page-sheet .details-container {
+    #character-header {
         display: flex;
         flex-direction: row;
-        align-items: stretch;
         flex-wrap: nowrap;
-        gap: .75rem;
-    }
-
-    .page-sheet .combat-box {
-        flex: 1 1 0;
-        display: flex;
-        flex-direction: column;
-        gap: .25rem;
-    }
-
-    .page-sheet .spell-build-box {
+        width: 100%;
+        max-width: 100%;
         min-width: 0;
+        box-sizing: border-box;
+    }
+
+    #character-name,
+    #character-race,
+    #character-class {
         flex: 1 1 0;
+        width: auto;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        font-size: clamp(0.65rem, 3.2vw, 1.05rem);
+        padding: 0.35rem 0.25rem;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        white-space: normal;
+        hyphens: auto;
+    }
+
+    /* Nav: equal share; wrap to a second row when five labels cannot fit one line */
+
+    #nav-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        margin-bottom: 1%;
+    }
+
+    #home-nav,
+    #theme-nav,
+    #character-nav,
+    #campaign-nav,
+    #settings-nav {
+        flex: 1 1 0;
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+
+        /* ~3 per row â†’ second row for the leftover buttons */
+        flex-basis: 30%;
+        white-space: nowrap;
+        font-size: clamp(0.65rem, 2.8vw, 0.95rem);
+        padding: 0.4rem 0.25rem;
+    }
+
+    #home-nav {
+        border-radius: 0;
+    }
+
+    #nav-container > #campaign-nav {
+
+        /* own row on mobile: round both bottom corners */
+    }
+}
+
+@media (max-width: 768px) {
+    #theme-nav {
+        /* Stay matched to sibling nav buttons (padding already set above) */
+        padding: 0.4rem 0.25rem;
+    }
+
+    #theme-nav select {
+        min-width: 0;
+        max-width: 100%;
+        font-size: inherit;
+    }
+
+    .drop-down,
+    #campaign-nav .drop-down {
+        left: 0;
+        right: 0;
+        width: auto;
+        max-width: 100%;
+        box-sizing: border-box;
+        transform: none;
+
+        /* undo the desktop centering shift, which pushes it off-screen here */
+    }
+
+    main {
         display: flex;
         flex-direction: column;
-        flex-wrap: nowrap;
-        gap: .25rem;
-        text-align: right;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        min-height: 0;
+        flex: none;
+        gap: 8px;
+        grid-template-areas: none;
+        grid-template-columns: none;
+        grid-template-rows: none;
+        overflow-x: hidden;
+        overflow-y: visible;
+        height: auto;
+        box-sizing: border-box;
     }
 
-    .page-sheet .combat-box p,
-    .page-sheet .spell-build-box p {
-        white-space: normal;
-        overflow-wrap: anywhere;
+    .sheet-tabs {
+        display: flex !important;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        border-bottom: var(--tileBorder);
+        box-sizing: border-box;
+        border-radius: 10px 10px 0 0;
     }
 
-    .page-sheet .spell-details-title {
+    .sheet-tabs [role="tab"] {
+        width: auto;
+        flex: 1 1 0;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    /* close the gap between the tab bar and the open panel */
+
+    .sheet-tabs {
+        margin-bottom: -8px;
+
+        /* cancels main's 8px gap */
+    }
+
+    .sheet-panel > :first-child {
+        margin-top: 0;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .sheet-panel[hidden] {
+        display: none !important;
+    }
+
+    .sheet-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
+        box-sizing: border-box;
+    }
+
+    #stat-container,
+    .health-container,
+    .skills-container,
+    #armor-class-container,
+    #initiative-container,
+    .action-container,
+    .condition-container {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    /* Base stats: true 4Ã—2 grid that cannot spill past the viewport */
+
+    #stat-container {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-auto-rows: auto;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    /* Conditions (mobile): keep the 2-column checkbox grid, slider row spans both */
+
+    .condition-container {
+        grid-template-rows: auto auto;
+        gap: 0.75rem;
+    }
+
+    .condition-tile {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        /* two checkbox columns */
+        gap: 0.5rem 0.75rem;
+        padding: 0.5rem 0;
+        justify-items: center;
+
+        /* center each group */
+        align-content: space-evenly;
+
+        /* even vertical spacing */
+    }
+
+    #conditions-list-1,
+    #conditions-list-2,
+    #conditions-list-3 {
         text-align: center;
-        margin: 0 2rem .75rem;
-        padding: 0;
-        font-size: 1.5rem;
-        font-weight: var(--fontW1);
-        color: var(--accent);
+        width: auto;
+        grid-column: auto;
+
+        /* no spanning, stay in the single row */
+        min-width: 0;
     }
 
-    .page-sheet .combat-box,
-    .page-sheet .spell-build-box,
-    .page-sheet .spell-description-box {
-        margin-top: .75rem;
-        padding: .6rem .75rem;
-        border: var(--tileBorder);
-        border-radius: var(--rad1);
-        background-color: var(--bg-color-2);
+    /* same width for both checkbox groups so the boxes line up */
+
+    #conditions-list-1,
+    #conditions-list-2 {
+        width: 9em;
+        grid-auto-rows: 1.6em;
     }
 
-    .page-sheet .spell-details p {
-        margin: .2rem 0;
-        overflow-wrap: anywhere;
+    .condition-tile {
+        font-size: 1.15rem;
+
+        /* bigger condition text and boxes */
     }
 
-    .page-sheet .spell-details-close {
-        position: absolute;
-        border: none;
-        top: .5rem;
-        right: .5rem;
-        width: 1.75rem;
-        height: 1.75rem;
-        background: transparent;
-        color: inherit;
-        font-weight: bold;
-        line-height: 1;
-        cursor: pointer;
+    #conditions-list-3 {
+        grid-column: 1 / -1;
+
+        /* exhaustion bar spans the bottom */
+        width: 100%;
+        grid-template-columns: minmax(0, 1fr) auto;
+
+        /* bar, then the number */
+        grid-auto-rows: auto;
+        row-gap: 0.25em;
+        padding: 0 0.75rem;
+        box-sizing: border-box;
     }
 
-    .page-sheet .spell-details-close:hover {
-        background-color: var(--bg-color-1);
+    #exhausted-label {
+        grid-column: 1 / -1;
+
+        /* label on its own line above the bar */
+        justify-self: center;
     }
 
-    /* ---------- Proficiencies Tab ---------- */
+    #exhausted-value {
+        width: 100%;
 
-    .page-sheet .tab-title {
-        text-align: center;
-        margin: 2%;
-        padding: 3%;
-    }
-
-    .page-sheet .proficiency-list {
-        padding: 0;
+        /* bar stretches across the box */
+        justify-self: stretch;
         margin: 0;
     }
 
-    .page-sheet .proficiency-tile {
-        border-top: var(--accent) solid 3px;
-        margin: 2%;
-        padding: 2%;
-    }
-
-    .page-sheet .proficiency-title {
-        text-align: center;
-    }
-
-    /* Upcast level picker in Magical Actions */
-
-    .page-sheet .upcast-picker {
-        font: inherit;
-        padding: 2px 4px;
-        border-radius: 6px;
-        cursor: pointer;
-    }
-
-    /* ---------- Learned Spells: smaller buttons, text scales with them ---------- */
-
-    /* The panel is a size container, so cqi = 1% of the panel's width */
-
-    .page-sheet #spells-panel-learned {
-        container-type: inline-size;
-    }
-
-    .page-sheet #spells-panel-learned .action-item .btn-action {
-        flex: 0 0 auto;
-        width: clamp(4.25rem, 13cqi, 5rem);
-
-        /* all three buttons share one width that follows the panel */
+    [role="tab"] {
+        flex: 1 1 auto;
         min-width: 0;
-        font-size: clamp(0.65rem, 2.2cqi, 0.85rem);
+        padding: 0.5rem;
+        font-size: 0.85rem;
+    }
 
-        /* text shrinks and grows with the panel */
-        padding: 0.2rem 0.4rem;
-        white-space: normal !important;
+    /* --- mobile: undo size containment that collapses tiles ---
+       container-type: size makes a box ignore its children's height when
+       laying out. On desktop the sheet grid gives every tile a real height,
+       so that works. On mobile, tiles only grow from their content â€” so
+       size containment shrinks them to nearly nothing and text vanishes.
+       Reset to normal, give sensible min-heights, let the page scroll. */
 
-        /* long labels like "Remove Action" wrap onto two lines */
-        line-height: 1.1;
+    .stat-tile,
+    .skill-tile,
+    #armor-class-tile-container,
+    #initiative-tile-container,
+    .current-hp-tile,
+    .max-hp-tile,
+    .health-button-tile,
+    .condition-container,
+    .action-container,
+    .panel-shell {
+        container-type: normal;
+        height: auto;
+        max-height: none;
+        min-height: 0;
+    }
+
+    .stat-tile {
+        flex: unset;
+        width: auto;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        min-height: 5.5rem;
+        overflow: hidden;
+    }
+
+    .skill-tile {
+        min-height: 3.5rem;
+        overflow: hidden;
         text-align: center;
     }
 
-    /* Spell Book level tabs: wrap onto a second row instead of overflowing (no sideways scroll needed) */
+    #armor-class-container,
+    #initiative-container,
+    .current-hp-tile,
+    .max-hp-tile,
+    .health-button-tile,
+    .condition-container {
+        min-height: 4.75rem;
+        height: auto;
+    }
 
-    .page-sheet .spell-book-tabs .action-tab-list,
-    .page-sheet .spell-book-tabs .action-tab-list[role="tablist"] {
-        flex-wrap: wrap;
-        overflow: visible;
+    #sheet-panel-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: auto auto;
+        grid-template-areas: "armorClass initiative"
+            "actions actions";
+        column-gap: 0.75rem;
+        row-gap: 0.35rem;
+
+        /* tighter space above the actions tile */
+        padding-top: 0.75rem;
+
+        /* space under the tabs, inside the panel */
+    }
+
+    #armor-class-container {
+        grid-area: armorClass;
+        height: 100%;
+    }
+
+    #initiative-container {
+        grid-area: initiative;
+        height: 100%;
+    }
+
+    #armor-class-container,
+    #initiative-container {
+        min-height: 6rem;
+    }
+
+    .action-container {
+        grid-area: actions;
+        min-height: 14rem;
+        overflow: hidden;
+    }
+
+    .action-tab-list {
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    #armor-class-tile-container,
+    #initiative-tile-container {
+        min-height: 6rem;
+        height: 100%;
+
+        /* fill the grid cell */
+    }
+
+    #skills-title {
+        padding: 0.35rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .skills-container {
+        margin-top: 2%;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: auto repeat(3);
+        grid-auto-rows: minmax(3.5rem, auto);
+        height: auto;
+        width: 100%;
         max-width: 100%;
+        min-width: 0;
         box-sizing: border-box;
     }
 
-    .page-sheet .spell-book-tabs .action-tab-list [role="tab"] {
-        flex: 1 1 5.5rem;
-        min-width: 0;
-        white-space: nowrap;
+    .health-container {
+        height: auto;
+        min-height: 5rem;
+        grid-template-rows: auto 10px;
     }
 
-    /*  ===== Mobile (max-width: 768px), consolidated =====  */
-
-    @media (max-width: 768px) {
-        /* Mobile: same title / status bar / background treatment as the home page */
-
-        html.page-sheet::before {
-            content: '';
-            position: fixed;
-            left: 0;
-            width: 100%;
-            top: calc(-1 * env(safe-area-inset-top));
-            height: calc(100lvh + env(safe-area-inset-top));
-            z-index: -1;
-            pointer-events: none;
-            background-image: var(--background);
-            background-size: auto 120%;
-            background-position: center bottom;
-            background-repeat: no-repeat;
-        }
-
-        /* sheet keeps a bottom fade too (the shared status-bar layer in components.css only fades the top) */
-        html.page-sheet::after {
-            height: calc(100lvh + env(safe-area-inset-top));
-            background: linear-gradient(to bottom,
-                var(--bgc-title, var(--titleFallback)) 0,
-                var(--bgc-title, var(--titleFallback)) env(safe-area-inset-top),
-                transparent calc(env(safe-area-inset-top) + 4rem),
-                transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
-                var(--bgc-title, var(--titleFallback)) 100%);
-        }
-
-        .page-sheet body {
-            background-image: none;
-            min-height: 100lvh;
-        }
-
-        /* title bar is solid title color and reaches up under the status bar */
-
-        .page-sheet header,
-        .page-sheet #site-title {
-            margin: 0;
-            border: none;
-            border-radius: 0;
-            box-shadow: none;
-        }
-
-        .page-sheet footer {
-            display: none;
-        }
-
-        .page-sheet #site-title {
-            background-color: var(--bgc-title, var(--bg-color-3));
-            padding-top: calc(env(safe-area-inset-top) + 0.5rem);
-        }
-
-        .page-sheet .rest-container {
-            display: flex;
-            margin: .5rem;
-        } 
-
-        .page-sheet .btn-rest {
-            padding: 0.5rem 1rem;
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .page-sheet .rest-choice {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            gap: .5rem;
-        }
-
-        .page-sheet .btn-rest-choice {
-            flex: 1 1 0;
-            min-width: 0;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .page-sheet .btn-rest-choice:active {
-            transform: scale(0.9);
-        }
-
-        .page-sheet .btn-rest:active {
-            transform: scale(0.9);
-        }
-    
-
-       .page-sheet .spell-details {
-            width: 100%;
-            transform: none;
-            border-radius: var(--toprad);
-            max-height: 70dvh;
-            top: auto;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            animation: slide 0.3s ease-out;
-        }
-
-        .page-sheet .details-container {
-            flex-direction: row;
-            font-weight: 400;
-            font-size: 0.8rem;
-        }
-
-        .page-sheet .spell-build-box {
-            text-align: left;
-            font-weight: 400;
-            width: 40%;
-            font-size: 0.8rem;
-        }
-
-        .page-sheet .spell-description-box {
-            font-weight: 400;
-            box-shadow: var(--bs1);
-            font-size: 0.8rem;
-        }
-
-    
-
-        .page-sheet #stat-container {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        .page-sheet #nav-container > li:hover,
-        .page-sheet #nav-container > li:focus-within {
-            z-index: 20;
-        }
-    }
-
-    @keyframes slide {
-        from {
-            transform: translateY(100%);
-        }
-        to {
-            transform: translateY(0);
-        }
-    }
-    /* Mobile fit: action rows and sheet tabs shrink instead of overflowing or clipping */
-    @media (max-width: 768px) {
-        .page-sheet .action-item {
-            gap: 0.35rem;
-        }
-
-        /* the name side takes what's left and wraps */
-        .page-sheet .action-item > :not(.action-button-container, form) {
-            flex: 1 1 auto;
-            min-width: 0;
-            overflow-wrap: anywhere;
-        }
-
-        .page-sheet .action-item > .action-button-container,
-        .page-sheet .action-item > form {
-            flex: 0 1 auto;
-            min-width: 0;
-        }
-
-        /* buttons size to their label instead of a fixed 5.5rem each */
-        .page-sheet .action-item .btn-action {
-            flex: 0 0 auto;
-            min-width: 3.25rem;
-            padding: 0 0.4rem;
-            font-size: clamp(0.7rem, 3.2vw, 0.9rem);
-        }
-    }
-}
-@layer overrides {
-    @media (max-width: 768px) {
-    }
-}
-@layer pages {
-    @media (max-width: 768px) {
-        /* tabs: smaller text and padding so long labels like Proficiencies fit */
-        :is(.page-sheet, .page-sheet *)[role="tab"] {
-            min-width: 0;
-            padding: 0.5rem 0.25rem;
-            font-size: clamp(0.65rem, 3vw, 0.95rem);
-            overflow-wrap: anywhere;
-            text-align: center;
-        }
-    }
-
-    /* Character Editor menu: shorter item (14% padding scales with the menu's width) */
-    .page-sheet #campaign-nav .btn-drop-campaign {
-        padding: 0.4rem 0.75rem;
-        margin: 0.25rem;
-    }
-}
-
-@layer pages {
-    /* ---------- editor portrait picker ---------- */
-    .page-sheet body.subpage .portrait-group-title {
-        margin: 0.75rem 0 0.25rem;
-        font-size: 1rem;
-    }
-
-    .page-sheet body.subpage .portrait-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));
-        gap: 0.5rem;
-    }
-
-    .page-sheet body.subpage .portrait-thumb {
+    #sheet-panel-conditions {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 0.2rem;
-        padding: 0.25rem;
-        background: transparent;
-        border: 2px solid transparent;
-        border-radius: 0.5rem;
-        color: inherit;
-        cursor: pointer;
+        gap: 0.6rem;
+
+        /* slight space between health and conditions */
+        padding-top: 0.75rem;
+
+        /* space under the tabs, inside the panel */
     }
 
-    .page-sheet body.subpage .portrait-thumb img {
+    #sheet-panel-conditions > .health-container,
+    #sheet-panel-conditions > .condition-container {
+        min-height: 12rem;
+
+        /* taller tiles */
+    }
+
+    #sheet-panel-conditions > .health-container {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        grid-template-rows: minmax(0, 1fr) auto;
+
+        /* bar row grows to fit the thicker bar */
+    }
+
+    .hp-bar-tile {
+        height: 1.25rem;
+
+        /* thicker health bar on mobile */
+        min-height: 1.25rem;
+        align-self: center;
+        margin: 0.6rem auto;
+
+        /* centered in its row */
+        width: 96%;
+        justify-self: center;
+    }
+}
+
+main.subpage-main {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    grid-template-columns: none;
+    grid-template-rows: none;
+    grid-template-areas: none;
+    place-items: stretch;
+    width: min(960px, 100%);
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    gap: 1rem;
+    overflow: visible;
+}
+
+@media (min-width: 769px) {
+    .sheet-panel,
+    .sheet-panel[hidden] {
+        display: contents !important;
+    }
+}
+
+/* The shop list when it opens inside the sheet's Inventory tab.
+   .panel-shell normally uses container-type: size, which makes it 0px tall
+   when it sits inside another box whose height comes from its content. */
+
+.action-container .item-shop {
+    container-type: normal;
+    height: auto;
+    min-height: 20rem;
+    margin-top: 0.5rem;
+}
+
+/* The spell book list when it opens inside the sheet's Spell Book tab (same fix as .item-shop). */
+
+.action-container .spells-tab {
+    container-type: normal;
+    height: auto;
+    min-height: 20rem;
+    margin-top: 0.5rem;
+}
+
+/* ---------- action buttons fill the end of each row ---------- */
+
+/* No padding on the top, right and bottom of the row, so the buttons can reach its edges.
+   The left padding keeps the item name off the border. */
+
+.action-item {
+    padding: 0 0 0 0.75rem;
+    min-height: 2.5rem;
+    overflow: hidden;
+
+    /* clips the buttons to the row's rounded corners */
+}
+
+/* The button groups and the <form> wrappers stretch from the top of the row to the bottom */
+
+.action-item > .action-button-container,
+.action-item > form,
+.action-button-container > form {
+    display: flex;
+    align-self: stretch;
+    margin: 0;
+}
+
+/* The "Equipped" label sits centered next to the Unequip button */
+
+.action-button-container > .equipped-item {
+    align-self: center;
+    padding: 0 0.5rem;
+}
+
+/* A disabled action button (e.g. "Prepared"): greyed out and not clickable */
+
+.btn-action:disabled,
+.btn-action:disabled:hover {
+    background-color: grey;
+    color: lightgrey;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
+
+    /* stop the hover-grow effect */
+}
+
+/* ---------- Spell Book header: Consult the Scrolls + 3 stats ---------- */
+
+/* Four equal columns, so each one fills exactly a quarter of the bar */
+
+.spell-stat-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.125rem;
+    align-items: stretch;
+}
+
+/* The button and the three stats share the same box, so they all sit level */
+
+.spell-stat-bar > .btn-link,
+.spell-stat-bar > .spell-stat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+    padding: 0.5rem 0.25rem;
+    min-height: 2.5rem;
+    box-sizing: border-box;
+    background-color: var(--bgc-low);
+    border-radius: 0;
+}
+
+/* Keep the bottom corners rounded on the outer two so the tile edge stays smooth */
+
+.spell-stat-bar > :first-child {
+    border-bottom-left-radius: 10px;
+}
+
+.spell-stat-bar > :last-child {
+    border-bottom-right-radius: 10px;
+}
+
+/* ---------- Every button in an action/spell row is the same size ---------- */
+
+/* Fixed width + centered text, so To Hit, Save, Damage and Cast line up from row to row.
+   Buttons also fill their wrapper top to bottom, with square corners so they sit flush. */
+
+.action-item .btn-action {
+    align-self: stretch;
+    min-width: 4.5rem;
+    border-radius: 0;
+    flex: 0 0 5.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 0.25rem;
+    white-space: nowrap;
+    font: inherit;
+}
+
+.action-item .btn-action {
+    box-shadow: none;
+}
+
+/* ---------- Spell details pop-up ---------- */
+
+.btn-spell-name {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.btn-spell-name:hover {
+    text-decoration: none;
+    color: var(--accent);
+}
+
+.spell-details {
+    position: fixed;
+    top: 50%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    width: min(38rem, 90vw);
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 1.5rem 1.25rem 1.25rem;
+    background-color: var(--bg-color-5);
+    backdrop-filter: blur(8px);
+    border: var(--tileBorder);
+    border-radius: var(--rad1);
+    box-shadow: var(--bs2);
+}
+
+.details-container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    gap: .75rem;
+}
+
+.combat-box {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.spell-build-box {
+    min-width: 0;
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: .25rem;
+    text-align: right;
+}
+
+.combat-box p,
+.spell-build-box p {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.spell-details-title {
+    text-align: center;
+    margin: 0 2rem .75rem;
+    padding: 0;
+    font-size: 1.5rem;
+    font-weight: var(--fontW1);
+    color: var(--accent);
+}
+
+.combat-box,
+.spell-build-box,
+.spell-description-box {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border: var(--tileBorder);
+    border-radius: var(--rad1);
+    background-color: var(--bg-color-2);
+}
+
+.spell-details p {
+    margin: .2rem 0;
+    overflow-wrap: anywhere;
+}
+
+.spell-details-close {
+    position: absolute;
+    border: none;
+    top: .5rem;
+    right: .5rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: transparent;
+    color: inherit;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.spell-details-close:hover {
+    background-color: var(--bg-color-1);
+}
+
+/* ---------- Proficiencies Tab ---------- */
+
+.tab-title {
+    text-align: center;
+    margin: 2%;
+    padding: 3%;
+}
+
+.proficiency-list {
+    padding: 0;
+    margin: 0;
+}
+
+.proficiency-tile {
+    border-top: var(--accent) solid 3px;
+    margin: 2%;
+    padding: 2%;
+}
+
+.proficiency-title {
+    text-align: center;
+}
+
+/* Upcast level picker in Magical Actions */
+
+.upcast-picker {
+    font: inherit;
+    padding: 2px 4px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* ---------- Learned Spells: smaller buttons, text scales with them ---------- */
+
+/* The panel is a size container, so cqi = 1% of the panel's width */
+
+#spells-panel-learned {
+    container-type: inline-size;
+}
+
+#spells-panel-learned .action-item .btn-action {
+    flex: 0 0 auto;
+    width: clamp(4.25rem, 13cqi, 5rem);
+
+    /* all three buttons share one width that follows the panel */
+    min-width: 0;
+    font-size: clamp(0.65rem, 2.2cqi, 0.85rem);
+
+    /* text shrinks and grows with the panel */
+    padding: 0.2rem 0.4rem;
+    white-space: normal !important;
+
+    /* long labels like "Remove Action" wrap onto two lines */
+    line-height: 1.1;
+    text-align: center;
+}
+
+/* Spell Book level tabs: wrap onto a second row instead of overflowing (no sideways scroll needed) */
+
+.spell-book-tabs .action-tab-list,
+.spell-book-tabs .action-tab-list[role="tablist"] {
+    flex-wrap: wrap;
+    overflow: visible;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.spell-book-tabs .action-tab-list [role="tab"] {
+    flex: 1 1 5.5rem;
+    min-width: 0;
+    white-space: nowrap;
+}
+
+/*  ===== Mobile (max-width: 768px), consolidated =====  */
+
+@media (max-width: 768px) {
+    /* Mobile: same title / status bar / background treatment as the home page */
+
+    html::before {
+        content: '';
+        position: fixed;
+        left: 0;
         width: 100%;
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
-        border-radius: 0.35rem;
+        top: calc(-1 * env(safe-area-inset-top));
+        height: calc(100lvh + env(safe-area-inset-top));
+        z-index: -1;
+        pointer-events: none;
+        background-image: var(--background);
+        background-size: auto 120%;
+        background-position: center bottom;
+        background-repeat: no-repeat;
     }
 
-    .page-sheet body.subpage .portrait-thumb.is-selected {
-        border-color: var(--accent);
-        box-shadow: 0 0 6px var(--accent);
+    /* sheet keeps a bottom fade too (the shared status-bar layer in components.css only fades the top) */
+    html::after {
+        height: calc(100lvh + env(safe-area-inset-top));
+        background: linear-gradient(to bottom,
+            var(--bgc-title, var(--titleFallback)) 0,
+            var(--bgc-title, var(--titleFallback)) env(safe-area-inset-top),
+            transparent calc(env(safe-area-inset-top) + 4rem),
+            transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
+            var(--bgc-title, var(--titleFallback)) 100%);
     }
 
-    .page-sheet body.subpage .portrait-empty {
-        margin: 0.5rem 0 0;
-        font-size: 0.85rem;
-        opacity: 0.8;
-    }
-}
-@layer pages {
-    /* ---------- sheet header portrait ---------- */
-    .page-sheet #character-header {
-        align-items: stretch;
+    body {
+        background-image: none;
+        min-height: 100lvh;
     }
 
-    .page-sheet #character-header .character-portrait {
-        flex: 0 0 auto;
-        align-self: stretch;
-        width: 3.5rem;
-        height: 3.5rem;
-        margin: var(--mar1);
-        
-        object-fit: cover;
-        /* border + blur come from .header-cell; the padding lets the header color frame the picture */
-        box-sizing: border-box;
-        padding: 0.25rem;
-        border-radius: 0 0 1.25rem 1.25rem;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    /* title bar is solid title color and reaches up under the status bar */
+
+    header,
+    #site-title {
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
     }
 
-    @media (max-width: 768px) {
-        /* the fixed RollOrb lives on the left edge, so the portrait moves to the right end */
-        .page-sheet #character-header .character-portrait {
-            order: 1;
-            width: 2.5rem;
-            height: 2.5rem;
-            
-        }
-
-        /* the portrait is the last item in the row here, so it gets the row's right edge */
-        .page-sheet #character-header > .header-cell:last-child {
-            border-right: none;
-        }
-
-        .page-sheet #character-header .character-portrait {
-            border-right: var(--tileBorder);
-        }
-    }
-}
-
-@layer pages {
-    /* collapsible portrait picker: arrow turns when open */
-    /* flex on <details> breaks open/close in iOS Safari, so keep the picker block-level */
-    .page-sheet body.subpage :is(details.portrait-picker, details.portrait-group) {
-        display: block;
-    }
-
-    .page-sheet body.subpage .portrait-summary {
-        display: block;
-    }
-
-    .page-sheet body.subpage :is(.portrait-summary, .portrait-group-title) {
-        cursor: pointer;
-        list-style: none;
-    }
-
-    .page-sheet body.subpage :is(.portrait-summary, .portrait-group-title)::-webkit-details-marker {
+    footer {
         display: none;
     }
 
-    .page-sheet body.subpage :is(.portrait-summary, .portrait-group-title)::before {
-        content: '\25B8';
-        display: inline-block;
-        margin-right: 0.4em;
-        transition: transform 0.2s;
+    #site-title {
+        background-color: var(--bgc-title, var(--bg-color-3));
+        padding-top: calc(env(safe-area-inset-top) + 0.5rem);
     }
 
-    .page-sheet body.subpage details[open] > :is(.portrait-summary, .portrait-group-title)::before {
-        transform: rotate(90deg);
+    .rest-container {
+        display: flex;
+        margin: .5rem;
+    } 
+
+    .btn-rest {
+        padding: 0.5rem 1rem;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .rest-choice {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: .5rem;
+    }
+
+    .btn-rest-choice {
+        flex: 1 1 0;
+        min-width: 0;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .btn-rest-choice:active {
+        transform: scale(0.9);
+    }
+
+    .btn-rest:active {
+        transform: scale(0.9);
+    }
+
+   .spell-details {
+        width: 100%;
+        transform: none;
+        border-radius: var(--toprad);
+        max-height: 70dvh;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        animation: slide 0.3s ease-out;
+    }
+
+    .details-container {
+        flex-direction: row;
+        font-weight: 400;
+        font-size: 0.8rem;
+    }
+
+    .spell-build-box {
+        text-align: left;
+        font-weight: 400;
+        width: 40%;
+        font-size: 0.8rem;
+    }
+
+    .spell-description-box {
+        font-weight: 400;
+        box-shadow: var(--bs1);
+        font-size: 0.8rem;
+    }
+
+    #stat-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #nav-container > li:hover,
+    #nav-container > li:focus-within {
+        z-index: 20;
     }
 }
 
-@layer overrides {
-    /* portrait picker: glass tile look under every display (same values as the glass display),
-       with <details> kept block-level so open/close still works on iPhone */
-    html.page-sheet body.subpage details.form-section.portrait-picker {
-        display: block;
-        width: 100%;
-        border: var(--glassBorder);
-        border-radius: 1.25rem;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(15px) saturate(180%);
-        -webkit-backdrop-filter: blur(15px) saturate(180%);
-        overflow: clip;
+@keyframes slide {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+/* Mobile fit: action rows and sheet tabs shrink instead of overflowing or clipping */
+@media (max-width: 768px) {
+    .action-item {
+        gap: 0.35rem;
     }
 
-    /* header strip: same as the old <p class="tile-top"> */
-    html.page-sheet body.subpage .portrait-picker > summary.tile-top.portrait-summary {
-        display: block;
-        margin: 0;
-        padding: 0.75rem;
+    /* the name side takes what's left and wraps */
+    .action-item > :not(.action-button-container, form) {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .action-item > .action-button-container,
+    .action-item > form {
+        flex: 0 1 auto;
+        min-width: 0;
+    }
+
+    /* buttons size to their label instead of a fixed 5.5rem each */
+    .action-item .btn-action {
+        flex: 0 0 auto;
+        min-width: 3.25rem;
+        padding: 0 0.4rem;
+        font-size: clamp(0.7rem, 3.2vw, 0.9rem);
+    }
+}
+
+@media (max-width: 768px) {
+    /* tabs: smaller text and padding so long labels like Proficiencies fit */
+    [role="tab"] {
+        min-width: 0;
+        padding: 0.5rem 0.25rem;
+        font-size: clamp(0.65rem, 3vw, 0.95rem);
+        overflow-wrap: anywhere;
         text-align: center;
-        background-color: var(--bgc-top);
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
+    }
+}
+
+/* Character Editor menu: shorter item (14% padding scales with the menu's width) */
+#campaign-nav .btn-drop-campaign {
+    padding: 0.4rem 0.75rem;
+    margin: 0.25rem;
+}
+
+/* ---------- sheet header portrait ---------- */
+#character-header {
+    align-items: stretch;
+}
+
+#character-header .character-portrait {
+    flex: 0 0 auto;
+    align-self: stretch;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: var(--mar1);
+    
+    object-fit: cover;
+    /* border + blur come from .header-cell; the padding lets the header color frame the picture */
+    box-sizing: border-box;
+    padding: 0.25rem;
+    border-radius: 0 0 1.25rem 1.25rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+    /* the fixed RollOrb lives on the left edge, so the portrait moves to the right end */
+    #character-header .character-portrait {
+        order: 1;
+        width: 2.5rem;
+        height: 2.5rem;
+        
     }
 
-    html.page-sheet body.subpage .portrait-picker > .tile-bottom {
-        border: none;
-        border-top: var(--glassBorder);
-        border-radius: 0 0 1.25rem 1.25rem;
-        box-shadow: none;
+    /* the portrait is the last item in the row here, so it gets the row's right edge */
+    #character-header > .header-cell:last-child {
+        border-right: none;
     }
 
-    /* group titles: same as the old <h3 class="portrait-group-title"> */
-    html.page-sheet body.subpage summary.portrait-group-title {
-        display: block;
-        margin: 0.75rem 0 0.25rem;
-        font-size: 1rem;
-        font-family: var(--fontF);
-        font-weight: bold;
-        letter-spacing: var(--letterSp);
+    #character-header .character-portrait {
+        border-right: var(--tileBorder);
     }
+}
 
-    html.page-sheet body.subpage .portrait-thumb {
-        border-radius: 0.75rem;
-    }
+/* ===== overrides: kept last in the file so they win ===== */
 
-    html.page-sheet body.subpage .portrait-thumb img {
-        border: var(--glassBorder);
-        border-radius: 0.75rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-    }
+#stat-container .stat-tile-value /* clash: kept at old specificity */ {
+    border-radius: 50% 50% 0 0;
+    overflow: var(--ofX1);
+}
+
+#stat-container .stat-tile-label /* clash: kept at old specificity */ {
+    overflow: var(--ofX1);
+    border-radius: 0 0 50% 50%;
+}
+
+#stat-container .stat-tile-modifier /* clash: kept at old specificity */ {
+    overflow: var(--ofX1);
+}
+
+#armor-class-tile-label,
+#initiative-tile-label /* clash: kept at old specificity */ {
+    overflow: var(--ofX1);
+}
+
+#armor-class-tile-value,
+#initiative-tile-value /* clash: kept at old specificity */ {
+    overflow: var(--ofX1);
+}
+
+#skills-title /* clash: kept at old specificity */ {
+    border: var(--tileBorder);
+}
+
+#hp-input /* clash: kept at old specificity */ {
+    border: var(--border1);
+}
+
+#condition-title /* clash: kept at old specificity */ {
+    overflow: var(--ofX1);
+}
+
+@media (max-width: 768px) {
+#nav-container > #campaign-nav /* clash: kept at old specificity */ {
+        border-radius: 0 0 10px 10px;
+}
+}
+
+/* Styled displays: these cells have ID rules above (for the standard look), so restate the display's corners here */
+html[data-display]:not([data-display='standard']) :is(#heal-button, #damage-button) {
+    border-radius: var(--btnRad);
+}
+
+html[data-display]:not([data-display='standard']) #skills-title {
+    border-radius: var(--tile) var(--tile) 0 0;
+}
+
+html[data-display]:not([data-display='standard']) #armor-class-tile-value {
+    border-radius: 0 0 var(--tile) var(--tile);
 }

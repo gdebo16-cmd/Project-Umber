@@ -1,87 +1,451 @@
-@import './themes.css';
+main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr 2fr;
+    grid-template-areas: "a"
+        "b"
+        "c";
+    margin: 0;
+    overflow: var(--ofX2);
+    backdrop-filter: none; /* the shared main blur (components.css) is off here on desktop */
+}
 
-@layer pages {
-    .page-signin main {
-        flex: 1;
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 2fr 2fr;
-        grid-template-areas: "a"
-            "b"
-            "c";
-        margin: 0;
-        overflow: var(--ofX2);
-    }
+ul,
+li,
+a {
+    list-style: none;
+    text-decoration: none;
+}
 
-    .page-signin ul,
-    .page-signin li,
-    .page-signin a {
-        list-style: none;
-        text-decoration: none;
-    }
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
 
-    :is(.page-signin, .page-signin *),
-    :is(.page-signin, .page-signin *)::before,
-    :is(.page-signin, .page-signin *)::after {
-        box-sizing: border-box;
-    }
+html {
+    max-width: var(--maxW);
+    overflow-x: var(--ofX1);
+}
 
-    html.page-signin {
-        max-width: var(--maxW);
-        overflow-x: var(--ofX1);
-    }
+body {
+    width: var(--w1);
+    backdrop-filter: var(--backdrop);
+    max-width: 3840px;
+    overflow-x: var(--ofX1);
+    overflow-y: auto;
 
-    .page-signin body {
-        width: var(--w1);
-        backdrop-filter: var(--backdrop);
-        max-width: 3840px;
-        overflow-x: var(--ofX1);
-        overflow-y: auto;
+    /* safety: scroll if a tile min-height needs more room */
+    background-image: var(--background);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: var(--fontF);
+    font-weight: var(--fontW1);
+    font-style: var(--fontStyle);
+    height: var(--h2);
+    max-height: var(--maxH2);
+    min-height: var(--minH2);
+    margin: var(--mar1);
+    display: flex;
+    flex-direction: column;
+    color: var(--txt-color-1);
+    scrollbar-width: none;
+}
 
-        /* safety: scroll if a tile min-height needs more room */
-        background-image: var(--background);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        font-family: var(--fontF);
-        font-weight: var(--fontW1);
-        font-style: var(--fontStyle);
-        height: var(--h2);
-        max-height: var(--maxH2);
-        min-height: var(--minH2);
-        margin: var(--mar1);
+option {
+    background-color: var(--bg-color-5);
+    color: var(--txt-color-1);
+    border: var(--tileBorder);
+    padding: var(--pad3);
+    margin: var(--mar1);
+    text-align: center;
+    font-size: var(--fontS1);
+    font-weight: var(--fontW1);
+    font-style: var(--fontStyle);
+}
+
+/* Shared press/hover grow. Same 1.03 scale the old per-selector rules used. */
+
+/* ---------- header / nav ---------- */
+
+header {
+    z-index: 1;
+    position: relative;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.title-logo {
+    width: 100%;
+    max-width: 100px;
+    height: 100%;
+    max-height: 100px;
+    margin: 0;
+    padding: 0;
+}
+
+#site-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: var(--fontW1);
+    font-style: var(--fontStyle);
+    color: var(--txt-color-1);
+    background-color: var(--bg-color-1);
+    border-radius: var(--tile);
+    border: var(--tileBorder);
+    box-shadow: var(--bs2);
+    margin: 0;
+}
+
+h1 {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 4px;
+    text-underline-offset: 14px;
+    text-decoration-style: solid;
+}
+
+#nav-box {
+    border-radius: var(--lowrad);
+    box-shadow: var(--bs2);
+}
+
+#nav-container {
+    background-color: var(--bg-color-3);
+    border-radius: var(--lowrad);
+    margin: 0;
+    padding: var(--pad3);
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+}
+
+#home-nav,
+#character-nav,
+#campaign-nav,
+#settings-nav {
+    min-width: var(--minW1);
+    flex: 1;
+}
+
+#home-nav {
+    border-radius: var(--radCornerBL);
+}
+
+#settings-nav {
+    border-radius: var(--radCornerBR);
+}
+
+#character-nav,
+#campaign-nav,
+#settings-nav {
+    position: relative;
+}
+
+.drop-down {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 200px;
+    max-width: 90vw;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 10;
+    text-align: center;
+    box-shadow: var(--bs2);
+    background-color: var(--bg-color-5);
+    border: var(--tileBorder);
+    transition: all 1s ease;
+    padding: var(--pad3);
+    margin: var(--mar1);
+}
+
+li:hover .drop-down {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.btn-drop-character,
+.btn-drop-campaign,
+.btn-drop-settings {
+    border: var(--tileBorder);
+    border-bottom: none;
+    border-right: none;
+    color: var(--txt-drop-1);
+    padding: 1.5%;
+}
+
+#settings-nav .drop-down {
+    left: auto;
+    right: 0;
+}
+
+#campaign-nav .drop-down {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    background-color: var(--bg-color-2);
+    border: var(--accent);
+    box-shadow: var(--bs2);
+    color: var(--txt-color-1);
+}
+
+.container {
+    background-color: var(--bg-color-1);
+    margin: 2%;
+    border-radius: var(--rad1);
+    border: var(--tileBorder);
+    box-shadow: var(--bs2);
+}
+
+.title {
+    text-align: center;
+}
+
+#site-title {
+    text-align: center;
+    padding: 0.75rem;
+    margin: 0;
+    font-style: var(--fontS1);
+    font-weight: var(--fontW1);
+    color: var(--title-color);
+    background-color: var(--bg-color-1);
+    border-radius: var(--tile);
+    border: var(--tileBorder);
+    box-shadow: var(--bs2);
+}
+
+h1 {
+    color: var(--title-color);
+}
+
+.form-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: "a d"
+        "b d"
+        "c d";
+    margin: 5%;
+}
+
+.form-container > form {
+    display: contents;
+}
+
+.form-title {
+    grid-area: d;
+    max-height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 0;
+    background-color: var(--bg-color-3);
+    display: flex;
+    flex-direction: column;
+    margin: 5%;
+    border-radius: var(--tile);
+    border: var(--tileBorder);
+    box-shadow: var(--bs2);
+}
+
+.user-name-container,
+.password-container,
+.email-container,
+.name-container {
+    min-width: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    margin: 5%;
+}
+
+.user-name-container {
+    grid-area: a;
+}
+
+.password-container {
+    grid-area: b;
+}
+
+.button-container {
+    grid-area: c;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5%;
+}
+
+.btn-form {
+    color: var(--txt-color-1);
+    background-color: var(--bg-color-3);
+    border: var(--tileBorder);
+    box-shadow: var(--bs2);
+    padding: 5%;
+    margin: 0;
+    transition: transform .2s ease;
+}
+
+.btn-form {
+    border-radius: var(--tile);
+}
+
+.btn-form:hover {
+    transform: scale(1.03);
+}
+
+.btn-form:active {
+    transform: scale(0.97);
+}
+
+.signin-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    padding: 5%;
+    margin: 0;
+    background-color: var(--bg-color-2);
+    border-radius: var(--toprad);
+    border: var(--tileBorder);
+    box-shadow: var(--bs2);
+}
+
+.signin-value {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    padding: 5%;
+    margin: 0;
+    text-align: center;
+    font-style: var(--fontS1);
+    font-weight: var(--fontW1);
+    background-color: var(--bg-color-3);
+    border: var(--tileBorder);
+    box-shadow: var(--bs2);
+}
+
+.signin-value {
+    border-radius: var(--lowrad);
+}
+
+.signin-value {
+    color: var(--txt-color-1);
+    font-family: inherit;
+    background-color: var(--bg-color-5);
+}
+
+.signin-value[type="password"],
+#password,
+.signin-value[name="password"] {
+    font-variant: normal;
+    text-transform: none;
+}
+
+.signin-value:-webkit-autofill,
+.signin-value:-webkit-autofill:hover,
+.signin-value:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px var(--bg-color-5) inset;
+    -webkit-text-fill-color: var(--txt-color-1);
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1%;
+    margin: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-color-1);
+    color: var(--txt-color-1);
+}
+
+@media (max-width: 768px) {
+    .form-container {
         display: flex;
         flex-direction: column;
-        color: var(--txt-color-1);
-        scrollbar-width: none;
+        justify-content: center;
+        width: 90%;
+        max-width: 420px;
+        margin: 5% auto;
+        height: auto;
+        align-self: center;
+        gap: 1.5rem;
     }
 
-    .page-signin option {
-        background-color: var(--bg-color-5);
-        color: var(--txt-color-1);
-        border: var(--tileBorder);
-        padding: var(--pad3);
-        margin: var(--mar1);
-        text-align: center;
-        font-size: var(--fontS1);
-        font-weight: var(--fontW1);
-        font-style: var(--fontStyle);
-    }
-
-    /* Shared press/hover grow. Same 1.03 scale the old per-selector rules used. */
-
-    /* ---------- header / nav ---------- */
-
-    .page-signin header {
-        z-index: 1;
-        position: relative;
-        flex-shrink: 0;
+    .form-title,
+    .user-name-container,
+    .password-container,
+    .email-container,
+    .name-container,
+    .button-container {
         margin: 0;
-        padding: 0;
     }
 
-    .page-signin .title-logo {
+    .signin-value {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .button-container {
+        gap: 4%;
+    }
+
+    .btn-form {
+        flex: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        backdrop-filter: var(--blur3);
+        grid-template-rows: 1fr;
+        grid-template-areas: none;
+        align-content: center;
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+    }
+
+    .button-container {
+        gap: 4%;
+        align-items: stretch;
+    }
+
+    .btn-form {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font: inherit;
+    }
+}
+
+@media (max-width: 768px) {
+    .title-logo {
         width: 100%;
         max-width: 100px;
         height: 100%;
@@ -90,12 +454,12 @@
         padding: 0;
     }
 
-    .page-signin #site-title {
+    #site-title {
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        font-size: 2.5rem;
+        font-size: 1rem;
         font-weight: var(--fontW1);
         font-style: var(--fontStyle);
         color: var(--txt-color-1);
@@ -104,550 +468,161 @@
         border: var(--tileBorder);
         box-shadow: var(--bs2);
         margin: 0;
+        padding: 1%;
     }
 
-    .page-signin h1 {
+    h1 {
         text-decoration: underline;
         text-decoration-color: var(--accent);
-        text-decoration-thickness: 4px;
-        text-underline-offset: 14px;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 10px;
         text-decoration-style: solid;
     }
 
-    .page-signin #nav-box {
-        border-radius: var(--lowrad);
-        box-shadow: var(--bs2);
-    }
-
-    .page-signin #nav-container {
-        background-color: var(--bg-color-3);
-        border-radius: var(--lowrad);
-        margin: 0;
-        padding: var(--pad3);
-        text-align: center;
-        display: flex;
-        flex-direction: row;
+    footer {
         justify-content: center;
-        align-items: stretch;
-    }
-
-    .page-signin #home-nav,
-    .page-signin #character-nav,
-    .page-signin #campaign-nav,
-    .page-signin #settings-nav {
-        min-width: var(--minW1);
-        flex: 1;
-    }
-
-    .page-signin #home-nav {
-        border-radius: var(--radCornerBL);
     }
 }
 
-@layer pages {
-    .page-signin #settings-nav {
-        border-radius: var(--radCornerBR);
-    }
+#login-link {
+    color: var(--txt-color-1);
 }
 
-@layer pages {
-    .page-signin #character-nav,
-    .page-signin #campaign-nav,
-    .page-signin #settings-nav {
-        position: relative;
+#site-title h1 {
+    margin: 0;
+
+    /* drop the browser's default h1 spacing */
+}
+
+/*  ===== Mobile (max-width: 768px), consolidated =====  */
+
+@media (max-width: 768px) {
+    /* Mobile: header, title and nav run edge to edge with no seams or rounded corners */
+
+    header,
+    #site-title,
+    #nav-box,
+    #nav-container {
+        border: none;
+        border-radius: 0;
+        margin: 0;
     }
 
-    .page-signin .drop-down {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
+    #site-title {
+        box-shadow: none;
+    }
+
+    /* Mobile: header and footer hug the screen edges. Fill the notch / home-bar areas with their own color instead of empty space */
+
+    body {
+        height: 100dvh;
+
+        /* the real visible height on phones, unlike 100vh */
+        max-height: 100dvh;
+    }
+
+    header {
+        padding-top: env(safe-area-inset-top);
+    }
+
+    footer {
+        padding-bottom: max(1%, env(safe-area-inset-bottom));
+    }
+
+    /* A fixed layer behind everything, sized to the LARGEST viewport so it runs under the status bar and Safari's toolbar */
+
+    html::before {
+        /* on html, because body's backdrop-filter would trap a fixed layer */
+        content: '';
+        position: fixed;
+        top: 0;
         left: 0;
-        width: 200px;
-        max-width: 90vw;
-        opacity: 0;
-        visibility: hidden;
+        width: 100%;
+        height: 100lvh;
+        z-index: -1;
+        background-image: var(--background);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
         pointer-events: none;
-        z-index: 10;
-        text-align: center;
-        box-shadow: var(--bs2);
-        background-color: var(--bg-color-5);
-        border: var(--tileBorder);
-        transition: all 1s ease;
-        padding: var(--pad3);
-        margin: var(--mar1);
     }
 
-    .page-signin li:hover .drop-down {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
+    body {
+        background-image: none;
+
+        /* the fixed layer above replaces it */
     }
 
-    .page-signin .btn-drop-character,
-    .page-signin .btn-drop-campaign,
-    .page-signin .btn-drop-settings {
-        border: var(--tileBorder);
-        border-bottom: none;
-        border-right: none;
-        color: var(--txt-drop-1);
-        padding: 1.5%;
+    /* Mobile v3: header/footer colors reach the very top and bottom of the phone */
+
+    header {
+        padding-top: 0;
+
+        /* the empty strip came from padding on the see-through header */
     }
 
-    .page-signin #settings-nav .drop-down {
-        left: auto;
-        right: 0;
+    #site-title {
+        padding-top: calc(env(safe-area-inset-top) + 0.5rem);
+
+        /* title color fills the status bar area */
     }
 
-    .page-signin #campaign-nav .drop-down {
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%);
-        background-color: var(--bg-color-2);
-        border: var(--accent);
-        box-shadow: var(--bs2);
-        color: var(--txt-color-1);
+    body {
+        height: auto;
+        max-height: none;
+        min-height: 100lvh;
+
+        /* full screen, including under Safari's toolbar */
     }
 
-    .page-signin .container {
-        background-color: var(--bg-color-1);
-        margin: 2%;
-        border-radius: var(--rad1);
-        border: var(--tileBorder);
-        box-shadow: var(--bs2);
+    footer {
+        padding-bottom: calc(env(safe-area-inset-bottom) + 0.75rem);
+
+        /* footer color fills the home-bar area */
     }
 
-    .page-signin .title {
-        text-align: center;
+    /* Mobile: stretch the fixed background up under the status bar so no bare band shows */
+
+    html::before {
+        top: calc(-1 * env(safe-area-inset-top));
+        height: calc(100lvh + env(safe-area-inset-top));
     }
 
-    .page-signin #site-title {
-        text-align: center;
-        padding: 0.75rem;
-        margin: 0;
-        font-style: var(--fontS1);
-        font-weight: var(--fontW1);
-        color: var(--title-color);
-        background-color: var(--bg-color-1);
-        border-radius: var(--tile);
-        border: var(--tileBorder);
-        box-shadow: var(--bs2);
+    /* Mobile: zoom the background so the dark bar baked into the top of the image is cropped off */
+
+    html::before {
+        background-size: auto 120%;
+        background-position: center bottom;
     }
 
-    .page-signin h1 {
-        color: var(--title-color);
+    /* Mobile: iOS Safari colors its bar from what is painted at the top, so paint a solid title-color strip there */
+
+    /* Mobile: no footer */
+
+    footer {
+        display: none;
     }
 
-    .page-signin .form-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
-        grid-template-areas: "a d"
-            "b d"
-            "c d";
-        margin: 5%;
-    }
+    /* Mobile: stretch the background picture past the bottom so it fills behind Safari's bottom bar */
 
-    .page-signin .form-container > form {
-        display: contents;
-    }
-
-    .page-signin .form-title {
-        grid-area: d;
-        max-height: 100%;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        min-height: 0;
-        background-color: var(--bg-color-3);
-        display: flex;
-        flex-direction: column;
-        margin: 5%;
-        border-radius: var(--tile);
-        border: var(--tileBorder);
-        box-shadow: var(--bs2);
-    }
-
-    .page-signin .user-name-container,
-    .page-signin .password-container,
-    .page-signin .email-container,
-    .page-signin .name-container {
-        min-width: 0;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: stretch;
-        margin: 5%;
-    }
-
-    .page-signin .user-name-container {
-        grid-area: a;
-    }
-
-    .page-signin .password-container {
-        grid-area: b;
-    }
-
-    .page-signin .button-container {
-        grid-area: c;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        margin: 5%;
-    }
-
-    .page-signin .btn-form {
-        color: var(--txt-color-1);
-        background-color: var(--bg-color-3);
-        border: var(--tileBorder);
-        box-shadow: var(--bs2);
-        padding: 5%;
-        margin: 0;
-        transition: transform .2s ease;
+    html::before {
+        height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
     }
 }
 
-@layer pages {
-    .page-signin .btn-form {
-        border-radius: var(--tile);
-    }
+/* ===== overrides: kept last in the file so they win ===== */
+
+.signin-value[type="password"],
+#password,
+.signin-value[name="password"] /* clash: kept at old specificity */ {
+    font-family: system-ui, Arial, sans-serif;
 }
 
-@layer pages {
-    .page-signin .btn-form:hover {
-        transform: scale(1.03);
-    }
-
-    .page-signin .btn-form:active {
-        transform: scale(0.97);
-    }
-
-    .page-signin .signin-label {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: stretch;
-        padding: 5%;
-        margin: 0;
-        background-color: var(--bg-color-2);
-        border-radius: var(--toprad);
-        border: var(--tileBorder);
-        box-shadow: var(--bs2);
-    }
-
-    .page-signin .signin-value {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: stretch;
-        padding: 5%;
-        margin: 0;
-        text-align: center;
-        font-style: var(--fontS1);
-        font-weight: var(--fontW1);
-        background-color: var(--bg-color-3);
-        border: var(--tileBorder);
-        box-shadow: var(--bs2);
-    }
+@media (max-width: 768px) {
 }
 
-@layer pages {
-    .page-signin .signin-value {
-        border-radius: var(--lowrad);
-    }
+@media (max-width: 768px) {
 }
 
-@layer pages {
-    .page-signin .signin-value {
-        color: var(--txt-color-1);
-        font-family: inherit;
-        background-color: var(--bg-color-5);
-    }
-}
-
-@layer pages {
-    .page-signin .signin-value[type="password"],
-    .page-signin #password,
-    .page-signin .signin-value[name="password"] {
-        font-variant: normal;
-        text-transform: none;
-    }
-}
-
-@layer overrides {
-    .page-signin .signin-value[type="password"],
-    .page-signin #password,
-    .page-signin .signin-value[name="password"] /* clash: kept at old specificity */ {
-        font-family: system-ui, Arial, sans-serif;
-    }
-}
-
-@layer pages {
-    .page-signin .signin-value:-webkit-autofill,
-    .page-signin .signin-value:-webkit-autofill:hover,
-    .page-signin .signin-value:-webkit-autofill:focus {
-        -webkit-box-shadow: 0 0 0 1000px var(--bg-color-5) inset;
-        -webkit-text-fill-color: var(--txt-color-1);
-        transition: background-color 9999s ease-in-out 0s;
-    }
-
-    .page-signin footer {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1%;
-        margin: 0;
-        left: 0;
-        right: 0;
-        background-color: var(--bg-color-1);
-        color: var(--txt-color-1);
-    }
-
-    @media (max-width: 768px) {
-        .page-signin .form-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 90%;
-            max-width: 420px;
-            margin: 5% auto;
-            height: auto;
-            align-self: center;
-            gap: 1.5rem;
-        }
-
-        .page-signin .form-title,
-        .page-signin .user-name-container,
-        .page-signin .password-container,
-        .page-signin .email-container,
-        .page-signin .name-container,
-        .page-signin .button-container {
-            margin: 0;
-        }
-
-        .page-signin .signin-value {
-            width: 100%;
-            min-width: 0;
-        }
-    }
-}
-@layer overrides {
-    @media (max-width: 768px) {
-    }
-}
-@layer pages {
-    @media (max-width: 768px) {
-        .page-signin .button-container {
-            gap: 4%;
-        }
-
-        .page-signin .btn-form {
-            flex: 1;
-        }
-    }
-}
-@layer overrides {
-    @media (max-width: 768px) {
-    }
-}
-@layer pages {
-    @media (max-width: 768px) {
-        .page-signin main {
-            backdrop-filter: var(--blur3);
-            grid-template-rows: 1fr;
-            grid-template-areas: none;
-            align-content: center;
-            flex: 1;
-            min-height: 0;
-            overflow-y: auto;
-        }
-
-        .page-signin .button-container {
-            gap: 4%;
-            align-items: stretch;
-        }
-
-        .page-signin .btn-form {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font: inherit;
-        }
-    }
-}
-@layer overrides {
-    @media (max-width: 768px) {
-    }
-}
-@layer pages {
-    @media (max-width: 768px) {
-        .page-signin .title-logo {
-            width: 100%;
-            max-width: 100px;
-            height: 100%;
-            max-height: 100px;
-            margin: 0;
-            padding: 0;
-        }
-
-        .page-signin #site-title {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            font-size: 1rem;
-            font-weight: var(--fontW1);
-            font-style: var(--fontStyle);
-            color: var(--txt-color-1);
-            background-color: var(--bg-color-1);
-            border-radius: var(--tile);
-            border: var(--tileBorder);
-            box-shadow: var(--bs2);
-            margin: 0;
-            padding: 1%;
-        }
-
-        .page-signin h1 {
-            text-decoration: underline;
-            text-decoration-color: var(--accent);
-            text-decoration-thickness: 2px;
-            text-underline-offset: 10px;
-            text-decoration-style: solid;
-        }
-
-        .page-signin footer {
-            justify-content: center;
-        }
-    }
-
-    .page-signin #login-link {
-        color: var(--txt-color-1);
-    }
-
-    .page-signin #site-title h1 {
-        margin: 0;
-
-        /* drop the browser's default h1 spacing */
-    }
-
-    /*  ===== Mobile (max-width: 768px), consolidated =====  */
-
-    @media (max-width: 768px) {
-        /* Mobile: header, title and nav run edge to edge with no seams or rounded corners */
-
-        .page-signin header,
-        .page-signin #site-title,
-        .page-signin #nav-box,
-        .page-signin #nav-container {
-            border: none;
-            border-radius: 0;
-            margin: 0;
-        }
-
-        .page-signin #site-title {
-            box-shadow: none;
-        }
-
-        /* Mobile: header and footer hug the screen edges. Fill the notch / home-bar areas with their own color instead of empty space */
-
-        .page-signin body {
-            height: 100dvh;
-
-            /* the real visible height on phones, unlike 100vh */
-            max-height: 100dvh;
-        }
-
-        .page-signin header {
-            padding-top: env(safe-area-inset-top);
-        }
-
-        .page-signin footer {
-            padding-bottom: max(1%, env(safe-area-inset-bottom));
-        }
-
-        /* A fixed layer behind everything, sized to the LARGEST viewport so it runs under the status bar and Safari's toolbar */
-
-        html.page-signin::before {
-            /* on html, because body's backdrop-filter would trap a fixed layer */
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100lvh;
-            z-index: -1;
-            background-image: var(--background);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            pointer-events: none;
-        }
-
-        .page-signin body {
-            background-image: none;
-
-            /* the fixed layer above replaces it */
-        }
-
-        /* Mobile v3: header/footer colors reach the very top and bottom of the phone */
-
-        .page-signin header {
-            padding-top: 0;
-
-            /* the empty strip came from padding on the see-through header */
-        }
-
-        .page-signin #site-title {
-            padding-top: calc(env(safe-area-inset-top) + 0.5rem);
-
-            /* title color fills the status bar area */
-        }
-
-        .page-signin body {
-            height: auto;
-            max-height: none;
-            min-height: 100lvh;
-
-            /* full screen, including under Safari's toolbar */
-        }
-
-        .page-signin footer {
-            padding-bottom: calc(env(safe-area-inset-bottom) + 0.75rem);
-
-            /* footer color fills the home-bar area */
-        }
-
-        /* Mobile: stretch the fixed background up under the status bar so no bare band shows */
-
-        html.page-signin::before {
-            top: calc(-1 * env(safe-area-inset-top));
-            height: calc(100lvh + env(safe-area-inset-top));
-        }
-
-        /* Mobile: zoom the background so the dark bar baked into the top of the image is cropped off */
-
-        html.page-signin::before {
-            background-size: auto 120%;
-            background-position: center bottom;
-        }
-
-        /* Mobile: iOS Safari colors its bar from what is painted at the top, so paint a solid title-color strip there */
-
-        /* Mobile: no footer */
-
-        .page-signin footer {
-            display: none;
-        }
-
-        /* Mobile: stretch the background picture past the bottom so it fills behind Safari's bottom bar */
-
-        html.page-signin::before {
-            height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
-        }
-    }
+@media (max-width: 768px) {
 }

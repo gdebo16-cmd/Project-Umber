@@ -6,7 +6,7 @@ import { sendJson } from '../utils/api';
 
 // Replaces Public/signin.html
 function LoginPage() {
-    usePageStyle(signinCss, null, 'page-signin');
+    usePageStyle(signinCss);
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -48,7 +48,7 @@ function LoginPage() {
 
                         {error && <p>{error}</p>}
 
-                        <article className="form-section button-container">
+                        <article className="button-container">
                             <button id="loginButton" className="btn btn-form" type="submit">Login</button>
                             <Link to="/register" className="btn btn-form" id="newUserButton">Create New User</Link>
                         </article>

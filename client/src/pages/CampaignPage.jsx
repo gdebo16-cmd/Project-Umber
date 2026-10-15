@@ -7,7 +7,7 @@ import SiteNav from '../components/SiteNav';
 
 
 function CampaignPage() {
-    usePageStyle(homeCss, null, 'page-home');
+    usePageStyle(homeCss);
     const {campId} = useParams();
     const {data, loading, error} = useFetch(`/api/campaigns/${campId}`);
 

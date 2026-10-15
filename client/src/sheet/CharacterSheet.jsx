@@ -27,7 +27,7 @@ const SHEET_TABS = [
 ];
 
 function CharacterSheet() {
-    usePageStyle(sheetCss, null, 'page-sheet');
+    usePageStyle(sheetCss);
     const { id } = useParams();
     const { data, setData, loading, error } = useFetch(`/api/characters/${id}`);
     const [sheetTab, setSheetTab] = useState('stats');
