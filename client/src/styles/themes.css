@@ -289,6 +289,13 @@
     html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .title-tile) /* clash: kept at old specificity */ {
         overflow: clip;
     }
+
+    /* home character lists scroll inside their tile (clip above would block it) */
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(#current-character-tile, #unfinished-character-tile) {
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
 }
 
 @layer displays {
@@ -1040,8 +1047,8 @@
 }
 
 @layer overrides {
-    /* middle nav buttons stay square like the rest of the nav bar; the ends keep their page-defined corners */
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(#character-nav, #campaign-nav) /* clash: kept at old specificity */ {
+    /* every nav button is square, outer corners included */
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) /* clash: kept at old specificity */ {
         border-radius: 0;
     }
 
