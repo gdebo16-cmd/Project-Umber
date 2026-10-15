@@ -1830,6 +1830,13 @@
         cursor: pointer;
     }
 
+    /* editor tile labels (STRENGTH, Name, Class...): centered with side padding so the rounded, clipped tile corner can't cut them off */
+    .page-sheet body.subpage .form-section > .tile-top {
+        display: block;
+        padding: 0.4rem 0.75rem;
+        text-align: center;
+    }
+
     /* editor Class tab: creator-style description box + feature tree (same look as char_create.css) */
     .page-sheet body.subpage #desc-container {
         display: flex;
