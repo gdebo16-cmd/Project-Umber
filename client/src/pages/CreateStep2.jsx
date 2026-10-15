@@ -7,6 +7,8 @@ import { sendJson } from '../utils/api';
 import CreateDescription from './CreateDescription';
 import StepNav from './StepNav';
 import Loader from '../components/Loader';
+import LevelChoices from './LevelChoices';
+import { choiceFeatures, keepPicks } from '../utils/levelChoices';
 
 // Replaces views/create_char_step2.ejs (step 2: class and subclass)
 // Builds what the description box shows for a class: dropdown sections + feature tree
@@ -39,13 +41,15 @@ function CreateStep2() {
     const [shown, setShown] = useState(null); // what the description box shows
     const [saveError, setSaveError] = useState('');
     const [skillPicks, setSkillPicks] = useState([]);
+    const [picks, setPicks] = useState({}); // feature choices, same shape as characters.feature_choices
     const picked = classes?.find((c) => String(c.id) === classId);
     const { data: draft } = useFetch('/api/create_char/draft');
 
     const changeClass = (e) => loadClass(e.target.value);
 
     // shared by picking a class and by refilling a saved draft
-    const loadClass = async (id, savedSubclassId, savedSkills, savedLevel) => {
+    const loadClass = async (id, savedSubclassId, savedSkills, savedLevel, savedPicks) => {
+        setPicks(savedPicks ?? {});
         if (savedLevel) setLevel(savedLevel);
         const picked = classes.find((c) => String(c.id) === id);
         setClassId(id);
@@ -103,9 +107,13 @@ function CreateStep2() {
 
     // coming back from step 3: refill class and subclass from the draft
     useEffect(() => {
-        if (classes && draft?.class_id) loadClass(String(draft.class_id), draft.subclass_id, draft.skill_picks, draft.level);
+        if (classes && draft?.class_id) loadClass(String(draft.class_id), draft.subclass_id, draft.skill_picks, draft.level, draft.feature_choices);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [classes, draft]);
+
+    // class choices plus the picked subclass's choices, up to the picked level
+    const pickedSub = subLocked ? undefined : subclasses.find((s) => String(s.id) === String(subclassId));
+    const choiceList = picked ? choiceFeatures(picked.features, pickedSub?.features, pickedSub?.name, level) : [];
 
     const submit = async (e) => {
         e.preventDefault();
@@ -115,6 +123,7 @@ function CreateStep2() {
                 subclass_id: subLocked ? null : subclassId,
                 level,
                 skills: skillPicks,
+                feature_choices: keepPicks(picks, choiceList),
             });
             navigate('/create_char/step3');
         } catch (err) {
@@ -203,6 +212,7 @@ function CreateStep2() {
                             ))}
                         </article>
                         )}
+                        <LevelChoices features={choiceList} picks={picks} onChange={setPicks} topClass="topTile" bottomClass="bottomTile" />
                         {saveError && <p>{saveError}</p>}
                         <article id="button-container" className="form-section">
                             <button id="submit" type="submit">Next: Abilities</button>

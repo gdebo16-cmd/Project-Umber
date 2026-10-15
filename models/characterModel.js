@@ -83,12 +83,13 @@ export async function createCharacter(userId, draft, final, plus2, plus1, maxHp)
         `INSERT INTO characters
            (user_id, name, race_id, subrace_id, class_id, subclass_id,
             str, dex, con, "int", wis, cha, luc, spd, plus2_stat, plus1_stat, max_hp, current_hp,
-            skill_proficiencies, level)
-         VALUES ($1,$2,$3,$20,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)
+            skill_proficiencies, level, feature_choices)
+         VALUES ($1,$2,$3,$20,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$21::jsonb)
          RETURNING id`,
         [userId, draft.name, draft.race_id, draft.class_id, draft.subclass_id,
          final.str, final.dex, final.con, final.int, final.wis, final.cha, final.luc, final.spd,
-         plus2, plus1, maxHp, maxHp, draft.skill_proficiencies ?? [], draft.level ?? 1, draft.subrace_id ?? null]
+         plus2, plus1, maxHp, maxHp, draft.skill_proficiencies ?? [], draft.level ?? 1, draft.subrace_id ?? null,
+         JSON.stringify(draft.feature_choices ?? {})]
     );
     return rows[0].id;
 }
@@ -120,7 +121,21 @@ export async function updatePortrait(charId, userId, portraitUrl) {
     );
 }
 
-export async function updateClass(charId, userId, classId, subclassId) {
+// featureChoices (already checked by checkFeatureChoices) replaces the saved picks when given
+export async function updateClass(charId, userId, classId, subclassId, featureChoices) {
+    if (featureChoices !== undefined) {
+        await pool.query(
+            `UPDATE characters
+                SET skill_proficiencies = CASE WHEN class_id IS DISTINCT FROM $1
+                        THEN COALESCE((SELECT skill_fixed FROM classes WHERE id = $1), '{}')
+                        ELSE skill_proficiencies END,
+                    feature_choices = $5::jsonb,
+                    class_id = $1, subclass_id = $2
+              WHERE id = $3 AND user_id = $4`,
+            [classId, subclassId, charId, userId, JSON.stringify(featureChoices)]
+        );
+        return;
+    }
     await pool.query(
         // changing class resets skills to the new class's fixed skills (old picks may not be valid)
         `UPDATE characters
@@ -153,6 +168,40 @@ export async function getCharacterFeature(charId, userId, source, featureId) {
         [featureId, charId, userId]
     );
     return rows[0];
+}
+
+// Checks a whole set of feature picks { "<source>:<feature id>": [values] } against a class,
+// subclass and level. Subclass picks only count from SUBCLASS_LEVEL up. Empty picks are dropped.
+// Returns { choices } (the cleaned set) or { error }.
+export async function checkFeatureChoices(classId, subclassId, level, picks) {
+    if (picks == null) return { choices: {} };
+    if (typeof picks !== 'object' || Array.isArray(picks)) return { error: 'feature_choices must be an object' };
+    const { rows } = await pool.query(
+        `SELECT 'class' AS source, id, name, level, options, choice_count
+           FROM class_features WHERE class_id = $1 AND cardinality(options) > 0
+         UNION ALL
+         SELECT 'subclass' AS source, id, name, level, options, choice_count
+           FROM subclass_features
+          WHERE subclass_id = $2 AND $3::int >= ${SUBCLASS_LEVEL} AND cardinality(options) > 0`,
+        [classId, subclassId, level]
+    );
+    const byKey = new Map(rows.map((f) => [`${f.source}:${f.id}`, f]));
+    const choices = {};
+    for (const [key, raw] of Object.entries(picks)) {
+        const vals = (Array.isArray(raw) ? raw : [raw]).filter((v) => v !== '' && v != null);
+        if (!vals.length) continue;
+        const f = byKey.get(key);
+        if (!f) return { error: 'One of those feature choices is not part of this class or subclass' };
+        if (Number(f.level) > level) return { error: `${f.name} unlocks at level ${f.level}` };
+        const count = f.choice_count ?? 1;
+        if (vals.length !== count) return { error: `Pick exactly ${count} for ${f.name}` };
+        if (!vals.every((v) => typeof v === 'string' && f.options.includes(v))) {
+            return { error: `That is not an option for ${f.name}` };
+        }
+        if (new Set(vals).size !== vals.length) return { error: 'Each option can only be picked once' };
+        choices[key] = vals;
+    }
+    return { choices };
 }
 
 // Set one feature pick: feature_choices[key] = values (array)

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import useSave from './useSave';
 import CreateDescription from '../CreateDescription';
+import LevelChoices from '../LevelChoices';
+import { choiceFeatures, keepPicks } from '../../utils/levelChoices';
 import { sendJson } from '../../utils/api';
 
 // Class + subclass editor, laid out like creator Step 2: pick tiles on top, then the
@@ -8,6 +10,8 @@ import { sendJson } from '../../utils/api';
 // (level <= the picked level, so it updates live while you change the level).
 // Level lives here too (it used to be its own tab) and saves through /edit/level first,
 // so the max_hp math and the "below level 3 clears the subclass" rule stay on the server.
+// Feature choices (class and subclass) are picked in the per-level tiles and saved with
+// the class save, so they stay usable while level/class/subclass changes are unsaved.
 const SUBCLASS_LEVEL = 3; // matches models/characterModel.js
 const LEVELS = Array.from({ length: 30 }, (_, i) => i + 1);
 
@@ -16,14 +20,17 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
     const [subclassId, setSubclassId] = useState(character.subclass_id ?? '');
     const [level, setLevel] = useState(character.level ?? 1);
     const [levelMsg, setLevelMsg] = useState('');
+    const [picks, setPicks] = useState(character.feature_choices ?? {});
     const subLocked = level < SUBCLASS_LEVEL;
-    const [choiceMsg, setChoiceMsg] = useState('');
-    const { save, message } = useSave(`/api/characters/${character.id}/edit/class`, onSaved);
+    const { save, message } = useSave(`/api/characters/${character.id}/edit/class`, (saved) => {
+        setPicks(saved.feature_choices ?? {});
+        onSaved(saved);
+    });
 
     // only the subclasses that belong to the picked class (this replaces charEdit.js)
     const subsForClass = subClasses.filter((s) => Number(s.class_id) === Number(classId));
     const pickedClass = classes.find((c) => Number(c.id) === Number(classId));
-    const pickedSub = subClasses.find((s) => Number(s.id) === Number(subclassId));
+    const pickedSub = subLocked ? undefined : subClasses.find((s) => Number(s.id) === Number(subclassId));
 
     const changeClass = (e) => {
         const newClassId = Number(e.target.value);
@@ -44,6 +51,9 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
         }
     };
 
+    // class + subclass choice features unlocked at the picked level
+    const choiceList = pickedClass ? choiceFeatures(pickedClass.features, pickedSub?.features, pickedSub?.name, level) : [];
+
     const submit = async (e) => {
         e.preventDefault();
         setLevelMsg('');
@@ -57,29 +67,14 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
                 return;
             }
         }
-        save({ class_id: classId, subclass_id: subLocked ? null : subclassId });
+        save({
+            class_id: classId,
+            subclass_id: subLocked ? null : subclassId,
+            feature_choices: keepPicks(picks, choiceList),
+        });
     };
 
-    // picks only save against the class/subclass already saved on the character
-    const levelSaved = level === (character.level ?? 1);
-    const classSaved = levelSaved && Number(classId) === Number(character.class_id);
-    const subSaved = classSaved && !!subclassId && Number(subclassId) === Number(character.subclass_id);
-    const choices = character.feature_choices ?? {};
-
-    const saveChoice = async (f, value) => {
-        try {
-            const data = await sendJson(`/api/characters/${character.id}/edit/features`, 'POST', {
-                source: f.source,
-                feature_id: f.id,
-                choice: value,
-            });
-            onSaved(data.character);
-            setChoiceMsg(`${f.name}: ${value} saved`);
-        } catch (err) {
-            setChoiceMsg(err.message);
-        }
-    };
-
+    const classSaved = Number(classId) === Number(character.class_id);
     const unlocked = (list, source) =>
         (list ?? [])
             .filter((f) => f.level <= level)
@@ -102,29 +97,6 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
             { label: 'Tools', body: pickedClass.tool_proficiencies ?? '-' },
         ],
         features,
-    };
-
-    // a dropdown under any unlocked feature that has options
-    const renderFeature = (f) => {
-        if (!f.options?.length) return null;
-        const canSave = f.source === 'class' ? classSaved : subSaved;
-        const current = choices[f.key]?.[0] ?? '';
-        return (
-            <label className="feature-choice">
-                <span>Choice:</span>
-                <select
-                    value={current}
-                    disabled={!canSave}
-                    onChange={(e) => saveChoice(f, e.target.value)}
-                >
-                    <option value="" disabled>Pick one</option>
-                    {f.options.map((o) => (
-                        <option key={o} value={o}>{o}</option>
-                    ))}
-                </select>
-                {!canSave && <span className="feature-choice-note">Save your changes first</span>}
-            </label>
-        );
     };
 
     return (
@@ -163,18 +135,18 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
                     </select>
                     {subLocked && <p className="pick-hint">Subclass unlocks at level {SUBCLASS_LEVEL}</p>}
                 </article>
+                <LevelChoices features={choiceList} picks={picks} onChange={setPicks} topClass="tile-top" bottomClass="tile-bottom" />
                 {levelMsg && <p>{levelMsg}</p>}
                 {message && <p>{message}</p>}
                 {subLocked && (character.level ?? 1) >= SUBCLASS_LEVEL && character.subclass_id && (
                     <p>Saving below level {SUBCLASS_LEVEL} removes your subclass and its feature choices.</p>
                 )}
-                {!classSaved && <p>Changing class resets skill proficiencies and feature choices when you save.</p>}
+                {!classSaved && <p>Changing class resets skill proficiencies when you save.</p>}
                 <article className="form-section button-container">
                     <button className="btn-form" type="submit">Save Changes</button>
                 </article>
             </form>
-            {choiceMsg && <p>{choiceMsg}</p>}
-            <CreateDescription item={shown} renderFeature={renderFeature} />
+            <CreateDescription item={shown} />
         </>
     );
 }

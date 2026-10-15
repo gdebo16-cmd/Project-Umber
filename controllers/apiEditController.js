@@ -71,7 +71,15 @@ export async function editClass(req, res) {
         }
     }
 
-    await Characters.updateClass(charId, req.session.userId, class_id, subclass_id);
+    // optional feature_choices { "<source>:<id>": [picks] } replace the saved picks when sent
+    let featureChoices;
+    if (req.body.feature_choices !== undefined) {
+        const picked = await Characters.checkFeatureChoices(class_id, subclass_id, level, req.body.feature_choices);
+        if (picked.error) return res.status(400).json({ error: picked.error });
+        featureChoices = picked.choices;
+    }
+
+    await Characters.updateClass(charId, req.session.userId, class_id, subclass_id, featureChoices);
     res.json({ character: await Characters.getEditCharacter(charId, req.session.userId) });
 }
 

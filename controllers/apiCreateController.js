@@ -2,7 +2,7 @@
 // Uses the session "draft locker" (req.session.charDraft) until step 3 saves it.
 import { listRaces, listSubraces, checkSubrace } from '../models/raceModel.js';
 import { listClasses, getHitDie, listSubclassesForClass, subclassBelongsToClass, getClassSkills } from '../models/classModel.js';
-import { createCharacter, SUBCLASS_LEVEL, MAX_LEVEL } from '../models/characterModel.js';
+import { createCharacter, checkFeatureChoices, SUBCLASS_LEVEL, MAX_LEVEL } from '../models/characterModel.js';
 
 const STATS = ["str", "dex", "con", "int", "wis", "cha", "luc", "spd"];
 
@@ -49,6 +49,7 @@ export function getDraft(req, res) {
         subclass_id: draft.subclass_id ?? null,
         level: draft.level ?? 1,
         skill_picks: draft.skill_picks ?? [],
+        feature_choices: draft.feature_choices ?? {},
         skill_proficiencies: draft.skill_proficiencies ?? [],
         hasRolls: !!draft.rolls && Object.keys(draft.rolls).length > 0,
     });
@@ -115,9 +116,14 @@ export async function step2Submit(req, res) {
         return res.status(400).json({ error: 'That skill is already given by your class' });
     }
 
+    // class + subclass feature choices (optional; each must be unlocked at this level)
+    const picked = await checkFeatureChoices(Number(class_id), subclass_id ? Number(subclass_id) : null, level, req.body.feature_choices);
+    if (picked.error) return res.status(400).json({ error: picked.error });
+
     req.session.charDraft.class_id = Number(class_id);
     req.session.charDraft.subclass_id = subclass_id ? Number(subclass_id) : null;
     req.session.charDraft.level = level;
+    req.session.charDraft.feature_choices = picked.choices;
     req.session.charDraft.skill_picks = skills; // what the dropdowns show when coming back
     req.session.charDraft.skill_proficiencies = [...fixed, ...skills]; // what gets saved at step 3
     res.json({ ok: true });
