@@ -2564,3 +2564,57 @@
         transform: rotate(90deg);
     }
 }
+
+@layer overrides {
+    /* portrait picker: glass tile look under every display (same values as the glass display),
+       with <details> kept block-level so open/close still works on iPhone */
+    html.page-sheet body.subpage details.form-section.portrait-picker {
+        display: block;
+        width: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 1.25rem;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(15px) saturate(180%);
+        -webkit-backdrop-filter: blur(15px) saturate(180%);
+        overflow: clip;
+    }
+
+    /* header strip: same as the old <p class="tile-top"> */
+    html.page-sheet body.subpage .portrait-picker > summary.tile-top.portrait-summary {
+        display: block;
+        margin: 0;
+        padding: 0.75rem;
+        text-align: center;
+        background-color: var(--bgc-top);
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    html.page-sheet body.subpage .portrait-picker > .tile-bottom {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 0 0 1.25rem 1.25rem;
+        box-shadow: none;
+    }
+
+    /* group titles: same as the old <h3 class="portrait-group-title"> */
+    html.page-sheet body.subpage summary.portrait-group-title {
+        display: block;
+        margin: 0.75rem 0 0.25rem;
+        font-size: 1rem;
+        font-family: var(--fontF);
+        font-weight: bold;
+        letter-spacing: var(--letterSp);
+    }
+
+    html.page-sheet body.subpage .portrait-thumb {
+        border-radius: 0.75rem;
+    }
+
+    html.page-sheet body.subpage .portrait-thumb img {
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 0.75rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+}
