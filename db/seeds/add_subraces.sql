@@ -26,7 +26,7 @@ JOIN (VALUES
     ('Lupine', 'Mastiff', 'mastiff', 'A sturdy, heavy-set breed. +1 HP per level.', '/races/lupine.png'),
     ('Lupine', 'Greyhound', 'greyhound', 'A lean, fast breed. +10 ft speed.', '/races/lupine.png'),
     ('Lupine', 'Husky', 'husky', 'A fluffy breed from the cold. Resistance to cold damage.', '/races/lupine.png'),
-    ('Lupine', 'Rottweiler', 'rottweiler', 'A powerful breed. Bite: 1d6 + STR as a bonus action, 1 per short rest.', '/races/lupine.png'),
+    ('Lupine', 'Rottweiler', 'rottweiler', 'A powerful breed. Bite: 1d6 + STR as a bonus action, 1 per short rest.', '/races/lupine-rottweiler.png'),
     ('Lupine', 'Shepherd', 'shepherd', 'A watchful herding breed. +2 Insight.', '/races/lupine.png'),
     ('Lupine', 'Bloodhound', 'bloodhound', 'A keen-nosed hound. Track by scent across a trail up to a day old.', '/races/lupine.png')
 ) AS v(race_name, name, slug, description, img_url) ON v.race_name = r.name

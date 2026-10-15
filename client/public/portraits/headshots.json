@@ -423,5 +423,10 @@
     "file": "race-vellari-sapphire.png",
     "label": "Vellari (Sapphire)",
     "group": "Race"
+  },
+  {
+    "file": "race-lupine-rottweiler.png",
+    "label": "Lupine (Rottweiler)",
+    "group": "Race"
   }
 ]
