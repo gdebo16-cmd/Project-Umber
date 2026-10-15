@@ -17,9 +17,10 @@ export async function ownsCharacter(charId, userId) {
 // Full sheet row (with race/class/subclass names) or undefined
 export async function getSheetCharacter(charId, userId) {
     const { rows } = await pool.query(
-        `SELECT ch.*, r.name AS race_name, cl.name AS class_name, cl.hitpoint_die, cl.primary_stat AS spell_stat, NULLIF(concat_ws(', ', cl.armor_proficiencies, s.armor_proficiencies), '') AS armor_proficiencies, NULLIF(concat_ws(', ', cl.weapon_proficiencies, s.weapon_proficiencies), '') AS weapon_proficiencies, NULLIF(concat_ws(', ', cl.tool_proficiencies, s.tool_proficiencies), '') AS tool_proficiencies, s.name AS subclass_name, r.base_speed AS race_base_speed
+        `SELECT ch.*, r.name AS race_name, sr.name AS subrace_name, cl.name AS class_name, cl.hitpoint_die, cl.primary_stat AS spell_stat, NULLIF(concat_ws(', ', cl.armor_proficiencies, s.armor_proficiencies), '') AS armor_proficiencies, NULLIF(concat_ws(', ', cl.weapon_proficiencies, s.weapon_proficiencies), '') AS weapon_proficiencies, NULLIF(concat_ws(', ', cl.tool_proficiencies, s.tool_proficiencies), '') AS tool_proficiencies, s.name AS subclass_name, r.base_speed AS race_base_speed
         FROM characters ch
         LEFT JOIN races r ON r.id = ch.race_id
+        LEFT JOIN subraces sr ON sr.id = ch.subrace_id
         LEFT JOIN classes cl ON cl.id = ch.class_id
         LEFT JOIN sub_classes s ON s.id = ch.subclass_id
         WHERE ch.id = $1 AND ch.user_id = $2`,
@@ -80,14 +81,14 @@ export async function deleteCharacter(charId, userId) {
 export async function createCharacter(userId, draft, final, plus2, plus1, maxHp) {
     const { rows } = await pool.query(
         `INSERT INTO characters
-           (user_id, name, race_id, class_id, subclass_id,
+           (user_id, name, race_id, subrace_id, class_id, subclass_id,
             str, dex, con, "int", wis, cha, luc, spd, plus2_stat, plus1_stat, max_hp, current_hp,
             skill_proficiencies, level)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)
+         VALUES ($1,$2,$3,$20,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)
          RETURNING id`,
         [userId, draft.name, draft.race_id, draft.class_id, draft.subclass_id,
          final.str, final.dex, final.con, final.int, final.wis, final.cha, final.luc, final.spd,
-         plus2, plus1, maxHp, maxHp, draft.skill_proficiencies ?? [], draft.level ?? 1]
+         plus2, plus1, maxHp, maxHp, draft.skill_proficiencies ?? [], draft.level ?? 1, draft.subrace_id ?? null]
     );
     return rows[0].id;
 }
@@ -96,7 +97,7 @@ export async function createCharacter(userId, draft, final, plus2, plus1, maxHp)
 
 export async function getEditCharacter(charId, userId) {
     const { rows } = await pool.query(
-        `SELECT id, name, race_id, class_id, subclass_id, level, str, dex, con, "int", wis, cha, luc, spd,
+        `SELECT id, name, race_id, subrace_id, class_id, subclass_id, level, str, dex, con, "int", wis, cha, luc, spd,
                 skill_proficiencies, feature_choices, portrait_url
          FROM characters WHERE id = $1 AND user_id = $2`,
         [charId, userId]
@@ -104,10 +105,10 @@ export async function getEditCharacter(charId, userId) {
     return rows[0];
 }
 
-export async function updateNameAndRace(charId, userId, name, raceId) {
+export async function updateNameAndRace(charId, userId, name, raceId, subraceId = null) {
     await pool.query(
-        `UPDATE characters SET name = $1, race_id = $2 WHERE id = $3 AND user_id = $4`,
-        [name, raceId, charId, userId]
+        `UPDATE characters SET name = $1, race_id = $2, subrace_id = $5 WHERE id = $3 AND user_id = $4`,
+        [name, raceId, charId, userId, subraceId]
     );
 }
 

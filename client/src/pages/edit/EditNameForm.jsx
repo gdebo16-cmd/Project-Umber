@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
 import useSave from './useSave';
+import CreateDescription from '../CreateDescription';
 
 const GROUPS = ['Race', 'Class', 'Subclass'];
 
 function EditNameForm({ character, races, onSaved }) {
     const [name, setName] = useState(character.name);
     const [raceId, setRaceId] = useState(character.race_id);
+    const [subraceId, setSubraceId] = useState(character.subrace_id ?? '');
+    const race = races.find((r) => r.id === Number(raceId));
+    const subraces = race?.subraces ?? [];
+    const subrace = subraces.find((s) => s.id === Number(subraceId));
     const { save, message } = useSave(`/api/characters/${character.id}/edit/name`, onSaved);
 
     // premade headshots from /portraits/headshots.json: [{ file, label, group }]
@@ -22,7 +27,7 @@ function EditNameForm({ character, races, onSaved }) {
 
     const submit = (e) => {
         e.preventDefault();
-        save({ name, race_id: raceId });
+        save({ name, race_id: raceId, subrace_id: subraceId || null });
     };
 
     const pickPortrait = (url) => {
@@ -52,12 +57,26 @@ function EditNameForm({ character, races, onSaved }) {
             </article>
             <article className="form-section">
                 <label className="tile-top" htmlFor="race_id">Select Race</label>
-                <select className="tile-bottom" id="race_id" value={raceId} onChange={(e) => setRaceId(Number(e.target.value))} required>
+                <select className="tile-bottom" id="race_id" value={raceId} onChange={(e) => { setRaceId(Number(e.target.value)); setSubraceId(''); }} required>
                     {races.map((r) => (
                         <option key={r.id} value={r.id}>{r.name}</option>
                     ))}
                 </select>
             </article>
+            {subraces.length > 0 && (
+                <article className="form-section">
+                    <label className="tile-top" htmlFor="subrace_id">{race.name === 'Lupine' ? 'Breed' : 'Gem Line'}</label>
+                    <select className="tile-bottom" id="subrace_id" value={subraceId} onChange={(e) => setSubraceId(e.target.value === '' ? '' : Number(e.target.value))}>
+                        <option value="">Select a sub-race</option>
+                        {subraces.map((s) => (
+                            <option key={s.id} value={s.id}>{s.name}</option>
+                        ))}
+                    </select>
+                </article>
+            )}
+            {subrace && (
+                <CreateDescription item={{ img: subrace.img_url, name: `${race.name} (${subrace.name})`, text: subrace.description }} />
+            )}
             <details className="form-section portrait-picker">
                 <summary className="tile-top portrait-summary">Character Portrait</summary>
                 <div className="tile-bottom">

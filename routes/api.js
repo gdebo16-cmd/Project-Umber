@@ -7,7 +7,7 @@ import {
 import { me, login, logout, register, home, getSettings, updateSettings, getProfile, updateProfile } from '../controllers/apiUserController.js';
 import { getInventory, addArmor, addWeapon, removeArmor, removeWeapon } from '../controllers/apiInventoryController.js';
 import { getEditCharacter, editNameAndRace, editClass, editLevel, editAbilities, editFeatureChoice, editPortrait } from '../controllers/apiEditController.js';
-import { getRaces, step1Submit, getStep2, step2Submit, getStep3, step3Submit, clearDraft, getDraft, rollStat, selectSubclass } from '../controllers/apiCreateController.js';
+import { getRaces, getSubraces, step1Submit, getStep2, step2Submit, getStep3, step3Submit, clearDraft, getDraft, rollStat, selectSubclass } from '../controllers/apiCreateController.js';
 import { getSpellbook, learnSpell, unlearnSpell, prepareSpell, unprepareSpell, setAction, removeAction } from '../controllers/apiSpellController.js';
 
 import { rateLimit } from 'express-rate-limit';
@@ -33,6 +33,7 @@ router.put('/profile', updateProfile);
 
 // character creation
 router.get('/create_char/races', getRaces);
+router.get('/races/:id/subraces', getSubraces);
 router.post('/create_char/step1', step1Submit);
 router.get('/create_char/step2', getStep2);
 router.post('/create_char/step2', step2Submit);

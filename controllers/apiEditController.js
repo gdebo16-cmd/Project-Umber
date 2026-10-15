@@ -1,7 +1,7 @@
 // The Character Editor page (/characters/:id/edit) as JSON for React. Queries live in models/.
 // Every save answers with the fresh character so React can show the new values.
 import * as Characters from '../models/characterModel.js';
-import { listRaces } from '../models/raceModel.js';
+import { listRaces, checkSubrace } from '../models/raceModel.js';
 import { listClasses, listAllSubclasses, getSubclassClassId } from '../models/classModel.js';
 
 // GET /api/characters/:id/edit  -> { character, races, classes, subClasses }
@@ -17,15 +17,18 @@ export async function getEditCharacter(req, res) {
     res.json({ character, races, classes, subClasses });
 }
 
-// POST /api/characters/:id/edit/name   body: { name, race_id }
+// POST /api/characters/:id/edit/name   body: { name, race_id, subrace_id }
 export async function editNameAndRace(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
     const charId = Number(req.params.id);
-    const { name, race_id } = req.body;
+    const { name, race_id, subrace_id } = req.body;
     if (!name) return res.status(400).json({ error: 'Name is required' });
     if (!race_id) return res.status(400).json({ error: 'Race is required' });
 
-    await Characters.updateNameAndRace(charId, req.session.userId, name, race_id);
+    const subraceId = await checkSubrace(race_id, subrace_id);
+    if (subraceId === false) return res.status(400).json({ error: 'That sub-race does not belong to this race' });
+
+    await Characters.updateNameAndRace(charId, req.session.userId, name, race_id, subraceId);
     res.json({ character: await Characters.getEditCharacter(charId, req.session.userId) });
 }
 

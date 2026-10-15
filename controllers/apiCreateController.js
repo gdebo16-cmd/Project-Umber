@@ -1,6 +1,6 @@
 // Character creation (3 steps) as JSON for React. Queries live in models/.
 // Uses the session "draft locker" (req.session.charDraft) until step 3 saves it.
-import { listRaces } from '../models/raceModel.js';
+import { listRaces, listSubraces, checkSubrace } from '../models/raceModel.js';
 import { listClasses, getHitDie, listSubclassesForClass, subclassBelongsToClass, getClassSkills } from '../models/classModel.js';
 import { createCharacter, SUBCLASS_LEVEL, MAX_LEVEL } from '../models/characterModel.js';
 
@@ -18,13 +18,21 @@ export async function getRaces(req, res) {
     res.json(await listRaces());
 }
 
-export function step1Submit(req, res) {
+// GET /api/races/:id/subraces
+export async function getSubraces(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
-    const { name, race_id } = req.body;
+    res.json(await listSubraces(Number(req.params.id)));
+}
+
+export async function step1Submit(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const { name, race_id, subrace_id } = req.body;
     if (!race_id) return res.status(400).json({ error: 'Race Select Required' });
+    const subraceId = await checkSubrace(race_id, subrace_id);
+    if (subraceId === false) return res.status(400).json({ error: 'That sub-race does not belong to this race' });
 
     // update the draft instead of replacing it, so going back to step 1 keeps the class picks
-    req.session.charDraft = { ...req.session.charDraft, name: name?.trim() || 'One with no name', race_id: Number(race_id) };
+    req.session.charDraft = { ...req.session.charDraft, name: name?.trim() || 'One with no name', race_id: Number(race_id), subrace_id: subraceId };
     res.json({ ok: true });
 }
 
@@ -36,6 +44,7 @@ export function getDraft(req, res) {
     res.json({
         name: draft.name,
         race_id: draft.race_id,
+        subrace_id: draft.subrace_id ?? null,
         class_id: draft.class_id ?? null,
         subclass_id: draft.subclass_id ?? null,
         level: draft.level ?? 1,

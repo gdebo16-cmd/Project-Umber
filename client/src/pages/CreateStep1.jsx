@@ -15,6 +15,7 @@ function CreateStep1() {
     const { data: races, loading, error } = useFetch('/api/create_char/races');
     const [name, setName] = useState('');
     const [raceId, setRaceId] = useState('');
+    const [subraceId, setSubraceId] = useState('');
     const [saveError, setSaveError] = useState('');
     const [hasSavedRace, setHasSavedRace] = useState(false); // lets Forward work once step 1 was saved
 
@@ -27,6 +28,7 @@ function CreateStep1() {
                 setName(draft.name === 'One with no name' ? '' : draft.name ?? '');
                 if (draft.race_id) {
                     setRaceId(String(draft.race_id));
+                    setSubraceId(draft.subrace_id ? String(draft.subrace_id) : '');
                     setHasSavedRace(true);
                 }
             });
@@ -35,7 +37,7 @@ function CreateStep1() {
     const submit = async (e) => {
         e.preventDefault();
         try {
-            await sendJson('/api/create_char/step1', 'POST', { name, race_id: raceId });
+            await sendJson('/api/create_char/step1', 'POST', { name, race_id: raceId, subrace_id: subraceId || null });
             navigate('/create_char/step2');
         } catch (err) {
             setSaveError(err.message);
@@ -47,6 +49,8 @@ function CreateStep1() {
 
     // the race that's picked right now, for the description box
     const race = races.find((r) => String(r.id) === String(raceId));
+    const subraces = race?.subraces ?? [];
+    const subrace = subraces.find((s) => String(s.id) === String(subraceId));
 
     return (
         <>
@@ -65,13 +69,24 @@ function CreateStep1() {
                         </article>
                         <article id="race-select-container" className="form-section tile">
                             <label className="topTile" htmlFor="race_id">Race</label>
-                            <select className="bottomTile" id="race_id" value={raceId} onChange={(e) => setRaceId(e.target.value)} required>
+                            <select className="bottomTile" id="race_id" value={raceId} onChange={(e) => { setRaceId(e.target.value); setSubraceId(''); }} required>
                                 <option value="" disabled>Select your Race</option>
                                 {races.map((r) => (
                                     <option key={r.id} value={r.id}>{r.name}</option>
                                 ))}
                             </select>
                         </article>
+                        {subraces.length > 0 && (
+                            <article id="subrace-select-container" className="form-section tile">
+                                <label className="topTile" htmlFor="subrace_id">{race.name === 'Lupine' ? 'Breed' : 'Gem Line'}</label>
+                                <select className="bottomTile" id="subrace_id" value={subraceId} onChange={(e) => setSubraceId(e.target.value)}>
+                                    <option value="">Select a sub-race</option>
+                                    {subraces.map((s) => (
+                                        <option key={s.id} value={s.id}>{s.name}</option>
+                                    ))}
+                                </select>
+                            </article>
+                        )}
                         {saveError && <p>{saveError}</p>}
                         <article id="button-container" className="form-section">
                             <button id="submit" type="submit">Next: Class</button>
@@ -79,7 +94,9 @@ function CreateStep1() {
                         </article>
                     </form>
                 </section>
-                <CreateDescription item={race && { img: race.img_url, name: race.name, text: race.traits, race }} />
+                <CreateDescription item={race && (subrace
+                    ? { img: subrace.img_url, name: `${race.name} (${subrace.name})`, text: subrace.description, race: { ...race, lineage_bonuses: [{ name: subrace.name, description: subrace.description }, ...(race.lineage_bonuses ?? [])] } }
+                    : { img: race.img_url, name: race.name, text: race.traits, race })} />
             </main>
             <footer>
                 
