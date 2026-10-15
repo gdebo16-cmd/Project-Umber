@@ -71,7 +71,7 @@
         scrollbar-width: none;
     }
 
-    .page-home img {
+    .page-home img:not(.character-image) {
         border: var(--tileBorder);
     }
 
@@ -425,9 +425,6 @@
         max-height: none;
         object-fit: cover;
         align-self: stretch;
-        outline: 5px ridge var(--tileBorder);
-        
-        border-radius: 0 0 0 10px;
         z-index: 1;
     }
 

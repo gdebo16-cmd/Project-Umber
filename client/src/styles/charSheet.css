@@ -1848,7 +1848,6 @@
         height: auto;
         margin: 0;
         background-color: var(--bgc-low);
-        border: var(--tileBorder);
     }
 
     .page-sheet body.subpage #class-info-section,
@@ -2490,7 +2489,6 @@
         width: 100%;
         aspect-ratio: 1 / 1;
         object-fit: cover;
-        border-radius: 0.35rem;
     }
 
     .page-sheet body.subpage .portrait-thumb.is-selected {
@@ -2517,9 +2515,6 @@
         height: 3.5rem;
         margin: var(--mar1);
         object-fit: cover;
-        border: var(--tileBorder);
-        border-radius: var(--lowrad);
-        box-shadow: var(--bs2);
     }
 
     @media (max-width: 768px) {
