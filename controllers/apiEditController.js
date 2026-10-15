@@ -29,6 +29,22 @@ export async function editNameAndRace(req, res) {
     res.json({ character: await Characters.getEditCharacter(charId, req.session.userId) });
 }
 
+// POST /api/characters/:id/edit/portrait   body: { portrait_url }  (null = default image)
+const PORTRAIT_PATH = /^\/portraits\/[a-z0-9-]+\.png$/;
+export async function editPortrait(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const charId = Number(req.params.id);
+    const url = req.body.portrait_url ?? null;
+    if (url !== null && (typeof url !== 'string' || !PORTRAIT_PATH.test(url))) {
+        return res.status(400).json({ error: 'Invalid portrait' });
+    }
+    if (!(await Characters.ownsCharacter(charId, req.session.userId))) {
+        return res.status(404).json({ error: 'Character not found' });
+    }
+    await Characters.updatePortrait(charId, req.session.userId, url);
+    res.json({ character: await Characters.getEditCharacter(charId, req.session.userId) });
+}
+
 // POST /api/characters/:id/edit/class   body: { class_id, subclass_id }
 export async function editClass(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });

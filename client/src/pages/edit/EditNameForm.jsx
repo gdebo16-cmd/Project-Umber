@@ -1,15 +1,48 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useSave from './useSave';
+
+const GROUPS = ['Race', 'Class', 'Subclass'];
 
 function EditNameForm({ character, races, onSaved }) {
     const [name, setName] = useState(character.name);
     const [raceId, setRaceId] = useState(character.race_id);
     const { save, message } = useSave(`/api/characters/${character.id}/edit/name`, onSaved);
 
+    // premade headshots from /portraits/headshots.json: [{ file, label, group }]
+    const [portraits, setPortraits] = useState([]);
+    const [portrait, setPortrait] = useState(character.portrait_url ?? null);
+    const portraitSave = useSave(`/api/characters/${character.id}/edit/portrait`, onSaved);
+
+    useEffect(() => {
+        fetch('/portraits/headshots.json')
+            .then((res) => (res.ok ? res.json() : []))
+            .then((list) => setPortraits(Array.isArray(list) ? list : []))
+            .catch(() => setPortraits([]));
+    }, []);
+
     const submit = (e) => {
         e.preventDefault();
         save({ name, race_id: raceId });
     };
+
+    const pickPortrait = (url) => {
+        setPortrait(url);
+        portraitSave.save({ portrait_url: url });
+    };
+
+    const thumb = (url, label) => (
+        <button
+            type="button"
+            key={url ?? 'default'}
+            className={portrait === url ? 'portrait-thumb is-selected' : 'portrait-thumb'}
+            onClick={() => pickPortrait(url)}
+            title={label}
+            aria-pressed={portrait === url}
+        >
+            <img src={url ?? '/default-character.png'} alt={label} loading="lazy" />
+            <span className="portrait-label">{label}</span>
+        </button>
+    );
 
     return (
         <form className="form-container" onSubmit={submit}>
@@ -24,6 +57,29 @@ function EditNameForm({ character, races, onSaved }) {
                         <option key={r.id} value={r.id}>{r.name}</option>
                     ))}
                 </select>
+            </article>
+            <article className="form-section portrait-picker">
+                <p className="tile-top">Character Portrait</p>
+                <div className="tile-bottom">
+                    <div className="portrait-grid">{thumb(null, 'Default')}</div>
+                    {portraits.length === 0 ? (
+                        <p className="portrait-empty">No portraits yet</p>
+                    ) : (
+                        GROUPS.map((g) => {
+                            const items = portraits.filter((p) => p.group === g);
+                            if (items.length === 0) return null;
+                            return (
+                                <div key={g} className="portrait-group">
+                                    <h3 className="portrait-group-title">{g}</h3>
+                                    <div className="portrait-grid">
+                                        {items.map((p) => thumb(`/portraits/${p.file}`, p.label))}
+                                    </div>
+                                </div>
+                            );
+                        })
+                    )}
+                    {portraitSave.message && <p>{portraitSave.message}</p>}
+                </div>
             </article>
             {message && <p>{message}</p>}
             <article className="form-section button-container">

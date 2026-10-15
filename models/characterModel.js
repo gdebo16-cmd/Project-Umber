@@ -31,7 +31,7 @@ export async function getSheetCharacter(charId, userId) {
 // Home page list for one user
 export async function listCharactersForUser(userId) {
     const { rows } = await pool.query(
-        `SELECT ch.id, ch.name,
+        `SELECT ch.id, ch.name, ch.portrait_url,
                 r.name AS race,
                 c.name AS class,
                 sc.name AS subclass
@@ -97,7 +97,7 @@ export async function createCharacter(userId, draft, final, plus2, plus1, maxHp)
 export async function getEditCharacter(charId, userId) {
     const { rows } = await pool.query(
         `SELECT id, name, race_id, class_id, subclass_id, level, str, dex, con, "int", wis, cha, luc, spd,
-                skill_proficiencies, feature_choices
+                skill_proficiencies, feature_choices, portrait_url
          FROM characters WHERE id = $1 AND user_id = $2`,
         [charId, userId]
     );
@@ -108,6 +108,14 @@ export async function updateNameAndRace(charId, userId, name, raceId) {
     await pool.query(
         `UPDATE characters SET name = $1, race_id = $2 WHERE id = $3 AND user_id = $4`,
         [name, raceId, charId, userId]
+    );
+}
+
+// portraitUrl is null (default image) or a validated '/portraits/<file>.png' path
+export async function updatePortrait(charId, userId, portraitUrl) {
+    await pool.query(
+        `UPDATE characters SET portrait_url = $1 WHERE id = $2 AND user_id = $3`,
+        [portraitUrl, charId, userId]
     );
 }
 

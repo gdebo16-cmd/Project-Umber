@@ -2459,3 +2459,80 @@
         margin: 0.25rem;
     }
 }
+
+@layer pages {
+    /* ---------- editor portrait picker ---------- */
+    .page-sheet body.subpage .portrait-group-title {
+        margin: 0.75rem 0 0.25rem;
+        font-size: 1rem;
+    }
+
+    .page-sheet body.subpage .portrait-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));
+        gap: 0.5rem;
+    }
+
+    .page-sheet body.subpage .portrait-thumb {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.2rem;
+        padding: 0.25rem;
+        background: transparent;
+        border: 2px solid transparent;
+        border-radius: 0.5rem;
+        color: inherit;
+        cursor: pointer;
+    }
+
+    .page-sheet body.subpage .portrait-thumb img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 0.35rem;
+    }
+
+    .page-sheet body.subpage .portrait-thumb.is-selected {
+        border-color: var(--accent);
+        box-shadow: 0 0 6px var(--accent);
+    }
+
+    .page-sheet body.subpage .portrait-label {
+        font-size: 0.7rem;
+        text-align: center;
+    }
+
+    .page-sheet body.subpage .portrait-empty {
+        margin: 0.5rem 0 0;
+        font-size: 0.85rem;
+        opacity: 0.8;
+    }
+}
+@layer pages {
+    /* ---------- sheet header portrait ---------- */
+    .page-sheet #character-header {
+        align-items: stretch;
+    }
+
+    .page-sheet #character-header .character-portrait {
+        flex: 0 0 auto;
+        align-self: center;
+        width: 3.5rem;
+        height: 3.5rem;
+        margin: var(--mar1);
+        object-fit: cover;
+        border: var(--tileBorder);
+        border-radius: var(--lowrad);
+        box-shadow: var(--bs2);
+    }
+
+    @media (max-width: 768px) {
+        /* the fixed RollOrb lives on the left edge, so the portrait moves to the right end */
+        .page-sheet #character-header .character-portrait {
+            order: 1;
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+    }
+}
