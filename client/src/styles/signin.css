@@ -57,10 +57,6 @@
         scrollbar-width: none;
     }
 
-    .page-signin select {
-        color: var(--txt-color-1);
-    }
-
     .page-signin option {
         background-color: var(--bg-color-5);
         color: var(--txt-color-1);
@@ -92,8 +88,6 @@
         max-height: 100px;
         margin: 0;
         padding: 0;
-        border: none;
-        box-shadow: none;
     }
 
     .page-signin #site-title {
@@ -145,21 +139,14 @@
         flex: 1;
     }
 
-    .page-signin .btn-nav {
-        border: var(--tileBorder);
-        background-color: var(--bg-color-2);
-        padding: var(--pad2);
-        color: var(--txt-color-1);
-    }
-
     .page-signin #home-nav {
-        border-radius: 0 0 0 10px;
+        border-radius: var(--radCornerBL);
     }
 }
 
-@layer overrides {
-    .page-signin #settings-nav /* clash: kept at old specificity */ {
-        border-radius: 0 0 10px 0;
+@layer pages {
+    .page-signin #settings-nav {
+        border-radius: var(--radCornerBR);
     }
 }
 
@@ -222,12 +209,6 @@
         color: var(--txt-color-1);
     }
 
-
-
-
-
-
-
     .page-signin .container {
         background-color: var(--bg-color-1);
         margin: 2%;
@@ -239,31 +220,6 @@
     .page-signin .title {
         text-align: center;
     }
-
-
-
-    .page-signin .tile-label {
-        text-align: center;
-        font-size: var(--fontS1);
-        font-weight: var(--fontW1);
-        font-style: var(--fontStyle);
-        padding: 5%;
-        border-radius: var(--toprad);
-    }
-
-    .page-signin .tile-value {
-        text-align: center;
-        font-size: var(--fontS1);
-        font-weight: var(--fontW1);
-        font-style: var(--fontStyle);
-        padding: 5%;
-    }
-
-    .page-signin select {
-        border: none;
-    }
-
-
 
     .page-signin #site-title {
         text-align: center;
@@ -353,8 +309,8 @@
     }
 }
 
-@layer overrides {
-    .page-signin .btn-form /* clash: kept at old specificity */ {
+@layer pages {
+    .page-signin .btn-form {
         border-radius: var(--tile);
     }
 }
@@ -397,8 +353,8 @@
     }
 }
 
-@layer overrides {
-    .page-signin .signin-value /* clash: kept at old specificity */ {
+@layer pages {
+    .page-signin .signin-value {
         border-radius: var(--lowrad);
     }
 }
@@ -408,11 +364,6 @@
         color: var(--txt-color-1);
         font-family: inherit;
         background-color: var(--bg-color-5);
-    }
-}
-
-@layer overrides {
-    .page-signin .signin-value /* clash: kept at old specificity */ {
     }
 }
 
@@ -485,8 +436,6 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-    .page-signin .signin-value /* clash: kept at old specificity */ {
-    }
     }
 }
 @layer pages {
@@ -502,8 +451,6 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-    .page-signin .btn-form /* clash: kept at old specificity */ {
-    }
     }
 }
 @layer pages {
@@ -535,8 +482,6 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-    .page-signin .btn-form /* clash: kept at old specificity */ {
-    }
     }
 }
 @layer pages {
@@ -548,8 +493,6 @@
             max-height: 100px;
             margin: 0;
             padding: 0;
-            border: none;
-            box-shadow: none;
         }
 
         .page-signin #site-title {
@@ -582,7 +525,6 @@
         }
     }
 
-
     .page-signin #login-link {
         color: var(--txt-color-1);
     }
@@ -612,12 +554,6 @@
         }
 
         /* Mobile: header and footer hug the screen edges. Fill the notch / home-bar areas with their own color instead of empty space */
-
-        html.page-signin {
-            padding-top: 0 !important;
-
-            /* overrides the safe-area padding in index.html */
-        }
 
         .page-signin body {
             height: 100dvh;
@@ -700,38 +636,7 @@
             background-position: center bottom;
         }
 
-        /* Mobile: soft fade at the top and bottom edges into the status bar color */
-
-        html.page-signin::after {
-            content: '';
-            position: fixed;
-            left: 0;
-            width: 100%;
-            top: calc(-1 * env(safe-area-inset-top));
-            height: calc(100lvh + env(safe-area-inset-top));
-            z-index: -1;
-            pointer-events: none;
-            background: linear-gradient(to bottom,
-                var(--status-solid, rgb(109, 83, 222)) 0,
-                transparent calc(env(safe-area-inset-top) + 4rem),
-                transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
-                var(--status-solid, rgb(109, 83, 222)) 100%);
-        }
-
         /* Mobile: iOS Safari colors its bar from what is painted at the top, so paint a solid title-color strip there */
-
-        html.page-signin {
-            background-color: var(--bgc-title, var(--bg-color-1));
-        }
-
-        html.page-signin::after {
-            background: linear-gradient(to bottom,
-                var(--bgc-title, rgb(65, 37, 157)) 0,
-                var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
-                transparent calc(env(safe-area-inset-top) + 4rem),
-                transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
-                var(--bgc-title, rgb(65, 37, 157)) 100%);
-        }
 
         /* Mobile: no footer */
 
@@ -739,19 +644,9 @@
             display: none;
         }
 
-        /* Mobile: no bottom fade, the picture runs to the bottom edge */
-
-        html.page-signin::after {
-            background: linear-gradient(to bottom,
-                var(--bgc-title, rgb(65, 37, 157)) 0,
-                var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
-                transparent calc(env(safe-area-inset-top) + 4rem));
-        }
-
         /* Mobile: stretch the background picture past the bottom so it fills behind Safari's bottom bar */
 
-        html.page-signin::before,
-        html.page-signin::after {
+        html.page-signin::before {
             height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
         }
     }

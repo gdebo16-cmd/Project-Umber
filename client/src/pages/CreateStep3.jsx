@@ -44,7 +44,7 @@ function CreateStep3() {
 
     // same dropdown twice, so make it a small function
     const statSelect = (id, value, setValue, placeholder) => (
-        <select className="bottomTile" id={id} value={value} onChange={(e) => setValue(e.target.value)} required>
+        <select className="tile-bottom" id={id} value={value} onChange={(e) => setValue(e.target.value)} required>
             <option value="" disabled>{placeholder}</option>
             {STATS.map((s) => (
                 <option key={s.key} value={s.key}>{s.label}</option>
@@ -66,23 +66,23 @@ function CreateStep3() {
                 <section id="form-container-step3">
                     <form className="form-container" onSubmit={submit}>
                         <article id="plus2Container" className="form-section tile">
-                            <label className="topTile" htmlFor="plus2">+2 bonus</label>
+                            <label className="tile-top" htmlFor="plus2">+2 bonus</label>
                             {statSelect('plus2', plus2, setPlus2, 'Select a +2 stat')}
                         </article>
 
                         <article id="plus1Container" className="form-section tile">
-                            <label className="topTile" htmlFor="plus1">+1 bonus</label>
+                            <label className="tile-top" htmlFor="plus1">+1 bonus</label>
                             {statSelect('plus1', plus1, setPlus1, 'Select a +1 stat')}
                         </article>
 
                         <article id="base-stat-container" className="form-section">
                             {STATS.map((s) => (
                                 <article key={s.key} id="baseStatItemContainer" className="form-section tile">
-                                    <span className="topTile">{s.label}</span>
+                                    <span className="tile-top">{s.label}</span>
                                     <button
                                         id="roll-button"
                                         type="button"
-                                        className="bottomTile btn-roll"
+                                        className="btn tile-bottom btn-roll"
                                         onClick={() => roll(s.key)}
                                     >
                                         {rolls[s.key] ?? 'roll'}
@@ -94,7 +94,7 @@ function CreateStep3() {
                         {saveError && <p>{saveError}</p>}
 
                         <article id="button-container" className="form-section">
-                            <button id="submit" className="btn-form" type="submit">Create Character</button>
+                            <button id="submit" className="btn btn-form" type="submit">Create Character</button>
                             <Link id="mobile-cancel" to="/home">Cancel</Link>
                         </article>
                     </form>

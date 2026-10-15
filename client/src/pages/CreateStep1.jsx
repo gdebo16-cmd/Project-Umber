@@ -64,12 +64,12 @@ function CreateStep1() {
                 <section id="form-container">
                     <form className="form-container" onSubmit={submit}>
                         <article id="char-name-container" className="form-section tile">
-                            <label className="topTile" htmlFor="name">Character name</label>
-                            <input className="bottomTile" type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="One with no name"  />
+                            <label className="tile-top" htmlFor="name">Character name</label>
+                            <input className="tile-bottom" type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="One with no name"  />
                         </article>
                         <article id="race-select-container" className="form-section tile">
-                            <label className="topTile" htmlFor="race_id">Race</label>
-                            <select className="bottomTile" id="race_id" value={raceId} onChange={(e) => { setRaceId(e.target.value); setSubraceId(''); }} required>
+                            <label className="tile-top" htmlFor="race_id">Race</label>
+                            <select className="tile-bottom" id="race_id" value={raceId} onChange={(e) => { setRaceId(e.target.value); setSubraceId(''); }} required>
                                 <option value="" disabled>Select your Race</option>
                                 {races.map((r) => (
                                     <option key={r.id} value={r.id}>{r.name}</option>
@@ -78,8 +78,8 @@ function CreateStep1() {
                         </article>
                         {subraces.length > 0 && (
                             <article id="subrace-select-container" className="form-section tile">
-                                <label className="topTile" htmlFor="subrace_id">{race.name === 'Lupine' ? 'Breed' : 'Gem Line'}</label>
-                                <select className="bottomTile" id="subrace_id" value={subraceId} onChange={(e) => setSubraceId(e.target.value)}>
+                                <label className="tile-top" htmlFor="subrace_id">{race.name === 'Lupine' ? 'Breed' : 'Gem Line'}</label>
+                                <select className="tile-bottom" id="subrace_id" value={subraceId} onChange={(e) => setSubraceId(e.target.value)}>
                                     <option value="">Select a sub-race</option>
                                     {subraces.map((s) => (
                                         <option key={s.id} value={s.id}>{s.name}</option>
@@ -99,7 +99,7 @@ function CreateStep1() {
                     : { img: race.img_url, name: race.name, text: race.traits, race })} />
             </main>
             <footer>
-                
+              <Link id="home-link" to="/home">Cancel</Link>
             </footer>
         </>
     );

@@ -5,11 +5,12 @@ import { getLearnedSpells } from '../models/spellModel.js';
 
 const { ownsCharacter } = Characters;
 
+
 // ---------- character sheet ----------
 
 // GET /api/characters/:id
 export async function getCharacter(req, res) {
-    if (!req.session.userId) return res.status(401).json({ error: 'You aint logged in, fool!' });
+    if (!req.session.userId) return res.status(401).json({ error: 'not logged in.' });
 
     const character = await Characters.getSheetCharacter(req.params.id, req.session.userId);
     if (!character) return res.status(404).json({ error: 'Character...What character?' });

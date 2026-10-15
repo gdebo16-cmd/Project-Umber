@@ -9,6 +9,7 @@ import { getInventory, addArmor, addWeapon, removeArmor, removeWeapon } from '..
 import { getEditCharacter, editNameAndRace, editClass, editLevel, editAbilities, editFeatureChoice, editPortrait } from '../controllers/apiEditController.js';
 import { getRaces, getSubraces, step1Submit, getStep2, step2Submit, getStep3, step3Submit, clearDraft, getDraft, rollStat, selectSubclass } from '../controllers/apiCreateController.js';
 import { getSpellbook, learnSpell, unlearnSpell, prepareSpell, unprepareSpell, setAction, removeAction } from '../controllers/apiSpellController.js';
+import { createCampaign, deleteCampaign, getCampaign, updateCampaign, listCampaigns } from '../controllers/apiCampaignController.js';
 
 import { rateLimit } from 'express-rate-limit';
 
@@ -77,6 +78,14 @@ router.post('/characters/:id/edit/class', editClass);
 router.post('/characters/:id/edit/level', editLevel);
 router.post('/characters/:id/edit/abilities', editAbilities);
 router.post('/characters/:id/edit/features', editFeatureChoice);
+
+// campaign creation and deletion
+router.get('/campaigns', listCampaigns);
+router.post('/campaigns', createCampaign);
+router.get('/campaigns/:id', getCampaign);
+router.patch('/campaigns/:id', updateCampaign);
+router.delete('/campaigns/:id', deleteCampaign);
+
 
 // If any route above crashes, answer with JSON instead of an HTML error page.
 // eslint-disable-next-line no-unused-vars

@@ -48,7 +48,7 @@ const pickBackground = async(e) => {
                 <section>
                         <article className="form-section profile-tile" id="profile-username-container">
                             <label id="theme-label" className="tile-label tile-top" htmlFor="theme-select">Color scheme</label>
-                            <select className="tile-value tile-bottom" id="theme-value" aria-label="Color scheme" defaultValue={localStorage.getItem('siteTheme') || 'default'} onChange={pickTheme}>
+                            <select className="field tile-value tile-bottom" id="theme-value" aria-label="Color scheme" defaultValue={localStorage.getItem('siteTheme') || 'default'} onChange={pickTheme}>
                                 {THEMES.map((t) => (
                                 <option className='option' id={`theme-option-${t}`} key={t} value={t}>{pretty(t)}</option>
                                 ))}
@@ -56,7 +56,7 @@ const pickBackground = async(e) => {
                         </article>
                         <article className="form-section profile-tile" id="profile-email-container">
                             <label id="display-label" className="tile-label tile-top" htmlFor="display-select">Display</label>
-                            <select className="tile-value tile-bottom" id="display-select" aria-label="Display" defaultValue={localStorage.getItem('siteDisplay') || 'standard'} onChange={pickDisplay}>
+                            <select className="field tile-value tile-bottom" id="display-select" aria-label="Display" defaultValue={localStorage.getItem('siteDisplay') || 'standard'} onChange={pickDisplay}>
                                 {DISPLAYS.map((d) => (
                                 <option className='option' id={`display-option-${d}`} key={d} value={d}>{pretty(d)}</option>
                                 ))}
@@ -64,7 +64,7 @@ const pickBackground = async(e) => {
                         </article>
                         <article className="form-section profile-tile" id="profile-background-container">
                             <label id="background-label" className="tile-label tile-top" htmlFor="background-select">Background</label>
-                            <select className="tile-value tile-bottom" id="background-select" aria-label="Background" defaultValue={localStorage.getItem('siteBackground') || 'default'} onChange={pickBackground}>
+                            <select className="field tile-value tile-bottom" id="background-select" aria-label="Background" defaultValue={localStorage.getItem('siteBackground') || 'default'} onChange={pickBackground}>
                                 {BACKGROUNDS.map((b) => (
                                 <option className='option' id={`background-option-${b}`} key={b} value={b}>{pretty(b)}</option>
                                 ))}

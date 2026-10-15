@@ -16,9 +16,9 @@ function ThemePicker() {
     };
 
     return (
-        <article className="btn-nav" id="theme-nav">
+        <article className="btn btn-nav" id="theme-nav">
             <label className="tile-top" htmlFor="theme-select">Color scheme</label>
-            <select className="tile-bottom" id="theme-select" aria-label="Color scheme" value={theme} onChange={change}>
+            <select className="field tile-bottom" id="theme-select" aria-label="Color scheme" value={theme} onChange={change}>
                 {THEMES.map((t) => (
                     <option key={t} value={t}>{pretty(t)}</option>
                 ))}

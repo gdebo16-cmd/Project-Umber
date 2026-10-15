@@ -60,7 +60,7 @@ function RegisterPage() {
                         {error && <p>{error}</p>}
 
                         <article className="form-section button-container">
-                            <button className="btn-form" type="submit">Create Account</button>
+                            <button className="btn btn-form" type="submit">Create Account</button>
                         </article>
                     </form>
                 </section>

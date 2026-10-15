@@ -12,6 +12,9 @@ import CreateStep1 from './pages/CreateStep1';
 import CreateStep2 from './pages/CreateStep2';
 import CreateStep3 from './pages/CreateStep3';
 import usePageTheme from './hooks/usePageTheme';
+import CampaignPage from './pages/CampaignPage';
+import CreateCampaign from './pages/CreateCampaign';
+import CampaignList from './pages/CampaignList';
 
 function ThemeWatcher() {
     usePageTheme();
@@ -33,6 +36,9 @@ function App() {
                     <Route path="/home" element={<HomePage />} />
                     <Route path='/profile' element={<ProfilePage />} />
                     <Route path="/settings" element={<SettingsPage />} />
+                    <Route path="/campaign/:campId" element={<CampaignPage />} />
+                    <Route path="/campaign_list" element={<CampaignList />} />
+                    <Route path="/create_campaign" element={<CreateCampaign />} />
                     <Route path="/create_char" element={<CreateStep1 />} />
                     <Route path="/create_char/step2" element={<CreateStep2 />} />
                     <Route path="/create_char/step3" element={<CreateStep3 />} />

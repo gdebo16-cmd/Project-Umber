@@ -6,8 +6,8 @@ function StepNav({ back, forward }) {
     const navigate = useNavigate();
     return (
         <nav id="step-nav">
-            <button type="button" className="btn-step" disabled={!back} onClick={() => navigate(back)}>Back</button>
-            <button type="button" className="btn-step" disabled={!forward} onClick={() => navigate(forward)}>Forward</button>
+            <button type="button" className="btn btn-step" disabled={!back} onClick={() => navigate(back)}>Back</button>
+            <button type="button" className="btn btn-step" disabled={!forward} onClick={() => navigate(forward)}>Forward</button>
         </nav>
     );
 }

@@ -52,7 +52,7 @@ function HomePage() {
                     <article className="title" id="current-character-title">
                         <h2 className="title-text">Current Characters</h2>
                     </article>
-                    <article className="tile" id="current-character-tile">
+                    <article className="char-list" id="current-character-tile">
                         {characters.length === 0 ? (
                             <p>No Characters Available</p>
                         ) : (
@@ -77,7 +77,7 @@ function HomePage() {
                     <article className="title" id="current-campaign-title">
                         <h2 className="title-text">Current Campaigns</h2>
                     </article>
-                    <article className="tile" id="current-campaign-list">
+                    <article className="char-list" id="current-campaign-list">
                         <p className="tile-text">No Campaigns Planned</p>
                     </article>
                 </section>
@@ -85,7 +85,7 @@ function HomePage() {
                     <article className="title" id="unfinished-character-title">
                         <h2 className="title-text">Unfinished Work</h2>
                     </article>
-                    <article className="tile" id="unfinished-character-tile">
+                    <article className="char-list" id="unfinished-character-tile">
                         <ul className="tile-list" id="unfinished-character-list">
                         {draft ? (
                             <li key={draft.id} className='character-tile' id={`character-tile-${draft.id}`}>

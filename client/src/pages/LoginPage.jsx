@@ -49,8 +49,8 @@ function LoginPage() {
                         {error && <p>{error}</p>}
 
                         <article className="form-section button-container">
-                            <button id="loginButton" className="btn-form" type="submit">Login</button>
-                            <Link to="/register" className="btn-form" id="newUserButton">Create New User</Link>
+                            <button id="loginButton" className="btn btn-form" type="submit">Login</button>
+                            <Link to="/register" className="btn btn-form" id="newUserButton">Create New User</Link>
                         </article>
                     </form>
                 </section>

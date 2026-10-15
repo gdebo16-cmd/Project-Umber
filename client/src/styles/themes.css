@@ -1,10 +1,17 @@
 @layer base, components, displays, pages, overrides;
+@import './components.css';
 
 @layer base {
     /* Shared theme + display variables. Pulled in by home.css, charSheet.css and signin.css via @import. */
 
     :root,
     [data-display='standard'] {
+        /* retool phase 1: shared literals */
+        --glassBorder: 1px solid rgba(255, 255, 255, 0.25);
+        --radCornerBL: 0 0 0 10px;
+        --radCornerBR: 0 0 10px 0;
+        --titleFallback: rgb(65, 37, 157);
+        --statusFallback: rgb(109, 83, 222);
         --tileBorder: 1px solid var(--bordercolor);
         --bs3: none;
         --backdrop: none;
@@ -163,9 +170,8 @@
         --bs3: 0 2px 8px rgba(0, 0, 0, 0.25);
         --toprad: 1.25rem 1.25rem 0 0;
         --lowrad: 0 0 1.25rem 1.25rem;
-        --tile: 1.25rem;
+        --tile: .75rem;
         --backdrop: blur(15px) saturate(180%);
-        --btnRad: 999px;
         --inputRad: .75rem;
     }
 
@@ -224,115 +230,6 @@
         --btnRad: .6rem;
         --inputRad: .5rem;
         --letterSp: .02em;
-    }
-}
-
-@layer displays {
-    /* Shared per-display rules: applied the same way on every page (all page stylesheets import this file).
-       'standard' has no rules here, so the default look is unchanged. */
-
-    html[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .panel-shell, .title-tile) {
-        border-radius: var(--tile);
-        box-shadow: var(--bs2);
-        backdrop-filter: var(--backdrop);
-        -webkit-backdrop-filter: var(--backdrop);
-    }
-}
-
-@layer overrides {
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .panel-shell, .title-tile) /* clash: kept at old specificity */ {
-        border: var(--tileBorder);
-    }
-}
-
-@layer displays {
-    html[data-display]:not([data-display='standard']) :is(button, .btn-form, .btn-nav, .btn-action, .damage-button, .btn-to-hit, .btn-spell-name, .btn-link, .btn-drop):not(.tile-top, .tile-bottom) {
-        letter-spacing: var(--letterSp);
-    }
-}
-
-@layer overrides {
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(button, .btn-form, .btn-nav, .btn-action, .damage-button, .btn-to-hit, .btn-spell-name, .btn-link, .btn-drop):not(.tile-top, .tile-bottom) /* clash: kept at old specificity */ {
-        border-radius: var(--btnRad);
-        box-shadow: var(--bs3);
-        font-family: var(--fontF);
-    }
-
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(input, select, textarea):not(.tile-top, .tile-bottom) /* clash: kept at old specificity */ {
-        border-radius: var(--inputRad);
-        font-family: var(--fontF);
-    }
-}
-
-@layer displays {
-    html[data-display]:not([data-display='standard']) :is(#nav-box, .drop-down) {
-        box-shadow: var(--bs2);
-    }
-}
-
-@layer overrides {
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(#nav-box, .drop-down) /* clash: kept at old specificity */ {
-        border-radius: var(--rad1);
-    }
-}
-
-@layer displays {
-    html[data-display]:not([data-display='standard']) :is(h1, h2, h3, .title, .tile-label) {
-        font-family: var(--fontF);
-        font-weight: var(--fontW1);
-        letter-spacing: var(--letterSp);
-    }
-}
-
-@layer overrides {
-    /* Tile halves (label on top, value below) sit flush inside the tile: corners follow the tile, no doubled borders */
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .title-tile) /* clash: kept at old specificity */ {
-        overflow: clip;
-    }
-
-    /* home character lists scroll inside their tile (clip above would block it) */
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) :is(#current-character-tile, #unfinished-character-tile) {
-        overflow-x: hidden;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-}
-
-@layer displays {
-    html[data-display]:not([data-display='standard']) .tile-top {
-        box-shadow: none;
-    }
-}
-
-@layer overrides {
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) .tile-top /* clash: kept at old specificity */ {
-        border: none;
-        border-radius: var(--tile) var(--tile) 0 0;
-    }
-}
-
-@layer displays {
-    html[data-display]:not([data-display='standard']) .tile-bottom {
-        border-top: var(--tileBorder);
-        box-shadow: none;
-    }
-}
-
-@layer overrides {
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) .tile-bottom /* clash: kept at old specificity */ {
-        border: none;
-        border-radius: 0 0 var(--tile) var(--tile);
-    }
-}
-
-@layer displays {
-    html[data-display='neon'] :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box) {
-        box-shadow: var(--glow);
-    }
-
-    html[data-display='minimal'] :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .panel-shell, .title-tile) {
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
     }
 }
 
@@ -648,7 +545,7 @@
         --bg-color-3: rgba(0, 0, 0, 0.466);
         --bg-color-2: rgba(9, 8, 8, 0.74);
         --bg-color-1: rgba(0, 0, 0, 0.452);
-        --txt-color-1: rgb(94, 91, 105);
+        --txt-color-1: rgb(208, 205, 222);
         --bordercolor: rgba(22, 21, 21, 0.74);
         --bgc-top: rgba(0, 0, 0, 0.883);
         --bgc-low: rgba(0, 0, 0, 0.614);
@@ -686,24 +583,23 @@
     }
 
     [data-theme="light-glass"] {
-        --healColor: rgba(46, 79, 46, 0.712);
-        --damageColor: rgba(79, 46, 46, 0.712);
+        --healColor: rgba(189, 223, 189, 0.712);
+        --damageColor: rgba(247, 144, 144, 0.712);
         --bgc-bubble-send: rgb(249, 232, 200);
         --bgc-bubble-receive: rgb(255, 255, 255);
         --bgc-orb: rgb(63, 59, 49);
-        --bg-color-5: rgb(245, 236, 214);
-        --bg-color-4: rgba(255, 255, 255, 0.062);
+        --bg-color-4: rgba(255, 255, 255, 0.799);
         --bg-color-3: rgba(255, 230, 184, 0.781);
         --bg-color-2: rgba(252, 202, 116, 0.669);
-        --bg-color-1: rgba(238, 232, 216, 0.74);
-        --txt-color-1: rgb(150, 200, 255);
+        --bg-color-1: rgba(145, 133, 98, 0.74);
+        --txt-color-1: rgb(89, 77, 48);
         --title-text: rgb(150, 200, 255);
         --text-color-2: rgb(150, 200, 255);
         --bordercolor: rgb(255, 228, 179);
         --bgc-top: rgba(255, 254, 252, 0.753);
         --bgc-low: rgba(196, 167, 132, 0.627);
         --bgc-title: rgba(203, 177, 121, 0.591);
-        --accent: rgb(255, 255, 255);
+        --accent: rgb(255, 215, 142);
         --blur1: blur(3px) saturate(150%);
         --blur2: blur(1.5px) saturate(150%);
     }
@@ -751,34 +647,34 @@
     }
 
     [data-theme="frozen"] {
-        --bgc-bubble-send: rgb(20, 83, 112);
-        --bgc-bubble-receive: rgb(155, 220, 245);
+        --bgc-bubble-send: rgb(178, 225, 247);
+        --bgc-bubble-receive: rgb(229, 248, 255);
         --bgc-orb: rgb(104, 161, 175);
-        --bg-color-5: rgb(16, 66, 90);
+        --bg-color-5: rgb(136, 179, 199);
         --bg-color-4: rgba(155, 220, 245, 0.893);
-        --bg-color-3: rgba(20, 83, 112, 0.806);
-        --bg-color-2: rgba(78, 193, 238, 0.867);
+        --bg-color-3: rgba(211, 239, 252, 0.806);
+        --bg-color-2: rgba(168, 222, 243, 0.872);
         --bg-color-1: rgba(58, 111, 138, 0.872);
-        --txt-color-1: rgb(12, 43, 49);
+        --txt-color-1: rgb(15, 67, 95);
         --bordercolor: rgba(119, 221, 255, 0.885);
-        --bgc-top: rgba(168, 221, 245, 0.948);
-        --bgc-low: rgba(46, 84, 100, 0.856);
+        --bgc-top: rgba(194, 235, 253, 0.948);
+        --bgc-low: rgba(109, 210, 253, 0.856);
         --bgc-title: rgba(71, 102, 115, 0.977);
-        --accent: rgb(252, 226, 187);
+        --accent: rgb(101, 129, 255);
         --blur1: blur(3px) saturate(150%);
         --blur2: blur(0) saturate(150%);
-        --healColor: rgba(109, 188, 253, 0.63);
-        --damageColor: rgba(39, 96, 252, 0.712);
+        --healColor: rgba(179, 220, 254, 0.889);
+        --damageColor: rgba(13, 22, 44, 0.888);
     }
 
     [data-theme="frozen-glass"] {
-        --bgc-bubble-send: rgb(20, 83, 112);
-        --bgc-bubble-receive: rgb(155, 220, 245);
-        --bgc-orb: rgb(104, 161, 175);
+        --bgc-bubble-send: rgb(178, 225, 247);
+        --bgc-bubble-receive: rgb(229, 248, 255);
+        --bgc-orb: rgb(111, 172, 187);
         --bg-color-5: rgb(133, 194, 222);
         --bg-color-4: rgba(153, 187, 200, 0.438);
         --bg-color-3: rgba(36, 130, 173, 0.678);
-        --bg-color-2: rgba(142, 223, 255, 0.72);
+        --bg-color-2: rgba(188, 233, 251, 0.631);
         --bg-color-1: rgba(84, 156, 174, 0.72);
         --txt-color-1: rgb(0, 80, 94);
         --bordercolor: rgba(208, 244, 255, 0.888);
@@ -788,8 +684,8 @@
         --accent: rgb(252, 226, 187);
         --blur1: blur(3px) saturate(150%);
         --blur2: blur(0) saturate(150%);
-        --healColor: rgba(109, 188, 253, 0.63);
-        --damageColor: rgba(39, 96, 252, 0.712);
+        --healColor: rgb(208, 234, 255);
+        --damageColor: rgb(2, 12, 39);
     }
 
     [data-theme="neon"] {
@@ -856,7 +752,7 @@
 }
 
 @layer overrides {
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-theme="neon"] :is(button, .btn-form, .btn-nav, .btn-action):hover /* clash: kept at old specificity */ {
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-theme="neon"] :is(button, .btn-form, .btn-nav, .btn-action):hover {
         box-shadow: var(--neonGlow);
     }
 }
@@ -1028,7 +924,6 @@
         }
     }
 
-
     /* phones: portrait crops of each background */
     @media (max-width: 768px) {
         html[data-background="default"] { --background: url('/colorsketch-eldrid-mobile-1440x2560.webp'); }
@@ -1046,41 +941,12 @@
     }
 }
 
-@layer overrides {
-    /* every nav button is square, outer corners included */
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) /* clash: kept at old specificity */ {
-        border-radius: 0;
-    }
-
-    /* nav borders follow each display's border style */
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display]:not([data-display='standard']) #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) /* clash: kept at old specificity */ {
-        border: var(--tileBorder);
-    }
-}
-@layer displays {
-    html[data-display]:not([data-display='standard']) #nav-container > :not(:first-child) {
-        border-left: none;
-    }
-    html[data-display='compact'] #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) {
-        border: none;
-    }
-
-    /* per-display nav borders */
-    html:is([data-display='glass'], [data-display='minimal']) #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) {
-        border: none;
-    }
-    html[data-display='bold'] #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) {
-        border: 3px solid var(--bordercolor);
-    }
-    html[data-display='neon'] #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) {
-        border: 1px solid var(--bgc-bubble-receive);
-    }
-}
-
-@layer overrides {
-    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display='neon'] #nav-container :is(.btn-nav, #home-nav, #character-nav, #campaign-nav, #settings-nav) /* clash: kept at old specificity */ {
+@layer pages {
+    html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display='neon'] #nav-container .btn-nav {
         box-shadow: var(--glow);
     }
+}
+@layer overrides {
 
     /* Home tabs: round only the top corners, on every display style */
     html:is(.page-sheet, .page-home, .page-signin, .page-create)[data-display] .home-tabs button.home-tab.home-tab:not(.tile-top) /* clash: kept at old specificity */ {
@@ -1093,34 +959,6 @@
     html[data-display] :is(.btn-spell-name, .btn-link) {
         box-shadow: none !important;
         text-shadow: none;
-    }
-}
-@layer overrides {
-    /* Condition lists inside the Conditions tile: no shadow, in every display style */
-    :is(:is(.page-sheet, .page-home, .page-signin, .page-create), :is(.page-sheet, .page-home, .page-signin, .page-create) *):is(#conditions-list-1, #conditions-list-2, #conditions-list-3) /* clash: kept at old specificity */ {
-        box-shadow: none;
-    }
-}
-
-@layer components {
-    /* Shared base rules (moved here from home.css, signin.css and charSheet.css, where they were identical).
-       They sit at the end of themes.css, which is the same spot in the cascade they had right after each page's @import. */
-    .hover-grow {
-        transition: transform .5s ease;
-    }
-
-    .hover-grow:hover {
-        transform: scale(1.03);
-    }
-
-    .tile-top {
-        background-color: var(--bgc-top);
-        border-radius: var(--toprad);
-    }
-
-    .tile-bottom {
-        background-color: var(--bgc-low);
-        border-radius: var(--lowrad);
     }
 }
 

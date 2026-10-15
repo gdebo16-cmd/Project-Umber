@@ -35,12 +35,12 @@ function ItemShop({ characterId, onDone }) {
             <>
                 <em className="ownedItem">Owned</em>
                 <form className="removeItemForm" onSubmit={(e) => { e.preventDefault(); changeItem(kind, itemId, 'remove'); }}>
-                    <button type="submit" id="remove-item-button" className="btn-action hover-grow">Remove</button>
+                    <button type="submit" id="remove-item-button" className="btn btn-action hover-grow">Remove</button>
                 </form>
             </>
         ) : (
             <form className="addItemForm" onSubmit={(e) => { e.preventDefault(); changeItem(kind, itemId, 'add'); }}>
-                <button type="submit" id="add-item-button" className="btn-action hover-grow">Add</button>
+                <button type="submit" id="add-item-button" className="btn btn-action hover-grow">Add</button>
             </form>
         )
     );
@@ -54,7 +54,7 @@ function ItemShop({ characterId, onDone }) {
         <>
             <section className="title-tile">
                 <h3 className="action-title tile-top">Item Shop</h3>
-                <button type="button" className="btn-link hover-grow" onClick={onDone}>Done browsing</button>
+                <button type="button" className="btn btn-link hover-grow" onClick={onDone}>Done browsing</button>
                 {saveError && <p>{saveError}</p>}
             </section>
             

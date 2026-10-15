@@ -39,12 +39,12 @@ const changeSpell = async (spellId, action) => {
             <>
                 <em className='learned-spell'>Learned</em>
                 <form className='forgetSpellForm' onSubmit={(e) => { e.preventDefault(); changeSpell(spellId, 'unlearn'); }}>
-                    <button type='submit' id='forget-spell-button' className='btn-action hover-grow'>Forget</button>
+                    <button type='submit' id='forget-spell-button' className='btn btn-action hover-grow'>Forget</button>
                 </form>           
             </>
         ) : (
             <form className='learnSpellForm' onSubmit={(e) => { e.preventDefault(); changeSpell(spellId, 'learn'); }}>
-                <button type='submit' id='learn-spell-button' className='btn-action hover-grow'>Learn</button>
+                <button type='submit' id='learn-spell-button' className='btn btn-action hover-grow'>Learn</button>
             </form>
         )
     );
@@ -60,7 +60,7 @@ const changeSpell = async (spellId, action) => {
         <>
         <section className="title-tile">
         <h3 className="action-title tile-top">Study Arcana</h3>
-        <button type='button' className='btn-link hover-grow' onClick={onDone}>Close the Book</button>
+        <button type='button' className='btn btn-link hover-grow' onClick={onDone}>Close the Book</button>
         {saveError && <p>{saveError}</p>}
         </section>
             
@@ -72,7 +72,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spell-list'>
                         {spells.filter(s => s.base_level === 0).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <button type='button' className='action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button>
+                                <button type='button' className='btn action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button>
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -83,7 +83,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spell-list'>
                         {spells.filter(s => s.base_level === 1).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <button type='button' className='action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button>
+                                <button type='button' className='btn action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button>
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -94,7 +94,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spell-list'>
                         {spells.filter(s => s.base_level === 2).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <button type='button' className='action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
+                                <button type='button' className='btn action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -105,7 +105,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spell-list'>
                         {spells.filter(s => s.base_level === 3).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <button type='button' className='action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
+                                <button type='button' className='btn action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -116,7 +116,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spell-list'>
                         {spells.filter(s => s.base_level === 4).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <button type='button' className='action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
+                                <button type='button' className='btn action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -127,7 +127,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spell-list'>
                         {spells.filter(s => s.base_level === 5).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <button type='button' className='action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
+                                <button type='button' className='btn action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}  
                             </li>
                         ))}
@@ -138,7 +138,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spell-list'>
                         {spells.filter(s => s.base_level === 6).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <button type='button' className='action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
+                                <button type='button' className='btn action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -149,7 +149,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spell-list'>
                         {spells.filter(s => s.base_level === 7).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <button type='button' className='action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
+                                <button type='button' className='btn action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -160,7 +160,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spell-list'>
                         {spells.filter(s => s.base_level === 8).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <button type='button' className='action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
+                                <button type='button' className='btn action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}
@@ -171,7 +171,7 @@ const changeSpell = async (spellId, action) => {
                     <ul className='action-list spell-list'>
                         {spells.filter(s => s.base_level === 9).map(s => (
                             <li key={s.id} className='action-item spell-item'>
-                                <button type='button' className='action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
+                                <button type='button' className='btn action-label spell-name btn-spell-name hover-grow' onClick={() => onOpenSpell?.(s)}>{s.name}</button> 
                                 {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                             </li>
                         ))}

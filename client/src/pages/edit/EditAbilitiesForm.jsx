@@ -24,7 +24,7 @@ function EditAbilitiesForm({ character, onSaved }) {
                 {STATS.map((s) => (
                     <article key={s.key} className="form-section">
                         <span className="tile-top">{s.label}</span>
-                        <button type="button" className="tile-bottom btn-roll" onClick={() => reroll(s.key)}>
+                        <button type="button" className="btn tile-bottom btn-roll" onClick={() => reroll(s.key)}>
                             {scores[s.key] ?? 'roll'}
                         </button>
                     </article>
@@ -32,7 +32,7 @@ function EditAbilitiesForm({ character, onSaved }) {
             </article>
             {message && <p>{message}</p>}
             <article className="form-section button-container">
-                <button className="btn-form" type="submit">Save Changes</button>
+                <button className="btn btn-form" type="submit">Save Changes</button>
             </article>
         </form>
     );

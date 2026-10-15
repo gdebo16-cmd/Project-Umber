@@ -54,7 +54,7 @@ function InventoryTab() {
         <section id="inventory-container">
             <article className='title-tile'>
                 <h3 className="action-title" id="inventory-title">Inventory</h3>
-                <button type="button" className="btn-link hover-grow" onClick={() => setBrowsing(true)}>Add Armor &amp; weapons</button>
+                <button type="button" className="btn btn-link hover-grow" onClick={() => setBrowsing(true)}>Add Armor &amp; weapons</button>
             </article>
             {error && <p>{error}</p>}
 
@@ -73,12 +73,12 @@ function InventoryTab() {
                                         <div className="action-button-container">
                                             <em className="equipped-item">Equipped</em>
                                             <form className="removeItemForm" onSubmit={(e) => { e.preventDefault(); armorAction(a.id, 'unequip'); }}>
-                                                <button type="submit" className="btn-action hover-grow">Unequip</button>
+                                                <button type="submit" className="btn btn-action hover-grow">Unequip</button>
                                             </form>
                                         </div>
                                     ) : (
                                         <form className="equipItemForm" onSubmit={(e) => { e.preventDefault(); armorAction(a.id, 'equip'); }}>
-                                            <button type="submit" className="btn-action hover-grow">Equip</button>
+                                            <button type="submit" className="btn btn-action hover-grow">Equip</button>
                                         </form>
                                     )}
                                 </li>
@@ -100,12 +100,12 @@ function InventoryTab() {
                                         <div className="action-button-container">
                                             <em className="equipped-item">Equipped</em>
                                             <form className="removeItemForm" onSubmit={(e) => { e.preventDefault(); weaponAction(w.id, 'unequip'); }}>
-                                                <button type="submit" className="btn-action hover-grow">Unequip</button>
+                                                <button type="submit" className="btn btn-action hover-grow">Unequip</button>
                                             </form>
                                         </div>
                                     ) : (
                                         <form className="equipItemForm" onSubmit={(e) => { e.preventDefault(); weaponAction(w.id, 'equip'); }}>
-                                            <button type="submit" className="btn-action hover-grow">Equip</button>
+                                            <button type="submit" className="btn btn-action hover-grow">Equip</button>
                                         </form>
                                     )}
                                 </li>

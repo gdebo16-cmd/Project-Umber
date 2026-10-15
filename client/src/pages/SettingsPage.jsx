@@ -45,17 +45,17 @@ function SettingsPage() {
                     <form onSubmit={submit}>
                         <article className="form-section profile-tile" id="profile-username-container">
                             <label className="profile-label" htmlFor="username">Username</label>
-                            <input className="profile-value" type="text" id="username" name="username" value={form.username} onChange={update} />
+                            <input className="field profile-value" type="text" id="username" name="username" value={form.username} onChange={update} />
                         </article>
 
                         <article className="form-section profile-tile" id="profile-email-container">
                             <label className="profile-label" htmlFor="email">Email</label>
-                            <input className="profile-value" type="email" id="email" name="email" value={form.email} onChange={update} />
+                            <input className="field profile-value" type="email" id="email" name="email" value={form.email} onChange={update} />
                         </article>
 
                         <article className="form-section profile-tile" id="profile-password-container">
                             <label className="profile-label" htmlFor="password">Password</label>
-                            <input className="profile-value" type="password" id="password" name="password" value={form.password} onChange={update} />
+                            <input className="field profile-value" type="password" id="password" name="password" value={form.password} onChange={update} />
                         </article>
 
                         {message && <p>{message}</p>}

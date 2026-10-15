@@ -149,8 +149,8 @@ function CreateStep2() {
                 <section id="form-container">
                     <form className="form-container" onSubmit={submit}>
                         <article id="level-container" className="form-section tile pick-tile">
-                            <label className="topTile" htmlFor="level">Select Level</label>
-                            <select className="bottomTile level-select" id="level" value={level} onChange={changeLevel} required>
+                            <label className="tile-top" htmlFor="level">Select Level</label>
+                            <select className="tile-bottom level-select" id="level" value={level} onChange={changeLevel} required>
                                 {LEVELS.map((n) => (
                                     <option key={n} value={n} className="level-option">{n}</option>
                                 ))}
@@ -158,8 +158,8 @@ function CreateStep2() {
                         </article>
 
                         <article id="class-container" className="form-section tile pick-tile">
-                            <label className="topTile" htmlFor="class_id">Select Class</label>
-                            <select className="bottomTile class-select" id="class_id" value={classId} onChange={changeClass} required>
+                            <label className="tile-top" htmlFor="class_id">Select Class</label>
+                            <select className="tile-bottom class-select" id="class_id" value={classId} onChange={changeClass} required>
                                 <option value="" disabled className="class-option">Select your Class</option>
                                 {classes.map((c) => (
                                     <option key={c.id} value={c.id} className="class-option">{c.name}</option>
@@ -168,9 +168,9 @@ function CreateStep2() {
                         </article>
 
                         <article id="sub-class-container" className="form-section tile pick-tile">
-                            <label className="topTile" htmlFor="subclass_id">Select Subclass</label>
+                            <label className="tile-top" htmlFor="subclass_id">Select Subclass</label>
                             <select
-                                className="bottomTile subclass-select"
+                                className="tile-bottom subclass-select"
                                 id="subclass_id"
                                 value={subclassId}
                                 onChange={changeSubclass}
@@ -186,14 +186,14 @@ function CreateStep2() {
                         </article>
                         {picked && picked.skill_choice_count > 0 && (
                         <article id="skill-container" className="form-section tile pick-tile">
-                            <label className="topTile">Choose {picked.skill_choice_count} Skills</label>
+                            <label className="tile-top">Choose {picked.skill_choice_count} Skills</label>
                             {picked.skill_fixed?.length > 0 && (
-                                <p className="bottomTile skill-pick-select">Always proficient: {picked.skill_fixed.join(', ')}</p>
+                                <p className="tile-bottom skill-pick-select">Always proficient: {picked.skill_fixed.join(', ')}</p>
                             )}
                             {skillPicks.map((choice, i) => (
                                 <select
                                     key={i}
-                                    className="bottomTile skill-pick-select"
+                                    className="tile-bottom skill-pick-select"
                                     value={choice}
                                     required
                                     onChange={(e) => {
@@ -212,7 +212,7 @@ function CreateStep2() {
                             ))}
                         </article>
                         )}
-                        <LevelChoices features={choiceList} picks={picks} onChange={setPicks} topClass="topTile" bottomClass="bottomTile" />
+                        <LevelChoices features={choiceList} picks={picks} onChange={setPicks} topClass="tile-top" bottomClass="tile-bottom" />
                         {saveError && <p>{saveError}</p>}
                         <article id="button-container" className="form-section">
                             <button id="submit" type="submit">Next: Abilities</button>
@@ -223,7 +223,7 @@ function CreateStep2() {
                 <CreateDescription item={shown} />
             </main>
             <footer>
-                <Link id="home-link" to="/home">Cancel</Link>
+                <Link id="home-link" to="/home">Back to Home</Link>
             </footer>
         </>
     );

@@ -34,7 +34,7 @@ function EditCharacterPage() {
         <>
             <header>
                 <h1 className='' id="site-title">{character.name} - Character Editor</h1>
-                <p className='btn-link' id="editLink"><Link to={`/characters/${character.id}`}>Back to character sheet</Link></p>
+                <p className='btn btn-link' id="editLink"><Link to={`/characters/${character.id}`}>Back to character sheet</Link></p>
             </header>
             <main className="subpage-main">
                 <section className="panel-shell">

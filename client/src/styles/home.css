@@ -6,7 +6,6 @@
         min-height: var(--minH1);
         margin: var(--mar1);
         overflow: var(--ofX2);
-        backdrop-filter: var(--blur1);
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: 1fr;
@@ -75,11 +74,6 @@
         border: var(--tileBorder);
     }
 
-    .page-home select {
-        color: var(--txt-color-1);
-        border: none;
-    }
-
     .page-home option {
         background-color: var(--bg-color-5);
         color: var(--txt-color-1);
@@ -138,9 +132,6 @@
     }
 
     .page-home .btn-nav {
-        background-color: var(--bg-color-2);
-        padding: var(--pad2);
-        color: var(--txt-color-1);
         width: 100%;
         min-width: 0;
         box-sizing: border-box;
@@ -150,21 +141,15 @@
     }
 }
 
-@layer overrides {
-    .page-home .btn-nav /* clash: kept at old specificity */ {
-        border: var(--tileBorder);
+@layer pages {
+    .page-home #home-nav {
+        border-radius: var(--radCornerBL);
     }
 }
 
 @layer pages {
-    .page-home #home-nav {
-        border-radius: 0 0 0 10px;
-    }
-}
-
-@layer overrides {
-    .page-home #settings-nav /* clash: kept at old specificity */ {
-        border-radius: 0 0 10px 0;
+    .page-home #settings-nav {
+        border-radius: var(--radCornerBR);
     }
 }
 
@@ -258,12 +243,6 @@
     }
 }
 
-@layer overrides {
-    .page-home .tile-label /* clash: kept at old specificity */ {
-        border-radius: var(--toprad);
-    }
-}
-
 @layer pages {
     .page-home .tile-value {
         text-align: center;
@@ -272,8 +251,6 @@
         font-style: var(--fontStyle);
         padding: 5%;
     }
-
-
 
     .page-home .profile-tile {
         text-align: center;
@@ -304,8 +281,8 @@
     }
 }
 
-@layer overrides {
-    .page-home .profile-value /* clash: kept at old specificity */ {
+@layer pages {
+    .page-home .profile-value {
         border-radius: var(--lowrad);
     }
 }
@@ -325,19 +302,11 @@
     }
 }
 
-@layer overrides {
-    .page-home .profile-button /* clash: kept at old specificity */ {
+@layer pages {
+    .page-home .profile-button {
         border-radius: var(--rad2);
     }
 }
-
-
-
-
-
-
-
-
 
 @layer pages {
     .page-home #current-character-container {
@@ -425,10 +394,10 @@
         max-height: none;
         object-fit: cover;
         align-self: stretch;
-        border: 1px solid rgba(255, 255, 255, 0.25);
+        border: var(--glassBorder);
         outline: 5px ridge var(--tileBorder);
         
-        border-radius: 0 0 0 10px;
+        border-radius: var(--radCornerBL);
         z-index: 1;
     }
 
@@ -466,7 +435,7 @@
         border: var(--tileBorder);
         background-color: var(--bg-color-1);
         backdrop-filter: var(--blur1);
-        border-radius: 0 0 10px 0;
+        border-radius: var(--radCornerBR);
     }
 
     .page-home .character-delete-button {
@@ -483,8 +452,8 @@
     }
 }
 
-@layer overrides {
-    .page-home .character-delete-button /* clash: kept at old specificity */ {
+@layer pages {
+    .page-home .character-delete-button {
         border-radius: 0 10px 0 0;
     }
 }
@@ -537,8 +506,6 @@
     }
 
     .page-home .form-section {
-        display: flex;
-        flex-direction: column;
         gap: 2.5%;
     }
 
@@ -564,10 +531,6 @@
     .page-home .btn-form:hover {
         transform: scale(1.05);
         animation: roll 1.5s ease-in-out infinite;
-    }
-
-    .page-home input {
-        border: none;
     }
 
     .page-home #site-title {
@@ -624,8 +587,6 @@
             align-items: stretch;
         }
 
-
-
         .page-home #current-character-tile {
             max-height: 20rem;
         }
@@ -636,8 +597,6 @@
             min-height: 12rem;
             box-sizing: border-box;
         }
-
-
 
         .page-home .profile-tile {
             border: var(--tileBorder);
@@ -668,9 +627,6 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-    .page-home .profile-value /* clash: kept at old specificity */ {
-            border-radius: var(--lowrad);
-    }
     }
 }
 @layer pages {
@@ -687,9 +643,6 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-    .page-home .profile-button /* clash: kept at old specificity */ {
-            border-radius: var(--rad2);
-    }
     }
 }
 @layer pages {
@@ -721,9 +674,6 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-    .page-home .btn-nav /* clash: kept at old specificity */ {
-            border: 1px solid var(--bordercolor);
-    }
     }
 }
 @layer pages {
@@ -777,26 +727,6 @@
             box-shadow: none;
         }
 
-        html.page-home {
-            padding-top: 0 !important;
-        }
-
-        html.page-home::after {
-            content: '';
-            position: fixed;
-            left: 0;
-            width: 100%;
-            top: calc(-1 * env(safe-area-inset-top));
-            height: calc(100lvh + env(safe-area-inset-top));
-            z-index: -1;
-            pointer-events: none;
-            background: linear-gradient(to bottom,
-                var(--status-solid, rgb(109, 83, 222)) 0,
-                transparent calc(env(safe-area-inset-top) + 4rem),
-                transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
-                var(--status-solid, rgb(109, 83, 222)) 100%);
-        }
-
         .page-home #current-character-container,
         .page-home #unfinished-character-container {
             max-height: 100%;
@@ -817,10 +747,6 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-    .page-home #current-character-tile,
-        .page-home #unfinished-character-tile /* clash: kept at old specificity */ {
-            overflow: none;
-    }
     }
 }
 @layer pages {
@@ -917,7 +843,6 @@
         }
     }
 
-
     /* Home tabs: hidden on desktop, on mobile they switch between the two sections */
 
     .page-home .home-tabs {
@@ -987,19 +912,6 @@
     @media (max-width: 768px) {
         /* Mobile: iOS Safari colors its bar from what is painted at the top, so paint a solid title-color strip there */
 
-        html.page-home {
-            background-color: var(--bgc-title, var(--bg-color-1));
-        }
-
-        html.page-home::after {
-            background: linear-gradient(to bottom,
-                var(--bgc-title, rgb(65, 37, 157)) 0,
-                var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
-                transparent calc(env(safe-area-inset-top) + 4rem),
-                transparent calc(100% - env(safe-area-inset-bottom) - 4rem),
-                var(--bgc-title, rgb(65, 37, 157)) 100%);
-        }
-
         .page-home .home-tabs {
             display: flex;
             gap: 0;
@@ -1021,9 +933,6 @@
 }
 @layer overrides {
     @media (max-width: 768px) {
-    .page-home .home-tab /* clash: kept at old specificity */ {
-            border-radius: 10px 10px 0 0;
-    }
     }
 }
 @layer pages {
@@ -1049,23 +958,12 @@
             display: none;
         }
 
-        /* Mobile: no bottom fade, the picture runs to the bottom edge */
-
-        html.page-home::after {
-            background: linear-gradient(to bottom,
-                var(--bgc-title, rgb(65, 37, 157)) 0,
-                var(--bgc-title, rgb(65, 37, 157)) env(safe-area-inset-top),
-                transparent calc(env(safe-area-inset-top) + 4rem));
-        }
-
         /* Mobile: stretch the background picture past the bottom so it fills behind Safari's bottom bar */
 
-        html.page-home::before,
-        html.page-home::after {
+        html.page-home::before {
             height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
         }
     }
-
 
     /* Mobile: tabs sit under the nav and the picked panel stretches to the bottom */
     @media (max-width: 768px) {
@@ -1080,7 +978,7 @@
             min-height: 0;
         }
 
-        .page-home main > .container.is-active > .tile {
+        .page-home main > .container.is-active > .char-list {
             flex: 1;
             max-height: none;
         }

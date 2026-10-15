@@ -26,10 +26,10 @@ function Conditions() {
     return (
         <section className="container condition-container" id="conditions-container">
             <p className="tile-component label-component tile-top" id="condition-title">Conditions</p>
-            <article className="tile condition-tile">
-                <article className="tile-component list-component" id="conditions-list-1">{GROUP_1.map(checkbox)}</article>
-                <article className="tile-component list-component" id="conditions-list-2">{GROUP_2.map(checkbox)}</article>
-                <article className="tile-component list-component" id="conditions-list-3">
+            <article className="tile-cell condition-tile">
+                <article className="list-component" id="conditions-list-1">{GROUP_1.map(checkbox)}</article>
+                <article className="list-component" id="conditions-list-2">{GROUP_2.map(checkbox)}</article>
+                <article className="list-component" id="conditions-list-3">
                     <label id="exhausted-label" className="tile-component exhausted-component label-component" htmlFor="exhausted-value">Exhausted</label>
                     <input
                         id="exhausted-value"

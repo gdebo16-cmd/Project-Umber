@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useSave from './useSave';
 import CreateDescription from '../CreateDescription';
 
-const GROUPS = ['Race', 'Class', 'Subclass'];
+const GROUPS = ['Race', 'Class', 'Subclass', 'Mixed'];
 
 function EditNameForm({ character, races, onSaved }) {
     const [name, setName] = useState(character.name);
@@ -102,7 +102,7 @@ function EditNameForm({ character, races, onSaved }) {
             </details>
             {message && <p>{message}</p>}
             <article className="form-section button-container">
-                <button className="btn-form" type="submit">Save Changes</button>
+                <button className="btn btn-form" type="submit">Save Changes</button>
             </article>
         </form>
     );

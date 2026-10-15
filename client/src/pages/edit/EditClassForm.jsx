@@ -143,7 +143,7 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
                 )}
                 {!classSaved && <p>Changing class resets skill proficiencies when you save.</p>}
                 <article className="form-section button-container">
-                    <button className="btn-form" type="submit">Save Changes</button>
+                    <button className="btn btn-form" type="submit">Save Changes</button>
                 </article>
             </form>
             <CreateDescription item={shown} />

@@ -68,7 +68,7 @@ function RollOrb({ open, label, onToggle }) {
         window.addEventListener('mouseup', onUp);
     };
 
-    const classes = ['roll-orb', open && 'is-open', dragging && 'is-dragging'].filter(Boolean).join(' ');
+    const classes = ['roll-orb', 'btn-round', open && 'is-open', dragging && 'is-dragging'].filter(Boolean).join(' ');
 
     return (
         <div
