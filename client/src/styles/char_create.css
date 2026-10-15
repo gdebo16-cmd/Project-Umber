@@ -205,6 +205,7 @@
         max-width: 100%;
         height: auto;
         display: block;
+        border-radius: 15px 15px 0 0;
     }
 
 
@@ -379,6 +380,7 @@
         margin: 0;
         box-sizing: border-box;
         background-color: var(--bgc-low);
+        border: var(--tileBorder);
     }
 
     /* Class basics text keeps its line breaks */

@@ -71,7 +71,7 @@
         scrollbar-width: none;
     }
 
-    .page-home img:not(.character-image) {
+    .page-home img {
         border: var(--tileBorder);
     }
 
@@ -425,6 +425,10 @@
         max-height: none;
         object-fit: cover;
         align-self: stretch;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        outline: 5px ridge var(--tileBorder);
+        
+        border-radius: 0 0 0 10px;
         z-index: 1;
     }
 

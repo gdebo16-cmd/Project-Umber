@@ -1848,6 +1848,7 @@
         height: auto;
         margin: 0;
         background-color: var(--bgc-low);
+        border: var(--tileBorder);
     }
 
     .page-sheet body.subpage #class-info-section,
@@ -2489,6 +2490,7 @@
         width: 100%;
         aspect-ratio: 1 / 1;
         object-fit: cover;
+        border-radius: 0.35rem;
     }
 
     .page-sheet body.subpage .portrait-thumb.is-selected {
@@ -2515,6 +2517,10 @@
         height: 3.5rem;
         margin: var(--mar1);
         object-fit: cover;
+        /* glass display look under every display and theme */
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 0 0 1.25rem 1.25rem;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     }
 
     @media (max-width: 768px) {
