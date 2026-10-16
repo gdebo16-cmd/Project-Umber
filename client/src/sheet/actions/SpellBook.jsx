@@ -63,7 +63,7 @@ const changeSpell = async (spellId, action) => {
         <section className="title-tile">
         <h3 className="action-title tile-top">Study Arcana</h3>
         <button type='button' className='btn btn-link hover-grow' onClick={onDone}>Close the Book</button>
-        {spellLimits && <p className='spell-stat'>Learned: {learnedLeveled}/{spellLimits.known} cantrips {learnedCantrips}/{spellLimits.cantrips}</p>}
+        {spellLimits && <p className='spell-stat'>Learned: {learnedLeveled}/{spellLimits.known} Cantrips: {learnedCantrips}/{spellLimits.cantrips}</p>}
         {saveError && <p>{saveError}</p>}
         </section>
             
