@@ -164,7 +164,8 @@ function SpellsTab() {
                 <p className="spell-stat">Primary Stat: {spellStat}</p>
                 <p className="spell-stat">Damage Bonus: {signed(spellAttack)} </p>
                 <p className="spell-stat">Target Save: {signed(spellSave)}</p>
-                {caps && <p className="spell-stat">Prepared: {preparedCount}/{caps.prepared} spells, {preparedCantrips}/{caps.cantrips} cantrips</p>}
+                {caps && <p className="spell-stat">Prepared spells {preparedCount}/{caps.prepared}</p>}
+                {caps && <p className="spell-stat">Cantrips {preparedCantrips}/{caps.cantrips}</p>}
             </article>
             
             {error && <p>{error}</p>}

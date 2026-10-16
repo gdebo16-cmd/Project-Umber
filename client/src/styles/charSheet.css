@@ -1313,6 +1313,11 @@ main > *,
 /* ---------- breakpoints ---------- */
 
 @media (max-width: 768px) {
+    /* Spell Book header: 2 even tiles per row */
+    .spell-stat-bar {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     /* Keep the page inside the viewport: no child may invent a width
        wider than the screen (the usual culprits are width:100% + padding
        without border-box, flex items that refuse to shrink, or fixed
@@ -1900,18 +1905,18 @@ main.subpage-main {
     /* stop the hover-grow effect */
 }
 
-/* ---------- Spell Book header: Consult the Scrolls + 3 stats ---------- */
+/* ---------- Spell Book header: Consult the Scrolls, 3 stats, prepared spells + cantrips ---------- */
 
-/* Four equal columns, so each one fills exactly a quarter of the bar */
+/* Even tiles: 3 per row on desktop (3x2 with the counters), 2 per row on phones (see the max-width: 768px block) */
 
 .spell-stat-bar {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.125rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.25rem;
     align-items: stretch;
 }
 
-/* The button and the three stats share the same box, so they all sit level */
+/* Every tile is the same box: thin border, centered label and value, one font size */
 
 .spell-stat-bar > .btn-link,
 .spell-stat-bar > .spell-stat {
@@ -1923,18 +1928,10 @@ main.subpage-main {
     padding: 0.5rem 0.25rem;
     min-height: 2.5rem;
     box-sizing: border-box;
+    font-size: 1rem;
     background-color: var(--bgc-low);
-    border-radius: 0;
-}
-
-/* Keep the bottom corners rounded on the outer two so the tile edge stays smooth */
-
-.spell-stat-bar > :first-child {
-    border-bottom-left-radius: 10px;
-}
-
-.spell-stat-bar > :last-child {
-    border-bottom-right-radius: 10px;
+    border: 1px solid color-mix(in srgb, var(--txt-color-1) 35%, transparent);
+    border-radius: 6px;
 }
 
 /* ---------- Every button in an action/spell row is the same size ---------- */
