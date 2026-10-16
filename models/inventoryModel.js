@@ -24,7 +24,8 @@ export async function listWeapons() {
 }
 
 export async function listWeaponsForCharacter(classId, subclassId, level) {
-    const { rows } = await pool.query(`SELECT w.* FROM weapons w WHERE EXISTS (SELECT 1 FROM class_item_proficiencies p
+    const { rows } = await pool.query(`SELECT w.*, (SELECT wc.name FROM weapon_category wc WHERE wc.id = w.category_id) AS weapon_category
+        FROM weapons w WHERE EXISTS (SELECT 1 FROM class_item_proficiencies p
         WHERE p.class_id = $1 AND (p.subclass_id IS NULL OR p.subclass_id = $2) AND p.min_level <= $3
         AND p.item_kind = 'weapon'
          AND p.match_field = 'weapon_category'
@@ -62,7 +63,7 @@ export async function getOwnedArmor(charId) {
 export async function getOwnedWeapons(charId) {
     const { rows } = await pool.query(
         `SELECT w.id, w.name, w.category, w.damage_dice, w.sigil_weapon, w.properties, w.description, w.rarity, w.damage_type, w.attack_bonus, w.range_normal, w.range_long,
-                (SELECT wc.name FROM weapon_category wc WHERE wc.id = w.category_id) AS weapon_category, cw.is_equipped, cw.dual_wield
+                (SELECT wc.name FROM weapon_category wc WHERE wc.id = w.category_id) AS weapon_category, cw.is_equipped, cw.dual_wield, cw.soul_branded
         FROM character_weapons cw
         JOIN weapons w ON w.id = cw.weapon_id
         WHERE cw.character_id = $1
@@ -181,6 +182,29 @@ export async function setWeaponDualWield(charId, weaponId, on) {
         [charId, weaponId, !!on]
     );
     return rowCount;
+}
+
+// Soul Brand (Soul Smith only): one branded weapon per character, so branding one clears the others.
+// Returns 'not-soul-smith', 'not-owned' or 'ok'.
+export async function setWeaponSoulBrand(charId, weaponId, on) {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+        const { rows: [ch] } = await client.query(
+            `SELECT c.name AS class_name FROM characters ch JOIN classes c ON c.id = ch.class_id WHERE ch.id = $1`, [charId]);
+        if (ch?.class_name !== 'Soul Smith') { await client.query('ROLLBACK'); return 'not-soul-smith'; }
+        if (on) await client.query(`UPDATE character_weapons SET soul_branded = false WHERE character_id = $1 AND weapon_id <> $2`, [charId, weaponId]);
+        const { rowCount } = await client.query(
+            `UPDATE character_weapons SET soul_branded = $3 WHERE character_id = $1 AND weapon_id = $2`, [charId, weaponId, !!on]);
+        if (!rowCount) { await client.query('ROLLBACK'); return 'not-owned'; }
+        await client.query('COMMIT');
+        return 'ok';
+    } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+    } finally {
+        client.release();
+    }
 }
 
 export async function unequipWeapon(charId, weaponId) {

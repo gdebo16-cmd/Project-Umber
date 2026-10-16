@@ -128,6 +128,20 @@ export async function dualWieldWeapon(req, res) {
     res.json({ ownedWeapons: await Inventory.getOwnedWeapons(charId) });
 }
 
+// POST /api/characters/:id/inventory/weapon/soul-brand   body: { weapon_id, soul_branded }
+export async function soulBrandWeapon(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const charId = Number(req.params.id);
+    if (!(await ownsCharacter(charId, req.session.userId))) {
+        return res.status(404).json({ error: 'Character not found' });
+    }
+
+    const result = await Inventory.setWeaponSoulBrand(charId, Number(req.body.weapon_id), req.body.soul_branded === true);
+    if (result === 'not-soul-smith') return res.status(403).json({ error: 'Only a Soul Smith can soul brand a weapon' });
+    if (result === 'not-owned') return res.status(404).json({ error: 'Weapon not owned' });
+    res.json({ ownedWeapons: await Inventory.getOwnedWeapons(charId) });
+}
+
 // POST /api/characters/:id/inventory/weapon/unequip   body: { weapon_id }
 export async function unequipWeapon(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });

@@ -9,6 +9,8 @@ import StepNav from './StepNav';
 import Loader from '../components/Loader';
 import LevelChoices from './LevelChoices';
 import { choiceFeatures, keepPicks } from '../utils/levelChoices';
+import WeaponFilter from '../components/WeaponFilter';
+import { filterSortWeapons, EMPTY_WEAPON_FILTER } from '../utils/weapons';
 
 // Replaces views/create_char_step2.ejs (step 2: class and subclass)
 // Builds what the description box shows for a class: dropdown sections + feature tree
@@ -34,6 +36,7 @@ function CreateStep2() {
     const navigate = useNavigate();
     const { data: classes, loading, error } = useFetch('/api/create_char/step2');
     const [classId, setClassId] = useState('');
+    const [weaponFilter, setWeaponFilter] = useState(EMPTY_WEAPON_FILTER);
     const [subclasses, setSubclasses] = useState([]);
     const [subclassId, setSubclassId] = useState('');
     const [level, setLevel] = useState(1);
@@ -220,10 +223,11 @@ function CreateStep2() {
                         {gearReady && (
                         <article id="starting-weapon-container" className="form-section tile pick-tile">
                             <label className="tile-top" htmlFor="weapon_id">Starting Weapon</label>
+                            <WeaponFilter value={weaponFilter} onChange={setWeaponFilter} showRarity={false} />
                             <select className="tile-bottom weapon-select" id="weapon_id" value={weaponId} onChange={(e) => setWeaponId(e.target.value)} required>
                                 <option value="" disabled className="weapon-option">Select a Weapon</option>
-                                {gear.weapons.map((w) => (
-                                    <option key={w.id} value={w.id} className="weapon-option">{w.name} ({w.damage_dice} {w.damage_type})</option>
+                                {filterSortWeapons(gear.weapons, weaponFilter).map((w) => (
+                                    <option key={w.id} value={w.id} className="weapon-option">{w.name} ({w.weapon_category}, {w.damage_dice} {w.damage_type})</option>
                                 ))}
                             </select>
                         </article>

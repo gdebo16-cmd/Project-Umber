@@ -2,7 +2,7 @@
 import { Router } from 'express';
 import {
     getCharacter, updateHp, updateSheetState, deleteCharacter,
-    equipArmor, unequipArmor, equipWeapon, unequipWeapon, dualWieldWeapon,
+    equipArmor, unequipArmor, equipWeapon, unequipWeapon, dualWieldWeapon, soulBrandWeapon,
 } from '../controllers/apiController.js';
 import { me, login, logout, register, home, getSettings, updateSettings, getProfile, updateProfile, deleteAccount } from '../controllers/apiUserController.js';
 import { getInventory, addArmor, addWeapon, removeArmor, removeWeapon } from '../controllers/apiInventoryController.js';
@@ -57,6 +57,7 @@ router.post('/characters/:id/inventory/armor/unequip', unequipArmor);
 router.post('/characters/:id/inventory/weapon/equip', equipWeapon);
 router.post('/characters/:id/inventory/weapon/unequip', unequipWeapon);
 router.post('/characters/:id/inventory/weapon/dual-wield', dualWieldWeapon);
+router.post('/characters/:id/inventory/weapon/soul-brand', soulBrandWeapon);
 
 // inventory page (add / remove items)
 router.get('/characters/:id/inventory', getInventory);

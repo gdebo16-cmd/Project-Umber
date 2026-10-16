@@ -3,6 +3,8 @@ import useFetch from '../../hooks/useFetch';
 import TabList from '../../components/TabList';
 import { sendJson } from '../../utils/api';
 import Loader from '../../components/Loader';
+import WeaponFilter from '../../components/WeaponFilter';
+import { filterSortWeapons, EMPTY_WEAPON_FILTER } from '../../utils/weapons';
 
 const TABS = [
     { id: 'armor', label: 'Armor' },
@@ -16,6 +18,7 @@ function ItemShop({ characterId, onDone }) {
     const { data, setData, loading, error } = useFetch(`/api/characters/${characterId}/inventory`);
     const [tab, setTab] = useState('armor');
     const [saveError, setSaveError] = useState('');
+    const [weaponFilter, setWeaponFilter] = useState(EMPTY_WEAPON_FILTER);
 
     // kind is 'armor' or 'weapon', action is 'add' or 'remove'
     const changeItem = async (kind, itemId, action) => {
@@ -75,10 +78,11 @@ function ItemShop({ characterId, onDone }) {
 
             <article role="tabpanel" id="inv-panel-weapons" className="action-tile inv-panel" aria-labelledby="inv-tab-weapons" hidden={tab !== 'weapons'}>
                 <h3 className="action-title tile-top">Weapons</h3>
+                <WeaponFilter value={weaponFilter} onChange={setWeaponFilter} />
                 <ul className="action-list inv-list">
-                    {weapons.map((w) => (
+                    {filterSortWeapons(weapons, weaponFilter).map((w) => (
                         <li key={w.id} className="action-item inv-list-item">
-                            {w.name} ({w.category}, {w.damage_dice}, {w.rarity}, {w.attack_bonus} Attack Bonus)
+                            {w.name} ({w.weapon_category}, {w.damage_dice}, {w.rarity}, {w.attack_bonus} Attack Bonus)
                             {itemButton('weapon', w.id, ownedWeaponIds.includes(Number(w.id)))}
                         </li>
                     ))}

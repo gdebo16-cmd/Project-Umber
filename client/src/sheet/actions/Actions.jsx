@@ -39,16 +39,19 @@ function Actions() {
     const fistDice = `${Math.max(1, Math.floor((character.str + hp) / 20))}d4`;
 
     // Every action has the same shape, so one map() can draw them all
+    const isSoulSmith = character.class_name === 'Soul Smith';
     const weaponActions = ownedWeapons.filter((w) => w.is_equipped).map((w) => {
             const ranged = w.category === 'ranged';
-            const abilityMod = ranged ? modOf(character.dex) : primaryMod;
+            // Soul Brand (Soul Smith): the branded weapon uses CHA for attack and damage
+            const branded = isSoulSmith && !!w.soul_branded;
+            const abilityMod = branded ? modOf(character.cha) : ranged ? modOf(character.dex) : primaryMod;
             const oneHanded = !(w.properties ?? []).includes('two-handed');
             const dual = oneHanded && !!w.dual_wield;
-            const hit = ranged ? toHit : meleeHit;
+            const hit = branded ? init + modOf(character.cha) : ranged ? toHit : meleeHit;
             // Seal Cracks: +1 radiant per Crack on sigil-weapon hits (weapons.sigil_weapon)
             return { key: `w${w.id}`, weaponId: w.id, name: w.name, dice: w.damage_dice, oneHanded, dual,
                 rarity: w.rarity, description: w.description, category: w.weapon_category,
-                damageType: w.damage_type, attackBonus: w.attack_bonus || 0, stat: ranged ? 'DEX' : (character.spell_stat || 'STR').toUpperCase(),
+                branded, damageType: w.damage_type, attackBonus: w.attack_bonus || 0, stat: branded ? 'CHA' : ranged ? 'DEX' : (character.spell_stat || 'STR').toUpperCase(),
                 hands: oneHanded ? ((w.properties ?? []).includes('versatile') ? 'One or two hands' : 'One hand') : 'Two hands',
                 range: w.range_normal ? `${w.range_normal}/${w.range_long ?? w.range_normal} ft` : ((w.properties ?? []).includes('reach') ? '10 ft (reach)' : '5 ft'),
                 dmgMod: (dual ? 0 : abilityMod) + (w.sigil_weapon ? cracks : 0),
@@ -60,6 +63,25 @@ function Actions() {
         { key: 'fists', name: 'Fists', dice: fistDice, dmgMod: 0, hit: meleeHit },
     ];
     const bonusWeapons = weaponActions.filter((a) => a.dual);
+
+    const toggleSoulBrand = async (a) => {
+        try {
+            const data = await sendJson(`/api/characters/${character.id}/inventory/weapon/soul-brand`, 'POST', { weapon_id: a.weaponId, soul_branded: !a.branded });
+            setOwnedWeapons(data.ownedWeapons);
+        } catch (err) {
+            onRoll(err.message);
+        }
+    };
+
+    // Soul Strike (feature text): +1d8 force on a soul brand hit, 2d8 from 11, 3d8 from 23; costs 1 Temper (tracked by hand)
+    const soulStrikeDice = character.level >= 23 ? '3d8' : character.level >= 11 ? '2d8' : '1d8';
+    const rollSoulStrike = (a) => {
+        const crit = critKey != null && critKey === a.key;
+        setCritKey(null);
+        const weapon = Math.max(0, rollDice(a.dice, crit) + a.dmgMod);
+        const extra = rollDice(soulStrikeDice, crit);
+        onRoll(`Damage dealt: ${weapon} + Soul Strike ${extra} force = ${weapon + extra}${crit ? ' CRIT!' : ''} (spend 1 Temper)`);
+    };
 
     const toggleDualWield = async (a) => {
         try {
@@ -279,6 +301,12 @@ function Actions() {
                             <div className="action-button-container">
                                 <button type="button" className="btn btn-action btn-to-hit hover-grow" onClick={() => rollHit(a)}>{signed(a.hit ?? toHit)}</button>
                                 <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} onClick={() => rollDamage(a)}>{a.dice}{a.dmgMod ? signed(a.dmgMod) : ''}</button>
+                                {a.branded && (
+                                    <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} title={`Soul Strike: on a hit, add ${soulStrikeDice} force (1 Temper)`}
+                                        onClick={() => rollSoulStrike(a)}>
+                                        +{soulStrikeDice} (1 T)
+                                    </button>
+                                )}
                                 {a.sigil && weaponHitFeature && (
                                     <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} title={`${weaponHitFeature.name}: on a hit, add ${diceOf(weaponHitFeature)} radiant`}
                                         onClick={() => rollWithHitFeature(a, weaponHitFeature)}>
@@ -438,16 +466,30 @@ function Actions() {
                                         <p>To Hit: <strong>{signed(openWeapon.hit ?? toHit)}</strong>{openWeapon.attackBonus ? <> (magic {signed(openWeapon.attackBonus)})</> : null}</p>
                                     </article>
                                 </section>
-                                {openWeapon.oneHanded && (
+                                {(openWeapon.oneHanded || (isSoulSmith && openWeapon.weaponId)) && (
                                     <section className="spell-build-box">
-                                        <article className="spell-build-box-title"><h4>Off Hand</h4></article>
+                                        <article className="spell-build-box-title"><h4>Options</h4></article>
                                         <article className="spell-build-box-content">
-                                            <p>
-                                                <label>
-                                                    <input type="checkbox" checked={openWeapon.dual} onChange={() => toggleDualWield(openWeapon)} /> Dual wield
-                                                </label>
-                                            </p>
-                                            <p>{openWeapon.dual ? 'Bonus action; no ability modifier on damage.' : 'Attack action.'}</p>
+                                            {openWeapon.oneHanded && (
+                                                <>
+                                                    <p>
+                                                        <label>
+                                                            <input type="checkbox" checked={openWeapon.dual} onChange={() => toggleDualWield(openWeapon)} /> Dual wield
+                                                        </label>
+                                                    </p>
+                                                    <p>{openWeapon.dual ? 'Bonus action; no ability modifier on damage.' : 'Attack action.'}</p>
+                                                </>
+                                            )}
+                                            {isSoulSmith && openWeapon.weaponId && (
+                                                <>
+                                                    <p>
+                                                        <label>
+                                                            <input type="checkbox" checked={openWeapon.branded} onChange={() => toggleSoulBrand(openWeapon)} /> Soul Brand
+                                                        </label>
+                                                    </p>
+                                                    <p>{openWeapon.branded ? `CHA for attack and damage; Soul Strike +${soulStrikeDice} force.` : 'One weapon at a time.'}</p>
+                                                </>
+                                            )}
                                         </article>
                                     </section>
                                 )}

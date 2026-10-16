@@ -2,6 +2,8 @@ import { useState } from 'react';
 import ItemShop from './ItemShop';
 import { sendJson } from '../../utils/api';
 import { useCharacter } from '../CharacterContext';
+import WeaponFilter from '../../components/WeaponFilter';
+import { filterSortWeapons, EMPTY_WEAPON_FILTER } from '../../utils/weapons';
 
 // The Inventory tab on the sheet: what you own, with Equip / Unequip buttons.
 // After each click the server sends back the new list, and the parent swaps it in,
@@ -11,7 +13,8 @@ function InventoryTab() {
     const characterId = character.id;
     const [error, setError] = useState('');
     const [browsing, setBrowsing] = useState(false); // true while the shop list is showing
-    const [openWeaponId, setOpenWeaponId] = useState(null); // weapon whose rarity and description are showing
+    const [openWeaponId, setOpenWeaponId] = useState(null);
+    const [weaponFilter, setWeaponFilter] = useState(EMPTY_WEAPON_FILTER); // weapon whose rarity and description are showing
     const base = `/api/characters/${characterId}/inventory`;
 
     const armorAction = async (armorId, action) => {
@@ -90,11 +93,12 @@ function InventoryTab() {
 
                 <li className="action-item spell-slot">
                     <span className="action-title" id="weaponsTitle">Weapons</span>
+                    <WeaponFilter value={weaponFilter} onChange={setWeaponFilter} />
                     <ul id="weaponsList" className="action-list">
                         {ownedWeapons.length === 0 ? (
                             <li className="action-item spell">No weapons yet.</li>
                         ) : (
-                            ownedWeapons.map((w) => (
+                            filterSortWeapons(ownedWeapons, weaponFilter).map((w) => (
                                 <li className="action-item spell" key={w.id}>
                                     <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenWeaponId(openWeaponId === w.id ? null : w.id)}>
                                         {w.name} ({w.damage_dice} {w.weapon_category ?? w.category})
