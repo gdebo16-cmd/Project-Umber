@@ -1,4 +1,4 @@
--- Gracewraith (class 15) + Archon / Seraph / Virtue subclasses + Gracewraith weapons.
+-- Gracewraith (class 15) + Archonbound / Seraphbound / Virtuebound subclasses + Gracewraith weapons.
 -- Source: class-kit/rules/15-gracewraith.md (LOCKED by Gabriel 2026-10-15). Safe to re-run.
 -- Art is not wired yet (Artemis is redoing it): class img_url stays 'Pending Img', subclass img_url NULL.
 BEGIN;
@@ -36,9 +36,9 @@ ON CONFLICT (name) DO UPDATE SET weapon_type=EXCLUDED.weapon_type, category=EXCL
 
 -- Subclasses (fixed ids so re-runs update in place)
 INSERT INTO sub_classes (id, name, class_id, img_url, description, armor_proficiencies, weapon_proficiencies, tool_proficiencies) VALUES
- (47, 'Archon', 15, NULL, 'You bound an Archon, a warden of celestial law. Its chains answer your verdicts, pinning the guilty in place until sentence is passed.', '', '', ''),
- (48, 'Seraph', 15, NULL, 'You bound a Seraph, a six-winged burning choir. Its fire pours out of every crack in your seal and lifts you into the sky.', '', '', ''),
- (49, 'Virtue', 15, NULL, 'You bound a Virtue, a celestial of mercy. You spend its stolen grace to mend allies, turn aside doom, and drag the newly dead back to life.', '', '', '')
+ (47, 'Archonbound', 15, NULL, 'You bound an Archon, a warden of celestial law. Its chains answer your verdicts, pinning the guilty in place until sentence is passed.', '', '', ''),
+ (48, 'Seraphbound', 15, NULL, 'You bound a Seraph, a six-winged burning choir. Its fire pours out of every crack in your seal and lifts you into the sky.', '', '', ''),
+ (49, 'Virtuebound', 15, NULL, 'You bound a Virtue, a celestial of mercy. You spend its stolen grace to mend allies, turn aside doom, and drag the newly dead back to life.', '', '', '')
 ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name, class_id=EXCLUDED.class_id, description=EXCLUDED.description;
 SELECT setval('sub_classes_id_seq', GREATEST((SELECT max(id) FROM sub_classes), (SELECT last_value FROM sub_classes_id_seq)));
 
@@ -98,7 +98,7 @@ SELECT 15, level, name, description, feature_type, source, DATE '2026-10-15', so
  (1,'Sigil Blade','You can use INT instead of STR or DEX for attack and damage rolls with a sigil blade (1d8 slashing, finesse, one-handed, not light). It counts as a focus for Gracewraith features, but not for another class''s spells.','feature','approved',4,NULL,NULL,NULL),
  (2,'Reseal','Bonus action, 2 uses per short rest (3 from 13): remove 1 Crack and gain temporary HP = 1d6 + CON modifier (2d6 + CON from 11, 3d6 + CON from 23).','feature','new',1,'bonus','2 per rest','1d6'),
  (2,'Chain Reach','Your chains and flails have reach 10 ft. On a hit, you can spend 1 Radiance to pull the target (Large or smaller, no save) up to 10 ft toward you.','feature','new',2,NULL,'1 Radiance',NULL),
- (3,'Gracewraith Subclass','Choose your bound entity: Archon, Seraph, or Virtue, and gain its level 3 feature.','choice','canon',1,NULL,NULL,NULL),
+ (3,'Gracewraith Subclass','Choose your bound entity: Archonbound, Seraphbound, or Virtuebound, and gain its level 3 feature.','choice','canon',1,NULL,NULL,NULL),
  (3,'Halo Ward','While you have 1+ Crack, add your Crack count (max +2) to AC against ranged attacks.','feature','new',2,NULL,NULL,NULL),
  (4,'Ability Boost','Raise your ability scores (amount in the Shared Frame); no score can go above 20.','boost','canon',1,NULL,NULL,NULL),
  (5,'Extra Attack (2)','You make 2 attacks when you take the Attack action.','feature','canon',1,NULL,NULL,NULL),
@@ -160,7 +160,7 @@ SELECT sid, level, name, description, feature_type, 'new', DATE '2026-10-15', 1,
  (49,10,'Mercy Siphon','When Grace Leech heals you, one ally within 30 ft regains the same amount.','feature',NULL,NULL,NULL),
  (49,14,'Sanctum of Theft','Action, 2 Radiance, gain 1 Crack: 15-ft aura on you for 1 minute; allies in it have resistance to one damage type you pick.','feature','action','2 Radiance',NULL),
  (49,18,'Stolen Resurrection','Action, 1 use per long rest: a creature within your reach that died within the last minute returns to life with 1 HP. You gain 2 Cracks (this can trigger a Breach). Can''t target yourself or be used at 0 HP; a creature can''t be brought back this way more than once per long rest, and it fails on death by old age or a missing vital part.','feature','action','1 per long rest',NULL),
- (49,24,'Mythic Grace Wellspring','Healing from Virtue features is maximized.','feature',NULL,NULL,NULL),
+ (49,24,'Mythic Grace Wellspring','Healing from Virtuebound features is maximized.','feature',NULL,NULL,NULL),
  (49,28,'Virtue Unchained','On a failed Breach save, instead of being stunned, every ally within 60 ft regains HP equal to half its HP maximum (no Virtue Breach effect).','feature',NULL,NULL,NULL)
 ) v(sid,level,name,description,feature_type,action_type,uses,dice)
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET description=EXCLUDED.description, feature_type=EXCLUDED.feature_type,
