@@ -455,6 +455,31 @@
     "group": "Race"
   },
   {
+    "file": "race-lupine-mastiff.png",
+    "label": "Lupine (Mastiff)",
+    "group": "Race"
+  },
+  {
+    "file": "race-lupine-greyhound.png",
+    "label": "Lupine (Greyhound)",
+    "group": "Race"
+  },
+  {
+    "file": "race-lupine-husky.png",
+    "label": "Lupine (Husky)",
+    "group": "Race"
+  },
+  {
+    "file": "race-lupine-shepherd.png",
+    "label": "Lupine (Shepherd)",
+    "group": "Race"
+  },
+  {
+    "file": "race-lupine-bloodhound.png",
+    "label": "Lupine (Bloodhound)",
+    "group": "Race"
+  },
+  {
     "file": "race-quillary.png",
     "label": "Quillary",
     "group": "Race"
