@@ -59,3 +59,11 @@ export function getLearnLimits(className, level, subclassName = null) {
     const i = Math.min(Math.max(Number(level) || 1, 1), 30) - 1;
     return { cantrips: SPELL_LIMITS[key].cantrips[i], spells: SPELL_LIMITS[key].spells[i] };
 }
+
+// Known vs prepared (Gabriel 2026-10-16): a caster can learn up to 2x the spells limit above and prepare only the limit.
+// Cantrips are unchanged (learn and prepare up to the cantrip limit). Returns null when the class has no cap.
+export function getSpellCaps(className, level, subclassName = null) {
+    const l = getLearnLimits(className, level, subclassName);
+    return l && { cantrips: l.cantrips, prepared: l.spells, known: l.spells * 2 };
+}
+/*prep-done*/

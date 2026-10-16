@@ -5,7 +5,7 @@ import { getSpellSlots, beamsAt, beamRollText, beamDamageText, scaledAt } from '
 import { createPortal } from 'react-dom';
 import { sendJson } from '../../utils/api';
 import RuneControl from './RuneControl';
-import { weaponRuneEffects, runicStrikeDice } from '../../utils/runes';
+import { weaponRuneEffects, runicStrikeDice, utilityRuneEffects } from '../../utils/runes'; /*prep-done*/
 
 // Dual wield: the off-hand attack is a bonus action and loses the ability modifier on DAMAGE (5e).
 // Flip this to true to also drop the modifier from to-hit (proficiency always stays).
@@ -13,7 +13,7 @@ const DUAL_WIELD_DROPS_HIT_MOD = false;
 
 // Your equipped weapons plus Fists. Each has a To Hit button and a Damage button.
 function Actions() {
-    const { character, hp, ownedWeapons, setOwnedWeapons, onRoll, learnedSpells, spendSlot, usedSlots = {}, actionFeatures = [], embers = 0, embersMax = 0, spendEmbers, restUses = {}, countUse, cracks = 0, crackMax = 0, gainCracks, removeCracks, kindleSlot } = useCharacter();
+    const { character, hp, ownedArmor = [], ownedWeapons, setOwnedWeapons, onRoll, learnedSpells, spendSlot, usedSlots = {}, actionFeatures = [], embers = 0, embersMax = 0, spendEmbers, restUses = {}, countUse, cracks = 0, crackMax = 0, gainCracks, removeCracks, kindleSlot } = useCharacter();
     const actionSpells = learnedSpells ?? [];
     const spellScore = character[(character.spell_stat || '').toLowerCase()];
     // spells use the class's spellcasting_stat (casting_stat); weapons keep the primary stat
@@ -27,7 +27,8 @@ function Actions() {
     // melee attacks use the class's primary stat (spell_stat is the class primary_stat)
     const primaryMod = modOf(spellScore);
     const meleeHit = init + primaryMod;
-    const actionSpellsList = actionSpells.filter((s) => s.is_action);
+    // only prepared spells reach the Actions tab
+    const actionSpellsList = actionSpells.filter((s) => s.is_action && s.is_prepared);
     // casting time decides the tile: bonus-action and reaction spells join those tiles, everything else stays under Magical Actions
     const magicSpells = actionSpellsList.filter((s) => s.action_type !== 'bonus' && s.action_type !== 'reaction');
     const bonusSpells = actionSpellsList.filter((s) => s.action_type === 'bonus');
@@ -111,7 +112,11 @@ function Actions() {
 
     // Runic Strike (Rune Weaver): once per turn, a runed-weapon hit adds force damage
     const runicDice = runicStrikeDice(character.level);
+    // no turn tracker on the sheet: Runic Strike locks after use until you press New turn
+    const [runicUsed, setRunicUsed] = useState(false);
     const rollRunicStrike = (a) => {
+        if (runicUsed) return onRoll('Runic Strike is once per turn. Press New turn to reset it.');
+        setRunicUsed(true);
         const crit = critKey != null && critKey === a.key;
         setCritKey(null);
         const weapon = Math.max(0, rollDice(a.dice, crit) + a.dmgMod);
@@ -292,6 +297,30 @@ function Actions() {
         </div>
     );
     const bonusFeatures = actionFeatures.filter((f) => f.action_type === 'bonus');
+
+    // Utility runes on worn/equipped items (rune-weaver-inscribe-runes.md). Lantern = bonus action, Mending = 1/long rest reaction.
+    const runeFx = utilityRuneEffects(ownedArmor, ownedWeapons);
+    const [litLanterns, setLitLanterns] = useState({});
+    const toggleLantern = (l) => {
+        const on = !litLanterns[l.key];
+        setLitLanterns({ ...litLanterns, [l.key]: on });
+        onRoll(on ? `Lantern Rune (${l.item}): bright light 20 ft and dim light 20 ft more (bonus action).` : `Lantern Rune (${l.item}): light off (bonus action).`);
+    };
+    const intMod = modOf(character.int);
+    const rollMending = (m) => {
+        if (restUses[m.key]) return onRoll('Mending Rune: used until your next long rest.');
+        if (countUse) countUse(m.key);
+        onRoll(`Mending Rune (${m.item}): reduce the hit's damage by ${Math.max(0, rollDice('1d6') + intMod)} (reaction, 1/long rest).`);
+    };
+    const itemNames = (list) => [...new Set(list.map((x) => x.item))].join(', ');
+    const runeNotes = [
+        runeFx.fleet && 'Fleet Rune: +5 ft walking speed (in your Speed distance).',
+        runeFx.dusksight && (character.race_darkvision ? 'Dusksight Rune: your darkvision extends 30 ft.' : 'Dusksight Rune: darkvision 30 ft.'),
+        runeFx.hush.length > 0 && `Hush Rune (${itemNames(runeFx.hush)}): makes no noise${runeFx.hush.some((h) => h.armor?.stealth_disadvantage) ? '; no Stealth disadvantage from this armor' : ''}.`,
+        runeFx.anchor.length > 0 && `Anchor Rune (${itemNames(runeFx.anchor)}): can't be disarmed or taken from you while you're conscious.`,
+        runeFx.homing.length > 0 && `Homing Rune (${itemNames(runeFx.homing)}): a thrown weapon returns to your hand; fired ammunition is recovered after combat.`,
+        runeFx.mending.length > 0 && `Mending Rune (${itemNames(runeFx.mending)}): repairs itself in 1 minute.`,
+    ].filter(Boolean);
     const reactionFeatures = actionFeatures.filter((f) => f.action_type === 'reaction');
 
     // One learned spell with its to-hit/save, damage (crit-aware), heal and upcast buttons. Shared by the Magical Actions, Bonus Actions and Reactions tiles.
@@ -349,10 +378,13 @@ function Actions() {
                                 <button type="button" className="btn btn-action btn-to-hit hover-grow" onClick={() => rollHit(a)}>{signed(a.hit ?? toHit)}</button>
                                 <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} onClick={() => rollDamage(a)}>{a.dice}{a.dmgMod ? signed(a.dmgMod) : ''}</button>
                                 {a.runed && (
-                                    <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} title={`Runic Strike: once per turn, add ${runicDice} force`}
-                                        onClick={() => rollRunicStrike(a)}>
-                                        +{runicDice} (Runic)
-                                    </button>
+                                    <>
+                                        <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} title={`Runic Strike: once per turn, add ${runicDice} force`}
+                                            disabled={runicUsed} onClick={() => rollRunicStrike(a)}>
+                                            {runicUsed ? 'Runic used' : `+${runicDice} (Runic)`}
+                                        </button>
+                                        {runicUsed && <button type="button" className="btn btn-action hover-grow" onClick={() => setRunicUsed(false)}>New turn</button>}
+                                    </>
                                 )}
                                 {a.branded && (
                                     <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} title={`Soul Strike: on a hit, add ${soulStrikeDice} force (1 Temper)`}
@@ -407,6 +439,14 @@ function Actions() {
                             </div>
                         </li>
                     )}
+                    {runeFx.lanterns.map((l) => (
+                        <li key={l.key} className="action-item spell">
+                            <span className="btn btn-spell-name">Lantern Rune ({l.item})</span>
+                            <div className="action-button-container">
+                                <button type="button" className="btn btn-action hover-grow" onClick={() => toggleLantern(l)}>{litLanterns[l.key] ? 'Light off' : 'Light on'}</button>
+                            </div>
+                        </li>
+                    ))}
                     {bonusSpells.map(spellRow)}
                     {bonusFeatures.map((f) => (
                             <li key={`${f.source}-${f.id}`} className="action-item spell">
@@ -422,6 +462,16 @@ function Actions() {
             <li className="action-item spell-slot">
                 <span className="action-title" id="reactions-title">Reactions</span>
                 <ul className="action-list" id="reactions-list">
+                    {runeFx.mending.map((m) => (
+                        <li key={m.key} className="action-item spell">
+                            <span className="btn btn-spell-name">Mending Rune ({m.item})</span>
+                            <div className="action-button-container">
+                                <button type="button" className="btn btn-action damage-button hover-grow" disabled={!!restUses[m.key]} onClick={() => rollMending(m)}>
+                                    {restUses[m.key] ? 'Used (long rest)' : `1d6${intMod ? signed(intMod) : ''}`}
+                                </button>
+                            </div>
+                        </li>
+                    ))}
                     {reactionSpells.map(spellRow)}
                     {reactionFeatures.map((f) => (
                             <li key={`${f.source}-${f.id}`} className="action-item spell">
@@ -459,6 +509,14 @@ function Actions() {
                     ))}
                 </ul>
             </li>
+            {runeNotes.length > 0 && (
+                <li className="action-item spell-slot">
+                    <span className="action-title" id="rune-effects-title">Rune Effects</span>
+                    <ul className="action-list" id="rune-effects-list">
+                        {runeNotes.map((n) => <li key={n} className="action-item spell">{n}</li>)}
+                    </ul>
+                </li>
+            )}
             {openItem && createPortal(
                 <article className="spell-details">
                     <button type='button' className='btn-round spell-details-close' onClick={() => setOpenItem(null)}>X</button>

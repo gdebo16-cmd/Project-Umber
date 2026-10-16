@@ -1,7 +1,7 @@
 // Rune Weaver: rune catalog, inscribing and removing runes on owned items, and the runed weapon.
 // Items are character_weapons rows (kind 'weapon') or character_armor rows (kind 'armor', which covers shields).
 import pool from '../db.js';
-import { RUNE_WEAVER, runesPerItem, activeRunes, WARDING_TYPES } from '../utils/runeLimits.js';
+import { RUNE_WEAVER, runesPerItem, activeRunes, WARDING_TYPES, runeFitsItem } from '../utils/runeLimits.js'; /*prep-done*/
 
 // the inscriber: must be a Rune Weaver of level 3+
 async function getInscriber(db, charId) {
@@ -63,7 +63,7 @@ export async function inscribeRune(charId, { kind, itemId, runeId, choiceValue }
         if (!rune) return fail(404, 'Unknown rune');
         const item = await getOwnedItem(db, charId, kind, itemId);
         if (!item) return fail(404, 'Item not owned');
-        if (!rune.item_types.includes(item.type)) return fail(400, `${rune.name} can't go on ${item.type === 'armor' ? 'armor' : `a ${item.type}`} (only ${rune.item_types.join(', ')})`);
+        if (!runeFitsItem(rune.item_types, item.type)) return fail(400, `${rune.name} can't go on ${item.type === 'armor' ? 'armor' : `a ${item.type}`} (only ${rune.item_types.join(', ')}; gear runes go on armor or shields)`);
         if (rune.min_level > ch.level) return fail(400, `${rune.name} needs level ${rune.min_level}`);
         if (rune.name === 'Homing Rune' && !item.properties.some((p) => p === 'thrown' || p === 'ammunition')) {
             return fail(400, 'Homing Rune needs a thrown weapon or one that fires ammunition');

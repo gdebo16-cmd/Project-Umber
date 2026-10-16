@@ -25,6 +25,10 @@ function SpellsTab() {
     const base = `/api/characters/${characterId}/spells`;
     const [tab, setTab] = useState('prepared');
     const preparedSpells = learnedSpells.filter((s) => s.is_prepared);
+    // prepared / max (leveled spells; cantrips count against the cantrip limit) /*prep-done*/
+    const caps = character.spell_limits;
+    const preparedCount = preparedSpells.filter((s) => s.base_level >= 1).length;
+    const preparedCantrips = preparedSpells.filter((s) => s.base_level === 0).length;
     const slots = getSpellSlots(level, character.spell_slots);
     const spellAttack = modOf(spellScore) + proficiencyBonus(level);
     const spellSave = 8 + spellAttack;
@@ -160,6 +164,7 @@ function SpellsTab() {
                 <p className="spell-stat">Primary Stat: {spellStat}</p>
                 <p className="spell-stat">Damage Bonus: {signed(spellAttack)} </p>
                 <p className="spell-stat">Target Save: {signed(spellSave)}</p>
+                {caps && <p className="spell-stat">Prepared: {preparedCount}/{caps.prepared} spells, {preparedCantrips}/{caps.cantrips} cantrips</p>}
             </article>
             
             {error && <p>{error}</p>}

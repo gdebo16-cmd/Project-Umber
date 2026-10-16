@@ -1,6 +1,7 @@
 // Character database reads and writes: sheet data, hp, levels, stats, create/delete.
 import pool from '../db.js';
 import { withEffectiveScores, effectiveScores, getBoostRows, statCap } from '../utils/abilityBoosts.js';
+import { getSpellCaps } from '../utils/spellLimits.js'; /*prep-done*/
 
 // a character can only have a subclass from this level up (creator + editor check this too)
 export const SUBCLASS_LEVEL = 3;
@@ -18,7 +19,7 @@ export async function ownsCharacter(charId, userId) {
 // Full sheet row (with race/class/subclass names) or undefined
 export async function getSheetCharacter(charId, userId) {
     const { rows } = await pool.query(
-        `SELECT ch.*, r.name AS race_name, sr.name AS subrace_name, cl.name AS class_name, cl.hitpoint_die, cl.primary_stat AS spell_stat, COALESCE(NULLIF(s.spellcasting_stat, ''), NULLIF(cl.spellcasting_stat, ''), cl.primary_stat) AS casting_stat, COALESCE(s.caster_type, cl.caster_type) AS caster_type, cl.has_embers, cl.crack_max, cl.breach_dc, cl.breach_dc_scaling, cl.saving_throws AS class_saving_throws, s.breach_effect, s.breach_drains_embers, NULLIF(concat_ws(', ', cl.armor_proficiencies, s.armor_proficiencies), '') AS armor_proficiencies, NULLIF(concat_ws(', ', cl.weapon_proficiencies, s.weapon_proficiencies), '') AS weapon_proficiencies, NULLIF(concat_ws(', ', cl.tool_proficiencies, s.tool_proficiencies), '') AS tool_proficiencies, s.name AS subclass_name, r.base_speed AS race_base_speed, COALESCE((SELECT SUM(sf.hp_per_level) FROM subclass_features sf WHERE sf.subclass_id = ch.subclass_id AND sf.level <= ch.level), 0) * ch.level AS hp_bonus
+        `SELECT ch.*, r.name AS race_name, sr.name AS subrace_name, cl.name AS class_name, cl.hitpoint_die, cl.primary_stat AS spell_stat, COALESCE(NULLIF(s.spellcasting_stat, ''), NULLIF(cl.spellcasting_stat, ''), cl.primary_stat) AS casting_stat, COALESCE(s.caster_type, cl.caster_type) AS caster_type, cl.has_embers, cl.crack_max, cl.breach_dc, cl.breach_dc_scaling, cl.saving_throws AS class_saving_throws, s.breach_effect, s.breach_drains_embers, NULLIF(concat_ws(', ', cl.armor_proficiencies, s.armor_proficiencies), '') AS armor_proficiencies, NULLIF(concat_ws(', ', cl.weapon_proficiencies, s.weapon_proficiencies), '') AS weapon_proficiencies, NULLIF(concat_ws(', ', cl.tool_proficiencies, s.tool_proficiencies), '') AS tool_proficiencies, s.name AS subclass_name, r.base_speed AS race_base_speed, r.darkvision AS race_darkvision, COALESCE((SELECT SUM(sf.hp_per_level) FROM subclass_features sf WHERE sf.subclass_id = ch.subclass_id AND sf.level <= ch.level), 0) * ch.level AS hp_bonus
         FROM characters ch
         LEFT JOIN races r ON r.id = ch.race_id
         LEFT JOIN subraces sr ON sr.id = ch.subrace_id
@@ -32,6 +33,8 @@ export async function getSheetCharacter(charId, userId) {
     );
     // Sheet shows the effective max HP (Rune-Hardened etc.); stored max_hp stays the base for level-up math
     if (rows[0]) rows[0].max_hp = Number(rows[0].max_hp) + Number(rows[0].hp_bonus || 0);
+    // spells: { cantrips, prepared, known } (null = no cap)
+    if (rows[0]) rows[0].spell_limits = getSpellCaps(rows[0].class_name, rows[0].level, rows[0].subclass_name);
     return withEffectiveScores(rows[0]);
 }
 

@@ -51,7 +51,7 @@ export async function listStartingGear(classId, subclassId, level) {
 
 export async function getOwnedArmor(charId) {
     const { rows } = await pool.query(
-        `SELECT ca.armor_id AS id, ca.id AS owned_id, ca.is_equipped, a.name, a.armor_type, a.ac_bonus,
+        `SELECT ca.armor_id AS id, ca.id AS owned_id, ca.is_equipped, a.name, a.armor_type, a.ac_bonus, a.stealth_disadvantage, /*prep-done*/
                 ${itemRunesJson('character_armor_id', 'ca.id')} AS runes
         FROM character_armor ca
         JOIN armor a ON a.id = ca.armor_id

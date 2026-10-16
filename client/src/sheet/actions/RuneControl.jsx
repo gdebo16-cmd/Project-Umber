@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { sendJson } from '../../utils/api';
 import { useCharacter } from '../CharacterContext';
+import { runeFits } from '../../utils/runes'; /*prep-done*/
 
 // "Inscribe runes" control for one owned item (Rune Weaver only). kind = 'weapon' | 'armor'; itemId = catalog id.
 // The server enforces item types, prerequisites, per-item and active limits; this only offers the likely picks.
@@ -30,7 +31,7 @@ function RuneControl({ kind, itemId, itemType, itemRunes = [], isRunedWeapon = f
     };
 
     const onItem = new Set(itemRunes.map((r) => Number(r.rune_id)));
-    const options = info.runes.filter((r) => r.item_types.includes(itemType) && r.min_level <= info.level && !onItem.has(Number(r.id)));
+    const options = info.runes.filter((r) => runeFits(r, itemType) && r.min_level <= info.level && !onItem.has(Number(r.id)));
     const picked = info.runes.find((r) => String(r.id) === runeId);
     const full = itemRunes.length >= info.perItem;
 

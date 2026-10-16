@@ -52,7 +52,9 @@ const changeSpell = async (spellId, action) => {
     if (loading) return <Loader />;
     if (error) return <p>Failure is upon us: {error}</p>;
 
-    const { spells, learnedIds } = data;
+    const { spells, learnedIds, learnedSpells = [], spellLimits } = data; /*prep-done*/
+    const learnedLeveled = learnedSpells.filter((s) => s.base_level >= 1).length;
+    const learnedCantrips = learnedSpells.filter((s) => s.base_level === 0).length;
     // the server only sends spells the character can cast, so the highest level present is the highest tab to show
     const maxLevel = Math.max(0, ...spells.map((s) => s.base_level));
     const visibleTabs = TABS.filter((t) => Number(t.id.split('_')[1]) <= maxLevel);
@@ -61,6 +63,7 @@ const changeSpell = async (spellId, action) => {
         <section className="title-tile">
         <h3 className="action-title tile-top">Study Arcana</h3>
         <button type='button' className='btn btn-link hover-grow' onClick={onDone}>Close the Book</button>
+        {spellLimits && <p className='spell-stat'>Learned: {learnedLeveled}/{spellLimits.known} spells, {learnedCantrips}/{spellLimits.cantrips} cantrips (prepare up to {spellLimits.prepared})</p>}
         {saveError && <p>{saveError}</p>}
         </section>
             

@@ -20,6 +20,7 @@ import { modOf, d20, proficiencyBonus } from '../utils/math';
 import Loader from '../components/Loader';
 import RestButton from './RestButton';
 import socket from '../utils/socket';
+import { utilityRuneEffects } from '../utils/runes'; /*prep-done*/
 
 // Mobile only: the three big tabs at the top. On desktop the CSS shows all three panels at once.
 const SHEET_TABS = [
@@ -72,8 +73,9 @@ function CharacterSheet() {
 
     const { character, ownedArmor, ownedWeapons, learnedSpells = [], actionFeatures = [] } = data;
     const hp = character.current_hp;
-    // Distance: (race base speed + Speed stat) scaled by how healthy you are
-    const distance = Math.round(((character.race_base_speed ?? 0) + (character.spd ?? 0)) * (character.max_hp ? hp / character.max_hp : 1));
+    // Distance: (race base speed + Speed stat + Fleet Rune 5 ft) scaled by how healthy you are
+    const fleetFt = utilityRuneEffects(ownedArmor, ownedWeapons).fleet ? 5 : 0;
+    const distance = Math.round(((character.race_base_speed ?? 0) + (character.spd ?? 0) + fleetFt) * (character.max_hp ? hp / character.max_hp : 1));
 
     // Per-rest state is saved on the character row (PATCH /state), so it survives reloads
     const usedSlots = character.used_slots || {};
@@ -182,6 +184,8 @@ function CharacterSheet() {
             const key = `${f.source}-${f.id}`;
             if (restUses[key] && f.rest_lock === 'long') newUses[key] = restUses[key];
         }
+        // rune uses (Mending Rune) recover on a long rest only
+        for (const [key, n] of Object.entries(restUses)) if (key.startsWith('rune-')) newUses[key] = n;
     }
     // embers: all back on a long rest, half the max on a short rest. One save for everything.
     saveState({

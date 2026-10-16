@@ -19,3 +19,22 @@ export function armorRuneEffects(ownedArmor) {
 
 // Runic Strike: +1d6 force (2d6 at 10, 3d6 at 18, 4d6 at 24)
 export const runicStrikeDice = (level) => (level >= 24 ? '4d6' : level >= 18 ? '3d6' : level >= 10 ? '2d6' : '1d6');
+
+// No gear table: runes listed for "gear" go on worn armor or shields (same rule as the server's runeFitsItem)
+export const runeFits = (rune, itemType) => rune.item_types.includes(itemType) || (rune.item_types.includes('gear') && (itemType === 'armor' || itemType === 'shield'));
+
+// Utility runes on worn armor/shields and equipped weapons (the spec's numbers only; the same effect twice doesn't stack)
+export function utilityRuneEffects(ownedArmor = [], ownedWeapons = []) {
+    const items = [...ownedArmor, ...ownedWeapons].filter((i) => i.is_equipped);
+    const withRune = (name) => items.flatMap((i) => (i.runes ?? []).filter((r) => r.name === name).map((r) => ({ key: `rune-${r.id}`, item: i.name, armor: i })));
+    return {
+        fleet: withRune('Fleet Rune').length > 0,               // +5 ft walking speed
+        dusksight: withRune('Dusksight Rune').length > 0,       // darkvision 30 ft (+30 ft if you already have it)
+        lanterns: withRune('Lantern Rune'),                     // bright 20 ft + dim 20 ft, bonus action on/off
+        hush: withRune('Hush Rune'),                            // silent; armor with it: no Stealth disadvantage
+        anchor: withRune('Anchor Rune'),                        // can't be disarmed or taken while conscious
+        homing: withRune('Homing Rune'),                        // thrown returns; ammunition recovered after combat
+        mending: withRune('Mending Rune'),                      // self-repairs; 1/long rest reaction: reduce a hit by 1d6 + INT
+    };
+}
+/*prep-done*/
