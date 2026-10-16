@@ -11,6 +11,7 @@ function InventoryTab() {
     const characterId = character.id;
     const [error, setError] = useState('');
     const [browsing, setBrowsing] = useState(false); // true while the shop list is showing
+    const [openWeaponId, setOpenWeaponId] = useState(null); // weapon whose rarity and description are showing
     const base = `/api/characters/${characterId}/inventory`;
 
     const armorAction = async (armorId, action) => {
@@ -95,7 +96,12 @@ function InventoryTab() {
                         ) : (
                             ownedWeapons.map((w) => (
                                 <li className="action-item spell" key={w.id}>
-                                    {w.name} ({w.damage_dice} {w.category})
+                                    <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenWeaponId(openWeaponId === w.id ? null : w.id)}>
+                                        {w.name} ({w.damage_dice} {w.weapon_category ?? w.category})
+                                    </button>
+                                    {openWeaponId === w.id && (
+                                        <p>{w.rarity && <strong>{w.rarity}. </strong>}{w.description}</p>
+                                    )}
                                     {w.is_equipped ? (
                                         <div className="action-button-container">
                                             <em className="equipped-item">Equipped</em>

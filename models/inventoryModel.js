@@ -27,9 +27,8 @@ export async function listWeaponsForCharacter(classId, subclassId, level) {
     const { rows } = await pool.query(`SELECT w.* FROM weapons w WHERE EXISTS (SELECT 1 FROM class_item_proficiencies p
         WHERE p.class_id = $1 AND (p.subclass_id IS NULL OR p.subclass_id = $2) AND p.min_level <= $3
         AND p.item_kind = 'weapon'
-         AND ((p.match_field = 'weapon_type' AND p.match_value = w.weapon_type)
-         OR (p.match_field = 'category' AND p.match_value = w.category)
-         OR (p.match_field = 'name' AND p.match_value = w.name)))`,
+         AND p.match_field = 'weapon_category'
+         AND p.match_value = (SELECT wc.code FROM weapon_category wc WHERE wc.id = w.category_id))`,
 [classId, subclassId, level]
 );
 return rows;
@@ -39,9 +38,9 @@ return rows;
 // but only common, non-unique items (no +1s or named weapons).
 export async function listStartingGear(classId, subclassId, level) {
     const armor = (await listArmorForCharacter(classId, subclassId, level))
-        .filter((a) => (a.rarity ?? 'common') === 'common');
+        .filter((a) => (a.rarity ?? 'common').toLowerCase() === 'common');
     const weapons = (await listWeaponsForCharacter(classId, subclassId, level))
-        .filter((w) => (w.rarity ?? 'common') === 'common' && !w.is_unique);
+        .filter((w) => (w.rarity ?? 'common').toLowerCase() === 'common' && !w.is_unique);
     const byName = (x, y) => x.name.localeCompare(y.name);
     return { armor: armor.sort(byName), weapons: weapons.sort(byName) };
 }
@@ -62,7 +61,8 @@ export async function getOwnedArmor(charId) {
 
 export async function getOwnedWeapons(charId) {
     const { rows } = await pool.query(
-        `SELECT w.id, w.name, w.category, w.damage_dice, w.sigil_weapon, cw.is_equipped
+        `SELECT w.id, w.name, w.category, w.damage_dice, w.sigil_weapon, w.properties, w.description, w.rarity, w.damage_type, w.attack_bonus, w.range_normal, w.range_long,
+                (SELECT wc.name FROM weapon_category wc WHERE wc.id = w.category_id) AS weapon_category, cw.is_equipped, cw.dual_wield
         FROM character_weapons cw
         JOIN weapons w ON w.id = cw.weapon_id
         WHERE cw.character_id = $1
@@ -167,6 +167,18 @@ export async function equipWeapon(charId, weaponId) {
         `UPDATE character_weapons SET is_equipped = true
          WHERE character_id = $1 AND weapon_id = $2`,
         [charId, weaponId]
+    );
+    return rowCount;
+}
+
+// Dual wield toggle (Actions tab). Two-handed weapons can't be dual wielded. Returns rows changed.
+export async function setWeaponDualWield(charId, weaponId, on) {
+    const { rowCount } = await pool.query(
+        `UPDATE character_weapons cw SET dual_wield = $3
+         FROM weapons w
+         WHERE w.id = cw.weapon_id AND cw.character_id = $1 AND cw.weapon_id = $2
+           AND ($3 = false OR NOT ('two-handed' = ANY(w.properties)))`,
+        [charId, weaponId, !!on]
     );
     return rowCount;
 }

@@ -88,8 +88,10 @@ async function meetsClause(clause, ctx, pickLevel, scores) {
     if (c.includes('spellcasting')) return ctx.caster;
     if (c.includes('extra attack')) return ctx.extraAttackLevel != null && ctx.extraAttackLevel <= pickLevel;
     if (c.includes('armor') || c.includes('shield')) return /medium|heavy|shield/i.test(ctx.armor);
-    if (c.includes('ranged weapon')) return /simple|martial|bow|crossbow|sling|dart/i.test(ctx.weapons);
-    if (c.includes('weapon')) return /simple|martial|weapon/i.test(ctx.weapons);
+    // weapons = the class + subclass weapon categories (see weapon_category)
+    if (c.includes('ranged weapon')) return /ranged/i.test(ctx.weapons);
+    if (c.includes('heavy or versatile')) return /versatile|great|reach|ranged two-handed/i.test(ctx.weapons);
+    if (c.includes('weapon')) return ctx.weapons.trim() !== '';
     return true; // unknown wording: not blocked
 }
 

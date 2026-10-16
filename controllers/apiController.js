@@ -115,6 +115,19 @@ export async function equipWeapon(req, res) {
     res.json({ ownedWeapons: await Inventory.getOwnedWeapons(charId) });
 }
 
+// POST /api/characters/:id/inventory/weapon/dual-wield   body: { weapon_id, dual_wield }
+export async function dualWieldWeapon(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const charId = Number(req.params.id);
+    if (!(await ownsCharacter(charId, req.session.userId))) {
+        return res.status(404).json({ error: 'Character not found' });
+    }
+
+    const rowCount = await Inventory.setWeaponDualWield(charId, Number(req.body.weapon_id), req.body.dual_wield === true);
+    if (!rowCount) return res.status(400).json({ error: 'Only an owned one-handed weapon can be dual wielded' });
+    res.json({ ownedWeapons: await Inventory.getOwnedWeapons(charId) });
+}
+
 // POST /api/characters/:id/inventory/weapon/unequip   body: { weapon_id }
 export async function unequipWeapon(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });

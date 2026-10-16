@@ -3,10 +3,15 @@ import { modOf, signed, healthInit, rollDice, rollToHit, proficiencyBonus } from
 import { useCharacter } from '../CharacterContext';
 import { getSpellSlots, beamsAt, beamRollText, beamDamageText, scaledAt } from '../../utils/spellSlots';
 import { createPortal } from 'react-dom';
+import { sendJson } from '../../utils/api';
+
+// Dual wield: the off-hand attack is a bonus action and loses the ability modifier on DAMAGE (5e).
+// Flip this to true to also drop the modifier from to-hit (proficiency always stays).
+const DUAL_WIELD_DROPS_HIT_MOD = false;
 
 // Your equipped weapons plus Fists. Each has a To Hit button and a Damage button.
 function Actions() {
-    const { character, hp, ownedWeapons, onRoll, learnedSpells, spendSlot, usedSlots = {}, actionFeatures = [], radiance = 0, radianceMax = 0, spendRadiance, restUses = {}, countUse, cracks = 0, crackMax = 0, gainCracks, removeCracks, kindleSlot } = useCharacter();
+    const { character, hp, ownedWeapons, setOwnedWeapons, onRoll, learnedSpells, spendSlot, usedSlots = {}, actionFeatures = [], radiance = 0, radianceMax = 0, spendRadiance, restUses = {}, countUse, cracks = 0, crackMax = 0, gainCracks, removeCracks, kindleSlot } = useCharacter();
     const actionSpells = learnedSpells ?? [];
     const spellScore = character[(character.spell_stat || '').toLowerCase()];
     // spells use the class's spellcasting_stat (casting_stat); weapons keep the primary stat
@@ -34,15 +39,36 @@ function Actions() {
     const fistDice = `${Math.max(1, Math.floor((character.str + hp) / 20))}d4`;
 
     // Every action has the same shape, so one map() can draw them all
-    const actions = [
-        ...ownedWeapons.filter((w) => w.is_equipped).map((w) => {
+    const weaponActions = ownedWeapons.filter((w) => w.is_equipped).map((w) => {
             const ranged = w.category === 'ranged';
-            const dmgMod = ranged ? modOf(character.dex) : primaryMod;
+            const abilityMod = ranged ? modOf(character.dex) : primaryMod;
+            const oneHanded = !(w.properties ?? []).includes('two-handed');
+            const dual = oneHanded && !!w.dual_wield;
+            const hit = ranged ? toHit : meleeHit;
             // Seal Cracks: +1 radiant per Crack on sigil-weapon hits (weapons.sigil_weapon)
-            return { key: `w${w.id}`, name: w.name, dice: w.damage_dice, dmgMod: dmgMod + (w.sigil_weapon ? cracks : 0), hit: ranged ? toHit : meleeHit, sigil: w.sigil_weapon };
-        }),
+            return { key: `w${w.id}`, weaponId: w.id, name: w.name, dice: w.damage_dice, oneHanded, dual,
+                rarity: w.rarity, description: w.description, category: w.weapon_category,
+                damageType: w.damage_type, attackBonus: w.attack_bonus || 0, stat: ranged ? 'DEX' : (character.spell_stat || 'STR').toUpperCase(),
+                hands: oneHanded ? ((w.properties ?? []).includes('versatile') ? 'One or two hands' : 'One hand') : 'Two hands',
+                range: w.range_normal ? `${w.range_normal}/${w.range_long ?? w.range_normal} ft` : ((w.properties ?? []).includes('reach') ? '10 ft (reach)' : '5 ft'),
+                dmgMod: (dual ? 0 : abilityMod) + (w.sigil_weapon ? cracks : 0),
+                hit: dual && DUAL_WIELD_DROPS_HIT_MOD ? hit - abilityMod : hit, sigil: w.sigil_weapon };
+        });
+    // dual-wielded weapons move to Bonus Actions
+    const actions = [
+        ...weaponActions.filter((a) => !a.dual),
         { key: 'fists', name: 'Fists', dice: fistDice, dmgMod: 0, hit: meleeHit },
     ];
+    const bonusWeapons = weaponActions.filter((a) => a.dual);
+
+    const toggleDualWield = async (a) => {
+        try {
+            const data = await sendJson(`/api/characters/${character.id}/inventory/weapon/dual-wield`, 'POST', { weapon_id: a.weaponId, dual_wield: !a.dual });
+            setOwnedWeapons(data.ownedWeapons);
+        } catch (err) {
+            onRoll(err.message);
+        }
+    };
 
     const [openItem, setOpenItem] = useState(null);
     const rollHit = (a) => {
@@ -244,14 +270,8 @@ function Actions() {
     );
 
 
-    return (
-        // Same shape as the Spells and Inventory tabs: one list of groups,
-        // each group = a title on top + its list of rows underneath
-        <ul className="action-list spell-list">
-            <li className="action-item spell-slot">
-                <span className="action-title" id="physical-actions-title">Physical Actions</span>
-                <ul className="action-list" id="physical-actions-list">
-                    {actions.map((a) => (
+    // one weapon row (Physical Actions, or Bonus Actions when dual wielded)
+    const weaponRow = (a) => (
                         <li key={a.key} className="action-item spell">
                             <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'weapon', data: a })}>
                                     {a.name}
@@ -267,7 +287,19 @@ function Actions() {
                                 )}
                             </div>
                         </li>
-                    ))}
+    );
+
+    // the open weapon popup reads the live row, so the dual wield checkbox updates in place
+    const openWeapon = openItem?.kind === 'weapon' ? (weaponActions.find((x) => x.key === openItem.data.key) ?? openItem.data) : null;
+
+    return (
+        // Same shape as the Spells and Inventory tabs: one list of groups,
+        // each group = a title on top + its list of rows underneath
+        <ul className="action-list spell-list">
+            <li className="action-item spell-slot">
+                <span className="action-title" id="physical-actions-title">Physical Actions</span>
+                <ul className="action-list" id="physical-actions-list">
+                    {actions.map(weaponRow)}
                 </ul>
             </li>
 
@@ -285,6 +317,7 @@ function Actions() {
             <li className="action-item spell-slot">
                 <span className="action-title" id="physical-actions-title">Bonus Actions</span>
                 <ul className="action-list" id="physical-actions-list">
+                    {bonusWeapons.map(weaponRow)}
                     {bonusSpells.map(spellRow)}
                     {bonusFeatures.map((f) => (
                             <li key={`${f.source}-${f.id}`} className="action-item spell">
@@ -393,20 +426,39 @@ function Actions() {
                     )}
 
                     {openItem.kind === 'weapon' && (
-                        <section className="details-container">
-                            <section className="combat-box">
-                                <article className="combat-box-title"><h4>To Hit</h4></article>
-                                <article className="combat-box-content">
-                                    <p><strong>{signed(openItem.data.hit ?? toHit)}</strong></p>
-                                </article>
+                        <>
+                            <section className="details-container">
+                                <section className="combat-box">
+                                    <article className="combat-box-title"><h4>Weapon Details</h4></article>
+                                    <article className="combat-box-content">
+                                        <p>Range: <strong>{openWeapon.range ?? 'Reach'}</strong></p>
+                                        <p>Damage: <strong>{openWeapon.dice}{openWeapon.dmgMod ? signed(openWeapon.dmgMod) : ''}{openWeapon.damageType ? ` ${openWeapon.damageType}` : ''}</strong></p>
+                                        <p>Stat: <strong>{openWeapon.stat ?? '-'}</strong></p>
+                                        <p>Hands: <strong>{openWeapon.hands ?? '-'}</strong></p>
+                                        <p>To Hit: <strong>{signed(openWeapon.hit ?? toHit)}</strong>{openWeapon.attackBonus ? <> (magic {signed(openWeapon.attackBonus)})</> : null}</p>
+                                    </article>
+                                </section>
+                                {openWeapon.oneHanded && (
+                                    <section className="spell-build-box">
+                                        <article className="spell-build-box-title"><h4>Off Hand</h4></article>
+                                        <article className="spell-build-box-content">
+                                            <p>
+                                                <label>
+                                                    <input type="checkbox" checked={openWeapon.dual} onChange={() => toggleDualWield(openWeapon)} /> Dual wield
+                                                </label>
+                                            </p>
+                                            <p>{openWeapon.dual ? 'Bonus action; no ability modifier on damage.' : 'Attack action.'}</p>
+                                        </article>
+                                    </section>
+                                )}
                             </section>
-                            <section className="spell-build-box">
-                                <article className="spell-build-box-title"><h4>Damage</h4></article>
-                                <article className="spell-build-box-content">
-                                    <p><strong>{openItem.data.dice}{openItem.data.dmgMod ? signed(openItem.data.dmgMod) : ''}</strong></p>
-                                </article>
-                            </section>
-                        </section>
+                            {(openWeapon.rarity || openWeapon.description) && (
+                                <section className="spell-description-box">
+                                    {openWeapon.rarity && <p>Rarity: <strong>{openWeapon.rarity}</strong>{openWeapon.category ? ` \u00b7 ${openWeapon.category}` : ''}</p>}
+                                    {openWeapon.description && <p><strong>Description:</strong> <br /> {openWeapon.description}</p>}
+                                </section>
+                            )}
+                        </>
                     )}
                 </article>
                 , document.body)}
