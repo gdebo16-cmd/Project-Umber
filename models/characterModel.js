@@ -206,6 +206,18 @@ export async function checkFeatureChoices(classId, subclassId, level, picks) {
         if (new Set(vals).size !== vals.length) return { error: 'Each option can only be picked once' };
         choices[key] = vals;
     }
+    // Option pools (several choice rows with the same name, e.g. Battle Drills at 3/9/15): no option twice across the pool
+    const seen = new Map();
+    for (const [key, vals] of Object.entries(choices)) {
+        const f = byKey.get(key);
+        const pool = `${f.source}:${f.name}`;
+        const taken = seen.get(pool) ?? new Set();
+        for (const v of vals) {
+            if (taken.has(v)) return { error: `You already picked ${v} from ${f.name}` };
+            taken.add(v);
+        }
+        seen.set(pool, taken);
+    }
     return { choices };
 }
 
