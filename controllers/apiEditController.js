@@ -3,6 +3,19 @@
 import * as Characters from '../models/characterModel.js';
 import { listRaces, checkSubrace } from '../models/raceModel.js';
 import { listClasses, listAllSubclasses, getSubclassClassId } from '../models/classModel.js';
+import { checkBoostRules } from '../utils/abilityBoosts.js';
+
+// Boost/blessing/cap rules against what the character has saved. Returns { error } or the result for applyBoostResult.
+async function boostCheck(charId, userId, classId, subclassId, level, choices, refundAbility) {
+    const saved = await Characters.getEditCharacter(charId, userId);
+    const sameClass = Number(saved.class_id) === Number(classId);
+    return checkBoostRules({
+        classId, subclassId, level, base: saved, choices,
+        prev: sameClass ? saved.feature_choices ?? {} : {},
+        repickAvailable: !!saved.boost_repick_available,
+        refundAbility,
+    });
+}
 
 // GET /api/characters/:id/edit  -> { character, races, classes, subClasses }
 export async function getEditCharacter(req, res) {
@@ -78,8 +91,14 @@ export async function editClass(req, res) {
         if (picked.error) return res.status(400).json({ error: picked.error });
         featureChoices = picked.choices;
     }
+    let boost;
+    if (featureChoices !== undefined) {
+        boost = await boostCheck(charId, req.session.userId, class_id, subclass_id, level, featureChoices, req.body.refund_ability);
+        if (boost.error) return res.status(400).json({ error: boost.error });
+    }
 
     await Characters.updateClass(charId, req.session.userId, class_id, subclass_id, featureChoices);
+    await Characters.applyBoostResult(charId, req.session.userId, boost);
     res.json({ character: await Characters.getEditCharacter(charId, req.session.userId) });
 }
 
@@ -110,7 +129,13 @@ export async function editFeatureChoice(req, res) {
     }
     if (new Set(choices).size !== choices.length) return res.status(400).json({ error: 'Each option can only be picked once' });
 
-    await Characters.setFeatureChoice(charId, req.session.userId, `${source}:${featureId}`, choices);
+    const key = `${source}:${featureId}`;
+    const saved = await Characters.getEditCharacter(charId, req.session.userId);
+    const boost = await boostCheck(charId, req.session.userId, saved.class_id, saved.subclass_id, Number(f.char_level),
+        { ...(saved.feature_choices ?? {}), [key]: choices }, req.body.refund_ability);
+    if (boost.error) return res.status(400).json({ error: boost.error });
+    await Characters.setFeatureChoice(charId, req.session.userId, key, choices);
+    await Characters.applyBoostResult(charId, req.session.userId, boost);
     res.json({ character: await Characters.getEditCharacter(charId, req.session.userId) });
 }
 

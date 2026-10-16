@@ -3,6 +3,7 @@
 // by level, so a subclass's choices show up next to the class ones once a subclass is picked.
 // picks is { "<source>:<feature id>": [values] }, the same shape as characters.feature_choices.
 
+import { KEPT_BOOST } from '../utils/levelChoices';
 function LevelChoices({ features, picks, onChange, topClass, bottomClass }) {
     if (!features.length) return null;
 
@@ -19,21 +20,27 @@ function LevelChoices({ features, picks, onChange, topClass, bottomClass }) {
             {features.filter((f) => f.level === lvl).map((f) => {
                 const count = f.choice_count ?? 1;
                 const current = picks[f.key] ?? [];
+                const info = f.option_info ?? {};
                 return Array.from({ length: count }, (_, i) => (
-                    <select
-                        key={`${f.key}:${i}`}
-                        className={bottomClass}
-                        aria-label={f.label}
-                        value={current[i] ?? ''}
-                        onChange={(e) => pick(f, i, e.target.value)}
-                    >
-                        <option value="" disabled>{f.label}: pick one</option>
-                        {f.options
-                            .filter((o) => o === current[i] || !current.includes(o))
-                            .map((o) => (
-                                <option key={o} value={o}>{f.label}: {o}</option>
-                            ))}
-                    </select>
+                    <div key={`${f.key}:${i}`}>
+                        <select
+                            className={bottomClass}
+                            aria-label={f.label}
+                            value={current[i] ?? ''}
+                            onChange={(e) => pick(f, i, e.target.value)}
+                        >
+                            <option value="" disabled>{f.label}: pick one</option>
+                            {f.options
+                                // a kept boost (pre-rework) only shows while it is the current pick
+                                .filter((o) => o === current[i] || (!current.includes(o) && o !== KEPT_BOOST))
+                                .map((o) => (
+                                    <option key={o} value={o} title={info[o] ?? ''}>
+                                        {f.label}: {o}{info[o] ? ` - ${info[o]}` : ''}
+                                    </option>
+                                ))}
+                        </select>
+                        {current[i] && info[current[i]] && <p className="pick-hint">{current[i]}: {info[current[i]]}</p>}
+                    </div>
                 ));
             })}
         </article>

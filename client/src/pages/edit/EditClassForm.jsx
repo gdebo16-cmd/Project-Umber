@@ -2,7 +2,7 @@ import { useState } from 'react';
 import useSave from './useSave';
 import CreateDescription from '../CreateDescription';
 import LevelChoices from '../LevelChoices';
-import { choiceFeatures, keepPicks } from '../../utils/levelChoices';
+import { choiceFeatures, keepPicks, KEPT_BOOST } from '../../utils/levelChoices';
 import { sendJson } from '../../utils/api';
 
 // Class + subclass editor, laid out like creator Step 2: pick tiles on top, then the
@@ -21,7 +21,7 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
     const [level, setLevel] = useState(character.level ?? 1);
     const [levelMsg, setLevelMsg] = useState('');
     const [picks, setPicks] = useState(character.feature_choices ?? {});
-    const subLocked = level < SUBCLASS_LEVEL;
+    const [refund, setRefund] = useState('');    const subLocked = level < SUBCLASS_LEVEL;
     const { save, message } = useSave(`/api/characters/${character.id}/edit/class`, (saved) => {
         setPicks(saved.feature_choices ?? {});
         onSaved(saved);
@@ -54,6 +54,10 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
     // class + subclass choice features unlocked at the picked level
     const choiceList = pickedClass ? choiceFeatures(pickedClass.features, pickedSub?.features, pickedSub?.name, level) : [];
 
+    // re-picking a kept (pre-rework) boost: which score had that +2, so it can come back off
+    const saved = character.feature_choices ?? {};
+    const repicking = Object.keys(saved).some((k) => saved[k]?.[0] === KEPT_BOOST && picks[k]?.[0] && picks[k][0] !== KEPT_BOOST);
+
     const submit = async (e) => {
         e.preventDefault();
         setLevelMsg('');
@@ -71,7 +75,7 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
             class_id: classId,
             subclass_id: subLocked ? null : subclassId,
             feature_choices: keepPicks(picks, choiceList),
-        });
+            ...(repicking && refund ? { refund_ability: refund } : {}),        });
     };
 
     const classSaved = Number(classId) === Number(character.class_id);
@@ -136,7 +140,18 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
                     {subLocked && <p className="pick-hint">Subclass unlocks at level {SUBCLASS_LEVEL}</p>}
                 </article>
                 <LevelChoices features={choiceList} picks={picks} onChange={setPicks} topClass="tile-top" bottomClass="tile-bottom" />
-                {levelMsg && <p>{levelMsg}</p>}
+                {repicking && (
+                    <article className="form-section tile pick-tile">
+                        <label className="tile-top" htmlFor="refund">Free re-pick: lower the score that kept boost raised</label>
+                        <select className="tile-bottom" id="refund" value={refund} onChange={(e) => setRefund(e.target.value)}>
+                            <option value="">Leave my scores as they are</option>
+                            {['str', 'dex', 'con', 'int', 'wis', 'cha'].map((s) => (
+                                <option key={s} value={s}>{s.toUpperCase()} -2</option>
+                            ))}
+                        </select>
+                        {!character.boost_repick_available && <p className="pick-hint">Your free re-pick is already used.</p>}
+                    </article>
+                )}                {levelMsg && <p>{levelMsg}</p>}
                 {message && <p>{message}</p>}
                 {subLocked && (character.level ?? 1) >= SUBCLASS_LEVEL && character.subclass_id && (
                     <p>Saving below level {SUBCLASS_LEVEL} removes your subclass and its feature choices.</p>

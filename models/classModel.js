@@ -1,5 +1,32 @@
 // Class and subclass database reads.
 import pool from '../db.js';
+import { scorePickDescriptions } from '../utils/abilityBoosts.js';
+
+// Adds option_info { option: description } to each choice feature: pool/alternative options from
+// class_feature_options, blessings on Ability Boost rows, score picks, and option A = the feature itself.
+async function addOptionInfo(owners, classIdOf) {
+    const { rows: opts } = await pool.query(`SELECT class_id, pool, name, description FROM class_feature_options`);
+    const { rows: bl } = await pool.query(`SELECT name, tree, prerequisite, description FROM primordial_blessings`);
+    const blessings = Object.fromEntries(bl.map((b) => [b.name,
+        `${b.tree}'s Blessing${b.prerequisite ? ` (needs ${b.prerequisite})` : ''}: ${b.description}`]));
+    const scores = scorePickDescriptions();
+    for (const o of owners) {
+        for (const f of o.features ?? []) {
+            if (!f.options?.length) continue;
+            const info = {};
+            for (const x of opts) {
+                if (x.class_id === classIdOf(o) && (x.pool === f.name || x.pool === f.options[0])) info[x.name] = x.description;
+            }
+            if (f.options[0] && !info[f.options[0]] && !scores[f.options[0]] && f.description && f.name !== 'Ability Boost') info[f.options[0]] = f.description;
+            for (const name of f.options) {
+                if (scores[name]) info[name] = scores[name];
+                else if (blessings[name] && f.name === 'Ability Boost') info[name] = blessings[name];
+            }
+            f.option_info = info;
+        }
+    }
+    return owners;
+}
 
 export async function listClasses() {
     const { rows } = await pool.query(
@@ -11,7 +38,7 @@ export async function listClasses() {
         FROM classes c
         ORDER BY c.name`
     );
-    return rows;
+    return addOptionInfo(rows, (c) => c.id);
 }
 
 // hit die for one class, or undefined

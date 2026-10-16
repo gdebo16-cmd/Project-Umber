@@ -1,5 +1,6 @@
 // Character database reads and writes: sheet data, hp, levels, stats, create/delete.
 import pool from '../db.js';
+import { withEffectiveScores, effectiveScores, getBoostRows, statCap } from '../utils/abilityBoosts.js';
 
 // a character can only have a subclass from this level up (creator + editor check this too)
 export const SUBCLASS_LEVEL = 3;
@@ -29,7 +30,7 @@ export async function getSheetCharacter(charId, userId) {
             WHERE pm.character_id = ch.id AND dm.user_id = $2 AND dm.role = 'dm'))`,
         [charId, userId]
     );
-    return rows[0];
+    return withEffectiveScores(rows[0]);
 }
 
 // Home page list for one user
@@ -104,11 +105,17 @@ export async function createCharacter(userId, draft, final, plus2, plus1, maxHp)
 export async function getEditCharacter(charId, userId) {
     const { rows } = await pool.query(
         `SELECT id, name, race_id, subrace_id, class_id, subclass_id, level, str, dex, con, "int", wis, cha, luc, spd,
-                skill_proficiencies, feature_choices, portrait_url
+                skill_proficiencies, feature_choices, portrait_url, boost_repick_available
          FROM characters WHERE id = $1 AND user_id = $2`,
         [charId, userId]
     );
-    return rows[0];
+    const ch = rows[0];
+    if (ch?.class_id) {
+        // base scores stay editable; effective = base + Ability Boost / Ascent picks, capped
+        ch.effective_scores = effectiveScores(ch, await getBoostRows(ch.class_id), ch.feature_choices ?? {}, ch.level);
+        ch.stat_cap = statCap(ch.level);
+    }
+    return ch;
 }
 
 export async function updateNameAndRace(charId, userId, name, raceId, subraceId = null) {
@@ -210,6 +217,7 @@ export async function checkFeatureChoices(classId, subclassId, level, picks) {
     const seen = new Map();
     for (const [key, vals] of Object.entries(choices)) {
         const f = byKey.get(key);
+        if (f.name === 'Ability Boost') continue; // boost rows repeat; checkBoostRules handles repeats
         const pool = `${f.source}:${f.name}`;
         const taken = seen.get(pool) ?? new Set();
         for (const v of vals) {
@@ -227,6 +235,17 @@ export async function setFeatureChoice(charId, userId, key, values) {
         `UPDATE characters SET feature_choices = feature_choices || jsonb_build_object($1::text, $2::jsonb)
           WHERE id = $3 AND user_id = $4`,
         [key, JSON.stringify(values), charId, userId]
+    );
+}
+
+// After checkBoostRules: lower the re-picked kept boost's score and use up the free re-pick
+export async function applyBoostResult(charId, userId, result) {
+    if (!result?.usedRepick) return;
+    const col = { str: 'str', dex: 'dex', con: 'con', int: '"int"', wis: 'wis', cha: 'cha' }[result.refund];
+    await pool.query(
+        `UPDATE characters SET boost_repick_available = false${col ? `, ${col} = GREATEST(3, ${col} - 2)` : ''}
+          WHERE id = $1 AND user_id = $2`,
+        [charId, userId]
     );
 }
 

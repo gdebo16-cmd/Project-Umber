@@ -1,5 +1,8 @@
 // Helpers for pages/LevelChoices.jsx (kept apart so that file only exports a component).
 
+// a pre-rework boost already counted in the scores (migration only; see utils/abilityBoosts.js)
+export const KEPT_BOOST = 'Kept boost (already in scores)';
+
 // the choice features that apply at this level, with their feature_choices key
 export function choiceFeatures(classFeatures, subFeatures, subName, level) {
     const tag = (list, source) =>

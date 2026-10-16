@@ -1,6 +1,7 @@
 // Character creation (3 steps) as JSON for React. Queries live in models/.
 // Uses the session "draft locker" (req.session.charDraft) until step 3 saves it.
 import { listRaces, listSubraces, checkSubrace } from '../models/raceModel.js';
+import { checkBoostRules } from '../utils/abilityBoosts.js';
 import { listClasses, getHitDie, listSubclassesForClass, subclassBelongsToClass, getClassSkills } from '../models/classModel.js';
 import { createCharacter, checkFeatureChoices, SUBCLASS_LEVEL, MAX_LEVEL } from '../models/characterModel.js';
 import { listStartingGear, addWeapon, equipWeapon, addArmor, equipArmor } from '../models/inventoryModel.js';
@@ -138,6 +139,9 @@ export async function step2Submit(req, res) {
     // class + subclass feature choices (optional; each must be unlocked at this level)
     const picked = await checkFeatureChoices(Number(class_id), subclass_id ? Number(subclass_id) : null, level, req.body.feature_choices);
     if (picked.error) return res.status(400).json({ error: picked.error });
+    // boosts/blessings: repeat limits and level/feature prerequisites (scores aren't rolled yet)
+    const boost = await checkBoostRules({ classId: Number(class_id), subclassId: subclass_id ? Number(subclass_id) : null, level, base: null, choices: picked.choices });
+    if (boost.error) return res.status(400).json({ error: boost.error });
 
     // starting gear: weapon required, armor optional; both must be on this class's list
     const gear = await listStartingGear(Number(class_id), subclass_id ? Number(subclass_id) : null, level);
