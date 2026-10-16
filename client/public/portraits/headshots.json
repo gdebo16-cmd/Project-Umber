@@ -455,280 +455,280 @@
     "group": "Race"
   },
   {
-      "file": "mix-cindral-evoker.png",
-      "label": "Cindral Evoker",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-cindral-frenzy.png",
-      "label": "Cindral Frenzy",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-cindral-ranger.png",
-      "label": "Cindral Ranger",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-cindral-witch-knight.png",
-      "label": "Cindral Witch Knight",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-dragonborn-crown-guard.png",
-      "label": "Dragonborn Crown Guard",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-dragonborn-evoker.png",
-      "label": "Dragonborn Evoker",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-dragonborn-mage.png",
-      "label": "Dragonborn Mage",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-dragonborn-phalanx.png",
-      "label": "Dragonborn Phalanx",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-dwarf-iron.png",
-      "label": "Dwarf Iron",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-dwarf-paladin.png",
-      "label": "Dwarf Paladin",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-dwarf-shieldbearer.png",
-      "label": "Dwarf Shieldbearer",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-dwarf-warlord.png",
-      "label": "Dwarf Warlord",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-gnome-berserker.png",
-      "label": "Gnome Berserker",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-gnome-scholar.png",
-      "label": "Gnome Scholar",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-gnome-technomancer.png",
-      "label": "Gnome Technomancer",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-gnome-twinstrike.png",
-      "label": "Gnome Twinstrike",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-hollowkin-hollowmancer.png",
-      "label": "Hollowkin Hollowmancer",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-hollowkin-necromancer.png",
-      "label": "Hollowkin Necromancer",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-hollowkin-summoner.png",
-      "label": "Hollowkin Summoner",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-lupine-berserker.png",
-      "label": "Lupine Berserker",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-lupine-cavalier.png",
-      "label": "Lupine Cavalier",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-lupine-warsong.png",
-      "label": "Lupine Warsong",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-ochre-druid.png",
-      "label": "Ochre Druid",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-ochre-lightbearer.png",
-      "label": "Ochre Lightbearer",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-ochre-roots.png",
-      "label": "Ochre Roots",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-quillary-shadowblade.png",
-      "label": "Quillary Shadowblade",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-quillary-venom-bound.png",
-      "label": "Quillary Venom Bound",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-quillary-witch.png",
-      "label": "Quillary Witch",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-rootborn-green.png",
-      "label": "Rootborn Green",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-rootborn-seasons.png",
-      "label": "Rootborn Seasons",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-rootborn-warrior.png",
-      "label": "Rootborn Warrior",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-sable-assassin.png",
-      "label": "Sable Assassin",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-sable-ghost-walker.png",
-      "label": "Sable Ghost Walker",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-sable-stalker.png",
-      "label": "Sable Stalker",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-saltborn-bloodwake.png",
-      "label": "Saltborn Bloodwake",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-saltborn-knight.png",
-      "label": "Saltborn Knight",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-saltborn-loresong.png",
-      "label": "Saltborn Loresong",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-umber-priest.png",
-      "label": "Umber Priest",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-umber-runeweaver.png",
-      "label": "Umber Runeweaver",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-umber-shadow-whisper.png",
-      "label": "Umber Shadow Whisper",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-uron-bear.png",
-      "label": "Uron Bear",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-uron-ironhide.png",
-      "label": "Uron Ironhide",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-uron-pugilist.png",
-      "label": "Uron Pugilist",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-vellari-emerald-druid.png",
-      "label": "Vellari Emerald Druid",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-vellari-fate.png",
-      "label": "Vellari Fate",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-vellari-onyx-shadowblade.png",
-      "label": "Vellari Onyx Shadowblade",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-vellari-quartz-priest.png",
-      "label": "Vellari Quartz Priest",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-vellari-ruby-duelist.png",
-      "label": "Vellari Ruby Duelist",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-vellari-sapphire-mage.png",
-      "label": "Vellari Sapphire Mage",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-vellari-songsmith.png",
-      "label": "Vellari Songsmith",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-vellari-tamer.png",
-      "label": "Vellari Tamer",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-vellari-topaz-ranger.png",
-      "label": "Vellari Topaz Ranger",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-wyrdling-archer.png",
-      "label": "Wyrdling Archer",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-wyrdling-hex.png",
-      "label": "Wyrdling Hex",
-      "group": "Mixed"
-    },
-    {
-      "file": "mix-wyrdling-lancer.png",
-      "label": "Wyrdling Lancer",
-      "group": "Mixed"
-    },
+    "file": "mix-cindral-evoker.png",
+    "label": "Cindral Evoker",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-cindral-frenzy.png",
+    "label": "Cindral Frenzy",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-cindral-ranger.png",
+    "label": "Cindral Ranger",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-cindral-witch-knight.png",
+    "label": "Cindral Witch Knight",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-dragonborn-crown-guard.png",
+    "label": "Dragonborn Crown Guard",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-dragonborn-evoker.png",
+    "label": "Dragonborn Evoker",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-dragonborn-mage.png",
+    "label": "Dragonborn Mage",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-dragonborn-phalanx.png",
+    "label": "Dragonborn Phalanx",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-dwarf-iron.png",
+    "label": "Dwarf Iron",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-dwarf-paladin.png",
+    "label": "Dwarf Paladin",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-dwarf-shieldbearer.png",
+    "label": "Dwarf Shieldbearer",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-dwarf-warlord.png",
+    "label": "Dwarf Warlord",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-gnome-berserker.png",
+    "label": "Gnome Berserker",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-gnome-scholar.png",
+    "label": "Gnome Scholar",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-gnome-technomancer.png",
+    "label": "Gnome Technomancer",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-gnome-twinstrike.png",
+    "label": "Gnome Twinstrike",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-hollowkin-hollowmancer.png",
+    "label": "Hollowkin Hollowmancer",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-hollowkin-necromancer.png",
+    "label": "Hollowkin Necromancer",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-hollowkin-summoner.png",
+    "label": "Hollowkin Summoner",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-lupine-berserker.png",
+    "label": "Lupine Berserker",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-lupine-cavalier.png",
+    "label": "Lupine Cavalier",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-lupine-warsong.png",
+    "label": "Lupine Warsong",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-ochre-druid.png",
+    "label": "Ochre Druid",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-ochre-lightbearer.png",
+    "label": "Ochre Lightbearer",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-ochre-roots.png",
+    "label": "Ochre Roots",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-quillary-shadowblade.png",
+    "label": "Quillary Shadowblade",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-quillary-venom-bound.png",
+    "label": "Quillary Venom Bound",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-quillary-witch.png",
+    "label": "Quillary Witch",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-rootborn-green.png",
+    "label": "Rootborn Green",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-rootborn-seasons.png",
+    "label": "Rootborn Seasons",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-rootborn-warrior.png",
+    "label": "Rootborn Warrior",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-sable-assassin.png",
+    "label": "Sable Assassin",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-sable-ghost-walker.png",
+    "label": "Sable Ghost Walker",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-sable-stalker.png",
+    "label": "Sable Stalker",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-saltborn-bloodwake.png",
+    "label": "Saltborn Bloodwake",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-saltborn-knight.png",
+    "label": "Saltborn Knight",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-saltborn-loresong.png",
+    "label": "Saltborn Loresong",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-umber-priest.png",
+    "label": "Umber Priest",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-umber-runeweaver.png",
+    "label": "Umber Runeweaver",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-umber-shadow-whisper.png",
+    "label": "Umber Shadow Whisper",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-uron-bear.png",
+    "label": "Uron Bear",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-uron-ironhide.png",
+    "label": "Uron Ironhide",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-uron-pugilist.png",
+    "label": "Uron Pugilist",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-vellari-emerald-druid.png",
+    "label": "Vellari Emerald Druid",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-vellari-fate.png",
+    "label": "Vellari Fate",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-vellari-onyx-shadowblade.png",
+    "label": "Vellari Onyx Shadowblade",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-vellari-quartz-priest.png",
+    "label": "Vellari Quartz Priest",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-vellari-ruby-duelist.png",
+    "label": "Vellari Ruby Duelist",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-vellari-sapphire-mage.png",
+    "label": "Vellari Sapphire Mage",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-vellari-songsmith.png",
+    "label": "Vellari Songsmith",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-vellari-tamer.png",
+    "label": "Vellari Tamer",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-vellari-topaz-ranger.png",
+    "label": "Vellari Topaz Ranger",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-wyrdling-archer.png",
+    "label": "Wyrdling Archer",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-wyrdling-hex.png",
+    "label": "Wyrdling Hex",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-wyrdling-lancer.png",
+    "label": "Wyrdling Lancer",
+    "group": "Mixed"
+  },
   {
     "file": "mix-corvani-assassin.png",
     "label": "Corvani Assassin",
@@ -782,6 +782,66 @@
   {
     "file": "mix-lumenwing-songsmith.png",
     "label": "Lumenwing Songsmith",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-uron-beasts.png",
+    "label": "Uron Beasts",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-corvani-binder.png",
+    "label": "Corvani Binder",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-umber-blood.png",
+    "label": "Umber Blood",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-sable-diresong.png",
+    "label": "Sable Diresong",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-graniar-ochre.png",
+    "label": "Graniar Ochre",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-hollowkin-shadows.png",
+    "label": "Hollowkin Shadows",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-lumenwing-skyreach.png",
+    "label": "Lumenwing Skyreach",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-wyrdling-starlight.png",
+    "label": "Wyrdling Starlight",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-cindral-tiger.png",
+    "label": "Cindral Tiger",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-dragonborn-umber.png",
+    "label": "Dragonborn Umber",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-lupine-vanguard.png",
+    "label": "Lupine Vanguard",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-saltborn-weaponmaster.png",
+    "label": "Saltborn Weaponmaster",
     "group": "Mixed"
   }
 ]

@@ -1002,3 +1002,27 @@ footer {
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+/* ===== alignment fixes: every campaign tile starts at the top, and its parts span the full width so short text doesn't shrink them ===== */
+.campaign-tile {
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.campaign-tile > .campaign-description {
+    width: 100%;
+    box-sizing: border-box;
+    border-top: none;
+    align-items: center;
+    text-align: center;
+}
+
+.campaign-tile > .campaign-image {
+    width: 100%;
+    align-self: stretch;
+}
+
+.campaign-tile .btn-form {
+    align-self: center;
+    margin-top: 0.75rem;
+}

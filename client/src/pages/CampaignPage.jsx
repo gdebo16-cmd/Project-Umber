@@ -106,8 +106,8 @@ function CampaignPage() {
                                 </div>
                                 {editError && <p className="camp-edit-error" role="alert">{editError}</p>}
                                 <div className="camp-edit-actions">
-                                    <button type="submit" className="btn" disabled={saving}>{saving ? 'Saving...' : 'Save'}</button>
-                                    <button type="button" className="btn" disabled={saving} onClick={() => setEditing(false)}>Cancel</button>
+                                    <button type="submit" className="btn btn-form" disabled={saving}>{saving ? 'Saving...' : 'Save'}</button>
+                                    <button type="button" className="btn btn-form" disabled={saving} onClick={() => setEditing(false)}>Cancel</button>
                                 </div>
                             </form>
                         </>
@@ -120,7 +120,7 @@ function CampaignPage() {
                             <p className="campaign-description"> <em>Description:</em> <br /> {campaign.description}</p>
                             {campaign.role === 'dm' && (
                                 <div className="camp-edit-actions">
-                                    <button type="button" className="btn" onClick={startEdit}>Edit Campaign</button>
+                                    <button type="button" className="btn btn-form" onClick={startEdit}>Edit Campaign</button>
                                 </div>
                             )}
                         </>
