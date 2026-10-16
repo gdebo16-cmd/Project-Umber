@@ -18,6 +18,16 @@ export function parseScorePick(value) {
     return m ? { stat: m[2].toLowerCase(), amount: Number(m[1]) } : null;
 }
 
+// Blessing picks that raise a score: 'Iron Resolve (+1 STR)', 'Keen Wits (+1 WIS)', 'Second Breath' (always CON).
+// Returns { name, stat } (stat may be null) for any blessing pick; name is the primordial_blessings name.
+export function parseBlessingPick(value) {
+    const v = String(value ?? '');
+    const m = /^(.+) \(\+1 (STR|DEX|CON|INT|WIS|CHA)\)$/.exec(v);
+    if (m) return { name: m[1], stat: m[2].toLowerCase() };
+    if (v === 'Second Breath') return { name: v, stat: 'con' };
+    return { name: v, stat: null };
+}
+
 // Boost/Ascent rows of a class, oldest first
 export async function getBoostRows(classId) {
     const { rows } = await pool.query(
@@ -42,7 +52,10 @@ export function effectiveScores(base, rows, choices, level) {
     const out = Object.fromEntries(STATS.map((s) => [s, Number(base[s]) || 0]));
     for (const p of boostPicks(rows, choices, level)) {
         const sp = parseScorePick(p.value);
-        if (sp) out[sp.stat] = Math.max(out[sp.stat], Math.min(cap, out[sp.stat] + sp.amount));
+        const bp = sp ? null : parseBlessingPick(p.value);
+        const stat = sp?.stat ?? bp?.stat;
+        const amount = sp?.amount ?? (bp?.stat ? 1 : 0);
+        if (stat && amount) out[stat] = Math.max(out[stat], Math.min(cap, out[stat] + amount));
     }
     return out;
 }
@@ -133,7 +146,8 @@ export async function checkBoostRules({ classId, subclassId, level, base, choice
             }
             continue;
         }
-        const b = byName.get(p.value);
+        const bp = parseBlessingPick(p.value);
+        const b = byName.get(bp.name);
         if (!b) continue; // kept boost
         const n = (taken.get(b.name) ?? 0) + 1;
         if (n > b.repeatable_max) return { error: b.repeatable_max === 1 ? `${b.name} can only be taken once` : `${b.name} can be taken at most ${b.repeatable_max} times` };
@@ -142,6 +156,14 @@ export async function checkBoostRules({ classId, subclassId, level, base, choice
             if (!(await meetsClause(clause, ctx, p.level, scores))) {
                 return { error: `${b.name} needs: ${b.prerequisite} (picked at level ${p.level})` };
             }
+        }
+        // its +1: Iron Resolve / Keen Wits name a score, so a capped score must be swapped for another;
+        // Second Breath is always CON, and its +1 is simply lost at the cap (blessings.md stat cap rule)
+        if (bp.stat && scores) {
+            if (scores[bp.stat] >= cap && bp.name !== 'Second Breath') {
+                return { error: `${bp.stat.toUpperCase()} is already at your cap of ${cap}; pick ${b.name} with another score` };
+            }
+            scores[bp.stat] = Math.min(cap, scores[bp.stat] + 1);
         }
     }
     return { refund, usedRepick };

@@ -4,17 +4,27 @@ import * as Characters from '../models/characterModel.js';
 import { listRaces, checkSubrace } from '../models/raceModel.js';
 import { listClasses, listAllSubclasses, getSubclassClassId } from '../models/classModel.js';
 import { checkBoostRules } from '../utils/abilityBoosts.js';
+import { checkSwapRules } from '../utils/choiceRules.js';
 
 // Boost/blessing/cap rules against what the character has saved. Returns { error } or the result for applyBoostResult.
 async function boostCheck(charId, userId, classId, subclassId, level, choices, refundAbility) {
     const saved = await Characters.getEditCharacter(charId, userId);
     const sameClass = Number(saved.class_id) === Number(classId);
-    return checkBoostRules({
-        classId, subclassId, level, base: saved, choices,
-        prev: sameClass ? saved.feature_choices ?? {} : {},
+    const prev = sameClass ? saved.feature_choices ?? {} : {};
+    const boost = await checkBoostRules({
+        classId, subclassId, level, base: saved, choices, prev,
         repickAvailable: !!saved.boost_repick_available,
         refundAbility,
     });
+    if (boost.error) return boost;
+    // swap rule: one pool swap per level gained; pick-one-of-three rows are permanent (the free re-pick is shared)
+    const swap = await checkSwapRules({
+        classId, level, choices, prev,
+        lastSwapLevel: saved.last_swap_level,
+        repickAvailable: !!saved.boost_repick_available && !boost.usedRepick,
+    });
+    if (swap.error) return swap;
+    return { ...boost, swapped: swap.swapped, usedRepick: boost.usedRepick || swap.usedRepick };
 }
 
 // GET /api/characters/:id/edit  -> { character, races, classes, subClasses }

@@ -87,8 +87,8 @@ export async function createCharacter(userId, draft, final, plus2, plus1, maxHp)
         `INSERT INTO characters
            (user_id, name, race_id, subrace_id, class_id, subclass_id,
             str, dex, con, "int", wis, cha, luc, spd, plus2_stat, plus1_stat, max_hp, current_hp,
-            skill_proficiencies, level, feature_choices)
-         VALUES ($1,$2,$3,$20,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$21::jsonb)
+            skill_proficiencies, level, feature_choices, last_swap_level)
+         VALUES ($1,$2,$3,$20,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$21::jsonb,$19)
          RETURNING id`,
         [userId, draft.name, draft.race_id, draft.class_id, draft.subclass_id,
          final.str, final.dex, final.con, final.int, final.wis, final.cha, final.luc, final.spd,
@@ -105,7 +105,7 @@ export async function createCharacter(userId, draft, final, plus2, plus1, maxHp)
 export async function getEditCharacter(charId, userId) {
     const { rows } = await pool.query(
         `SELECT id, name, race_id, subrace_id, class_id, subclass_id, level, str, dex, con, "int", wis, cha, luc, spd,
-                skill_proficiencies, feature_choices, portrait_url, boost_repick_available
+                skill_proficiencies, feature_choices, portrait_url, boost_repick_available, last_swap_level
          FROM characters WHERE id = $1 AND user_id = $2`,
         [charId, userId]
     );
@@ -238,8 +238,12 @@ export async function setFeatureChoice(charId, userId, key, values) {
     );
 }
 
-// After checkBoostRules: lower the re-picked kept boost's score and use up the free re-pick
+// After checkBoostRules/checkSwapRules: lower the re-picked kept boost's score, use up the free re-pick,
+// and remember the level of a pool swap (one per level gained)
 export async function applyBoostResult(charId, userId, result) {
+    if (result?.swapped) {
+        await pool.query(`UPDATE characters SET last_swap_level = level WHERE id = $1 AND user_id = $2`, [charId, userId]);
+    }
     if (!result?.usedRepick) return;
     const col = { str: 'str', dex: 'dex', con: 'con', int: '"int"', wis: 'wis', cha: 'cha' }[result.refund];
     await pool.query(

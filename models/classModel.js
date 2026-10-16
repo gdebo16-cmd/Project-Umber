@@ -20,7 +20,10 @@ async function addOptionInfo(owners, classIdOf) {
             if (f.options[0] && !info[f.options[0]] && !scores[f.options[0]] && f.description && f.name !== 'Ability Boost') info[f.options[0]] = f.description;
             for (const name of f.options) {
                 if (scores[name]) info[name] = scores[name];
-                else if (blessings[name] && f.name === 'Ability Boost') info[name] = blessings[name];
+                else if (f.name === 'Ability Boost') {
+                    const base = name.replace(/ \(\+1 (STR|DEX|CON|INT|WIS|CHA)\)$/, '');
+                    if (blessings[base]) info[name] = base === name ? blessings[base] : `${blessings[base]} (your +1 goes to ${name.slice(-4, -1)})`;
+                }
             }
             f.option_info = info;
         }
