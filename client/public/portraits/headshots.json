@@ -470,6 +470,31 @@
     "group": "Race"
   },
   {
+    "file": "race-gehennan.png",
+    "label": "Gehennan",
+    "group": "Race"
+  },
+  {
+    "file": "race-gehennan-red.png",
+    "label": "Gehennan (Wrathveined)",
+    "group": "Race"
+  },
+  {
+    "file": "race-gehennan-purple.png",
+    "label": "Gehennan (Dusk-veined)",
+    "group": "Race"
+  },
+  {
+    "file": "race-gehennan-gold.png",
+    "label": "Gehennan (Oathveined)",
+    "group": "Race"
+  },
+  {
+    "file": "race-gehennan-orange.png",
+    "label": "Gehennan (Rustveined)",
+    "group": "Race"
+  },
+  {
     "file": "mix-cindral-evoker.png",
     "label": "Cindral Evoker",
     "group": "Mixed"
