@@ -319,7 +319,7 @@ main {
 
     /* H and E share the bottom block: skills span full actions height (no saves) */
     grid-template-areas: "B B B B B B B B"
-        "I I I F G C C C"
+        "I I R F G C C C"
         "H H H H E E E E"
         "H H H H E E E E"
         "H H H H E E E E"
@@ -703,6 +703,7 @@ main {
 
 .condition-tile {
     font-size: clamp(0.7rem, 12cqh, 0.95rem);
+    background-color: var(--bgc-low);
     margin-top: var(--mar1);
     padding: 0.35rem 0.6rem;
     display: grid;
@@ -737,9 +738,64 @@ main {
 #conditions-list-2 > .condition-checkbox {
     grid-column: 1;
     margin: var(--mar1);
-    width: 1em;
-    height: 1em;
+    width: 1.1em;
+    height: 1.1em;
     cursor: pointer;
+    /* themed shape instead of the browser default. --check-shape comes from the theme
+       (themes.css): diamond, shield, hexagon... The outer shape is the outline color. */
+    appearance: none;
+    display: grid;
+    place-items: center;
+    border: none;
+    clip-path: var(--check-shape);
+    background-color: var(--txt-color-1);
+    transition: transform 0.15s ease-in-out;
+}
+
+/* inner fill: same shape, slightly smaller, so a thin outline shows around it */
+#conditions-list-1 > .condition-checkbox::before,
+#conditions-list-2 > .condition-checkbox::before {
+    content: "";
+    grid-area: 1 / 1;
+    width: 78%;
+    height: 78%;
+    clip-path: var(--check-shape);
+    background-color: var(--bgc-top);
+    transition: background-color 0.15s ease-in-out;
+}
+
+/* the check mark */
+#conditions-list-1 > .condition-checkbox::after,
+#conditions-list-2 > .condition-checkbox::after {
+    content: "";
+    grid-area: 1 / 1;
+    width: 45%;
+    height: 45%;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    background-color: var(--txt-color-1);
+    transform: scale(0);
+    transition: transform 0.15s ease-in-out;
+}
+
+#conditions-list-1 > .condition-checkbox:checked::before,
+#conditions-list-2 > .condition-checkbox:checked::before {
+    background-color: var(--accent);
+}
+
+#conditions-list-1 > .condition-checkbox:checked::after,
+#conditions-list-2 > .condition-checkbox:checked::after {
+    transform: scale(1);
+}
+
+#conditions-list-1 > .condition-checkbox:active,
+#conditions-list-2 > .condition-checkbox:active {
+    transform: scale(0.9);
+}
+
+#conditions-list-1 > .condition-checkbox:focus-visible,
+#conditions-list-2 > .condition-checkbox:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
 }
 
 #conditions-list-1 > label,
@@ -780,6 +836,61 @@ main {
 #conditions-list-3 output {
     min-width: 2ch;
     text-align: right;
+}
+/* Exhaustion slider: themed track, and a thumb in the theme's --check-shape.
+   The -webkit- and -moz- versions are separate rules on purpose: a browser drops a
+   whole rule if it doesn't understand one selector in it. */
+#exhausted-value {
+    appearance: none;
+    height: 1.2em;
+    background: transparent;
+    cursor: pointer;
+}
+
+#exhausted-value::-webkit-slider-runnable-track {
+    height: 0.45em;
+    border: var(--tileBorder);
+    border-radius: var(--tile);
+    background: linear-gradient(to right, var(--accent) var(--fill, 0%), var(--bgc-top) var(--fill, 0%)); /* accent up to the thumb */
+    box-shadow: var(--bs2);
+}
+
+#exhausted-value::-moz-range-track {
+    height: 0.45em;
+    border: var(--tileBorder);
+    border-radius: var(--tile);
+    background-color: var(--bgc-top);
+    box-shadow: var(--bs2);
+}
+
+#exhausted-value::-moz-range-progress {
+    height: 0.45em;
+    border-radius: var(--tile);
+    background-color: var(--accent);
+}
+
+#exhausted-value::-webkit-slider-thumb {
+    appearance: none;
+    width: 1.1em;
+    height: 1.1em;
+    margin-top: calc((0.45em - 1.1em) / 2 - 1px); /* center the thumb on the track */
+    border: none;
+    clip-path: var(--check-shape);
+    background-color: var(--accent);
+}
+
+#exhausted-value::-moz-range-thumb {
+    width: 1.1em;
+    height: 1.1em;
+    border: none;
+    border-radius: 0;
+    clip-path: var(--check-shape);
+    background-color: var(--accent);
+}
+
+#exhausted-value:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
 }
 
 #condition-checkbox {
@@ -902,7 +1013,8 @@ main {
 }
 
 .action-container > [role="tabpanel"]::-webkit-scrollbar,
-.panel-shell > [role="tabpanel"]::-webkit-scrollbar {
+.panel-shell > [role="tabpanel"]::-webkit-scrollbar,
+.roll-feed::-webkit-scrollbar {
     display: none;
 }
 
@@ -971,7 +1083,7 @@ main {
 
 .action-item {
     border: var(--tileBorder);
-    border-radius: var(--tile);width: 100%;
+    width: 100%;
     height: 100%;
     max-height: none;
     object-fit: cover;
@@ -979,7 +1091,7 @@ main {
     border: var(--glassBorder);
     outline: 5px ridge var(--tileBorder);
     
-    border-radius: var(--radCornerBL);
+    border-radius: var(--tile);
     z-index: 1;
     box-shadow: var(--bs2);
     background-color: var(--bgc-low);
@@ -1048,33 +1160,85 @@ em {
 }
 
 .roll-orb-panel {
-    position: relative;
-
-    /* lets the tail be placed relative to the bubble */
-    display: inline-block;
-    padding: 0.75rem 1rem;
-    background-color: var(--bgc-bubble-send);
-    border-radius: 1rem 1rem 1rem .5rem;
-
-    /* the rounded box */
-    max-width: 20rem;
-    width: 60%;
-    margin: 4%;
+    /* plain container: the bubbles inside carry the bubble look */
+    position: relative; /* anchors the jump-to-newest arrow */
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
-.roll-orb-panel::after {
-    content: '';
+/* ---------- roll feed: your rolls (sent) and other players' rolls (received) ---------- */
+.roll-feed {
+    list-style: none;
+    margin: 0;
+    padding: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox; Chrome/Safari use the shared ::-webkit-scrollbar rule above */
+    touch-action: pan-y; /* lets a finger scroll the feed inside the orb */
+    overscroll-behavior: contain;
+}
+
+.roll-bubble {
+    max-width: 85%;
+    padding: 0.4rem 0.65rem;
+    border-radius: 1rem;
+    box-shadow: var(--bs2);
+    font-size: 0.85rem;
+    line-height: 1.3;
+    color: var(--txt-color-1);
+    overflow-wrap: anywhere;
+}
+
+.roll-bubble.is-sent {
+    align-self: flex-end;
+    background-color: var(--bgc-bubble-send);
+    border-bottom-right-radius: 0.25rem;
+}
+
+.roll-bubble.is-received {
+    align-self: flex-start;
+    background-color: var(--bgc-bubble-receive);
+    border-bottom-left-radius: 0.25rem;
+}
+
+.roll-bubble-name {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: bold;
+    opacity: 0.75;
+    margin-bottom: 0.15rem;
+}
+/* jump-to-newest arrow: shows when a roll arrives while you're scrolled up */
+.roll-jump {
     position: absolute;
-    bottom: -0.6rem;
-    left: .5rem;
-    border-width: 0.6rem 0.6rem 0 0;
-    border-style: solid;
-    border-color: var(--bgc-bubble-send) transparent;
+    bottom: 0.75rem;
+    left: 50%;
+    translate: -50% 0;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: var(--tileBorder);
+    background-color: var(--bgc-bubble-receive);
+    color: var(--txt-color-1);
+    box-shadow: var(--bs2);
+    cursor: pointer;
 }
 
 .roll-orb.is-open {
     width: 18rem;
     height: 16rem;
+    max-width: calc(100vw - 2rem); /* never bigger than a small phone screen */
+    max-height: calc(100vh - 2rem);
     border-radius: 0.5rem;
     cursor: default;
 }
@@ -1607,6 +1771,54 @@ main.subpage-main {
     .sheet-panel,
     .sheet-panel[hidden] {
         display: contents !important;
+    }
+
+    /* Rest: its own tile in the gap between Conditions (I) and Armor Class (F).
+       Desktop-only, so these .rest-* selectors are repeated here on purpose
+       (the mobile versions live in the max-width: 768px block). */
+    .rest-container {
+        grid-area: R;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0; /* the button fills the tile */
+        border-radius: var(--tile);
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+        background-color: var(--bgc-low); /* same as the Armor Class / Initiative value cells */
+        overflow: var(--ofX1);
+    }
+
+    .btn-rest,
+    .btn-rest-choice {
+        padding: 0.3rem 0.75rem;
+        border: none; /* the tile border is the edge */
+        border-radius: var(--tile);
+        box-shadow: none;
+        background-color: var(--bgc-top); /* match the neighboring tiles' title bars instead of --accent */
+        color: var(--txt-color-1);
+        font-weight: bold;
+        font-size: clamp(0.85rem, 1.2vw, 1.15rem); /* fill more of the button */
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .rest-container > .btn-rest {
+        width: 100%;
+        height: 100%;
+    }
+
+    .btn-rest:active,
+    .btn-rest-choice:active {
+        transform: scale(0.9);
+    }
+
+    /* Short / Long / Cancel stack vertically to fit the narrow tile */
+    .rest-choice {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        width: 100%;
     }
 }
 

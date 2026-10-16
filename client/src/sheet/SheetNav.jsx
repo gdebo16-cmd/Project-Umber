@@ -8,9 +8,11 @@ function SheetNav({ characterId }) {
             <ul id="nav-container">
                 <Link id="home-nav" className="btn btn-drop btn-nav hover-grow" to="/home">home</Link>
 
-                <li id="character-nav" className="btn btn-nav">Characters
+                <li id="character-nav" className="btn btn-nav">Adventure
                     <ul className="drop-down" id="characterDropdown">
                         <Link id="createCharacter" className="btn btn-drop btn-drop-character" to="/create_char">Create Character</Link>
+                        <Link id="createCampaign" className="btn btn-drop btn-drop-character" to="/create_campaign">Create Campaign</Link>
+                        <Link id="campaignList" className="btn btn-drop btn-drop-character" to="/campaign_list">Campaign List</Link>
                     </ul>
                 </li>
 

@@ -13,6 +13,7 @@ export default defineConfig({
       '/classes': 'http://localhost:3000',
       '/races': 'http://localhost:3000',
       '/subclasses': 'http://localhost:3000',
+      '/socket.io': { target: 'http://localhost:3000', ws: true },
     },
   },
 });

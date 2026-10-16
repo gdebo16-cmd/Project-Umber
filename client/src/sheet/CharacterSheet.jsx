@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import useFetch from '../hooks/useFetch';
 import usePageStyle from '../hooks/usePageStyle';
@@ -18,6 +18,7 @@ import { STATS } from '../utils/stats';
 import { getSpellSlots } from '../utils/spellSlots';
 import Loader from '../components/Loader';
 import RestButton from './RestButton';
+import socket from '../utils/socket';
 
 // Mobile only: the three big tabs at the top. On desktop the CSS shows all three panels at once.
 const SHEET_TABS = [
@@ -29,13 +30,30 @@ const SHEET_TABS = [
 function CharacterSheet() {
     usePageStyle(sheetCss);
     const { id } = useParams();
+
     const { data, setData, loading, error } = useFetch(`/api/characters/${id}`);
     const [sheetTab, setSheetTab] = useState('stats');
-    const [rollLabel, setRollLabel] = useState(''); // what the roll orb shows
+    const [rolls, setRolls] = useState([]);
     const [orbOpen, setOrbOpen] = useState(false);
     const [usedSlots, setUsedSlots] = useState({});
     const [conditions, setConditions] = useState({});
     const [exhaustion, setExhaustion] = useState(0);
+
+    useEffect(() => {
+        socket.connect();
+        const onConnect = () => socket.emit('join-sheet', id);
+        socket.on('connect', onConnect);
+        const onRoll = (roll) => {
+            setRolls((prev) => [...prev,{ ...roll, mine: false }].slice(-20));
+        };
+        socket.on('roll', onRoll);
+        return () => {
+            socket.off('roll', onRoll);
+            socket.off('connect', onConnect);
+            socket.disconnect();
+        };
+    }, [id]);
+
 
 
     const setHp = (newHp) =>
@@ -46,7 +64,8 @@ function CharacterSheet() {
 
     // Every roll on the sheet goes through here: show the text and pop the orb open
     const showRoll = (label) => {
-        setRollLabel(label);
+        socket.emit('roll', label);
+        setRolls((prev) => [...prev, {mine: true, name: 'You', label, at: Date.now()}].slice(-20));
         setOrbOpen(true);
     };
 
@@ -159,7 +178,7 @@ function CharacterSheet() {
                     
                 </section>
             </main>
-            <RollOrb open={orbOpen} label={rollLabel} onToggle={() => setOrbOpen((o) => !o)} />
+            <RollOrb open={orbOpen} rolls={rolls} onToggle={() => setOrbOpen((o) => !o)} />
         </CharacterContext.Provider>
     );
 }

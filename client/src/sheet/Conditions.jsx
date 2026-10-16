@@ -39,6 +39,7 @@ function Conditions() {
                         min="0"
                         max="10"
                         value={exhaustion}
+                        style={{ '--fill': `${exhaustion * 10}%` }} /* how much of the track is accent, 0-10 -> 0-100% */
                         onChange={(e) => setExhaustion(Number(e.target.value))}
                     />
                     <output htmlFor="exhausted-value">{exhaustion}</output>
