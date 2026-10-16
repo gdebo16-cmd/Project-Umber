@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate, useSearchParams } from 'react-router';
 import usePageStyle from '../hooks/usePageStyle';
 import signinCss from '../styles/signin.css?inline';
 import { sendJson } from '../utils/api';
@@ -8,6 +8,9 @@ import { sendJson } from '../utils/api';
 function LoginPage() {
     usePageStyle(signinCss);
     const navigate = useNavigate();
+    const [params] = useSearchParams();
+    const next = params.get('next');
+    const dest = next && next.startsWith('/') && !next.startsWith('//') ? next : '/home';
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -16,7 +19,7 @@ function LoginPage() {
         e.preventDefault(); // stop the browser from reloading the page
         try {
             await sendJson('/api/login', 'POST', { username, password });
-            navigate('/home');
+            navigate(dest);
         } catch (err) {
             setError(err.message);
         }

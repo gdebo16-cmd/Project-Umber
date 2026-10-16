@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Navigate, Outlet } from 'react-router';
+import { Navigate, Outlet, useLocation } from 'react-router';
 import Loader from './Loader';
 
 // Wrap pages that need a logged-in user. Asks the server "who am I?" (/api/me).
 // Not logged in -> send them to /login. Logged in -> show the page (<Outlet />).
 function RequireLogin() {
     const [status, setStatus] = useState('checking');
-
+    const location = useLocation();
+    
     useEffect(() => {
         fetch('/api/me')
             .then(async (res) => {
@@ -32,7 +33,7 @@ function RequireLogin() {
     }, []);
 
     if (status === 'checking') return <Loader />;
-    if (status === 'no') return <Navigate to="/login" replace />;
+    if (status === 'no') return <Navigate to={`/login?next=${encodeURIComponent(location.pathname)}`} replace />;
     return <Outlet />;
 }
 

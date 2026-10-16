@@ -15,6 +15,7 @@ import usePageTheme from './hooks/usePageTheme';
 import CampaignPage from './pages/CampaignPage';
 import CreateCampaign from './pages/CreateCampaign';
 import CampaignList from './pages/CampaignList';
+import JoinCampaign from './pages/JoinCampaign';
 
 function ThemeWatcher() {
     usePageTheme();
@@ -38,6 +39,7 @@ function App() {
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/campaign/:campId" element={<CampaignPage />} />
                     <Route path="/campaign_list" element={<CampaignList />} />
+                    <Route path="/join/:code" element={<JoinCampaign />} />
                     <Route path="/create_campaign" element={<CreateCampaign />} />
                     <Route path="/create_char" element={<CreateStep1 />} />
                     <Route path="/create_char/step2" element={<CreateStep2 />} />

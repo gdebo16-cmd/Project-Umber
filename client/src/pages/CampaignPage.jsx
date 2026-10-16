@@ -20,7 +20,9 @@ function CampaignPage() {
     const [form, setForm] = useState({ name: '', description: '', campaign_img_url: null });
     const [saving, setSaving] = useState(false);
     const [editError, setEditError] = useState('');
+    const [copied, setCopied] = useState(false);
 
+    
 
     if (error) return <p>Failure is upon us: {error}</p>;
     if (loading) return <Loader text='Summoning your stories...'/>;
@@ -59,6 +61,21 @@ function CampaignPage() {
         }
     };
 
+    const shareInvite = async () => {
+        const url = `${window.location.origin}/join/${campaign.invite_code}`;
+        if (navigator.share) {
+          try {
+            await navigator.share({ title: campaign.name, text: `Join my campaign "${campaign.name}"`, url });
+          } catch { /* they closed the share menu */ }
+        } else if (navigator.clipboard) {
+          await navigator.clipboard.writeText(url);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        } else {
+          window.prompt('Copy this link:', url);
+        }
+      };
+
     return (
         <>
             <header id="site-title">
@@ -72,7 +89,7 @@ function CampaignPage() {
                     <button type="button" className={campTab === 'invite' ? 'home-tab is-active' : 'home-tab'} onClick={() => setCampTab('invite')}>Invite / Join</button>
                     <button type="button" className={campTab === 'players' ? 'home-tab is-active' : 'home-tab'} onClick={() => setCampTab('players')}>Current Players</button>
                 </nav>
-                <section className={campTab === 'campaign' ? 'container campaign-tile is-active' : 'container campaign-tile'}>
+                <section className={campTab === 'campaign' ? 'container campaign-tile camp-area-a is-active' : 'container campaign-tile camp-area-a'}>
                     {editing ? (
                         <>
                             <h2 className="campaign-name"><strong>Edit Campaign</strong></h2>
@@ -117,16 +134,21 @@ function CampaignPage() {
                             {campaign.campaign_img_url
                                 ? <img className="campaign-image" src={campaign.campaign_img_url} alt={`${campaign.name} picture`} />
                                 : <div className="campaign-image" role="img" aria-label={`${campaign.name} picture`} />}
-                            <p className="campaign-description"> <em>Description:</em> <br /> {campaign.description}</p>
-                            {campaign.role === 'dm' && (
-                                <div className="camp-edit-actions">
-                                    <button type="button" className="btn btn-form" onClick={startEdit}>Edit Campaign</button>
+                            <div className="camp-panel">
+                                <div className="camp-panel-row">
+                                    <p className="camp-panel-label">Description</p>
+                                    <p className="campaign-description">{campaign.description}</p>
                                 </div>
-                            )}
+                                {campaign.role === 'dm' && (
+                                    <div className="camp-edit-actions">
+                                        <button type="button" className="btn btn-form" onClick={startEdit}>Edit Campaign</button>
+                                    </div>
+                                )}
+                            </div>
                         </>
                     )}
                 </section>
-                <section className={campTab === 'invite' ? 'container campaign-tile camp-panel-tile is-active' : 'container campaign-tile camp-panel-tile'}>
+                <section className={campTab === 'invite' ? 'container campaign-tile camp-panel-tile camp-area-b is-active' : 'container campaign-tile camp-panel-tile camp-area-b'}>
                     <h2 className="campaign-name"><strong>Invite / Join</strong></h2>
                     <div className="camp-panel">
                         {campaign.role === 'dm' && (
@@ -134,6 +156,9 @@ function CampaignPage() {
                                 <p className="camp-panel-label">Invite code</p>
                                 <p className="camp-invite-code">{campaign.invite_code}</p>
                                 <p className="camp-panel-hint">Share this code so players can join.</p>
+                                <button type="button" className="btn btn-form" onClick={shareInvite}>
+                                    {copied ? 'Copied!' : 'Share invite link'}
+                                </button>
                             </div>
                         )}
                         <div className="camp-panel-row">
@@ -147,7 +172,7 @@ function CampaignPage() {
                         </div>
                     </div>
                 </section>
-                <section className={campTab === 'players' ? 'container campaign-tile camp-panel-tile is-active' : 'container campaign-tile camp-panel-tile'}>
+                <section className={campTab === 'players' ? 'container campaign-tile camp-panel-tile camp-area-c is-active' : 'container campaign-tile camp-panel-tile camp-area-c'}>
                     <h2 className="campaign-name"><strong>Current Players</strong></h2>
                     <ul className="camp-panel campaign-member-list">
                         {members.map((mem) => (
