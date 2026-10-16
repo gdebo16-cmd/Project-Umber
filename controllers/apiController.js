@@ -16,7 +16,7 @@ export async function getCharacter(req, res) {
     if (!character) return res.status(404).json({ error: 'Character...What character?' });
 
     const charId = character.id;
-    character.spell_slots = await getClassSlots(character.class_id, character.level);
+    character.spell_slots = await getClassSlots(character.class_id, character.level, character.subclass_id);
     const ownedArmor = await Inventory.getOwnedArmor(charId);
     const ownedWeapons = await Inventory.getOwnedWeapons(charId);
     const learnedSpells = await getLearnedSpells(charId);

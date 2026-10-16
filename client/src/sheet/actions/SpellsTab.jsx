@@ -4,7 +4,7 @@ import SpellBook from './SpellBook';
 import { sendJson } from '../../utils/api';
 import TabList from '../../components/TabList';
 import { getSpellSlots, beamsAt, beamRollText, beamDamageText } from '../../utils/spellSlots';
-import { modOf, signed, proficiencyBonus, rollDice, d20 } from '../../utils/math';
+import { modOf, signed, proficiencyBonus, rollDice, rollToHit } from '../../utils/math';
 import { useCharacter } from '../CharacterContext';
 import { createPortal } from 'react-dom';
 
@@ -29,6 +29,7 @@ function SpellsTab() {
     const spellAttack = modOf(spellScore) + proficiencyBonus(level);
     const spellSave = 8 + spellAttack;
     const [openSpell, setOpenSpell] = useState(null);
+    const [critKey, setCritKey] = useState(null);   // spell tile whose last to-hit was a natural 20
 
    
 
@@ -56,25 +57,39 @@ function SpellsTab() {
         const lvl = s.cast_level ?? s.base_level;          // upcast tiles cast at the level they sit under
         const who = character?.name ?? 'You';
         const hasFirst = s.attack_type || s.opponent_save_roll;
+        const isHeal = !!s.heal_dice && !s.damage_dice && !s.base_damage_dice;
+        const healMod = isHeal && s.heal_add_mod ? modOf(spellScore) : 0;
 
         // Uses one slot at this level, then shows the message. Stops if none are left.
         const cast = (message) => {
             if (!spendSlot(lvl)) return onRoll?.(`No level ${lvl} slots left!`);
             onRoll?.(message);
         };
-        const damageText = () => beamsAt(s, level) > 1 ? beamDamageText(beamsAt(s, level), dice) : `${s.heal_dice && !s.damage_dice && !s.base_damage_dice ? 'Healed' : 'Damage dealt'}: ${rollDice(dice)}`;
+        const key = `s${s.upcastKey ?? s.id}`;
+        const hitText = () => {
+            const r = rollToHit(toHit);
+            setCritKey(r.crit ? key : null);
+            return `Chance to hit: ${r.total}${r.crit ? ' CRIT!' : r.fail ? ' (natural 1)' : ''}!`;
+        };
+        // a natural 20 on this tile's to-hit doubles the damage dice once
+        const damageText = () => {
+            const crit = critKey === key;
+            setCritKey(null);
+            if (isHeal) return `Healed: ${Math.max(0, rollDice(dice) + healMod)}`;
+            return beamsAt(s, level) > 1 ? beamDamageText(beamsAt(s, level), dice, 0, crit) : `Damage dealt: ${rollDice(dice, crit)}${crit ? ' CRIT!' : ''}`;
+        };
 
         return (
             <>
                 {/* the first button you click spends the slot */}
                 {s.attack_type ? (
-                    <button type='button' className='btn btn-action btn-to-hit hover-grow' onClick={() => cast(beamsAt(s, level) > 1 ? `${who} casts ${s.name}! ${beamRollText(beamsAt(s, level), toHit, dice)}` : `${who} casts ${s.name}! Chance to hit: ${d20() + toHit}!`)}>{signed(toHit)}</button>
+                    <button type='button' className='btn btn-action btn-to-hit hover-grow' onClick={() => cast(beamsAt(s, level) > 1 ? `${who} casts ${s.name}! ${beamRollText(beamsAt(s, level), toHit, dice)}` : `${who} casts ${s.name}! ${hitText()}`)}>{signed(toHit)}</button>
                 ) : s.opponent_save_roll ? (
                     <button type='button' className='btn btn-action btn-to-hit hover-grow' onClick={() => cast(`${who} casts ${s.name}! Target mus make a ${s.opponent_save_roll} roll and beat a ${spellSave}!`)}>{s.opponent_save_roll} {spellSave}</button>
                 ) : null}
                 {dice ? (
                     // with a to-hit/save button the damage is just a roll; without one, this button is the cast
-                    <button type='button' className='btn btn-action damage-button hover-grow' onClick={() => hasFirst ? onRoll?.(damageText()) : cast(`${who} casts ${s.name}! ${damageText()}`)}>{dice}</button>
+                    <button type='button' className={`btn btn-action damage-button hover-grow${critKey === key ? ' is-crit' : ''}`} onClick={() => hasFirst ? onRoll?.(damageText()) : cast(`${who} casts ${s.name}! ${damageText()}`)}>{dice}{healMod ? signed(healMod) : ''}</button>
                 ) : (
                     <button type='button' className='btn btn-action damage-button hover-grow' onClick={() => cast(`${who} casts ${s.name}!`)}>Cast</button>
                 )}
@@ -162,7 +177,7 @@ function SpellsTab() {
                         {spellAtLevel(preparedSpells, 0).map((s) => (
                             <li className="action-item spell" key={s.id}>
                                 <button type='button' className='btn btn-spell-name hover-grow' onClick={() => setOpenSpell(s)}>{s.name}</button>
-                                    <article className="action-button-container">{spellButtons(s, s.base_damage_dice)}</article>
+                                    <article className="action-button-container">{spellButtons(s, s.base_damage_dice || s.heal_dice)}</article>
                             </li>
                         ))}
                     </ul>

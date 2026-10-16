@@ -39,8 +39,21 @@ export const SPELL_LIMITS = {
     },
 };
 
-// Returns { cantrips, spells } for that class at that level, or null if the class has no cap.
-export function getLearnLimits(className, level) {
+// Subclass casters (the base class casts nothing). Checked before the class table.
+export const SUBCLASS_SPELL_LIMITS = {
+    'Mark of Possession': {
+        cantrips: [0, 0, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        spells: [0, 0, 3, 4, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10, 11, 11, 11, 12, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18],
+    },
+};
+
+// Returns { cantrips, spells } for that class (or subclass) at that level, or null if there is no cap.
+export function getLearnLimits(className, level, subclassName = null) {
+    const sub = Object.keys(SUBCLASS_SPELL_LIMITS).find((k) => k.toLowerCase() === String(subclassName ?? '').trim().toLowerCase());
+    if (sub) {
+        const j = Math.min(Math.max(Number(level) || 1, 1), 30) - 1;
+        return { cantrips: SUBCLASS_SPELL_LIMITS[sub].cantrips[j], spells: SUBCLASS_SPELL_LIMITS[sub].spells[j] };
+    }
     const key = Object.keys(SPELL_LIMITS).find((k) => k.toLowerCase() === String(className ?? '').trim().toLowerCase());
     if (!key) return null;
     const i = Math.min(Math.max(Number(level) || 1, 1), 30) - 1;

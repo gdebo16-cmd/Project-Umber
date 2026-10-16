@@ -7,7 +7,7 @@ import { getSpellSlots } from '../client/src/utils/spellSlots.js';
 import { getLearnLimits } from '../utils/spellLimits.js';
 
 // Highest spell level a character can cast (number of slot tiers). Cantrips (0) are always allowed.
-const highestSlotFor = async (ch) => getSpellSlots(ch.level, await Spells.getClassSlots(ch.class_id, ch.level)).length;
+const highestSlotFor = async (ch) => getSpellSlots(ch.level, await Spells.getClassSlots(ch.class_id, ch.level, ch.subclass_id)).length;
 
 // Everything the sheet and the book need after a change:
 // learnedSpells = full rows for the Spell Book tab, learnedIds = just the ids for the book's buttons
@@ -52,7 +52,7 @@ export async function learnSpell(req, res) {
         return res.status(400).json({ error: `You can't learn level ${baseLevel} spells yet. At level ${ch.level} you can cast up to level ${highestSlot}.` });
     }
     // Known caps (re-learning a spell you already know is never blocked)
-    const limits = getLearnLimits(ch.class_name, ch.level);
+    const limits = getLearnLimits(ch.class_name, ch.level, ch.subclass_name);
     if (limits) {
         const { rows: [counts] } = await pool.query(
             `SELECT COUNT(*) FILTER (WHERE s.base_level = 0)::int AS cantrips,

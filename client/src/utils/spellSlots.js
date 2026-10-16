@@ -31,7 +31,7 @@ const SLOT_TABLE = {
     30: [4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1],
 }
 
-import { d20, rollDice } from './math.js';
+import { rollDice, rollToHit } from './math.js';
 
 // classSlots = character.spell_slots from class_spell_slots ([] = no slots). The table above is only a fallback when no class data was loaded.
 export function getSpellSlots(level, classSlots) {
@@ -47,15 +47,18 @@ export function beamsAt(spell, level) {
 }
 
 // One to-hit + damage roll per beam, as one line for the roll orb
+// Each beam rolls its own d20; only a beam that rolls a natural 20 doubles its damage dice
 export function beamRollText(beams, toHit, dice, dmgMod = 0) {
-    return Array.from({ length: beams }, (_, i) =>
-        `Beam ${i + 1}: to hit ${d20() + toHit}${dice ? `, damage ${Math.max(0, rollDice(dice) + dmgMod)}` : ''}`).join(' | ');
+    return Array.from({ length: beams }, (_, i) => {
+        const r = rollToHit(toHit);
+        return `Beam ${i + 1}: to hit ${r.total}${r.crit ? ' CRIT!' : r.fail ? ' (natural 1)' : ''}${dice ? `, damage ${Math.max(0, rollDice(dice, r.crit) + dmgMod)}` : ''}`;
+    }).join(' | ');
 }
 
 // One damage roll per beam, e.g. "Damage dealt: 5 + 3 = 8 (2 beams)"
-export function beamDamageText(beams, dice, dmgMod = 0) {
-    const hits = Array.from({ length: beams }, () => Math.max(0, rollDice(dice) + dmgMod));
-    return `Damage dealt: ${hits.join(' + ')} = ${hits.reduce((a, b) => a + b, 0)} (${beams} beams)`;
+export function beamDamageText(beams, dice, dmgMod = 0, crit = false) {
+    const hits = Array.from({ length: beams }, () => Math.max(0, rollDice(dice, crit) + dmgMod));
+    return `Damage dealt: ${hits.join(' + ')} = ${hits.reduce((a, b) => a + b, 0)} (${beams} beams)${crit ? ' CRIT!' : ''}`;
 }
 
 // Value at a level from a [{ level, <key> }] scaling list, else the base value

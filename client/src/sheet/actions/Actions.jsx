@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { modOf, signed, healthInit, rollDice, d20, proficiencyBonus } from '../../utils/math';
+import { modOf, signed, healthInit, rollDice, rollToHit, proficiencyBonus } from '../../utils/math';
 import { useCharacter } from '../CharacterContext';
 import { getSpellSlots, beamsAt, beamRollText, beamDamageText, scaledAt } from '../../utils/spellSlots';
 import { createPortal } from 'react-dom';
@@ -21,6 +21,13 @@ function Actions() {
     const primaryMod = modOf(spellScore);
     const meleeHit = init + primaryMod;
     const actionSpellsList = actionSpells.filter((s) => s.is_action);
+    // casting time decides the tile: bonus-action and reaction spells join those tiles, everything else stays under Magical Actions
+    const magicSpells = actionSpellsList.filter((s) => s.action_type !== 'bonus' && s.action_type !== 'reaction');
+    const bonusSpells = actionSpellsList.filter((s) => s.action_type === 'bonus');
+    const reactionSpells = actionSpellsList.filter((s) => s.action_type === 'reaction');
+    const [critKey, setCritKey] = useState(null);   // key of the action/spell whose last to-hit was a natural 20
+    const critMark = (r) => (r.crit ? ' CRIT!' : r.fail ? ' (natural 1)' : '');
+    const critClass = (key) => (critKey === key ? ' is-crit' : '');
    
 
     // Fists get weaker as you get hurt. Always at least 1d4.
@@ -38,8 +45,25 @@ function Actions() {
     ];
 
     const [openItem, setOpenItem] = useState(null);
-    const rollHit = (a) => onRoll(`Chance to hit: ${d20() + (a?.hit ?? toHit)}`);
-    const rollDamage = (a) => onRoll(a.beams > 1 ? beamDamageText(a.beams, a.dice, a.dmgMod) : `Damage dealt: ${Math.max(0, rollDice(a.dice) + a.dmgMod)}`);
+    const rollHit = (a) => {
+        const r = rollToHit(a?.hit ?? toHit);
+        setCritKey(r.crit ? a.key : null);
+        onRoll(`Chance to hit: ${r.total}${critMark(r)}`);
+    };
+
+    // A natural 20 on this action's last to-hit doubles the damage dice (not the flat bonus), then the crit is used up
+    const rollDamage = (a) => {
+        const crit = critKey != null && critKey === a.key;
+        setCritKey(null);
+        onRoll(a.beams > 1 ? beamDamageText(a.beams, a.dice, a.dmgMod, crit) : `Damage dealt: ${Math.max(0, rollDice(a.dice, crit) + a.dmgMod)}${crit ? ' CRIT!' : ''}`);
+    };
+
+    // Single-beam spell to-hit: remembers a crit under the spell's key
+    const spellHitText = (s) => {
+        const r = rollToHit(spellToHit + (s.base_to_hit_modifier || 0));
+        setCritKey(r.crit ? `s${s.id}` : null);
+        return `Chance to hit: ${r.total}${critMark(r)}`;
+    };
 
     // Spends one slot at the spell's level, then shows the message. Stops if none are left.
     const castSpell = (s, message) => {
@@ -62,10 +86,19 @@ function Actions() {
     };
 
     // Dice at a cast level: the spell_upcasts row for that level if there is one, else the base dice
+    // Damage dice at a cast level: the spell_upcasts row for that level if there is one, else the base dice
     const diceAt = (s, lvl) => {
         const up = (s.upcasts || []).find((u) => u.cast_level === lvl);
-        return up?.damage_dice || up?.heal_dice || s.base_damage_dice;
+        return up?.damage_dice || s.base_damage_dice;
     };
+
+    // Healing at a cast level: spell_upcasts.heal_dice, else spells.heal_dice. heal_add_mod adds the casting mod. Healing never crits.
+    const healAt = (s, lvl) => {
+        const up = (s.upcasts || []).find((u) => u.cast_level === lvl);
+        return up?.heal_dice || s.heal_dice;
+    };
+    const healMod = (s) => (s.heal_add_mod ? spellMod : 0);
+    const healText = (s, lvl) => `Healed: ${Math.max(0, rollDice(healAt(s, lvl)) + healMod(s))}`;
 
     // Spells that can be upcast open the picker; cantrips and spells with no upcast rows (like Misty Step) cast right away
     const onCastClick = (s, castNow) => {
@@ -81,8 +114,11 @@ function Actions() {
         setCastLevels({ ...castLevels, [s.id]: lvl });
         const start = `${character.name} casts ${s.name} at level ${lvl}!`;
         const dice = diceAt(s, lvl);
-        if (s.attack_type) return onRoll(`${start} Chance to hit: ${d20() + spellToHit + (s.base_to_hit_modifier || 0)}`);
+        if (s.attack_type) return onRoll(beamsAt(s, character.level) > 1
+            ? `${start} ${beamRollText(beamsAt(s, character.level), spellToHit + (s.base_to_hit_modifier || 0), dice, s.dmgMod || 0)}`
+            : `${start} ${spellHitText(s)}`);
         if (s.opponent_save_roll) return onRoll(`${start} Target must make a ${s.opponent_save_roll} roll and roll higher than a ${spellSave}`);
+        if (!dice && healAt(s, lvl)) return onRoll(`${start} ${healText(s, lvl)}`);
         if (dice) return onRoll(`${start} Damage dealt: ${Math.max(0, rollDice(dice) + (s.dmgMod || 0))}`);
         onRoll(start);
     };
@@ -103,9 +139,12 @@ function Actions() {
     const rollWithHitFeature = (a, f) => {
         const cost = costOf(f);
         if (cost && !(spendRadiance && spendRadiance(cost))) return onRoll(`Not enough Radiance for ${f.name}: need ${cost}, have ${radiance}.`);
-        const weapon = Math.max(0, rollDice(a.dice) + a.dmgMod);
-        const extra = rollDice(diceOf(f));
-        onRoll(`Damage dealt: ${weapon} + ${f.name} ${extra} radiant = ${weapon + extra}${cost ? ` (-${cost} Radiance, ${radiance - cost}/${radianceMax} left)` : ''}`);
+        // crit doubles the weapon dice and the Sigil dice; dmgMod (stat + Cracks) stays flat
+        const crit = critKey != null && critKey === a.key;
+        setCritKey(null);
+        const weapon = Math.max(0, rollDice(a.dice, crit) + a.dmgMod);
+        const extra = rollDice(diceOf(f), crit);
+        onRoll(`Damage dealt: ${weapon} + ${f.name} ${extra} radiant = ${weapon + extra}${crit ? ' CRIT!' : ''}${cost ? ` (-${cost} Radiance, ${radiance - cost}/${radianceMax} left)` : ''}`);
     };
 
     // count = dice bought for per-die features (Bound Virtue). Spends Radiance first; blocked if the pool is too low.
@@ -160,6 +199,50 @@ function Actions() {
     const bonusFeatures = actionFeatures.filter((f) => f.action_type === 'bonus');
     const reactionFeatures = actionFeatures.filter((f) => f.action_type === 'reaction');
 
+    // One learned spell with its to-hit/save, damage (crit-aware), heal and upcast buttons. Shared by the Magical Actions, Bonus Actions and Reactions tiles.
+    const spellRow = (s) => (
+        <li key={s.id} className="action-item spell">
+            <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'spell', data: s })}>
+                {s.name}
+            </button>
+
+            <div className="action-button-container">
+                {s.attack_type ? (
+                    <button type='button' className='btn btn-action btn-to-hit hover-grow'
+                    onClick={() => onCastClick(s, () => castSpell(s, beamsAt(s, character.level) > 1
+                        ? `${character.name} casts ${s.name}! ${beamRollText(beamsAt(s, character.level), spellToHit + (s.base_to_hit_modifier || 0), s.base_damage_dice, s.dmgMod || 0)}`
+                        : `${character.name} casts ${s.name}! ${spellHitText(s)}`))}>
+                        {signed(spellToHit + (s.base_to_hit_modifier || 0))}
+                    </button>
+                ) : s.opponent_save_roll ? (
+                    <button type='button' className='btn btn-action btn-to-hit hover-grow' onClick={() => onCastClick(s, () => castSpell(s, `Target must make a ${s.opponent_save_roll} roll and roll higher than a ${spellSave}`))}>{s.opponent_save_roll} {spellSave}</button>
+                ) : null}
+
+                {(s.base_damage_dice) ? (
+                    // with a to-hit/save button the damage is just a roll; without one, this button is the cast
+                    <button type="button" className={`btn btn-action damage-button hover-grow${critClass(`s${s.id}`)}`} onClick={() => (s.attack_type || s.opponent_save_roll) ? rollDamage({ key: `s${s.id}`, dice: diceAt(s, castLevels[s.id] ?? s.base_level), dmgMod: s.dmgMod || 0, beams: beamsAt(s, character.level) }) : onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}! Damage dealt: ${Math.max(0, rollDice(s.base_damage_dice) + (s.dmgMod || 0))}`))}>{diceAt(s, castLevels[s.id] ?? s.base_level)}{s.dmgMod ? signed(s.dmgMod) : ''}</button>
+                ) : s.heal_dice ? (
+                    // healing spells: dice (+ casting mod where the rules add it), never crits
+                    <button type="button" className="btn btn-action damage-button hover-grow" onClick={() => onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}! ${healText(s, s.base_level)}`))}>{healAt(s, castLevels[s.id] ?? s.base_level)}{healMod(s) ? signed(healMod(s)) : ''}</button>
+                ) : (
+                    <button type='button' className='btn btn-action damage-button hover-grow' onClick={() => onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}!`))}>Cast</button>
+                )}
+
+                {/* Level picker: shows after clicking a leveled spell's cast button */}
+                {pickerFor === s.id && (
+                    <select className="upcast-picker" autoFocus defaultValue=""
+                        onChange={(e) => castAtLevel(s, Number(e.target.value))}
+                        onBlur={() => setPickerFor(null)}>
+                        <option value="" disabled>Cast at level...</option>
+                        {openSlotLevels(s).map((lvl) => (
+                            <option key={lvl} value={lvl}>Level {lvl}{(diceAt(s, lvl) || healAt(s, lvl)) ? ` (${diceAt(s, lvl) || healAt(s, lvl)})` : ''}</option>
+                        ))}
+                    </select>
+                )}
+            </div>
+        </li>
+    );
+
 
     return (
         // Same shape as the Spells and Inventory tabs: one list of groups,
@@ -175,9 +258,9 @@ function Actions() {
                                 </button>
                             <div className="action-button-container">
                                 <button type="button" className="btn btn-action btn-to-hit hover-grow" onClick={() => rollHit(a)}>{signed(a.hit ?? toHit)}</button>
-                                <button type="button" className="btn btn-action damage-button hover-grow" onClick={() => rollDamage(a)}>{a.dice}{a.dmgMod ? signed(a.dmgMod) : ''}</button>
+                                <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} onClick={() => rollDamage(a)}>{a.dice}{a.dmgMod ? signed(a.dmgMod) : ''}</button>
                                 {a.sigil && weaponHitFeature && (
-                                    <button type="button" className="btn btn-action damage-button hover-grow" title={`${weaponHitFeature.name}: on a hit, add ${diceOf(weaponHitFeature)} radiant`}
+                                    <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} title={`${weaponHitFeature.name}: on a hit, add ${diceOf(weaponHitFeature)} radiant`}
                                         onClick={() => rollWithHitFeature(a, weaponHitFeature)}>
                                         +{diceOf(weaponHitFeature)} ({costOf(weaponHitFeature)} R)
                                     </button>
@@ -191,48 +274,10 @@ function Actions() {
             <li className="action-item spell-slot">
                 <span className="action-title" id="magical-actions-title">Magical Actions</span>
                 <ul className="action-list" id="magical-actions-list">
-                    {actionSpellsList.length === 0 ? (
+                    {magicSpells.length === 0 ? (
                         <li className="action-item spell">No spells set as actions yet.</li>
                     ) : (
-                        actionSpellsList.map((s) => (
-                            <li key={s.id} className="action-item spell">
-                                <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'spell', data: s })}>
-                                    {s.name}
-                                </button>
-
-                                <div className="action-button-container">
-                                    {s.attack_type ? (
-                                        <button type='button' className='btn btn-action btn-to-hit hover-grow'
-                                        onClick={() => onCastClick(s, () => castSpell(s, beamsAt(s, character.level) > 1
-                                            ? `${character.name} casts ${s.name}! ${beamRollText(beamsAt(s, character.level), spellToHit + (s.base_to_hit_modifier || 0), s.base_damage_dice, s.dmgMod || 0)}`
-                                            : `${character.name} casts ${s.name}! ...Chance to hit... ${d20() + spellToHit + (s.base_to_hit_modifier || 0)}!`))}>
-                                            {signed(spellToHit + (s.base_to_hit_modifier || 0))}
-                                        </button>
-                                    ) : s.opponent_save_roll ? (
-                                        <button type='button' className='btn btn-action btn-to-hit hover-grow' onClick={() => onCastClick(s, () => castSpell(s, `Target must make a ${s.opponent_save_roll} roll and roll higher than a ${spellSave}`))}>{s.opponent_save_roll} {spellSave}</button>
-                                    ) : null}
-
-                                    {(s.base_damage_dice) ? (
-                                        // with a to-hit/save button the damage is just a roll; without one, this button is the cast
-                                        <button type="button" className="btn btn-action damage-button hover-grow" onClick={() => (s.attack_type || s.opponent_save_roll) ? rollDamage({ dice: diceAt(s, castLevels[s.id] ?? s.base_level), dmgMod: s.dmgMod || 0, beams: beamsAt(s, character.level) }) : onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}! Damage dealt: ${Math.max(0, rollDice(s.base_damage_dice) + (s.dmgMod || 0))}`))}>{diceAt(s, castLevels[s.id] ?? s.base_level)}{s.dmgMod ? signed(s.dmgMod) : ''}</button>
-                                    ) : (
-                                        <button type='button' className='btn btn-action damage-button hover-grow' onClick={() => onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}!`))}>Cast</button>
-                                    )}
-
-                                    {/* Level picker: shows after clicking a leveled spell's cast button */}
-                                    {pickerFor === s.id && (
-                                        <select className="upcast-picker" autoFocus defaultValue=""
-                                            onChange={(e) => castAtLevel(s, Number(e.target.value))}
-                                            onBlur={() => setPickerFor(null)}>
-                                            <option value="" disabled>Cast at level...</option>
-                                            {openSlotLevels(s).map((lvl) => (
-                                                <option key={lvl} value={lvl}>Level {lvl}{diceAt(s, lvl) ? ` (${diceAt(s, lvl)})` : ''}</option>
-                                            ))}
-                                        </select>
-                                    )}
-                                </div>
-                            </li>
-                        ))
+                        magicSpells.map(spellRow)
                     )}
                 </ul>
             </li>
@@ -240,6 +285,7 @@ function Actions() {
             <li className="action-item spell-slot">
                 <span className="action-title" id="physical-actions-title">Bonus Actions</span>
                 <ul className="action-list" id="physical-actions-list">
+                    {bonusSpells.map(spellRow)}
                     {bonusFeatures.map((f) => (
                             <li key={`${f.source}-${f.id}`} className="action-item spell">
                                 <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
@@ -254,6 +300,7 @@ function Actions() {
             <li className="action-item spell-slot">
                 <span className="action-title" id="reactions-title">Reactions</span>
                 <ul className="action-list" id="reactions-list">
+                    {reactionSpells.map(spellRow)}
                     {reactionFeatures.map((f) => (
                             <li key={`${f.source}-${f.id}`} className="action-item spell">
                                 <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'feature', data: f })}>

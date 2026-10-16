@@ -234,9 +234,9 @@
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor: rgba(79, 46, 46, 0.712);
     --bgc-bubble-send: rgb(26, 29, 72);
-    --bgc-bubble-receive: rgb(87, 65, 184);
+    --bgc-bubble-receive: rgb(112, 94, 187);
     --bgc-orb: rgb(64, 71, 175);
-    --bg-color-5: rgb(66, 12, 166);
+    --bg-color-5: rgb(85, 59, 133);
     --bg-color-4: rgba(71, 52, 139, 0.356);
     --bg-color-3: rgba(74, 60, 199, 0.678);
     --bg-color-2: rgba(84, 16, 16, 0.893);
@@ -285,7 +285,7 @@
     --damageColor: rgba(79, 46, 46, 0.712);
     --bgc-bubble-send: rgb(26, 29, 72);
     --bgc-bubble-receive: rgb(116, 94, 212);
-    --bgc-orb: rgb(64, 71, 175);
+    --bgc-orb: rgb(74, 78, 139);
     --bg-color-5: rgb(65, 27, 137);
     --bg-color-4: rgba(71, 52, 139, 0.356);
     --bg-color-3: rgba(74, 60, 199, 0.678);

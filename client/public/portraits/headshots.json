@@ -145,6 +145,11 @@
     "group": "Class"
   },
   {
+    "file": "class-soul-smith.png",
+    "label": "Soul Smith",
+    "group": "Class"
+  },
+  {
     "file": "subclass-ghost-walker.png",
     "label": "Ghost Walker",
     "group": "Subclass"
@@ -367,6 +372,21 @@
   {
     "file": "subclass-witch-knight.png",
     "label": "Witch Knight",
+    "group": "Subclass"
+  },
+  {
+    "file": "subclass-soul-smith-crossroads.png",
+    "label": "Mark of Crossroads",
+    "group": "Subclass"
+  },
+  {
+    "file": "subclass-soul-smith-legion.png",
+    "label": "Mark of Legion",
+    "group": "Subclass"
+  },
+  {
+    "file": "subclass-soul-smith-possession.png",
+    "label": "Mark of Possession",
     "group": "Subclass"
   },
   {
