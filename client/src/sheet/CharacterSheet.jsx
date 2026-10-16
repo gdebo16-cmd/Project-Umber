@@ -15,8 +15,8 @@ import Conditions from './Conditions';
 import RollOrb from './RollOrb';
 import { CharacterContext } from './CharacterContext';
 import { STATS } from '../utils/stats';
-import { getSpellSlots } from '../utils/spellSlots';
-import { modOf } from '../utils/math';
+import { getSpellSlots, scaledAt } from '../utils/spellSlots';
+import { modOf, d20, proficiencyBonus } from '../utils/math';
 import Loader from '../components/Loader';
 import RestButton from './RestButton';
 import socket from '../utils/socket';
@@ -80,7 +80,8 @@ function CharacterSheet() {
     const conditions = character.conditions || {};
     const exhaustion = character.exhaustion || 0;
     const radianceSpent = character.radiance_spent || 0;
-    const restLocks = character.rest_locks || {};
+    const restUses = character.rest_uses || {};   // { featureKey: uses spent since its recovery rest }
+    const cracks = character.cracks || 0;
     const saveState = (patch) => {
         setData((prev) => ({ ...prev, character: { ...prev.character, ...patch } }));
         fetch(`/api/characters/${character.id}/state`, {
@@ -92,7 +93,7 @@ function CharacterSheet() {
     const setUsedSlots = (used_slots) => saveState({ used_slots });
     const setConditions = (v) => saveState({ conditions: typeof v === 'function' ? v(conditions) : v });
     const setExhaustion = (exhaustion) => saveState({ exhaustion });
-    const lockFeature = (key) => saveState({ rest_locks: { ...restLocks, [key]: true } });
+    const countUse = (key) => saveState({ rest_uses: { ...restUses, [key]: (restUses[key] || 0) + 1 } });
 
     const spendSlot = (lvl) => {
         if (lvl === 0) return true;
@@ -116,12 +117,34 @@ function CharacterSheet() {
         return true;
     };
 
+    // Seal Cracks (classes.crack_max; NULL = no Crack track). Going past the max = Breach: CON save vs breach_dc, Cracks stay at max.
+    const crackMax = character.crack_max || 0;
+    const breachDc = scaledAt(character.breach_dc_scaling, 'dc', character.level, character.breach_dc);
+    const conSave = modOf(character.con) + ((character.class_saving_throws || []).includes('CON') ? proficiencyBonus(character.level) : 0);
+    const gainCracks = (n) => {
+        if (!crackMax || n <= 0) return;
+        const patch = { cracks: Math.min(crackMax, cracks + n) };
+        const messages = [];
+        for (let i = 0; i < cracks + n - crackMax; i++) {
+            const roll = d20() + conSave;
+            if (roll >= breachDc) {
+                messages.push(`Breach! CON save ${roll} vs DC ${breachDc}: success, nothing happens.`);
+            } else {
+                messages.push(`Breach! CON save ${roll} vs DC ${breachDc}: failed. Stunned until the end of your next turn.${character.breach_effect ? ` ${character.breach_effect}` : ''}`);
+                if (character.breach_drains_radiance) patch.radiance_spent = radianceMax;
+            }
+        }
+        saveState(patch);
+        messages.forEach(showRoll);
+    };
+    const removeCracks = (n) => saveState({ cracks: Math.max(0, cracks - n) });
+
     // Slot-to-Radiance features (kindles_slot, e.g. Kindled Slot): spend one slot, regain Radiance = its level (capped at max)
     const kindleSlot = (lvl, key) => {
-        if (restLocks[key]) return showRoll('That feature is used until your next long rest.');
+        if (restUses[key]) return showRoll('That feature is used until your next long rest.');
         if (!spendSlot(lvl)) return showRoll(`No level ${lvl} slots left!`);
         const gained = Math.min(lvl, radianceSpent);
-        saveState({ radiance_spent: radianceSpent - gained, rest_locks: { ...restLocks, [key]: true } });
+        saveState({ radiance_spent: radianceSpent - gained, rest_uses: { ...restUses, [key]: (restUses[key] || 0) + 1 } });
         showRoll(`${character.name} uses Kindled Slot (level ${lvl} slot): +${gained} Radiance (${radiance + gained}/${radianceMax})`);
     };
 
@@ -152,12 +175,12 @@ function CharacterSheet() {
     for (const [name, on] of Object.entries(conditions)) {
         newConditions[name] = on && Math.random() >= pct;
     }
-    // Once-per-rest locks: a long rest clears all; a short rest clears only the short-rest ones
-    const newLocks = {};
+    // Uses per rest: a long rest resets all; a short rest resets only features that recover on a short rest
+    const newUses = {};
     if (type !== 'long') {
         for (const f of actionFeatures) {
             const key = `${f.source}-${f.id}`;
-            if (restLocks[key] && f.rest_lock === 'long') newLocks[key] = true;
+            if (restUses[key] && f.rest_lock === 'long') newUses[key] = restUses[key];
         }
     }
     // Radiance: all back on a long rest, half the max on a short rest. One save for everything.
@@ -166,7 +189,8 @@ function CharacterSheet() {
         conditions: newConditions,
         exhaustion: exhaustion - Math.round(exhaustion * pct),
         radiance_spent: type === 'long' ? 0 : Math.max(0, radianceSpent - Math.floor(radianceMax / 2)),
-        rest_locks: newLocks,
+        rest_uses: newUses,
+        cracks: type === 'long' ? 0 : Math.max(0, cracks - 2),   // Mending: short rest -2 Cracks, long rest all
     });
 
     return Math.round(pct * 100);
@@ -196,8 +220,12 @@ function CharacterSheet() {
         radiance,
         radianceMax,
         spendRadiance,
-        restLocks,
-        lockFeature,
+        restUses,
+        countUse,
+        cracks,
+        crackMax,
+        gainCracks,
+        removeCracks,
         kindleSlot,
     };
 

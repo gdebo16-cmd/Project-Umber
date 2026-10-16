@@ -62,7 +62,7 @@ export async function getOwnedArmor(charId) {
 
 export async function getOwnedWeapons(charId) {
     const { rows } = await pool.query(
-        `SELECT w.id, w.name, w.category, w.damage_dice, cw.is_equipped
+        `SELECT w.id, w.name, w.category, w.damage_dice, w.sigil_weapon, cw.is_equipped
         FROM character_weapons cw
         JOIN weapons w ON w.id = cw.weapon_id
         WHERE cw.character_id = $1

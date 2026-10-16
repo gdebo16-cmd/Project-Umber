@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
 
 // Your equipped weapons plus Fists. Each has a To Hit button and a Damage button.
 function Actions() {
-    const { character, hp, ownedWeapons, onRoll, learnedSpells, spendSlot, usedSlots = {}, actionFeatures = [], radiance = 0, radianceMax = 0, spendRadiance, restLocks = {}, lockFeature, kindleSlot } = useCharacter();
+    const { character, hp, ownedWeapons, onRoll, learnedSpells, spendSlot, usedSlots = {}, actionFeatures = [], radiance = 0, radianceMax = 0, spendRadiance, restUses = {}, countUse, cracks = 0, crackMax = 0, gainCracks, removeCracks, kindleSlot } = useCharacter();
     const actionSpells = learnedSpells ?? [];
     const spellScore = character[(character.spell_stat || '').toLowerCase()];
     // spells use the class's spellcasting_stat (casting_stat); weapons keep the primary stat
@@ -31,7 +31,8 @@ function Actions() {
         ...ownedWeapons.filter((w) => w.is_equipped).map((w) => {
             const ranged = w.category === 'ranged';
             const dmgMod = ranged ? modOf(character.dex) : primaryMod;
-            return { key: `w${w.id}`, name: w.name, dice: w.damage_dice, dmgMod, hit: ranged ? toHit : meleeHit };
+            // Seal Cracks: +1 radiant per Crack on sigil-weapon hits (weapons.sigil_weapon)
+            return { key: `w${w.id}`, name: w.name, dice: w.damage_dice, dmgMod: dmgMod + (w.sigil_weapon ? cracks : 0), hit: ranged ? toHit : meleeHit, sigil: w.sigil_weapon };
         }),
         { key: 'fists', name: 'Fists', dice: fistDice, dmgMod: 0, hit: meleeHit },
     ];
@@ -92,17 +93,34 @@ function Actions() {
     const featureKey = (f) => `${f.source}-${f.id}`;
     const costOf = (f) => (f.radiance_cost == null ? 0 : scaledAt(f.cost_scaling, 'cost', character.level, f.radiance_cost));
     const diceOf = (f) => scaledAt(f.dice_scaling, 'dice', character.level, f.dice);
-    const isLocked = (f) => f.rest_lock && restLocks[featureKey(f)];
+    const usesOf = (f) => scaledAt(f.uses_scaling, 'uses', character.level, f.rest_uses);
+    const usedOf = (f) => restUses[featureKey(f)] || 0;
+    const isLocked = (f) => f.rest_uses != null && usedOf(f) >= usesOf(f);
+    const weaponHitFeature = actionFeatures.find((f) => f.on_weapon_hit);   // e.g. Sigil Strike
+    const listedFeatures = actionFeatures.filter((f) => !f.on_weapon_hit);
+
+    // Weapon damage + an on-hit feature (Sigil Strike): spend its Radiance, add its dice to this damage roll
+    const rollWithHitFeature = (a, f) => {
+        const cost = costOf(f);
+        if (cost && !(spendRadiance && spendRadiance(cost))) return onRoll(`Not enough Radiance for ${f.name}: need ${cost}, have ${radiance}.`);
+        const weapon = Math.max(0, rollDice(a.dice) + a.dmgMod);
+        const extra = rollDice(diceOf(f));
+        onRoll(`Damage dealt: ${weapon} + ${f.name} ${extra} radiant = ${weapon + extra}${cost ? ` (-${cost} Radiance, ${radiance - cost}/${radianceMax} left)` : ''}`);
+    };
 
     // count = dice bought for per-die features (Bound Virtue). Spends Radiance first; blocked if the pool is too low.
     const activateFeature = (f, count = 1) => {
-        if (isLocked(f)) return onRoll(`${f.name} is used until your next ${f.rest_lock} rest.`);
+        if (isLocked(f)) return onRoll(`${f.name}: no uses left (${usedOf(f)}/${usesOf(f)}) until your next ${f.rest_lock} rest.`);
         const cost = costOf(f) * (f.radiance_per_die ? count : 1);
         if (cost && !(spendRadiance && spendRadiance(cost))) return onRoll(`Not enough Radiance for ${f.name}: need ${cost}, have ${radiance}.`);
-        if (f.rest_lock && lockFeature) lockFeature(featureKey(f));
+        if (f.rest_uses != null && countUse) countUse(featureKey(f));
         const dice = diceOf(f);
         const rollWith = dice && (f.radiance_per_die ? `${count}${dice.slice(dice.indexOf('d'))}` : dice);
-        onRoll(`${character.name} uses ${f.name}${cost ? ` (-${cost} Radiance, ${radiance - cost}/${radianceMax} left)` : ''}!${rollWith ? ` Rolled ${rollWith}: ${rollDice(rollWith)}` : ''}`);
+        const crackText = crackMax && f.cracks_removed ? ` -${Math.min(cracks, f.cracks_removed)} Crack` : crackMax && f.cracks_gained ? ` +${f.cracks_gained} Crack` : '';
+        const usesText = f.rest_uses != null ? ` [${usesOf(f) - usedOf(f) - 1}/${usesOf(f)} uses left]` : '';
+        onRoll(`${character.name} uses ${f.name}${cost ? ` (-${cost} Radiance, ${radiance - cost}/${radianceMax} left)` : ''}${crackText}${usesText}!${rollWith ? ` Rolled ${rollWith}: ${rollDice(rollWith)}` : ''}`);
+        if (crackMax && f.cracks_removed && removeCracks) removeCracks(f.cracks_removed);
+        if (crackMax && f.cracks_gained && gainCracks) gainCracks(f.cracks_gained);
     };
 
     // The buttons for one feature row (same in every feature group)
@@ -158,6 +176,12 @@ function Actions() {
                             <div className="action-button-container">
                                 <button type="button" className="btn btn-action btn-to-hit hover-grow" onClick={() => rollHit(a)}>{signed(a.hit ?? toHit)}</button>
                                 <button type="button" className="btn btn-action damage-button hover-grow" onClick={() => rollDamage(a)}>{a.dice}{a.dmgMod ? signed(a.dmgMod) : ''}</button>
+                                {a.sigil && weaponHitFeature && (
+                                    <button type="button" className="btn btn-action damage-button hover-grow" title={`${weaponHitFeature.name}: on a hit, add ${diceOf(weaponHitFeature)} radiant`}
+                                        onClick={() => rollWithHitFeature(a, weaponHitFeature)}>
+                                        +{diceOf(weaponHitFeature)} ({costOf(weaponHitFeature)} R)
+                                    </button>
+                                )}
                             </div>
                         </li>
                     ))}
@@ -244,7 +268,19 @@ function Actions() {
             <li className="action-item spell-slot">
                 <span className="action-title" id="feature-actions-title">Class Features</span>
                 <ul className="action-list" id="feature-actions-list">
-                    {actionFeatures.map((f) => (
+                    {(radianceMax > 0 || crackMax > 0) && (
+                        <li className="action-item spell">
+                            <span className="btn btn-spell-name">
+                                {radianceMax > 0 && `Radiance ${radiance}/${radianceMax}`}{radianceMax > 0 && crackMax > 0 && ' \u00b7 '}{crackMax > 0 && `Cracks ${cracks}/${crackMax}`}
+                            </span>
+                            {crackMax > 0 && cracks >= 3 && (
+                                <div className="action-button-container">
+                                    <span className="btn btn-action">{character.level >= 20 ? 'Shedding light, no Hide' : `Leak: take ${cracks} radiant at turn start, no Hide`}</span>
+                                </div>
+                            )}
+                        </li>
+                    )}
+                    {listedFeatures.map((f) => (
                         <li key={`${f.source}-${f.id}`} className="action-item spell">
                             <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
                                 {f.name}

@@ -24,7 +24,7 @@ export async function getCharacter(req, res) {
     res.json({ character, ownedArmor, ownedWeapons, learnedSpells, actionFeatures });
 }
 
-// PATCH /api/characters/:id/state   body: any of { used_slots, radiance_spent, rest_locks, conditions, exhaustion }
+// PATCH /api/characters/:id/state   body: any of { used_slots, radiance_spent, cracks, rest_uses, conditions, exhaustion }
 const isCountMap = (o) => o && typeof o === 'object' && !Array.isArray(o) && Object.values(o).every((v) => Number.isInteger(v) && v >= 0);
 const isFlagMap = (o) => o && typeof o === 'object' && !Array.isArray(o) && Object.values(o).every((v) => typeof v === 'boolean');
 export async function updateSheetState(req, res) {
@@ -33,7 +33,8 @@ export async function updateSheetState(req, res) {
     const checks = {
         used_slots: isCountMap,
         radiance_spent: (v) => Number.isInteger(v) && v >= 0,
-        rest_locks: isFlagMap,
+        cracks: (v) => Number.isInteger(v) && v >= 0 && v <= 10,
+        rest_uses: isCountMap,
         conditions: isFlagMap,
         exhaustion: (v) => Number.isInteger(v) && v >= 0 && v <= 10,
     };

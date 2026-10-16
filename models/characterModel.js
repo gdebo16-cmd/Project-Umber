@@ -17,7 +17,7 @@ export async function ownsCharacter(charId, userId) {
 // Full sheet row (with race/class/subclass names) or undefined
 export async function getSheetCharacter(charId, userId) {
     const { rows } = await pool.query(
-        `SELECT ch.*, r.name AS race_name, sr.name AS subrace_name, cl.name AS class_name, cl.hitpoint_die, cl.primary_stat AS spell_stat, COALESCE(cl.spellcasting_stat, cl.primary_stat) AS casting_stat, cl.caster_type, cl.has_radiance, NULLIF(concat_ws(', ', cl.armor_proficiencies, s.armor_proficiencies), '') AS armor_proficiencies, NULLIF(concat_ws(', ', cl.weapon_proficiencies, s.weapon_proficiencies), '') AS weapon_proficiencies, NULLIF(concat_ws(', ', cl.tool_proficiencies, s.tool_proficiencies), '') AS tool_proficiencies, s.name AS subclass_name, r.base_speed AS race_base_speed
+        `SELECT ch.*, r.name AS race_name, sr.name AS subrace_name, cl.name AS class_name, cl.hitpoint_die, cl.primary_stat AS spell_stat, COALESCE(cl.spellcasting_stat, cl.primary_stat) AS casting_stat, cl.caster_type, cl.has_radiance, cl.crack_max, cl.breach_dc, cl.breach_dc_scaling, cl.saving_throws AS class_saving_throws, s.breach_effect, s.breach_drains_radiance, NULLIF(concat_ws(', ', cl.armor_proficiencies, s.armor_proficiencies), '') AS armor_proficiencies, NULLIF(concat_ws(', ', cl.weapon_proficiencies, s.weapon_proficiencies), '') AS weapon_proficiencies, NULLIF(concat_ws(', ', cl.tool_proficiencies, s.tool_proficiencies), '') AS tool_proficiencies, s.name AS subclass_name, r.base_speed AS race_base_speed
         FROM characters ch
         LEFT JOIN races r ON r.id = ch.race_id
         LEFT JOIN subraces sr ON sr.id = ch.subrace_id
@@ -247,15 +247,15 @@ export async function updateLevel(charId, userId, level, newMax) {
 
 export async function getActionFeatures(classId, subclassId, level, raceId) {
     const { rows } = await pool.query(
-        `SELECT 'class' AS source, id, name, description, level, action_type, uses, dice, radiance_cost, radiance_per_die, cost_scaling, dice_scaling, rest_lock, kindles_slot
+        `SELECT 'class' AS source, id, name, description, level, action_type, uses, dice, radiance_cost, radiance_per_die, cost_scaling, dice_scaling, rest_lock, kindles_slot, cracks_gained, cracks_removed, rest_uses, uses_scaling, on_weapon_hit
         FROM class_features
-        WHERE class_id = $1 AND level <= $3 AND (action_type IS NOT NULL OR radiance_cost IS NOT NULL)
+        WHERE class_id = $1 AND level <= $3 AND (action_type IS NOT NULL OR radiance_cost IS NOT NULL OR rest_uses IS NOT NULL)
         UNION ALL
-        SELECT 'subclass' AS source, id, name, description, level, action_type, uses, dice, radiance_cost, radiance_per_die, cost_scaling, dice_scaling, rest_lock, kindles_slot
+        SELECT 'subclass' AS source, id, name, description, level, action_type, uses, dice, radiance_cost, radiance_per_die, cost_scaling, dice_scaling, rest_lock, kindles_slot, cracks_gained, cracks_removed, rest_uses, uses_scaling, on_weapon_hit
         FROM subclass_features
-        WHERE subclass_id = $2 AND level <= $3 AND (action_type IS NOT NULL OR radiance_cost IS NOT NULL)
+        WHERE subclass_id = $2 AND level <= $3 AND (action_type IS NOT NULL OR radiance_cost IS NOT NULL OR rest_uses IS NOT NULL)
         UNION ALL
-        SELECT 'race' AS source, id, name, description, level, action_type, uses, dice, NULL::int, false, NULL::jsonb, NULL::jsonb, NULL::text, false
+        SELECT 'race' AS source, id, name, description, level, action_type, uses, dice, NULL::int, false, NULL::jsonb, NULL::jsonb, NULL::text, false, 0, 0, NULL::int, NULL::jsonb, false
         FROM race_lineage_bonuses
         WHERE race_id = $4 AND level <= $3 AND action_type IS NOT NULL
         ORDER BY level, name`,
@@ -273,9 +273,9 @@ export async function updateAbilities(charId, userId, vals) {
     );
 }
 
-// Saved sheet state (slots used, Radiance, once-per-rest locks, conditions, exhaustion). Only the fields in `patch` change.
+// Saved sheet state (slots used, Radiance, Seal Cracks, uses per rest, conditions, exhaustion). Only the fields in `patch` change.
 // Returns the saved state or undefined if the character isn't yours.
-export const SHEET_STATE_FIELDS = ['used_slots', 'radiance_spent', 'rest_locks', 'conditions', 'exhaustion'];
+export const SHEET_STATE_FIELDS = ['used_slots', 'radiance_spent', 'cracks', 'rest_uses', 'conditions', 'exhaustion'];
 export async function updateSheetState(charId, userId, patch) {
     const fields = SHEET_STATE_FIELDS.filter((f) => f in patch);
     if (!fields.length) return undefined;
