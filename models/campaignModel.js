@@ -43,11 +43,12 @@ export async function getCampaign(campId, userId) {
     return rows[0];
 }
 
-export async function updateCampaign(campId, userId, name, description) {
-    await pool.query(
-        `UPDATE campaigns SET name = $1, description = $2 WHERE id = $3 AND user_id = $4`,
-        [name, description, campId, userId]
+export async function updateCampaign(campId, userId, name, description, campaignImgUrl = null) {
+    const { rowCount } = await pool.query(
+        `UPDATE campaigns SET name = $1, description = $2, campaign_img_url = $3 WHERE id = $4 AND user_id = $5`,
+        [name, description, campaignImgUrl, campId, userId]
     );
+    return rowCount;
 }
 
 export async function listCampaigns(userId) {

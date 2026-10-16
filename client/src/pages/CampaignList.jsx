@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import { sendJson } from '../utils/api';
 import useFetch from '../hooks/useFetch';
 import usePageStyle from '../hooks/usePageStyle';
-import homeCss from '../styles/home.css?inline';
+import campaignListCss from '../styles/campaignList.css?inline';
 import SiteNav from '../components/SiteNav';
 import Loader from '../components/Loader';
 
@@ -13,7 +13,7 @@ function CampaignList() {
     const [joinError, setJoinError] = useState('');
     const navigate = useNavigate();
 
-    usePageStyle(homeCss);
+    usePageStyle(campaignListCss);
     const { data, setData, loading, error } = useFetch('/api/campaigns');
 
     const deleteCampaign = async (e, camp) => {
@@ -50,31 +50,45 @@ function CampaignList() {
                 <h1>Campaigns</h1>
             </header>
             <SiteNav />
-            <main className="page-campaign">
-                <section className="campaign-tabs">
-                    <Link to="/create_campaign">Create Campaign</Link>
-                    <form onSubmit={joinCampaign} className='join-campaign'>
-                        <input className='field' type='text' placeholder='invite-code' value={code} onChange={(e) => setCode(e.target.value)} maxLength={8} />
-                        <button className='btn' type='submit'>Join Campaign</button>
-                        {joinError && <p className='error'>{joinError}</p>}
-                    </form>
+            <main>
+                <section className="cl-panel">
+                    <h2 className="cl-header"><strong>Start or Join a Tale</strong></h2>
+                    <div className="cl-body cl-actions">
+                        <Link className="btn cl-create" to="/create_campaign">Create Campaign</Link>
+                        <form onSubmit={joinCampaign} className="cl-join">
+                            <input className="field" type="text" placeholder="Invite code" value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} maxLength={8} />
+                            <button className="btn" type="submit">Join</button>
+                        </form>
+                        {joinError && <p className="cl-error">{joinError}</p>}
+                    </div>
                 </section>
-                <section className="campaign-list">
-                    {campaigns.length === 0 ? (
-                        <p>No Tales Yet</p>
-                    ) : (
-                        <ul className="tile-list" id="campaign-list">
-                            {campaigns.map((camp) => (
-                                <li key={camp.id} className="campaign-tile">
-                                    <Link to={`/campaign/${camp.id}`}>
-                                        <h3 className="campaign-name">{camp.name}</h3>
-                                        <p className="campaign-description">{camp.description}</p>
-                                        {camp.role === 'dm' && (<button type="button" className="campaign-delete-button" onClick={(e) => deleteCampaign(e, camp)}>Delete</button>)}  
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
+                <section className="cl-panel">
+                    <h2 className="cl-header"><strong>Your Campaigns</strong></h2>
+                    <div className="cl-body">
+                        {campaigns.length === 0 ? (
+                            <p className="cl-empty">No Tales Yet</p>
+                        ) : (
+                            <ul className="cl-list">
+                                {campaigns.map((camp) => (
+                                    <li key={camp.id} className="cl-card">
+                                        <Link className="cl-card-link" to={`/campaign/${camp.id}`}>
+                                            {camp.campaign_img_url
+                                                ? <img className="cl-card-image" src={camp.campaign_img_url} alt="" />
+                                                : <div className="cl-card-image" aria-hidden="true" />}
+                                            <div className="cl-card-text">
+                                                <h3 className="cl-card-name">{camp.name}</h3>
+                                                <span className={`cl-role role-${camp.role}`}>{camp.role === 'dm' ? 'DM' : 'Player'}</span>
+                                                <p className="cl-card-description">{camp.description}</p>
+                                            </div>
+                                        </Link>
+                                        {camp.role === 'dm' && (
+                                            <button type="button" className="btn cl-delete" onClick={(e) => deleteCampaign(e, camp)}>Delete</button>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
                 </section>
             </main>
         </>

@@ -11,11 +11,21 @@ export async function getCampaign(req, res) {
     res.json({ campaign, members });
  }
 
-// PATCH /api/campaigns/:id   body: { name, description }
+// preset campaign images live in client/public/campaigns (mirrors PORTRAIT_PATH in apiEditController.js)
+const CAMPAIGN_IMG_PATH = /^\/campaigns\/[a-z0-9-]+\.webp$/;
+
+// PATCH /api/campaigns/:id   body: { name, description, campaign_img_url }
 export async function updateCampaign(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'not logged in.' });
-    const { name, description } = req.body;
-    await Campaigns.updateCampaign(req.params.id, req.session.userId, name, description);
+    const { name, description = '', campaign_img_url = null } = req.body ?? {};
+    const cleanName = typeof name === 'string' ? name.trim() : '';
+    if (!cleanName) return res.status(400).json({ error: 'Campaign name is required.' });
+    if (typeof description !== 'string') return res.status(400).json({ error: 'Description must be text.' });
+    if (campaign_img_url !== null && (typeof campaign_img_url !== 'string' || !CAMPAIGN_IMG_PATH.test(campaign_img_url))) {
+        return res.status(400).json({ error: 'Invalid campaign image.' });
+    }
+    const updated = await Campaigns.updateCampaign(req.params.id, req.session.userId, cleanName, description, campaign_img_url);
+    if (!updated) return res.status(404).json({ error: 'Campaign not found, or you are not its DM.' });
     res.json({ ok: true });
 }
 
