@@ -3,7 +3,7 @@ import { useState } from 'react';
 import SpellBook from './SpellBook';
 import { sendJson } from '../../utils/api';
 import TabList from '../../components/TabList';
-import { getSpellSlots, beamsAt, beamRollText } from '../../utils/spellSlots';
+import { getSpellSlots, beamsAt, beamRollText, beamDamageText } from '../../utils/spellSlots';
 import { modOf, signed, proficiencyBonus, rollDice, d20 } from '../../utils/math';
 import { useCharacter } from '../CharacterContext';
 import { createPortal } from 'react-dom';
@@ -62,7 +62,7 @@ function SpellsTab() {
             if (!spendSlot(lvl)) return onRoll?.(`No level ${lvl} slots left!`);
             onRoll?.(message);
         };
-        const damageText = () => `${s.heal_dice && !s.damage_dice && !s.base_damage_dice ? 'Healed' : 'Damage dealt'}: ${rollDice(dice)}`;
+        const damageText = () => beamsAt(s, level) > 1 ? beamDamageText(beamsAt(s, level), dice) : `${s.heal_dice && !s.damage_dice && !s.base_damage_dice ? 'Healed' : 'Damage dealt'}: ${rollDice(dice)}`;
 
         return (
             <>

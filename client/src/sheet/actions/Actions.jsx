@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { modOf, signed, healthInit, rollDice, d20, proficiencyBonus } from '../../utils/math';
 import { useCharacter } from '../CharacterContext';
-import { getSpellSlots, beamsAt, beamRollText } from '../../utils/spellSlots';
+import { getSpellSlots, beamsAt, beamRollText, beamDamageText, scaledAt } from '../../utils/spellSlots';
 import { createPortal } from 'react-dom';
 
 // Your equipped weapons plus Fists. Each has a To Hit button and a Damage button.
 function Actions() {
-    const { character, hp, ownedWeapons, onRoll, learnedSpells, spendSlot, usedSlots = {}, actionFeatures = [], radiance, radianceMax, kindledUsed, kindleSlot } = useCharacter();
+    const { character, hp, ownedWeapons, onRoll, learnedSpells, spendSlot, usedSlots = {}, actionFeatures = [], radiance = 0, radianceMax = 0, spendRadiance, restLocks = {}, lockFeature, kindleSlot } = useCharacter();
     const actionSpells = learnedSpells ?? [];
     const spellScore = character[(character.spell_stat || '').toLowerCase()];
     // spells use the class's spellcasting_stat (casting_stat); weapons keep the primary stat
@@ -38,7 +38,7 @@ function Actions() {
 
     const [openItem, setOpenItem] = useState(null);
     const rollHit = (a) => onRoll(`Chance to hit: ${d20() + (a?.hit ?? toHit)}`);
-    const rollDamage = (a) => onRoll(`Damage dealt: ${Math.max(0, rollDice(a.dice) + a.dmgMod)}`);
+    const rollDamage = (a) => onRoll(a.beams > 1 ? beamDamageText(a.beams, a.dice, a.dmgMod) : `Damage dealt: ${Math.max(0, rollDice(a.dice) + a.dmgMod)}`);
 
     // Spends one slot at the spell's level, then shows the message. Stops if none are left.
     const castSpell = (s, message) => {
@@ -87,6 +87,58 @@ function Actions() {
     };
 
     const ACTION_LABELS = { action: 'Action', bonus: 'Bonus Action', reaction: 'Reaction' };
+
+    // --- Features: Radiance costs, scaling dice and once-per-rest locks all come from the feature row ---
+    const featureKey = (f) => `${f.source}-${f.id}`;
+    const costOf = (f) => (f.radiance_cost == null ? 0 : scaledAt(f.cost_scaling, 'cost', character.level, f.radiance_cost));
+    const diceOf = (f) => scaledAt(f.dice_scaling, 'dice', character.level, f.dice);
+    const isLocked = (f) => f.rest_lock && restLocks[featureKey(f)];
+
+    // count = dice bought for per-die features (Bound Virtue). Spends Radiance first; blocked if the pool is too low.
+    const activateFeature = (f, count = 1) => {
+        if (isLocked(f)) return onRoll(`${f.name} is used until your next ${f.rest_lock} rest.`);
+        const cost = costOf(f) * (f.radiance_per_die ? count : 1);
+        if (cost && !(spendRadiance && spendRadiance(cost))) return onRoll(`Not enough Radiance for ${f.name}: need ${cost}, have ${radiance}.`);
+        if (f.rest_lock && lockFeature) lockFeature(featureKey(f));
+        const dice = diceOf(f);
+        const rollWith = dice && (f.radiance_per_die ? `${count}${dice.slice(dice.indexOf('d'))}` : dice);
+        onRoll(`${character.name} uses ${f.name}${cost ? ` (-${cost} Radiance, ${radiance - cost}/${radianceMax} left)` : ''}!${rollWith ? ` Rolled ${rollWith}: ${rollDice(rollWith)}` : ''}`);
+    };
+
+    // The buttons for one feature row (same in every feature group)
+    const featureButtons = (f) => (
+        <div className="action-button-container">
+            {f.kindles_slot && kindleSlot ? (
+                <select className="upcast-picker" value="" disabled={!!isLocked(f)}
+                    onChange={(e) => kindleSlot(Number(e.target.value), featureKey(f))}>
+                    <option value="" disabled>{isLocked(f) ? `Used (${f.rest_lock} rest)` : `Radiance ${radiance}/${radianceMax}: spend slot...`}</option>
+                    {getSpellSlots(character.level, character.spell_slots).map((n, j) => (usedSlots[j + 1] || 0) < n && (
+                        <option key={j + 1} value={j + 1}>Level {j + 1} slot (+{j + 1} Radiance)</option>
+                    ))}
+                </select>
+            ) : f.radiance_per_die ? (
+                <select className="upcast-picker" value="" onChange={(e) => activateFeature(f, Number(e.target.value))}>
+                    <option value="" disabled>{`Radiance ${radiance}/${radianceMax}: dice...`}</option>
+                    {Array.from({ length: proficiencyBonus(character.level) }, (_, i) => (
+                        <option key={i + 1} value={i + 1} disabled={(i + 1) * costOf(f) > radiance}>{(i + 1) * costOf(f)} Radiance ({i + 1}{(diceOf(f) || 'd8').slice((diceOf(f) || 'd8').indexOf('d'))})</option>
+                    ))}
+                </select>
+            ) : (
+                <>
+                    {f.dice && !costOf(f) && (
+                        <button type="button" className="btn btn-action damage-button hover-grow"
+                            onClick={() => onRoll(`${character.name} uses ${f.name}! Rolled: ${rollDice(diceOf(f))}`)}>
+                            {diceOf(f)}
+                        </button>
+                    )}
+                    <button type="button" className="btn btn-action damage-button hover-grow" disabled={!!isLocked(f)}
+                        onClick={() => activateFeature(f)}>
+                        {costOf(f) ? `${diceOf(f) ? `${diceOf(f)} ` : ''}(${costOf(f)} R)` : 'Use'}
+                    </button>
+                </>
+            )}
+        </div>
+    );
     const bonusFeatures = actionFeatures.filter((f) => f.action_type === 'bonus');
     const reactionFeatures = actionFeatures.filter((f) => f.action_type === 'reaction');
 
@@ -138,7 +190,7 @@ function Actions() {
 
                                     {(s.base_damage_dice) ? (
                                         // with a to-hit/save button the damage is just a roll; without one, this button is the cast
-                                        <button type="button" className="btn btn-action damage-button hover-grow" onClick={() => (s.attack_type || s.opponent_save_roll) ? rollDamage({ dice: diceAt(s, castLevels[s.id] ?? s.base_level), dmgMod: s.dmgMod || 0 }) : onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}! Damage dealt: ${Math.max(0, rollDice(s.base_damage_dice) + (s.dmgMod || 0))}`))}>{diceAt(s, castLevels[s.id] ?? s.base_level)}{s.dmgMod ? signed(s.dmgMod) : ''}</button>
+                                        <button type="button" className="btn btn-action damage-button hover-grow" onClick={() => (s.attack_type || s.opponent_save_roll) ? rollDamage({ dice: diceAt(s, castLevels[s.id] ?? s.base_level), dmgMod: s.dmgMod || 0, beams: beamsAt(s, character.level) }) : onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}! Damage dealt: ${Math.max(0, rollDice(s.base_damage_dice) + (s.dmgMod || 0))}`))}>{diceAt(s, castLevels[s.id] ?? s.base_level)}{s.dmgMod ? signed(s.dmgMod) : ''}</button>
                                     ) : (
                                         <button type='button' className='btn btn-action damage-button hover-grow' onClick={() => onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}!`))}>Cast</button>
                                     )}
@@ -169,28 +221,7 @@ function Actions() {
                                 <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
                                     {f.name}
                                 </button>
-                                <div className="action-button-container">
-                                    {f.dice && (
-                                        <button type="button" className="btn btn-action damage-button hover-grow"
-                                            onClick={() => onRoll(`${character.name} uses ${f.name}! Rolled: ${rollDice(f.dice)}`)}>
-                                            {f.dice}
-                                        </button>
-                                    )}
-                                    {f.name === 'Kindled Slot' && kindleSlot ? (
-                                        <select className="upcast-picker" value="" disabled={kindledUsed}
-                                            onChange={(e) => kindleSlot(Number(e.target.value))}>
-                                            <option value="" disabled>{kindledUsed ? 'Used (long rest)' : `Radiance ${radiance}/${radianceMax}: spend slot...`}</option>
-                                            {getSpellSlots(character.level, character.spell_slots).map((n, j) => (usedSlots[j + 1] || 0) < n && (
-                                                <option key={j + 1} value={j + 1}>Level {j + 1} slot (+{j + 1} Radiance)</option>
-                                            ))}
-                                        </select>
-                                    ) : (
-                                        <button type="button" className="btn btn-action damage-button hover-grow"
-                                            onClick={() => onRoll(`${character.name} uses ${f.name}!`)}>
-                                            Use
-                                        </button>
-                                    )}
-                                </div>
+                                {featureButtons(f)}
                             </li>
                         ))}
                 </ul>
@@ -204,18 +235,7 @@ function Actions() {
                                 <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
                                     {f.name}
                                 </button>
-                                <div className="action-button-container">
-                                    {f.dice && (
-                                        <button type="button" className="btn btn-action damage-button hover-grow"
-                                            onClick={() => onRoll(`${character.name} uses ${f.name}! Rolled: ${rollDice(f.dice)}`)}>
-                                            {f.dice}
-                                        </button>
-                                    )}
-                                    <button type="button" className="btn btn-action damage-button hover-grow"
-                                        onClick={() => onRoll(`${character.name} uses ${f.name}!`)}>
-                                        Use
-                                    </button>
-                                </div>
+                                {featureButtons(f)}
                             </li>
                         ))}
                 </ul>
@@ -229,18 +249,7 @@ function Actions() {
                             <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
                                 {f.name}
                             </button>
-                            <div className="action-button-container">
-                                {f.dice && (
-                                    <button type="button" className="btn btn-action damage-button hover-grow"
-                                        onClick={() => onRoll(`${character.name} uses ${f.name}! Rolled: ${rollDice(f.dice)}`)}>
-                                        {f.dice}
-                                    </button>
-                                )}
-                                <button type="button" className="btn btn-action damage-button hover-grow"
-                                    onClick={() => onRoll(`${character.name} uses ${f.name}!`)}>
-                                    Use
-                                </button>
-                            </div>
+                            {featureButtons(f)}
                         </li>
                     ))}
                 </ul>

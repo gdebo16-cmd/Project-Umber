@@ -24,6 +24,31 @@ export async function getCharacter(req, res) {
     res.json({ character, ownedArmor, ownedWeapons, learnedSpells, actionFeatures });
 }
 
+// PATCH /api/characters/:id/state   body: any of { used_slots, radiance_spent, rest_locks, conditions, exhaustion }
+const isCountMap = (o) => o && typeof o === 'object' && !Array.isArray(o) && Object.values(o).every((v) => Number.isInteger(v) && v >= 0);
+const isFlagMap = (o) => o && typeof o === 'object' && !Array.isArray(o) && Object.values(o).every((v) => typeof v === 'boolean');
+export async function updateSheetState(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const b = req.body || {};
+    const checks = {
+        used_slots: isCountMap,
+        radiance_spent: (v) => Number.isInteger(v) && v >= 0,
+        rest_locks: isFlagMap,
+        conditions: isFlagMap,
+        exhaustion: (v) => Number.isInteger(v) && v >= 0 && v <= 10,
+    };
+    const patch = {};
+    for (const [field, ok] of Object.entries(checks)) {
+        if (!(field in b)) continue;
+        if (!ok(b[field])) return res.status(400).json({ error: `Bad ${field}` });
+        patch[field] = b[field];
+    }
+    if (!Object.keys(patch).length) return res.status(400).json({ error: 'Nothing to save' });
+    const state = await Characters.updateSheetState(Number(req.params.id), req.session.userId, patch);
+    if (!state) return res.status(404).json({ error: 'Character not found' });
+    res.json(state);
+}
+
 // PATCH /api/characters/:id/hp   body: { action: 'heal' | 'damage', amount }
 export async function updateHp(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });

@@ -56,13 +56,13 @@ export async function getSpellsForCharacter(classId, subclassId, level) {
     return rows;
 }
 // Slot counts for a class at a level from class_spell_slots: [1st, 2nd, ...].
-// [] = the class has slot rows but none yet at this level (e.g. Paladin L1). null = no rows at all (sheet falls back to the full-caster table).
+// [] = no slots at this level: either none yet (Paladin L1) or the class has no slot rows at all (non-casters like Warrior).
 export async function getClassSlots(classId, level) {
     const { rows } = await pool.query(
         `SELECT slot_level, slots, level = $2 AS here FROM class_spell_slots WHERE class_id = $1 AND (level = $2 OR level = (SELECT MIN(level) FROM class_spell_slots WHERE class_id = $1))`,
         [classId, level]
     );
-    if (!rows.length) return null;
+    if (!rows.length) return [];
     const slots = [];
     for (const r of rows.filter((r) => r.here)) slots[r.slot_level - 1] = r.slots;
     return Array.from(slots, (n) => n || 0);

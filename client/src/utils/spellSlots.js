@@ -33,7 +33,7 @@ const SLOT_TABLE = {
 
 import { d20, rollDice } from './math.js';
 
-// classSlots = character.spell_slots from class_spell_slots. Classes with no rows (null) use the full-caster table above.
+// classSlots = character.spell_slots from class_spell_slots ([] = no slots). The table above is only a fallback when no class data was loaded.
 export function getSpellSlots(level, classSlots) {
     if (Array.isArray(classSlots)) return classSlots;
     const capped = Math.min(Math.max(level, 1), 30);
@@ -51,3 +51,13 @@ export function beamRollText(beams, toHit, dice, dmgMod = 0) {
     return Array.from({ length: beams }, (_, i) =>
         `Beam ${i + 1}: to hit ${d20() + toHit}${dice ? `, damage ${Math.max(0, rollDice(dice) + dmgMod)}` : ''}`).join(' | ');
 }
+
+// One damage roll per beam, e.g. "Damage dealt: 5 + 3 = 8 (2 beams)"
+export function beamDamageText(beams, dice, dmgMod = 0) {
+    const hits = Array.from({ length: beams }, () => Math.max(0, rollDice(dice) + dmgMod));
+    return `Damage dealt: ${hits.join(' + ')} = ${hits.reduce((a, b) => a + b, 0)} (${beams} beams)`;
+}
+
+// Value at a level from a [{ level, <key> }] scaling list, else the base value
+export const scaledAt = (steps, key, level, base) =>
+    (Array.isArray(steps) ? steps : []).reduce((v, st) => (Number(level) >= st.level ? st[key] : v), base);

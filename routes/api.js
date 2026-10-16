@@ -1,7 +1,7 @@
 // JSON routes for the React client. Everything here is mounted at /api in index.js.
 import { Router } from 'express';
 import {
-    getCharacter, updateHp, deleteCharacter,
+    getCharacter, updateHp, updateSheetState, deleteCharacter,
     equipArmor, unequipArmor, equipWeapon, unequipWeapon,
 } from '../controllers/apiController.js';
 import { me, login, logout, register, home, getSettings, updateSettings, getProfile, updateProfile, deleteAccount } from '../controllers/apiUserController.js';
@@ -51,6 +51,7 @@ router.post('/create_char/roll/:stat', rollStat);
 router.get('/characters/:id', getCharacter);
 router.delete('/characters/:id', deleteCharacter);
 router.patch('/characters/:id/hp', updateHp);
+router.patch('/characters/:id/state', updateSheetState);
 router.post('/characters/:id/inventory/armor/equip', equipArmor);
 router.post('/characters/:id/inventory/armor/unequip', unequipArmor);
 router.post('/characters/:id/inventory/weapon/equip', equipWeapon);
