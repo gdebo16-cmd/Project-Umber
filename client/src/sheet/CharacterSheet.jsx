@@ -79,7 +79,7 @@ function CharacterSheet() {
     const usedSlots = character.used_slots || {};
     const conditions = character.conditions || {};
     const exhaustion = character.exhaustion || 0;
-    const radianceSpent = character.radiance_spent || 0;
+    const embersSpent = character.embers_spent || 0;
     const restUses = character.rest_uses || {};   // { featureKey: uses spent since its recovery rest }
     const cracks = character.cracks || 0;
     const saveState = (patch) => {
@@ -104,16 +104,16 @@ function CharacterSheet() {
         return true;
     };
 
-    // Stolen Radiance pool (classes.has_radiance): ceil(level / 2) + INT mod (min 1), + CON mod from level 17
-    const radianceMax = character.has_radiance
+    // Stolen Radiance pool (classes.has_embers): ceil(level / 2) + INT mod (min 1), + CON mod from level 17
+    const embersMax = character.has_embers
         ? Math.max(1, Math.ceil(character.level / 2) + modOf(character.int) + (character.level >= 17 ? modOf(character.con) : 0))
         : 0;
-    const radiance = Math.max(0, radianceMax - radianceSpent);
+    const embers = Math.max(0, embersMax - embersSpent);
 
-    // Spend Radiance from the pool. false = not enough.
-    const spendRadiance = (cost) => {
-        if (cost > radiance) return false;
-        saveState({ radiance_spent: radianceSpent + cost });
+    // Spend embers from the pool. false = not enough.
+    const spendEmbers = (cost) => {
+        if (cost > embers) return false;
+        saveState({ embers_spent: embersSpent + cost });
         return true;
     };
 
@@ -131,7 +131,7 @@ function CharacterSheet() {
                 messages.push(`Breach! CON save ${roll} vs DC ${breachDc}: success, nothing happens.`);
             } else {
                 messages.push(`Breach! CON save ${roll} vs DC ${breachDc}: failed. Stunned until the end of your next turn.${character.breach_effect ? ` ${character.breach_effect}` : ''}`);
-                if (character.breach_drains_radiance) patch.radiance_spent = radianceMax;
+                if (character.breach_drains_embers) patch.embers_spent = embersMax;
             }
         }
         saveState(patch);
@@ -139,13 +139,13 @@ function CharacterSheet() {
     };
     const removeCracks = (n) => saveState({ cracks: Math.max(0, cracks - n) });
 
-    // Slot-to-Radiance features (kindles_slot, e.g. Kindled Slot): spend one slot, regain Radiance = its level (capped at max)
+    // Slot-to-embers features (kindles_slot, e.g. Kindled Slot): spend one slot, regain embers = its level (capped at max)
     const kindleSlot = (lvl, key) => {
         if (restUses[key]) return showRoll('That feature is used until your next long rest.');
         if (!spendSlot(lvl)) return showRoll(`No level ${lvl} slots left!`);
-        const gained = Math.min(lvl, radianceSpent);
-        saveState({ radiance_spent: radianceSpent - gained, rest_uses: { ...restUses, [key]: (restUses[key] || 0) + 1 } });
-        showRoll(`${character.name} uses Kindled Slot (level ${lvl} slot): +${gained} Radiance (${radiance + gained}/${radianceMax})`);
+        const gained = Math.min(lvl, embersSpent);
+        saveState({ embers_spent: embersSpent - gained, rest_uses: { ...restUses, [key]: (restUses[key] || 0) + 1 } });
+        showRoll(`${character.name} uses Kindled Slot (level ${lvl} slot): +${gained} embers (${embers + gained}/${embersMax})`);
     };
 
     const rest = async (type) => {
@@ -183,12 +183,12 @@ function CharacterSheet() {
             if (restUses[key] && f.rest_lock === 'long') newUses[key] = restUses[key];
         }
     }
-    // Radiance: all back on a long rest, half the max on a short rest. One save for everything.
+    // embers: all back on a long rest, half the max on a short rest. One save for everything.
     saveState({
         used_slots: newSlots,
         conditions: newConditions,
         exhaustion: exhaustion - Math.round(exhaustion * pct),
-        radiance_spent: type === 'long' ? 0 : Math.max(0, radianceSpent - Math.floor(radianceMax / 2)),
+        embers_spent: type === 'long' ? 0 : Math.max(0, embersSpent - Math.floor(embersMax / 2)),
         rest_uses: newUses,
         cracks: type === 'long' ? 0 : Math.max(0, cracks - 2),   // Mending: short rest -2 Cracks, long rest all
     });
@@ -217,9 +217,9 @@ function CharacterSheet() {
         exhaustion,
         setExhaustion,
         rest,
-        radiance,
-        radianceMax,
-        spendRadiance,
+        embers,
+        embersMax,
+        spendEmbers,
         restUses,
         countUse,
         cracks,

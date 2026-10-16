@@ -24,7 +24,7 @@ export async function getCharacter(req, res) {
     res.json({ character, ownedArmor, ownedWeapons, learnedSpells, actionFeatures });
 }
 
-// PATCH /api/characters/:id/state   body: any of { used_slots, radiance_spent, cracks, rest_uses, conditions, exhaustion }
+// PATCH /api/characters/:id/state   body: any of { used_slots, embers_spent, cracks, rest_uses, conditions, exhaustion }
 const isCountMap = (o) => o && typeof o === 'object' && !Array.isArray(o) && Object.values(o).every((v) => Number.isInteger(v) && v >= 0);
 const isFlagMap = (o) => o && typeof o === 'object' && !Array.isArray(o) && Object.values(o).every((v) => typeof v === 'boolean');
 export async function updateSheetState(req, res) {
@@ -32,7 +32,7 @@ export async function updateSheetState(req, res) {
     const b = req.body || {};
     const checks = {
         used_slots: isCountMap,
-        radiance_spent: (v) => Number.isInteger(v) && v >= 0,
+        embers_spent: (v) => Number.isInteger(v) && v >= 0,
         cracks: (v) => Number.isInteger(v) && v >= 0 && v <= 10,
         rest_uses: isCountMap,
         conditions: isFlagMap,
@@ -138,6 +138,20 @@ export async function soulBrandWeapon(req, res) {
 
     const result = await Inventory.setWeaponSoulBrand(charId, Number(req.body.weapon_id), req.body.soul_branded === true);
     if (result === 'not-soul-smith') return res.status(403).json({ error: 'Only a Soul Smith can soul brand a weapon' });
+    if (result === 'not-owned') return res.status(404).json({ error: 'Weapon not owned' });
+    res.json({ ownedWeapons: await Inventory.getOwnedWeapons(charId) });
+}
+
+// POST /api/characters/:id/inventory/weapon/sigil-mark   body: { weapon_id, marked }
+export async function sigilMarkWeapon(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const charId = Number(req.params.id);
+    if (!(await ownsCharacter(charId, req.session.userId))) {
+        return res.status(404).json({ error: 'Character not found' });
+    }
+
+    const result = await Inventory.setWeaponSigilMark(charId, Number(req.body.weapon_id), req.body.marked === true);
+    if (result === 'not-gracewraith') return res.status(403).json({ error: 'Only a Gracewraith can place a sigil mark' });
     if (result === 'not-owned') return res.status(404).json({ error: 'Weapon not owned' });
     res.json({ ownedWeapons: await Inventory.getOwnedWeapons(charId) });
 }

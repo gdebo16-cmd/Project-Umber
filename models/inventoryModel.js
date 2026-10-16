@@ -1,5 +1,6 @@
 // Armor and weapon database reads and writes: catalog, owned items, add/remove, equip.
 import pool from '../db.js';
+import { itemRunesJson } from './runeModel.js';
 
 // ---------- catalog ----------
 
@@ -50,7 +51,8 @@ export async function listStartingGear(classId, subclassId, level) {
 
 export async function getOwnedArmor(charId) {
     const { rows } = await pool.query(
-        `SELECT ca.armor_id AS id, ca.is_equipped, a.name, a.armor_type, a.ac_bonus
+        `SELECT ca.armor_id AS id, ca.id AS owned_id, ca.is_equipped, a.name, a.armor_type, a.ac_bonus,
+                ${itemRunesJson('character_armor_id', 'ca.id')} AS runes
         FROM character_armor ca
         JOIN armor a ON a.id = ca.armor_id
         WHERE ca.character_id = $1
@@ -63,7 +65,10 @@ export async function getOwnedArmor(charId) {
 export async function getOwnedWeapons(charId) {
     const { rows } = await pool.query(
         `SELECT w.id, w.name, w.category, w.damage_dice, w.sigil_weapon, w.properties, w.description, w.rarity, w.damage_type, w.attack_bonus, w.range_normal, w.range_long,
-                (SELECT wc.name FROM weapon_category wc WHERE wc.id = w.category_id) AS weapon_category, cw.is_equipped, cw.dual_wield, cw.soul_branded
+                (SELECT wc.name FROM weapon_category wc WHERE wc.id = w.category_id) AS weapon_category, cw.id AS owned_id, cw.is_equipped, cw.dual_wield, cw.soul_branded,
+                EXISTS (SELECT 1 FROM characters c WHERE c.id = cw.character_id AND c.sigil_item_id = cw.id) AS sigil_marked,
+                EXISTS (SELECT 1 FROM characters c WHERE c.id = cw.character_id AND c.runed_weapon_item_id = cw.id) AS is_runed,
+                ${itemRunesJson('character_weapon_id', 'cw.id')} AS runes
         FROM character_weapons cw
         JOIN weapons w ON w.id = cw.weapon_id
         WHERE cw.character_id = $1
@@ -205,6 +210,21 @@ export async function setWeaponSoulBrand(charId, weaponId, on) {
     } finally {
         client.release();
     }
+}
+
+// Sigil mark (Gracewraith only): one marked weapon, stored as characters.sigil_item_id.
+// Returns 'not-gracewraith', 'not-owned' or 'ok'.
+export async function setWeaponSigilMark(charId, weaponId, on) {
+    const { rows: [ch] } = await pool.query(
+        `SELECT c.name AS class_name FROM characters ch JOIN classes c ON c.id = ch.class_id WHERE ch.id = $1`, [charId]);
+    if (ch?.class_name !== 'Gracewraith') return 'not-gracewraith';
+    const { rows: [row] } = await pool.query(
+        `SELECT id FROM character_weapons WHERE character_id = $1 AND weapon_id = $2`, [charId, weaponId]);
+    if (!row) return 'not-owned';
+    await pool.query(
+        `UPDATE characters SET sigil_item_id = CASE WHEN $2 THEN $3::int WHEN sigil_item_id = $3 THEN NULL ELSE sigil_item_id END WHERE id = $1`,
+        [charId, !!on, row.id]);
+    return 'ok';
 }
 
 export async function unequipWeapon(charId, weaponId) {

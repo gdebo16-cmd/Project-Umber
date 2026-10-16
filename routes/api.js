@@ -1,8 +1,9 @@
 // JSON routes for the React client. Everything here is mounted at /api in index.js.
+import * as Runes from '../controllers/apiRuneController.js';
 import { Router } from 'express';
 import {
     getCharacter, updateHp, updateSheetState, deleteCharacter,
-    equipArmor, unequipArmor, equipWeapon, unequipWeapon, dualWieldWeapon, soulBrandWeapon,
+    equipArmor, unequipArmor, equipWeapon, unequipWeapon, dualWieldWeapon, soulBrandWeapon, sigilMarkWeapon,
 } from '../controllers/apiController.js';
 import { me, login, logout, register, home, getSettings, updateSettings, getProfile, updateProfile, deleteAccount } from '../controllers/apiUserController.js';
 import { getInventory, addArmor, addWeapon, removeArmor, removeWeapon } from '../controllers/apiInventoryController.js';
@@ -58,6 +59,11 @@ router.post('/characters/:id/inventory/weapon/equip', equipWeapon);
 router.post('/characters/:id/inventory/weapon/unequip', unequipWeapon);
 router.post('/characters/:id/inventory/weapon/dual-wield', dualWieldWeapon);
 router.post('/characters/:id/inventory/weapon/soul-brand', soulBrandWeapon);
+router.post('/characters/:id/inventory/weapon/sigil-mark', sigilMarkWeapon);
+router.get('/characters/:id/runes', Runes.getRunes);
+router.post('/characters/:id/runes/inscribe', Runes.inscribe);
+router.post('/characters/:id/runes/remove', Runes.remove);
+router.post('/characters/:id/runes/runed-weapon', Runes.runedWeapon);
 
 // inventory page (add / remove items)
 router.get('/characters/:id/inventory', getInventory);

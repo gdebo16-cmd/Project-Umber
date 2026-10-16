@@ -3,6 +3,7 @@ import ItemShop from './ItemShop';
 import { sendJson } from '../../utils/api';
 import { useCharacter } from '../CharacterContext';
 import WeaponFilter from '../../components/WeaponFilter';
+import RuneControl from './RuneControl';
 import { filterSortWeapons, EMPTY_WEAPON_FILTER } from '../../utils/weapons';
 
 // The Inventory tab on the sheet: what you own, with Equip / Unequip buttons.
@@ -14,6 +15,7 @@ function InventoryTab() {
     const [error, setError] = useState('');
     const [browsing, setBrowsing] = useState(false); // true while the shop list is showing
     const [openWeaponId, setOpenWeaponId] = useState(null);
+    const [openArmorId, setOpenArmorId] = useState(null); // armor whose runes are showing
     const [weaponFilter, setWeaponFilter] = useState(EMPTY_WEAPON_FILTER); // weapon whose rarity and description are showing
     const base = `/api/characters/${characterId}/inventory`;
 
@@ -72,7 +74,12 @@ function InventoryTab() {
                         ) : (
                             ownedArmor.map((a) => (
                                 <li className="action-item spell" key={a.id}>
-                                    {a.name} ({a.armor_type}, +{a.ac_bonus} AC)
+                                    <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenArmorId(openArmorId === a.id ? null : a.id)}>
+                                        {a.name} ({a.armor_type}, +{a.ac_bonus} AC){(a.runes ?? []).length ? ` [${a.runes.map((r) => r.name).join(', ')}]` : ''}
+                                    </button>
+                                    {openArmorId === a.id && (
+                                        <RuneControl kind="armor" itemId={a.id} itemType={a.armor_type === 'shield' ? 'shield' : 'armor'} itemRunes={a.runes ?? []} />
+                                    )}
                                     {a.is_equipped ? (
                                         <div className="action-button-container">
                                             <em className="equipped-item">Equipped</em>

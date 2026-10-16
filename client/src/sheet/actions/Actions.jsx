@@ -4,6 +4,8 @@ import { useCharacter } from '../CharacterContext';
 import { getSpellSlots, beamsAt, beamRollText, beamDamageText, scaledAt } from '../../utils/spellSlots';
 import { createPortal } from 'react-dom';
 import { sendJson } from '../../utils/api';
+import RuneControl from './RuneControl';
+import { weaponRuneEffects, runicStrikeDice } from '../../utils/runes';
 
 // Dual wield: the off-hand attack is a bonus action and loses the ability modifier on DAMAGE (5e).
 // Flip this to true to also drop the modifier from to-hit (proficiency always stays).
@@ -11,7 +13,7 @@ const DUAL_WIELD_DROPS_HIT_MOD = false;
 
 // Your equipped weapons plus Fists. Each has a To Hit button and a Damage button.
 function Actions() {
-    const { character, hp, ownedWeapons, setOwnedWeapons, onRoll, learnedSpells, spendSlot, usedSlots = {}, actionFeatures = [], radiance = 0, radianceMax = 0, spendRadiance, restUses = {}, countUse, cracks = 0, crackMax = 0, gainCracks, removeCracks, kindleSlot } = useCharacter();
+    const { character, hp, ownedWeapons, setOwnedWeapons, onRoll, learnedSpells, spendSlot, usedSlots = {}, actionFeatures = [], embers = 0, embersMax = 0, spendEmbers, restUses = {}, countUse, cracks = 0, crackMax = 0, gainCracks, removeCracks, kindleSlot } = useCharacter();
     const actionSpells = learnedSpells ?? [];
     const spellScore = character[(character.spell_stat || '').toLowerCase()];
     // spells use the class's spellcasting_stat (casting_stat); weapons keep the primary stat
@@ -40,22 +42,36 @@ function Actions() {
 
     // Every action has the same shape, so one map() can draw them all
     const isSoulSmith = character.class_name === 'Soul Smith';
+    const isRuneWeaver = character.subclass_name === 'Rune Weaver' && character.level >= 3;
+    const isGracewraith = character.class_name === 'Gracewraith';
+    // rune damage riders on a weapon hit (crits double them too)
+    const riderRolls = (a, crit) => (a.riders ?? []).map((r) => ({ ...r, n: rollDice(r.dice, crit) }));
+    const riderText = (rs) => rs.map((r) => ` + ${r.n} ${r.type}`).join('');
+    const riderSum = (rs) => rs.reduce((s, r) => s + r.n, 0);
     const weaponActions = ownedWeapons.filter((w) => w.is_equipped).map((w) => {
             const ranged = w.category === 'ranged';
             // Soul Brand (Soul Smith): the branded weapon uses CHA for attack and damage
             const branded = isSoulSmith && !!w.soul_branded;
-            const abilityMod = branded ? modOf(character.cha) : ranged ? modOf(character.dex) : primaryMod;
+            // Rune Weaver: the runed weapon uses INT; Keen Rune +1 to hit; Ember/Rime/Spark/Gall riders
+            const runed = isRuneWeaver && !!w.is_runed;
+            // Sigil mark (Gracewraith): INT for attack and damage; counts as a sigil blade (Crack bonus, Sigil Strike)
+            const marked = isGracewraith && !!w.sigil_marked;
+            const sigil = marked || !!w.sigil_weapon;
+            const runeFx = weaponRuneEffects(w);
+            const statMod = branded ? modOf(character.cha) : (runed || marked) ? modOf(character.int) : null;
+            const abilityMod = statMod ?? (ranged ? modOf(character.dex) : primaryMod);
             const oneHanded = !(w.properties ?? []).includes('two-handed');
             const dual = oneHanded && !!w.dual_wield;
-            const hit = branded ? init + modOf(character.cha) : ranged ? toHit : meleeHit;
-            // Seal Cracks: +1 radiant per Crack on sigil-weapon hits (weapons.sigil_weapon)
+            const hit = (statMod != null ? init + statMod : ranged ? toHit : meleeHit) + runeFx.hitBonus;
+            // Seal Cracks: +1 radiant per Crack on sigil hits (the marked weapon, plus chain whips and flails via weapons.sigil_weapon)
             return { key: `w${w.id}`, weaponId: w.id, name: w.name, dice: w.damage_dice, oneHanded, dual,
                 rarity: w.rarity, description: w.description, category: w.weapon_category,
-                branded, damageType: w.damage_type, attackBonus: w.attack_bonus || 0, stat: branded ? 'CHA' : ranged ? 'DEX' : (character.spell_stat || 'STR').toUpperCase(),
+                branded, runed, marked, runes: w.runes ?? [], riders: runeFx.riders,
+                damageType: w.damage_type, attackBonus: w.attack_bonus || 0, stat: branded ? 'CHA' : (runed || marked) ? 'INT' : ranged ? 'DEX' : (character.spell_stat || 'STR').toUpperCase(),
                 hands: oneHanded ? ((w.properties ?? []).includes('versatile') ? 'One or two hands' : 'One hand') : 'Two hands',
                 range: w.range_normal ? `${w.range_normal}/${w.range_long ?? w.range_normal} ft` : ((w.properties ?? []).includes('reach') ? '10 ft (reach)' : '5 ft'),
-                dmgMod: (dual ? 0 : abilityMod) + (w.sigil_weapon ? cracks : 0),
-                hit: dual && DUAL_WIELD_DROPS_HIT_MOD ? hit - abilityMod : hit, sigil: w.sigil_weapon };
+                dmgMod: (dual ? 0 : abilityMod) + (sigil ? cracks : 0),
+                hit: dual && DUAL_WIELD_DROPS_HIT_MOD ? hit - abilityMod : hit, sigil };
         });
     // dual-wielded weapons move to Bonus Actions
     const actions = [
@@ -63,6 +79,15 @@ function Actions() {
         { key: 'fists', name: 'Fists', dice: fistDice, dmgMod: 0, hit: meleeHit },
     ];
     const bonusWeapons = weaponActions.filter((a) => a.dual);
+
+    const toggleSigilMark = async (a) => {
+        try {
+            const data = await sendJson(`/api/characters/${character.id}/inventory/weapon/sigil-mark`, 'POST', { weapon_id: a.weaponId, marked: !a.marked });
+            setOwnedWeapons(data.ownedWeapons);
+        } catch (err) {
+            onRoll(err.message);
+        }
+    };
 
     const toggleSoulBrand = async (a) => {
         try {
@@ -80,8 +105,26 @@ function Actions() {
         setCritKey(null);
         const weapon = Math.max(0, rollDice(a.dice, crit) + a.dmgMod);
         const extra = rollDice(soulStrikeDice, crit);
-        onRoll(`Damage dealt: ${weapon} + Soul Strike ${extra} force = ${weapon + extra}${crit ? ' CRIT!' : ''} (spend 1 Temper)`);
+        const rs = riderRolls(a, crit);
+        onRoll(`Damage dealt: ${weapon}${riderText(rs)} + Soul Strike ${extra} force = ${weapon + riderSum(rs) + extra}${crit ? ' CRIT!' : ''} (spend 1 Temper)`);
     };
+
+    // Runic Strike (Rune Weaver): once per turn, a runed-weapon hit adds force damage
+    const runicDice = runicStrikeDice(character.level);
+    const rollRunicStrike = (a) => {
+        const crit = critKey != null && critKey === a.key;
+        setCritKey(null);
+        const weapon = Math.max(0, rollDice(a.dice, crit) + a.dmgMod);
+        const extra = rollDice(runicDice, crit);
+        const rs = riderRolls(a, crit);
+        onRoll(`Damage dealt: ${weapon}${riderText(rs)} + Runic Strike ${extra} force = ${weapon + riderSum(rs) + extra}${crit ? ' CRIT!' : ''} (once per turn)`);
+    };
+
+    // Call the Brand (Soul Smith L2): bonus action, any distance on the same plane; a holder makes a STR save vs class DC
+    const classDc = 8 + proficiencyBonus(character.level) + modOf(character.cha);
+    const brandedWeapon = weaponActions.find((a) => a.branded);
+    const hasCallTheBrand = isSoulSmith && character.level >= 2 && !!brandedWeapon;
+    const callTheBrand = () => onRoll(`Call the Brand: ${brandedWeapon.name} returns to your hand (bonus action). If someone holds it: STR save DC ${classDc} (an attuned holder keeps it).`);
 
     const toggleDualWield = async (a) => {
         try {
@@ -103,7 +146,10 @@ function Actions() {
     const rollDamage = (a) => {
         const crit = critKey != null && critKey === a.key;
         setCritKey(null);
-        onRoll(a.beams > 1 ? beamDamageText(a.beams, a.dice, a.dmgMod, crit) : `Damage dealt: ${Math.max(0, rollDice(a.dice, crit) + a.dmgMod)}${crit ? ' CRIT!' : ''}`);
+        if (a.beams > 1) return onRoll(beamDamageText(a.beams, a.dice, a.dmgMod, crit));
+        const weapon = Math.max(0, rollDice(a.dice, crit) + a.dmgMod);
+        const rs = riderRolls(a, crit);
+        onRoll(`Damage dealt: ${weapon}${rs.length ? `${riderText(rs)} = ${weapon + riderSum(rs)}` : ''}${crit ? ' CRIT!' : ''}`);
     };
 
     // Single-beam spell to-hit: remembers a crit under the spell's key
@@ -173,9 +219,9 @@ function Actions() {
 
     const ACTION_LABELS = { action: 'Action', bonus: 'Bonus Action', reaction: 'Reaction' };
 
-    // --- Features: Radiance costs, scaling dice and once-per-rest locks all come from the feature row ---
+    // --- Features: embers costs, scaling dice and once-per-rest locks all come from the feature row ---
     const featureKey = (f) => `${f.source}-${f.id}`;
-    const costOf = (f) => (f.radiance_cost == null ? 0 : scaledAt(f.cost_scaling, 'cost', character.level, f.radiance_cost));
+    const costOf = (f) => (f.ember_cost == null ? 0 : scaledAt(f.cost_scaling, 'cost', character.level, f.ember_cost));
     const diceOf = (f) => scaledAt(f.dice_scaling, 'dice', character.level, f.dice);
     const usesOf = (f) => scaledAt(f.uses_scaling, 'uses', character.level, f.rest_uses);
     const usedOf = (f) => restUses[featureKey(f)] || 0;
@@ -183,29 +229,30 @@ function Actions() {
     const weaponHitFeature = actionFeatures.find((f) => f.on_weapon_hit);   // e.g. Sigil Strike
     const listedFeatures = actionFeatures.filter((f) => !f.on_weapon_hit);
 
-    // Weapon damage + an on-hit feature (Sigil Strike): spend its Radiance, add its dice to this damage roll
+    // Weapon damage + an on-hit feature (Sigil Strike): spend its embers, add its dice to this damage roll
     const rollWithHitFeature = (a, f) => {
         const cost = costOf(f);
-        if (cost && !(spendRadiance && spendRadiance(cost))) return onRoll(`Not enough Radiance for ${f.name}: need ${cost}, have ${radiance}.`);
+        if (cost && !(spendEmbers && spendEmbers(cost))) return onRoll(`Not enough embers for ${f.name}: need ${cost}, have ${embers}.`);
         // crit doubles the weapon dice and the Sigil dice; dmgMod (stat + Cracks) stays flat
         const crit = critKey != null && critKey === a.key;
         setCritKey(null);
         const weapon = Math.max(0, rollDice(a.dice, crit) + a.dmgMod);
         const extra = rollDice(diceOf(f), crit);
-        onRoll(`Damage dealt: ${weapon} + ${f.name} ${extra} radiant = ${weapon + extra}${crit ? ' CRIT!' : ''}${cost ? ` (-${cost} Radiance, ${radiance - cost}/${radianceMax} left)` : ''}`);
+        const rs = riderRolls(a, crit);
+        onRoll(`Damage dealt: ${weapon}${riderText(rs)} + ${f.name} ${extra} radiant = ${weapon + riderSum(rs) + extra}${crit ? ' CRIT!' : ''}${cost ? ` (-${cost} embers, ${embers - cost}/${embersMax} left)` : ''}`);
     };
 
-    // count = dice bought for per-die features (Bound Virtue). Spends Radiance first; blocked if the pool is too low.
+    // count = dice bought for per-die features (Bound Virtue). Spends embers first; blocked if the pool is too low.
     const activateFeature = (f, count = 1) => {
         if (isLocked(f)) return onRoll(`${f.name}: no uses left (${usedOf(f)}/${usesOf(f)}) until your next ${f.rest_lock} rest.`);
-        const cost = costOf(f) * (f.radiance_per_die ? count : 1);
-        if (cost && !(spendRadiance && spendRadiance(cost))) return onRoll(`Not enough Radiance for ${f.name}: need ${cost}, have ${radiance}.`);
+        const cost = costOf(f) * (f.embers_per_die ? count : 1);
+        if (cost && !(spendEmbers && spendEmbers(cost))) return onRoll(`Not enough embers for ${f.name}: need ${cost}, have ${embers}.`);
         if (f.rest_uses != null && countUse) countUse(featureKey(f));
         const dice = diceOf(f);
-        const rollWith = dice && (f.radiance_per_die ? `${count}${dice.slice(dice.indexOf('d'))}` : dice);
+        const rollWith = dice && (f.embers_per_die ? `${count}${dice.slice(dice.indexOf('d'))}` : dice);
         const crackText = crackMax && f.cracks_removed ? ` -${Math.min(cracks, f.cracks_removed)} Crack` : crackMax && f.cracks_gained ? ` +${f.cracks_gained} Crack` : '';
         const usesText = f.rest_uses != null ? ` [${usesOf(f) - usedOf(f) - 1}/${usesOf(f)} uses left]` : '';
-        onRoll(`${character.name} uses ${f.name}${cost ? ` (-${cost} Radiance, ${radiance - cost}/${radianceMax} left)` : ''}${crackText}${usesText}!${rollWith ? ` Rolled ${rollWith}: ${rollDice(rollWith)}` : ''}`);
+        onRoll(`${character.name} uses ${f.name}${cost ? ` (-${cost} embers, ${embers - cost}/${embersMax} left)` : ''}${crackText}${usesText}!${rollWith ? ` Rolled ${rollWith}: ${rollDice(rollWith)}` : ''}`);
         if (crackMax && f.cracks_removed && removeCracks) removeCracks(f.cracks_removed);
         if (crackMax && f.cracks_gained && gainCracks) gainCracks(f.cracks_gained);
     };
@@ -216,16 +263,16 @@ function Actions() {
             {f.kindles_slot && kindleSlot ? (
                 <select className="upcast-picker" value="" disabled={!!isLocked(f)}
                     onChange={(e) => kindleSlot(Number(e.target.value), featureKey(f))}>
-                    <option value="" disabled>{isLocked(f) ? `Used (${f.rest_lock} rest)` : `Radiance ${radiance}/${radianceMax}: spend slot...`}</option>
+                    <option value="" disabled>{isLocked(f) ? `Used (${f.rest_lock} rest)` : `Embers ${embers}/${embersMax}: spend slot...`}</option>
                     {getSpellSlots(character.level, character.spell_slots).map((n, j) => (usedSlots[j + 1] || 0) < n && (
-                        <option key={j + 1} value={j + 1}>Level {j + 1} slot (+{j + 1} Radiance)</option>
+                        <option key={j + 1} value={j + 1}>Level {j + 1} slot (+{j + 1} embers)</option>
                     ))}
                 </select>
-            ) : f.radiance_per_die ? (
+            ) : f.embers_per_die ? (
                 <select className="upcast-picker" value="" onChange={(e) => activateFeature(f, Number(e.target.value))}>
-                    <option value="" disabled>{`Radiance ${radiance}/${radianceMax}: dice...`}</option>
+                    <option value="" disabled>{`Embers ${embers}/${embersMax}: dice...`}</option>
                     {Array.from({ length: proficiencyBonus(character.level) }, (_, i) => (
-                        <option key={i + 1} value={i + 1} disabled={(i + 1) * costOf(f) > radiance}>{(i + 1) * costOf(f)} Radiance ({i + 1}{(diceOf(f) || 'd8').slice((diceOf(f) || 'd8').indexOf('d'))})</option>
+                        <option key={i + 1} value={i + 1} disabled={(i + 1) * costOf(f) > embers}>{(i + 1) * costOf(f)} embers ({i + 1}{(diceOf(f) || 'd8').slice((diceOf(f) || 'd8').indexOf('d'))})</option>
                     ))}
                 </select>
             ) : (
@@ -301,6 +348,12 @@ function Actions() {
                             <div className="action-button-container">
                                 <button type="button" className="btn btn-action btn-to-hit hover-grow" onClick={() => rollHit(a)}>{signed(a.hit ?? toHit)}</button>
                                 <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} onClick={() => rollDamage(a)}>{a.dice}{a.dmgMod ? signed(a.dmgMod) : ''}</button>
+                                {a.runed && (
+                                    <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} title={`Runic Strike: once per turn, add ${runicDice} force`}
+                                        onClick={() => rollRunicStrike(a)}>
+                                        +{runicDice} (Runic)
+                                    </button>
+                                )}
                                 {a.branded && (
                                     <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} title={`Soul Strike: on a hit, add ${soulStrikeDice} force (1 Temper)`}
                                         onClick={() => rollSoulStrike(a)}>
@@ -310,7 +363,7 @@ function Actions() {
                                 {a.sigil && weaponHitFeature && (
                                     <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} title={`${weaponHitFeature.name}: on a hit, add ${diceOf(weaponHitFeature)} radiant`}
                                         onClick={() => rollWithHitFeature(a, weaponHitFeature)}>
-                                        +{diceOf(weaponHitFeature)} ({costOf(weaponHitFeature)} R)
+                                        +{diceOf(weaponHitFeature)} ({costOf(weaponHitFeature)} embers)
                                     </button>
                                 )}
                             </div>
@@ -346,6 +399,14 @@ function Actions() {
                 <span className="action-title" id="physical-actions-title">Bonus Actions</span>
                 <ul className="action-list" id="physical-actions-list">
                     {bonusWeapons.map(weaponRow)}
+                    {hasCallTheBrand && (
+                        <li className="action-item spell">
+                            <span className="btn btn-spell-name">Call the Brand ({brandedWeapon.name})</span>
+                            <div className="action-button-container">
+                                <button type="button" className="btn btn-action hover-grow" onClick={callTheBrand}>Call</button>
+                            </div>
+                        </li>
+                    )}
                     {bonusSpells.map(spellRow)}
                     {bonusFeatures.map((f) => (
                             <li key={`${f.source}-${f.id}`} className="action-item spell">
@@ -376,10 +437,10 @@ function Actions() {
             <li className="action-item spell-slot">
                 <span className="action-title" id="feature-actions-title">Class Features</span>
                 <ul className="action-list" id="feature-actions-list">
-                    {(radianceMax > 0 || crackMax > 0) && (
+                    {(embersMax > 0 || crackMax > 0) && (
                         <li className="action-item spell">
                             <span className="btn btn-spell-name">
-                                {radianceMax > 0 && `Radiance ${radiance}/${radianceMax}`}{radianceMax > 0 && crackMax > 0 && ' \u00b7 '}{crackMax > 0 && `Cracks ${cracks}/${crackMax}`}
+                                {embersMax > 0 && `Embers ${embers}/${embersMax}`}{embersMax > 0 && crackMax > 0 && ' \u00b7 '}{crackMax > 0 && `Cracks ${cracks}/${crackMax}`}
                             </span>
                             {crackMax > 0 && cracks >= 3 && (
                                 <div className="action-button-container">
@@ -466,7 +527,7 @@ function Actions() {
                                         <p>To Hit: <strong>{signed(openWeapon.hit ?? toHit)}</strong>{openWeapon.attackBonus ? <> (magic {signed(openWeapon.attackBonus)})</> : null}</p>
                                     </article>
                                 </section>
-                                {(openWeapon.oneHanded || (isSoulSmith && openWeapon.weaponId)) && (
+                                {(openWeapon.oneHanded || ((isSoulSmith || isRuneWeaver || isGracewraith) && openWeapon.weaponId)) && (
                                     <section className="spell-build-box">
                                         <article className="spell-build-box-title"><h4>Options</h4></article>
                                         <article className="spell-build-box-content">
@@ -478,6 +539,19 @@ function Actions() {
                                                         </label>
                                                     </p>
                                                     <p>{openWeapon.dual ? 'Bonus action; no ability modifier on damage.' : 'Attack action.'}</p>
+                                                </>
+                                            )}
+                                            {isRuneWeaver && openWeapon.weaponId && (
+                                                <RuneControl kind="weapon" itemId={openWeapon.weaponId} itemType="weapon" itemRunes={openWeapon.runes} isRunedWeapon={openWeapon.runed} />
+                                            )}
+                                            {isGracewraith && openWeapon.weaponId && (
+                                                <>
+                                                    <p>
+                                                        <label>
+                                                            <input type="checkbox" checked={openWeapon.marked} onChange={() => toggleSigilMark(openWeapon)} /> Sigil mark
+                                                        </label>
+                                                    </p>
+                                                    <p>{openWeapon.marked ? 'INT for attack and damage; Sigil Strike and the Crack bonus apply.' : 'One weapon at a time.'}</p>
                                                 </>
                                             )}
                                             {isSoulSmith && openWeapon.weaponId && (
