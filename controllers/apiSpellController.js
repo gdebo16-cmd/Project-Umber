@@ -7,7 +7,7 @@ import { getSpellSlots } from '../client/src/utils/spellSlots.js';
 import { getLearnLimits } from '../utils/spellLimits.js';
 
 // Highest spell level a character can cast (number of slot tiers). Cantrips (0) are always allowed.
-const highestSlotFor = (level) => getSpellSlots(level).length;
+const highestSlotFor = async (ch) => getSpellSlots(ch.level, await Spells.getClassSlots(ch.class_id, ch.level)).length;
 
 // Everything the sheet and the book need after a change:
 // learnedSpells = full rows for the Spell Book tab, learnedIds = just the ids for the book's buttons
@@ -33,7 +33,7 @@ export async function getSpellbook(req, res) {
     if (charId === null) return;
     const ch = await getSheetCharacter(charId, req.session.userId);
     const allSpells = await Spells.getSpellsForCharacter(ch.class_id, ch.subclass_id, ch.level);
-    const highestSlot = highestSlotFor(ch.level);
+    const highestSlot = await highestSlotFor(ch);
     const spells = allSpells.filter((s) => Number(s.base_level) <= highestSlot);
     res.json({ spells, ...(await loadLearned(charId)) });
 }
@@ -47,7 +47,7 @@ export async function learnSpell(req, res) {
     const { rows: [spell] } = await pool.query('SELECT base_level FROM spells WHERE id = $1', [spellId]);
     if (!spell) return res.status(400).json({ error: 'That spell does not exist' });
     const baseLevel = Number(spell.base_level);
-    const highestSlot = highestSlotFor(ch.level);
+    const highestSlot = await highestSlotFor(ch);
     if (baseLevel > highestSlot) {
         return res.status(400).json({ error: `You can't learn level ${baseLevel} spells yet. At level ${ch.level} you can cast up to level ${highestSlot}.` });
     }

@@ -31,8 +31,23 @@ const SLOT_TABLE = {
     30: [4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1],
 }
 
-export function getSpellSlots(level) {
+import { d20, rollDice } from './math.js';
+
+// classSlots = character.spell_slots from class_spell_slots. Classes with no rows (null) use the full-caster table above.
+export function getSpellSlots(level, classSlots) {
+    if (Array.isArray(classSlots)) return classSlots;
     const capped = Math.min(Math.max(level, 1), 30);
     return SLOT_TABLE[capped] || [];
 }
 
+// Beams a spell fires at a character level, from spells.beam_scaling ([{ level, beams }, ...]). No data = 1 beam.
+export function beamsAt(spell, level) {
+    const steps = Array.isArray(spell?.beam_scaling) ? spell.beam_scaling : [];
+    return steps.reduce((n, st) => (Number(level) >= st.level ? st.beams : n), 1);
+}
+
+// One to-hit + damage roll per beam, as one line for the roll orb
+export function beamRollText(beams, toHit, dice, dmgMod = 0) {
+    return Array.from({ length: beams }, (_, i) =>
+        `Beam ${i + 1}: to hit ${d20() + toHit}${dice ? `, damage ${Math.max(0, rollDice(dice) + dmgMod)}` : ''}`).join(' | ');
+}

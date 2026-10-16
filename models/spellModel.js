@@ -5,7 +5,7 @@ import pool from '../db.js';
 export async function getLearnedSpells(charId) {
     const { rows } = await pool.query(
         `SELECT s.id, s.name, s.base_level, s.base_damage_dice, s.opponent_save_roll, s.attack_type, s.base_to_hit_modifier, 
-                s.range, s.duration, s.casting_time, s.focus_level, s.base_description AS description,
+                s.range, s.duration, s.casting_time, s.focus_level, s.base_description AS description, s.beam_scaling,
                 st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name,
                 COALESCE((SELECT json_agg(json_build_object('cast_level', u.cast_level, 'damage_dice', u.damage_dice, 'heal_dice', u.heal_dice, 'extra_targets', u.extra_targets) ORDER BY u.cast_level)
                           FROM spell_upcasts u WHERE u.spell_id = s.id), '[]') AS upcasts,
@@ -26,7 +26,7 @@ export async function getLearnedSpells(charId) {
 export async function getAllSpells() {
     const { rows } = await pool.query(
         `SELECT s.id, s.name, s.base_level, s.base_damage_dice, s.opponent_save_roll, s.attack_type, s.base_to_hit_modifier, 
-                s.range, s.duration, s.casting_time, s.focus_level, s.base_description AS description,
+                s.range, s.duration, s.casting_time, s.focus_level, s.base_description AS description, s.beam_scaling,
                 st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name,
                 COALESCE((SELECT json_agg(json_build_object('cast_level', u.cast_level, 'damage_dice', u.damage_dice, 'heal_dice', u.heal_dice, 'extra_targets', u.extra_targets) ORDER BY u.cast_level)
                           FROM spell_upcasts u WHERE u.spell_id = s.id), '[]') AS upcasts
@@ -55,6 +55,19 @@ export async function getSpellsForCharacter(classId, subclassId, level) {
     );
     return rows;
 }
+// Slot counts for a class at a level from class_spell_slots: [1st, 2nd, ...].
+// [] = the class has slot rows but none yet at this level (e.g. Paladin L1). null = no rows at all (sheet falls back to the full-caster table).
+export async function getClassSlots(classId, level) {
+    const { rows } = await pool.query(
+        `SELECT slot_level, slots, level = $2 AS here FROM class_spell_slots WHERE class_id = $1 AND (level = $2 OR level = (SELECT MIN(level) FROM class_spell_slots WHERE class_id = $1))`,
+        [classId, level]
+    );
+    if (!rows.length) return null;
+    const slots = [];
+    for (const r of rows.filter((r) => r.here)) slots[r.slot_level - 1] = r.slots;
+    return Array.from(slots, (n) => n || 0);
+}
+
 // ---------- spell writes ----------
 
 // If the row already exists (UNIQUE character_id + spell_id), just mark it learned

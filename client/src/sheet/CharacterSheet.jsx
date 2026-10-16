@@ -16,6 +16,7 @@ import RollOrb from './RollOrb';
 import { CharacterContext } from './CharacterContext';
 import { STATS } from '../utils/stats';
 import { getSpellSlots } from '../utils/spellSlots';
+import { modOf } from '../utils/math';
 import Loader from '../components/Loader';
 import RestButton from './RestButton';
 import socket from '../utils/socket';
@@ -38,6 +39,8 @@ function CharacterSheet() {
     const [usedSlots, setUsedSlots] = useState({});
     const [conditions, setConditions] = useState({});
     const [exhaustion, setExhaustion] = useState(0);
+    const [radianceSpent, setRadianceSpent] = useState(0);   // Gracewraith Radiance below max (session only, like slots)
+    const [kindledUsed, setKindledUsed] = useState(false);   // Kindled Slot: once per long rest
 
     useEffect(() => {
         socket.connect();
@@ -79,11 +82,27 @@ function CharacterSheet() {
 
     const spendSlot = (lvl) => {
         if (lvl === 0) return true;
-        const total = getSpellSlots(character.level)[lvl - 1] || 0;
+        const total = getSpellSlots(character.level, character.spell_slots)[lvl - 1] || 0;
         const used = usedSlots[lvl] || 0;
         if (used >= total) return false;
         setUsedSlots({ ...usedSlots, [lvl]: used + 1 });
         return true;
+    };
+
+    // Stolen Radiance pool: ceil(level / 2) + INT mod (min 1), + CON mod from level 17. Gracewraith only.
+    const radianceMax = character.class_name === 'Gracewraith'
+        ? Math.max(1, Math.ceil(character.level / 2) + modOf(character.int) + (character.level >= 17 ? modOf(character.con) : 0))
+        : 0;
+    const radiance = Math.max(0, radianceMax - radianceSpent);
+
+    // Kindled Slot: spend one slot of your choice, regain Radiance equal to its level (capped at max)
+    const kindleSlot = (lvl) => {
+        if (kindledUsed) return showRoll('Kindled Slot is used until your next long rest.');
+        if (!spendSlot(lvl)) return showRoll(`No level ${lvl} slots left!`);
+        const gained = Math.min(lvl, radianceSpent);
+        setRadianceSpent(radianceSpent - gained);
+        setKindledUsed(true);
+        showRoll(`${character.name} uses Kindled Slot (level ${lvl} slot): +${gained} Radiance (${radiance + gained}/${radianceMax})`);
     };
 
     const rest = async (type) => {
@@ -116,6 +135,9 @@ function CharacterSheet() {
     }
     setConditions(newConditions);
     setExhaustion(exhaustion - Math.round(exhaustion * pct));
+    // Radiance: all back on a long rest, half the max on a short rest; Kindled Slot resets on a long rest
+    setRadianceSpent(type === 'long' ? 0 : Math.max(0, radianceSpent - Math.floor(radianceMax / 2)));
+    if (type === 'long') setKindledUsed(false);
 
     return Math.round(pct * 100);
 };
@@ -141,6 +163,11 @@ function CharacterSheet() {
         exhaustion,
         setExhaustion,
         rest,
+        radiance,
+        radianceMax,
+        setRadianceSpent,
+        kindledUsed,
+        kindleSlot,
     };
 
     return (

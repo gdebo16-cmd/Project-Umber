@@ -3,7 +3,7 @@ import { useState } from 'react';
 import SpellBook from './SpellBook';
 import { sendJson } from '../../utils/api';
 import TabList from '../../components/TabList';
-import { getSpellSlots } from '../../utils/spellSlots';
+import { getSpellSlots, beamsAt, beamRollText } from '../../utils/spellSlots';
 import { modOf, signed, proficiencyBonus, rollDice, d20 } from '../../utils/math';
 import { useCharacter } from '../CharacterContext';
 import { createPortal } from 'react-dom';
@@ -19,13 +19,13 @@ function SpellsTab() {
     const characterId = character.id;
     const level = character.level;
     const spellStat = character.spell_stat;
-    const spellScore = character[(character.spell_stat || '').toLowerCase()];
+    const spellScore = character[(character.casting_stat || character.spell_stat || '').toLowerCase()];
     const [error, setError] = useState('');
     const [browsing, setBrowsing] = useState(false);
     const base = `/api/characters/${characterId}/spells`;
     const [tab, setTab] = useState('prepared');
     const preparedSpells = learnedSpells.filter((s) => s.is_prepared);
-    const slots = getSpellSlots(level);
+    const slots = getSpellSlots(level, character.spell_slots);
     const spellAttack = modOf(spellScore) + proficiencyBonus(level);
     const spellSave = 8 + spellAttack;
     const [openSpell, setOpenSpell] = useState(null);
@@ -68,7 +68,7 @@ function SpellsTab() {
             <>
                 {/* the first button you click spends the slot */}
                 {s.attack_type ? (
-                    <button type='button' className='btn btn-action btn-to-hit hover-grow' onClick={() => cast(`${who} casts ${s.name}! Chance to hit: ${d20() + toHit}!`)}>{signed(toHit)}</button>
+                    <button type='button' className='btn btn-action btn-to-hit hover-grow' onClick={() => cast(beamsAt(s, level) > 1 ? `${who} casts ${s.name}! ${beamRollText(beamsAt(s, level), toHit, dice)}` : `${who} casts ${s.name}! Chance to hit: ${d20() + toHit}!`)}>{signed(toHit)}</button>
                 ) : s.opponent_save_roll ? (
                     <button type='button' className='btn btn-action btn-to-hit hover-grow' onClick={() => cast(`${who} casts ${s.name}! Target mus make a ${s.opponent_save_roll} roll and beat a ${spellSave}!`)}>{s.opponent_save_roll} {spellSave}</button>
                 ) : null}

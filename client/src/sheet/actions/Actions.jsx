@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { modOf, signed, healthInit, rollDice, d20, proficiencyBonus } from '../../utils/math';
 import { useCharacter } from '../CharacterContext';
-import { getSpellSlots } from '../../utils/spellSlots';
+import { getSpellSlots, beamsAt, beamRollText } from '../../utils/spellSlots';
 import { createPortal } from 'react-dom';
 
 // Your equipped weapons plus Fists. Each has a To Hit button and a Damage button.
 function Actions() {
-    const { character, hp, ownedWeapons, onRoll, learnedSpells, spendSlot, usedSlots = {}, actionFeatures = [] } = useCharacter();
+    const { character, hp, ownedWeapons, onRoll, learnedSpells, spendSlot, usedSlots = {}, actionFeatures = [], radiance, radianceMax, kindledUsed, kindleSlot } = useCharacter();
     const actionSpells = learnedSpells ?? [];
     const spellScore = character[(character.spell_stat || '').toLowerCase()];
+    // spells use the class's spellcasting_stat (casting_stat); weapons keep the primary stat
+    const castScore = character[(character.casting_stat || character.spell_stat || '').toLowerCase()];
     const init = modOf(character.dex) + healthInit(hp, character.max_hp);
     const strMod = modOf(character.str);
-    const spellMod = modOf(spellScore);
+    const spellMod = modOf(castScore);
     const spellToHit =  spellMod + proficiencyBonus(character.level);
     const spellSave = 8 + spellToHit;
     const toHit = init + strMod;
@@ -50,7 +52,7 @@ function Actions() {
 
     // Slot levels from the spell's level up that still have a slot left
     const openSlotLevels = (s) => {
-        const slots = getSpellSlots(character.level);
+        const slots = getSpellSlots(character.level, character.spell_slots);
         const levels = [];
         for (let lvl = s.base_level; lvl <= slots.length; lvl++) {
             if ((usedSlots[lvl] || 0) < slots[lvl - 1]) levels.push(lvl);
@@ -125,7 +127,9 @@ function Actions() {
                                 <div className="action-button-container">
                                     {s.attack_type ? (
                                         <button type='button' className='btn btn-action btn-to-hit hover-grow'
-                                        onClick={() => onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}! ...Chance to hit... ${d20() + spellToHit + (s.base_to_hit_modifier || 0)}!`))}>
+                                        onClick={() => onCastClick(s, () => castSpell(s, beamsAt(s, character.level) > 1
+                                            ? `${character.name} casts ${s.name}! ${beamRollText(beamsAt(s, character.level), spellToHit + (s.base_to_hit_modifier || 0), s.base_damage_dice, s.dmgMod || 0)}`
+                                            : `${character.name} casts ${s.name}! ...Chance to hit... ${d20() + spellToHit + (s.base_to_hit_modifier || 0)}!`))}>
                                             {signed(spellToHit + (s.base_to_hit_modifier || 0))}
                                         </button>
                                     ) : s.opponent_save_roll ? (
@@ -172,10 +176,20 @@ function Actions() {
                                             {f.dice}
                                         </button>
                                     )}
-                                    <button type="button" className="btn btn-action damage-button hover-grow"
-                                        onClick={() => onRoll(`${character.name} uses ${f.name}!`)}>
-                                        Use
-                                    </button>
+                                    {f.name === 'Kindled Slot' && kindleSlot ? (
+                                        <select className="upcast-picker" value="" disabled={kindledUsed}
+                                            onChange={(e) => kindleSlot(Number(e.target.value))}>
+                                            <option value="" disabled>{kindledUsed ? 'Used (long rest)' : `Radiance ${radiance}/${radianceMax}: spend slot...`}</option>
+                                            {getSpellSlots(character.level, character.spell_slots).map((n, j) => (usedSlots[j + 1] || 0) < n && (
+                                                <option key={j + 1} value={j + 1}>Level {j + 1} slot (+{j + 1} Radiance)</option>
+                                            ))}
+                                        </select>
+                                    ) : (
+                                        <button type="button" className="btn btn-action damage-button hover-grow"
+                                            onClick={() => onRoll(`${character.name} uses ${f.name}!`)}>
+                                            Use
+                                        </button>
+                                    )}
                                 </div>
                             </li>
                         ))}
