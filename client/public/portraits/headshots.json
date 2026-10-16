@@ -460,6 +460,16 @@
     "group": "Race"
   },
   {
+    "file": "race-radiants.png",
+    "label": "Radiant",
+    "group": "Race"
+  },
+  {
+    "file": "race-skyborn.png",
+    "label": "Skyborn",
+    "group": "Race"
+  },
+  {
     "file": "mix-cindral-evoker.png",
     "label": "Cindral Evoker",
     "group": "Mixed"
