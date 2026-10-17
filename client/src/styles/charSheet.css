@@ -2191,6 +2191,11 @@ main.subpage-main {
         min-width: 0;
         padding: 0 0.25rem;
         font-size: clamp(0.6rem, 2.8vw, 0.9rem);
+        /* labels like "New turn" can drop to two lines so the button stays narrow */
+        white-space: normal;
+        overflow-wrap: break-word;
+        line-height: 1.1;
+        text-align: center;
     }
 }
 

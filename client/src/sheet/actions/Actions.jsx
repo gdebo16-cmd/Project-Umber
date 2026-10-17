@@ -394,7 +394,7 @@ function Actions() {
                                     <>
                                         <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} title={`Runic Strike: once per turn, add ${runicDice} force`}
                                             disabled={runicUsed} onClick={() => rollRunicStrike(a)}>
-                                            {runicUsed ? 'Used' : `+${runicDice} (Runic)`}
+                                            {runicUsed ? 'Runic used' : `+${runicDice} (Runic)`}
                                         </button>
                                         {runicUsed && <button type="button" className="btn btn-action hover-grow" onClick={() => setRunicUsed(false)}>New turn</button>}
                                     </>
