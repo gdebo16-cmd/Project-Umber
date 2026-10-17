@@ -206,6 +206,7 @@ body {
 /* DETAILS POPUP  .spell-details: spell, weapon and feature cards on the sheet, option/blessing details in the creator and editor */
 
 .spell-details {
+    box-sizing: border-box;
     position: fixed;
     top: 50%;
     left: 35%;
@@ -265,6 +266,8 @@ body {
 .combat-box,
 .spell-build-box,
 .spell-description-box {
+    box-sizing: border-box;
+    max-width: 100%;
     margin-top: .75rem;
     padding: .6rem .75rem;
     border: var(--tileBorder);
