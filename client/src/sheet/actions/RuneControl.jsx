@@ -62,7 +62,11 @@ function RuneControl({ kind, itemId, itemType, itemRunes = [], isRunedWeapon = f
                             {info.wardingTypes.map((t) => <option key={t} value={t}>{t}</option>)}
                         </select>
                     )}
-                    <button type="button" className="btn btn-action hover-grow" disabled={!picked || (picked.choice_param && !choice)} onClick={inscribe}>Inscribe</button>
+                </p>
+            )}
+            {!full && picked && (
+                <p>
+                    <button type="button" className="btn btn-action hover-grow" disabled={!!picked.choice_param && !choice} onClick={inscribe}>Inscribe</button>
                 </p>
             )}
             {picked && <p>{picked.effect}</p>}

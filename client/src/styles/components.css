@@ -254,6 +254,14 @@ body {
     overflow-wrap: anywhere;
 }
 
+/* selects in the Options box (e.g. Inscribe runes) fit the box and use its text size */
+.spell-build-box select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: inherit;
+}
+
 .spell-details-title {
     text-align: center;
     margin: 0 2rem .75rem;
@@ -345,7 +353,7 @@ body {
     /* Mobile: iOS Safari zooms into any field under 16px, so keep fields at 16px or more */
 
     input,
-    select,
+    select:not(.spell-build-box select),
     textarea {
         font-size: max(16px, 1em) !important;
     }
