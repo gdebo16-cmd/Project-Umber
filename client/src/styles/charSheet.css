@@ -2168,13 +2168,15 @@ main.subpage-main {
 @media (max-width: 768px) {
     .action-item {
         gap: 0.35rem;
+        padding-left: 0.5rem;
     }
 
-    /* the name side takes what's left and wraps */
+    /* the name side takes what's left and wraps inside its own cell */
     .action-item > :not(.action-button-container, form) {
-        flex: 1 1 auto;
+        flex: 1 1 0;
         min-width: 0;
         overflow-wrap: anywhere;
+        font-size: clamp(0.7rem, 3vw, 0.9rem);
     }
 
     .action-item > .action-button-container,
@@ -2183,12 +2185,12 @@ main.subpage-main {
         min-width: 0;
     }
 
-    /* buttons size to their label instead of a fixed 5.5rem each */
+    /* buttons size to their label and shrink to keep the row on one line */
     .action-item .btn-action {
-        flex: 0 0 auto;
-        min-width: 3.25rem;
-        padding: 0 0.4rem;
-        font-size: clamp(0.7rem, 3.2vw, 0.9rem);
+        flex: 0 1 auto;
+        min-width: 0;
+        padding: 0 0.25rem;
+        font-size: clamp(0.6rem, 2.8vw, 0.9rem);
     }
 }
 
