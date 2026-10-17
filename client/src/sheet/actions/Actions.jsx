@@ -607,12 +607,14 @@ function Actions() {
                                                         <label>
                                                             <input type="checkbox" checked={openWeapon.dual} onChange={() => toggleDualWield(openWeapon)} /> Dual wield
                                                         </label>
-                                                        {openWeapon.versatile && (
-                                                            <label>
-                                                                {' '}<input type="checkbox" checked={openWeapon.twoHand} onChange={() => toggleTwoHands(openWeapon)} /> Two hands
-                                                            </label>
-                                                        )}
                                                     </p>
+                                                    {openWeapon.versatile && (
+                                                        <p>
+                                                            <label>
+                                                                <input type="checkbox" checked={openWeapon.twoHand} onChange={() => toggleTwoHands(openWeapon)} /> Two hands
+                                                            </label>
+                                                        </p>
+                                                    )}
                                                     <p>{openWeapon.dual ? 'Bonus action; no ability modifier on damage.' : openWeapon.twoHand ? `Attack action; two hands (${openWeapon.dice}).` : 'Attack action.'}</p>
                                                 </>
                                             )}
