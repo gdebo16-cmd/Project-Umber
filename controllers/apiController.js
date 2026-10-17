@@ -128,6 +128,19 @@ export async function dualWieldWeapon(req, res) {
     res.json({ ownedWeapons: await Inventory.getOwnedWeapons(charId) });
 }
 
+// POST /api/characters/:id/inventory/weapon/two-hands   body: { weapon_id, two_handed }
+export async function twoHandWeapon(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const charId = Number(req.params.id);
+    if (!(await ownsCharacter(charId, req.session.userId))) {
+        return res.status(404).json({ error: 'Character not found' });
+    }
+
+    const rowCount = await Inventory.setWeaponTwoHanded(charId, Number(req.body.weapon_id), req.body.two_handed === true);
+    if (!rowCount) return res.status(400).json({ error: 'Only an owned versatile weapon can be used in two hands' });
+    res.json({ ownedWeapons: await Inventory.getOwnedWeapons(charId) });
+}
+
 // POST /api/characters/:id/inventory/weapon/soul-brand   body: { weapon_id, soul_branded }
 export async function soulBrandWeapon(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });

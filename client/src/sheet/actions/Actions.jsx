@@ -63,13 +63,16 @@ function Actions() {
             const abilityMod = statMod ?? (ranged ? modOf(character.dex) : primaryMod);
             const oneHanded = !(w.properties ?? []).includes('two-handed');
             const dual = oneHanded && !!w.dual_wield;
+            // Two hands: versatile weapons swap to their versatile die (never while dual wielding)
+            const versatile = oneHanded && !!w.versatile_dice;
+            const twoHand = versatile && !dual && !!w.two_handed;
             const hit = (statMod != null ? init + statMod : ranged ? toHit : meleeHit) + runeFx.hitBonus;
             // Seal Cracks: +1 radiant per Crack on sigil hits (the marked weapon, plus chain whips and flails via weapons.sigil_weapon)
-            return { key: `w${w.id}`, weaponId: w.id, name: w.name, dice: w.damage_dice, oneHanded, dual,
+            return { key: `w${w.id}`, weaponId: w.id, name: w.name, dice: twoHand ? w.versatile_dice : w.damage_dice, oneHanded, dual, versatile, twoHand,
                 rarity: w.rarity, description: w.description, category: w.weapon_category,
                 branded, runed, marked, runes: w.runes ?? [], riders: runeFx.riders,
                 damageType: w.damage_type, attackBonus: w.attack_bonus || 0, stat: branded ? 'CHA' : (runed || marked) ? 'INT' : ranged ? 'DEX' : (character.spell_stat || 'STR').toUpperCase(),
-                hands: oneHanded ? ((w.properties ?? []).includes('versatile') ? 'One or two hands' : 'One hand') : 'Two hands',
+                hands: twoHand ? 'Two hands' : oneHanded ? ((w.properties ?? []).includes('versatile') ? 'One or two hands' : 'One hand') : 'Two hands',
                 range: w.range_normal ? `${w.range_normal}/${w.range_long ?? w.range_normal} ft` : ((w.properties ?? []).includes('reach') ? '10 ft (reach)' : '5 ft'),
                 dmgMod: (dual ? 0 : abilityMod) + (sigil ? cracks : 0),
                 hit: dual && DUAL_WIELD_DROPS_HIT_MOD ? hit - abilityMod : hit, sigil };
@@ -134,6 +137,15 @@ function Actions() {
     const toggleDualWield = async (a) => {
         try {
             const data = await sendJson(`/api/characters/${character.id}/inventory/weapon/dual-wield`, 'POST', { weapon_id: a.weaponId, dual_wield: !a.dual });
+            setOwnedWeapons(data.ownedWeapons);
+        } catch (err) {
+            onRoll(err.message);
+        }
+    };
+
+    const toggleTwoHands = async (a) => {
+        try {
+            const data = await sendJson(`/api/characters/${character.id}/inventory/weapon/two-hands`, 'POST', { weapon_id: a.weaponId, two_handed: !a.twoHand });
             setOwnedWeapons(data.ownedWeapons);
         } catch (err) {
             onRoll(err.message);
@@ -595,8 +607,13 @@ function Actions() {
                                                         <label>
                                                             <input type="checkbox" checked={openWeapon.dual} onChange={() => toggleDualWield(openWeapon)} /> Dual wield
                                                         </label>
+                                                        {openWeapon.versatile && (
+                                                            <label>
+                                                                {' '}<input type="checkbox" checked={openWeapon.twoHand} onChange={() => toggleTwoHands(openWeapon)} /> Two hands
+                                                            </label>
+                                                        )}
                                                     </p>
-                                                    <p>{openWeapon.dual ? 'Bonus action; no ability modifier on damage.' : 'Attack action.'}</p>
+                                                    <p>{openWeapon.dual ? 'Bonus action; no ability modifier on damage.' : openWeapon.twoHand ? `Attack action; two hands (${openWeapon.dice}).` : 'Attack action.'}</p>
                                                 </>
                                             )}
                                             {isRuneWeaver && openWeapon.weaponId && (

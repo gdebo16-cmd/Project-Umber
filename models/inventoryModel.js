@@ -65,7 +65,7 @@ export async function getOwnedArmor(charId) {
 export async function getOwnedWeapons(charId) {
     const { rows } = await pool.query(
         `SELECT w.id, w.name, w.category, w.damage_dice, w.sigil_weapon, w.properties, w.description, w.rarity, w.damage_type, w.attack_bonus, w.range_normal, w.range_long,
-                (SELECT wc.name FROM weapon_category wc WHERE wc.id = w.category_id) AS weapon_category, cw.id AS owned_id, cw.is_equipped, cw.dual_wield, cw.soul_branded,
+                (SELECT wc.name FROM weapon_category wc WHERE wc.id = w.category_id) AS weapon_category, cw.id AS owned_id, cw.is_equipped, cw.dual_wield, cw.two_handed, w.versatile_dice, cw.soul_branded,
                 EXISTS (SELECT 1 FROM characters c WHERE c.id = cw.character_id AND c.sigil_item_id = cw.id) AS sigil_marked,
                 EXISTS (SELECT 1 FROM characters c WHERE c.id = cw.character_id AND c.runed_weapon_item_id = cw.id) AS is_runed,
                 ${itemRunesJson('character_weapon_id', 'cw.id')} AS runes
@@ -180,10 +180,22 @@ export async function equipWeapon(charId, weaponId) {
 // Dual wield toggle (Actions tab). Two-handed weapons can't be dual wielded. Returns rows changed.
 export async function setWeaponDualWield(charId, weaponId, on) {
     const { rowCount } = await pool.query(
-        `UPDATE character_weapons cw SET dual_wield = $3
+        `UPDATE character_weapons cw SET dual_wield = $3, two_handed = (cw.two_handed AND NOT $3)
          FROM weapons w
          WHERE w.id = cw.weapon_id AND cw.character_id = $1 AND cw.weapon_id = $2
            AND ($3 = false OR NOT ('two-handed' = ANY(w.properties)))`,
+        [charId, weaponId, !!on]
+    );
+    return rowCount;
+}
+
+// Two hands toggle (Actions tab). Only versatile weapons with a versatile die; clears dual wield. Returns rows changed.
+export async function setWeaponTwoHanded(charId, weaponId, on) {
+    const { rowCount } = await pool.query(
+        `UPDATE character_weapons cw SET two_handed = $3, dual_wield = (cw.dual_wield AND NOT $3)
+         FROM weapons w
+         WHERE w.id = cw.weapon_id AND cw.character_id = $1 AND cw.weapon_id = $2
+           AND ($3 = false OR w.versatile_dice IS NOT NULL)`,
         [charId, weaponId, !!on]
     );
     return rowCount;
