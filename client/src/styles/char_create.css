@@ -456,7 +456,7 @@ footer {
     }
 
     main {
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: minmax(0, 1fr); /* minmax: wide content (description box, styled displays) can't widen the column past the screen */
         grid-template-rows: auto 1fr;
         grid-template-areas: 'a'
             'b';
@@ -484,6 +484,7 @@ footer {
 
     .pick-tile select { 
         background-color: var(--bg-color-1);
+        width: 100%; /* the weapon filter selects stack full width too */
     }
 
     .pick-tile option {
