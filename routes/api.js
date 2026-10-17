@@ -8,7 +8,7 @@ import {
 import { me, login, logout, register, home, getSettings, updateSettings, getProfile, updateProfile, deleteAccount } from '../controllers/apiUserController.js';
 import { getInventory, addArmor, addWeapon, removeArmor, removeWeapon } from '../controllers/apiInventoryController.js';
 import { getEditCharacter, editNameAndRace, editClass, editLevel, editAbilities, editFeatureChoice, editPortrait } from '../controllers/apiEditController.js';
-import { getRaces, getSubraces, step1Submit, getStep2, step2Submit, getStep3, step3Submit, clearDraft, getDraft, rollStat, selectSubclass, getStartingGear } from '../controllers/apiCreateController.js';
+import { getRaces, getSubraces, step1Submit, getStep2, step2Submit, getStep3, step3Submit, boostOptions, clearDraft, getDraft, rollStat, selectSubclass, getStartingGear } from '../controllers/apiCreateController.js';
 import { getSpellbook, learnSpell, unlearnSpell, prepareSpell, unprepareSpell, setAction, removeAction } from '../controllers/apiSpellController.js';
 import { createCampaign, deleteCampaign, getCampaign, updateCampaign, listCampaigns, joinCampaign, setCampaignCharacter } from '../controllers/apiCampaignController.js';
 
@@ -47,6 +47,7 @@ router.post('/create_char/step3', step3Submit);
 router.get('/create_char/draft', getDraft);
 router.delete('/create_char/draft', clearDraft);
 router.post('/create_char/roll/:stat', rollStat);
+router.post('/boost_options', boostOptions);
 
 // character sheet
 router.get('/characters/:id', getCharacter);

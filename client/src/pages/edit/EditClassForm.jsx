@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import useBoostOptions from '../../hooks/useBoostOptions';
 import useSave from './useSave';
 import CreateDescription from '../CreateDescription';
 import LevelChoices from '../LevelChoices';
-import { choiceFeatures, keepPicks, KEPT_BOOST } from '../../utils/levelChoices';
+import { choiceFeatures, keepPicks, KEPT_BOOST, isBoostRow } from '../../utils/levelChoices';
 import { sendJson } from '../../utils/api';
 
 // Class + subclass editor, laid out like creator Step 2: pick tiles on top, then the
@@ -53,6 +54,14 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
 
     // class + subclass choice features unlocked at the picked level
     const choiceList = pickedClass ? choiceFeatures(pickedClass.features, pickedSub?.features, pickedSub?.name, level) : [];
+
+    // boost rows only offer what the character qualifies for with its current (base) scores
+    const boostKeys = choiceList.filter(isBoostRow).map((f) => f.key);
+    const allowed = useBoostOptions({
+        enabled: boostKeys.length > 0, classId, subclassId: subLocked ? null : subclassId, level,
+        scores: { str: character.str, dex: character.dex, con: character.con, int: character.int, wis: character.wis, cha: character.cha },
+        boostKeys, picks, setPicks,
+    });
 
     // re-picking a kept (pre-rework) boost: which score had that +2, so it can come back off
     const saved = character.feature_choices ?? {};
@@ -139,7 +148,7 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
                     </select>
                     {subLocked && <p className="pick-hint">Subclass unlocks at level {SUBCLASS_LEVEL}</p>}
                 </article>
-                <LevelChoices features={choiceList} picks={picks} onChange={setPicks} topClass="tile-top" bottomClass="tile-bottom" />
+                <LevelChoices features={choiceList} picks={picks} onChange={setPicks} topClass="tile-top" bottomClass="tile-bottom" allowed={allowed} />
                 {repicking && (
                     <article className="form-section tile pick-tile">
                         <label className="tile-top" htmlFor="refund">Free re-pick: lower the score that kept boost raised</label>

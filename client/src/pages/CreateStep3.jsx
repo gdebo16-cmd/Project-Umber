@@ -7,6 +7,9 @@ import { sendJson } from '../utils/api';
 import { STATS } from '../utils/stats';
 import StepNav from './StepNav';
 import Loader from '../components/Loader';
+import LevelChoices from './LevelChoices';
+import useBoostOptions from '../hooks/useBoostOptions';
+import { choiceFeatures, keepPicks } from '../utils/levelChoices';
 
 // Replaces views/create_char_step3.ejs (step 3: roll abilities, pick +2 and +1)
 // The server does the rolling and remembers each roll; clicking a stat again rerolls it.
@@ -17,11 +20,22 @@ function CreateStep3() {
     const [plus2, setPlus2] = useState('');
     const [plus1, setPlus1] = useState('');
     const [saveError, setSaveError] = useState('');
+    const [picks, setPicks] = useState(null); // Ability Boost / Primordial Ascent picks (feature_choices shape)
+    if (data && picks === null) setPicks(data.boostPicks ?? {});
+
+    // boost rows show once every stat is rolled, filtered by the scores so far (rolls + the +2/+1)
+    const boostList = data ? choiceFeatures(data.boostFeatures, [], null, data.level) : [];
+    const rolled = !!data && STATS.every((s) => data.rolls[s.key] !== undefined);
+    const scores = rolled ? Object.fromEntries(STATS.map((s) => [s.key, data.rolls[s.key] + (s.key === plus2 ? 2 : 0) + (s.key === plus1 ? 1 : 0)])) : null;
+    const allowed = useBoostOptions({
+        enabled: rolled && boostList.length > 0, classId: data?.class_id, subclassId: data?.subclass_id, level: data?.level,
+        scores, boostKeys: boostList.map((f) => f.key), picks: picks ?? {}, setPicks,
+    });
 
     const roll = async (key) => {
         try {
             const result = await sendJson(`/api/create_char/roll/${key}`, 'POST');
-            setData((prev) => ({ rolls: { ...prev.rolls, [key]: result.value } }));
+            setData((prev) => ({ ...prev, rolls: { ...prev.rolls, [key]: result.value } }));
         } catch (err) {
             setSaveError(err.message);
         }
@@ -30,7 +44,7 @@ function CreateStep3() {
     const submit = async (e) => {
         e.preventDefault();
         try {
-            const saved = await sendJson('/api/create_char/step3', 'POST', { plus2, plus1 });
+            const saved = await sendJson('/api/create_char/step3', 'POST', { plus2, plus1, feature_choices: keepPicks(picks ?? {}, boostList) });
             if (saved.gearError) window.alert(saved.gearError);
             navigate('/home');
         } catch (err) {
@@ -91,6 +105,8 @@ function CreateStep3() {
                                 </article>
                             ))}
                         </article>
+
+                        {rolled && <LevelChoices features={boostList} picks={picks ?? {}} onChange={setPicks} topClass="tile-top" bottomClass="tile-bottom" allowed={allowed} />}
 
                         {saveError && <p>{saveError}</p>}
 

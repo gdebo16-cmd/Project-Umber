@@ -8,7 +8,7 @@ import CreateDescription from './CreateDescription';
 import StepNav from './StepNav';
 import Loader from '../components/Loader';
 import LevelChoices from './LevelChoices';
-import { choiceFeatures, keepPicks } from '../utils/levelChoices';
+import { choiceFeatures, keepPicks, isBoostRow } from '../utils/levelChoices';
 import WeaponFilter from '../components/WeaponFilter';
 import { filterSortWeapons, EMPTY_WEAPON_FILTER } from '../utils/weapons';
 
@@ -147,7 +147,8 @@ function CreateStep2() {
 
     // class choices plus the picked subclass's choices, up to the picked level
     const pickedSub = subLocked ? undefined : subclasses.find((s) => String(s.id) === String(subclassId));
-    const choiceList = picked ? choiceFeatures(picked.features, pickedSub?.features, pickedSub?.name, level) : [];
+    // Ability Boost / Primordial Ascent rows are picked on step 3, after the scores are rolled
+    const choiceList = picked ? choiceFeatures(picked.features, pickedSub?.features, pickedSub?.name, level).filter((f) => !isBoostRow(f)) : [];
 
     const submit = async (e) => {
         e.preventDefault();

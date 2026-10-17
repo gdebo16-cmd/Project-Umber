@@ -6,7 +6,8 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { KEPT_BOOST } from '../utils/levelChoices';
-function LevelChoices({ features, picks, onChange, topClass, bottomClass }) {
+// allowed (optional): { [feature key]: [options] } from useBoostOptions; rows it names only show those options
+function LevelChoices({ features, picks, onChange, topClass, bottomClass, allowed }) {
     // the picked option's full description, in the same popup as the sheet's spell cards: { label, name, text }
     const [details, setDetails] = useState(null);
     if (!features.length) return null;
@@ -49,6 +50,7 @@ function LevelChoices({ features, picks, onChange, topClass, bottomClass }) {
                             {f.options
                                 // a kept boost (pre-rework) only shows while it is the current pick
                                 .filter((o) => o === current[i] || (!current.includes(o) && o !== KEPT_BOOST))
+                                .filter((o) => !allowed?.[f.key] || allowed[f.key].includes(o))
                                 .map((o) => (
                                     <option key={o} value={o} title={info[o] ?? ''}>
                                         {f.label}: {o}

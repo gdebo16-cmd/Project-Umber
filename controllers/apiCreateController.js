@@ -1,7 +1,7 @@
 // Character creation (3 steps) as JSON for React. Queries live in models/.
 // Uses the session "draft locker" (req.session.charDraft) until step 3 saves it.
 import { listRaces, listSubraces, checkSubrace } from '../models/raceModel.js';
-import { checkBoostRules } from '../utils/abilityBoosts.js';
+import { checkBoostRules, allowedBoostOptions, BOOST_ROWS } from '../utils/abilityBoosts.js';
 import { listClasses, getHitDie, listSubclassesForClass, subclassBelongsToClass, getClassSkills } from '../models/classModel.js';
 import { createCharacter, checkFeatureChoices, SUBCLASS_LEVEL, MAX_LEVEL } from '../models/characterModel.js';
 import { listStartingGear, addWeapon, equipWeapon, addArmor, equipArmor } from '../models/inventoryModel.js';
@@ -165,13 +165,31 @@ export async function step2Submit(req, res) {
     res.json({ ok: true });
 }
 
-export function getStep3(req, res) {
+// Ability Boost / Primordial Ascent rows are picked at step 3, once the scores are known
+export async function getStep3(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
     const draft = req.session.charDraft;
     if (!draft || !draft.class_id) return res.status(409).json({ error: 'Start with step 1' });
 
     draft.rolls = draft.rolls ?? {};
-    res.json({ rolls: draft.rolls });
+    const cls = (await listClasses()).find((c) => c.id === draft.class_id);
+    const boostFeatures = (cls?.features ?? []).filter((f) => BOOST_ROWS.includes(f.name) && f.options?.length && f.level <= (draft.level ?? 1));
+    const choices = draft.feature_choices ?? {};
+    const boostPicks = Object.fromEntries(boostFeatures.map((f) => [`class:${f.id}`, choices[`class:${f.id}`]]).filter(([, v]) => v));
+    res.json({ rolls: draft.rolls, class_id: draft.class_id, subclass_id: draft.subclass_id, level: draft.level ?? 1, boostFeatures, boostPicks });
+}
+
+// POST /api/boost_options  body: { class_id, subclass_id, level, scores, feature_choices }
+// -> { options: { [feature key]: [allowed options] } } for the Ability Boost / Primordial Ascent dropdowns
+// (creator step 3 and the editor). Same rules as a save; the save still checks.
+export async function boostOptions(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const classId = Number(req.body.class_id);
+    const level = Number(req.body.level ?? 1);
+    if (!classId || !Number.isInteger(level) || level < 1 || level > MAX_LEVEL) return res.status(400).json({ error: 'class_id and level are required' });
+    const subclassId = req.body.subclass_id ? Number(req.body.subclass_id) : null;
+    const choices = req.body.feature_choices && typeof req.body.feature_choices === 'object' ? req.body.feature_choices : {};
+    res.json({ options: await allowedBoostOptions({ classId, subclassId, level, base: req.body.scores ?? null, choices }) });
 }
 
 // POST /api/create_char/roll/:stat  (moved here from the old EJS charController)
@@ -210,6 +228,16 @@ export async function step3Submit(req, res) {
     const final = { ...rolls }; // copy the rolls, then add the bonuses
     final[plus2] += 2;
     final[plus1] += 1;
+
+    // boost/blessing picks (step 3): merged into the step 2 choices, checked against the final scores
+    const boostPicks = req.body.feature_choices ?? {};
+    const merged = { ...(draft.feature_choices ?? {}) };
+    for (const [key, vals] of Object.entries(boostPicks)) merged[key] = vals;
+    const picked = await checkFeatureChoices(draft.class_id, draft.subclass_id ?? null, draft.level ?? 1, merged);
+    if (picked.error) return res.status(400).json({ error: picked.error });
+    const boost = await checkBoostRules({ classId: draft.class_id, subclassId: draft.subclass_id ?? null, level: draft.level ?? 1, base: final, choices: picked.choices });
+    if (boost.error) return res.status(400).json({ error: boost.error });
+    draft.feature_choices = picked.choices;
 
     const hitDie = await getHitDie(draft.class_id);
     if (!hitDie) return res.status(400).json({ error: 'Class not found' });

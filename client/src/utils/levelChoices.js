@@ -26,3 +26,8 @@ export function keepPicks(picks, features) {
     }
     return out;
 }
+
+// Ability Boost / Primordial Ascent rows: picked on creator step 3 (after the scores), filtered by the server
+// (POST /api/boost_options, same rules as utils/abilityBoosts.js on save)
+export const BOOST_ROWS = ['Ability Boost', 'Primordial Ascent'];
+export const isBoostRow = (f) => f.source === 'class' && BOOST_ROWS.includes(f.name);

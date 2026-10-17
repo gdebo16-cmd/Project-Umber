@@ -31,7 +31,7 @@ export function parseBlessingPick(value) {
 // Boost/Ascent rows of a class, oldest first
 export async function getBoostRows(classId) {
     const { rows } = await pool.query(
-        `SELECT id, level, name FROM class_features WHERE class_id = $1 AND name = ANY($2) ORDER BY level, id`,
+        `SELECT id, level, name, options FROM class_features WHERE class_id = $1 AND name = ANY($2) ORDER BY level, id`,
         [classId, BOOST_ROWS]
     );
     return rows;
@@ -71,12 +71,12 @@ export async function withEffectiveScores(ch) {
 }
 
 // Does the class/subclass meet one prerequisite clause? scores may be null (character creation, before rolls).
-async function meetsClause(clause, ctx, pickLevel, scores) {
+function meetsClause(clause, ctx, pickLevel, scores) {
     const c = clause.toLowerCase().trim();
     if (!c || c === 'none') return true;
     if (c.includes(' or level ')) {
         const [a, b] = c.split(' or level ');
-        return (await meetsClause(a, ctx, pickLevel, scores)) || pickLevel >= Number(b);
+        return meetsClause(a, ctx, pickLevel, scores) || pickLevel >= Number(b);
     }
     let m = /^level (\d+)$/.exec(c);
     if (m) return pickLevel >= Number(m[1]);
@@ -121,7 +121,14 @@ export async function checkBoostRules({ classId, subclassId, level, base, choice
         refund = s;
     }
 
-    // class info for prerequisites
+    const { ctx, byName } = await loadPrereqContext(classId, subclassId);
+    const scores = base ? Object.fromEntries(STATS.map((s) => [s, Number(base[s]) - (s === refund ? 2 : 0)])) : null;
+    const error = walkPicks(picks, { ctx, byName, cap: statCap(level), scores });
+    return error ? { error } : { refund, usedRepick };
+}
+
+// Class/subclass info for blessing prerequisites, and the blessings by name
+async function loadPrereqContext(classId, subclassId) {
     const { rows: [info] } = await pool.query(
         `SELECT COALESCE(NULLIF(s.caster_type, ''), NULLIF(c.caster_type, ''), 'none') <> 'none' AS caster,
                 concat_ws(', ', c.armor_proficiencies, s.armor_proficiencies) AS armor,
@@ -133,17 +140,19 @@ export async function checkBoostRules({ classId, subclassId, level, base, choice
     const ctx = { caster: !!info?.caster, armor: info?.armor ?? '', weapons: info?.weapons ?? '', extraAttackLevel: info?.extra_attack_level };
     const { rows: blessings } = await pool.query(`SELECT name, prerequisite, repeatable_max FROM primordial_blessings`);
     const byName = new Map(blessings.map((b) => [b.name, b]));
+    return { ctx, byName };
+}
 
-    // walk the picks in level order: caps, prerequisites (with the scores at that point), repeat limits
-    const cap = statCap(level);
-    const scores = base ? Object.fromEntries(STATS.map((s) => [s, Number(base[s]) - (s === refund ? 2 : 0)])) : null;
-    const taken = new Map();
+// Walk boost picks in level order: caps, prerequisites (with the scores at that point), repeat limits.
+// scores (copied, may be null) = base scores. Returns an error message or null.
+function walkPicks(picks, { ctx, byName, cap, scores: base, taken = new Map() }) {
+    const scores = base ? { ...base } : null;
     for (const p of picks) {
         const sp = parseScorePick(p.value);
         if (sp) {
-            if ((p.name === 'Primordial Ascent') !== (sp.amount === 1)) return { error: `${p.value} isn't an option for ${p.name}` };
+            if ((p.name === 'Primordial Ascent') !== (sp.amount === 1)) return `${p.value} isn't an option for ${p.name}`;
             if (scores) {
-                if (scores[sp.stat] >= cap) return { error: `${sp.stat.toUpperCase()} is already at your cap of ${cap}; pick another score or a blessing` };
+                if (scores[sp.stat] >= cap) return `${sp.stat.toUpperCase()} is already at your cap of ${cap}; pick another score or a blessing`;
                 scores[sp.stat] = Math.min(cap, scores[sp.stat] + sp.amount);
             }
             continue;
@@ -152,23 +161,59 @@ export async function checkBoostRules({ classId, subclassId, level, base, choice
         const b = byName.get(bp.name);
         if (!b) continue; // kept boost
         const n = (taken.get(b.name) ?? 0) + 1;
-        if (n > b.repeatable_max) return { error: b.repeatable_max === 1 ? `${b.name} can only be taken once` : `${b.name} can be taken at most ${b.repeatable_max} times` };
+        if (n > b.repeatable_max) return b.repeatable_max === 1 ? `${b.name} can only be taken once` : `${b.name} can be taken at most ${b.repeatable_max} times`;
         taken.set(b.name, n);
         for (const clause of String(b.prerequisite ?? '').split(/,\s*/)) {
-            if (!(await meetsClause(clause, ctx, p.level, scores))) {
-                return { error: `${b.name} needs: ${b.prerequisite} (picked at level ${p.level})` };
+            if (!meetsClause(clause, ctx, p.level, scores)) {
+                return `${b.name} needs: ${b.prerequisite} (picked at level ${p.level})`;
             }
         }
         // its +1: Iron Resolve / Keen Wits name a score, so a capped score must be swapped for another;
         // Second Breath is always CON, and its +1 is simply lost at the cap (blessings.md stat cap rule)
         if (bp.stat && scores) {
             if (scores[bp.stat] >= cap && bp.name !== 'Second Breath') {
-                return { error: `${bp.stat.toUpperCase()} is already at your cap of ${cap}; pick ${b.name} with another score` };
+                return `${bp.stat.toUpperCase()} is already at your cap of ${cap}; pick ${b.name} with another score`;
             }
             scores[bp.stat] = Math.min(cap, scores[bp.stat] + 1);
         }
     }
-    return { refund, usedRepick };
+    return null;
+}
+
+// Which options each boost row may show, for the creator/editor dropdowns (the save still runs checkBoostRules).
+// Rows are walked in level order with the same rules as a save: an option is allowed when the picks kept so far
+// plus that option pass walkPicks, and it doesn't push a blessing past its repeat limit counting the later rows.
+// A current pick that is no longer allowed is dropped (not counted for later rows), so the client clears it.
+// Returns { [feature key]: [allowed options] }.
+export async function allowedBoostOptions({ classId, subclassId, level, base, choices }) {
+    const rows = (await getBoostRows(classId)).filter((r) => Number(r.level) <= Number(level));
+    if (!rows.length) return {};
+    const { ctx, byName } = await loadPrereqContext(classId, subclassId);
+    const cap = statCap(level);
+    const scores = base && STATS.every((s) => Number.isFinite(Number(base[s])))
+        ? Object.fromEntries(STATS.map((s) => [s, Number(base[s])])) : null;
+    const blessingOf = (v) => (parseScorePick(v) ? null : byName.get(parseBlessingPick(v).name)?.name);
+    const kept = [];
+    const out = {};
+    rows.forEach((r, i) => {
+        const key = `class:${r.id}`;
+        const current = choices?.[key]?.[0];
+        // blessings picked on later rows count toward the repeat limit too
+        const later = new Map();
+        for (const lr of rows.slice(i + 1)) {
+            const name = blessingOf(choices?.[`class:${lr.id}`]?.[0]);
+            if (name) later.set(name, (later.get(name) ?? 0) + 1);
+        }
+        out[key] = (r.options ?? []).filter((o) => {
+            if (o === KEPT_BOOST) return current === KEPT_BOOST;
+            const name = blessingOf(o);
+            if (name && later.get(name) >= byName.get(name).repeatable_max) return false;
+            const candidate = [...kept, { key, level: Number(r.level), name: r.name, value: o }];
+            return !walkPicks(candidate, { ctx, byName, cap, scores });
+        });
+        if (current && out[key].includes(current)) kept.push({ key, level: Number(r.level), name: r.name, value: current });
+    });
+    return out;
 }
 
 // Short descriptions for the dropdowns: { optionName: description }
