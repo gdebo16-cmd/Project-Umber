@@ -203,9 +203,142 @@ body {
     }
 }
 
+/* DETAILS POPUP  .spell-details: spell, weapon and feature cards on the sheet, option/blessing details in the creator and editor */
+
+.spell-details {
+    position: fixed;
+    top: 50%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    width: min(38rem, 90vw);
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 1.5rem 1.25rem 1.25rem;
+    background-color: var(--bg-color-5);
+    backdrop-filter: blur(8px);
+    border: var(--tileBorder);
+    border-radius: var(--rad1);
+    box-shadow: var(--bs2);
+}
+
+.details-container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    gap: .75rem;
+}
+
+.combat-box {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.spell-build-box {
+    min-width: 0;
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: .25rem;
+    text-align: right;
+}
+
+.combat-box p,
+.spell-build-box p {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.spell-details-title {
+    text-align: center;
+    margin: 0 2rem .75rem;
+    padding: 0;
+    font-size: 1.5rem;
+    font-weight: var(--fontW1);
+    color: var(--accent);
+}
+
+.combat-box,
+.spell-build-box,
+.spell-description-box {
+    margin-top: .75rem;
+    padding: .6rem .75rem;
+    border: var(--tileBorder);
+    border-radius: var(--rad1);
+    background-color: var(--bg-color-2);
+}
+
+.spell-details p {
+    margin: .2rem 0;
+    overflow-wrap: anywhere;
+}
+
+.spell-details-close {
+    position: absolute;
+    border: none;
+    top: .5rem;
+    right: .5rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: transparent;
+    color: inherit;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.spell-details-close:hover {
+    background-color: var(--bg-color-1);
+}
+
+@keyframes slide {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
 /*  ===== Mobile (max-width: 768px), consolidated =====  */
 
 @media (max-width: 768px) {
+    /* Mobile: the details popup slides up from the bottom, full width */
+    .spell-details {
+        width: 100%;
+        transform: none;
+        border-radius: var(--toprad);
+        max-height: 70dvh;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        animation: slide 0.3s ease-out;
+    }
+
+    .details-container {
+        flex-direction: row;
+        font-weight: 400;
+        font-size: 0.8rem;
+    }
+
+    .spell-build-box {
+        text-align: left;
+        font-weight: 400;
+        width: 40%;
+        font-size: 0.8rem;
+    }
+
+    .spell-description-box {
+        font-weight: 400;
+        box-shadow: var(--bs1);
+        font-size: 0.8rem;
+    }
+
     /* Mobile: iOS Safari zooms into any field under 16px, so keep fields at 16px or more */
 
     input,

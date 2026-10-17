@@ -3,8 +3,12 @@
 // by level, so a subclass's choices show up next to the class ones once a subclass is picked.
 // picks is { "<source>:<feature id>": [values] }, the same shape as characters.feature_choices.
 
+import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { KEPT_BOOST } from '../utils/levelChoices';
 function LevelChoices({ features, picks, onChange, topClass, bottomClass }) {
+    // the picked option's full description, in the same popup as the sheet's spell cards: { label, name, text }
+    const [details, setDetails] = useState(null);
     if (!features.length) return null;
 
     const pick = (f, i, value) => {
@@ -12,9 +16,21 @@ function LevelChoices({ features, picks, onChange, topClass, bottomClass }) {
         const next = Array.from({ length: count }, (_, j) => picks[f.key]?.[j] ?? '');
         next[i] = value;
         onChange({ ...picks, [f.key]: next });
+        const text = f.option_info?.[value];
+        if (text) setDetails({ label: f.label, name: value, text });
     };
 
-    return [...new Set(features.map((f) => f.level))].map((lvl) => (
+    const popup = details && createPortal(
+        <article className="spell-details">
+            <button type="button" className="btn-round spell-details-close" aria-label="Close" onClick={() => setDetails(null)}>X</button>
+            <h3 className="spell-details-title">{details.name}</h3>
+            <section className="spell-description-box">
+                <p><strong>{details.label}:</strong> <br /> {details.text}</p>
+            </section>
+        </article>,
+        document.body);
+
+    return [...new Set(features.map((f) => f.level))].map((lvl, n) => (
         <article key={lvl} className="form-section tile pick-tile level-choices">
             <label className={topClass}>Level {lvl} Choices</label>
             {features.filter((f) => f.level === lvl).map((f) => {
@@ -35,14 +51,21 @@ function LevelChoices({ features, picks, onChange, topClass, bottomClass }) {
                                 .filter((o) => o === current[i] || (!current.includes(o) && o !== KEPT_BOOST))
                                 .map((o) => (
                                     <option key={o} value={o} title={info[o] ?? ''}>
-                                        {f.label}: {o}{info[o] ? ` - ${info[o]}` : ''}
+                                        {f.label}: {o}
                                     </option>
                                 ))}
                         </select>
-                        {current[i] && info[current[i]] && <p className="pick-hint">{current[i]}: {info[current[i]]}</p>}
+                        {current[i] && info[current[i]] && (
+                            <p className="pick-hint">
+                                <button type="button" className="btn btn-link hover-grow" onClick={() => setDetails({ label: f.label, name: current[i], text: info[current[i]] })}>
+                                    {current[i]}: tap to view
+                                </button>
+                            </p>
+                        )}
                     </div>
                 ));
             })}
+            {n === 0 && popup}
         </article>
     ));
 }

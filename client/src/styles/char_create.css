@@ -52,6 +52,7 @@ header {
 .tile {
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 :is(.tile-top, .topTile) {
@@ -124,6 +125,8 @@ select {
     border: none;
     background-color: var(--bgc-low);
     color: var(--txt-color-1);
+    max-width: 100%;
+    min-width: 0;
 }
 
 select {
