@@ -38,8 +38,9 @@ function Actions() {
     const critClass = (key) => (critKey === key ? ' is-crit' : '');
    
 
-    // Fists get weaker as you get hurt. Always at least 1d4.
-    const fistDice = `${Math.max(1, Math.floor((character.str + hp) / 20))}d4`;
+    // Fists: Strength-based. The die shrinks as HP% drops (full 1d8, 75%+ 1d6, 50%+ 1d4, below 50% a flat 1), plus STR mod.
+    // To-hit uses STR (toHit) instead of the class primary stat. Damage is floored at 0 by the roll.
+    const fistDice = ['1', '1', '1d4', '1d6', '1d8'][healthInit(hp, character.max_hp)];
 
     // Every action has the same shape, so one map() can draw them all
     const isSoulSmith = character.class_name === 'Soul Smith';
@@ -80,7 +81,7 @@ function Actions() {
     // dual-wielded weapons move to Bonus Actions
     const actions = [
         ...weaponActions.filter((a) => !a.dual),
-        { key: 'fists', name: 'Fists', dice: fistDice, dmgMod: 0, hit: meleeHit },
+        { key: 'fists', name: 'Fists', dice: fistDice, dmgMod: strMod, hit: toHit },
     ];
     const bonusWeapons = weaponActions.filter((a) => a.dual);
 
