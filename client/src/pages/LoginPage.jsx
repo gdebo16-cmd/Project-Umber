@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate, useSearchParams } from 'react-router';
 import usePageStyle from '../hooks/usePageStyle';
 import signinCss from '../styles/signin.css?inline';
 import { sendJson } from '../utils/api';
@@ -8,6 +8,9 @@ import { sendJson } from '../utils/api';
 function LoginPage() {
     usePageStyle(signinCss);
     const navigate = useNavigate();
+    const [params] = useSearchParams();
+    const next = params.get('next');
+    const dest = next && next.startsWith('/') && !next.startsWith('//') ? next : '/home';
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -16,7 +19,7 @@ function LoginPage() {
         e.preventDefault(); // stop the browser from reloading the page
         try {
             await sendJson('/api/login', 'POST', { username, password });
-            navigate('/home');
+            navigate(dest);
         } catch (err) {
             setError(err.message);
         }
@@ -24,37 +27,39 @@ function LoginPage() {
 
     return (
         <>
-            <header id="topContainer">
-                <h1 id="siteTitle">Eldrid Tales</h1>
+            <header id="site-title">
+                <img src="/Logo.png" alt="Eldrid Tales Logo" className="title-logo" />
+                <h1>Eldrid Tales</h1>
             </header>
 
             <main>
-                <section id="formContainer">
-                    <article id="formTitle">
+                <section className="form-container">
+                    <article className="form-title">
+                        
                         <h2 id="titleText">Welcome to Your Legend</h2>
                     </article>
-                    <form className="formContainer" onSubmit={submit}>
-                        <article className="formSectionContainer tile" id="userNameContainer">
-                            <label id="userNameLabel" className="topTile" htmlFor="userName">Enter Username</label>
-                            <input className="bottomTile" type="text" id="userName" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                    <form onSubmit={submit}>
+                        <article className="form-section user-name-container">
+                            <label id="userNameLabel" className="signin-label" htmlFor="userName">Enter Username</label>
+                            <input className="signin-value" type="text" id="userName" value={username} onChange={(e) => setUsername(e.target.value)} required />
                         </article>
 
-                        <article className="formSectionContainer tile" id="passwordContainer">
-                            <label id="passwordLabel" className="topTile" htmlFor="password">Enter Password</label>
-                            <input className="bottomTile" type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                        <article className="form-section password-container ">
+                            <label id="passwordLabel" className="signin-label" htmlFor="password">Enter Password</label>
+                            <input className="signin-value" type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                         </article>
 
                         {error && <p>{error}</p>}
 
-                        <article className="formSectionContainer" id="buttonContainer">
-                            <button id="submit" className="formButton" type="submit">Login</button>
-                            <Link to="/register" className="formButton" id="newUser">Create New User</Link>
+                        <article className="button-container">
+                            <button id="loginButton" className="btn btn-form" type="submit">Login</button>
+                            <Link to="/register" className="btn btn-form" id="newUserButton">Create New User</Link>
                         </article>
                     </form>
                 </section>
             </main>
             <footer>
-                <p id="footerText">© 2026 Eldrid Tales. All rights reserved.</p>
+                <p className="footer-text" id="footer-text">© 2026 Eldrid Tales. All rights reserved.</p>
             </footer>
         </>
     );

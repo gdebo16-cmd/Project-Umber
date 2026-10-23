@@ -14,18 +14,18 @@ function EditLevelForm({ character, onSaved }) {
     };
 
     return (
-        <form className="formContainer" onSubmit={submit}>
-            <article className="formSectionContainer">
-                <label className="cap-top" htmlFor="level">Level</label>
-                <select className="cap-bottom" id="level" value={level ?? 1} onChange={(e) => setLevel(Number(e.target.value))} required>
+        <form className="form-container" onSubmit={submit}>
+            <article className="form-section">
+                <label className="tile-top" htmlFor="level">Level</label>
+                <select className="tile-bottom" id="level" value={level ?? 1} onChange={(e) => setLevel(Number(e.target.value))} required>
                     {LEVELS.map((n) => (
                         <option key={n} value={n}>{n}</option>
                     ))}
                 </select>
             </article>
             {message && <p>{message}</p>}
-            <article className="formSectionContainer buttonContainer">
-                <button className="formButton" type="submit">Save Changes</button>
+            <article className="form-section button-container">
+                <button className="btn btn-form" type="submit">Save Changes</button>
             </article>
         </form>
     );

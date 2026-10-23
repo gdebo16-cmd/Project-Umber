@@ -1,18 +1,20 @@
+import { useState } from 'react';
 import { Link } from 'react-router';
 import useFetch from '../hooks/useFetch';
 import usePageStyle from '../hooks/usePageStyle';
 import homeCss from '../styles/home.css?inline';
 import SiteNav from '../components/SiteNav';
+import Loader from '../components/Loader';
 
-// Replaces views/home.ejs
 function HomePage() {
     usePageStyle(homeCss);
     const { data, setData, loading, error } = useFetch('/api/home');
+    const [homeTab, setHomeTab] = useState('current'); // which section shows on mobile
 
     const deleteCharacter = async (e, ch) => {
         e.preventDefault();   // the button sits inside the card's link, so don't follow the link
         e.stopPropagation();
-        if (!window.confirm(`Delete ${ch.name}? This cannot be undone.`)) return;
+        if (!window.confirm(`Do you want to delete ${ch.name}? This cannot be undone.`)) return;
 
         const res = await fetch(`/api/characters/${ch.id}`, { method: 'DELETE' });
         if (res.ok) {
@@ -21,35 +23,60 @@ function HomePage() {
         }
     };
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Failure is upon us: {error}</p>;
+    const deleteCampaign = async (e, camp) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!window.confirm(`Do you want to delete ${camp.name}? This cannot be undone.`)) return;
+        const res = await fetch(`/api/campaigns/${camp.id}`, { method: 'DELETE' });
+        if (res.ok) {
+            setData((prev) => ({ ...prev, campaigns: prev.campaigns.filter((c) => c.id !== camp.id) }));
+        }
+    };
 
-    const { username, characters } = data;
+    const deleteDraft = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!window.confirm('Delete this unfinished character?')) return;
+        const res = await fetch('/api/create_char/draft', { method: 'DELETE' });
+        if (res.ok) setData((prev) => ({ ...prev, draft: null }));
+    };
+
+    if (error) return <p>Failure is upon us: {error}</p>;
+    if (loading) return <Loader text='Summoning your stories...'/>;
+
+    const { username, characters, campaigns, draft } = data;
 
     return (
         <>
-            <header id="topContainer">
-                <h1 id="siteTitle">Welcome {username}, To Eldridia</h1>
-                <SiteNav />
+            <header id="site-title">
+                <img src="/Logo.png" alt="Eldrid Tales Logo" className="title-logo" />
+                <h1>Welcome {username}!</h1>
             </header>
-
+            <SiteNav />
             <main>
-                <section id="currentCharacters" className="mainBlock tile">
-                    <h3 className="topTile">Current Characters</h3>
-                    <article className="bottomTile" id="characterList">
+                <nav className="home-tabs">
+                    <button type="button" className={homeTab === 'current' ? 'home-tab is-active' : 'home-tab'} onClick={() => setHomeTab('current')}>Current Characters</button>
+                    <button type="button" className={homeTab === 'campaign' ? 'home-tab is-active' : 'home-tab'} onClick={() => setHomeTab('campaign')}>Current Campaigns</button>
+                    <button type="button" className={homeTab === 'unfinished' ? 'home-tab is-active' : 'home-tab'} onClick={() => setHomeTab('unfinished')}>Unfinished Work</button>
+                </nav>
+                <section id="current-character-container" className={homeTab === 'current' ? 'container is-active' : 'container'}>
+                    <article className="title" id="current-character-title">
+                        <h2 className="title-text">Current Characters</h2>
+                    </article>
+                    <article className="char-list" id="current-character-tile">
                         {characters.length === 0 ? (
                             <p>No Characters Available</p>
                         ) : (
-                            <ul id="currentCharacterContainer">
+                            <ul className="tile-list" id="current-character-list">
                                 {characters.map((ch) => (
-                                    <li key={ch.id} className="currentCharacterItem">
+                                    <li key={ch.id} className='character-tile' id={`character-tile-${ch.id}`}>
                                         <Link to={`/characters/${ch.id}`} className="char-tile">
-                                            <h3 className="currentCharacterName">{ch.name}</h3>
-                                            <img className="currentCharacterImage" src="/utils/defaultimg.png" alt="Character Image" />
-                                            <p className="currentCharacterRace">Race: {ch.race}</p>
-                                            <p className="currentCharacterClass">Class: {ch.class}</p>
-                                            <p className="currentCharacterSubclass">Sub-class: {ch.subclass}</p>
-                                            <button type="button" className="deleteButton" onClick={(e) => deleteCharacter(e, ch)}>Delete</button>
+                                            <h3 className="character-name">{ch.name}</h3>
+                                            <img className="character-image" src={ch.portrait_url ?? '/default-character.png'} alt="Character Image" />
+                                            <p className="character-race">Race: {ch.race}</p>
+                                            <p className="character-class">Class: {ch.class}</p>
+                                            <p className="character-subclass">Sub-class: {ch.subclass}</p>
+                                            <button type="button" className="character-delete-button" onClick={(e) => deleteCharacter(e, ch)}>Delete</button>
                                         </Link>
                                     </li>
                                 ))}
@@ -57,21 +84,58 @@ function HomePage() {
                         )}
                     </article>
                 </section>
-                <section id="currentCampaign" className="mainBlock tile">
-                    <h3 className="topTile">Current Campaigns</h3>
-                    <article className="bottomTile" id="campaignList">
-                        <p>No Campaigns Planned</p>
+                <section id="current-campaign-container" className={homeTab === 'campaign' ? 'container is-active' : 'container'}>
+                    <article className="title" id="current-campaign-title">
+                        <h2 className="title-text">Current Campaigns</h2>
                     </article>
+                    <article className="char-list" id="current-campaign-tile">
+                        {campaigns.length === 0 ? (
+                            <p>No Campaigns Planned</p>
+                        ) : (
+                            <ul className="tile-list" id="current-campaign-list">
+                                {campaigns.map((camp) => (
+                                    <li key={camp.id} className='campaign-tile' id={`campaign-tile-${camp.id}`}>
+                                        <Link to={`/campaign/${camp.id}`} className='camp-tile'>
+                                            <h3 className="campaign-name">{camp.name}</h3>
+                                            {camp.campaign_img_url
+                                                ? <img className="campaign-image" src={camp.campaign_img_url} alt={`${camp.name} picture`} />
+                                                : <div className="campaign-image" role="img" aria-label={`${camp.name} picture`} />}
+                                            {camp.description && <p className="campaign-description">{camp.description}</p>}
+                                            <button type="button" className="campaign-delete-button" onClick={(e) => deleteCampaign(e, camp)}>Delete</button>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </article>
+                    
                 </section>
-                <section id="unfinishedCharacters" className="mainBlock tile">
-                    <h3 className="topTile">Unfinished Work</h3>
-                    <article className="bottomTile" id="unfinishedList">
-                        <p>Youre All Caught Up!</p>
+                <section id="unfinished-character-container" className={homeTab === 'unfinished' ? 'container is-active' : 'container'}>
+                    <article className="title" id="unfinished-character-title">
+                        <h2 className="title-text">Unfinished Work</h2>
+                    </article>
+                    <article className="char-list" id="unfinished-character-tile">
+                        <ul className="tile-list" id="unfinished-character-list">
+                        {draft ? (
+                            <li key={draft.id} className='character-tile' id={`character-tile-${draft.id}`}>
+                                <Link to={draft.class_id ? '/create_char/step3' : '/create_char/step2'} className='char-tile'>
+                                    <h3 className='character-name'>{draft.name || 'One with no name'}</h3>
+                                    <img className='character-image' src='/default-character.png' alt='Character Image' />
+                                    <p className='character-race'>Race: {draft.race || 'Undecided'}</p>
+                                    <p className='character-class'>Class: {draft.class || 'Undecided'}</p>
+                                    <p className='character-subclass'>Sub-class: {draft.subclass || 'Undecided'}</p>
+                                    <button type='button' className='character-delete-button' onClick={deleteDraft}>Delete</button>
+                                </Link>
+                            </li>
+                        ) : (
+                            <p className='tile-text'>You are all caught up!</p>
+                        )}
+                        </ul>
                     </article>
                 </section>
             </main>
             <footer>
-                <p id="footerText">copyrite Eldrid Tales LLC</p>
+                <p className="footer-text" id="footer-text">copyrite Eldrid Tales LLC</p>
             </footer>
         </>
     );

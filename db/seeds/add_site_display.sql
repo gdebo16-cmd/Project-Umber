@@ -1,0 +1,1 @@
+ALTER TABLE users ADD COLUMN IF NOT EXISTS site_display VARCHAR(30) DEFAULT 'standard';

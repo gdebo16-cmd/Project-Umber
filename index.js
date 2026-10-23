@@ -1,16 +1,13 @@
-﻿import express from "express";
+import express from "express";
 import 'dotenv/config';
 import connectPgSimple from 'connect-pg-simple';
 import pool from './db.js';
-import authRoutes from './routes/auth.js';
-import homeRoutes from './routes/home.js';
-import settingsRoutes from './routes/settings.js';
-import char_createRoutes from './routes/char_create.js';
-import charRoutes from './routes/char.js';
 import apiRoutes from './routes/api.js';
 import session from "express-session"; //import use of per-session structure
 import path from "path";
 import { fileURLToPath } from "url";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 
 const app = express();
@@ -22,43 +19,78 @@ const store = new PgStore({
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const publicDir = path.join(__dirname, "Public");
-
-app.use(
-	session({               //defines security and rule set of each session
-		secret: process.env.SESSION_SECRET,
-		cookie: { maxAge: 300000000, secure: false, sameSite: "lax" },
-		resave: false,
-		saveUninitialized: false, store,
-	})
-);
+const clientDist = path.join(__dirname, "client", "dist");
 
 app.set("trust proxy", 1);
-app.set('view engine', 'ejs');
-app.set('views', './views');
 
+const sessionMiddleware = session({               //defines security and rule set of each session
+	secret: process.env.SESSION_SECRET,
+	cookie: { maxAge: 300000000,
+		secure: process.env.NODE_ENV === "production",
+		sameSite: "lax"
+	},
+	resave: false,
+	saveUninitialized: false, store,
+});
+
+app.use(sessionMiddleware);
 
 app.use(express.json()); //to accept JSON strings
 app.use(express.urlencoded({ extended: true }));  //to accept forms
-app.use(express.static(publicDir));
+app.use(express.static(publicDir)); // images (/utils, /classes, /races, /subclasses) for the React client
 
-app.use('/auth', authRoutes);
-app.use('/home', homeRoutes);
-app.use('/create_char', char_createRoutes);
-app.use('/settings', settingsRoutes);
-app.use('/characters', charRoutes);
 app.use('/api', apiRoutes);
-app.use('/charEdit', charRoutes);
 
 
 app.get('/health', (req, res) => {
   res.json({ ok: true });
 });
 
-app.get("/", (req, res) => res.redirect("/login"));
-app.get("/login", (req, res) => res.sendFile("signin.html", { root: publicDir }));
-app.get("/register", (req, res) => res.sendFile("registration.html", { root: publicDir }));
+app.use(express.static(clientDist));
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`App is running on http://localhost:${process.env.PORT || 3000}`);
+app.get(/^(?!\/api).*/, (req, res) => {
+	res.sendFile('index.html', { root: clientDist });
 });
+
+const server = createServer(app);
+const io = new Server(server);
+
+io.engine.use(sessionMiddleware);
+
+io.on('connection', (socket) => {
+	const userId = socket.request.session?.userId;
+	if (!userId) return socket.disconnect(true);
+	console.log(`User ${userId} connected`);
+	socket.on('join-sheet', async (characterId) => {
+		const { rows } = await pool.query(
+			`SELECT cm.campaign_id, ch.name
+			FROM campaign_members cm
+			JOIN characters ch ON ch.id = cm.character_id
+			WHERE cm.character_id = $1 AND ch.user_id = $2`,
+			[Number(characterId), userId]
+		);
+		socket.data.characterId = Number(characterId);
+		socket.data.characterName = rows[0]?.name;
+		rows.forEach((r) => socket.join(`campaign:${r.campaign_id}`));
+		console.log(`character ${characterId} joined`, rows.map((r) => r.campaign_id));
+	});
+	socket.on('roll', (label) => {
+		if (!socket.data.characterId || typeof label !== 'string') return;
+		const roll = {
+			characterId: socket.data.characterId,
+			name: socket.data.characterName,
+			label: label.slice(0, 300),
+			at: Date.now(),
+		};
+		for (const room of socket.rooms) {
+			if (room.startsWith('campaign:')) socket.to(room).emit('roll', roll);
+		}
+	});
+});
+
+
+server.listen(process.env.PORT || 3000, () => {
+	console.log(`App is running on http://localhost:${process.env.PORT || 3000}`);
+});
+
 

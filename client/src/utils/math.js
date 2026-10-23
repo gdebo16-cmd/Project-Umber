@@ -11,14 +11,23 @@ export const healthInit = (current, max) => {
 };
 
 // "2d6" -> roll two 6-sided dice and add them up
-export const rollDice = (dice) => {
-    const [count, sides] = String(dice).split('d').map(Number);
-    let total = 0;
-    for (let i = 0; i < count; i++) total += Math.floor(Math.random() * sides) + 1;
+export const rollDice = (dice, crit = false) => {
+    const text = String(dice).replace(/\s/g, '');          // "3d4 + 3" becomes "3d4+3"
+    if (!text.includes('d')) return Number(text) || 0;     // a flat number like "20"
+    const [diePart, bonus = 0] = text.split('+');          // "3d4" and "3"
+    const [count, sides] = diePart.split('d').map(Number);
+    const rolls = crit ? count * 2 : count;
+    let total = Number(bonus);
+    for (let i = 0; i < rolls; i++) total += Math.floor(Math.random() * sides) + 1;
     return total;
 };
 
 export const d20 = () => Math.floor(Math.random() * 20) + 1;
+
+export const rollToHit = (bonus) => {
+    const natural = d20();
+    return { natural, total: natural + bonus, crit: natural === 20, fail: natural === 1, fumble: natural === 1 };
+};
 
 // roll 4d6 and drop the lowest (used by the character editor's roll buttons)
 export const roll4d6DropLowest = () => {

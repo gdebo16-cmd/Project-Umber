@@ -11,7 +11,7 @@ function LogoutLink() {
     };
 
     return (
-        <a id="logout" className="settingsDropdownButton" href="/login" onClick={logout}>Log Out</a>
+        <a id="logout" className="btn-drop-settings" href="/login" onClick={logout}>Log Out</a>
     );
 }
 

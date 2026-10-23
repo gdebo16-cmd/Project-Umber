@@ -6,7 +6,6 @@ function useFetch(url) {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        setLoading(true);
         fetch(url)
         .then((res) => {
             if(!res.ok) throw new Error(`HTTP error! status: ${res.status}`);

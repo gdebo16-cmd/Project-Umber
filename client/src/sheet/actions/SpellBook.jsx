@@ -16,34 +16,47 @@ const TABS = [
     { id: 'level_9', label: 'Level 9' },
 ];
 
-function SpellBook({ characterId, onDone }) {
+// Optional: if you want the panel titles to stay exact
+const LEVEL_TITLES = {
+    0: 'Low Level Spells',
+    1: 'Level 1 Spells',
+    2: 'Level 2 Spells',
+    3: 'Level 3 Spells',
+    4: 'Level 4 Spells',
+    5: 'Level 5 Spells',
+    6: 'Level 6 Spells',
+    7: 'Level 7 Spells',
+    8: 'Level 8 Spells',
+    9: 'Level 9 Spells',
+};
+
+function SpellBook({ characterId, onDone, onOpenSpell }) {
     const { data, setData, loading, error } = useFetch(`/api/characters/${characterId}/spellbook`);
     const [tab, setTab] = useState('level_0');
     const [saveError, setSaveError] = useState('');
 
-const changeSpell = async (spellId, action) => {
-    // action is 'learn' or 'unlearn'
-    const url = `/api/characters/${characterId}/spells/${action}`;
-    try {
-        const learned = await sendJson(url, 'POST', { spell_id: spellId });
-        setData((prev) => ({ ...prev, ...learned }));
-        setSaveError('');
-    } catch (err) {
-        setSaveError(err.message);
-    }
-};
+    const changeSpell = async (spellId, action) => {
+        const url = `/api/characters/${characterId}/spells/${action}`;
+        try {
+            const learned = await sendJson(url, 'POST', { spell_id: spellId });
+            setData((prev) => ({ ...prev, ...learned }));
+            setSaveError('');
+        } catch (err) {
+            setSaveError(err.message);
+        }
+    };
 
     const spellButton = (spellId, learned) => (
         learned ? (
             <>
-                <em className='learnedSpell'>Learned</em>
-                <form className='forgetSpellForm' onSubmit={(e) => { e.preventDefault(); changeSpell(spellId, 'unlearn'); }}>
-                    <button type='submit' id='forget-spell-button' className='action-button hover-grow'>Forget</button>
-                </form>           
+                <em className="learned"></em>
+                <form className="action-form" onSubmit={(e) => { e.preventDefault(); changeSpell(spellId, 'unlearn'); }}>
+                    <button type="submit" id="forget-spell-button" className="action-button">Forget</button>
+                </form>
             </>
         ) : (
-            <form className='learnSpellForm' onSubmit={(e) => { e.preventDefault(); changeSpell(spellId, 'learn'); }}>
-                <button type='submit' id='learn-spell-button' className='action-button hover-grow'>Learn</button>
+            <form className="action-form" onSubmit={(e) => { e.preventDefault(); changeSpell(spellId, 'learn'); }}>
+                <button type="submit" id="learn-spell-button" className="action-button">Learn</button>
             </form>
         )
     );
@@ -51,132 +64,59 @@ const changeSpell = async (spellId, action) => {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Failure is upon us: {error}</p>;
 
-    const { spells, learnedIds } = data;
-    return (
+    const { spells, learnedIds, learnedSpells = [], spellLimits } = data; /*prep-done*/
+    const learnedLeveled = learnedSpells.filter((s) => s.base_level >= 1).length;
+    const learnedCantrips = learnedSpells.filter((s) => s.base_level === 0).length;
+    const maxLevel = Math.max(0, ...spells.map((s) => s.base_level));
+    const visibleTabs = TABS.filter((t) => Number(t.id.split('_')[1]) <= maxLevel);
+    
+    
+    
+return (
         <>
-        <section className="title-tile">
-        <h3 className="action-title cap-top">Study Arcana</h3>
-        <button type='button' className='link-button hover-grow' onClick={onDone}>Close the Book</button>
-        {saveError && <p>{saveError}</p>}
-        </section>
-            
-            <section className='panel-shell spell-book-tabs'>
-                <TabList tabs={TABS} active={tab} onChange={setTab} prefix='spell-' />
+            <section className="title-tile">
+                <h3 className="shop-title">Study Arcana</h3>
+                <article className='book-bar'>
+                    <button type="button" className="spellbook-button" onClick={onDone}>Close the Book</button>
+                {spellLimits && <p className='spell-stat-book'>Learned: {learnedLeveled}/{spellLimits.known} Cantrips: {learnedCantrips}/{spellLimits.cantrips}</p>}
+                {saveError && <p>{saveError}</p>}
+                </article>
                 
-                <article role='tabpanel' id='spell-panel-level_0' className='action-tile spell-panel' aria-labelledby='spell-tab-level_0' hidden={tab !== 'level_0'}>
-                    <h3 className='action-title cap-top'>Low Level Spells</h3>
-                    <ul className='action-list spellList'>
-                        {spells.filter(s => s.base_level === 0).map(s => (
-                            <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span>
-                                {spellButton(s.id, learnedIds.includes(Number(s.id)))}
-                            </li>
-                        ))}
-                    </ul>
-                </article>
-                <article role='tabpanel' id='spell-panel-level_1' className='action-tile spell-panel' aria-labelledby='spell-tab-level_1' hidden={tab !== 'level_1'}>
-                    <h3 className='action-title cap-top'>Level 1 Spells</h3>
-                    <ul className='action-list spellList'>
-                        {spells.filter(s => s.base_level === 1).map(s => (
-                            <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span>
-                                {spellButton(s.id, learnedIds.includes(Number(s.id)))}
-                            </li>
-                        ))}
-                    </ul>
-                </article>
-                <article role='tabpanel' id='spell-panel-level_2' className='action-tile spell-panel' aria-labelledby='spell-tab-level_2' hidden={tab !== 'level_2'}>
-                    <h3 className='action-title cap-top'>Level 2 Spells</h3>
-                    <ul className='action-list spellList'>
-                        {spells.filter(s => s.base_level === 2).map(s => (
-                            <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
-                                {spellButton(s.id, learnedIds.includes(Number(s.id)))}
-                            </li>
-                        ))}
-                    </ul>
-                </article>
-                <article role='tabpanel' id='spell-panel-level_3' className='action-tile spell-panel' aria-labelledby='spell-tab-level_3' hidden={tab !== 'level_3'}>
-                    <h3 className='action-title cap-top'>Level 3 Spells</h3>
-                    <ul className='action-list spellList'>
-                        {spells.filter(s => s.base_level === 3).map(s => (
-                            <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
-                                {spellButton(s.id, learnedIds.includes(Number(s.id)))}
-                            </li>
-                        ))}
-                    </ul>
-                </article>
-                <article role='tabpanel' id='spell-panel-level_4' className='action-tile spell-panel' aria-labelledby='spell-tab-level_4' hidden={tab !== 'level_4'}>
-                    <h3 className='action-title cap-top'>Level 4 Spells</h3>
-                    <ul className='action-list spellList'>
-                        {spells.filter(s => s.base_level === 4).map(s => (
-                            <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
-                                {spellButton(s.id, learnedIds.includes(Number(s.id)))}
-                            </li>
-                        ))}
-                    </ul>
-                </article>
-                <article role='tabpanel' id='spell-panel-level_5' className='action-tile spell-panel' aria-labelledby='spell-tab-level_5' hidden={tab !== 'level_5'}>
-                    <h3 className='action-title cap-top'>Level 5 Spells</h3>
-                    <ul className='action-list spellList'>
-                        {spells.filter(s => s.base_level === 5).map(s => (
-                            <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
-                                {spellButton(s.id, learnedIds.includes(Number(s.id)))}  
-                            </li>
-                        ))}
-                    </ul>
-                </article>
-                <article role='tabpanel' id='spell-panel-level_6' className='action-tile spell-panel' aria-labelledby='spell-tab-level_6' hidden={tab !== 'level_6'}>
-                    <h3 className='action-title cap-top'>Level 6 Spells</h3>
-                    <ul className='action-list spellList'>
-                        {spells.filter(s => s.base_level === 6).map(s => (
-                            <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
-                                {spellButton(s.id, learnedIds.includes(Number(s.id)))}
-                            </li>
-                        ))}
-                    </ul>
-                </article>
-                <article role='tabpanel' id='spell-panel-level_7' className='action-tile spell-panel' aria-labelledby='spell-tab-level_7' hidden={tab !== 'level_7'}>
-                    <h3 className='action-title cap-top'>Level 7 Spells</h3>
-                    <ul className='action-list spellList'>
-                        {spells.filter(s => s.base_level === 7).map(s => (
-                            <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
-                                {spellButton(s.id, learnedIds.includes(Number(s.id)))}
-                            </li>
-                        ))}
-                    </ul>
-                </article>            
-                <article role='tabpanel' id='spell-panel-level_8' className='action-tile spell-panel' aria-labelledby='spell-tab-level_8' hidden={tab !== 'level_8'}>
-                    <h3 className='action-title cap-top'>Level 8 Spells</h3>
-                    <ul className='action-list spellList'>
-                        {spells.filter(s => s.base_level === 8).map(s => (
-                            <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
-                                {spellButton(s.id, learnedIds.includes(Number(s.id)))}
-                            </li>
-                        ))}
-                    </ul>
-                </article>
-                <article role='tabpanel' id='spell-panel-level_9' className='action-tile spell-panel' aria-labelledby='spell-tab-level_9' hidden={tab !== 'level_9'}>   
-                  <h3 className='action-title cap-top'>Level 9 Spells</h3>
-                    <ul className='action-list spellList'>
-                        {spells.filter(s => s.base_level === 9).map(s => (
-                            <li key={s.id} className='action-item spell-item'>
-                                <span className='action-label spellName'>{s.name}</span> 
-                                {spellButton(s.id, learnedIds.includes(Number(s.id)))}
-                            </li>
-                        ))}
-                    </ul>
-                </article>
+            </section>
+
+            <section className="panel-shell spell-book-tabs">
+                <TabList tabs={visibleTabs} active={tab} onChange={setTab} prefix="spell-" />
+
+                {TABS.map(({ id }) => {
+                    const level = Number(id.replace('level_', ''));
+                    const levelSpells = spells.filter((s) => s.base_level === level);
+
+                    return (
+                        <article
+                            key={id}
+                            role="tabpanel"
+                            id={`spell-panel-${id}`}
+                            className="action-container"
+                            aria-labelledby={`spell-tab-${id}`}
+                            hidden={tab !== id}
+                        >
+                            <h3 className="action-title">{LEVEL_TITLES[level]}</h3>
+                            <ul className="action-set">
+                                {levelSpells.map((s) => (
+                                    <li key={s.id} className="action-item">
+                                        <button type="button" className="caption-btn hover-grow" onClick={() => onOpenSpell?.(s)}>{s.name}</button>
+                                        {spellButton(s.id, learnedIds.includes(Number(s.id)))}
+                                    </li>
+                                ))}
+                            </ul>
+                        </article>
+                    );
+                })}
             </section>
         </>
     );
-};
-
+}
 
 export default SpellBook;
+
+   

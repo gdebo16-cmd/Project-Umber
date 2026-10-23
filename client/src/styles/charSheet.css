@@ -1,1614 +1,199 @@
-/* Project-Umber character sheet
-   Tokens in :root are shared with theme swaps. Unused tokens are kept on purpose.
-*/
-
-:root {
-    
-    --rad1: .80rem;
-    --rad2: .35rem;
-    --bs1: 2px 2px 15px black;
-    --bs2: 2px 2px 10px black;
-    --pad1: .25%;
-    --pad2: 1%;
-    --pad3: 0;
-    --mar1: 0;
-    --mar2: 2%;
-    --shadowInner: inset 6px 6px 8px #000000a9, 
-                   inset -1px -1px 5px #00000079;
-    --toprad: 10px 10px 0 0;
-    --lowrad: 0 0 10px 10px;
-    --padTop: 3%;
-    --padLow: 2%;
-    --tile: 10px;
-    --marTop: 0;
-    --marLow: 0;
-    --section-gap: 0.75rem;
-    --healColor: rgba(46, 79, 46, 0.712);
-    --damageColor:  rgba(79, 46, 46, 0.712);
-    --fontF: "Cinzel Decorative", serif;
-    --fontW1: 700;
-    --fontW2: 400;
-    --fontStyle: normal;
-    --fontS1: 100%;
-    --fontS2: 130%;
-    --fontS3: 160%;
-    --w1: 100%;
-    --w2: 100vw;
-    --h1: 100%;
-    --h2: 100vh;
-    --maxW: 100%;
-    --maxH1: 100%;
-    --maxH2: 100vh;
-    --minW1: 0;
-    --minW2: 0;
-    --minH1: 0;
-    --minH2: 0;
-    --ofX1: hidden;
-    --ofX2: hidden;
-    --ofY1: auto;
-    --ofY2: auto;
-    --border1: none;
+* {
+   font-family: var(--fontfam);
+   font-weight: var(--fontweight);
+   font-style: var(--fontstyle);
 }
 
-:root, 
 
-[data-theme="purple"] {
-    --bg-color-4: rgba(71, 52, 139, 0.356);
-    --bg-color-3: rgba(74, 60, 199, 0.678);
-    --bg-color-2: rgba(68, 42, 196, 0.171);
-    --bg-color-1: rgba(109, 83, 222, 0.72);
-    --txt-color-1: rgba(255, 255, 255, 0.756);
-    --tileBorder: 1px solid rgba(160, 150, 180, 0.565);
-    --bgc-top: rgba(64, 72, 175, 0.72);
-    --bgc-low: rgba(46, 31, 133, 0.466);
-    --accent: rgb(245, 188, 103);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(2px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
-}
-[data-theme="green"] {
-    --bg-color-4: rgba(41, 66, 43, 0.377);
-    --bg-color-3: rgba(41, 66, 43, 0.678);
-    --bg-color-2: rgba(59, 110, 66, 0.24);
-    --bg-color-1: rgba(34, 53, 41, 0.548);
-    --txt-color-1: rgba(237, 243, 221, 0.822);
-    --tileBorder: 1px solid rgba(150, 180, 154, 0.565);
-    --bgc-top: rgba(64, 104, 73, 0.72);
-    --bgc-low: rgba(51, 80, 48, 0.596);
-    --accent: rgb(238, 224, 163);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(2px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
-}
-
-[data-theme="blue"] {
-    --bg-color-4: rgba(26, 55, 150, 0.37);
-    --bg-color-3: rgba(16, 47, 146, 0.404);
-    --bg-color-2: rgba(59, 86, 209, 0.637);
-    --bg-color-1: rgba(44, 62, 128, 0.72);
-    --txt-color-1: rgba(232, 239, 250, 0.822);
-    --tileBorder: 1px solid rgba(202, 218, 255, 0.565);
-    --bgc-top: rgba(33, 60, 184, 0.72);
-    --bgc-low: rgba(20, 44, 150, 0.486);
-    --accent: rgb(163, 238, 238);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(2px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
-}
-
-[data-theme="red"] {
-    --bg-color-4: rgba(112, 20, 20, 0.356);
-    --bg-color-3: rgba(126, 35, 35, 0.678);
-    --bg-color-2: rgba(88, 28, 28, 0.67);
-    --bg-color-1: rgba(65, 9, 9, 0.72);
-    --txt-color-1: rgba(250, 232, 232, 0.822);
-    --tileBorder: 1px solid rgba(252, 199, 199, 0.565);
-    --bgc-top: rgba(131, 39, 39, 0.72);
-    --bgc-low: rgba(97, 26, 26, 0.397);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(5px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
-}
-
-[data-theme="orange"] {
-    --bg-color-4: rgba(112, 72, 20, 0.39);
-    --bg-color-3: rgba(112, 72, 20, 0.678);
-    --bg-color-2: rgba(129, 83, 22, 0.67);
-    --bg-color-1: rgba(65, 45, 9, 0.72);
-    --txt-color-1: rgba(250, 232, 232, 0.822);
-    --tileBorder: 1px solid rgba(252, 225, 199, 0.565);
-    --bgc-top: rgba(202, 136, 60, 0.72);
-    --bgc-low: rgba(145, 99, 39, 0.459);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(5px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
-}
-
-[data-theme="yellow"] {
-    --bg-color-4: rgba(172, 149, 24, 0.432);
-    --bg-color-3: rgba(160, 148, 42, 0.678);
-    --bg-color-2: rgba(192, 169, 41, 0.67);
-    --bg-color-1: rgba(124, 114, 67, 0.72);
-    --txt-color-1: rgba(250, 250, 232, 0.822);
-    --tileBorder: 1px solid rgba(252, 247, 199, 0.565);
-    --bgc-top: rgba(209, 183, 35, 0.72);
-    --bgc-low: rgba(148, 136, 68, 0.452);
-    --accent: rgb(208, 252, 187);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(5px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
-}
-
-[data-theme="dark"] {
-    --bg-color-4: rgba(0, 0, 0, 0.466);
-    --bg-color-3: rgba(0, 0, 0, 0.466);
-    --bg-color-2: rgba(36, 35, 35, 0.67);
-    --bg-color-1: rgba(0, 0, 0, 0.452);
-    --txt-color-1: rgba(255, 255, 255, 0.822);
-    --tileBorder: 1px solid rgba(255, 255, 255, 0.74);
-    --bgc-top: rgba(0, 0, 0, 0.671);
-    --bgc-low: rgba(5, 5, 5, 0.068);
-    --accent: rgb(252, 196, 112);
-    --healColor: rgba(140, 184, 140, 0.384);
-    --damageColor:  rgba(48, 37, 37, 0.712);
-    --shadowInner: inset 4px 4px 15px #ffeacea9, 
-                   inset 0px 0px 5px #ffeacea9;
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(5px) saturate(150%);
-    --background: url('/utils/mapblack1.png');
-}
-
-[data-theme="light"] {
-    --bg-color-4: rgba(255, 255, 255, 0.062);
-    --bg-color-3: rgba(255, 230, 184, 0.781);
-    --bg-color-2: rgba(253, 249, 242, 0.829);
-    --bg-color-1: rgba(238, 232, 216, 0.74);
-    --txt-color-1: rgba(0, 0, 0, 0.678);
-    --text-color-2: rgba(255, 255, 255, 0.986);
-    --tileBorder: 1px solid rgb(255, 228, 179);
-    --bgc-top: rgba(255, 255, 255, 0.918);
-    --bgc-low: rgba(255, 255, 255, 0.486);
-    --accent: rgb(145, 100, 3);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(2px) saturate(150%);
-    --background: url('/utils/mapwhite1.png');
-}
-
-[data-theme="hellfire"] {
-    --bg-color-4: rgba(78, 71, 71, 0.459);
-    --bg-color-3: rgba(3, 3, 3, 0.678);
-    --bg-color-2: rgba(119, 42, 42, 0.67);
-    --bg-color-1: rgba(65, 9, 9, 0.72);
-    --txt-color-1: rgba(228, 43, 11, 0.822);
-    --tileBorder: 1px solid rgba(252, 199, 199, 0.565);
-    --bgc-top: rgba(82, 37, 25, 0.72);
-    --bgc-low: rgba(0, 0, 0, 0.72);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(5px) saturate(150%);
-    --healColor: rgba(253, 249, 227, 0.685);
-    --damageColor:  rgba(65, 56, 56, 0.712);
-    --background: url('/utils/hellfiremap.png');
-}
-
-[data-theme="frozen"] {
-    --bg-color-4: rgba(155, 220, 245, 0.438);
-    --bg-color-3: rgba(20, 83, 112, 0.678);
-    --bg-color-2: rgba(22, 99, 129, 0.67);
-    --bg-color-1: rgba(26, 79, 92, 0.72);
-    --txt-color-1: rgba(232, 250, 247, 0.822);
-    --tileBorder: 1px solid rgba(208, 248, 241, 0.801);
-    --bgc-top: rgba(168, 221, 245, 0.486);
-    --bgc-low: rgba(92, 125, 138, 0.534);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(5px) saturate(150%);
-    --blur2: blur(0) saturate(150%);
-    --healColor: rgba(109, 188, 253, 0.63);
-    --damageColor:  rgba(39, 96, 252, 0.712);
-    --background: url('/utils/frozenmap1.png');
-}
-/* ---------- reset / base ---------- */
-
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-html {
+html, body {
+    margin: 0 ! important;
+    padding: 0 ! important;
+    width: 100vw;
+    height: 100dvh;
+    overflow: hidden ! important;
+    scroll-behavior: smooth ! important;
+    overscroll-behavior: none ! important;
+    -webkit-overflow-scrolling: touch ! important;
+    -ms-overflow-style: none ! important;
+    -webkit-tap-highlight-color: transparent ! important;
+    -webkit-touch-callout: none ! important;
+    -webkit-user-select: none ! important;
+    -moz-user-select: none ! important;
+    -ms-user-select: none ! important;
+    user-select: none ! important;
     max-width: var(--maxW);
-    overflow-x: var(--ofX1);
 }
 
 body {
-    width: var(--w1);
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100svh;
+    background-color: var(--bgc-theme);
+    z-index: -2 ! important;
     max-width: 3840px;
-    overflow-x: var(--ofX1);
-    overflow-y: auto; /* safety: scroll if a tile min-height needs more room */
-    background-image: var(--background);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
     font-family: var(--fontF);
     font-weight: var(--fontW1);
-    font-style: var(--fontStyle);
-    height: var(--h2);
-    max-height: var(--maxH2);
-    min-height: var(--minH2);
-    margin: var(--mar1);
+    font-style: var(--fontstyle);
+    margin: 0;
     display: flex;
     flex-direction: column;
-    color: var(--txt-color-1);
 }
 
-pre {
-    display: none;
-    max-width: var(--maxW);
-    overflow-x: auto;
-    white-space: pre-wrap;
-    word-break: break-word;
-    color: white;
-    backdrop-filter: var(--blur1);
-    font-size: var(--fontS3);
+.fixed-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100svh;
+    overflow: hidden;
+    min-height: 100dvh;
+    background-image: var(--background);
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
 }
 
-ul, li, a {
+ul,
+li,
+a {
     list-style: none;
     text-decoration: none;
+    color: var(--txt-color-1);
 }
 
 option {
-    background-color: var(--bg-color-1);
-    color: var(--txt-color-1);
+    background-color: var(--drop-down-bg);
+    color: var(--drop-down-txt);
     border: var(--tileBorder);
-    padding: var(--pad3);
-    margin: var(--mar1);
+    padding: 0;
+    margin: 0;
     text-align: center;
-    font-size: var(--fontS1);
-    font-weight: var(--fontW1);
-    font-style: var(--fontStyle);
+    font-size: 100%;
 }
 
-/* Shared press/hover grow. Same 1.03 scale the old per-selector rules used. */
-.hover-grow {
-    transition: transform .5s ease;
-}
-
-.hover-grow:hover {
-    transform: scale(1.03);
-}
-
-/* Top cap / bottom cap used by inventory blocks and any tile that already
-   carried these exact declarations. Edit-page .topTile/.bottomTile are NOT
-   given the create-flow look here; those pages stay as they render today
-   unless an element also has the sheet classes below. */
-
-.cap-top {
-    background-color: var(--bgc-top);
-    border-radius: var(--toprad);
-}
-
-.cap-bottom {
-    background-color: var(--bgc-low);
-    border-radius: var(--lowrad);
-}
-
-/* ---------- header / nav ---------- */
 
 header {
+    width: 100%;
+    margin-top: 0;
+    padding-top: env(safe-area-inset-top);
+}
+
+footer {
+    width: 100vw;
+    height: 100svh;
+    overflow: hidden ! important;
+    background-color: var(--bgc-theme);
+    margin-bottom: 0 !important;
+    padding-bottom: env(safe-area-inset-bottom);
     z-index: 1;
-    position: relative;
-    flex-shrink: 0;
 }
 
-#siteTitle {
-    background-color: var(--bg-color-3);
-    color: var(--txt-color-1);
-    text-align: center;
-    padding: var(--pad1);
-    margin: var(--mar1);
-}
-
-#characterHeader {
-    width: var(--w1);
-    max-width: var(--maxW);
-    min-width: var(--minW1);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    color: var(--txt-color-1);
-    background-color: var(--bg-color-2);
-}
-
-#characterName,
-#characterRace,
-#characterClass {
-    font-size: var(--fontS2);
-    text-align: center;
-    padding: var(--pad2);
-    margin: var(--mar1);
-    border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
-    backdrop-filter: var(--blur2);
-}
-
-#characterName {
-    flex-grow: 3;
-}
-
-#characterRace,
-#characterClass {
-    flex-grow: 2;
-}
-
-#navBox {
-    border-radius: var(--lowrad);
-    box-shadow: var(--bs2);
-}
-
-#navContainer {
-    background-color: var(--bg-color-3);
-    border-radius: var(--lowrad);
-    margin: var(--mar1);
-    padding: var(--pad3);
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: stretch;
-}
-
-#homeNav,
-#themeNav,
-#characterNav,
-#campaignNav,
-#settingsNav {
-    min-width: var(--minW1);
-    flex: 1;
-    backdrop-filter: var(--blur2);
-}
-
-.navButton {
-    border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
-    background-color: var(--bg-color-2);
-    padding: var(--pad2);
-    color: var(--txt-color-1);
-}
-
-#homeNav {
-    border-radius: 0 0 0 10px;
-}
-
-#themeNav {
-    /* Match sibling .navButton items in #navContainer:
-       same flex share, height, font, padding, border, radius (from .navButton).
-       Keep padding ON #themeNav so % padding resolves against #navContainer
-       the same way as home / Characters / etc. */
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: center;
-    min-width: var(--minW1);
-    position: relative;
-    box-sizing: border-box;
-}
-
-#themeNav label {
-    /* Keep for a11y; do not take layout space (select is the visible control) */
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: var(--pad3);
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: var(--border1);
-}
-
-#themeNav select {
-    box-sizing: border-box;
-    width: var(--w1);
-    height: var(--h1);
-    min-width: var(--minW1);
-    flex: 1 1 auto;
-    align-self: stretch;
-    margin: var(--mar1);
-    /* Padding/border/radius come from #themeNav.navButton — do not re-declare % here */
-    padding: var(--pad3);
-    border: var(--border1);
-    border-radius: inherit;
-    background-color: transparent;
-    color: inherit;
-    font: inherit;
-    line-height: inherit;
-    text-align: center;
-    text-align-last: center;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-#themeNav select.cap-bottom {
-    /* Neutralize inventory tile paint; keep nav chrome from #themeNav.navButton */
-    background-color: transparent;
-    border-radius: inherit;
-    border: var(--border1);
-}
-
-
-#settingsNav {
-    border-radius: 0 0 10px 0;
-}
-
-#characterNav,
-#campaignNav,
-#settingsNav {
-    position: relative;
-}
-
-.dropDown {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 200px;
-    max-width: 90vw;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    z-index: 10;
-    text-align: center;
-    box-shadow: var(--bs2);
-    background-color: var(--bg-color-5);
-    border: var(--tileBorder);
-    transition: all 1s ease;
-    padding: var(--pad3);
-    margin: var(--mar1);
-}
-
-li:hover .dropDown {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-.characterDropdownButton,
-.campaignDropdownButton,
-.settingsDropdownButton {
-    border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
-    color: var(--txt-drop-1);
-    padding: 1.5%;
-}
-
-#settingsNav .dropDown {
-    left: auto;
-    right: 0;
-}
-
-#campaignNav .dropDown {
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-    background-color: var(--bg-color-2);
-    border: var(--accent);
-    box-shadow: var(--bs2);
-    color: var(--txt-color-1);
-}
-
-/* ---------- layout ---------- */
+/* ---------- Universal breakpoints ---------- */
 
 .sheet-tabs {
     display: none !important;
 }
 
-main {
-    width: var(--w1);
-    max-width: var(--maxW);
-    min-width: var(--minW1);
-    min-height: var(--minH1);
-    flex: 1 1 auto;
-    overflow-x: var(--ofX1);
-    overflow-y: var(--ofY1); /* safety net with body */
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    /* 7 rows: B, mid, skills x3, saves x2. Actions (H) spans skills+saves
-       so it ends level with the bottom of saving throws and stays tall. */
-    grid-template-rows:
-        minmax(0, 0.85fr)
-        minmax(0, 0.95fr)
-        minmax(0, 1.2fr)
-        minmax(0, 1.2fr)
-        minmax(0, 1.2fr)
-        minmax(0, 1.2fr)
-        minmax(0, 1.2fr);
-    /* H and E share the bottom block: skills span full actions height (no saves) */
-    grid-template-areas:
-        "B B B B B B B B"
-        "I I I F G C C C"
-        "H H H H E E E E"
-        "H H H H E E E E"
-        "H H H H E E E E"
-        "H H H H E E E E"
-        "H H H H E E E E";
-    gap: 0.5rem;
-    place-items: stretch;
-    align-items: stretch;
-    justify-items: stretch;
-    backdrop-filter: var(--blur1);
-}
-
-/* ---------- stat tiles ---------- */
-
-
-.tile {
-    border-bottom: none;
-    border-right: none;
-    text-align: center;
-    
-   
-    
-    border: var(--tileBorder);
-    border-radius: var(--tile);
-    box-shadow: var(--bs2);
-
-    color: var(--txt-color-1);
-    
-    min-width: var(--minW1);
-    width: var(--w1);
-    
-}
-
-
-#stat-container {
-    grid-area: B;
-    display: flex;
-    flex-direction: row;
-    width: var(--w1);
-    gap: 8px;
-    
-    margin-top: 1%;
-    background-color: var(--bg-color-4);
-}
-
-.stat-tile {
-    flex: 1 1 0;
-    cursor: pointer;
-    container-type: size;
-    
-    display: grid;
-    grid-template-rows: 1fr 2fr 1fr;
-    
-    height: var(--h1);
-    min-height: var(--minH1);
-    overflow: var(--ofX1);
-    
-}
-
-#stat-tile-label,
-#stat-tile-modifier,
-#stat-tile-value {
-    margin: var(--mar1);
-}
-
-#stat-tile-value {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--minH1);
-    border-radius: 50% 50% 0 0;
-    overflow: var(--ofX1);
-}
-
-#stat-tile-label {
-    font-size: clamp(0.6rem, 15cqh, 0.85rem);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--minH1);
-    overflow: var(--ofX1);
-    border-radius: 0 0 50% 50%;
-}
-
-#stat-tile-modifier {
-    font-size: clamp(0.8rem, 26cqh, 1.45rem);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--minH1);
-    overflow: var(--ofX1);
-}
-
-#armor-class-container {
-    grid-area: F;
-}
-
-#initiative-container {
-    grid-area: G;
-}
-
-#armor-class-tile-container,
-#initiative-tile-container {
-
-    display: grid;
-    grid-template-rows: 1fr 2fr;
-    height: var(--h1);
-    min-height: var(--minH1);
-    container-type: size;
-    cursor: pointer;
-}
-
-.armor-class-tile,
-.initiative-tile {
-    container-type: size;
-    border: var(--tileBorder);
-    text-align: center;
-    border-radius: var(--tile);
-    box-shadow: var(--bs2);
-    height: var(--h1);
-    min-height: var(--minH1);
-}
-
-
-
-#armor-class-tile-label,
-#initiative-tile-label {
-    margin: var(--mar1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--minH1);
-    font-size: clamp(0.5rem, 13cqh, 1rem);
-    overflow: var(--ofX1);
-
-}
-
-#armor-class-tile-value,
-#initiative-tile-value {
-    margin: var(--mar1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--bgc-low);
-    border-radius: 0 0 10px 10px;
-    min-height: var(--minH1);
-    font-size: clamp(0.85rem, 30cqh, 1.55rem);
-    overflow: var(--ofX1);
-}
-
-
-
-/* ---------- skills ---------- */
-
-.skills-container {
-    grid-area: E;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: auto repeat(6, minmax(0, 1fr));
-    grid-auto-flow: column;
-    gap: 0.35rem;
-    height: var(--h1);
-    cursor: pointer;
-    border-radius: var(--tile);
-    
-}
-
-#skills-title {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    flex-shrink: 0;
-    border: var(--tileBorder);
-    margin: var(--mar1);
-    container-type: inline-size;
-    padding: 0.35rem 0.6rem;
-    line-height: 1.2;
-    height: var(--h1);
-    font-size: clamp(0.75rem, 4.5cqi, 1.05rem);
-    overflow: var(--ofX1);
-    background-color: var(--bgc-top);
-    border-radius: var(--tile);
-    text-align: center;
-    box-shadow: var(--bs1);
-    border-radius: var(--tile);
-}
-
-
-.skill-tile {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr;
-    border-radius: var(--tile);
-    container-type: size;
-    cursor: pointer;
-    box-shadow: var(--bs2);
-    overflow: var(--ofX1);
-}
-
-
-.skill-label,
-.skill-value { 
-    padding: 0.2rem 0.25rem;
-    margin: var(--mar1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: var(--ofX1);
-}
-.skill-label {
-    font-size: clamp(0.5rem, 18cqh, 1rem);
-    line-height: 1.15;
-}
-.skill-value {
-    font-size: clamp(0.8rem, 32cqh, 1.2rem);
-}
-
-/* ---------- health ---------- */
-
-.health-container {
-    grid-area: C;
-    border-radius: var(--tile);
-    box-shadow: var(--bs2);
-    border: var(--tileBorder);
-
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: minmax(0, 1fr) minmax(6px, 12%);
-    grid-template-areas:
-        "a b c"
-        "d d d";
-    height: var(--h1);
-    min-height: var(--minH1);
-    overflow: var(--ofX1);
-
-    background-color: var(--bg-color-4);
-}
-
-.health-button-tile {
-    grid-area: a;
-    
-    display: grid;
-    grid-template-rows: repeat(3, minmax(0, 1fr));
-
-    container-type: size;
-    overflow: var(--ofX1);
-    font-family: var(--fontF1);
-    font-weight: var(--fontW1);
-    font-style: var(--fontStyle);
-}
-
-.current-hp-tile {
-    grid-area: b;
-}
-
-.max-hp-tile {
-    grid-area: c;
-}
-
-
-.hp-bar-tile {
-    grid-area: d;
-    min-height: var(--minH1);
-    height: 60%;
-    align-self: center;
-    background: #444;
-    border-radius: var(--rad1);
-    overflow: var(--ofX1);
-    margin: 0 2%;
-  }
-  
-  #hp-bar-fill {
-    height: var(--h1);
-    background: #3cb371;
-  }
-
-
-.button-tile-component {
-    min-width: var(--minW1);
-    font-family: inherit;
-    font-size: clamp(0.55rem, min(18cqh, 14cqi), 1rem);
-    padding: 0 4%;
-    white-space: nowrap;
-    overflow: var(--ofX1);
-    text-overflow: ellipsis;
-}
-
-.button-component {
-    border: var(--border1);
-    color: var(--txtC1);
-    overflow: var(--ofX1);
-    cursor: pointer;
-}
-
-#heal-button {
-    border-radius: 10px 0 0 0;
-    background-color: var(--healColor);
-}
-    
-
-#damage-button {
-    background-color: var(--damageColor);
-    border-radius: 0 0 0 10px;
-    
-    
-    
-}   
-
-#hp-input {
-    border: var(--border1);
-    color: var(--txt-color-1);
-    background-color: transparent;
-    text-align: center;
-    appearance: textfield;
-    -moz-appearance: textfield;
-    
-}
-#hp-input::-webkit-outer-spin-button,
-#hp-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: var(--mar1);
-}
-
-
-.current-hp-tile,
-.max-hp-tile {
-    display: grid;
-    grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
-    min-width: var(--minW1);
-    min-height: var(--minH1);
-    container-type: size;
-    overflow: var(--ofX1);
-}
-
-.hp-label-component {
-    text-align: center;
-    font-size: clamp(0.55rem, min(18cqh, 12cqi), 1rem);
-    line-height: 1.1;   
-    background-color: var(--bgc-top);
-    padding-top: 4%;
-    padding-bottom: 4%;
-    margin: var(--mar1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--minH1);
-    overflow: var(--ofX1);
-}
-
-.hp-value-component {
-    font-size: clamp(0.7rem, min(30cqh, 22cqi), 1.5rem);
-    text-align: center;
-    margin: var(--mar1);
-    background-color: var(--bgc-low);
-    display: flex;  
-    align-items: center;
-    justify-content: center;
-    min-height: var(--minH1);
-    overflow: var(--ofX1);
-}
-
-#current-hp-value--fallen {
-    font-size: clamp(0.5rem, min(14cqh, 11cqi), 0.9rem);
-    line-height: 1.1;
-    overflow-wrap: anywhere;
-}
-
-/* ---------- conditions ---------- */
-
-.condition-container {
-    grid-area: I;
-    border-radius: var(--tile);
-    border: var(--tileBorder);
-    box-shadow: var(--bs2);
-    display: grid;
-    grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
-    overflow: var(--ofX1);
-    container-type: size;
-}
-.condition-container > * {
-    min-height: var(--minH1);
-    max-height: var(--h1);
-    
-}
-
-#condition-title {
-    font-size: clamp(0.7rem, 22cqh, 1rem);
-    padding: 0.35rem;
-    margin: var(--mar1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--minH1);
-    overflow: var(--ofX1);
-}
-
-.condition-tile {
-    font-size: clamp(0.7rem, 12cqh, 0.95rem);
-    margin-top: var(--mar1);
-    padding: 0.35rem 0.6rem;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: min-content;
-    column-gap: 0.75rem;
-    row-gap: 0.2rem;
-    align-content: start;
-
-    min-height: var(--minH1);
-    max-height: var(--h1);
-    overflow-x: var(--ofX1);
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255,255,255,0.35) transparent;
-}
-
-
-
-#conditions-list-1,
-#conditions-list-2,
-#conditions-list-3 {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-auto-flow: row dense;
-    grid-auto-rows: 1.4em;
-    align-items: center;
-    column-gap: 0.45em;
-    min-width: var(--minW1);
-    
-    font-size: 0.85em;
-    text-align: left;
-}
-
-#conditions-list-1 > .condition-checkbox,
-#conditions-list-2 > .condition-checkbox {
-    grid-column: 1;
-    margin: var(--mar1);
-    width: 1em;
-    height: 1em;
-    cursor: pointer;
-}
-
-#conditions-list-1 > label,
-#conditions-list-2 > label {
-    grid-column: 2;
-    justify-self: start;
-    min-width: var(--minW1);
-    max-width: var(--w1);
-    overflow: var(--ofX1);
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-/* Exhaustion: own row under both columns, full width: label | slider | value */
-#conditions-list-3 {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: center;
-    column-gap: 0.5em;
-    min-width: var(--minW1);
-    font-size: 0.85em;
-    text-align: left;
-}
-
-.exhausted-component {
-    width: 100%;
-    min-width: var(--minW1);
-    margin: var(--mar1);
-}
-
-#conditions-list-3 output {
-    min-width: 2ch;
-    text-align: right;
-}
-
-#condition-checkbox {
-    cursor: pointer;
-}
-
-/* ---------- actions / spells / tabs ---------- */
-
-
-
-.action-container {
-    grid-area: H;
-    min-height: var(--minH1);  
-    height: var(--h1);
-    max-height: var(--h1);
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-    align-items: start;
-    font-family: var(--fontF1);
-    font-weight: var(--fontW2);
-    font-style: var(--fontStyle);
-    border-radius: 15px;
-    box-shadow: var(--bs2);
-    
-}
-
-.action-tab-list {
-    display: flex;
-    justify-content: space-around;
-    align-items: stretch;
-    gap: 0.5rem;
-    background-color: var(--bgc-top);
-    border-radius: var(--toprad);
-    border: var(--tileBorder);
-    height: auto;
-    min-height: var(--minH1);
-    padding: 0.5rem;
-    margin: var(--mar1);
-    box-shadow: var(--bs2);
-    overflow: auto;
-    scrollbar-width: none;
-    scrollbar-color: rgba(255,255,255,0.35) transparent;
-    
-}
-
-/* the whole bar holding both tabs */
-.spells-tab .action-tab-list {
-    border-radius: var(--toprad);
-    gap: 0.25rem;
-    margin: 0 0.5rem;
-    padding: 0.5rem;
-}
-
-.spells-panel {
-    margin: 0 0.5rem;
-    padding:  0.5rem;
-    border-radius: var(--lowrad);
-}
-
-/* each tab button */
-.spells-tab [role="tab"] {
-    padding: 0.5rem 1rem;
-    
-}
-
-/* the tab that's currently open */
-.spells-tab [role="tab"][aria-selected="true"] {
-    color: var(--accent);
-    background-color: var(--bgc-low);
-}
-
-.spell-slot-checkbox {
-    appearance: none;          /* turn off the browser's default box */
-    width: 1.1rem;
-    height: 1.1rem;
-    margin: .35rem 0.25rem;
-    border: 2px solid var(--accent);
-    border-radius: 50%;        /* round, like a gem. Use 3px for a square */
-    background-color: transparent;
-    cursor: pointer;
-    transition: background-color 0.2s, box-shadow 0.2s;
-}
-
-/* when the box is checked (slot used) */
-.spell-slot-checkbox:checked {
-    background-color: var(--accent);
-    box-shadow: 0 0 6px var(--accent);   /* a little glow */
-}
-
-/* when you hover over one */
-.spell-slot-checkbox:hover {
-    box-shadow: 0 0 4px var(--accent);
-}
-
-
-[role="tab"] {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    width: var(--w1);
-    border-radius: var(--rad1);
-    border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
-    color: var(--txt-color-1);
-    background-color: var(--bg-color-4);
-    
-}
-
-[role="tab"][aria-selected="true"] {
-    font-weight: var(--fontW1);
-    box-shadow: var(--shadowInner);
-    border-top: none;
-    border-left: none;
-    color: var(--accent);
-}
-
-[role="tabpanel"] {
-    height: var(--h1);
-    background-color: var(--bgc-low);
-}
-
-
-.action-container > [role="tabpanel"],
-.panel-shell > [role="tabpanel"] {
-    min-height: 0;
-    height: auto;
-    max-height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-width: none; /* scrolls by wheel/touch, no visible bar */
-}
-
-.action-container > [role="tabpanel"]::-webkit-scrollbar,
-.panel-shell > [role="tabpanel"]::-webkit-scrollbar {
-    display: none;
-}
-
-#panel-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    
-}
-
-/* Only hide panels inside action / subpage shells — never .sheet-panel on desktop */
-.action-container > [role="tabpanel"][hidden],
-.panel-shell > [role="tabpanel"][hidden] {
-    display: none !important;
-}
-
-.spell-book-tabs {
-    border: var(--tileBorder);
-    border-radius: var(--tile);
-    box-shadow: var(--bs2);
-}
-
-.action-tile {
-    max-height: var(--h1);
-    border: var(--tileBorder);
-    border-top: none;
-    padding: 0.5rem;
-    
-}
-
-.action-item.spell-slot {   /* both classes, so this beats the plain .action-item rule further down */
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;   /* title and list both go full width */
-    gap: .5rem;                 /* no space between them */
-    padding: 0;             /* drop the .action-item padding */
-    border: none;           /* drop the extra frame around both */
-    background: none;
-    box-shadow: none;
-    overflow: var(--ofX1);
-    border: var(--tileBorder);
-    box-shadow: var(--bs2);
-}
-
-.spell-slot > .spell-list {
-    margin: 0;
-    border-top: none;       /* so the title and list don't draw a double line */
-    min-height: 1.5rem; 
-        /* empty levels still show a small box */
-}
-
-.spellList {
-    display: flex;
-    
-    gap: 0.75rem;
-}
-
-.action-title {
-    text-align: left;
-    background-color: var(--bgc-top);
-    border-radius: var(--toprad);
-    padding: 0.6rem;
-    border-bottom: none;
-    margin: 0;
-}
-
-.action-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    padding: 0.3rem;
-    margin: 0 0.5rem;
-    
-}
-
-.action-item {
-    border: var(--tileBorder);
-    border-radius: var(--tile);
-    box-shadow: var(--bs2);
-    background-color: var(--bgc-low);
-    padding: 1.25rem;
-    margin-bottom: 0.5rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    overflow: var(--ofX1);
-}
-
-.action-button-container {
-    display: flex;
-    flex-direction: row;
-    gap: 0.125rem;
-    align-self: stretch;
-    flex-direction: row;
-    
-}
-
-.action-button {
-    flex: 1;
-    align-self: stretch; 
-    background-color: var(--accent); 
-    border: var(--tileBorder);
-    border-radius: var(--rad2);
-    box-shadow: var(--bs2);
-    margin: 0;
-}
-
-
-.action-button:hover {
-    background-color: var(--bg-color-2);
-    color: var(--accent);
-    cursor: pointer;
-}
-
-.title-tile {
-    display: flex;
-    margin: 1%;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
-    border: var(--tileBorder);
-    border-radius: var(--tile);
-    box-shadow: var(--bs2);
-    background-color: var(--bgc-low);
-    text-align: center;
-}
-.action-tab-title {
-    border-radius: var(--toprad);
-    background-color: var(--bgc-top);
-    margin: 0;
-}
-
-.link-button {
-    border: none;
-    text-align: right;
-    border-radius: var(--lowrad);
-    background-color: var(--bgc-low);
-    padding: 2%;
-    margin: 0;
-    color: var(--txt-color-1);
-    font-family: var(--fontF1);
-    font-weight: var(--fontW1);
-    font-style: var(--fontStyle);
-}
-
-
-
-
-
-
-
-/* ---------- inventory ---------- */
-
-
-
-.learnedSpell {
-    text-align: right;
-    margin-right: 1%;
-}
-
-em {
-    color: var(--accent);
-    margin-left: 1%;
-    flex: 1 1 32%;
-}
-
-.addItemButton,
-.removeItemButton {
-    border: var(--tileBorder);
-    background-color: var(--bgc-low);
-    border-radius: var(--tile);
-    cursor: pointer;
-    color: var(--txt-color-1);
-}
-
-.removeItemButton {
-    padding: 15%;
-    margin: 0;
-    flex: 1 1 32%;
-}
-
-.addItemButton:hover,
-.removeItemButton:hover {
-    background-color: var(--bgc-top);
-    color: var(--accent);
-    cursor: pointer;
-}
-
-/* ---------- roll orb ---------- */
-
-.roll-orb {
-    position: fixed;
-    left: 1rem;
-    top: 50%;
-    z-index: 1000;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    background-color: var(--bgc-top);
-    border: var(--tileBorder);
-    cursor: grab;
-    user-select: none;
-    touch-action: none;
-}
-
-.roll-orb.is-open {
-    width: 15rem;
-    height: 12rem;
-    border-radius: 0.5rem;
-    cursor: default;
-}
-
-.roll-orb.is-dragging {
-    cursor: grabbing;
-}
-
-.roll-orb.is-open .roll-orb-face {
-    display: none;
-}
-
-.roll-orb:not(.is-open) .roll-orb__panel {
-    display: none;
-}
-
-/* ---------- overflow guard ---------- */
-
-main > *,
-.sheet-panel,
-#stat-container,
-.health-container,
-.skills-container,
-#armor-class-container,
-#initiative-container,
-.action-container,
-.condition-container,
-.gear,
-#healthContainer,
-#skills-container,
-.condition-tile {
-    min-width: 0;
-    max-width: 100%;
-    min-height: 0;
-}
-
-.skill-label,
-.skill-value,
-#stat-tile-label,
-#stat-tile-value {
-    overflow-wrap: anywhere;
-    word-break: break-word;
-}
-
-/* ---------- breakpoints ---------- */
-
-@media (max-width: 768px) {
-    /* Keep the page inside the viewport: no child may invent a width
-       wider than the screen (the usual culprits are width:100% + padding
-       without border-box, flex items that refuse to shrink, or fixed
-       grid tracks). */
-    html,
-    body,
-    header,
-    #siteTitle,
-    #navBox,
-    #characterHeader,
-    #navContainer,
-    main {
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
+    [role="tabpanel"] {
+        height: var(--h1);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        padding: 2%;
+        background-color: var(--panel-bg);
     }
-
-    body {
+    
+    .action-container > [role="tabpanel"],
+    .panel-shell > [role="tabpanel"] {
+        min-height: 0;
         height: auto;
-        max-height: none;
-        width: 100%;
-        overflow-x: hidden;
+        max-height: 100%;
         overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: none;
     }
 
-    /* Header: three cells share one row; text may shrink/wrap so "Wizard" stays on-screen.
-       (Old rule set width:100% on EACH cell = three full widths side by side.) */
-    #characterHeader {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
+    .action-container > [role="tabpanel"]::-webkit-scrollbar,
+    .panel-shell > [role="tabpanel"]::-webkit-scrollbar,
+    .roll-feed::-webkit-scrollbar {
+        display: none;
     }
 
-    #characterName,
-    #characterRace,
-    #characterClass {
-        flex: 1 1 0;
-        width: auto;
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-        font-size: clamp(0.65rem, 3.2vw, 1.05rem);
-        padding: 0.35rem 0.25rem;
-        overflow-wrap: anywhere;
-        word-break: break-word;
-        white-space: normal;
-        hyphens: auto;
-    }
-
-    /* Nav: equal share; wrap to a second row when five labels cannot fit one line */
-    #navContainer {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-        margin-bottom: 1%;
-    }
-
-    #homeNav,
-    #themeNav,
-    #characterNav,
-    #campaignNav,
-    #settingsNav {
-        flex: 1 1 0;
-        min-width: 0;
-        max-width: 100%;
-        box-sizing: border-box;
-        /* ~3 per row → second row for the leftover buttons */
-        flex-basis: 30%;
-        white-space: nowrap;
-        font-size: clamp(0.65rem, 2.8vw, 0.95rem);
-        padding: 0.4rem 0.25rem;
-    }
-
-    #homeNav {
-        border-radius: 0;
-    }
-
-    #campaignNav {
-        border-radius: 0 0 0 10px;
-    }
-
-    #themeNav {
-        /* Stay matched to sibling nav buttons (padding already set above) */
-        padding: 0.4rem 0.25rem;
-    }
-
-    #themeNav select {
-        min-width: 0;
-        max-width: 100%;
-        font-size: inherit;
-    }
-
-    .dropDown,
-    #campaignNav .dropDown {
-        left: 0;
-        right: 0;
-        width: auto;
-        max-width: 100%;
-        box-sizing: border-box;
-        transform: none; /* undo the desktop centering shift, which pushes it off-screen here */
-    }
-
-    main {
+    #panel-actions {
         display: flex;
         flex-direction: column;
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        min-height: 0;
-        flex: none;
-        gap: 8px;
-        grid-template-areas: none;
-        grid-template-columns: none;
-        grid-template-rows: none;
-        overflow-x: hidden;
-        overflow-y: visible;
-        height: auto;
-        box-sizing: border-box;
+        gap: 0.75rem;
+    }
+    
+    .action-container > [role="tabpanel"][hidden],
+    .panel-shell > [role="tabpanel"][hidden] {
+        display: none !important;
     }
 
-    .sheet-tabs {
-        display: flex !important;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        border-bottom: var(--tileBorder);
-        box-sizing: border-box;
-        border-radius: 10px 10px 0 0;
-    }
-
-    .sheet-tabs [role="tab"] {
-        width: auto;
-        flex: 1 1 0;
-        min-width: 0;
-        box-sizing: border-box;
+        .spells-tab [role="tab"] {
+        padding: 0.5rem 1rem;
+            background-color: transparent;
+            box-shadow: none;
+            border: none;
+            border-radius: 0;
+        }
+    
+    
+    .spells-tab [role="tab"][aria-selected="true"] {
+        color: var(--txt-spell-tab);
+        background-color: transparent;
+        box-shadow: none;
+        transform: none;
     }
 
     .sheet-panel[hidden] {
         display: none !important;
     }
 
-    .sheet-panel {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        overflow-x: hidden;
-        box-sizing: border-box;
+        .action-tab-list {
+        position: relative;
+        display: flex;
+        justify-content: space-around;
+        align-items: stretch;
+        gap: 0;
+        background-color: var(--bgc-top);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
+        overflow: auto;
+        scrollbar-width: none;
+        scrollbar-color: rgba(255,255,255,0.35) transparent;
     }
 
-    #stat-container,
-    .health-container,
-    .skills-container,
-    #armor-class-container,
-    #initiative-container,
-    .action-container,
-    .condition-container,
-    .gear {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
+    .spells-tab .action-tab-list {
+        gap: 0;
+        margin: 0 0.5rem;
+        padding: 0.5rem;
     }
-
-    /* Base stats: true 4×2 grid that cannot spill past the viewport */
-    #stat-container {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        grid-auto-rows: auto;
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-    }
-
-    .stat-tile {
-        flex: unset;
-        width: auto;
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-    }
-
-    /* Conditions (mobile): keep the 2-column checkbox grid, slider row spans both */
-    .condition-container {
-        grid-template-rows: auto auto;
-    }
-
-    .condition-tile {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.5rem 0.75rem;
-        padding-right: 0.5rem;
-    }
-
-    #conditions-list-1,
-    #conditions-list-2,
-    #conditions-list-3 {
-        text-align: left;
-        width: auto;
-    }
-
-    .action-tab-list {
+    
+    .sheet-tabs {
+        display: flex !important;
+        flex-direction: row;
         flex-wrap: wrap;
+        margin-bottom: -8px;
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
+    }
+
+    .sheet-tabs [role="tab"] {
+        width: auto;
+        flex: 1 1 0;
+        border: none;
+        border-radius: 0;
+        background-color: transparent;
+        box-shadow: none;
+        font-size: 80%;
+        color: var(--txt-tab);
     }
 
     [role="tab"] {
@@ -1616,222 +201,50 @@ main > *,
         min-width: 0;
         padding: 0.5rem;
         font-size: 0.85rem;
+        min-width: 0;
+        padding: 2.8%;
+        overflow-wrap: anywhere;
+        text-align: center;
+        background-color: transparent;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        font-size: 80%;
+        color: var(--txt-tab);
     }
 
-    /* --- mobile: undo size containment that collapses tiles ---
-       container-type: size makes a box ignore its children's height when
-       laying out. On desktop the sheet grid gives every tile a real height,
-       so that works. On mobile, tiles only grow from their content — so
-       size containment shrinks them to nearly nothing and text vanishes.
-       Reset to normal, give sensible min-heights, let the page scroll. */
-    .stat-tile,
-    .skill-tile,
-    #armor-class-tile-container,
-    #initiative-tile-container,
-    .current-hp-tile,
-    .max-hp-tile,
-    .health-button-tile,
-    .condition-container,
-    .action-container,
-    .panel-shell {
-        container-type: normal;
-        height: auto;
-        max-height: none;
-        min-height: 0;
+    /* restored from components.css (removed with it): the open tab gets its own colour and sinks in */
+    [role="tab"][aria-selected="true"] {
+        font-weight: var(--fontW1);
+        border-top: none;
+        border-left: none;
+        background-color: transparent;
+        color: var(--txt-color-1);
+        box-shadow: none;
+        transform: none;
     }
 
-    .stat-tile {
-        min-height: 5.5rem;
-        overflow: hidden;
-    }
-
-    .skill-tile {
-        min-height: 3.5rem;
-        overflow: hidden;
-    }
-
-    #armor-class-container,
-    #initiative-container,
-    .current-hp-tile,
-    .max-hp-tile,
-    .health-button-tile,
-    .condition-container {
-        min-height: 4.75rem;
-        height: auto;
-    }
-
-    #sheet-panel-actions {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-template-rows: 1fr 6fr;
-        grid-template-areas:
-            "armorClass initiative"
-            "actions actions"
-            "actions actions"
-            "actions actions"
-            "actions actions"
-            "actions actions"
-            "actions actions"
-            ;
-        gap: 0.75rem;
-    }
-
-    #armor-class-container {
-        grid-area: armorClass;
-    }
-    #initiative-container {
-        grid-area: initiative;
-    }
-    .action-container {
-        grid-area: actions;
-    }
-
-    .action-tab-list {
-        flex-direction: row;
-        flex-wrap: nowrap;
-    }
-
-    #armor-class-tile-container,
-    #initiative-tile-container {
-        min-height: 4.75rem;
-    }
-
-    .action-container {
-        min-height: 14rem;
-        overflow: hidden;
-    }
-
-    .skills-container {
-        margin-top: 2%;
-    }
-
-    #skills-title {
-       padding: 0.35rem;
-       
-    }
-
-    .skills-container {
-        
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-        grid-template-rows: auto 3fr 3fr 3fr;
-        grid-auto-rows: minmax(3.5rem, auto);
-        height: auto;
+    .sheet-panel {
         width: 100%;
         max-width: 100%;
         min-width: 0;
+        overflow-x: hidden;
+        flex-shrink: 0;
+        height: auto;            /* beats [role="tabpanel"] height: var(--h1) (100%), which now resolves against phone main's fixed height */
         box-sizing: border-box;
     }
 
-    .skill-tile {
-        text-align: center;
+    .sheet-panel > :first-child {
+        margin-top: 0;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
     }
 
-    .health-container {
-        height: auto;
-        min-height: 5rem;
-        grid-template-rows: auto 10px;
-    }
 
-    #sheet-panel-conditions {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-    }
+/* ---------- breakpoints ---------- */
 
-        .condition-container {
-            gap: 0.75rem;
-        }
-}
-
-/* ---------- edit / inventory subpages ---------- */
-
-body.subpage {
-    height: auto;
-    max-height: none;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-body.subpage main.subpage-main,
-main.subpage-main {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    grid-template-columns: none;
-    grid-template-rows: none;
-    grid-template-areas: none;
-    place-items: stretch;
-    width: min(960px, 100%);
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 1rem;
-    gap: 1rem;
-    overflow: visible;
-}
-
-body.subpage .panel-shell {
-    width: 100%;
-    min-height: 60vh;
-}
-
-body.subpage .action-tab-list {
-    flex-shrink: 0;
-}
-
-body.subpage .formContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-body.subpage .formSectionContainer {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-body.subpage .cap-bottom,
-body.subpage select.cap-bottom,
-body.subpage input.cap-bottom {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    border: var(--tileBorder);
-    border-radius: var(--lowrad);
-    background-color: var(--bg-color-2);
-    color: var(--txt-color-1);
-    font: inherit;
-}
-
-body.subpage .buttonContainer {
-    align-items: center;
-    margin-top: 0.5rem;
-}
-
-body.subpage .formButton {
-    cursor: pointer;
-    padding: 0.6rem 1.25rem;
-    border: var(--tileBorder);
-    border-radius: var(--tile);
-    background-color: var(--bgc-top);
-    color: var(--accent);
-    font: inherit;
-    box-shadow: var(--bs2);
-}
-
-body.subpage .edit-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 0.75rem;
-}
-
-body.subpage .rollBtn {
-    cursor: pointer;
-}
-
-body.subpage .invList {
-    margin: 0;
-    padding: 0;
+.slide {
+    pointer-events: none;
 }
 
 @media (min-width: 769px) {
@@ -1840,67 +253,3074 @@ body.subpage .invList {
         display: contents !important;
     }
 
+    /* ---------- character header ---------- */
+
+    #character-header {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+        align-self: center;
+        
+        color: var(--txt-color-1);
+        background-color: var(--bg-color-header);
+        height: 8vh;
+        flex-shrink: 0;
+        box-sizing: border-box;
+        margin-top: -1.5vh;
+    }
+
+    #character-name,
+    #character-race,
+    #character-class {
+        border: var(--tileBorder);
+        font-size: 150%;
+        text-align: center;
+        padding: 2%;
+    }
+
+    #character-name {
+        flex-grow: 2;
+        position: relative;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;   /* portrait sits right beside the name/level */
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-left: 8vw;
+    }
+
+    #character-name > .portrait-frame {
+        display: block;
+        position: fixed;
+        top: 7vh;
+        height: 15vh;
+        width: 11vw;
+        left: 1vh;
+        flex-shrink: 0;
+        aspect-ratio: 1 / 1;
+        margin: 0;
+        filter: drop-shadow(2px 0 0 var(--accent)) drop-shadow(-2px 0 0 var(--accent)) drop-shadow(0 2px 0 var(--accent)) drop-shadow(0 -2px 0 var(--accent)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));   /* frame + shadow tracing --check-shape */
+    }
+
+    #character-header .character-portrait {
+        display: block;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        object-fit: cover;
+        box-sizing: border-box;
+        border: none;
+        padding: 0;
+        background: none;
+        border-radius: 0 0 1.25rem 1.25rem;
+        clip-path: var(--check-shape);   /* same shape as the theme's checkboxes */
+    }
+
+    .title-portrait {
+        display: none;
+    }
+
+    #character-race,
+    #character-class {
+        flex-grow: 2;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* ---------- nav ---------- */
+
+    #nav-box {
+        position: relative;
+        z-index: 5;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        flex-shrink: 0;
+    }
+
+    #nav-container {
+        background-color: color-mix(in srgb, var(--bgc-theme) 60%, transparent);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
+        box-sizing: border-box;
+        width: 75vw;
+        gap: 0;
+        margin: 1vh auto;
+        padding: 0;
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+        position: relative;
+    }
+
+    #home-nav,
+    #character-nav,
+    #campaign-nav,
+    #settings-nav {
+        min-width: 10rem;
+        flex: 1 1 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1vh 2vw;
+        font-size: 1.3rem;
+        cursor: pointer;
+        color: var(--txt-color-1);
+        background-color: transparent;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    #home-nav {
+        border-radius: 0;
+    }
+
+    #settings-nav {
+        border-radius: 0;
+    }
+
+    #nav-container > :last-child {
+        border-radius: var(--tile);
+    }
+
+    #character-nav,
+    #campaign-nav,
+    #settings-nav {
+        position: relative;
+    }
+
+    .drop-down {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        max-width: 100vw;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        z-index: 10;
+        background-color: var(--drop-down-bg);
+        transition: all .5s ease;
+        padding: 0;
+    }
+
+    .title-logo {
+        max-width: 33vw;
+        max-height: 9vh;
+        margin: 0 auto;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+        display: block;
+        content: url('/logo_banner.png');
+        height: auto;
+        width: auto;
+        object-fit: contain;
+    }
+
+    li:hover .drop-down {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        width: 100%;
+        box-shadow: var(--bs2);
+    }
+
+    .btn-drop-character,
+    .btn-drop-campaign,
+    .btn-drop-settings {
+        color: var(--drop-down-txt);
+        padding: 8%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: var(--tileBorder);
+        font-size: 80%;
+        box-shadow: var(--bs2);
+    }
+
+    #settings-nav .drop-down {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+
+    #campaign-nav .drop-down {
+        left: auto;
+        right: 0;
+        transform: none;
+        background-color: var(--drop-down-bg);
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+        color: var(--drop-down-txt);
+    }
+
+    #root {
+        display: flex;
+        flex-direction: column;
+        height: 100dvh;
+    }
+
+    main {
+        width: 100%;
+        min-height: 0;
+        flex: 1 1 auto;
+        margin-bottom: 8vh;
+        overflow-x: var(--ofX1);
+        overflow-y: auto;
+    
+        /* safety net with body */
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+
+        /* 7 rows: B, mid, skills x3, saves x2. Actions (H) spans skills+saves
+        so it ends level with the bottom of saving throws and stays tall. */
+        grid-template-rows: 11vh
+            12vh
+            minmax(0, 1.2fr)
+            minmax(0, 1.2fr)
+            minmax(0, 1.2fr)
+            minmax(0, 1.2fr)
+            minmax(0, 1.2fr);
+
+        /* H and E share the bottom block: skills span full actions height (no saves) */
+        grid-template-areas: 
+            "C C C I I I I R"
+            "H H H H G F E E"
+            "H H H H B B E E"
+            "H H H H B B E E"
+            "H H H H B B E E"
+            "H H H H B B E E"
+            "H H H H B B E E";
+        gap: 0.5rem;
+        padding: 0.5rem;
+        place-items: stretch;
+        align-items: stretch;
+        justify-items: stretch;
+        padding-bottom: 0.5rem;
+        box-sizing: border-box;
+    }
+
+    /* ---------- stat tiles ---------- */
+
+    #stat-container {
+        grid-area: B;
+        display: grid;
+        grid-template-rows: repeat(4, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
+        gap: 8px;
+        margin-top: .5%;
+    
+    }
+
+    .stat-tile {
+        flex: 1 1 0;
+        cursor: pointer;
+        container-type: size;
+        display: grid;
+        grid-template-rows: 1fr 2fr 1fr;
+        height: var(--h1);
+        min-height: var(--minH1);
+        overflow: var(--ofX1);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        background-color: var(--bg-color-4);
+        transition: transform 0.2s ease-in-out;
+        
+    }
+
+    .stat-tile:hover {
+        transform: scale(1.05);
+        
+    }
+
+    #stat-container .stat-tile-label,
+    #stat-container .stat-tile-modifier,
+    #stat-container .stat-tile-value {
+        margin: var(--mar1);
+        
+    }
+
+    .stat-tile-value {
+        background-color: var(--bgc-theme);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        font-size: 120%;
+        border-radius: 50% 50% 0 0;
+        overflow: var(--ofX1);
+    }
+
+    .stat-tile-label {
+        font-size: clamp(0.6rem, 15cqh, 0.85rem);
+        background-color: var(--bgc-char-name);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        font-size: 80%;
+        overflow: var(--ofX1);
+        border-radius: 0 0 50% 50%;
+    }
+
+    .stat-tile-modifier {
+        display: flex;
+        font-size: 160%;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        overflow: var(--ofX1);
+        color: var(--txt-color-1);
+    }
+
+    /* ---------- armor class / initiative ---------- */
+
+    #armor-class-container {
+        grid-area: F;
+    }
+
+    #initiative-container {
+        grid-area: G;
+    }
+
+    #armor-class-tile-container,
+    #initiative-tile-container {
+        display: grid;
+        grid-template-rows: 1fr 2fr;
+        height: var(--h1);
+        min-height: var(--minH1);
+        container-type: size;
+        cursor: pointer;
+        color: var(--txt-color-1);
+    }
+
+    .armor-class-tile,
+    .initiative-tile {
+        /* border, corners, shadow, centering come from .tile */
+        container-type: size;
+        height: var(--h1);
+        min-height: var(--minH1);
+        background-color: var(--bg-color-4);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .initiative-tile:hover {
+        transform: scale(1.05);
+        
+    }
+
+    #armor-class-tile-label,
+    #initiative-tile-label {
+        margin: var(--mar1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        font-size: clamp(0.5rem, 13cqh, 1rem);
+        border: var(--tileBorder);
+        background-color: var(--bgc-char-name);
+        border-radius: var(--tile) var(--tile) 0 0;
+        overflow: var(--ofX1);
+    }
+
+    #armor-class-tile-value,
+    #initiative-tile-value {
+        margin: var(--mar1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--bgc-char-stat);
+        border-radius: 0 0 10px 10px;
+        min-height: var(--minH1);
+        font-size: clamp(0.85rem, 30cqh, 1.55rem);
+        border: var(--tileBorder);
+        overflow: var(--ofX1);
+    }
+
+    /* ---------- skills ---------- */
+
+    .skills-container {
+        grid-area: E;
+        align-self: end;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: auto repeat(9, minmax(0, 1fr));
+        grid-auto-flow: column;
+        gap: 0.35rem;
+        margin-top: 1%;
+        height: 100%;
+        min-height: 0;
+        cursor: pointer;
+        border-radius: var(--tile);
+    }
+
+    .filter-container {
+        display: flex;
+        gap: 0;
+        width: 100%;
+    }
+
+    .field {
+        flex: 1 1 0;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: .4rem .5rem;
+        font: inherit;
+        text-align: center;
+        background-color: var(--bgc-char-stat);
+        color: var(--txt-color-1);
+        border: var(--tileBorder);
+        cursor: pointer;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    #skills-title {
+        grid-column: 1 / -1;
+        background-color: var(--bgc-char-stat);
+        border-radius: var(--tile);
+
+        grid-row: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2%;
+        margin: 0;
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+        font-size: clamp(0.75rem, 4.5cqi, 1.05rem);
+        height: auto;
+        text-align: center;
+    }
+
+    .skill-tile {
+        color: var(--txt-color-1);
+        display: grid;
+        grid-template-rows: 1fr 2fr;
+        grid-template-columns: 1fr;
+        cursor: pointer;
+        overflow: var(--ofX1);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        transition: transform 0.2s ease-in-out;
+    }
+    .skill-tile:hover {
+        transform: scale(1.05);
+        
+    }
+
+    .skill-label,
+    .skill-value {
+        padding: 0.2rem 0.25rem;
+        text-align: center;
+        margin: var(--mar1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: var(--ofX1);
+    }
+
+    .skill-label {
+        font-size: clamp(0.5rem, 18cqh, 1rem);
+        line-height: 1.15;
+        background-color: var(--bgc-char-name);
+        
+    }
+
+    .skill-value {
+        font-size: clamp(0.8rem, 32cqh, 1.2rem);
+        background-color: var(--bg-color-4);
+    }
+
+    .skill-tile.is-proficient .skill-label::before {
+        content: "\25CF";
+        font-size: 0.6em;
+        margin-right: 0.3em;
+    }
+
+    /* ---------- health ---------- */
+
+    .health-container {
+        grid-area: C;
+        box-shadow: var(--bs2);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: minmax(0, 1fr) minmax(6px, 12%);
+        grid-template-areas: "c b a"
+            "d d d";
+        min-height: var(--minH1);
+        overflow: var(--ofX1);
+        padding-bottom: 5%;
+        color: var(--txt-color-1);
+        background: var(--healColor);
+        background-color: var(--bg-color-4);
+        
+    }
+
+    .health-button-tile {
+        grid-area: a;
+        display: grid;
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr)); /* Heal + Temp HP share the top row */
+        container-type: size;
+        overflow: var(--ofX1);
+        font-family: var(--fontF1);
+        font-weight: var(--fontW1);
+        font-style: var(--fontstyle);
+        border: var(--tileBorder);
+        border-radius: 0 var(--tile) var(--tile) 0;
+       
+        
+    }
+
+    .current-hp-tile {
+        grid-area: b;
+        border: var(--tileBorder);
+   
+        
+    }
+
+    .max-hp-tile {
+        grid-area: c;
+        border: var(--tileBorder);
+        border-radius:  var(--tile) 0 0 var(--tile) ;
+      
+    }
+
+    .hp-bar-tile {
+        position: relative;
+        top: 100%;
+        grid-area: d;
+        min-height: var(--minH1);
+        height: 100%;
+        align-self: center;
+        background: var(--bgc-low);
+        overflow: var(--ofX1);
+        margin: 1%;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+    }
+
+    #hp-bar-fill {
+        height: var(--h1);
+        border-radius: var(--tile);
+        background: color-mix(in srgb, var(--healColor), white 30%);
+    }
+
+    #hp-bar-fill.very_hurt {
+        background: color-mix(in srgb, var(--damageColor), white 30%);
+    }
+
+    #hp-bar-fill.hurt{
+        background: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    }
+
+    .health-container.very_hurt {
+        background: var(--damageColor);
+    }
+
+    .health-container.hurt {
+        background: color-mix(in srgb, var(--healColor), var(--damageColor));
+    }
+
+    #heal-button {
+        border-radius: 10px 0 0 0;
+        background-color: var(--healColor);
+    }
+
+    #damage-button {
+        background-color: var(--damageColor);
+        border-radius: var(--radCornerBL);
+        grid-column: 1 / -1; /* spans both columns: same width as Heal + Temp HP */
+    }
+
+    .button-tile-component {
+        min-width: var(--minW1);
+        font-family: inherit;
+        font-size: clamp(0.55rem, min(18cqh, 14cqi), 1rem);
+        padding: 0 4%;
+        white-space: nowrap;
+        overflow: var(--ofX1);
+        text-overflow: ellipsis;
+    }
+
+    .button-component {
+        border: var(--border1);
+        color: var(--txtC1);
+        overflow: var(--ofX1);
+        cursor: pointer;
+    }
+
+    .damage-button.is-crit {
+        position: relative;
+        z-index: 1;
+        color: var(--bgc-top);
+        font-weight: bold;
+        border: none;
+        background:
+            linear-gradient(110deg, transparent 32%, rgba(255, 255, 255, 0.35) 42%, rgba(255, 255, 255, 0.95) 50%, rgba(255, 255, 255, 0.35) 58%, transparent 68%),
+            linear-gradient(var(--txt-color-1), var(--txt-color-1));
+        background-size: 300% 100%, 100% 100%;
+        background-repeat: no-repeat;
+        animation: crit-shimmer 3s ease-in-out infinite;
+    }
+
+    #hp-input {
+        color: var(--txt-color-1);
+        background-color: transparent;
+        text-align: center;
+        appearance: textfield;
+        -moz-appearance: textfield;
+        border: none;
+        grid-column: 1 / -1;
+    }
+
+    #hp-input::-webkit-outer-spin-button,
+    #hp-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: var(--mar1);
+    }
+
+    .current-hp-tile,
+    .max-hp-tile {
+        display: grid;
+        grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
+        min-width: var(--minW1);
+        min-height: var(--minH1);
+        container-type: size;
+        overflow: var(--ofX1);
+    }
+
+    .hp-label-component {
+        text-align: center;
+        font-size: clamp(0.55rem, min(18cqh, 12cqi), 1rem);
+        line-height: 1.1;
+        background-color: var(--bgc-char-name);
+        padding-top: 4%;
+        padding-bottom: 4%;
+        margin: var(--mar1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        overflow: var(--ofX1);
+    }
+
+    .hp-value-component {
+        font-size: clamp(0.7rem, min(30cqh, 22cqi), 1.5rem);
+        text-align: center;
+        margin: var(--mar1);
+        background-color: var(--bgc-char-stat);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        overflow: var(--ofX1);
+    }
+
+    #current-hp-value--fallen {
+        font-size: clamp(0.5rem, min(14cqh, 11cqi), 0.9rem);
+        line-height: 1.1;
+        overflow-wrap: anywhere;
+    }
+
+    /* ---------- conditions ---------- */
+
+    .condition-container {
+        grid-area: I;
+        border-radius: var(--tile);
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+        display: grid;
+        grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
+        overflow: var(--ofX1);
+        container-type: size;
+        background-color: var(--bgc-low);
+    }
+
+    .condition-container > * {
+        min-height: var(--minH1);
+        max-height: var(--h1);
+        color: var(--txt-color-1);
+    }
+
+    #condition-title {
+        font-size: clamp(0.7rem, 22cqh, 1rem);
+        border-radius: var(--tile) var(--tile) 15% 15%;
+        padding: 0.35rem;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        background-color: var(--bgc-top);
+        overflow: var(--ofX1);
+    }
+
+    .condition-tile {
+        font-size: clamp(0.7rem, 12cqh, 0.95rem);
+        
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-auto-rows: min-content;
+        align-content: start;
+        min-height: var(--minH1);
+        max-height: var(--h1);
+        overflow-x: var(--ofX1);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255,255,255,0.35) transparent;
+        margin-top: var(--mar1);
+        padding: 2% 15% 2% 15%;
+        column-gap: 0.75rem;
+        row-gap: 0.25rem;
+    }
+
+    #conditions-list-1,
+    #conditions-list-2,
+    #conditions-list-3 {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        grid-auto-flow: row dense;
+        grid-auto-rows: 1.4em;
+        align-items: center;
+        column-gap: 0.45em;
+        min-width: var(--minW1);
+        font-size: 0.85em;
+        text-align: left;
+    }
+
+    #conditions-list-1 > .condition-checkbox,
+    #conditions-list-2 > .condition-checkbox {
+        grid-column: 1;
+        margin-top: 2%;
+        margin-left: 2%;
+        width: 1.1em;
+        height: 1.1em;
+        cursor: pointer;
+        /* themed shape instead of the browser default. --check-shape comes from the theme
+           (themes.css): diamond, shield, hexagon... The outer shape is the outline color. */
+        appearance: none;
+        display: grid;
+        place-items: center;
+        border: none;
+        clip-path: var(--check-shape);
+        background-color: var(--txt-color-1);
+        transition: transform 0.15s ease-in-out;
+        margin: var(--mar1);
+    }
+
+    /* inner fill: same shape, slightly smaller, so a thin outline shows around it */
+
+    #conditions-list-1 > .condition-checkbox::before,
+    #conditions-list-2 > .condition-checkbox::before {
+        content: "";
+        grid-area: 1 / 1;
+        width: 78%;
+        height: 78%;
+        clip-path: var(--check-shape);
+        background-color: var(--bgc-top);
+        transition: background-color 0.15s ease-in-out;
+    }
+
+    /* the check mark */
+
+    #conditions-list-1 > .condition-checkbox::after,
+    #conditions-list-2 > .condition-checkbox::after {
+        content: "";
+        grid-area: 1 / 1;
+        width: 45%;
+        height: 45%;
+        clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        background-color: var(--txt-color-1);
+        transform: scale(0);
+        transition: transform 0.15s ease-in-out;
+    }
+
+    #conditions-list-1 > .condition-checkbox:checked::before,
+    #conditions-list-2 > .condition-checkbox:checked::before {
+        background-color: var(--accent);
+    }
+
+    #conditions-list-1 > .condition-checkbox:checked::after,
+    #conditions-list-2 > .condition-checkbox:checked::after {
+        transform: scale(1);
+    }
+
+    #conditions-list-1 > .condition-checkbox:active,
+    #conditions-list-2 > .condition-checkbox:active {
+        transform: scale(0.9);
+    }
+
+    #conditions-list-1 > .condition-checkbox:focus-visible,
+    #conditions-list-2 > .condition-checkbox:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+    }
+
+    #conditions-list-1 > label,
+    #conditions-list-2 > label {
+        grid-column: 2;
+        justify-self: start;
+        min-width: var(--minW1);
+        max-width: var(--w1);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+        overflow: var(--ofX1);
+    }
+
+    #conditions-list-3 {
+       display: flex;
+       text-align: center;
+       flex-direction: column;
+       gap: 0.25rem;
+       margin-top: 3%;
+       font-size: 130%;
+    }
+
+    .exhausted-component {
+        display: flex;
+        flex-direction: column;
+        width: 20vw;
+        margin-left: 50%;
+    }
+
+    #conditions-list-3 output {
+        min-width: 2ch;
+        margin-left: 50%;
+    }
+
+    #exhausted-value {
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    #exhausted-value::-webkit-slider-runnable-track {
+        height: 0.45em;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        background: linear-gradient(to right, var(--accent) var(--fill, 0%), var(--bgc-top) var(--fill, 0%)); /* accent up to the thumb */
+        box-shadow: var(--bs2);
+    }
+
+    #exhausted-value::-moz-range-track {
+        height: 0.45em;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        background-color: var(--bgc-top);
+        box-shadow: var(--bs2);
+    }
+
+    #exhausted-value::-moz-range-progress {
+        height: 0.45em;
+        border-radius: var(--tile);
+        background-color: var(--accent);
+    }
+
+    #exhausted-value::-webkit-slider-thumb {
+        appearance: none;
+        width: 1.1em;
+        height: 1.1em;
+        margin-top: calc((0.45em - 1.1em) / 2 - 1px); /* center the thumb on the track */
+        border: none;
+        clip-path: var(--check-shape);
+        background-color: var(--accent);
+    }
+
+    #exhausted-value::-moz-range-thumb {
+        width: 1.1em;
+        height: 1.1em;
+        border: none;
+        border-radius: 0;
+        clip-path: var(--check-shape);
+        background-color: var(--accent);
+    }
+
+    #exhausted-value:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+    }
+
+    #condition-checkbox {
+        cursor: pointer;
+    }
+
+    /* ---------- actions ---------- */
+
+    .action-container {
+        grid-area: H;
+        min-height: 0;
+        overflow: visible;
+        height: auto;
+        max-height: none;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-items: stretch;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        background-color: var(--bg-color-nav);
+    }
+
+    .spell-slot-checkbox {
+        appearance: none;
+        width: 1.1rem;
+        height: 1.1rem;
+        margin: .35rem 0.25rem;
+        border: 2px solid var(--spellslot-border);
+        border-radius: 50%;
+        background-color: transparent;
+        cursor: pointer;
+        transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    .spell-slot-checkbox:checked {
+        background-color: var(--spellslot-checked);
+        clip-path: var(--check-shape);
+        box-shadow: 0 0 6px var(--spellslot-checked-shadow);
+    }
+
+    .spell-slot-checkbox:hover {
+        box-shadow: 0 0 4px var(--accent);
+    }
+
+    .btn-action:disabled,
+    .btn-action:disabled:hover {
+        background-color: var(--accent);
+        color: var(--txt-color-1);
+        cursor: not-allowed;
+        opacity: 0.6;
+        transform: none;
+    }
+
+    .action-title {
+        text-align: center;
+        background-color: var(--bgc-char-name);
+        padding: 2%;
+        margin: 0;
+        text-align: center;
+        border-radius: var(--tile) var(--tile) 0 0;
+        border-bottom: none;
+        color: var(--txt-color-1);
+    }
+
+    .action-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        background-color: var(--bgc-low);
+        border-radius: var(--tile);
+        border: var(--tileBorder);
+        overflow: visible;
+        flex-shrink: 0;
+    }
+
+    .title-tile {
+        display: flex;
+        
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        text-align: center;
+    
+    }
+
+    /* ---------- inventory ---------- */
+
+    em {
+        color: var(--txt-color-1);
+        margin-left: 1%;
+        flex: 1 1 32%;
+    }
+
+    /* ---------- item shop / spell book ---------- */
+
+    .action-container .item-shop {
+        container-type: normal;
+        height: auto;
+        min-height: 20rem;
+        margin-top: 0.5rem;
+    }
+
+    .action-container .spells-tab {
+        container-type: normal;
+        height: auto;
+        min-height: 20rem;
+        margin-top: 0.5rem;
+        
+    }
+
+    /* ---------- overflow guard ---------- */
+
+    main > *,
+        .sheet-panel,
+        #stat-container,
+        .health-container,
+        .skills-container,
+        #armor-class-container,
+        #initiative-container,
+        .action-container,
+        .condition-container,
+        #skills-container,
+        .condition-tile {
+            min-width: 0;
+            max-width: 100%;
+            min-height: 0;
+        }
+
+    .skill-label,
+        .skill-value,
+        #stat-container .stat-tile-label,
+        #stat-container .stat-tile-value {
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
+
+    /*--------- rest ----------*/
+
+    .rest-container {
+        grid-area: R;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0; 
+        border-radius: var(--tile);
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+        background-color: var(--bgc-low); 
+        overflow: var(--ofX1);
+    }
+
+    .btn-rest,
+    .btn-rest-choice {
+        padding: 0.3rem 0.75rem;
+        border: none; 
+        border-radius: var(--tile);
+        box-shadow: none;
+        background-color: var(--bgc-top); 
+        color: var(--txt-color-1);
+        font-weight: bold;
+        font-size: clamp(0.85rem, 1.2vw, 1.15rem); 
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .rest-container > .btn-rest {
+        width: 100%;
+        height: 100%;
+    }
+
+    .btn-rest:active,
+    .btn-rest-choice:active {
+        transform: scale(0.9);
+    }
+
+    /* Short / Long / Cancel stack vertically to fit the narrow tile */
+
+    .rest-choice {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        width: 100%;
+    }
+
+    footer {
+        display: flex;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: calc(100dvh - 8vh);
+        z-index: 10;
+        height: 10vh;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        font-size: 150%;
+        color: var(--txt-color-1);
+        border-top: var(--tileBorder);
+        box-shadow: var(--bs2);
+        background-color: var(--bgc-theme);
+        border-radius: 50% 50% 0 0;
+        overflow: hidden;
+    }
+
+    header {
+        display: flex;
+        height: 8vh;
+        flex-shrink: 0;
+        width: 100vw;
+        border-radius: 0 0 15% 15%;
+    }
+
+    #site-title {
+        background-color: var(--bgc-theme);
+        color: var(--txt-color-1);
+        position: relative;
+        top: 0;
+        border-bottom: var(--tileBorder);
+        z-index: 20;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        font-size: 150%;
+        justify-content: center;
+        align-items: center;
+        box-shadow: var(--bs2);
+    }
+
+    #character-race, #character-class,
+    #stat-container :is(.stat-tile-modifier, .stat-tile-value),
+    :is(#armor-class-tile-container, #initiative-tile-container) .value-component,
+    .skills-container :is(#skills-title, .skill-label, .skill-value),
+    :is(#condition-title, #exhausted-label),
+    footer .footer-text {
+        color: var(--txt-color-1);
+    }
+
+    .slide {
+        z-index: 3;
+        box-sizing: border-box;
+        pointer-events: none;
+        background-color: color-mix(in srgb, var(--accent) 25%, transparent);
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.06));
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: var(--tile);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 10px color-mix(in srgb, var(--accent) 45%, transparent);
+        transition: transform .35s ease, width .35s ease, height .35s ease;
+    }
+
+    .action-button,
+    .damage-button {
+        box-sizing: border-box;
+        padding: 1vh 1.5vw;
+        font-size: 1.1rem;
+        cursor: pointer;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+    }
+
+    /* ---------- restored from HEAD (Oct 16) desktop rules ---------- */
+
+    html[data-display]:not([data-display='standard']) :is(#heal-button, #damage-button) {
+        border-radius: var(--btnRad);
+    }
+
+    html[data-display]:not([data-display='standard']) #skills-title {
+        border-radius: var(--tile) var(--tile) 0 0;
+    }
+
+    html[data-display]:not([data-display='standard']) #armor-class-tile-value {
+        border-radius: 0 0 var(--tile) var(--tile);
+    }
+
+    .tile {
+        text-align: center;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        color: var(--txt-color-1);
+        min-width: var(--minW1);
+        width: var(--w1);
+    }
+
+
+
+    .sheet-tabs {
+        display: none !important;
+    }
+
+    .action-tabs {
+        position: relative;
+        display: flex;
+        flex-wrap: nowrap;
+        width: 100%;
+        gap: 0;
+    
+        margin: 0 0 0.5rem;
+        flex-shrink: 0;
+        box-sizing: border-box;
+      
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
+        background-color: var(--bgc-action-bar);
+    }
+
+    .action-tabs [role="tab"] {
+        flex: 1 1 0;
+        min-width: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1vh 2vw;
+        font-size: 1.1rem;
+        cursor: pointer;
+        color: var(--txt-color-1);
+        border: none;
+        border-radius: 0;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    .action-tabs [role="tab"][aria-selected="true"] {
+        color: var(--txt-color-1);
+        background-color: transparent;
+        transform: none;
+    }
+    .action-container > [role="tabpanel"],
+    .panel-shell > [role="tabpanel"] {
+        border: var(--tileBorder);
+        min-height: 0;
+        flex: 1 1 auto;
+        overflow-y: auto;
+        box-sizing: border-box;
+    }
+
+    .action-item {
+        border: var(--tileBorder);
+        width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: cover;
+        align-self: stretch;
+        border-radius: var(--tile);
+        z-index: 1;
+        margin-bottom: 0.5rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: stretch;
+        padding: 0;
+        min-height: 2.5rem;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .action-button-container {
+        display: flex;
+        align-self: stretch;
+        flex-direction: row;
+        flex: 1 1 0;
+        justify-content: center;
+        align-items: stretch;
+        border-radius: 0 var(--tile) var(--tile) 0;
+        overflow: var(--ofX1);
+        }
+
+    .action-button:hover {
+        background-color: var(--bgc-action-hover);
+        transform: scale(1.05);
+        
+    }
+
+
+    main.subpage-main {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        grid-template-columns: none;
+        grid-template-rows: none;
+        grid-template-areas: none;
+        place-items: stretch;
+        width: min(960px, 100%);
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 1rem;
+        gap: 1rem;
+        overflow: visible;
+    }
+
+    .action-item > .action-button-container,
+    .action-item > form,
+    .action-button-container > form {
+        display: flex;
+        align-self: stretch;
+        margin: 0;
+    }
+
+    .action-button-container > .equipped-item {
+        align-self: center;
+        padding: 0 0.5rem;
+    }
+
+
+    .btn-spell-name {
+        background: none;
+        border: none;
+        padding: 0;
+        font: inherit;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .btn-spell-name:hover {
+        text-decoration: none;
+        color: var(--accent);
+    }
+
+    #spells-panel-learned .action-item .btn-action {
+        flex: 0 0 auto;
+        width: clamp(4.25rem, 13cqi, 5rem);
+        min-width: 0;
+        font-size: clamp(0.65rem, 2.2cqi, 0.85rem);
+        padding: 0.2rem 0.4rem;
+        white-space: normal !important;
+        line-height: 1.1;
+        text-align: center;
+    }
+
+    .action-set {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        padding: 0.3rem;
+        margin: 0;
+        background-color: var(--bgc-low);
+        border-radius: 0 0 var(--tile) var(--tile);
+    }
+
+    .caption-btn {
+        flex: 1 1 0;
+        border: none;
+        background-color: var(--bgc-top);
+        color: var(--txt-color-1);
+        padding: 3%;
+        border-right: var(--tileBorder);
+        border-radius: var(--tile) 0 0 var(--tile);
+    }
+
+    .action-button {
+        background-color: var(--bgc-action);
+        color: var(--txt-action);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1 1 0;
+        height: 100%;
+        margin: 0;
+        font-size: 80%;
+        border: none;
+        overflow: hidden;
+    }
+
+    .spell-action-set {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        padding: 0.3rem;
+        margin: 0;
+        border-radius: 0 0 var(--tile) var(--tile);
+    }
+
+    .equipped-item {
+        flex: 1 1 0;
+        font-style: italic;
+        text-decoration: underline;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--bgc-tab);
+    }
+
+    .learned {
+        flex: 1 1 0;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        font-size: 70%;
+        color: var(--accent);
+        padding: 2%;
+        text-decoration: underline;
+    }
+
+    .spellbook-button {
+        text-align: center;
+        margin: 0;
+        padding: 3%;
+        width: 100%;
+        border: var(--tileBorder);
+        background-color: var(--bgc-char-stat);
+        border-radius: 0 0 0 var(--tile);
+        color: var(--txt-color-1);
+        font-size: 120%;
+    }
+
+    .spell-stat-book {
+        display: flex;
+        align-items: center;
+        color: var(--txt-color-1);
+        border-radius: 0 0 var(--tile) 0;
+        border: var(--tileBorder);
+        background-color: var(--bgc-char-stat);
+        text-align: center;
+        margin: 0;
+        padding: 2%;
+        width: 100%;
+    }
+
+    .spell-tabs {
+        display: flex;
+        flex-direction: row;
+        gap: 0;
+        padding: 0.5rem;
+        margin: 2% 0;
+        border-radius: var(--tile);
+        border: var(--tileBorder);
+        position: relative;
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
+    }
+
+    .spell-tab-title {
+        text-align: center;
+        margin: 2%;
+        padding: 3%;
+        background-color: var(--bgc-top);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        color: var(--txt-color-1);
+    }
 }
 
+@media (max-width: 768px) {
+    header {
+            display: flex;
+            height: 13vh;
+            width: 100vw;
+            border-radius: 0 0 15% 15%;
+            position: relative;          /* anchors the phone portrait */
+            flex-shrink: 0;
+        }
 
-/* The shop list when it opens inside the sheet's Inventory tab.
-   .panel-shell normally uses container-type: size, which makes it 0px tall
-   when it sits inside another box whose height comes from its content. */
-.action-container .item-shop {
-    container-type: normal;
-    height: auto;
-    min-height: 20rem;
-    margin-top: 0.5rem;
+    html,
+        body,
+        header,
+        #site-title,
+        #nav-box,
+        #character-header,
+        #nav-container,
+        main {
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+
+    main {
+            display: block;          /* not flex: a height-capped flex column was squeezing the panels */
+            flex-direction: column;
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: calc(100svh - 25vh);   /* header 13vh + nav 6vh visible + character bar 6vh; runs under the fixed footer */
+            width: 100%;
+            overscroll-behavior: contain;
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: blur(3px);
+            flex: none;
+            min-height: 0;
+            padding-bottom: calc(4vh + env(safe-area-inset-bottom));
+        }
+
+    #site-title {
+            background-color: var(--bgc-theme);
+            color: var(--txt-color-1);
+            position: relative;
+            top: 0;
+            border-bottom: var(--tileBorder);
+            z-index: 2;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            font-size: var(--fontS1);
+            justify-content: center;
+            align-items: center;
+            box-shadow: var(--bs2);
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 5px;
+            height: 13vh;
+        }
+
+    /* ---------- character header ---------- */
+
+    #character-header {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: stretch;
+       
+        margin-bottom: 1%;
+        box-shadow: var(--bs2);
+        border-radius: var(--tile);
+        height: 6vh;
+        flex-shrink: 0;
+    }
+
+    .title-logo {
+        max-width: 70px;
+        max-height: 70px;
+        margin: 0;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+    }
+
+    #site-title > .portrait-frame {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 5%;
+        width: 11vh;
+        max-width: 11vh;
+        aspect-ratio: 1 / 1;
+        transform: translateY(-50%);
+        filter: drop-shadow(2px 0 0 var(--accent)) drop-shadow(-2px 0 0 var(--accent)) drop-shadow(0 2px 0 var(--accent)) drop-shadow(0 -2px 0 var(--accent)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));   /* frame + shadow tracing --check-shape */
+    }
+
+    .title-portrait {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: var(--portrait-edge);   /* arched window: rounded top, flat bottom */
+        box-sizing: border-box;
+        clip-path: var(--check-shape);   /* same shape as the theme's checkboxes */
+    }
+
+    #character-header .character-portrait {
+        display: none;
+    }
+
+    #character-name,
+    #character-race,
+    #character-class {
+        flex: 1 1 0;
+        margin: 0;
+        padding: 2%;
+        display: flex;
+        justify-content: center;
+        font-size: 80%;
+        overflow-wrap: anywhere;
+        word-break: auto-phrase;
+        hyphens: auto;
+        text-align: center;
+        border: var(--tileBorder);
+        color: var(--txt-color-1);
+        background-color: var(--bg-color-header);
+    }
+
+    #character-name {
+        border-radius: var(--character-name-edge);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #character-race {
+        border-radius: var(--character-race-edge);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #character-class {
+        border-radius: var(--character-class-edge);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* ---------- nav ---------- */
+
+
+    #nav-container {
+        position: relative;
+        top: 0;
+        z-index: 1;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        height: 9vh;
+        background-color: var(--bg-color-nav);
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        justify-content: center;
+        align-items: stretch;
+        margin-top: -3vh;
+        padding-top: 3vh;
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
+    }
+
+    #home-nav,
+    #character-nav,
+    #campaign-nav,
+    #settings-nav {
+        border: none;
+        border-top: none;
+        flex: 1 1 0;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 80%;
+        padding: 2%;
+        margin: 0;
+        background-color: transparent;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    #campaign-nav {
+        border-right: none;
+    }
+
+    #character-nav,
+    #campaign-nav,
+    #settings-nav {
+        position: relative;
+    }
+
+    #home-nav {
+        border-left: none;
+    }
+
+    #settings-nav {
+        border-radius: 0;
+    }
+
+    .drop-down {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        max-width: 100vw;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        z-index: 10;
+        border-radius: var(--tile);
+        transition: all .5s ease;
+        height: 10vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    li:hover .drop-down {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        width: 100%;
+        box-shadow: var(--bs2);
+        border-radius: var(--tile);
+        background-color: var(--drop-down-bg);
+    }
+
+    #nav-container > li:hover,
+    #nav-container > li:focus-within {
+        z-index: 20;
+    }
+
+    #campaign-nav .drop-down {
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-width: 100%;
+        height: 5vh;
+        box-sizing: border-box;
+        transform: none;
+    }
+
+    #settings-nav .drop-down {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+
+    #campaign-nav .drop-down {
+        left: auto;
+        right: 0;
+        transform: none;
+        background-color: var(--drop-down-bg);
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+        color: var(--drop-down-txt);
+    }
+
+    .btn-drop-character,
+    .btn-drop-campaign,
+    .btn-drop-settings {
+        border-radius: 5px;
+        color: var(--drop-down-txt);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+        height: 10vh;
+        font-size: 100%;
+    }
+
+    /* ----------Tabs/Panel layout ---------- */
+
+    .action-tab-list {
+            display: flex;
+            position: sticky;
+            align-items: stretch;
+            justify-content: center;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            padding: 2%;
+            margin: 1%;
+            background-color: var(--bgc-action-bar);
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
+        
+        }
+
+    /* ---------- Stats Panel (stats, skills) ---------- */
+
+    /* ---------- stat tiles ---------- */
+
+    #stat-container {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-rows: auto auto;
+        grid-auto-flow: row;
+        gap: 0.5rem;
+        color: var(--txt-color-1);
+        margin: 4% 2%;
+    }
+
+    .stat-tile {
+        flex: 1 1 0;
+        cursor: pointer;
+        display: grid;
+        grid-template-rows: 1fr 2fr 1fr;
+        height: var(--h1);
+        min-height: var(--minH1);
+        overflow: var(--ofX1);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+    }
+
+    .stat-tile-label,
+    .stat-tile-modifier,
+    .stat-tile-value {
+        margin: 0;
+    }
+
+    #stat-container .stat-tile-value {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        font-size: 80%;
+        background-color: var(--bgc-char-stat);
+    
+    }
+
+    #stat-container .stat-tile-label {
+        font-size: clamp(0.6rem, 15cqh, 0.85rem);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        font-size: 80%;
+        background-color: var(--bgc-char-name);
+    }
+
+    #stat-container .stat-tile-modifier {
+        font-size: 85%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        background-color: var(--bg-color-statmod);
+    }
+
+    /* ---------- skills ---------- */
+
+    .skills-container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: auto repeat(6, minmax(0, 1fr));
+        grid-auto-flow: column;
+        gap: 0.5rem;
+        height: var(--h1);
+        cursor: pointer;
+        color: var(--txt-color-1);
+        margin: 2% 2%;
+    }
+
+    #skills-title {
+        
+        grid-column: 1 / -1;
+        grid-row: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3%;
+        border-radius: var(--tile);
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+        flex-shrink: 0;
+        font-size: 130%;
+        height: 10vh;
+        background-color: var(--bgc-top);
+    }
+
+    .skill-tile {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr;
+        margin: 2% 2%;
+        cursor: pointer;
+        overflow: var(--ofX1);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        height:100%;
+    }
+
+    .skill-label,
+    .skill-value {
+        padding: 2%;
+        text-align: center;
+        margin: var(--mar1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: var(--ofX1);
+    }
+
+    .skill-label {
+        font-size: 120%;
+        line-height: 1.15;
+        background-color: var(--bgc-char-name);
+    }
+
+    .skill-value {
+        font-size: 85%;
+        background-color: var(--bgc-char-stat);
+    }
+
+    .skill-tile.is-proficient .skill-label::before {
+        content: "\25CF";
+        font-size: 0.6em;
+        margin-right: 0.3em;
+    }
+
+    /* ---------- conditions Panel (rest, health, & conditions) ---------- */
+
+    #sheet-panel-conditions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+
+    /* ---------- rest ---------- */
+
+    .rest-container {
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+       
+
+    }
+
+    .btn-rest {
+        padding: 2%;
+        width: 100%;
+        height: 100%;
+
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+        background-color: var(--rest-bgc);
+        color: var(--rest-txt);
+        transition: transform 0.02s ease-in-out;
+    }
+
+    .rest-choice {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: .5rem;
+    }
+
+    .btn-rest-choice {
+        padding: 2%;
+        width: 100%;
+        height: 100%;
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+        background-color: var(--rest-bg-choice-1);
+        color: var(--rest-txt-choice-1);
+        transition: transform 0.02s ease-in-out;
+    }
+
+    .btn-rest:active,
+    .btn-rest-choice:active {
+        transform: scale(0.9);
+    }
+
+    /* ---------- health ---------- */
+
+    .health-container {
+        box-shadow: var(--bs2);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: minmax(0, 1fr) minmax(6px, 12%);
+        grid-template-areas: "a b c"
+            "d d d";
+        min-height: var(--minH1);
+        color: var(--txt-color-1);
+        height: 150px;
+        background: var(--healColor);
+    }
+
+    .health-button-tile {
+        display: grid;
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr)); /* Heal + Temp HP share the top row */
+        border: var(--tileBorder);
+        border-radius: var(--tile) 0 0 var(--tile);
+    }
+
+    .current-hp-tile {
+        grid-area: b;
+        border: var(--tileBorder);
+        
+    }
+
+    .max-hp-tile {
+        grid-area: c;
+        border: var(--tileBorder);
+        border-radius: 0 var(--tile) var(--tile) 0;
+    }
+
+    .hp-bar-tile {
+        grid-area: d;
+        min-height: var(--minH1);
+        background: var(--bgc-low);
+        height: 100%;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        
+
+    }
+
+    #hp-bar-fill {
+        height: 100%;
+        background: color-mix(in srgb, var(--healColor), white 30%);
+        border-radius: var(--tile);
+    }
+
+    #hp-bar-fill.very_hurt {
+        background: color-mix(in srgb, var(--damageColor), white 30%);
+        border-radius: var(--tile);
+    }
+
+    #hp-bar-fill.hurt{
+        background: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+        border-radius: var(--tile);
+    }
+
+    .health-container.very_hurt {
+        background: var(--damageColor);
+    }
+
+    .health-container.hurt {
+        background: color-mix(in srgb, var(--healColor), var(--damageColor));
+    }
+
+    #heal-button {
+        border-radius: 10px 0 0 0;
+        background-color: var(--healColor);
+    }
+
+    #damage-button {
+        background-color: var(--damageColor);
+        border-radius: var(--radCornerBL);
+        grid-column: 1 / -1; /* spans both columns: same width as Heal + Temp HP */
+    }
+
+    .button-tile-component {
+        min-width: var(--minW1);
+        font-family: inherit;
+        font-size: 80%;
+        padding: 0 4%;
+        white-space: nowrap;
+        overflow: var(--ofX1);
+        text-overflow: ellipsis;
+    }
+
+    .button-component {
+        border: var(--border1);
+        color: var(--txtC1);
+        overflow: var(--ofX1);
+        cursor: pointer;
+    }
+
+    .damage-button.is-crit {
+        position: relative;
+        z-index: 1;
+        color: var(--bgc-top);
+        font-weight: bold;
+        border: none;
+        background:
+            linear-gradient(110deg, transparent 32%, rgba(255, 255, 255, 0.35) 42%, rgba(255, 255, 255, 0.95) 50%, rgba(255, 255, 255, 0.35) 58%, transparent 68%),
+            linear-gradient(var(--txt-color-1), var(--txt-color-1));
+        background-size: 300% 100%, 100% 100%;
+        background-repeat: no-repeat;
+        animation: crit-shimmer 3s ease-in-out infinite;
+    }
+
+    #hp-input {
+        color: var(--txt-color-1);
+        background-color: transparent;
+        text-align: center;
+        appearance: textfield;
+        -moz-appearance: textfield;
+        border: none;
+        grid-column: 1 / -1;
+    }
+
+    #hp-input::-webkit-outer-spin-button,
+    #hp-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: var(--mar1);
+    }
+
+    .current-hp-tile,
+    .max-hp-tile {
+        display: grid;
+        grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
+        min-width: var(--minW1);
+        min-height: var(--minH1);
+        container-type: size;
+        overflow: var(--ofX1);
+    }
+
+    .hp-label-component {
+        text-align: center;
+        font-size: 80%;
+        line-height: 1.1;
+        background-color: var(--bgc-char-name);
+        padding-top: 4%;
+        padding-bottom: 4%;
+        margin: var(--mar1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        overflow: var(--ofX1);
+    }
+
+    .hp-value-component {
+        font-size: 85%;
+        text-align: center;
+        margin: var(--mar1);
+        background-color: var(--bgc-char-stat);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        overflow: var(--ofX1);
+    }
+
+    #current-hp-value--fallen {
+        font-size: 80%;
+        line-height: 1.1;
+        overflow-wrap: anywhere;
+    }
+
+    /* ---------- conditions ---------- */
+
+    .condition-container > * {
+        min-height: var(--minH1);
+        max-height: var(--h1);
+        color: var(--txt-color-1);
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+    }
+
+    #condition-title {
+        font-size: 100%;
+        padding: 1%;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--minH1);
+        background-color: var(--bg-color-nav);
+        border-radius: var(--tile) var(--tile) 0 0;
+    }
+
+    .condition-tile {
+        font-size: 120%;
+        background-color: var(--bgc-low);
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-auto-rows: min-content;
+        align-content: start;
+        min-height: var(--minH1);
+        max-height: var(--h1);
+        overflow-x: var(--ofX1);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        border-radius: 0 0 var(--tile) var(--tile) ;
+        scrollbar-color: rgba(255,255,255,0.35) transparent;
+    }
+
+    #conditions-list-1,
+    #conditions-list-2,
+    #conditions-list-3 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: .5em;
+        min-width: var(--minW1);
+        font-size: 0.85em;
+        margin: 3%;
+        padding: 3%;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        background-color: var(--bgc-char-name);
+        box-shadow: var(--bs2);
+    }
+
+    #conditions-list-1 > .condition-checkbox,
+    #conditions-list-2 > .condition-checkbox {
+        width: 2.0em;
+        height: 2.0em;
+        cursor: pointer;
+        appearance: none;
+        display: grid;
+        place-items: center;
+        border: none;
+        clip-path: var(--check-shape);
+        background-color: var(--txt-color-1);
+        transition: transform 0.15s ease-in-out;
+    }
+
+    /* inner fill: same shape, slightly smaller, so a thin outline shows around it */
+
+    #conditions-list-1 > .condition-checkbox::before,
+    #conditions-list-2 > .condition-checkbox::before {
+        content: "";
+        grid-area: 1 / 1;
+        width: 78%;
+        height: 78%;
+        clip-path: var(--check-shape);
+        background-color: var(--bgc-char-stat);
+        transition: background-color 0.15s ease-in-out;
+    }
+
+    /* the check mark */
+
+    #conditions-list-1 > .condition-checkbox::after,
+    #conditions-list-2 > .condition-checkbox::after {
+        content: "";
+        grid-area: 1 / 1;
+        width: 45%;
+        height: 45%;
+        clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        background-color: var(--txt-color-1);
+        transform: scale(0);
+        transition: transform 0.15s ease-in-out;
+    }
+
+    #conditions-list-1 > .condition-checkbox:checked::before,
+    #conditions-list-2 > .condition-checkbox:checked::before {
+        background-color: var(--accent);
+    }
+
+    #conditions-list-1 > .condition-checkbox:checked::after,
+    #conditions-list-2 > .condition-checkbox:checked::after {
+        transform: scale(1);
+    }
+
+    #conditions-list-1 > .condition-checkbox:active,
+    #conditions-list-2 > .condition-checkbox:active {
+        transform: scale(0.9);
+    }
+
+    #conditions-list-1 > .condition-checkbox:focus-visible,
+    #conditions-list-2 > .condition-checkbox:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+    }
+
+    #conditions-list-1 > label,
+    #conditions-list-2 > label {
+        grid-column: 2;
+        justify-self: start;
+        min-width: var(--minW1);
+        max-width: var(--w1);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+        overflow: var(--ofX1);
+    }
+
+    #conditions-list-3 {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        column-gap: 0.5em;
+        min-width: var(--minW1);
+        font-size: 0.85em;
+        text-align: left;
+    }
+
+    .exhausted-component {
+        width: 100%;
+        min-width: var(--minW1);
+        margin: var(--mar1);
+    }
+
+    #conditions-list-3 output {
+        min-width: 2ch;
+        text-align: right;
+    }
+
+    #exhausted-value {
+        appearance: none;
+        height: 1.2em;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    #exhausted-value::-webkit-slider-runnable-track {
+        height: 0.45em;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        background: linear-gradient(to right, var(--accent) var(--fill, 0%), var(--bgc-top) var(--fill, 0%)); /* accent up to the thumb */
+        box-shadow: var(--bs2);
+    }
+
+    #exhausted-value::-moz-range-track {
+        height: 0.45em;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        background-color: var(--bgc-top);
+        box-shadow: var(--bs2);
+    }
+
+    #exhausted-value::-moz-range-progress {
+        height: 0.45em;
+        border-radius: var(--tile);
+        background-color: var(--accent);
+    }
+
+    #exhausted-value::-webkit-slider-thumb {
+        appearance: none;
+        width: 1.1em;
+        height: 1.1em;
+        margin-top: calc((0.45em - 1.1em) / 2 - 1px); /* center the thumb on the track */
+        border: none;
+        clip-path: var(--check-shape);
+        background-color: var(--accent);
+    }
+
+    #exhausted-value::-moz-range-thumb {
+        width: 1.1em;
+        height: 1.1em;
+        border: none;
+        border-radius: 0;
+        clip-path: var(--check-shape);
+        background-color: var(--accent);
+    }
+
+    #exhausted-value:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+    }
+
+    #condition-checkbox {
+        cursor: pointer;
+    }
+
+    /* ---------- combat panel (ac, init, actions, spellbook, inventory) ---------- */
+
+    /* ---------- actions layout ---------- */
+
+    #sheet-panel-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: auto auto;
+        grid-template-areas: "armorClass initiative"
+            "actions actions";
+        column-gap: 0.75rem;
+        row-gap: 0.35rem;
+        padding-top: 0.75rem;
+        margin: 2% 0;
+    }
+
+    /* ---------- armor class / initiative ---------- */
+
+    #armor-class-container {
+        grid-area: armorClass;
+        height: 100%;
+    }
+
+    #initiative-container {
+        grid-area: initiative;
+        height: 100%;
+    }
+
+    #armor-class-tile-container,
+    #initiative-tile-container {
+        min-height: 6rem;
+        height: 100%;
+        color: var(--txt-color-1);
+        cursor: pointer;
+        margin: 2% 0;
+    }
+
+    #armor-class-tile-label,
+    #initiative-tile-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 80%;
+        border: var(--tileBorder);
+        background-color: var(--bgc-char-name);
+        border-radius: var(--tile) var(--tile) 0 0;
+        margin: 0;
+        padding: 5%;
+    }
+
+    #armor-class-tile-value,
+    #initiative-tile-value {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--bgc-char-stat);
+        border-radius: 0 0 10px 10px;
+        min-height: var(--minH1);
+        font-size: 90%;
+        border: var(--tileBorder);
+        margin: 0;
+        padding: 7%;
+    }
+
+    /* ---------- actions ---------- */
+
+    .action-container {
+        grid-area: actions;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        min-height: 14rem;
+        overflow: hidden;
+        padding: 0;
+
+    }
+
+    .action-list {
+        display: flex;
+        flex-direction: column;
+        border: var(--tileBorder);
+        box-shadow: var(--bs2);
+        margin: 2% 0;
+        border-radius: var(--tile);
+        overflow: var(--ofX1);
+    }
+
+    .action-set {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        padding: 0.3rem;
+        margin: 0;
+        background-color: var(--bgc-low);
+        border-radius: 0 0 var(--tile) var(--tile);
+    }
+
+    .action-title {
+        text-align: left;
+        color: var(--txt-color-1);
+        background-color: var(--bgc-char-name);
+        border-radius: var(--tile) var(--tile) 0 0;
+        padding: 3%;
+        margin: 0;
+        text-align: center;
+    }
+
+    .action-item {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: space-between;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        overflow: hidden;
+    }
+
+    .caption-btn {
+        flex: 1 1 0;
+        border: none;
+        background-color: var(--bgc-top);
+        color: var(--txt-color-1);
+        padding: 3%;
+        border-right: var(--tileBorder);
+        border-radius: var(--tile) 0 0 var(--tile);
+    }
+
+    .action-button-container { 
+        flex: 1 1 0;
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        border-radius: 0 var(--tile) var(--tile) 0;
+        overflow: var(--ofX1);
+        background-color: var(--damage-bg);
+        
+    }
+
+    .action-tabs {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        color: var(--txt-color-1);
+        background-color: var(--bgc-action-bar);
+       
+        gap: 0;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        padding: 0.5rem;
+        margin: 2% 0;
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
+    }
+
+    .action-button {
+        background-color: var(--bgc-action);
+        color: var(--txt-action);
+        display: flex;;
+        align-items: center;
+        justify-content: center;
+        flex: 1 1 0;
+        height: 100%;
+        margin: 0;
+        font-size: 80%;
+        border: none;
+        overflow: hidden;
+    }
+
+    .damage-button {
+        flex: 1 1 0;
+        border: none;
+        background-color: var(--bgc-action);
+        color: var(--txt-action);
+    }
+
+
+    .spell-details {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: var(--bgc-low);
+        animation: slide-in 0.3s ease-out forwards;
+        z-index: 1000;
+        color: var(--txt-color-1);
+        border: var(--tileBorder);
+        border-radius: var(--tile) var(--tile) 0 0;
+        box-shadow: var(--bs2);
+        
+    }
+
+    .spell-details-title {
+        text-align: center;
+        font-size: 2rem;
+
+    }
+
+    .spell-details-close {
+        background: none;
+        border: none;
+        color: var(--txt-color-1);
+        font-size: 1.5rem;
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+
+    .details-container {
+        display: flex;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: auto auto;
+        grid-template-areas: 
+             "combat build"
+            "description description";
+    }
+
+    .combat-box {
+        border: var(--tileBorder);
+        grid-area: combat;
+        text-align: left;
+        padding: 1%;
+        margin: 2%;
+        background-color: var(--bgc-low);
+        border-radius: var(--tile);
+    }
+
+    .spell-build-box {
+        border: var(--tileBorder);
+        grid-area: build;
+        text-align: right;
+        padding: 1%;
+        margin: 2%;
+        background-color: var(--bgc-low);
+        border-radius: var(--tile);
+    }
+
+    .spell-description-box {
+        grid-area: description;
+        border: var(--tileBorder);
+        padding: 1%;
+        margin: 1%;
+        background-color: var(--bgc-low);
+        border-radius: var(--tile);
+    }
+
+    /*----------spell tab-----------*/
+
+    .spell-tabs {
+        display: flex;
+        flex-direction: row;
+        gap: 0;
+        padding: 0.5rem;
+        margin: 2% 0;
+        border-radius: var(--tile);
+        border: var(--tileBorder);
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
+    }
+
+    .spell-tab-title {
+        text-align: center;
+        margin: 2%;
+        padding: 3%;
+        background-color: var(--bgc-top);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        color: var(--txt-color-1);
+    }
+
+    .spell-stat-bar {
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        padding: 0.5rem;
+        box-shadow: var(--bs2);
+        margin: 2%;
+        color: var(--txt-color-1);
+    }
+
+    .spell-stat {
+        font-size: 0.85rem;
+        text-align: center;
+        padding: 0.25rem;
+    }
+
+    .book-button {
+        color: var(--txt-color-1);
+        box-shadow: var(--bs-book);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .book-button:active {
+        transform: scale(0.9);
+    }
+
+    .learn-button-container {
+        flex: 1 1 0;
+        display: flex;
+        background-color: var(--bgc-low);
+        text-align: center;
+    }
+
+    .learn-button-container:last-child {
+        border-radius: 0 0 var(--tile) var(--tile);
+    }
+
+    .spell-action-form {
+        border: var(--tileBorder);
+        margin: 0;
+        padding: 0;
+    }
+
+    #unlearn-spell-form {
+        border-radius: 0 var(--tile) 0 0;
+    }
+
+    #action-spell-form {
+        border-radius: 0 0 var(--tile) 0;
+    }
+
+    .spell-action-set {
+        display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            padding: 0.3rem;
+            margin: 0;
+            border-radius: 0 0 var(--tile) var(--tile);
+    }
+
+    .shop-title {
+        text-align: center;
+        font-size: 140%;
+        color: var(--txt-color-1);
+        background-color: var(--bgc-char-name);
+        margin: 0;
+        padding: 3%;
+        border-radius: var(--tile) var(--tile) 0 0;
+        border: var(--tileBorder);
+    }
+
+    .book-bar {
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+    }
+
+    .spellbook-button {
+        text-align: center;
+        margin: 0;
+        padding: 3%;
+        width: 100%;
+        border: var(--tileBorder);
+        background-color: var(--bgc-char-stat);
+        border-radius:0 0 0 var(--tile);
+        color: var(--txt-color-1);
+        font-size: 120%;
+
+    }
+
+    .spell-stat-book {
+        display: flex;
+        align-items: center;
+        color: var(--txt-color-1);
+        border-radius:0 0 var(--tile) 0;
+        border: var(--tileBorder);
+        background-color: var(--bgc-char-stat);
+        text-align: center;
+        margin: 0;
+        padding: 2%;
+        width: 100%;
+    }
+
+    .learned {
+        flex: 1 1 0;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        font-size: 70%;
+        color: var(--accent);
+        padding: 2%;
+        text-decoration: underline;
+
+    }
+
+    /* ---------- inventory ---------- */
+
+    .shop-button {
+        width: 100%;
+        margin: 0 0 2% 0;
+        border: var(--tileBorder);
+        background-color: var(--bgc-char-stat);
+        color: var(--txt-color-1);
+        border-radius: 0 0 var(--tile) var(--tile);
+        box-shadow: var(--bs2);
+        padding: 3%;
+    }
+
+    .filter-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+        width: 100%;
+        
+    }
+
+    .field {
+        flex: 1 1 0;
+        background-color: var(--bgc-char-stat);
+        color: var(--txt-color-1);
+        border: var(--tileBorder);
+        appearance: none;
+        box-sizing: border-box;
+        min-width: 0;
+        padding: 0.4rem 1.4em 0.4rem 0.5rem;
+        font: inherit;
+        text-align: center;
+        text-overflow: ellipsis;
+        cursor: pointer;
+        background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+        background-position: right 0.75em center, right 0.45em center;
+        background-size: 0.3em 0.3em;
+        background-repeat: no-repeat;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .filter-container .field + .field {
+        border-left: none;
+    }
+
+    .spell-slot-checkbox {
+        appearance: none;
+        width: 1.1rem;
+        height: 1.1rem;
+        margin: .35rem 0.25rem;
+        border: 2px solid var(--spellslot-border);
+        border-radius: 50%;
+        background-color: transparent;
+        cursor: pointer;
+        transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    .spell-slot-checkbox:checked {
+        background-color: var(--spellslot-checked);
+        clip-path: var(--check-shape);
+        box-shadow: 0 0 6px var(--spellslot-checked-shadow);
+    }
+
+    .spell-slot-checkbox:hover {
+        box-shadow: 0 0 4px var(--accent);
+    }
+
+    .shop-entry {
+        width: 100%;
+        border: var(--tileBorder);
+        background-color: var(--bgc-char-stat);
+        color: var(--txt-color-1);
+        border-radius:var(--tile);
+        box-shadow: var(--bs2);
+        padding: 3%;
+    }
+
+    .equipped-item {
+        flex: 1 1 0;
+        font-style: italic;
+        text-decoration: underline;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--bgc-tab);
+        
+    }
+
+    footer {
+        display: flex;
+        position: fixed;
+        top: calc(100svh - 2vh);
+        z-index: 10;
+        height: 3vh;
+        width: 100%;
+        border-top: var(--tileBorder);
+        box-shadow: var(--bs2);
+        border-radius: 50% 50% 0 0;
+        overflow: hidden;
+    }
+
+    .footer-text {
+        display: none;
+    }
+
+    .slide {
+        z-index: 3;
+        box-sizing: border-box;
+        background-color: color-mix(in srgb, var(--accent) 25%, transparent);
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.06));
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: var(--tile);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 10px color-mix(in srgb, var(--accent) 45%, transparent);
+        transition: transform .35s ease, width .35s ease, height .35s ease;
+    }
 }
 
-/* The spell book list when it opens inside the sheet's Spell Book tab (same fix as .item-shop). */
-.action-container .spell-book,
-.action-container .spells-tab {
-    container-type: normal;
-    height: auto;
-    min-height: 20rem;
-    margin-top: 0.5rem;
+    
+/* ---------- Universal Layout ---------- */
+
+.spell-stat-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.25rem;
+    align-items: stretch;
 }
 
-
-/* ---------- action buttons fill the end of each row ---------- */
-/* No padding on the top, right and bottom of the row, so the buttons can reach its edges.
-   The left padding keeps the item name off the border. */
-.action-item {
-    padding: 0 0 0 0.75rem;
-    min-height: 2.5rem;
-    overflow: hidden;            /* clips the buttons to the row's rounded corners */
-}
-
-/* The button groups and the <form> wrappers stretch from the top of the row to the bottom */
-.action-item > .action-button-container,
-.action-item > form,
-.action-button-container > form {
+.spell-stat-bar > .btn-link,
+.spell-stat-bar > .spell-stat {
     display: flex;
-    align-self: stretch;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+    padding: 0.5rem 0.25rem;
+    min-height: 2.5rem;
+    box-sizing: border-box;
+    font-size: 1rem;
+    background-color: var(--bgc-low);
+    border: 1px solid color-mix(in srgb, var(--txt-color-1) 35%, transparent);
+    border-radius: 6px;
+    overflow-wrap: anywhere;
+}
+
+.spell-stat-bar > .spell-stat:nth-child(n + 5) {
+    grid-column: span 2;
+}
+
+/* ---------- Proficiencies Tab ---------- */
+
+.tab-title {
+    text-align: center;
+    margin: 2%;
+    padding: 3%;
+}
+
+.proficiency-list {
+    padding: 0;
     margin: 0;
 }
 
-/* Buttons fill their wrapper top to bottom, with square corners so they sit flush */
-.action-item .action-button {
-    align-self: stretch;
-    min-width: 4.5rem;
-    border-radius: 0;
-    box-shadow: none;
+.proficiency-tile {
+    border-top: var(--accent) solid 3px;
+    margin: 2%;
+    padding: 2%;
 }
 
-/* The "Equipped" label sits centered next to the Unequip button */
-.action-button-container > .equipped-item {
-    align-self: center;
-    padding: 0 0.5rem;
+.proficiency-title {
+    text-align: center;
 }
 
-/* A disabled action button (e.g. "Prepared"): greyed out and not clickable */
-.action-button:disabled,
-.action-button:disabled:hover {
-    background-color: grey;
-    color: lightgrey;
-    cursor: not-allowed;
-    opacity: 0.6;
-    transform: none;   /* stop the hover-grow effect */
+
+.upcast-picker {
+    font: inherit;
+    padding: 2px 4px;
+    border-radius: var(--rad1);
+    cursor: pointer;
+    border: var(--tileBorder);
+    background-color: var(--bgc-char-stat);
+    color: var(--txt-color-1);
+}
+
+#spells-panel-learned {
+    container-type: inline-size;
+}
+
+
+
+.spell-book-tabs .action-tab-list,
+.spell-book-tabs .action-tab-list[role="tablist"] {
+    flex-wrap: wrap;
+    overflow: visible;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.spell-book-tabs .action-tab-list [role="tab"] {
+    flex: 1 1 5.5rem;
+    min-width: 0;
+    white-space: nowrap;
+}
+
+/* ---------- roll orb ---------- */
+
+    .roll-orb {
+        position: fixed;
+        /* starts at the right of the header row, mirroring the portrait on the left */
+        right: 5%;
+        left: auto;
+        top: calc(6.5vh - 1.5rem);
+        z-index: 1000;
+        width: 3rem;
+        height: 3rem;
+        background-color: var(--bgc-orb);
+        border: var(--tileBorder);
+        cursor: grab;
+        user-select: none;
+        touch-action: none;
+        border-radius: var(--orb);
+    }
+    
+    .roll-orb-panel {
+        /* plain container: the bubbles inside carry the bubble look */
+        position: relative; /* anchors the jump-to-newest arrow */
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        width: 100%;
+        height: 100%;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .roll-feed {
+        list-style: none;
+        margin: 0;
+        padding: 0.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        scrollbar-width: none; /* Firefox; Chrome/Safari use the shared ::-webkit-scrollbar rule above */
+        touch-action: pan-y; /* lets a finger scroll the feed inside the orb */
+        overscroll-behavior: contain;
+    }
+    
+    .roll-bubble {
+        max-width: 85%;
+        padding: 0.4rem 0.65rem;
+        border-radius: 1rem;
+        box-shadow: var(--bs-bubble);
+        font-size: 0.85rem;
+        line-height: 1.3;
+        color: var(--txt-color-1);
+        overflow-wrap: anywhere;
+    }
+    
+    .roll-bubble.is-sent {
+        align-self: flex-end;
+        background-color: var(--bgc-bubble-send);
+        border-bottom-right-radius: 0.25rem;
+    }
+    
+    .roll-bubble.is-received {
+        align-self: flex-start;
+        background-color: var(--bgc-bubble-receive);
+        border-bottom-left-radius: 0.25rem;
+    }
+    
+    .roll-bubble-name {
+        display: block;
+        font-size: 0.7rem;
+        font-weight: bold;
+        opacity: 0.75;
+        margin-bottom: 0.15rem;
+    }
+    
+    .roll-jump {
+        position: absolute;
+        bottom: 0.75rem;
+        left: 50%;
+        translate: -50% 0;
+        width: 2rem;
+        height: 2rem;
+        padding: 0;
+        border: var(--tileBorder);
+        background-color: var(--bgc-bubble-receive);
+        color: var(--txt-color-1);
+        box-shadow: var(--bs2);
+        cursor: pointer;
+    }
+    
+    .roll-orb.is-open {
+        width: 18rem;
+        height: 16rem;
+        max-width: calc(100vw - 2rem); /* never bigger than a small phone screen */
+        max-height: calc(100vh - 2rem);
+        border-radius: var(--open-orb);
+        cursor: default;
+    }
+    
+    .roll-orb.opens-left {
+        translate: calc(-100% + 3rem) 0;
+    }
+    
+    .roll-orb.opens-up {
+        translate: 0 calc(-100% + 3rem);
+    }
+    
+    .roll-orb.opens-left.opens-up {
+        translate: calc(-100% + 3rem) calc(-100% + 3rem);
+    }
+    
+    .roll-orb.is-dragging {
+        cursor: grabbing;
+    }
+    
+    .roll-orb.is-open .roll-orb-face {
+        display: none;
+    }
+    
+    .roll-orb:not(.is-open) .roll-orb-panel {
+        display: none;
+    }
+
+/* ---------- KeyFrames ---------- */
+
+@keyframes slide-in {
+    0%   { 
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% { 
+        transform: translateY(0); 
+        opacity: 1;
+    }
+}
+
+@keyframes slide-out {
+    0%   { 
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% { 
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+
+@keyframes crit-shimmer {
+    0%   { background-position: 100% 0, 0 0; }
+    60%  { background-position: 0% 0, 0 0; }
+    100% { background-position: 0% 0, 0 0; }
 }

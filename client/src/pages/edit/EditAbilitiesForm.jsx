@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router';
 import useSave from './useSave';
 import { STATS } from '../../utils/stats';
 import { roll4d6DropLowest } from '../../utils/math';
@@ -19,20 +20,22 @@ function EditAbilitiesForm({ character, onSaved }) {
     };
 
     return (
-        <form className="formContainer" onSubmit={submit}>
-            <article id="statsContainer" className="edit-stats">
+        <form className="step-2-form" onSubmit={submit}>
+            <article id="base-stat-container" className="name-tile-2">
+                <label className="name-label-2">Ability Rolls</label>
                 {STATS.map((s) => (
-                    <article key={s.key} className="formSectionContainer">
-                        <span className="cap-top">{s.label}</span>
-                        <button type="button" className="cap-bottom rollBtn" onClick={() => reroll(s.key)}>
+                    <div key={s.key} className="name-value-container">
+                        <span className="name-value-top-half">{s.label}</span>
+                        <button type="button" className="name-value-bottom-half" onClick={() => reroll(s.key)}>
                             {scores[s.key] ?? 'roll'}
                         </button>
-                    </article>
+                    </div>
                 ))}
             </article>
             {message && <p>{message}</p>}
-            <article className="formSectionContainer buttonContainer">
-                <button className="formButton" type="submit">Save Changes</button>
+            <article className="button-tile">
+                <button className="action-button" type="submit">Save Changes</button>
+                <Link className="action-button" to={`/characters/${character.id}`}>Cancel</Link>
             </article>
         </form>
     );

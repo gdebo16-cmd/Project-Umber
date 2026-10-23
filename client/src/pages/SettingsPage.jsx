@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
 import usePageStyle from '../hooks/usePageStyle';
-import homeCss from '../styles/home.css?inline';
+import settingsCss from '../styles/settings.css?inline';
 import SiteNav from '../components/SiteNav';
 import { sendJson } from '../utils/api';
 
 // Replaces views/settings.ejs
 function SettingsPage() {
-    usePageStyle(homeCss);
+    usePageStyle(settingsCss);
     const [form, setForm] = useState({ username: '', email: '', password: '' });
-    const [welcomeName, setWelcomeName] = useState('');
     const [message, setMessage] = useState('');
 
     // load the current username and email once
@@ -18,7 +16,6 @@ function SettingsPage() {
             .then((res) => res.json())
             .then((data) => {
                 setForm({ username: data.username, email: data.email, password: '' });
-                setWelcomeName(data.username);
             });
     }, []);
 
@@ -27,8 +24,7 @@ function SettingsPage() {
     const submit = async (e) => {
         e.preventDefault();
         try {
-            const data = await sendJson('/api/settings', 'PUT', form);
-            setWelcomeName(data.username);
+            await sendJson('/api/settings', 'PUT', form);
             setForm({ ...form, password: '' }); // clear the password box, like the page reload did
             setMessage('Account updated');
         } catch (err) {
@@ -36,46 +32,57 @@ function SettingsPage() {
         }
     };
 
+    // the browser's confirm popup has to say OK before anything is deleted
+    const deleteAccount = async () => {
+        const ok = window.confirm('Delete your profile? This permanently removes your account, characters and campaigns. This cannot be undone.');
+        if (!ok) return;
+        try {
+            await sendJson('/api/settings', 'DELETE');
+            window.location.href = '/'; // full reload so the app forgets the old login
+        } catch (err) {
+            setMessage(err.message);
+        }
+    };
+
     return (
         <>
-            <header id="topContainer">
-                <h1 id="siteTitle">Welcome {welcomeName}, To Eldridia</h1>
-                <SiteNav />
+            <header id="site-title">
+                <img src="/Logo.png" alt="Eldrid Tales Logo" className="title-logo" />
+                <h1>Account Settings</h1>
             </header>
-
+            <SiteNav />
             <main>
-                <section id="formContainer">
-                    <article id="formTitle">
-                        <h2 id="titleText">Settings</h2>
-                        <h3 id="subTitleText">Account Information</h3>
-                    </article>
-                    <form className="formContainer" onSubmit={submit}>
-                        <article id="userNameContainer" className="formSectionContainer tile">
-                            <label className="topTile" htmlFor="username">Username</label>
-                            <input className="bottomTile" type="text" id="username" name="username" value={form.username} onChange={update} />
+                <section className='profile-container'>
+                    <form onSubmit={submit}>
+                        <article className="profile-tile" id="profile-username-container">
+                            <label className="profile-label" htmlFor="username">Username</label>
+                            <input className="field profile-value" type="text" id="username" name="username" value={form.username} onChange={update} />
                         </article>
 
-                        <article id="emailContainer" className="formSectionContainer tile">
-                            <label className="topTile" htmlFor="email">Email</label>
-                            <input className="bottomTile" type="email" id="email" name="email" value={form.email} onChange={update} />
+                        <article className="form-section profile-tile" id="profile-email-container">
+                            <label className="profile-label" htmlFor="email">Email</label>
+                            <input className="field profile-value" type="email" id="email" name="email" value={form.email} onChange={update} />
                         </article>
 
-                        <article id="passwordContainer" className="formSectionContainer tile">
-                            <label className="topTile" htmlFor="password">Password</label>
-                            <input className="bottomTile" type="password" id="password" name="password" value={form.password} onChange={update} />
+                        <article className="form-section profile-tile" id="profile-password-container">
+                            <label className="profile-label" htmlFor="password">Password</label>
+                            <input className="field profile-value" type="password" id="password" name="password" value={form.password} onChange={update} />
                         </article>
 
                         {message && <p>{message}</p>}
 
-                        <article id="buttonContainer" className="formSectionContainer">
-                            <button className="formButton" id="submit" type="submit">Update Account</button>
+                        <article className="form-section profile-tile" id="profile-submit-container">
+                            <button className="profile-button" id="submit" type="submit">Update Account</button>
                         </article>
                     </form>
+
+                    <article className="form-section profile-tile" id="profile-delete-container">
+                        <button className="profile-button" id="delete-account" type="button" onClick={deleteAccount}>Delete Profile</button>
+                    </article>
                 </section>
             </main>
             <footer>
-                <Link id="homeLink" to="/home">Back to home</Link>
-                <p id="footerText">copyrite Eldrid Tales LLC</p>
+                <p className="footer-text" id="footer-text">copyrite Eldrid Tales LLC</p>
             </footer>
         </>
     );

@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 
 // Each EJS page loaded its own stylesheet (charSheet.css, home.css, signin.css...).
-// They all style things like <body> and #siteTitle differently, so loading them all at
+// They all style things like <body> and #site-title differently, so loading them all at
 // once would make them fight. This hook adds a page's CSS only while that page is on
 // screen and removes it when you leave. It can also add a class to <body> (like "subpage").
+// Shared styles (themes.css, components.css) are loaded once in main.jsx; this only adds the page's own file.
+// Only one page is mounted at a time, so only one page stylesheet is ever live.
 function usePageStyle(css, bodyClass) {
     useEffect(() => {
         const style = document.createElement('style');
