@@ -880,6 +880,7 @@ footer {
         box-shadow: var(--bs2);
         color: var(--txt-color-1);
         font-size: 150%;
+        grid-column: 1 / -1;
     }
 
     .name-value,
@@ -1075,5 +1076,22 @@ footer {
     .name-value-container > .name-value-bottom-half {
         flex: 0 0 auto;
         border-left: none;
+    }
+
+    #base-stat-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        height: auto;
+        flex-shrink: 0;
+    }
+
+    #base-stat-container > .name-value-container {
+        flex-direction: column;
+    }
+
+    #base-stat-container > .name-value-container > .name-value-bottom-half {
+        border-left: var(--tileBorder);
+        border-top: none;
     }
 }
