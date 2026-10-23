@@ -14,6 +14,7 @@ export async function getInventory(req, res) {
         character: { id: ch.id, name: ch.name },
         armor: await Inventory.listArmorForCharacter(ch.class_id, ch.subclass_id, ch.level),
         weapons: await Inventory.listWeaponsForCharacter(ch.class_id, ch.subclass_id, ch.level),
+        items: await Inventory.listItems(),
         ...(await Inventory.getOwnedIds(charId)),
     });
 }
@@ -34,6 +35,12 @@ export const addArmor = (req, res) => changeOwned(req, res, (id) => Inventory.ad
 
 // POST /api/characters/:id/inventory/weapon   body: { weapon_id }
 export const addWeapon = (req, res) => changeOwned(req, res, (id) => Inventory.addWeapon(id, Number(req.body.weapon_id)));
+
+// POST /api/characters/:id/inventory/item   body: { item_id }
+export const addItem = (req, res) => changeOwned(req, res, (id) => Inventory.addItem(id, Number(req.body.item_id)));
+
+// POST /api/characters/:id/inventory/item/remove   body: { item_id }
+export const removeItem = (req, res) => changeOwned(req, res, (id) => Inventory.removeItem(id, Number(req.body.item_id)));
 
 // POST /api/characters/:id/inventory/armor/remove   body: { armor_id }
 export const removeArmor = (req, res) => changeOwned(req, res, (id) => Inventory.removeArmor(id, Number(req.body.armor_id)));

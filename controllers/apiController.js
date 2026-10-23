@@ -63,6 +63,18 @@ export async function updateHp(req, res) {
     res.json(hp);
 }
 
+// PATCH /api/characters/:id/temp-hp   body: { amount } (doesn't stack: keeps the higher) or { clear: true }
+export async function updateTempHp(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const clear = req.body.clear === true;
+    const amount = clear ? 0 : Number(req.body.amount);
+    if (!Number.isInteger(amount) || amount < 0) return res.status(400).json({ error: 'Bad amount' });
+
+    const row = await Characters.setTempHp(req.params.id, req.session.userId, amount, clear);
+    if (!row) return res.status(404).json({ error: 'Character not found' });
+    res.json(row);
+}
+
 // DELETE /api/characters/:id
 export async function deleteCharacter(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });

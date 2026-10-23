@@ -1,6 +1,5 @@
-import { Link } from 'react-router';
 import usePageStyle from '../hooks/usePageStyle';
-import homeCss from '../styles/home.css?inline';
+import profileCss from '../styles/profile.css?inline';
 import SiteNav from '../components/SiteNav';
 import { sendJson } from '../utils/api';
 
@@ -12,7 +11,7 @@ const DISPLAYS = ['standard', 'compact', 'neon', 'glass', 'parchment', 'minimal'
 const BACKGROUNDS = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen', 'neon', 'dark-map', 'light-map', 'hellfire-map', 'frozen-map'];
 
 function ProfilePage() {
-    usePageStyle(homeCss);
+    usePageStyle(profileCss);
 
 
 
@@ -44,8 +43,8 @@ const pickBackground = async(e) => {
                 <h1>Profile</h1>  
             </header>
             <SiteNav />
-            <main id="profile-main">
-                <section>
+            <main>
+                <section className='profile-container'>
                         <article className="form-section profile-tile" id="profile-username-container">
                             <label id="theme-label" className="tile-label tile-top" htmlFor="theme-select">Color scheme</label>
                             <select className="field tile-value tile-bottom" id="theme-value" aria-label="Color scheme" defaultValue={localStorage.getItem('siteTheme') || 'default'} onChange={pickTheme}>
@@ -70,15 +69,10 @@ const pickBackground = async(e) => {
                                 ))}
                             </select>
                         </article>
-                        <article className="form-section profile-tile" id="profile-username-container">
-                            <label id="img-label" className="tile-label tile-top" htmlFor="img-input">Character Image</label>
-                            <img src={'/images/default-avatar.png'} alt="Avatar" className='tile-value tile-bottom'/>
-                        </article>
                 </section>
             </main>
             <footer>
-                <Link id="home-link" to="/home">Back to home</Link>
-                <p id="footer-text">copyrite Eldrid Tales LLC</p>
+                <p className="footer-text" id="footer-text">copyrite Eldrid Tales LLC</p>
             </footer>
         </>
     );

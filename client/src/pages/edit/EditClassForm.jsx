@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router';
 import useBoostOptions from '../../hooks/useBoostOptions';
 import useSave from './useSave';
 import CreateDescription from '../CreateDescription';
@@ -114,45 +115,45 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
 
     return (
         <>
-            <form className="form-container" onSubmit={submit}>
-                <article className="form-section tile pick-tile">
-                    <label className="tile-top" htmlFor="level">Level</label>
-                    <select className="tile-bottom" id="level" value={level} onChange={changeLevel} required>
+            <form className="step-2-form" onSubmit={submit}>
+                <article className="name-tile-2">
+                    <label className="name-label-2" htmlFor="level">Level</label>
+                    <select className="name-value-2" id="level" value={level} onChange={changeLevel} required>
                         {LEVELS.map((n) => (
-                            <option key={n} value={n}>{n}</option>
+                            <option key={n} value={n} className="level-option">{n}</option>
                         ))}
                     </select>
                 </article>
-                <article className="form-section tile pick-tile">
-                    <label className="tile-top" htmlFor="class_id">Select Class</label>
-                    <select className="tile-bottom" id="class_id" value={classId} onChange={changeClass} required>
+                <article className="name-tile-2">
+                    <label className="name-label-2" htmlFor="class_id">Select Class</label>
+                    <select className="name-value-2" id="class_id" value={classId} onChange={changeClass} required>
                         {classes.map((c) => (
-                            <option key={c.id} value={c.id}>{c.name}</option>
+                            <option key={c.id} value={c.id} className="name-option-2">{c.name}</option>
                         ))}
                     </select>
                 </article>
-                <article className="form-section tile pick-tile">
-                    <label className="tile-top" htmlFor="subclass_id">Select Subclass</label>
+                <article className="name-tile-2">
+                    <label className="name-label-2" htmlFor="subclass_id">Select Subclass</label>
                     <select
-                        className="tile-bottom"
+                        className="name-value-2"
                         id="subclass_id"
                         value={subclassId}
                         onChange={(e) => setSubclassId(Number(e.target.value))}
                         required={!subLocked}
                         disabled={subLocked}
                     >
-                        <option value="" disabled>{subLocked ? 'No Subclass yet' : 'Select a Subclass'}</option>
+                        <option value="" disabled className="name-option-2">{subLocked ? 'No Subclass yet' : 'Select a Subclass'}</option>
                         {subsForClass.map((s) => (
-                            <option key={s.id} value={s.id}>{s.name}</option>
+                            <option key={s.id} value={s.id} className="name-option-2">{s.name}</option>
                         ))}
                     </select>
                     {subLocked && <p className="pick-hint">Subclass unlocks at level {SUBCLASS_LEVEL}</p>}
                 </article>
-                <LevelChoices features={choiceList} picks={picks} onChange={setPicks} topClass="tile-top" bottomClass="tile-bottom" allowed={allowed} />
+                <LevelChoices features={choiceList} picks={picks} onChange={setPicks} allowed={allowed} tileClass="name-tile-2" rowClass="name-value-container" topClass="name-label-2" bottomClass="name-value-2" pickedClass="name-value-top-half" hintClass="name-value-bottom-half" hintTag="button" />
                 {repicking && (
-                    <article className="form-section tile pick-tile">
-                        <label className="tile-top" htmlFor="refund">Free re-pick: lower the score that kept boost raised</label>
-                        <select className="tile-bottom" id="refund" value={refund} onChange={(e) => setRefund(e.target.value)}>
+                    <article className="name-tile-2">
+                        <label className="name-label-2" htmlFor="refund">Free re-pick: lower the score that kept boost raised</label>
+                        <select className="name-value-2" id="refund" value={refund} onChange={(e) => setRefund(e.target.value)}>
                             <option value="">Leave my scores as they are</option>
                             {['str', 'dex', 'con', 'int', 'wis', 'cha'].map((s) => (
                                 <option key={s} value={s}>{s.toUpperCase()} -2</option>
@@ -166,8 +167,9 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
                     <p>Saving below level {SUBCLASS_LEVEL} removes your subclass and its feature choices.</p>
                 )}
                 {!classSaved && <p>Changing class resets skill proficiencies when you save.</p>}
-                <article className="form-section button-container">
-                    <button className="btn btn-form" type="submit">Save Changes</button>
+                <article className="button-tile">
+                    <button className="action-button" type="submit">Save Changes</button>
+                    <Link className="action-button" to={`/characters/${character.id}`}>Cancel</Link>
                 </article>
             </form>
             <CreateDescription item={shown} />

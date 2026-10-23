@@ -87,15 +87,15 @@ function SpellsTab() {
             <>
                 {/* the first button you click spends the slot */}
                 {s.attack_type ? (
-                    <button type='button' className='btn btn-action btn-to-hit hover-grow' onClick={() => cast(beamsAt(s, level) > 1 ? `${who} casts ${s.name}! ${beamRollText(beamsAt(s, level), toHit, dice)}` : `${who} casts ${s.name}! ${hitText()}`)}>{signed(toHit)}</button>
+                    <button type='button' className='action-button btn-to-hit hover-grow' onClick={() => cast(beamsAt(s, level) > 1 ? `${who} casts ${s.name}! ${beamRollText(beamsAt(s, level), toHit, dice)}` : `${who} casts ${s.name}! ${hitText()}`)}>{signed(toHit)}</button>
                 ) : s.opponent_save_roll ? (
-                    <button type='button' className='btn btn-action btn-to-hit hover-grow' onClick={() => cast(`${who} casts ${s.name}! Target mus make a ${s.opponent_save_roll} roll and beat a ${spellSave}!`)}>{s.opponent_save_roll} {spellSave}</button>
+                    <button type='button' className='action-button btn-to-hit hover-grow' onClick={() => cast(`${who} casts ${s.name}! Target mus make a ${s.opponent_save_roll} roll and beat a ${spellSave}!`)}>{s.opponent_save_roll} {spellSave}</button>
                 ) : null}
                 {dice ? (
                     // with a to-hit/save button the damage is just a roll; without one, this button is the cast
-                    <button type='button' className={`btn btn-action damage-button hover-grow${critKey === key ? ' is-crit' : ''}`} onClick={() => hasFirst ? onRoll?.(damageText()) : cast(`${who} casts ${s.name}! ${damageText()}`)}>{dice}{healMod ? signed(healMod) : ''}</button>
+                    <button type='button' className={`action-button damage-button ${critKey === key ? ' is-crit' : ''}`} onClick={() => hasFirst ? onRoll?.(damageText()) : cast(`${who} casts ${s.name}! ${damageText()}`)}>{dice}{healMod ? signed(healMod) : ''}</button>
                 ) : (
-                    <button type='button' className='btn btn-action damage-button hover-grow' onClick={() => cast(`${who} casts ${s.name}!`)}>Cast</button>
+                    <button type='button' className='action-button damage-button' onClick={() => cast(`${who} casts ${s.name}!`)}>Cast</button>
                 )}
             </>
         );
@@ -158,9 +158,9 @@ function SpellsTab() {
 
         <>
         <section className='title-tile'>
-            <h2 className="action-tab-title" id="spell-title">Spell Book</h2>
-            <article className="action-button-container spell-stat-bar">
-                <button type='button' className='btn btn-link hover-grow' onClick={() => setBrowsing(true)}>Consult the Scrolls</button>
+            <h2 className="spell-tab-title" id="spell-title">Spell Book</h2>
+            <article className="spell-stat-bar">
+                <button type='button' className='book-button spell-stat' onClick={() => setBrowsing(true)}>Consult the Scrolls</button>
                 <p className="spell-stat">Primary Stat: {spellStat}</p>
                 <p className="spell-stat">Damage Bonus: {signed(spellAttack)} </p>
                 <p className="spell-stat">Target Save: {signed(spellSave)}</p>
@@ -172,24 +172,24 @@ function SpellsTab() {
         </section>
 
         <section className="panel-shell spells-tab">
-        <TabList tabs={SPELL_TABS} active={tab} onChange={setTab} prefix="spells-" />
+        <TabList className="spell-tabs" tabs={SPELL_TABS} active={tab} onChange={setTab} prefix="spells-" />
 
             
-        <article role="tabpanel" id="spells-panel-prepared" className="action-tile spells-panel" aria-labelledby="spells-tab-prepared" hidden={tab !== 'prepared'}>
-            <ul className="action-list spell-list">
-                <li className="action-item spell-slot">
+        <article role="tabpanel" id="spells-panel-prepared" className="spell-tab" aria-labelledby="spells-tab-prepared" hidden={tab !== 'prepared'}>
+            <ul className="action-container">
+                <li className="action-list">
                     <span className="action-title">Low Level Spells</span>
-                    <ul className="action-list">
+                    <ul className="action-set">
                         {spellAtLevel(preparedSpells, 0).map((s) => (
-                            <li className="action-item spell" key={s.id}>
-                                <button type='button' className='btn btn-spell-name hover-grow' onClick={() => setOpenSpell(s)}>{s.name}</button>
+                            <li className="action-item" key={s.id}>
+                                <button type='button' className='caption-btn' onClick={() => setOpenSpell(s)}>{s.name}</button>
                                     <article className="action-button-container">{spellButtons(s, s.base_damage_dice || s.heal_dice)}</article>
                             </li>
                         ))}
                     </ul>
                 </li>
                 {slots.map((count, i) => (
-                    <li className="action-item spell-slot" key={i}>
+                    <li className="action-list" key={i}>
                         <span className='action-title'>Level {i + 1} Spells <br />
                             {Array.from({ length: count }, (_, j) => (
                                 <input key={j} type='checkbox' className='spell-slot-checkbox'
@@ -197,16 +197,16 @@ function SpellsTab() {
                                 onChange={(e) => setUsedSlots({ ...usedSlots, [i + 1]: e.target.checked ? j + 1 : j })} />
                             ))}
                         </span>
-                        <ul className="action-list">
+                        <ul className="action-set">
                             {spellAtLevel(preparedSpells, i + 1).map((s) => (
-                            <li className="action-item spell" key={s.id}>
-                                <button type='button' className='btn btn-spell-name hover-grow' onClick={() => setOpenSpell(s)}>{s.name}</button>
+                            <li className="action-item" key={s.id}>
+                                <button type='button' className='caption-btn' onClick={() => setOpenSpell(s)}>{s.name}</button>
                                     <article className="action-button-container">{spellButtons(s, s.base_damage_dice)}</article>
                             </li>
                              ))}
                             {upcastsAtLevel(preparedSpells, i + 1).map((s) => (
-                            <li className="action-item spell upcast-spell" key={s.upcastKey}>
-                                <button type='button' className='btn btn-spell-name hover-grow' onClick={() => setOpenSpell(s)}>{s.name}</button>
+                            <li className="action-item upcast-spell" key={s.upcastKey}>
+                                <button type='button' className='caption-btn' onClick={() => setOpenSpell(s)}>{s.name}</button>
                                     <article className="action-button-container">{spellButtons(s, s.damage_dice || s.heal_dice)}</article>
                             </li>
                             ))}
@@ -215,25 +215,25 @@ function SpellsTab() {
                 ))}   
             </ul>
         </article>
-        <article role="tabpanel" className="action-tile spells-panel" id="spells-panel-learned" aria-labelledby="spells-tab-learned" hidden={tab !== 'learned'}>
+        <article role="tabpanel" className="spell-tab" id="spells-panel-learned" aria-labelledby="spells-tab-learned" hidden={tab !== 'learned'}>
                 {learnedSpells.length === 0 ? (
                     <p>You know nothing of magic.</p>
                 ) : (
-                    <ul className="action-list spell-list">
+                    <ul className="spell-action-set">
                     {learnedSpells.map((s) => (
                         <li className="action-item" key={s.id}>
-                            {s.name} <br /> Level: {s.base_level}
-                            <article className="action-button-container">
-                            <form className="removeSpellForm" onSubmit={(e) => { e.preventDefault(); spellAction(s.id, 'unlearn'); }}>
-                                <button type="submit" id="unlearn-spell-button" className="btn btn-action hover-grow">Unlearn</button>
-                            </form>
-                            <form className="prepareSpellForm" onSubmit={(e) => { e.preventDefault(); spellAction(s.id, s.is_prepared ? 'unprepare' : 'prepare'); }}>
-                                <button type="submit" className="btn btn-action hover-grow">
+                            <button type='button' className='caption-btn' onClick={() => setOpenSpell(s)}>{s.name}</button>
+                            <article className="learn-button-container">
+                                <form id="unlearn-spell-form" className="spell-action-form" onSubmit={(e) => { e.preventDefault(); spellAction(s.id, 'unlearn'); }}>
+                                    <button type="submit" id="unlearn-spell-button" className="action-button">Unlearn</button>
+                                </form>
+                            <form id="prepare-spell-form" className="spell-action-form" onSubmit={(e) => { e.preventDefault(); spellAction(s.id, s.is_prepared ? 'unprepare' : 'prepare'); }}>
+                                <button type="submit" className="action-button prepare-button">
                                     {s.is_prepared ? 'Unprepare' : 'Prepare'}
                                 </button>
                             </form>
-                            <form className='setActionForm' onSubmit={(e) => { e.preventDefault(); spellAction(s.id, s.is_action ? 'removeAction' : 'setAction'); }}>
-                                <button type="submit" className="btn btn-action hover-grow">
+                            <form id="action-spell-form" className='spell-action-form' onSubmit={(e) => { e.preventDefault(); spellAction(s.id, s.is_action ? 'removeAction' : 'setAction'); }}>
+                                <button type="submit" className="action-button">
                                     {s.is_action ? 'Remove Action' : 'Set Action'}
                                 </button>
                             </form>

@@ -3,41 +3,19 @@
 :root,
 [data-display='standard'] {
     /* retool phase 1: shared literals */
-    --glassBorder: 1px solid rgba(255, 255, 255, 0.25);
     --radCornerBL: 0 0 0 10px;
     --radCornerBR: 0 0 10px 0;
-    --titleFallback: rgb(65, 37, 157);
-    --statusFallback: rgb(109, 83, 222);
     --tileBorder: 1px solid var(--bordercolor);
     --bs3: none;
-    --backdrop: none;
-    --glow: none;
-    --btnRad: var(--rad2);
-    --inputRad: var(--rad2);
-    --letterSp: normal;
-    --rad1: .80rem;
-    --rad2: .35rem;
     --bs1: 2px 2px 15px black;
     --bs2: 2px 2px 10px black;
-    --pad1: .25%;
-    --pad2: 1%;
-    --pad3: 0;
-    --mar1: 0;
-    --mar2: 2%;
+    --fontfam: "Almendra", serif;
+    --fontweight: 400;
+    --fontstyle: normal;
     --shadowInner: inset 6px 6px 8px #000000a9,
         inset -1px -1px 5px #00000079;
-    --toprad: 10px 10px 0 0;
-    --lowrad: 0 0 10px 10px;
-    --padTop: 3%;
-    --padLow: 2%;
     --tile: 10px;
-    --marTop: 0;
-    --marLow: 0;
     --section-gap: 0.75rem;
-    --fontF: "Cinzel Decorative", serif;
-    --fontW1: 700;
-    --fontW2: 400;
-    --fontStyle: normal;
     --fontS1: 100%;
     --fontS2: 130%;
     --fontS3: 160%;
@@ -48,15 +26,17 @@
     --maxW: 100%;
     --maxH1: 100%;
     --maxH2: 100vh;
-    --minW1: 0;
-    --minW2: 0;
-    --minH1: 0;
-    --minH2: 0;
     --ofX1: hidden;
     --ofX2: hidden;
     --ofY1: auto;
     --ofY2: auto;
     --border1: none;
+    --orb: 50%;
+    --bs-bubble: 0 0 6px var(--bbl-shadow);
+    --open-orb: 10px;
+    --tab: 0.5rem;
+    --bs-tab: 0 0 6px var(--tab-shadow);
+    --nav-tile: 0.5rem;
 }
 
 [data-display='compact'] {
@@ -81,10 +61,9 @@
     --marTop: 0;
     --marLow: 0;
     --section-gap: 0.75rem;
-    --fontF: "Cinzel Decorative", serif;
-    --fontW1: 700;
-    --fontW2: 400;
-    --fontStyle: normal;
+    --fontfam: "Almendra", serif;
+    --fontweight: 400;
+    --fontstyle: normal;
     --fontS1: 100%;
     --fontS2: 130%;
     --fontS3: 150%;
@@ -126,10 +105,9 @@
     --marTop: 0;
     --marLow: 0;
     --section-gap: 0.75rem;
-    --fontF: "Cinzel Decorative", serif;
-    --fontW1: 700;
-    --fontW2: 400;
-    --fontStyle: normal;
+    --fontfam: "Almendra", serif;
+    --fontweight: 400;
+    --fontstyle: normal;
     --fontS1: 100%;
     --fontS2: 130%;
     --fontS3: 150%;
@@ -181,8 +159,9 @@
     --toprad: .2rem .2rem 0 0;
     --lowrad: 0 0 .2rem .2rem;
     --tile: .2rem;
-    --fontF: "Cinzel", "Cinzel Decorative", Georgia, serif;
-    --fontW1: 600;
+    --fontfam: "Almendra", serif;
+    --fontweight: 400;
+    --fontstyle: normal;
     --btnRad: .15rem;
     --inputRad: .1rem;
     --letterSp: .03em;
@@ -200,8 +179,9 @@
     --lowrad: 0 0 .4rem .4rem;
     --tile: .4rem;
     --section-gap: 1rem;
-    --fontF: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    --fontW1: 600;
+    --fontfam: "Almendra", serif;
+    --fontweight: 400;
+    --fontstyle: normal;
     --fontS2: 120%;
     --fontS3: 140%;
     --btnRad: .3rem;
@@ -230,532 +210,1660 @@
 
 :root,
 [data-theme="default"] {
+    --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
+    --txt-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); /* condition checkbox + exhaustion slider thumb: diamond */
+
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor: rgba(79, 46, 46, 0.712);
+
     --bgc-bubble-send: rgb(26, 29, 72);
     --bgc-bubble-receive: rgb(112, 94, 187);
-    --bgc-orb: rgb(64, 71, 175);
-    --bg-color-5: rgb(85, 59, 133);
-    --bg-color-4: rgba(71, 52, 139, 0.356);
-    --bg-color-3: rgba(74, 60, 199, 0.678);
-    --bg-color-2: rgba(84, 16, 16, 0.893);
-    --bg-color-1: rgba(109, 83, 222, 0.72);
-    --title-color: rgba(255, 182, 55, 0.756);
-    --txt-color-1: rgba(247, 220, 144, 0.998);
-    --bordercolor: rgba(248, 219, 147, 0.777);
-    --bgc-top: rgba(38, 12, 98, 0.908);
-    --bgc-low: rgba(93, 41, 41, 0.903);
-    --bgc-title: rgb(30, 22, 65);
-    --accent: rgb(245, 188, 103);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(1.5px) saturate(150%);
-    --blur3: blur(3px) saturate(150%);
+    --bgc-orb: rgb(47, 52, 126);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(28, 20, 61);
+
+    --bg-color-statmod: rgba(77, 56, 13, 0.734);
+    --bg-color-header: rgba(84, 16, 16, 0.893);
+    --bgc-top: rgba(38, 12, 98, 0.775);
+    --bgc-low: rgba(62, 12, 12, 0.903);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(178, 127, 80, 0.777);
+    --txt-color-1: rgba(178, 127, 80, 0.998);
+    --accent: rgb(178, 127, 80);
+
+    --site-title-bg: rgba(33, 13, 80, 0.858);
+    --bg-color-nav: rgba(33, 13, 80, 0.858);
+
+    --spellslot-border: rgba(102, 22, 22, 0.92);
+    --spellslot-checked: rgba(250, 179, 104, 0.93);
+    --spellslot-checked-shadow: rgba(250, 179, 104, 0.775);
+
+    --panel-bg: rgba(59, 42, 100, 0.475);
+    --damage-bg: rgba(28, 20, 56, 0.822);
+
+    --bgc-spell-tab: rgba(31, 25, 47, 0.908);
+    --txt-spell-tab: rgba(248, 204, 159, 0.956);
+
+    --txt-tab: rgba(248, 204, 159, 0.956);
+    --bgc-tab: rgba(31, 25, 47, 0.908);
+    --tab-shadow: none;
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(42, 17, 102, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(38, 12, 98, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(55, 47, 89, 0.822);
+    --rest-txt-choice-1: rgba(246, 216, 136, 0.908);
+    --rest-bg-choice-2: rgba(38, 12, 98, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(16, 3, 46, 0.964);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(16, 3, 46, 0.837);
+    --bgc-char-stat: rgba(63, 5, 5, 0.803);
+    --bgc-char-delete: rgba(248, 204, 159, 0.956);
+    --delete-txt: rgba(63, 5, 5, 0.803);
+
+    --bgc-theme: #1a0e2e;
 }
 
 [data-theme="prestige"] {
+    --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
     --check-shape: polygon(0 15%, 25% 45%, 50% 5%, 75% 45%, 100% 15%, 90% 100%, 10% 100%); /* condition checkbox + exhaustion slider thumb: crown */
+
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor: rgba(79, 46, 46, 0.712);
+
     --bgc-bubble-send: rgb(26, 29, 72);
-    --bgc-bubble-receive: rgb(87, 65, 184);
-    --bgc-orb: rgb(64, 71, 175);
-    --bg-color-5: rgb(66, 12, 166);
-    --bg-color-4: rgba(71, 52, 139, 0.356);
-    --bg-color-3: rgba(74, 60, 199, 0.678);
-    --bg-color-2: rgba(99, 78, 204, 0.736);
-    --bg-color-1: rgba(109, 83, 222, 0.72);
-    --title-color: rgba(255, 178, 46, 0.756);
-    --txt-color-1: rgba(255, 255, 255, 0.756);
-    --bordercolor: rgba(248, 219, 147, 0.777);
+    --bgc-bubble-receive: rgb(112, 94, 187);
+    --bgc-orb: rgb(47, 52, 126);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(112, 94, 187);
+
+    --bg-color-statmod: rgba(77, 56, 13, 0.734);
+    --bg-color-header: rgba(84, 16, 16, 0.893);
     --bgc-top: rgba(44, 30, 106, 0.907);
     --bgc-low: rgba(155, 118, 48, 0.466);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(178, 127, 80, 0.777);
+    --txt-color-1: rgba(255, 255, 255, 0.756);
+    --accent: rgb(178, 127, 80);
+
+    --site-title-bg: rgba(38, 12, 98, 0.908);
+    --bg-color-nav: rgba(38, 12, 98, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(38, 12, 98, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(38, 12, 98, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(38, 12, 98, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(38, 12, 98, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(38, 12, 98, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(38, 12, 98, 0.908);
+    --rest-bg-choice-2: rgba(38, 12, 98, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(38, 12, 98, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(44, 30, 106, 0.837);
+    --bgc-char-stat: rgba(155, 118, 48, 0.803);
+    --bgc-char-delete: rgba(255, 255, 255, 0.956);
+    --delete-txt: rgba(155, 118, 48, 0.803);
+
+    --bgc-theme: #1a1240;
+
     --bgc-title: rgb(65, 37, 157);
-    --accent: rgb(245, 188, 103);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(1.5px) saturate(150%);
-    --blur3: blur(3px) saturate(150%);
+    --title-color: rgba(255, 178, 46, 0.756);
 }
 
 
 
 [data-theme="purple"] {
+    --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
     --check-shape: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%); /* condition checkbox + exhaustion slider thumb: hexagon */
+
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor: rgba(79, 46, 46, 0.712);
-    --bgc-bubble-send: rgb(26, 29, 72);
+
+    --bgc-bubble-send: rgb(45, 50, 122);
     --bgc-bubble-receive: rgb(116, 94, 212);
     --bgc-orb: rgb(74, 78, 139);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(150, 154, 211);
+
+    --bg-color-statmod: rgba(116, 86, 122, 0.734);
+    --bg-color-header: rgba(46, 31, 133, 0.893);
+    --bgc-top: rgba(64, 72, 175, 0.72);
+    --bgc-low: rgba(46, 31, 133, 0.466);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(255, 247, 230, 0.565);
+    --txt-color-1: rgba(255, 255, 255, 0.756);
+    --accent: rgb(178, 127, 80);
+
+    --site-title-bg: rgba(64, 72, 175, 0.908);
+    --bg-color-nav: rgba(64, 72, 175, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(64, 72, 175, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(64, 72, 175, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(64, 72, 175, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(64, 72, 175, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(64, 72, 175, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(64, 72, 175, 0.908);
+    --rest-bg-choice-2: rgba(64, 72, 175, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(64, 72, 175, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(64, 72, 175, 0.837);
+    --bgc-char-stat: rgba(46, 31, 133, 0.803);
+    --bgc-char-delete: rgba(255, 255, 255, 0.956);
+    --delete-txt: rgba(46, 31, 133, 0.803);
+
+    --bgc-theme: #411b89;
+
+    --bgc-title: rgb(46, 30, 102);
     --bg-color-5: rgb(65, 27, 137);
     --bg-color-4: rgba(71, 52, 139, 0.356);
     --bg-color-3: rgba(74, 60, 199, 0.678);
     --bg-color-2: rgba(68, 42, 196, 0.171);
     --bg-color-1: rgba(109, 83, 222, 0.72);
-    --txt-color-1: rgba(255, 255, 255, 0.756);
-    --bordercolor: rgba(160, 150, 180, 0.565);
-    --bgc-top: rgba(64, 72, 175, 0.72);
-    --bgc-low: rgba(46, 31, 133, 0.466);
-    --bgc-title: rgb(46, 30, 102);
-    --accent: rgb(245, 188, 103);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(1.5px) saturate(150%);
 }
 
 [data-theme="green"] {
     --check-shape: polygon(50% 0, 100% 35%, 85% 85%, 50% 100%, 15% 85%, 0 35%); /* condition checkbox + exhaustion slider thumb: leaf */
+
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor: rgba(79, 46, 46, 0.712);
+
     --bgc-bubble-send: rgb(20, 57, 50);
     --bgc-bubble-receive: rgb(45, 140, 109);
     --bgc-orb: rgb(66, 156, 120);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(128, 145, 132);
+
+    --bg-color-statmod: rgba(116, 130, 88, 0.734);
+    --bg-color-header: rgba(51, 80, 48, 0.893);
+    --bgc-top: rgba(24, 55, 31, 0.915);
+    --bgc-low: rgba(86, 118, 82, 0.897);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(251, 237, 149, 0.565);
+    --txt-color-1: rgba(237, 243, 221, 0.822);
+    --accent: rgb(238, 224, 163);
+
+    --site-title-bg: rgba(24, 55, 31, 0.908);
+    --bg-color-nav: rgba(57, 78, 62, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(24, 55, 31, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(24, 55, 31, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(24, 55, 31, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(24, 55, 31, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(24, 55, 31, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(24, 55, 31, 0.908);
+    --rest-bg-choice-2: rgba(24, 55, 31, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(24, 55, 31, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(64, 104, 73, 0.837);
+    --bgc-char-stat: rgba(51, 80, 48, 0.803);
+    --bgc-char-delete: rgba(237, 243, 221, 0.956);
+    --delete-txt: rgba(51, 80, 48, 0.803);
+
+    --bgc-theme: #1c3621;
+
+    --bgc-title: rgb(18, 41, 19);
     --bg-color-5: rgb(28, 54, 33);
     --bg-color-4: rgba(20, 34, 22, 0.814);
     --bg-color-3: rgba(41, 66, 43, 0.841);
     --bg-color-2: rgba(32, 61, 36, 0.851);
     --bg-color-1: rgba(34, 53, 41, 0.879);
-    --txt-color-1: rgba(237, 243, 221, 0.822);
-    --bordercolor: rgba(150, 180, 154, 0.565);
-    --bgc-top: rgba(64, 104, 73, 0.915);
-    --bgc-low: rgba(51, 80, 48, 0.897);
-    --bgc-title: rgb(18, 41, 19);
-    --accent: rgb(238, 224, 163);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(1.5px) saturate(150%);
 }
 
 [data-theme="glass-green"] {
     --check-shape: polygon(50% 0, 100% 35%, 85% 85%, 50% 100%, 15% 85%, 0 35%); /* condition checkbox + exhaustion slider thumb: leaf */
+
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor: rgba(79, 46, 46, 0.712);
+
     --bgc-bubble-send: rgb(20, 57, 50);
     --bgc-bubble-receive: rgb(45, 140, 109);
     --bgc-orb: rgb(66, 156, 120);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(131, 155, 131);
+
+    --bg-color-statmod: rgba(88, 94, 62, 0.734);
+    --bg-color-header: rgba(8, 24, 7, 0.893);
+    --bgc-top: rgba(29, 74, 30, 0.756);
+    --bgc-low: rgba(8, 24, 7, 0.651);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(113, 252, 131, 0.744);
+    --txt-color-1: rgba(220, 234, 182, 0.822);
+    --accent: rgb(238, 224, 163);
+
+    --site-title-bg: rgba(29, 74, 30, 0.908);
+    --bg-color-nav: rgba(29, 74, 30, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(29, 74, 30, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(29, 74, 30, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(29, 74, 30, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(29, 74, 30, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(29, 74, 30, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(29, 74, 30, 0.908);
+    --rest-bg-choice-2: rgba(29, 74, 30, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(29, 74, 30, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(29, 74, 30, 0.837);
+    --bgc-char-stat: rgba(8, 24, 7, 0.803);
+    --bgc-char-delete: rgba(220, 234, 182, 0.956);
+    --delete-txt: rgba(8, 24, 7, 0.803);
+
+    --bgc-theme: #1c3621;
+
+    --bgc-title: rgba(10, 30, 11, 0.824);
     --bg-color-5: rgb(28, 54, 33);
     --bg-color-4: rgba(41, 66, 43, 0.377);
     --bg-color-3: rgba(41, 66, 43, 0.678);
     --bg-color-2: rgba(7, 35, 11, 0.485);
     --bg-color-1: rgba(48, 80, 52, 0.678);
-    --txt-color-1: rgba(220, 234, 182, 0.822);
-    --bordercolor: rgba(113, 252, 131, 0.744);
-    --bgc-top: rgba(29, 74, 30, 0.756);
-    --bgc-low: rgba(8, 24, 7, 0.651);
-    --bgc-title: rgba(10, 30, 11, 0.824);
-    --accent: rgb(238, 224, 163);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(1.5px) saturate(150%);
 }
 
 [data-theme="blue"] {
     --check-shape: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%); /* condition checkbox + exhaustion slider thumb: shield */
+
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor: rgba(79, 46, 46, 0.712);
+
     --bgc-bubble-send: rgb(35, 60, 149);
     --bgc-bubble-receive: rgb(94, 135, 212);
     --bgc-orb: rgb(64, 112, 175);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(122, 122, 123);
+
+    --bg-color-statmod: rgba(73, 103, 120, 0.734);
+    --bg-color-header: rgba(24, 30, 57, 0.893);
+    --bgc-top: rgba(13, 13, 15, 0.919);
+    --bgc-low: rgba(24, 30, 57, 0.906);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(185, 206, 255, 0.905);
+    --txt-color-1: rgba(232, 239, 250, 0.822);
+    --accent: rgb(163, 238, 238);
+
+    --site-title-bg: rgba(13, 13, 15, 0.908);
+    --bg-color-nav: rgba(64, 81, 155, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(13, 13, 15, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(13, 13, 15, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(13, 13, 15, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(13, 13, 15, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(13, 13, 15, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(13, 13, 15, 0.908);
+    --rest-bg-choice-2: rgba(13, 13, 15, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(13, 13, 15, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(27, 47, 138, 0.837);
+    --bgc-char-stat: rgba(24, 30, 57, 0.803);
+    --bgc-char-delete: rgba(232, 239, 250, 0.956);
+    --delete-txt: rgba(24, 30, 57, 0.803);
+
+    --bgc-theme: #162149;
+
+    --bgc-title: rgb(19, 30, 100);
     --bg-color-5: rgb(22, 42, 112);
     --bg-color-4: rgba(18, 25, 47, 0.8);
     --bg-color-3: rgba(28, 47, 110, 0.828);
     --bg-color-2: rgba(89, 111, 206, 0.809);
     --bg-color-1: rgba(33, 46, 94, 0.922);
-    --txt-color-1: rgba(232, 239, 250, 0.822);
-    --bordercolor: rgba(202, 218, 255, 0.565);
-    --bgc-top: rgba(27, 47, 138, 0.919);
-    --bgc-low: rgba(24, 30, 57, 0.906);
-    --bgc-title: rgb(19, 30, 100);
-    --accent: rgb(163, 238, 238);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(1.5px) saturate(150%);
+
+    --blur: blur(2px) saturate(100%) brightness(1);
 }
 [data-theme="glass-blue"] {
     --check-shape: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%); /* condition checkbox + exhaustion slider thumb: shield */
+
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor: rgba(79, 46, 46, 0.712);
+
     --bgc-bubble-send: rgb(35, 60, 149);
     --bgc-bubble-receive: rgb(94, 135, 212);
     --bgc-orb: rgb(64, 112, 175);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(138, 154, 226);
+
+    --bg-color-statmod: rgba(80, 113, 140, 0.734);
+    --bg-color-header: rgba(36, 46, 88, 0.893);
+    --bgc-top: rgba(43, 72, 202, 0.78);
+    --bgc-low: rgba(36, 46, 88, 0.698);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(172, 214, 255, 0.718);
+    --txt-color-1: rgba(232, 239, 250, 0.822);
+    --accent: rgb(163, 238, 238);
+
+    --site-title-bg: rgba(43, 72, 202, 0.908);
+    --bg-color-nav: rgba(43, 72, 202, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(43, 72, 202, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(43, 72, 202, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(43, 72, 202, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(43, 72, 202, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(43, 72, 202, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(43, 72, 202, 0.908);
+    --rest-bg-choice-2: rgba(43, 72, 202, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(43, 72, 202, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(43, 72, 202, 0.837);
+    --bgc-char-stat: rgba(36, 46, 88, 0.803);
+    --bgc-char-delete: rgba(232, 239, 250, 0.956);
+    --delete-txt: rgba(36, 46, 88, 0.803);
+
+    --bgc-theme: #162a70;
+
+    --bgc-title: rgba(19, 30, 100, 0.774);
     --bg-color-5: rgb(22, 42, 112);
     --bg-color-4: rgba(26, 55, 150, 0.37);
     --bg-color-3: rgba(16, 47, 146, 0.404);
     --bg-color-2: rgba(35, 55, 143, 0.659);
     --bg-color-1: rgba(44, 62, 128, 0.72);
-    --txt-color-1: rgba(232, 239, 250, 0.822);
-    --bordercolor: rgba(172, 214, 255, 0.718);
-    --bgc-top: rgba(43, 72, 202, 0.78);
-    --bgc-low: rgba(36, 46, 88, 0.698);
-    --bgc-title: rgba(19, 30, 100, 0.774);
-    --accent: rgb(163, 238, 238);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(1.5px) saturate(150%);
 }
 
 [data-theme="red"] {
     --check-shape: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%); /* condition checkbox + exhaustion slider thumb: shield */
+
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor: rgba(79, 46, 46, 0.712);
+
     --bgc-bubble-send: rgb(72, 26, 26);
     --bgc-bubble-receive: rgb(212, 94, 94);
     --bgc-orb: rgb(175, 64, 64);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(187, 136, 136);
+
+    --bg-color-statmod: rgba(127, 92, 78, 0.734);
+    --bg-color-header: rgba(59, 20, 20, 0.893);
+    --bgc-top: rgba(131, 39, 39, 0.953);
+    --bgc-low: rgba(59, 20, 20, 0.923);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(252, 199, 199, 0.565);
+    --txt-color-1: rgba(250, 232, 232, 0.822);
+    --accent: rgb(252, 226, 187);
+
+    --site-title-bg: rgba(131, 39, 39, 0.908);
+    --bg-color-nav: rgba(131, 39, 39, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(131, 39, 39, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(131, 39, 39, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(131, 39, 39, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(131, 39, 39, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(131, 39, 39, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(131, 39, 39, 0.908);
+    --rest-bg-choice-2: rgba(131, 39, 39, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(131, 39, 39, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(131, 39, 39, 0.837);
+    --bgc-char-stat: rgba(59, 20, 20, 0.803);
+    --bgc-char-delete: rgba(250, 232, 232, 0.956);
+    --delete-txt: rgba(59, 20, 20, 0.803);
+
+    --bgc-theme: #5c1212;
+
+    --bgc-title: rgb(67, 19, 19);
     --bg-color-5: rgb(92, 18, 18);
     --bg-color-4: rgba(112, 20, 20, 0.88);
     --bg-color-3: rgba(126, 35, 35, 0.885);
     --bg-color-2: rgba(88, 28, 28, 0.929);
     --bg-color-1: rgba(65, 9, 9, 0.922);
-    --txt-color-1: rgba(250, 232, 232, 0.822);
-    --bordercolor: rgba(252, 199, 199, 0.565);
-    --bgc-top: rgba(131, 39, 39, 0.953);
-    --bgc-low: rgba(59, 20, 20, 0.923);
-    --bgc-title: rgb(67, 19, 19);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(3px) saturate(150%);
 }
 
 [data-theme="glass-red"] {
     --check-shape: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%); /* condition checkbox + exhaustion slider thumb: shield */
+
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor: rgba(79, 46, 46, 0.712);
+
     --bgc-bubble-send: rgb(72, 26, 26);
     --bgc-bubble-receive: rgb(212, 94, 94);
     --bgc-orb: rgb(175, 64, 64);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(152, 125, 125);
+
+    --bg-color-statmod: rgba(115, 93, 79, 0.734);
+    --bg-color-header: rgba(42, 21, 21, 0.893);
+    --bgc-top: rgba(67, 18, 18, 0.783);
+    --bgc-low: rgba(42, 21, 21, 0.77);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(252, 170, 170, 0.721);
+    --txt-color-1: rgba(251, 205, 98, 0.877);
+    --accent: rgb(252, 226, 187);
+
+    --site-title-bg: rgba(67, 18, 18, 0.908);
+    --bg-color-nav: rgba(67, 18, 18, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(67, 18, 18, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(67, 18, 18, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(67, 18, 18, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(67, 18, 18, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(67, 18, 18, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(67, 18, 18, 0.908);
+    --rest-bg-choice-2: rgba(67, 18, 18, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(67, 18, 18, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(67, 18, 18, 0.837);
+    --bgc-char-stat: rgba(42, 21, 21, 0.803);
+    --bgc-char-delete: rgba(251, 205, 98, 0.956);
+    --delete-txt: rgba(42, 21, 21, 0.803);
+
+    --bgc-theme: #5c1212;
+
+    --bgc-title: rgba(61, 6, 6, 0.91);
     --bg-color-5: rgb(92, 18, 18);
     --bg-color-4: rgba(112, 20, 20, 0.356);
     --bg-color-3: rgba(126, 35, 35, 0.678);
     --bg-color-2: rgba(49, 1, 1, 0.805);
     --bg-color-1: rgba(65, 9, 9, 0.72);
-    --txt-color-1: rgba(251, 205, 98, 0.877);
-    --bordercolor: rgba(252, 170, 170, 0.721);
-    --bgc-top: rgba(67, 18, 18, 0.783);
-    --bgc-low: rgba(42, 21, 21, 0.77);
-    --bgc-title: rgba(61, 6, 6, 0.91);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(3px) saturate(150%);
 }
 
 [data-theme="orange"] {
     --check-shape: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%); /* condition checkbox + exhaustion slider thumb: octagon */
+
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor: rgba(79, 46, 46, 0.712);
+
     --bgc-bubble-send: rgb(72, 43, 26);
     --bgc-bubble-receive: rgb(212, 141, 94);
     --bgc-orb: rgb(175, 118, 64);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(200, 168, 131);
+
+    --bg-color-statmod: rgba(137, 100, 25, 0.734);
+    --bg-color-header: rgba(74, 46, 9, 0.893);
+    --bgc-top: rgba(155, 96, 29, 0.962);
+    --bgc-low: rgba(74, 46, 9, 0.938);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(252, 225, 199, 0.565);
+    --txt-color-1: rgba(250, 232, 232, 0.822);
+    --accent: rgb(255, 199, 56);
+
+    --site-title-bg: rgba(155, 96, 29, 0.908);
+    --bg-color-nav: rgba(155, 96, 29, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(155, 96, 29, 0.216);
+    --damage-bg: rgba(48, 26, 9, 0.893);
+
+    --bgc-spell-tab: rgba(155, 96, 29, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(85, 36, 8, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(155, 96, 29, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(155, 96, 29, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(155, 96, 29, 0.908);
+    --rest-bg-choice-2: rgba(155, 96, 29, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(155, 96, 29, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(155, 96, 29, 0.837);
+    --bgc-char-stat: rgba(74, 46, 9, 0.803);
+    --bgc-char-delete: rgba(250, 232, 232, 0.956);
+    --delete-txt: rgba(74, 46, 9, 0.803);
+
+    --bgc-theme: #6e3e0e;
+
+    --bgc-title: rgb(52, 37, 18);
     --bg-color-5: rgb(110, 62, 14);
     --bg-color-4: rgba(134, 81, 13, 0.872);
     --bg-color-3: rgba(115, 71, 12, 0.894);
     --bg-color-2: rgba(192, 114, 13, 0.881);
     --bg-color-1: rgba(89, 60, 7, 0.903);
-    --txt-color-1: rgba(250, 232, 232, 0.822);
-    --bordercolor: rgba(252, 225, 199, 0.565);
-    --bgc-top: rgba(155, 96, 29, 0.962);
-    --bgc-low: rgba(74, 46, 9, 0.938);
-    --bgc-title: rgb(52, 37, 18);
-    --accent: rgb(255, 199, 56);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(3px) saturate(150%);
 }
 
 [data-theme="glass-orange"] {
     --check-shape: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%); /* condition checkbox + exhaustion slider thumb: octagon */
+
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor: rgba(79, 46, 46, 0.712);
+
     --bgc-bubble-send: rgb(72, 43, 26);
     --bgc-bubble-receive: rgb(212, 141, 94);
     --bgc-orb: rgb(175, 118, 64);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(224, 179, 128);
+
+    --bg-color-statmod: rgba(160, 82, 36, 0.734);
+    --bg-color-header: rgba(110, 73, 25, 0.893);
+    --bgc-top: rgba(198, 117, 25, 0.72);
+    --bgc-low: rgba(110, 73, 25, 0.459);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(250, 222, 146, 0.767);
+    --txt-color-1: rgba(250, 232, 232, 0.822);
+    --accent: rgb(253, 98, 55);
+
+    --site-title-bg: rgba(198, 117, 25, 0.908);
+    --bg-color-nav: rgba(198, 117, 25, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(198, 117, 25, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(198, 117, 25, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(198, 117, 25, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(198, 117, 25, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(198, 117, 25, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(198, 117, 25, 0.908);
+    --rest-bg-choice-2: rgba(198, 117, 25, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(198, 117, 25, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(198, 117, 25, 0.837);
+    --bgc-char-stat: rgba(110, 73, 25, 0.803);
+    --bgc-char-delete: rgba(250, 232, 232, 0.956);
+    --delete-txt: rgba(110, 73, 25, 0.803);
+
+    --bgc-theme: #6e3e0e;
+
+    --bgc-title: rgba(52, 37, 18, 0.776);
     --bg-color-5: rgb(110, 62, 14);
     --bg-color-4: rgba(112, 72, 20, 0.39);
     --bg-color-3: rgba(112, 72, 20, 0.678);
     --bg-color-2: rgba(129, 83, 22, 0.67);
     --bg-color-1: rgba(65, 45, 9, 0.72);
-    --txt-color-1: rgba(250, 232, 232, 0.822);
-    --bordercolor: rgba(250, 222, 146, 0.767);
-    --bgc-top: rgba(198, 117, 25, 0.72);
-    --bgc-low: rgba(110, 73, 25, 0.459);
-    --bgc-title: rgba(52, 37, 18, 0.776);
-    --accent: rgb(253, 98, 55);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(3px) saturate(150%);
 }
 
 [data-theme="yellow"] {
     --check-shape: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); /* condition checkbox + exhaustion slider thumb: star */
+
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor: rgba(79, 46, 46, 0.712);
+
     --bgc-bubble-send: rgb(72, 62, 26);
     --bgc-bubble-receive: rgb(212, 206, 94);
     --bgc-orb: rgb(175, 147, 64);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(202, 184, 119);
+
+    --bg-color-statmod: rgba(93, 48, 21, 0.734);
+    --bg-color-header: rgba(67, 56, 20, 0.893);
+    --bgc-top: rgba(158, 126, 7, 0.902);
+    --bgc-low: rgba(67, 56, 20, 0.895);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(252, 247, 199, 0.565);
+    --txt-color-1: rgba(250, 250, 232, 0.822);
+    --accent: rgb(142, 33, 23);
+
+    --site-title-bg: rgba(158, 126, 7, 0.908);
+    --bg-color-nav: rgba(158, 126, 7, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(158, 126, 7, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(158, 126, 7, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(158, 126, 7, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(158, 126, 7, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(158, 126, 7, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(158, 126, 7, 0.908);
+    --rest-bg-choice-2: rgba(158, 126, 7, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(158, 126, 7, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(158, 126, 7, 0.837);
+    --bgc-char-stat: rgba(67, 56, 20, 0.803);
+    --bgc-char-delete: rgba(250, 250, 232, 0.956);
+    --delete-txt: rgba(67, 56, 20, 0.803);
+
+    --bgc-theme: #786616;
+
+    --bgc-title: rgb(49, 43, 18);
     --bg-color-5: rgb(120, 102, 22);
     --bg-color-4: rgba(172, 149, 24, 0.432);
     --bg-color-3: rgba(160, 148, 42, 0.678);
     --bg-color-2: rgba(206, 179, 23, 0.895);
     --bg-color-1: rgba(124, 114, 67, 0.72);
-    --txt-color-1: rgba(250, 250, 232, 0.822);
-    --bordercolor: rgba(252, 247, 199, 0.565);
-    --bgc-top: rgba(158, 126, 7, 0.902);
-    --bgc-low: rgba(67, 56, 20, 0.895);
-    --bgc-title: rgb(49, 43, 18);
-    --accent: rgb(142, 33, 23);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(3px) saturate(150%);
 }
 
 [data-theme="glass-yellow"] {
     --check-shape: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); /* condition checkbox + exhaustion slider thumb: star */
+
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor: rgba(79, 46, 46, 0.712);
+
     --bgc-bubble-send: rgb(72, 62, 26);
     --bgc-bubble-receive: rgb(212, 206, 94);
     --bgc-orb: rgb(175, 147, 64);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(230, 209, 138);
+
+    --bg-color-statmod: rgba(117, 88, 22, 0.734);
+    --bg-color-header: rgba(74, 56, 6, 0.893);
+    --bgc-top: rgba(210, 171, 43, 0.826);
+    --bgc-low: rgba(74, 56, 6, 0.671);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(252, 247, 199, 0.565);
+    --txt-color-1: rgba(250, 250, 232, 0.822);
+    --accent: rgb(198, 147, 53);
+
+    --site-title-bg: rgba(210, 171, 43, 0.908);
+    --bg-color-nav: rgba(210, 171, 43, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(210, 171, 43, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(210, 171, 43, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(210, 171, 43, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(210, 171, 43, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(210, 171, 43, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(210, 171, 43, 0.908);
+    --rest-bg-choice-2: rgba(210, 171, 43, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(210, 171, 43, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(210, 171, 43, 0.837);
+    --bgc-char-stat: rgba(74, 56, 6, 0.803);
+    --bgc-char-delete: rgba(250, 250, 232, 0.956);
+    --delete-txt: rgba(74, 56, 6, 0.803);
+
+    --bgc-theme: #786616;
+
+    --bgc-title: rgba(50, 37, 11, 0.71);
     --bg-color-5: rgb(120, 102, 22);
     --bg-color-4: rgba(172, 149, 24, 0.432);
     --bg-color-3: rgba(160, 148, 42, 0.678);
     --bg-color-2: rgba(124, 93, 9, 0.67);
     --bg-color-1: rgba(124, 114, 67, 0.72);
-    --txt-color-1: rgba(250, 250, 232, 0.822);
-    --bordercolor: rgba(252, 247, 199, 0.565);
-    --bgc-top: rgba(210, 171, 43, 0.826);
-    --bgc-low: rgba(74, 56, 6, 0.671);
-    --bgc-title: rgba(50, 37, 11, 0.71);
-    --accent: rgb(198, 147, 53);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(3px) saturate(150%);
 }
 
 [data-theme="dark"] {
+    --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); /* condition checkbox + exhaustion slider thumb: diamond */
+
+    --healColor: rgba(140, 184, 140, 0.384);
+    --damageColor: rgba(48, 37, 37, 0.712);
+
     --bgc-bubble-send: rgb(0, 0, 0);
     --bgc-bubble-receive: rgb(43, 43, 43);
     --bgc-orb: rgb(107, 107, 107);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(115, 115, 115);
+
+    --bg-color-statmod: rgba(91, 72, 42, 0.734);
+    --bg-color-header: rgba(5, 5, 5, 0.893);
+    --bgc-top: rgba(0, 0, 0, 0.992);
+    --bgc-low: rgba(5, 5, 5, 0.854);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(29, 29, 29, 0.519);
+    --txt-color-1: rgba(255, 255, 255, 0.822);
+    --accent: rgb(178, 127, 80);
+
+    --site-title-bg: rgba(0, 0, 0, 0.908);
+    --bg-color-nav: rgba(0, 0, 0, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(0, 0, 0, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(0, 0, 0, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(0, 0, 0, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(0, 0, 0, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(0, 0, 0, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(0, 0, 0, 0.908);
+    --rest-bg-choice-2: rgba(0, 0, 0, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(0, 0, 0, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(0, 0, 0, 0.837);
+    --bgc-char-stat: rgba(5, 5, 5, 0.803);
+    --bgc-char-delete: rgba(255, 255, 255, 0.956);
+    --delete-txt: rgba(5, 5, 5, 0.803);
+
+    --bgc-theme: #121212;
+
+    --bgc-title: rgb(0, 0, 0);
     --bg-color-5: rgb(18, 18, 18);
     --bg-color-4: rgba(0, 0, 0, 0.466);
     --bg-color-3: rgba(0, 0, 0, 0.466);
     --bg-color-2: rgba(15, 15, 15, 0.917);
     --bg-color-1: rgba(0, 0, 0, 0.452);
-    --txt-color-1: rgba(255, 255, 255, 0.822);
-    --bordercolor: rgba(29, 29, 29, 0.519);
-    --bgc-top: rgba(0, 0, 0, 0.992);
-    --bgc-low: rgba(5, 5, 5, 0.854);
-    --bgc-title: rgb(0, 0, 0);
-    --accent: rgb(252, 196, 112);
-    --healColor: rgba(140, 184, 140, 0.384);
-    --damageColor: rgba(48, 37, 37, 0.712);
-    --shadowInner: inset 4px 4px 15px #ffeacea9,
-        inset 0px 0px 5px #ffeacea9;
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(3px) saturate(150%);
+
+    --shadowInner: inset 4px 4px 15px #ffeacea9, inset 0px 0px 5px #ffeacea9;
 }
 
 [data-theme="dark-glass"] {
+    --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); /* condition checkbox + exhaustion slider thumb: diamond */
+
+    --healColor: rgba(140, 184, 140, 0.384);
+    --damageColor: rgba(48, 37, 37, 0.712);
+
     --bgc-bubble-send: rgb(0, 0, 0);
     --bgc-bubble-receive: rgb(43, 43, 43);
     --bgc-orb: rgb(107, 107, 107);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(115, 115, 115);
+
+    --bg-color-statmod: rgba(88, 69, 39, 0.734);
+    --bg-color-header: rgba(0, 0, 0, 0.893);
+    --bgc-top: rgba(0, 0, 0, 0.883);
+    --bgc-low: rgba(0, 0, 0, 0.614);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(22, 21, 21, 0.74);
+    --txt-color-1: rgb(208, 205, 222);
+    --accent: rgb(178, 127, 80);
+
+    --site-title-bg: rgba(0, 0, 0, 0.908);
+    --bg-color-nav: rgba(0, 0, 0, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(0, 0, 0, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(0, 0, 0, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(0, 0, 0, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(0, 0, 0, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(0, 0, 0, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(0, 0, 0, 0.908);
+    --rest-bg-choice-2: rgba(0, 0, 0, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(0, 0, 0, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(0, 0, 0, 0.837);
+    --bgc-char-stat: rgba(0, 0, 0, 0.803);
+    --bgc-char-delete: rgba(208, 205, 222, 0.956);
+    --delete-txt: rgba(0, 0, 0, 0.803);
+
+    --bgc-theme: #121212;
+
+    --bgc-title: rgba(0, 0, 0, 0.756);
     --bg-color-5: rgb(18, 18, 18);
     --bg-color-4: rgba(0, 0, 0, 0.466);
     --bg-color-3: rgba(0, 0, 0, 0.466);
     --bg-color-2: rgba(9, 8, 8, 0.74);
     --bg-color-1: rgba(0, 0, 0, 0.452);
-    --txt-color-1: rgb(208, 205, 222);
-    --bordercolor: rgba(22, 21, 21, 0.74);
-    --bgc-top: rgba(0, 0, 0, 0.883);
-    --bgc-low: rgba(0, 0, 0, 0.614);
-    --bgc-title: rgba(0, 0, 0, 0.756);
-    --accent: rgb(252, 196, 112);
-    --healColor: rgba(140, 184, 140, 0.384);
-    --damageColor: rgba(48, 37, 37, 0.712);
-    --shadowInner: inset 4px 4px 15px #ffeacea9,
-        inset 0px 0px 5px #ffeacea9;
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(3px) saturate(150%);
+
+    --shadowInner: inset 4px 4px 15px #ffeacea9, inset 0px 0px 5px #ffeacea9;
 }
 
 [data-theme="light"] {
+    --gold-gradient: linear-gradient(to bottom, #926135, #5e3d1f);
     --check-shape: circle(50%); /* condition checkbox + exhaustion slider thumb: circle */
+
     --healColor: rgba(46, 79, 46, 0.712);
     --damageColor: rgba(79, 46, 46, 0.712);
+
     --bgc-bubble-send: rgb(249, 232, 200);
     --bgc-bubble-receive: rgb(255, 255, 255);
     --bgc-orb: rgb(63, 59, 49);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(250, 247, 246);
+
+    --bg-color-statmod: rgba(207, 179, 124, 0.734);
+    --bg-color-header: rgba(240, 221, 189, 0.893);
+    --bgc-top: rgba(245, 241, 238, 0.935);
+    --bgc-low: rgb(240, 221, 189);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(146, 97, 53, 0.679);
+    --txt-color-1: rgba(0, 0, 0, 0.678);
+    --accent: rgb(146, 97, 53);
+
+    --site-title-bg: rgba(245, 241, 238, 0.908);
+    --bg-color-nav: rgba(245, 241, 238, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(245, 241, 238, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(245, 241, 238, 0.908);
+    --txt-spell-tab: rgba(0, 0, 0, 0.678);
+
+    --txt-tab: rgba(0, 0, 0, 0.678);
+    --bgc-tab: rgba(245, 241, 238, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(245, 241, 238, 0.908);
+    --drop-down-txt: rgba(0, 0, 0, 0.678);
+
+    --rest-bgc: rgba(245, 241, 238, 0.908);
+    --rest-txt: rgba(0, 0, 0, 0.678);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(0, 0, 0, 0.678);
+    --rest-bg-choice-2: rgba(245, 241, 238, 0.908);
+    --rest-txt-choice-2: rgba(0, 0, 0, 0.678);
+
+    --bgc-action-bar: rgba(245, 241, 238, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(245, 241, 238, 0.837);
+    --bgc-char-stat: rgba(240, 221, 189, 0.803);
+    --bgc-char-delete: rgba(0, 0, 0, 0.956);
+    --delete-txt: rgba(240, 221, 189, 0.803);
+
+    --bgc-theme: #f5ecd6;
+
+    --bgc-title: rgb(254, 242, 216);
     --bg-color-5: rgb(245, 236, 214);
     --bg-color-4: rgba(255, 255, 255, 0.062);
     --bg-color-3: rgba(255, 230, 184, 0.781);
     --bg-color-2: rgba(218, 190, 143, 0.942);
     --bg-color-1: rgba(238, 232, 216, 0.74);
-    --txt-color-1: rgba(0, 0, 0, 0.678);
+
     --title-text: rgb(255, 255, 255);
     --text-color-2: rgba(255, 255, 255, 0.986);
-    --bordercolor: rgba(209, 153, 48, 0.679);
-    --bgc-top: rgba(245, 241, 238, 0.935);
-    --bgc-low: rgb(240, 221, 189);
-    --bgc-title: rgb(254, 242, 216);
-    --accent: rgb(145, 100, 3);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(1.5px) saturate(150%);
 }
 
 [data-theme="light-glass"] {
+    --gold-gradient: linear-gradient(to bottom, #926135, #5e3d1f);
     --check-shape: circle(50%); /* condition checkbox + exhaustion slider thumb: circle */
+
     --healColor: rgba(189, 223, 189, 0.712);
     --damageColor: rgba(247, 144, 144, 0.712);
+
     --bgc-bubble-send: rgb(249, 232, 200);
     --bgc-bubble-receive: rgb(255, 255, 255);
     --bgc-orb: rgb(63, 59, 49);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(255, 254, 253);
+
+    --bg-color-statmod: rgba(217, 184, 136, 0.734);
+    --bg-color-header: rgba(196, 167, 132, 0.893);
+    --bgc-top: rgba(255, 254, 252, 0.753);
+    --bgc-low: rgba(196, 167, 132, 0.627);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgb(178, 127, 80);
+    --txt-color-1: rgb(89, 77, 48);
+    --accent: rgb(146, 97, 53);
+
+    --site-title-bg: rgba(255, 254, 252, 0.908);
+    --bg-color-nav: rgba(255, 254, 252, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(255, 254, 252, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(255, 254, 252, 0.908);
+    --txt-spell-tab: rgb(89, 77, 48);
+
+    --txt-tab: rgb(89, 77, 48);
+    --bgc-tab: rgba(255, 254, 252, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(255, 254, 252, 0.908);
+    --drop-down-txt: rgb(89, 77, 48);
+
+    --rest-bgc: rgba(255, 254, 252, 0.908);
+    --rest-txt: rgb(89, 77, 48);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgb(89, 77, 48);
+    --rest-bg-choice-2: rgba(255, 254, 252, 0.908);
+    --rest-txt-choice-2: rgb(89, 77, 48);
+
+    --bgc-action-bar: rgba(255, 254, 252, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(255, 254, 252, 0.837);
+    --bgc-char-stat: rgba(196, 167, 132, 0.803);
+    --bgc-char-delete: rgba(89, 77, 48, 0.956);
+    --delete-txt: rgba(196, 167, 132, 0.803);
+
+    --bgc-theme: #c4a784;
+
+    --bgc-title: rgba(203, 177, 121, 0.591);
     --bg-color-5: rgb(196, 167, 132);
     --bg-color-4: rgba(255, 255, 255, 0.799);
     --bg-color-3: rgba(255, 230, 184, 0.781);
     --bg-color-2: rgba(252, 202, 116, 0.669);
     --bg-color-1: rgba(145, 133, 98, 0.74);
-    --txt-color-1: rgb(89, 77, 48);
+
     --title-text: rgb(150, 200, 255);
     --text-color-2: rgb(150, 200, 255);
-    --bordercolor: rgb(255, 228, 179);
-    --bgc-top: rgba(255, 254, 252, 0.753);
-    --bgc-low: rgba(196, 167, 132, 0.627);
-    --bgc-title: rgba(203, 177, 121, 0.591);
-    --accent: rgb(255, 215, 142);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(1.5px) saturate(150%);
 }
 
 [data-theme="hellfire"] {
     --check-shape: polygon(50% 0, 85% 45%, 100% 70%, 80% 95%, 50% 100%, 20% 95%, 0 70%, 15% 45%); /* condition checkbox + exhaustion slider thumb: flame */
+
+    --healColor: rgba(46, 79, 46, 0.712);
+    --damageColor: rgba(79, 46, 46, 0.712);
+
     --bgc-bubble-send: rgb(82, 37, 25);
     --bgc-bubble-receive: rgb(138, 67, 47);
     --bgc-orb: rgb(104, 51, 33);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(144, 121, 115);
+
+    --bg-color-statmod: rgba(88, 79, 65, 0.734);
+    --bg-color-header: rgba(0, 0, 0, 0.893);
+    --bgc-top: rgba(53, 12, 1, 0.883);
+    --bgc-low: rgba(0, 0, 0, 0.854);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(8, 3, 3, 0.738);
+    --txt-color-1: rgb(255, 129, 32);
+    --accent: rgb(252, 226, 187);
+
+    --site-title-bg: rgba(53, 12, 1, 0.908);
+    --bg-color-nav: rgba(53, 12, 1, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(53, 12, 1, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(53, 12, 1, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(53, 12, 1, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(53, 12, 1, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(53, 12, 1, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(53, 12, 1, 0.908);
+    --rest-bg-choice-2: rgba(53, 12, 1, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(53, 12, 1, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(53, 12, 1, 0.837);
+    --bgc-char-stat: rgba(0, 0, 0, 0.803);
+    --bgc-char-delete: rgba(255, 129, 32, 0.956);
+    --delete-txt: rgba(0, 0, 0, 0.803);
+
+    --bgc-theme: #473737;
+
+    --bgc-title: rgb(67, 22, 22);
     --bg-color-5: rgb(71, 55, 55);
     --bg-color-4: rgba(78, 71, 71, 0.845);
     --bg-color-3: rgba(3, 3, 3, 0.843);
     --bg-color-2: rgba(77, 11, 11, 0.882);
     --bg-color-1: rgba(65, 9, 9, 0.875);
-    --txt-color-1: rgb(255, 129, 32);
-    --bordercolor: rgba(8, 3, 3, 0.738);
-    --bgc-top: rgba(53, 12, 1, 0.883);
-    --bgc-low: rgba(0, 0, 0, 0.854);
-    --bgc-title: rgb(67, 22, 22);
-    --accent: rgb(252, 226, 187);
+
     --blur1: blur(3px) saturate(150%);
     --blur2: blur(3px) saturate(150%);
-    --healColor: rgba(253, 249, 227, 0.685);
-    --damageColor: rgba(65, 56, 56, 0.712);
 }
 
 [data-theme="glass-fire"] {
     --check-shape: polygon(50% 0, 85% 45%, 100% 70%, 80% 95%, 50% 100%, 20% 95%, 0 70%, 15% 45%); /* condition checkbox + exhaustion slider thumb: flame */
+
+    --healColor: rgba(46, 79, 46, 0.712);
+    --damageColor: rgba(79, 46, 46, 0.712);
+
     --bgc-bubble-send: rgb(82, 37, 25);
     --bgc-bubble-receive: rgb(138, 67, 47);
     --bgc-orb: rgb(104, 51, 33);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(136, 121, 121);
+
+    --bg-color-statmod: rgba(3, 2, 2, 0.734);
+    --bg-color-header: rgba(0, 0, 0, 0.893);
+    --bgc-top: rgba(38, 11, 11, 0.851);
+    --bgc-low: rgba(0, 0, 0, 0.805);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(254, 119, 88, 0.459);
+    --txt-color-1: rgb(251, 126, 0);
+    --accent: rgb(8, 7, 7);
+
+    --site-title-bg: rgba(38, 11, 11, 0.908);
+    --bg-color-nav: rgba(38, 11, 11, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(38, 11, 11, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(38, 11, 11, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(38, 11, 11, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(38, 11, 11, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(38, 11, 11, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(38, 11, 11, 0.908);
+    --rest-bg-choice-2: rgba(38, 11, 11, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(38, 11, 11, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(38, 11, 11, 0.837);
+    --bgc-char-stat: rgba(0, 0, 0, 0.803);
+    --bgc-char-delete: rgba(251, 126, 0, 0.956);
+    --delete-txt: rgba(0, 0, 0, 0.803);
+
+    --bgc-theme: #473737;
+
+    --bgc-title: rgba(9, 5, 5, 0.615);
     --bg-color-5: rgb(71, 55, 55);
     --bg-color-4: rgba(78, 71, 71, 0.459);
     --bg-color-3: rgba(3, 3, 3, 0.678);
     --bg-color-2: rgba(39, 8, 8, 0.776);
     --bg-color-1: rgba(65, 9, 9, 0.72);
-    --txt-color-1: rgb(251, 126, 0);
-    --bordercolor: rgba(254, 119, 88, 0.459);
-    --bgc-top: rgba(38, 11, 11, 0.851);
-    --bgc-low: rgba(0, 0, 0, 0.805);
-    --bgc-title: rgba(9, 5, 5, 0.615);
-    --accent: rgb(8, 7, 7);
+
     --blur1: blur(3px) saturate(150%);
     --blur2: blur(3px) saturate(150%);
-    --healColor: rgba(253, 249, 227, 0.685);
-    --damageColor: rgba(65, 56, 56, 0.712);
 }
 
 [data-theme="frozen"] {
     --check-shape: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%); /* condition checkbox + exhaustion slider thumb: hexagon */
+
+    --healColor: rgba(179, 220, 254, 0.889);
+    --damageColor: rgba(13, 22, 44, 0.888);
+
     --bgc-bubble-send: rgb(178, 225, 247);
     --bgc-bubble-receive: rgb(229, 248, 255);
     --bgc-orb: rgb(104, 161, 175);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(221, 244, 254);
+
+    --bg-color-statmod: rgba(106, 182, 254, 0.734);
+    --bg-color-header: rgba(109, 210, 253, 0.893);
+    --bgc-top: rgba(194, 235, 253, 0.948);
+    --bgc-low: rgba(109, 210, 253, 0.856);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(119, 221, 255, 0.885);
+    --txt-color-1: rgb(15, 67, 95);
+    --accent: rgb(101, 129, 255);
+
+    --site-title-bg: rgba(194, 235, 253, 0.908);
+    --bg-color-nav: rgba(194, 235, 253, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(194, 235, 253, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(194, 235, 253, 0.908);
+    --txt-spell-tab: rgb(15, 67, 95);
+
+    --txt-tab: rgb(15, 67, 95);
+    --bgc-tab: rgba(194, 235, 253, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(194, 235, 253, 0.908);
+    --drop-down-txt: rgb(15, 67, 95);
+
+    --rest-bgc: rgba(194, 235, 253, 0.908);
+    --rest-txt: rgb(15, 67, 95);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgb(15, 67, 95);
+    --rest-bg-choice-2: rgba(194, 235, 253, 0.908);
+    --rest-txt-choice-2: rgb(15, 67, 95);
+
+    --bgc-action-bar: rgba(194, 235, 253, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(194, 235, 253, 0.837);
+    --bgc-char-stat: rgba(109, 210, 253, 0.803);
+    --bgc-char-delete: rgba(15, 67, 95, 0.956);
+    --delete-txt: rgba(109, 210, 253, 0.803);
+
+    --bgc-theme: #88b3c7;
+
+    --bgc-title: rgba(71, 102, 115, 0.977);
     --bg-color-5: rgb(136, 179, 199);
     --bg-color-4: rgba(155, 220, 245, 0.893);
     --bg-color-3: rgba(211, 239, 252, 0.806);
     --bg-color-2: rgba(168, 222, 243, 0.872);
     --bg-color-1: rgba(58, 111, 138, 0.872);
-    --txt-color-1: rgb(15, 67, 95);
-    --bordercolor: rgba(119, 221, 255, 0.885);
-    --bgc-top: rgba(194, 235, 253, 0.948);
-    --bgc-low: rgba(109, 210, 253, 0.856);
-    --bgc-title: rgba(71, 102, 115, 0.977);
-    --accent: rgb(101, 129, 255);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(0) saturate(150%);
-    --healColor: rgba(179, 220, 254, 0.889);
-    --damageColor: rgba(13, 22, 44, 0.888);
 }
 
 [data-theme="frozen-glass"] {
     --check-shape: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%); /* condition checkbox + exhaustion slider thumb: hexagon */
+
+    --healColor: rgb(208, 234, 255);
+    --damageColor: rgb(2, 12, 39);
+
     --bgc-bubble-send: rgb(178, 225, 247);
     --bgc-bubble-receive: rgb(229, 248, 255);
     --bgc-orb: rgb(111, 172, 187);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(173, 223, 246);
+
+    --bg-color-statmod: rgba(197, 217, 224, 0.734);
+    --bg-color-header: rgba(167, 212, 244, 0.893);
+    --bgc-top: rgba(106, 196, 238, 0.579);
+    --bgc-low: rgba(167, 212, 244, 0.623);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(208, 244, 255, 0.888);
+    --txt-color-1: rgb(0, 80, 94);
+    --accent: rgb(252, 226, 187);
+
+    --site-title-bg: rgba(106, 196, 238, 0.908);
+    --bg-color-nav: rgba(106, 196, 238, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(106, 196, 238, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(106, 196, 238, 0.908);
+    --txt-spell-tab: rgb(0, 80, 94);
+
+    --txt-tab: rgb(0, 80, 94);
+    --bgc-tab: rgba(106, 196, 238, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(106, 196, 238, 0.908);
+    --drop-down-txt: rgb(0, 80, 94);
+
+    --rest-bgc: rgba(106, 196, 238, 0.908);
+    --rest-txt: rgb(0, 80, 94);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgb(0, 80, 94);
+    --rest-bg-choice-2: rgba(106, 196, 238, 0.908);
+    --rest-txt-choice-2: rgb(0, 80, 94);
+
+    --bgc-action-bar: rgba(106, 196, 238, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(106, 196, 238, 0.837);
+    --bgc-char-stat: rgba(167, 212, 244, 0.803);
+    --bgc-char-delete: rgba(0, 80, 94, 0.956);
+    --delete-txt: rgba(167, 212, 244, 0.803);
+
+    --bgc-theme: #85c2de;
+
+    --bgc-title: rgba(69, 121, 143, 0.679);
     --bg-color-5: rgb(133, 194, 222);
     --bg-color-4: rgba(153, 187, 200, 0.438);
     --bg-color-3: rgba(36, 130, 173, 0.678);
     --bg-color-2: rgba(188, 233, 251, 0.631);
     --bg-color-1: rgba(84, 156, 174, 0.72);
-    --txt-color-1: rgb(0, 80, 94);
-    --bordercolor: rgba(208, 244, 255, 0.888);
-    --bgc-top: rgba(106, 196, 238, 0.579);
-    --bgc-low: rgba(167, 212, 244, 0.623);
-    --bgc-title: rgba(69, 121, 143, 0.679);
-    --accent: rgb(252, 226, 187);
-    --blur1: blur(3px) saturate(150%);
-    --blur2: blur(0) saturate(150%);
-    --healColor: rgb(208, 234, 255);
-    --damageColor: rgb(2, 12, 39);
 }
 
 [data-theme="neon"] {
     --check-shape: circle(50%); /* condition checkbox + exhaustion slider thumb: circle */
+
     --healColor: rgba(0, 255, 200, 0.35);
     --damageColor: rgba(255, 40, 140, 0.4);
+
     --bgc-bubble-send: rgb(18, 8, 40);
     --bgc-bubble-receive: rgb(255, 60, 200);
     --bgc-orb: rgb(0, 229, 255);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(135, 119, 153);
+
+    --bg-color-statmod: rgba(5, 87, 105, 0.734);
+    --bg-color-header: rgba(8, 4, 24, 0.893);
+    --bgc-top: rgba(36, 8, 70, 0.78);
+    --bgc-low: rgba(8, 4, 24, 0.6);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(255, 70, 210, 0.75);
+    --txt-color-1: rgba(240, 235, 255, 0.95);
+    --accent: rgb(0, 240, 255);
+
+    --site-title-bg: rgba(36, 8, 70, 0.908);
+    --bg-color-nav: rgba(36, 8, 70, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(36, 8, 70, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(36, 8, 70, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(36, 8, 70, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(36, 8, 70, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(36, 8, 70, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(36, 8, 70, 0.908);
+    --rest-bg-choice-2: rgba(36, 8, 70, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(36, 8, 70, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(36, 8, 70, 0.837);
+    --bgc-char-stat: rgba(8, 4, 24, 0.803);
+    --bgc-char-delete: rgba(240, 235, 255, 0.956);
+    --delete-txt: rgba(8, 4, 24, 0.803);
+
+    --bgc-theme: #0e0620;
+
+    --bgc-title: rgb(10, 3, 26);
+    --title-color: rgb(0, 240, 255);
     --bg-color-5: rgb(14, 6, 32);
     --bg-color-4: rgba(30, 10, 60, 0.45);
     --bg-color-3: rgba(20, 6, 45, 0.72);
     --bg-color-2: rgba(40, 12, 80, 0.55);
     --bg-color-1: rgba(10, 4, 28, 0.72);
-    --title-color: rgb(0, 240, 255);
-    --txt-color-1: rgba(240, 235, 255, 0.95);
-    --bordercolor: rgba(255, 70, 210, 0.75);
-    --bgc-top: rgba(36, 8, 70, 0.78);
-    --bgc-low: rgba(8, 4, 24, 0.6);
-    --bgc-title: rgb(10, 3, 26);
-    --accent: rgb(0, 240, 255);
-    --blur1: blur(6px) saturate(170%);
-    --blur2: blur(3px) saturate(170%);
-    --blur3: blur(6px) saturate(170%);
-    --shadowInner: inset 4px 4px 12px rgba(255, 60, 200, 0.35),
-        inset -1px -1px 6px rgba(0, 240, 255, 0.35);
+
+    --shadowInner: inset 4px 4px 12px rgba(255, 60, 200, 0.35), inset -1px -1px 6px rgba(0, 240, 255, 0.35);
     --neonGlow: 0 0 4px rgba(255, 60, 200, 0.9), 0 0 12px rgba(255, 60, 200, 0.55);
     --neonTextGlow: 0 0 3px rgba(0, 240, 255, 0.9), 0 0 10px rgba(0, 240, 255, 0.5);
 }
 
 [data-theme="neon-glass"] {
     --check-shape: circle(50%); /* condition checkbox + exhaustion slider thumb: circle */
+
     --healColor: rgba(0, 255, 200, 0.35);
     --damageColor: rgba(255, 40, 140, 0.4);
+
     --bgc-bubble-send: rgb(18, 8, 40);
     --bgc-bubble-receive: rgb(255, 60, 200);
     --bgc-orb: rgb(0, 229, 255);
+    --txt-orb: rgba(255, 255, 255, 0.822);
+    --bs-orb: 0 0 6px rgba(255, 255, 255, 0.822);
+    --bbl-shadow: rgb(135, 119, 153);
+
+    --bg-color-statmod: rgba(5, 87, 105, 0.734);
+    --bg-color-header: rgba(8, 4, 24, 0.893);
+    --bgc-top: rgba(36, 8, 70, 0.78);
+    --bgc-low: rgba(8, 4, 24, 0.6);
+
+    --portrait-border: 3px ridge rgba(250, 180, 104, 0.628);
+    --bordercolor: rgba(255, 70, 210, 0.75);
+    --txt-color-1: rgba(240, 235, 255, 0.95);
+    --accent: rgb(0, 240, 255);
+
+    --site-title-bg: rgba(36, 8, 70, 0.908);
+    --bg-color-nav: rgba(36, 8, 70, 0.858);
+
+    --spellslot-border: rgba(250, 180, 104, 0.628);
+    --spellslot-checked: rgba(250, 180, 104, 0.628);
+    --spellslot-checked-shadow: rgba(250, 180, 104, 0.628);
+
+    --panel-bg: rgba(36, 8, 70, 0.216);
+    --damage-bg: rgba(36, 30, 63, 0.814);
+
+    --bgc-spell-tab: rgba(36, 8, 70, 0.908);
+    --txt-spell-tab: rgba(255, 255, 255, 0.822);
+
+    --txt-tab: rgba(255, 255, 255, 0.822);
+    --bgc-tab: rgba(36, 8, 70, 0.908);
+    --tab-shadow: rgba(255, 255, 255, 0.822);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(36, 8, 70, 0.908);
+    --drop-down-txt: rgba(255, 255, 255, 0.822);
+
+    --rest-bgc: rgba(36, 8, 70, 0.908);
+    --rest-txt: rgba(255, 255, 255, 0.822);
+    --rest-bg-choice-1: rgba(255, 255, 255, 0.822);
+    --rest-txt-choice-1: rgba(36, 8, 70, 0.908);
+    --rest-bg-choice-2: rgba(36, 8, 70, 0.908);
+    --rest-txt-choice-2: rgba(255, 255, 255, 0.822);
+
+    --bgc-action-bar: rgba(36, 8, 70, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(36, 8, 70, 0.837);
+    --bgc-char-stat: rgba(8, 4, 24, 0.803);
+    --bgc-char-delete: rgba(240, 235, 255, 0.956);
+    --delete-txt: rgba(8, 4, 24, 0.803);
+
+    --bgc-theme: #0e0620;
+
+    --bgc-title: rgb(10, 3, 26);
+    --title-color: rgb(0, 240, 255);
     --bg-color-5: rgb(14, 6, 32);
     --bg-color-4: rgba(30, 10, 60, 0.45);
     --bg-color-3: rgba(20, 6, 45, 0.72);
     --bg-color-2: rgba(40, 12, 80, 0.55);
     --bg-color-1: rgba(10, 4, 28, 0.72);
-    --title-color: rgb(0, 240, 255);
-    --txt-color-1: rgba(240, 235, 255, 0.95);
-    --bordercolor: rgba(255, 70, 210, 0.75);
-    --bgc-top: rgba(36, 8, 70, 0.78);
-    --bgc-low: rgba(8, 4, 24, 0.6);
-    --bgc-title: rgb(10, 3, 26);
-    --accent: rgb(0, 240, 255);
-    --blur1: blur(6px) saturate(170%);
-    --blur2: blur(3px) saturate(170%);
-    --blur3: blur(6px) saturate(170%);
-    --shadowInner: inset 4px 4px 12px rgba(255, 60, 200, 0.35),
-        inset -1px -1px 6px rgba(0, 240, 255, 0.35);
+
+    --shadowInner: inset 4px 4px 12px rgba(255, 60, 200, 0.35), inset -1px -1px 6px rgba(0, 240, 255, 0.35);
     --neonGlow: 0 0 4px rgba(255, 60, 200, 0.9), 0 0 12px rgba(255, 60, 200, 0.55);
     --neonTextGlow: 0 0 3px rgba(0, 240, 255, 0.9), 0 0 10px rgba(0, 240, 255, 0.5);
 }
@@ -841,6 +1949,7 @@
     --background-desktop: url('/eldrid-bg-neon-3840.webp');
 }
 
+/* phones: portrait crops of each background */
 @media (max-width: 768px) {
     /* phones: lighter glass blur so the background picture shows through */
 
@@ -850,10 +1959,6 @@
         --blur2: blur(0.5px) saturate(140%);
         --blur3: blur(0.75px) saturate(140%);
     }
-}
-
-/* phones: portrait crops of each background */
-@media (max-width: 768px) {
     html[data-background="default"] { --background: url('/colorsketch-eldrid-mobile-1440x2560.webp'); }
     html[data-background="green"] { --background: url('/eldrid-bg-green-mobile-1440x2560.webp'); }
     html[data-background="purple"] { --background: url('/eldrid-bg-purple-mobile-1440x2560.webp'); }

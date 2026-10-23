@@ -9,7 +9,7 @@ const TABS = [
     { id: 'actions', label: 'Actions' },
     { id: 'spells', label: 'Spell Book' },
     { id: 'inventory', label: 'Inventory' },
-    { id: 'equipment', label: 'Proficiencies' },
+    { id: 'proficiencies', label: 'Proficiencies' },
 ];
 
 // The big box with Actions / Spells / Inventory / Proficiencies tabs.
@@ -18,8 +18,8 @@ function ActionPanel() {
     const [tab, setTab] = useState('actions');
 
     return (
-        <section className="container action-container" id="action-panel-container">
-            <TabList tabs={TABS} active={tab} onChange={setTab} prefix="" />
+        <section className="action-container" id="action-panel-container">
+            <TabList className='action-tabs' tabs={TABS} active={tab} onChange={setTab} prefix="" />
 
             <article role="tabpanel" id="panel-actions" aria-labelledby="tab-actions" hidden={tab !== 'actions'}>
                 <Actions />
@@ -33,7 +33,7 @@ function ActionPanel() {
                 <InventoryTab />
             </article>
 
-            <article role="tabpanel" id="panel-equipment" aria-labelledby="tab-equipment" hidden={tab !== 'equipment'}>
+            <article role="tabpanel" id="panel-proficiencies" aria-labelledby="tab-proficiencies" hidden={tab !== 'proficiencies'}>
                 <ProficienciesTab />
             </article>
         </section>

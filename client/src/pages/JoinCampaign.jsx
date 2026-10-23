@@ -30,7 +30,12 @@ export default function JoinCampaign() {
     }, [code]);
 
     return (
-
+        <>
+        <header id="site-title">
+            <img src="/Logo.png" alt="Eldrid Tales Logo" className="title-logo" />
+            <h1>Join Campaign</h1>
+        </header>
+        <main>
         <div>
         {error ? (
             <>
@@ -41,5 +46,10 @@ export default function JoinCampaign() {
             <p>Joining campaign...</p>
         )}
         </div>
+        </main>
+        <footer>
+            <p className="footer-text">copyrite Eldrid Tales LLC</p>
+        </footer>
+        </>
     );
 }

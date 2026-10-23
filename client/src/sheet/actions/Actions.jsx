@@ -296,12 +296,12 @@ function Actions() {
             ) : (
                 <>
                     {f.dice && !costOf(f) && (
-                        <button type="button" className="btn btn-action damage-button hover-grow"
+                        <button type="button" className="action-button damage-button hover-grow"
                             onClick={() => onRoll(`${character.name} uses ${f.name}! Rolled: ${rollDice(diceOf(f))}`)}>
                             {diceOf(f)}
                         </button>
                     )}
-                    <button type="button" className="btn btn-action damage-button hover-grow" disabled={!!isLocked(f)}
+                    <button type="button" className="action-button damage-button hover-grow" disabled={!!isLocked(f)}
                         onClick={() => activateFeature(f)}>
                         {costOf(f) ? `${diceOf(f) ? `${diceOf(f)} ` : ''}(${costOf(f)} R)` : 'Use'}
                     </button>
@@ -339,30 +339,30 @@ function Actions() {
     // One learned spell with its to-hit/save, damage (crit-aware), heal and upcast buttons. Shared by the Magical Actions, Bonus Actions and Reactions tiles.
     const spellRow = (s) => (
         <li key={s.id} className="action-item spell">
-            <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'spell', data: s })}>
+            <button type="button" className="btn caption-btn btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'spell', data: s })}>
                 {s.name}
             </button>
 
             <div className="action-button-container">
                 {s.attack_type ? (
-                    <button type='button' className='btn btn-action btn-to-hit hover-grow'
+                    <button type='button' className='action-button hover-grow'
                     onClick={() => onCastClick(s, () => castSpell(s, beamsAt(s, character.level) > 1
                         ? `${character.name} casts ${s.name}! ${beamRollText(beamsAt(s, character.level), spellToHit + (s.base_to_hit_modifier || 0), s.base_damage_dice, s.dmgMod || 0)}`
                         : `${character.name} casts ${s.name}! ${spellHitText(s)}`))}>
                         {signed(spellToHit + (s.base_to_hit_modifier || 0))}
                     </button>
                 ) : s.opponent_save_roll ? (
-                    <button type='button' className='btn btn-action btn-to-hit hover-grow' onClick={() => onCastClick(s, () => castSpell(s, `Target must make a ${s.opponent_save_roll} roll and roll higher than a ${spellSave}`))}>{s.opponent_save_roll} {spellSave}</button>
+                    <button type='button' className='btn action-button hover-grow' onClick={() => onCastClick(s, () => castSpell(s, `Target must make a ${s.opponent_save_roll} roll and roll higher than a ${spellSave}`))}>{s.opponent_save_roll} {spellSave}</button>
                 ) : null}
 
                 {(s.base_damage_dice) ? (
                     // with a to-hit/save button the damage is just a roll; without one, this button is the cast
-                    <button type="button" className={`btn btn-action damage-button hover-grow${critClass(`s${s.id}`)}`} onClick={() => (s.attack_type || s.opponent_save_roll) ? rollDamage({ key: `s${s.id}`, dice: diceAt(s, castLevels[s.id] ?? s.base_level), dmgMod: s.dmgMod || 0, beams: beamsAt(s, character.level) }) : onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}! Damage dealt: ${Math.max(0, rollDice(s.base_damage_dice) + (s.dmgMod || 0))}`))}>{diceAt(s, castLevels[s.id] ?? s.base_level)}{s.dmgMod ? signed(s.dmgMod) : ''}</button>
+                    <button type="button" className={`btn action-button  hover-grow${critClass(`s${s.id}`)}`} onClick={() => (s.attack_type || s.opponent_save_roll) ? rollDamage({ key: `s${s.id}`, dice: diceAt(s, castLevels[s.id] ?? s.base_level), dmgMod: s.dmgMod || 0, beams: beamsAt(s, character.level) }) : onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}! Damage dealt: ${Math.max(0, rollDice(s.base_damage_dice) + (s.dmgMod || 0))}`))}>{diceAt(s, castLevels[s.id] ?? s.base_level)}{s.dmgMod ? signed(s.dmgMod) : ''}</button>
                 ) : s.heal_dice ? (
                     // healing spells: dice (+ casting mod where the rules add it), never crits
-                    <button type="button" className="btn btn-action damage-button hover-grow" onClick={() => onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}! ${healText(s, s.base_level)}`))}>{healAt(s, castLevels[s.id] ?? s.base_level)}{healMod(s) ? signed(healMod(s)) : ''}</button>
+                    <button type="button" className="btn action-button hover-grow" onClick={() => onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}! ${healText(s, s.base_level)}`))}>{healAt(s, castLevels[s.id] ?? s.base_level)}{healMod(s) ? signed(healMod(s)) : ''}</button>
                 ) : (
-                    <button type='button' className='btn btn-action damage-button hover-grow' onClick={() => onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}!`))}>Cast</button>
+                    <button type='button' className='btn action-button  hover-grow' onClick={() => onCastClick(s, () => castSpell(s, `${character.name} casts ${s.name}!`))}>Cast</button>
                 )}
 
                 {/* Level picker: shows after clicking a leveled spell's cast button */}
@@ -384,29 +384,29 @@ function Actions() {
     // one weapon row (Physical Actions, or Bonus Actions when dual wielded)
     const weaponRow = (a) => (
                         <li key={a.key} className="action-item spell">
-                            <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'weapon', data: a })}>
+                            <button type="button" className="caption-btn hover-grow" onClick={() => setOpenItem({ kind: 'weapon', data: a })}>
                                     {a.name}
                                 </button>
                             <div className="action-button-container">
-                                <button type="button" className="btn btn-action btn-to-hit hover-grow" onClick={() => rollHit(a)}>{signed(a.hit ?? toHit)}</button>
-                                <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} onClick={() => rollDamage(a)}>{a.dice}{a.dmgMod ? signed(a.dmgMod) : ''}</button>
+                                <button type="button" className="btn action-button btn-to-hit hover-grow" onClick={() => rollHit(a)}>{signed(a.hit ?? toHit)}</button>
+                                <button type="button" className={`btn action-button damage-button hover-grow${critClass(a.key)}`} onClick={() => rollDamage(a)}>{a.dice}{a.dmgMod ? signed(a.dmgMod) : ''}</button>
                                 {a.runed && (
                                     <>
-                                        <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} title={`Runic Strike: once per turn, add ${runicDice} force`}
+                                        <button type="button" className={`btn action-button damage-button hover-grow${critClass(a.key)}`} title={`Runic Strike: once per turn, add ${runicDice} force`}
                                             disabled={runicUsed} onClick={() => rollRunicStrike(a)}>
                                             {runicUsed ? 'Runic used' : `+${runicDice} (Runic)`}
                                         </button>
-                                        {runicUsed && <button type="button" className="btn btn-action hover-grow" onClick={() => setRunicUsed(false)}>New turn</button>}
+                                        {runicUsed && <button type="button" className="btn action-button hover-grow" onClick={() => setRunicUsed(false)}>New turn</button>}
                                     </>
                                 )}
                                 {a.branded && (
-                                    <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} title={`Soul Strike: on a hit, add ${soulStrikeDice} force (1 Temper)`}
+                                    <button type="button" className={`btn action-button damage-button hover-grow${critClass(a.key)}`} title={`Soul Strike: on a hit, add ${soulStrikeDice} force (1 Temper)`}
                                         onClick={() => rollSoulStrike(a)}>
                                         +{soulStrikeDice} (1 T)
                                     </button>
                                 )}
                                 {a.sigil && weaponHitFeature && (
-                                    <button type="button" className={`btn btn-action damage-button hover-grow${critClass(a.key)}`} title={`${weaponHitFeature.name}: on a hit, add ${diceOf(weaponHitFeature)} radiant`}
+                                    <button type="button" className={`btn action-button damage-button hover-grow${critClass(a.key)}`} title={`${weaponHitFeature.name}: on a hit, add ${diceOf(weaponHitFeature)} radiant`}
                                         onClick={() => rollWithHitFeature(a, weaponHitFeature)}>
                                         +{diceOf(weaponHitFeature)} ({costOf(weaponHitFeature)} embers)
                                     </button>
@@ -419,51 +419,49 @@ function Actions() {
     const openWeapon = openItem?.kind === 'weapon' ? (weaponActions.find((x) => x.key === openItem.data.key) ?? openItem.data) : null;
 
     return (
-        // Same shape as the Spells and Inventory tabs: one list of groups,
-        // each group = a title on top + its list of rows underneath
-        <ul className="action-list spell-list">
-            <li className="action-item spell-slot">
+        <ul className="action-container">
+            <li className="action-list">
                 <span className="action-title" id="physical-actions-title">Physical Actions</span>
-                <ul className="action-list" id="physical-actions-list">
+                <ul className="action-set" id="physical-actions-set">
                     {actions.map(weaponRow)}
                 </ul>
             </li>
 
-            <li className="action-item spell-slot">
+            <li className="action-list">
                 <span className="action-title" id="magical-actions-title">Magical Actions</span>
-                <ul className="action-list" id="magical-actions-list">
+                <ul className="action-set" id="magical-actions-set">
                     {magicSpells.length === 0 ? (
-                        <li className="action-item spell">No spells set as actions yet.</li>
+                        <li className="action-item">No spells set as actions yet.</li>
                     ) : (
                         magicSpells.map(spellRow)
                     )}
                 </ul>
             </li>
 
-            <li className="action-item spell-slot">
+            <li className="action-list">
                 <span className="action-title" id="physical-actions-title">Bonus Actions</span>
-                <ul className="action-list" id="physical-actions-list">
+                <ul className="action-set" id="physical-actions-set">
                     {bonusWeapons.map(weaponRow)}
                     {hasCallTheBrand && (
-                        <li className="action-item spell">
-                            <span className="btn btn-spell-name">Call the Brand ({brandedWeapon.name})</span>
+                        <li className="action-item">
+                            <span className="caption-btn">Call the Brand ({brandedWeapon.name})</span>
                             <div className="action-button-container">
-                                <button type="button" className="btn btn-action hover-grow" onClick={callTheBrand}>Call</button>
+                                <button type="button" className="action-button" onClick={callTheBrand}>Call</button>
                             </div>
                         </li>
                     )}
                     {runeFx.lanterns.map((l) => (
-                        <li key={l.key} className="action-item spell">
-                            <span className="btn btn-spell-name">Lantern Rune ({l.item})</span>
+                        <li key={l.key} className="action-item">
+                            <span className="caption-btn">Lantern Rune ({l.item})</span>
                             <div className="action-button-container">
-                                <button type="button" className="btn btn-action hover-grow" onClick={() => toggleLantern(l)}>{litLanterns[l.key] ? 'Light off' : 'Light on'}</button>
+                                <button type="button" className="action-button" onClick={() => toggleLantern(l)}>{litLanterns[l.key] ? 'Light off' : 'Light on'}</button>
                             </div>
                         </li>
                     ))}
                     {bonusSpells.map(spellRow)}
                     {bonusFeatures.map((f) => (
-                            <li key={`${f.source}-${f.id}`} className="action-item spell">
-                                <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
+                            <li key={`${f.source}-${f.id}`} className="action-item">
+                                <button type="button" className="caption-btn" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
                                     {f.name}
                                 </button>
                                 {featureButtons(f)}
@@ -472,14 +470,14 @@ function Actions() {
                 </ul>
             </li>
 
-            <li className="action-item spell-slot">
+            <li className="action-list">
                 <span className="action-title" id="reactions-title">Reactions</span>
-                <ul className="action-list" id="reactions-list">
+                <ul className="action-set" id="reactions-set">
                     {runeFx.mending.map((m) => (
-                        <li key={m.key} className="action-item spell">
-                            <span className="btn btn-spell-name">Mending Rune ({m.item})</span>
+                        <li key={m.key} className="action-item">
+                            <span className=" caption-btn">Mending Rune ({m.item})</span>
                             <div className="action-button-container">
-                                <button type="button" className="btn btn-action damage-button hover-grow" disabled={!!restUses[m.key]} onClick={() => rollMending(m)}>
+                                <button type="button" className="action-button damage-button" disabled={!!restUses[m.key]} onClick={() => rollMending(m)}>
                                     {restUses[m.key] ? 'Used (long rest)' : `1d6${intMod ? signed(intMod) : ''}`}
                                 </button>
                             </div>
@@ -487,8 +485,8 @@ function Actions() {
                     ))}
                     {reactionSpells.map(spellRow)}
                     {reactionFeatures.map((f) => (
-                            <li key={`${f.source}-${f.id}`} className="action-item spell">
-                                <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
+                            <li key={`${f.source}-${f.id}`} className="action-item">
+                                <button type="button" className="caption-btn" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
                                     {f.name}
                                 </button>
                                 {featureButtons(f)}
@@ -497,24 +495,24 @@ function Actions() {
                 </ul>
             </li>
 
-            <li className="action-item spell-slot">
+            <li className="action-list">
                 <span className="action-title" id="feature-actions-title">Class Features</span>
-                <ul className="action-list" id="feature-actions-list">
+                <ul className="action-set" id="feature-actions-set">
                     {(embersMax > 0 || crackMax > 0) && (
-                        <li className="action-item spell">
-                            <span className="btn btn-spell-name">
+                        <li className="action-item">
+                            <span className="caption-btn">
                                 {embersMax > 0 && `Embers ${embers}/${embersMax}`}{embersMax > 0 && crackMax > 0 && ' \u00b7 '}{crackMax > 0 && `Cracks ${cracks}/${crackMax}`}
                             </span>
                             {crackMax > 0 && cracks >= 3 && (
                                 <div className="action-button-container">
-                                    <span className="btn btn-action">{character.level >= 20 ? 'Shedding light, no Hide' : `Leak: take ${cracks} radiant at turn start, no Hide`}</span>
+                                    <span className="caption-btn">{character.level >= 20 ? 'Shedding light, no Hide' : `Leak: take ${cracks} radiant at turn start, no Hide`}</span>
                                 </div>
                             )}
                         </li>
                     )}
                     {listedFeatures.map((f) => (
-                        <li key={`${f.source}-${f.id}`} className="action-item spell">
-                            <button type="button" className="btn btn-spell-name hover-grow" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
+                        <li key={`${f.source}-${f.id}`} className="action-item">
+                            <button type="button" className="caption-btn" onClick={() => setOpenItem({ kind: 'feature', data: f })}>
                                 {f.name}
                             </button>
                             {featureButtons(f)}
@@ -523,18 +521,17 @@ function Actions() {
                 </ul>
             </li>
             {runeNotes.length > 0 && (
-                <li className="action-item spell-slot">
+                <li className="action-list">
                     <span className="action-title" id="rune-effects-title">Rune Effects</span>
-                    <ul className="action-list" id="rune-effects-list">
-                        {runeNotes.map((n) => <li key={n} className="action-item spell">{n}</li>)}
+                    <ul className="action-set" id="rune-effects-set">
+                        {runeNotes.map((n) => <li key={n} className="action-item">{n}</li>)}
                     </ul>
                 </li>
             )}
             {openItem && createPortal(
                 <article className="spell-details">
-                    <button type='button' className='btn-round spell-details-close' onClick={() => setOpenItem(null)}>X</button>
-                    <h3 className='spell-details-title'>{openItem.data.name}</h3>
-
+                        <button type='button' className='spell-details-close' onClick={() => setOpenItem(null)}>X</button>
+                        <h3 className='spell-details-title'>{openItem.data.name}</h3>
                     {openItem.kind === 'feature' && (
                         <>
                             <section className="details-container">

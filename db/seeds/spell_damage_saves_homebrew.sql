@@ -4,36 +4,36 @@ BEGIN;
 ALTER TABLE spells ADD COLUMN IF NOT EXISTS base_damage_dice TEXT;
 ALTER TABLE spells ADD COLUMN IF NOT EXISTS opponent_save_roll TEXT;
 -- 1) SRD corrections (explicit overwrite of values seeded by spell_damage_saves.sql)
-UPDATE spells SET base_damage_dice = '3d4+3' WHERE lower(name) = lower('Magic Missile');
-UPDATE spells SET base_damage_dice = '10d6+40' WHERE lower(name) = lower('Disintegrate');
-UPDATE spells SET base_damage_dice = '7d8+30' WHERE lower(name) = lower('Finger of Death');
-UPDATE spells SET base_damage_dice = NULL WHERE lower(name) = lower('Sleep');
+UPDATE spells SET base_damage_dice = '3d4+3' WHERE id = 305 /* Seeker Darts */;
+UPDATE spells SET base_damage_dice = '10d6+40' WHERE id = 199 /* Unmaking Ray */;
+UPDATE spells SET base_damage_dice = '7d8+30' WHERE id = 230 /* Deathpoint */;
+UPDATE spells SET base_damage_dice = NULL WHERE id = 382 /* Slumber Mist */;
 -- 2) SRD spells the API data missed (fill NULLs only)
 UPDATE spells s SET base_damage_dice = COALESCE(s.base_damage_dice, v.dice), opponent_save_roll = COALESCE(s.opponent_save_roll, v.save)
 FROM (VALUES
-  ('Spirit Guardians', '3d8'::text, 'WIS'::text),
-  ('Arcane Hand', '4d8'::text, NULL::text),
-  ('Earthquake', '5d6'::text, 'DEX'::text),
-  ('Geas', '5d10'::text, NULL::text),
-  ('Glyph of Warding', '5d8'::text, 'DEX'::text),
-  ('Prismatic Wall', '10d6'::text, 'DEX'::text),
-  ('Spike Growth', '2d4'::text, NULL::text),
-  ('Weird', '4d10'::text, NULL::text),
-  ('Antipathy/Sympathy', NULL::text, 'WIS'::text),
-  ('Call Lightning', NULL::text, 'DEX'::text),
-  ('Detect Thoughts', NULL::text, 'WIS'::text),
-  ('Flaming Sphere', NULL::text, 'DEX'::text),
-  ('Forcecage', NULL::text, 'CHA'::text),
-  ('Levitate', NULL::text, 'CON'::text),
-  ('Power Word Stun', NULL::text, 'CON'::text),
-  ('Sanctuary', NULL::text, 'WIS'::text),
-  ('Seeming', NULL::text, 'CHA'::text),
-  ('Sleet Storm', NULL::text, 'DEX'::text),
-  ('True Polymorph', NULL::text, 'WIS'::text),
-  ('Wall of Stone', NULL::text, 'DEX'::text),
-  ('Web', NULL::text, 'DEX'::text),
-  ('Zone of Truth', NULL::text, 'CHA'::text),
-  ('Irresistible Dance', NULL::text, 'WIS'::text)
-) AS v(name, dice, save) WHERE lower(s.name) = lower(v.name);
+  (391 /* Spirit Ring */, '3d8'::text, 'WIS'::text),
+  (131 /* Force Fist */, '4d8'::text, NULL::text),
+  (210 /* Worldshake */, '5d6'::text, 'DEX'::text),
+  (249 /* Binding Oath */, '5d10'::text, NULL::text),
+  (254 /* Waiting Sigil */, '5d8'::text, 'DEX'::text),
+  (343 /* Rainbow Barrier */, '10d6'::text, 'DEX'::text),
+  (390 /* Rose Garden */, '2d4'::text, NULL::text),
+  (427 /* Dreadweave */, '4d10'::text, NULL::text),
+  (129 /* Lure and Repel */, NULL::text, 'WIS'::text),
+  (152 /* Thunderhead */, NULL::text, 'DEX'::text),
+  (196 /* Thoughtread */, NULL::text, 'WIS'::text),
+  (237 /* Rolling Blaze */, NULL::text, 'DEX'::text),
+  (243 /* Prism Cage */, NULL::text, 'CHA'::text),
+  (294 /* Drift Rise */, NULL::text, 'CON'::text),
+  (339 /* Stunning Utterance */, NULL::text, 'CON'::text),
+  (365 /* Hallowed Refuge */, NULL::text, 'WIS'::text),
+  (370 /* Glamour Masks */, NULL::text, 'CHA'::text),
+  (383 /* Icestorm Squall */, NULL::text, 'DEX'::text),
+  (411 /* Perfect Shift */, NULL::text, 'WIS'::text),
+  (421 /* Stone Rampart */, NULL::text, 'DEX'::text),
+  (426 /* Sticky Weave */, NULL::text, 'DEX'::text),
+  (432 /* Banish Lies */, NULL::text, 'CHA'::text),
+  (289 /* Compel Dance */, NULL::text, 'WIS'::text)
+) AS v(id, dice, save) WHERE s.id = v.id;
 -- 3) Homebrew values were superseded by homebrew_rework.sql (2026-10-11) and removed from this file.
 COMMIT;

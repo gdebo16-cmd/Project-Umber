@@ -3,18 +3,18 @@
 // renderFeature(f) is optional: extra UI under a feature (the Character Editor uses it for choice dropdowns).
 function CreateDescription({ item, renderFeature }) {
     return (
-        <section id="desc-container" className="tile" hidden={!item}>
+        <section id="desc-container" className="step-1-desc-container" hidden={!item}>
             {item && (
-                <article id="descArticle">
+                <article id="descArticle" className="step-1-desc-tile">
                     <section id="img-section">
-                      <img id="desc-img" className="topTile" src={item.img} alt={item.name} />
+                      <img id="desc-img" src={item.img} alt={item.name} />
                     </section>
                     {!item.hideTitle && <section id="titleSection">
-                      <h3 id="title" className="bottomTile">{item.name}</h3>
+                      <h3 id="title" className="title-text">{item.name}</h3>
                     </section>}
                     {!item.race && !item.sections && item.text && (
-                        <section id="textSection">
-                          <p id="text" className="bottomTile">{item.text}</p>
+                        <section id="textSection" className="step-1-form">
+                          <p id="text" className="text-block name-tile">{item.text}</p>
                         </section>
                     )}
                     {item.race && (<section id="traits-section">

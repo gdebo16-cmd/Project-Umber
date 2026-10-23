@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import usePageStyle from '../hooks/usePageStyle';
-import signinCss from '../styles/signin.css?inline';
+import registerCss from '../styles/register.css?inline';
 import { sendJson } from '../utils/api';
 
 // Replaces Public/registration.html
 function RegisterPage() {
-    usePageStyle(signinCss);
+    usePageStyle(registerCss);
     const navigate = useNavigate();
     // one state object for the whole form
     const [form, setForm] = useState({ username: '', password: '', email: '', name: '' });
@@ -61,13 +61,14 @@ function RegisterPage() {
 
                         <article className="form-section button-container">
                             <button className="btn btn-form" type="submit">Create Account</button>
+                            <Link className="btn btn-form" id="login-link" to="/login">Back to login</Link>
                         </article>
                     </form>
                 </section>
             </main>
             <footer>
-                <p id="footer-text">© 2026 Eldrid Tales. All rights reserved.</p>
-                <Link id="login-link" to="/login">Back to login</Link>
+                <p className="footer-text" id="footer-text">© 2026 Eldrid Tales. All rights reserved.</p>
+                
             </footer>
         </>
     );

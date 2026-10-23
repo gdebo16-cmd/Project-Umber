@@ -10,7 +10,10 @@ function ArmorClass({ character, ownedArmor }) {
     
     // Guard Rune +1 AC; Warding Rune resistances (equipped armor and shields)
     const runes = armorRuneEffects(ownedArmor);
-    const ac = 10 + modOf(character.con) + armorBonus + shieldBonus + runes.acBonus;
+    // Body armor caps the CON mod (armor.con_cap: light/none = no cap, medium 2, heavy 0)
+    const caps = equipped.filter((a) => a.armor_type !== 'shield' && a.con_cap != null).map((a) => Number(a.con_cap));
+    const conMod = caps.length ? Math.min(modOf(character.con), ...caps) : modOf(character.con);
+    const ac = 10 + conMod + armorBonus + shieldBonus + runes.acBonus;
     
     return (
         <section className='container' id='armor-class-container'>

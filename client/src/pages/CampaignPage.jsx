@@ -92,8 +92,9 @@ function CampaignPage() {
                 <section className={campTab === 'campaign' ? 'container campaign-tile camp-area-a is-active' : 'container campaign-tile camp-area-a'}>
                     {editing ? (
                         <>
+                        <div className="edit-container">
                             <h2 className="campaign-name"><strong>Edit Campaign</strong></h2>
-                            <form className="camp-panel camp-edit-form" onSubmit={saveEdit}>
+                            <form className="camp-edit-form" onSubmit={saveEdit}>
                                 <div className="camp-panel-row">
                                     <label className="camp-panel-label" htmlFor="camp-edit-name">Title</label>
                                     <input id="camp-edit-name" className="field" type="text" maxLength={120} value={form.name}
@@ -104,7 +105,11 @@ function CampaignPage() {
                                     <textarea id="camp-edit-desc" className="field" rows={5} value={form.description}
                                         onChange={(e) => setForm({ ...form, description: e.target.value })} />
                                 </div>
-                                <div className="camp-panel-row">
+                                <div className="camp-edit-actions">
+                                    <button type="submit" className="btn edit-btn" disabled={saving}>{saving ? 'Saving...' : 'Save'}</button>
+                                    <button type="button" className="btn edit-btn" disabled={saving} onClick={() => setEditing(false)}>Cancel</button>
+                                </div>
+                                <div className="camp-image-set">
                                     <p className="camp-panel-label">Campaign image</p>
                                     <div className="camp-img-grid">
                                         <button type="button" className={form.campaign_img_url === null ? 'camp-img-choice camp-img-none is-selected' : 'camp-img-choice camp-img-none'}
@@ -122,11 +127,9 @@ function CampaignPage() {
                                     </div>
                                 </div>
                                 {editError && <p className="camp-edit-error" role="alert">{editError}</p>}
-                                <div className="camp-edit-actions">
-                                    <button type="submit" className="btn btn-form" disabled={saving}>{saving ? 'Saving...' : 'Save'}</button>
-                                    <button type="button" className="btn btn-form" disabled={saving} onClick={() => setEditing(false)}>Cancel</button>
-                                </div>
+                                
                             </form>
+                        </div>
                         </>
                     ) : (
                         <>
@@ -141,7 +144,7 @@ function CampaignPage() {
                                 </div>
                                 {campaign.role === 'dm' && (
                                     <div className="camp-edit-actions">
-                                        <button type="button" className="btn btn-form" onClick={startEdit}>Edit Campaign</button>
+                                        <button type="button" className=" btn-form" onClick={startEdit}>Edit Campaign</button>
                                     </div>
                                 )}
                             </div>
@@ -149,38 +152,37 @@ function CampaignPage() {
                     )}
                 </section>
                 <section className={campTab === 'invite' ? 'container campaign-tile camp-panel-tile camp-area-b is-active' : 'container campaign-tile camp-panel-tile camp-area-b'}>
-                    <h2 className="campaign-name"><strong>Invite / Join</strong></h2>
-                    <div className="camp-panel">
+                    <h2 className="campaign-name invite-join-title"><strong>Invite / Join</strong></h2>
+                    <div className="camp-panel invite-join-panel">
                         {campaign.role === 'dm' && (
-                            <div className="camp-panel-row">
-                                <p className="camp-panel-label">Invite code</p>
-                                <p className="camp-invite-code">{campaign.invite_code}</p>
-                                <p className="camp-panel-hint">Share this code so players can join.</p>
-                                <button type="button" className="btn btn-form" onClick={shareInvite}>
+                            <div className="invite-join-tile">
+                                <p className="invite-join-label">Invite code</p>
+                                <p className="invite-join-code">{campaign.invite_code}</p>
+                                <button type="button" className=" btn-share" onClick={shareInvite}>
                                     {copied ? 'Copied!' : 'Share invite link'}
                                 </button>
                             </div>
                         )}
-                        <div className="camp-panel-row">
-                            <label className="camp-panel-label" htmlFor="camp-character">Your character</label>
-                            <select id="camp-character" className="field" value={selectedId} onChange={chooseCharacter}>
-                                <option value="" disabled>Choose a character</option>
+                        <div className="invite-join-tile2">
+                            <label className="invite-join-label" htmlFor="camp-character">Your character</label>
+                            <select id="camp-character" className="invite-join-select" value={selectedId} onChange={chooseCharacter}>
+                                <option className='invite-join-option-disabled' value="" disabled>Choose a character</option>
                                 {characters.map((ch) => (
-                                    <option className="field-option" key={ch.id} value={ch.id}>{ch.name}</option>
+                                    <option className="invite-join-option-selected" key={ch.id} value={ch.id}>{ch.name}</option>
                                 ))}
                             </select>
                         </div>
                     </div>
                 </section>
-                <section className={campTab === 'players' ? 'container campaign-tile camp-panel-tile camp-area-c is-active' : 'container campaign-tile camp-panel-tile camp-area-c'}>
-                    <h2 className="campaign-name"><strong>Current Players</strong></h2>
-                    <ul className="camp-panel campaign-member-list">
+                <section className={campTab === 'players' ? 'is-active' : 'container'}>
+                    <h2 className="players-title"><strong>Current Players</strong></h2>
+                    <ul className="players-list">
                         {members.map((mem) => (
-                            <li className="camp-panel-row campaign-member" key={mem.username}>
-                                <span className="member-name">{mem.username}</span>
-                                <span className={`member-role role-${mem.role}`}>{mem.role === 'dm' ? 'DM' : 'Player'}</span>
+                            <li className="player-tile" key={mem.username}>
+                                <span className="player-name">{mem.username}</span>
+                                <span className={`player-role role-${mem.role}`}>{mem.role === 'dm' ? 'DM' : 'Player'}</span>
                                 {/* players never see the DM's character status; the DM sees everything */}
-                                {!(mem.role === 'dm' && campaign.role !== 'dm') && <span className="member-character">
+                                {!(mem.role === 'dm' && campaign.role !== 'dm') && <span className="player-character">
                                     {mem.character_name
                                         ? (campaign.role === 'dm'
                                             ? <Link to={`/characters/${mem.character_id}`}>{mem.character_name}</Link>
@@ -193,7 +195,7 @@ function CampaignPage() {
                 </section>
             </main>
             <footer>
-                <Link id="home-link" to="/home">Home</Link>
+                <Link id="home-link" className="footer-text" to="/home">Home</Link>
             </footer>
         </>
     );

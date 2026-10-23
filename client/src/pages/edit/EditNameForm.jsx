@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 import useSave from './useSave';
 import CreateDescription from '../CreateDescription';
 
@@ -50,26 +51,26 @@ function EditNameForm({ character, races, onSaved }) {
     );
 
     return (
-        <form className="form-container" onSubmit={submit}>
-            <article className="form-section">
-                <label className="tile-top" htmlFor="name">Name</label>
-                <input className="tile-bottom" type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required autoFocus />
+        <form className="step-1-form" onSubmit={submit}>
+            <article className="name-tile">
+                <label className="name-label" htmlFor="name">Name</label>
+                <input className="name-value" type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required autoFocus />
             </article>
-            <article className="form-section">
-                <label className="tile-top" htmlFor="race_id">Select Race</label>
-                <select className="tile-bottom" id="race_id" value={raceId} onChange={(e) => { setRaceId(Number(e.target.value)); setSubraceId(''); }} required>
+            <article className="name-tile">
+                <label className="name-label" htmlFor="race_id">Select Race</label>
+                <select className="name-value" id="race_id" value={raceId} onChange={(e) => { setRaceId(Number(e.target.value)); setSubraceId(''); }} required>
                     {races.map((r) => (
-                        <option key={r.id} value={r.id}>{r.name}</option>
+                        <option className="name-option" key={r.id} value={r.id}>{r.name}</option>
                     ))}
                 </select>
             </article>
             {subraces.length > 0 && (
-                <article className="form-section">
-                    <label className="tile-top" htmlFor="subrace_id">{race.name === 'Lupine' ? 'Breed' : 'Gem Line'}</label>
-                    <select className="tile-bottom" id="subrace_id" value={subraceId} onChange={(e) => setSubraceId(e.target.value === '' ? '' : Number(e.target.value))}>
-                        <option value="">Select a sub-race</option>
+                <article className="name-tile">
+                    <label className="name-label" htmlFor="subrace_id">{race.name === 'Lupine' ? 'Breed' : 'Gem Line'}</label>
+                    <select className="name-value" id="subrace_id" value={subraceId} onChange={(e) => setSubraceId(e.target.value === '' ? '' : Number(e.target.value))}>
+                        <option className="name-option" value="">Select a sub-race</option>
                         {subraces.map((s) => (
-                            <option key={s.id} value={s.id}>{s.name}</option>
+                            <option className="name-option" key={s.id} value={s.id}>{s.name}</option>
                         ))}
                     </select>
                 </article>
@@ -101,8 +102,9 @@ function EditNameForm({ character, races, onSaved }) {
                 </div>
             </details>
             {message && <p>{message}</p>}
-            <article className="form-section button-container">
-                <button className="btn btn-form" type="submit">Save Changes</button>
+            <article className="button-tile">
+                <button className="action-button" type="submit">Save Changes</button>
+                <Link className="action-button" to={`/characters/${character.id}`}>Cancel</Link>
             </article>
         </form>
     );

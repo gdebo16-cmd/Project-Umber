@@ -7,6 +7,25 @@ import { getSpellCaps } from '../utils/spellLimits.js'; /*prep-done*/
 export const SUBCLASS_LEVEL = 3;
 export const MAX_LEVEL = 30;
 
+// ---------- effective max HP (one place for the sheet, healing and level changes) ----------
+// Stored max_hp stays the base (level-up math). Effective max = base + subclass hp_per_level x level + CON boost HP.
+// alias = characters table alias; level / sub = SQL expressions (default: the row's own level and subclass)
+export function hpBonusSql(alias, level = `${alias}.level`, sub = `${alias}.subclass_id`) {
+    return `(COALESCE((SELECT SUM(sf.hp_per_level) FROM subclass_features sf WHERE sf.subclass_id = ${sub} AND sf.level <= ${level}), 0) * ${level})`;
+}
+export function effMaxSql(base, alias, conBonus, level, sub) {
+    return `(${base} + ${hpBonusSql(alias, level, sub)} + ${conBonus})`;
+}
+const scoreMod = (s) => Math.floor((Number(s) || 0) / 2) - 5;
+// Extra HP from Ability Boost / Primordial Ascent CON picks, retroactive like 5e: (effective CON mod - base CON mod) x level
+// ch needs class_id, con (base), feature_choices, level
+export async function conHpBonus(ch, level = ch?.level) {
+    if (!ch?.class_id) return 0;
+    const lvl = Number(level) || 1;
+    const eff = effectiveScores(ch, await getBoostRows(ch.class_id), ch.feature_choices ?? {}, lvl);
+    return Math.max(0, (scoreMod(eff.con) - scoreMod(ch.con)) * lvl);
+}
+
 // true if this character belongs to the logged-in user
 export async function ownsCharacter(charId, userId) {
     const { rows } = await pool.query(
@@ -19,7 +38,7 @@ export async function ownsCharacter(charId, userId) {
 // Full sheet row (with race/class/subclass names) or undefined
 export async function getSheetCharacter(charId, userId) {
     const { rows } = await pool.query(
-        `SELECT ch.*, r.name AS race_name, sr.name AS subrace_name, cl.name AS class_name, cl.hitpoint_die, cl.primary_stat AS spell_stat, COALESCE(NULLIF(s.spellcasting_stat, ''), NULLIF(cl.spellcasting_stat, ''), cl.primary_stat) AS casting_stat, COALESCE(s.caster_type, cl.caster_type) AS caster_type, cl.has_embers, cl.crack_max, cl.breach_dc, cl.breach_dc_scaling, cl.saving_throws AS class_saving_throws, s.breach_effect, s.breach_drains_embers, NULLIF(concat_ws(', ', cl.armor_proficiencies, s.armor_proficiencies), '') AS armor_proficiencies, NULLIF(concat_ws(', ', cl.weapon_proficiencies, s.weapon_proficiencies), '') AS weapon_proficiencies, NULLIF(concat_ws(', ', cl.tool_proficiencies, s.tool_proficiencies), '') AS tool_proficiencies, s.name AS subclass_name, r.base_speed AS race_base_speed, r.darkvision AS race_darkvision, COALESCE((SELECT SUM(sf.hp_per_level) FROM subclass_features sf WHERE sf.subclass_id = ch.subclass_id AND sf.level <= ch.level), 0) * ch.level AS hp_bonus
+        `SELECT ch.*, r.name AS race_name, sr.name AS subrace_name, cl.name AS class_name, cl.hitpoint_die, cl.primary_stat AS spell_stat, COALESCE(NULLIF(s.spellcasting_stat, ''), NULLIF(cl.spellcasting_stat, ''), cl.primary_stat) AS casting_stat, COALESCE(s.caster_type, cl.caster_type) AS caster_type, cl.has_embers, cl.crack_max, cl.breach_dc, cl.breach_dc_scaling, cl.saving_throws AS class_saving_throws, s.breach_effect, s.breach_drains_embers, NULLIF(concat_ws(', ', cl.armor_proficiencies, s.armor_proficiencies), '') AS armor_proficiencies, NULLIF(concat_ws(', ', cl.weapon_proficiencies, s.weapon_proficiencies), '') AS weapon_proficiencies, NULLIF(concat_ws(', ', cl.tool_proficiencies, s.tool_proficiencies), '') AS tool_proficiencies, s.name AS subclass_name, r.base_speed AS race_base_speed, r.darkvision AS race_darkvision, ${hpBonusSql('ch')} AS hp_bonus
         FROM characters ch
         LEFT JOIN races r ON r.id = ch.race_id
         LEFT JOIN subraces sr ON sr.id = ch.subrace_id
@@ -32,7 +51,7 @@ export async function getSheetCharacter(charId, userId) {
         [charId, userId]
     );
     // Sheet shows the effective max HP (Rune-Hardened etc.); stored max_hp stays the base for level-up math
-    if (rows[0]) rows[0].max_hp = Number(rows[0].max_hp) + Number(rows[0].hp_bonus || 0);
+    if (rows[0]) rows[0].max_hp = Number(rows[0].max_hp) + Number(rows[0].hp_bonus || 0) + await conHpBonus(rows[0]); // con is still the base here
     // spells: { cantrips, prepared, known } (null = no cap)
     if (rows[0]) rows[0].spell_limits = getSpellCaps(rows[0].class_name, rows[0].level, rows[0].subclass_name);
     return withEffectiveScores(rows[0]);
@@ -65,15 +84,35 @@ export async function getCharacterName(charId, userId) {
     return rows[0];
 }
 
-// Heal (+) or damage (-), clamped to 0..effective max HP (stored max_hp + subclass hp_per_level bonus, e.g. Rune-Hardened). Returns { current_hp, max_hp } or undefined
+// Heal (+) or damage (-), clamped to 0..effective max HP (see effMaxSql). Damage comes off temp_hp first; healing never touches temp_hp.
+// Returns { current_hp, temp_hp, max_hp } or undefined
 export async function changeHp(charId, userId, change) {
+    const { rows: found } = await pool.query(
+        `SELECT id, class_id, con, level, feature_choices FROM characters WHERE id = $1 AND user_id = $2`,
+        [charId, userId]
+    );
+    if (!found[0]) return undefined;
+    const conBonus = await conHpBonus(found[0]);
     const { rows } = await pool.query(
-        `UPDATE characters
-         SET current_hp = LEAST(max_hp + (
-             SELECT COALESCE((SELECT SUM(sf.hp_per_level) FROM subclass_features sf WHERE sf.subclass_id = c.subclass_id AND sf.level <= c.level), 0) * c.level FROM characters c WHERE c.id = $2), GREATEST(0, current_hp + $1))
-         WHERE id = $2 AND user_id = $3
-         RETURNING current_hp, max_hp + (SELECT COALESCE((SELECT SUM(sf.hp_per_level) FROM subclass_features sf WHERE sf.subclass_id = c.subclass_id AND sf.level <= c.level), 0) * c.level FROM characters c WHERE c.id = $2)::int AS max_hp`,
-        [change, charId, userId]
+        `UPDATE characters c
+            SET temp_hp = CASE WHEN $1::int < 0 THEN GREATEST(0, c.temp_hp + $1::int) ELSE c.temp_hp END,
+                current_hp = LEAST(${effMaxSql('c.max_hp', 'c', '$4::int')},
+                    GREATEST(0, c.current_hp + CASE WHEN $1::int < 0 THEN LEAST(0, $1::int + c.temp_hp) ELSE $1::int END))
+          WHERE c.id = $2 AND c.user_id = $3
+          RETURNING c.current_hp, c.temp_hp, ${effMaxSql('c.max_hp', 'c', '$4::int')}::int AS max_hp`,
+        [change, charId, userId, conBonus]
+    );
+    return rows[0];
+}
+
+// Temporary HP doesn't stack: keeps the higher of the current and new amount. clear = true sets it to 0 (long rest).
+// Returns { temp_hp } or undefined
+export async function setTempHp(charId, userId, amount, clear = false) {
+    const { rows } = await pool.query(
+        `UPDATE characters SET temp_hp = CASE WHEN $4::boolean THEN 0 ELSE GREATEST(temp_hp, $1::int) END
+          WHERE id = $2 AND user_id = $3
+          RETURNING temp_hp`,
+        [amount, charId, userId, clear]
     );
     return rows[0];
 }
@@ -89,17 +128,22 @@ export async function deleteCharacter(charId, userId) {
 
 // Save a finished draft. Returns the new id
 export async function createCharacter(userId, draft, final, plus2, plus1, maxHp) {
+    const m = draft.magic ?? {}; // step 4: alignment, personality states, race element
     const { rows } = await pool.query(
         `INSERT INTO characters
            (user_id, name, race_id, subrace_id, class_id, subclass_id,
             str, dex, con, "int", wis, cha, luc, spd, plus2_stat, plus1_stat, max_hp, current_hp,
-            skill_proficiencies, level, feature_choices, last_swap_level)
-         VALUES ($1,$2,$3,$20,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$21::jsonb,$19)
+            skill_proficiencies, level, feature_choices, last_swap_level,
+            alignment_code, upbringing_id, lifestyle_id, outlook_id, upbringing_state, lifestyle_state, outlook_state, race_element_id)
+         VALUES ($1,$2,$3,$20,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$21::jsonb,$19,
+                 $22,$23,$24,$25,$26,$27,$28,$29)
          RETURNING id`,
         [userId, draft.name, draft.race_id, draft.class_id, draft.subclass_id,
          final.str, final.dex, final.con, final.int, final.wis, final.cha, final.luc, final.spd,
          plus2, plus1, maxHp, maxHp, draft.skill_proficiencies ?? [], draft.level ?? 1, draft.subrace_id ?? null,
-         JSON.stringify(draft.feature_choices ?? {})]
+         JSON.stringify(draft.feature_choices ?? {}),
+         m.alignment_code ?? null, m.upbringing_id ?? null, m.lifestyle_id ?? null, m.outlook_id ?? null,
+         m.upbringing_state ?? null, m.lifestyle_state ?? null, m.outlook_state ?? null, m.race_element_id ?? null]
     );
     return rows[0].id;
 }
@@ -273,16 +317,22 @@ export async function getLevelInfo(charId, userId) {
 
 // Dropping below SUBCLASS_LEVEL clears the subclass and its feature picks
 export async function updateLevel(charId, userId, level, newMax) {
+    const { rows: found } = await pool.query(
+        `SELECT id, class_id, con, feature_choices FROM characters WHERE id = $1 AND user_id = $2`,
+        [charId, userId]
+    );
+    const conBonus = found[0] ? await conHpBonus(found[0], level) : 0;
+    // clamp to the effective max at the new level (subclass bonus only from SUBCLASS_LEVEL up)
     await pool.query(
         `UPDATE characters
-            SET level = $1, max_hp = $2, current_hp = LEAST(current_hp, $2),
+            SET level = $1, max_hp = $2, current_hp = LEAST(current_hp, ${effMaxSql('$2::int', 'characters', '$5::int', '$1::int', `CASE WHEN $1::int < ${SUBCLASS_LEVEL} THEN NULL ELSE characters.subclass_id END`)}),
                 feature_choices = CASE WHEN $1::int < ${SUBCLASS_LEVEL} THEN
                         (SELECT COALESCE(jsonb_object_agg(k, v), '{}'::jsonb)
                            FROM jsonb_each(feature_choices) AS e(k, v) WHERE k NOT LIKE 'subclass:%')
                     ELSE feature_choices END,
                 subclass_id = CASE WHEN $1::int < ${SUBCLASS_LEVEL} THEN NULL ELSE subclass_id END
           WHERE id = $3 AND user_id = $4`,
-        [level, newMax, charId, userId]
+        [level, newMax, charId, userId, conBonus]
     );
 }
 

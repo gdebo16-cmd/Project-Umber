@@ -2,13 +2,13 @@
 import * as Runes from '../controllers/apiRuneController.js';
 import { Router } from 'express';
 import {
-    getCharacter, updateHp, updateSheetState, deleteCharacter,
+    getCharacter, updateHp, updateTempHp, updateSheetState, deleteCharacter,
     equipArmor, unequipArmor, equipWeapon, unequipWeapon, dualWieldWeapon, twoHandWeapon, soulBrandWeapon, sigilMarkWeapon,
 } from '../controllers/apiController.js';
 import { me, login, logout, register, home, getSettings, updateSettings, getProfile, updateProfile, deleteAccount } from '../controllers/apiUserController.js';
-import { getInventory, addArmor, addWeapon, removeArmor, removeWeapon } from '../controllers/apiInventoryController.js';
+import { getInventory, addArmor, addWeapon, removeArmor, removeWeapon, addItem, removeItem } from '../controllers/apiInventoryController.js';
 import { getEditCharacter, editNameAndRace, editClass, editLevel, editAbilities, editFeatureChoice, editPortrait } from '../controllers/apiEditController.js';
-import { getRaces, getSubraces, step1Submit, getStep2, step2Submit, getStep3, step3Submit, boostOptions, clearDraft, getDraft, rollStat, selectSubclass, getStartingGear } from '../controllers/apiCreateController.js';
+import { getRaces, getSubraces, step1Submit, getStep2, step2Submit, getStep3, step3Submit, getStep4, step4Submit, boostOptions, clearDraft, getDraft, rollStat, selectSubclass, getStartingGear } from '../controllers/apiCreateController.js';
 import { getSpellbook, learnSpell, unlearnSpell, prepareSpell, unprepareSpell, setAction, removeAction } from '../controllers/apiSpellController.js';
 import { createCampaign, deleteCampaign, getCampaign, updateCampaign, listCampaigns, joinCampaign, setCampaignCharacter } from '../controllers/apiCampaignController.js';
 
@@ -44,6 +44,8 @@ router.get('/create_char/subclasses/:classId', selectSubclass);
 router.get('/create_char/gear', getStartingGear);
 router.get('/create_char/step3', getStep3);
 router.post('/create_char/step3', step3Submit);
+router.get('/create_char/step4', getStep4);
+router.post('/create_char/step4', step4Submit);
 router.get('/create_char/draft', getDraft);
 router.delete('/create_char/draft', clearDraft);
 router.post('/create_char/roll/:stat', rollStat);
@@ -53,6 +55,7 @@ router.post('/boost_options', boostOptions);
 router.get('/characters/:id', getCharacter);
 router.delete('/characters/:id', deleteCharacter);
 router.patch('/characters/:id/hp', updateHp);
+router.patch('/characters/:id/temp-hp', updateTempHp);
 router.patch('/characters/:id/state', updateSheetState);
 router.post('/characters/:id/inventory/armor/equip', equipArmor);
 router.post('/characters/:id/inventory/armor/unequip', unequipArmor);
@@ -73,6 +76,8 @@ router.post('/characters/:id/inventory/armor', addArmor);
 router.post('/characters/:id/inventory/weapon', addWeapon);
 router.post('/characters/:id/inventory/armor/remove', removeArmor);
 router.post('/characters/:id/inventory/weapon/remove', removeWeapon);
+router.post('/characters/:id/inventory/item', addItem);
+router.post('/characters/:id/inventory/item/remove', removeItem);
 
 // spell book (learn / unlearn spells)
 router.get('/characters/:id/spellbook', getSpellbook);

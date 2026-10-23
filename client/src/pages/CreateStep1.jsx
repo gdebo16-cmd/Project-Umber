@@ -54,52 +54,44 @@ function CreateStep1() {
 
     return (
         <>
-            <header id="topContainer">
-                <h1 id="site-title">Create Character</h1>
-                <h2 id="form-title">Step 1 of 3 — Name and race</h2>
-                <StepNav back={null} forward={hasSavedRace ? '/create_char/step2' : null} />
+            <header id='site-title'>
+                    <h1>Create Character</h1>
             </header>
-
+            <div id='nav-container'>
+                        <h2>Step 1 of 4 — Name and race</h2>
+                        <StepNav back={null} forward={hasSavedRace ? '/create_char/step2' : null} />
+                </div>
             <main>
-                <section id="form-container">
-                    <form className="form-container" onSubmit={submit}>
-                        <article id="char-name-container" className="form-section tile">
-                            <label className="tile-top" htmlFor="name">Character name</label>
-                            <input className="tile-bottom" type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="One with no name"  />
+            <div className="step-1-container-wrapper">
+                <section className="step-1-container">
+                    <form className="step-1-form" onSubmit={submit}>
+                        <article id="name" className="name-tile">
+                            <label className="name-label" htmlFor="name">Character name</label>
+                            <input className="name-value" type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="One with no name"  />
                         </article>
-                        <article id="race-select-container" className="form-section tile">
-                            <label className="tile-top" htmlFor="race_id">Race</label>
-                            <select className="tile-bottom" id="race_id" value={raceId} onChange={(e) => { setRaceId(e.target.value); setSubraceId(''); }} required>
-                                <option value="" disabled>Select your Race</option>
+                        <article id="race" className="name-tile">
+                            <label className="name-label" htmlFor="race_id">Race</label>
+                            <select className="name-value" id="race_id" value={raceId} onChange={(e) => { setRaceId(e.target.value); setSubraceId(''); }} required>
+                                <option className="name-option" value="" disabled>Select your Race</option>
                                 {races.map((r) => (
-                                    <option key={r.id} value={r.id}>{r.name}</option>
+                                    <option className="name-option" key={r.id} value={r.id}>{r.name}</option>
                                 ))}
                             </select>
                         </article>
-                        {subraces.length > 0 && (
-                            <article id="subrace-select-container" className="form-section tile">
-                                <label className="tile-top" htmlFor="subrace_id">{race.name === 'Lupine' ? 'Breed' : 'Gem Line'}</label>
-                                <select className="tile-bottom" id="subrace_id" value={subraceId} onChange={(e) => setSubraceId(e.target.value)}>
-                                    <option value="">Select a sub-race</option>
-                                    {subraces.map((s) => (
-                                        <option key={s.id} value={s.id}>{s.name}</option>
-                                    ))}
-                                </select>
-                            </article>
-                        )}
                         {saveError && <p>{saveError}</p>}
-                        <article id="button-container" className="form-section">
-                            <button id="submit" type="submit">Next: Class</button>
-                            <Link id="mobile-cancel" to="/home">Cancel</Link>
+                        <article id="button-container" className="button-tile">
+                            <button className = 'action-button' id="action-button" type="submit">Next: Class</button>
+                            <Link className = 'action-button' id="cancel-button" to="/home">Cancel</Link>
                         </article>
                     </form>
-                </section>
-                <CreateDescription item={race && (subrace
+                    <CreateDescription item={race && (subrace
                     ? { img: subrace.img_url, name: `${race.name} (${subrace.name})`, text: subrace.description, race: { ...race, lineage_bonuses: [{ name: subrace.name, description: subrace.description }, ...(race.lineage_bonuses ?? [])] } }
                     : { img: race.img_url, name: race.name, text: race.traits, race })} />
+                </section>
+            </div>
             </main>
             <footer>
-              <Link id="home-link" to="/home">Cancel</Link>
+                <p className="footer-text">copyrite Eldrid Tales LLC</p>
             </footer>
         </>
     );

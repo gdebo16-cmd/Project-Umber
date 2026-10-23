@@ -11,6 +11,7 @@ import EditCharacterPage from './pages/EditCharacterPage';
 import CreateStep1 from './pages/CreateStep1';
 import CreateStep2 from './pages/CreateStep2';
 import CreateStep3 from './pages/CreateStep3';
+import CreateStep4 from './pages/CreateStep4';
 import usePageTheme from './hooks/usePageTheme';
 import CampaignPage from './pages/CampaignPage';
 import CreateCampaign from './pages/CreateCampaign';
@@ -44,6 +45,7 @@ function App() {
                     <Route path="/create_char" element={<CreateStep1 />} />
                     <Route path="/create_char/step2" element={<CreateStep2 />} />
                     <Route path="/create_char/step3" element={<CreateStep3 />} />
+                    <Route path="/create_char/step4" element={<CreateStep4 />} />
                     <Route path="/characters/:id" element={<CharacterSheet />} />
                     <Route path="/characters/:id/inventory" element={<InventoryPage />} />
                     <Route path="/characters/:id/edit" element={<EditCharacterPage />} />

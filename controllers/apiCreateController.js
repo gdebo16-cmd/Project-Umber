@@ -1,10 +1,12 @@
-// Character creation (3 steps) as JSON for React. Queries live in models/.
+// Character creation (4 steps) as JSON for React. Queries live in models/.
 // Uses the session "draft locker" (req.session.charDraft) until step 3 saves it.
 import { listRaces, listSubraces, checkSubrace } from '../models/raceModel.js';
 import { checkBoostRules, allowedBoostOptions, BOOST_ROWS } from '../utils/abilityBoosts.js';
 import { listClasses, getHitDie, listSubclassesForClass, subclassBelongsToClass, getClassSkills } from '../models/classModel.js';
 import { createCharacter, checkFeatureChoices, SUBCLASS_LEVEL, MAX_LEVEL } from '../models/characterModel.js';
 import { listStartingGear, addWeapon, equipWeapon, addArmor, equipArmor } from '../models/inventoryModel.js';
+import { listMagicOptions, checkMagicPicks } from '../models/magicModel.js';
+import pool from '../db.js';
 
 const STATS = ["str", "dex", "con", "int", "wis", "cha", "luc", "spd"];
 
@@ -56,6 +58,7 @@ export function getDraft(req, res) {
         weapon_id: draft.weapon_id ?? null,
         armor_id: draft.armor_id ?? null,
         hasRolls: !!draft.rolls && Object.keys(draft.rolls).length > 0,
+        hasStep3: !!draft.final,
     });
 }
 
@@ -162,6 +165,7 @@ export async function step2Submit(req, res) {
     req.session.charDraft.skill_proficiencies = [...fixed, ...skills]; // what gets saved at step 3
     req.session.charDraft.weapon_id = weaponId;
     req.session.charDraft.armor_id = armorId;
+    delete req.session.charDraft.final; // class picks changed, so step 3 has to be saved again
     res.json({ ok: true });
 }
 
@@ -176,7 +180,7 @@ export async function getStep3(req, res) {
     const boostFeatures = (cls?.features ?? []).filter((f) => BOOST_ROWS.includes(f.name) && f.options?.length && f.level <= (draft.level ?? 1));
     const choices = draft.feature_choices ?? {};
     const boostPicks = Object.fromEntries(boostFeatures.map((f) => [`class:${f.id}`, choices[`class:${f.id}`]]).filter(([, v]) => v));
-    res.json({ rolls: draft.rolls, class_id: draft.class_id, subclass_id: draft.subclass_id, level: draft.level ?? 1, boostFeatures, boostPicks });
+    res.json({ rolls: draft.rolls, class_id: draft.class_id, subclass_id: draft.subclass_id, level: draft.level ?? 1, boostFeatures, boostPicks, plus2: draft.plus2 ?? '', plus1: draft.plus1 ?? '' });
 }
 
 // POST /api/boost_options  body: { class_id, subclass_id, level, scores, feature_choices }
@@ -205,6 +209,7 @@ export function rollStat(req, res) {
 
     draft.rolls = draft.rolls ?? {};
     draft.rolls[stat] = rollStatValue(); // re-rollable: every click rolls again
+    delete draft.final; // scores changed, so step 3 has to be saved again before step 4
     res.json({ stat, value: draft.rolls[stat] });
 }
 
@@ -238,6 +243,37 @@ export async function step3Submit(req, res) {
     const boost = await checkBoostRules({ classId: draft.class_id, subclassId: draft.subclass_id ?? null, level: draft.level ?? 1, base: final, choices: picked.choices });
     if (boost.error) return res.status(400).json({ error: boost.error });
     draft.feature_choices = picked.choices;
+
+    // step 4 (Background) saves the character, so keep the finished scores in the draft
+    draft.final = final;
+    draft.plus2 = plus2;
+    draft.plus1 = plus1;
+    res.json({ ok: true });
+}
+
+// GET /api/create_char/step4: alignment chart, personality dropdowns, race elements, Black gate
+export async function getStep4(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const draft = req.session.charDraft;
+    if (!draft || !draft.final) return res.status(409).json({ error: 'Finish step 3 first' });
+    const opts = await listMagicOptions(draft.race_id, draft.subrace_id ?? null);
+    const races = await listRaces();
+    const race = races.find((r) => r.id === draft.race_id);
+    // the subclass half of the Black gate; the alignment half depends on the pick
+    const { rows } = await pool.query(`SELECT black_gate_level FROM sub_classes WHERE id = $1`, [draft.subclass_id ?? null]);
+    const gateLevel = rows[0]?.black_gate_level ?? null;
+    res.json({ ...opts, img_url: race?.img_url ?? null, subclassGate: gateLevel !== null && (draft.level ?? 1) >= gateLevel });
+}
+
+// POST /api/create_char/step4: check the background picks, then save the character
+export async function step4Submit(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const draft = req.session.charDraft;
+    if (!draft || !draft.final) return res.status(409).json({ error: 'Finish step 3 first' });
+    const checked = await checkMagicPicks(draft, req.body);
+    if (checked.error) return res.status(400).json({ error: checked.error });
+    draft.magic = checked.magic;
+    const { final, plus2, plus1 } = draft;
 
     const hitDie = await getHitDie(draft.class_id);
     if (!hitDie) return res.status(400).json({ error: 'Class not found' });

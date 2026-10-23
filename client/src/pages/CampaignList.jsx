@@ -57,7 +57,7 @@ function CampaignList() {
                         <Link className="btn cl-create" to="/create_campaign">Create Campaign</Link>
                         <form onSubmit={joinCampaign} className="cl-join">
                             <input className="field" type="text" placeholder="Invite code" value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} maxLength={8} />
-                            <button className="btn" type="submit">Join</button>
+                            <button className="btn cl-join-btn" type="submit">Join</button>
                         </form>
                         {joinError && <p className="cl-error">{joinError}</p>}
                     </div>
@@ -91,6 +91,9 @@ function CampaignList() {
                     </div>
                 </section>
             </main>
+            <footer>
+                <p className="footer-text">copyrite Eldrid Tales LLC</p>
+            </footer>
         </>
     );
 }

@@ -1,226 +1,23 @@
-/* Shared element rules (retool phase 6). Loaded once for every page from main.jsx, right after themes.css.
-
-   How displays work now:
-     - Each [data-display] block in themes.css only SETS VARIABLES (--tile, --tileBorder, --bs2, --bs3,
-       --backdrop, --btnRad, --inputRad, --rad1, --fontF, --fontW1, --letterSp, --glow ...).
-     - The rules below are the only display-driven rules. They run on every display except 'standard'
-       (standard is the original hand-styled look, so these never touch it) and only read variables.
-       Neon's glow comes from neon's --bs2/--bs3 (= --glow); minimal's flat look comes from --backdrop: none.
-
-   Element groups (edit here, not per page):
-     SURFACE  .form-section .tile .tile-component .profile-tile .action-tile .combat-box .spell-build-box
-              .spell-panel .edit-panel .title-tile
-              (.panel-shell is NOT a surface: it only holds a tab list + tab panels, which carry the frame)
-     TILE-TOP / TILE-BOTTOM  the two halves of a tile
-     BTN  buttons: .btn base + .btn-nav / .btn-action / .btn-link / .btn-round
-     FIELD / FORM-SECTION / TABS  inputs, form stacks, [role="tab"] buttons
-     PAGE / STATUS BAR  main blur and the phone status-bar color layer (one copy for all pages)
-     HEADER-CELL  cells in a header row (sheet header name/race/class/portrait)
-     BUTTON   button .btn-form .btn-nav .btn-action .damage-button .btn-to-hit .btn-spell-name .btn-link .btn-drop
-     INPUT    input select textarea
-     NAV      #nav-box .drop-down, and the square nav buttons in #nav-container
-     HEADING  h1 h2 h3 .title .tile-label
-   The logo (.title-logo) is deliberately in none of these groups, so it never gets a border or shadow.
-
-   Layers: the 'displays' rules can be beaten by page CSS; the 'overrides' rules beat page CSS
-   (they keep the specificity they had before the retool, so the look is unchanged). */
-
-/* ===== shared element rules ===== */
-
-.hover-grow {
-    transition: transform .5s ease;
-}
-
-.hover-grow:hover {
-    transform: scale(1.03);
-}
-
-/* TILE-TOP / TILE-BOTTOM, every display */
-.tile-top {
-    background-color: var(--bgc-top);
-    border-radius: var(--toprad);
-}
-
-.tile-bottom {
-    background-color: var(--bgc-low);
-    border-radius: var(--lowrad);
-}
-
-/* HEADER CELL: one row of cells sharing edges (sheet header: name, race, class, portrait).
-   The row's background shows through; each cell draws top+left, the last one also the right edge. */
-.header-cell {
-    border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
-    backdrop-filter: var(--blur2);
-    -webkit-backdrop-filter: var(--blur2);
-    margin: var(--mar1);
-}
-
-.header-cell:last-child {
-    border-right: var(--tileBorder);
-}
-
-/* BUTTONS: .btn is the base (display looks come from the BUTTON rules below);
-   variants: .btn-nav (squared nav bar), .btn-action, .btn-link, .btn-round */
-.btn-nav {
-    border: var(--tileBorder);
-    background-color: var(--bg-color-2);
-    padding: var(--pad2);
-    color: var(--txt-color-1);
-}
-
-.btn-action {
-    flex: 1;
-    align-self: stretch;
-    background-color: var(--accent);
-    border: var(--tileBorder);
-    border-radius: var(--rad2);
-    box-shadow: var(--bs2);
-    margin: 0;
-}
-
-.btn-action:hover {
-    background-color: var(--bg-color-2);
-    color: var(--accent);
-    cursor: pointer;
-}
-
-.btn-link {
-    border: none;
-    text-align: right;
-    border-radius: var(--lowrad);
-    background-color: var(--bgc-low);
-    padding: 2%;
-    margin: 0;
-    color: var(--txt-color-1);
-    font-family: var(--fontF1);
-    font-weight: var(--fontW1);
-    font-style: var(--fontStyle);
-}
-
-.btn-round {
-    border-radius: 50%;
-}
-
-/* FIELD: inputs and selects sit on their tile without a border of their own */
-.field {
-    color: var(--txt-color-1);
-    border: none;
-}
-
-/* FORM SECTION: label/control stacks (details.form-section stays display:block, see the iOS rule in charSheet.css) */
-.form-section {
-    display: flex;
-    flex-direction: column;
-}
-
-/* TABS: every [role="tab"] button; the open one drops its top/left edge and sinks in */
-[role="tab"] {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    width: var(--w1);
-    border-radius: var(--rad1);
-    border: var(--tileBorder);
-    border-bottom: none;
-    border-right: none;
-    color: var(--txt-color-1);
-    background-color: var(--bg-color-4);
-}
-
-[role="tab"][aria-selected="true"] {
-    font-weight: var(--fontW1);
-    border-top: none;
-    border-left: none;
-    color: var(--accent);
-    box-shadow: var(--shadowInner);
-}
-
-/* PAGE: the main area blurs the background picture (signin turns it off on desktop and sets its own on phones) */
-main {
-    backdrop-filter: var(--blur1);
-}
-
-/* iPhone: stop Safari from enlarging text on its own, and never allow sideways scrolling */
-
-html {
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-}
-
-html,
-body {
-    overflow-x: hidden;
-}
-
-.loader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    min-height: 60vh;
-    color: var(--bgc-bubble-receive);
-}
-
-.loader-ring {
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 50%;
-    background: conic-gradient(from 0deg, #333 0%, red 70%, #333 100%);
-    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
-    mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
-    filter: blur(1px);
-    animation: loader-spin 0.9s linear infinite,
-        loader-rainbow 3s linear infinite;
-}
-
-@keyframes loader-spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes loader-rainbow {
-    from {
-        filter: blur(1px) hue-rotate(0deg);
-    }
-
-    to {
-        filter: blur(1px) hue-rotate(360deg);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .loader-ring {
-        animation: loader-pulse 1.5s ease-in-out infinite;
-    }
-}
-
-@keyframes loader-pulse {
-    50% {
-        opacity: 0.4;
-    }
-}
-
 /* DETAILS POPUP  .spell-details: spell, weapon and feature cards on the sheet, option/blessing details in the creator and editor */
 
 .spell-details {
     box-sizing: border-box;
     position: fixed;
-    top: 50%;
-    left: 35%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
-    width: min(38rem, 90vw);
-    max-height: 80vh;
+    top: 0;        /* full screen height, slides under the header and footer */
+    bottom: 0;
+    right: 0;
+    z-index: 5;    /* above main, below the header (20) and fixed footer (10) */
+    width: 25vw;
+    min-width: 22rem;
+    max-width: 100vw;
     overflow-y: auto;
-    padding: 1.5rem 1.25rem 1.25rem;
+    padding: calc(8vh + 1.5rem) 1.25rem calc(8vh + 1.25rem);  /* clear the 8vh header and footer */
     background-color: var(--bg-color-5);
     backdrop-filter: blur(8px);
     border: var(--tileBorder);
-    border-radius: var(--rad1);
+    border-radius: var(--rad1) 0 0 var(--rad1);
     box-shadow: var(--bs2);
+    animation: slide 0.3s ease-out;
 }
 
 .details-container {
@@ -260,6 +57,12 @@ body {
     max-width: 100%;
     box-sizing: border-box;
     font-size: inherit;
+    padding: 0.3rem 0.5rem;
+    border: var(--tileBorder);
+    border-radius: var(--rad1);
+    background-color: var(--bgc-char-stat);
+    color: var(--txt-color-1);
+    font-family: inherit;
 }
 
 .spell-details-title {
@@ -291,7 +94,8 @@ body {
 .spell-details-close {
     position: absolute;
     border: none;
-    top: .5rem;
+    top: calc(var(--close-offset, 8vh) + .5rem);  /* desktop: below the 8vh header; phone sets --close-offset: 0px */
+    z-index: 1;
     right: .5rem;
     width: 1.75rem;
     height: 1.75rem;
@@ -306,12 +110,25 @@ body {
     background-color: var(--bg-color-1);
 }
 
+select {
+    font: inherit;
+    color: var(--txt-color-1);
+    background-color: var(--bgc-char-stat);
+    border: var(--tileBorder);
+    border-radius: var(--rad1);
+}
+
+select:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
 @keyframes slide {
     from {
-        transform: translateY(100%);
+        translate: var(--slide-from, 100% 0); /* desktop: from the right; phone sets --slide-from to slide up */
     }
     to {
-        transform: translateY(0);
+        translate: 0 0;
     }
 }
 
@@ -321,6 +138,9 @@ body {
     /* Mobile: the details popup slides up from the bottom, full width */
     .spell-details {
         width: 100%;
+        min-width: 0;  /* undo the desktop side panel min-width */
+        z-index: 100;
+        padding: 1.5rem 1.25rem 1.25rem;
         transform: none;
         border-radius: var(--toprad);
         max-height: 70dvh;
@@ -328,6 +148,8 @@ body {
         bottom: 0;
         left: 0;
         right: 0;
+        --close-offset: 0px;  /* phone: X back at the popup top */
+        --slide-from: 0 100%;  /* phone: slide up from the bottom, as before */
         animation: slide 0.3s ease-out;
     }
 
@@ -349,175 +171,4 @@ body {
         box-shadow: var(--bs1);
         font-size: 0.8rem;
     }
-
-    /* Mobile: iOS Safari zooms into any field under 16px, so keep fields at 16px or more */
-
-    input,
-    select:not(.spell-build-box select),
-    textarea {
-        font-size: max(16px, 1em) !important;
-    }
-}
-
-/* stop white showing around the page on phones (notch area, overscroll) */
-
-html {
-    background-color: var(--bg-color-1);
-    background-image: var(--background);
-
-    /* same image as body, so it reaches the screen curves */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: 100%;
-}
-
-/* STATUS BAR (phones): solid title color under the status bar, fading out below it.
-   On html, because body's backdrop-filter would trap a fixed layer. */
-@media (max-width: 768px) {
-    html {
-        padding-top: 0 !important; /* overrides the safe-area padding in index.html */
-        background-color: var(--bgc-title, var(--bg-color-1));
-    }
-
-    html::after {
-        content: '';
-        position: fixed;
-        left: 0;
-        width: 100%;
-        top: calc(-1 * env(safe-area-inset-top));
-        height: calc(100lvh + env(safe-area-inset-top) + env(safe-area-inset-bottom) + 8rem);
-        z-index: -1;
-        pointer-events: none;
-        background: linear-gradient(to bottom,
-            var(--bgc-title, var(--titleFallback)) 0,
-            var(--bgc-title, var(--titleFallback)) env(safe-area-inset-top),
-            transparent calc(env(safe-area-inset-top) + 4rem));
-    }
-}
-
-/* ===== display looks: the display condition sits in :where() so it adds no weight; a page rule on the same element still wins ===== */
-
-/* SURFACE */
-:where(html[data-display]:not([data-display='standard'])) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .title-tile) {
-    border-radius: var(--tile);
-    box-shadow: var(--bs2);
-    backdrop-filter: var(--backdrop);
-    -webkit-backdrop-filter: var(--backdrop);
-}
-
-/* TILE-TOP / TILE-BOTTOM: halves sit flush inside the tile */
-:where(html[data-display]:not([data-display='standard'])) .tile-top {
-    box-shadow: none;
-}
-
-:where(html[data-display]:not([data-display='standard'])) .tile-bottom {
-    border-top: var(--tileBorder);
-    box-shadow: none;
-}
-
-/* BUTTON */
-:where(html[data-display]:not([data-display='standard'])) :is(button, .btn):not(.tile-top, .tile-bottom) {
-    letter-spacing: var(--letterSp);
-}
-
-/* NAV */
-:where(html[data-display]:not([data-display='standard'])) :is(#nav-box, .drop-down) {
-    box-shadow: var(--bs2);
-}
-
-/* HEADING */
-:where(html[data-display]:not([data-display='standard'])) :is(h1, h2, h3, .title, .tile-label) {
-    font-family: var(--fontF);
-    font-weight: var(--fontW1);
-    letter-spacing: var(--letterSp);
-}
-
-/* neon color scheme glows (colors only; shape comes from data-display) */
-
-html[data-theme="neon"] :is(h1, h2, h3, .title, .tile-label, .tile-top, .action-title) {
-    text-shadow: var(--neonTextGlow);
-}
-
-/* Text-only buttons (spell and feature names, links) get no shadow, so the words don't look outlined */
-html[data-display] :is(.btn-spell-name, .btn-link) {
-    box-shadow: none !important;
-    text-shadow: none;
-}
-
-html[data-display='neon'] #nav-container .btn-nav {
-    box-shadow: var(--glow);
-}
-
-/* ===== display overrides: these must beat page rules, so they keep the full html[data-display]... weight ===== */
-
-/* SURFACE: one border style per display; contents clip to the rounded corners */
-html[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .combat-box, .spell-build-box, .spell-panel, .edit-panel, .title-tile) {
-    border: var(--tileBorder);
-}
-
-html[data-display]:not([data-display='standard']) :is(.form-section, .tile, .tile-component, .profile-tile, .action-tile, .title-tile) {
-    overflow: clip;
-}
-
-/* home character lists scroll inside their container box */
-html[data-display]:not([data-display='standard']) :is(#current-character-tile, #unfinished-character-tile) {
-    overflow-x: hidden;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* TILE-TOP / TILE-BOTTOM: corners follow the tile, no doubled borders */
-html[data-display]:not([data-display='standard']) .tile-top {
-    border: none;
-    border-radius: var(--tile) var(--tile) 0 0;
-}
-
-html[data-display]:not([data-display='standard']) .tile-bottom {
-    border: none;
-    border-radius: 0 0 var(--tile) var(--tile);
-}
-
-/* BUTTON */
-html[data-display]:not([data-display='standard']) :is(button, .btn):not(.tile-top, .tile-bottom) {
-    border-radius: var(--btnRad);
-    box-shadow: var(--bs3);
-    font-family: var(--fontF);
-}
-
-/* INPUT */
-html[data-display]:not([data-display='standard']) :is(input, select, textarea):not(.tile-top, .tile-bottom) {
-    border-radius: var(--inputRad);
-    font-family: var(--fontF);
-}
-
-/* NAV: box corners, and every nav button square with the display's border */
-html[data-display]:not([data-display='standard']) :is(#nav-box, .drop-down) {
-    border-radius: var(--rad1);
-}
-
-html[data-display]:not([data-display='standard']) #nav-container :is(.btn-nav, #campaign-nav) /* #campaign-nav: beats the sheet mobile corner rule */ {
-    border-radius: 0;
-    border: var(--tileBorder);
-}
-
-html[data-theme="neon"] :is(button, .btn-form, .btn-nav, .btn-action):hover {
-    box-shadow: var(--neonGlow);
-}
-
-/* Home tabs: round only the top corners, on every display style */
-html[data-display] .home-tabs button.home-tab.home-tab:not(.tile-top) /* clash: kept at old specificity */ {
-    border-radius: var(--tile, .75rem) var(--tile, .75rem) 0 0;
-}
-
-/* light-glass: open tab glows light blue */
-html[data-theme="light-glass"] :is([role="tab"][aria-selected="true"], .home-tab.is-active) {
-    color: rgb(255, 255, 255);
-    background-color: rgb(185, 220, 255);
-    box-shadow: 0 0 12px 3px rgba(185, 220, 255, 0.9), var(--shadowInner);
-}
-
-/* every theme: very soft text shadow for readability */
-html body {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }

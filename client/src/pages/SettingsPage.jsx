@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
 import usePageStyle from '../hooks/usePageStyle';
-import homeCss from '../styles/home.css?inline';
+import settingsCss from '../styles/settings.css?inline';
 import SiteNav from '../components/SiteNav';
 import { sendJson } from '../utils/api';
 
 // Replaces views/settings.ejs
 function SettingsPage() {
-    usePageStyle(homeCss);
+    usePageStyle(settingsCss);
     const [form, setForm] = useState({ username: '', email: '', password: '' });
     const [message, setMessage] = useState('');
 
@@ -52,10 +51,10 @@ function SettingsPage() {
                 <h1>Account Settings</h1>
             </header>
             <SiteNav />
-            <main id="profile-main">
-                <section>
+            <main>
+                <section className='profile-container'>
                     <form onSubmit={submit}>
-                        <article className="form-section profile-tile" id="profile-username-container">
+                        <article className="profile-tile" id="profile-username-container">
                             <label className="profile-label" htmlFor="username">Username</label>
                             <input className="field profile-value" type="text" id="username" name="username" value={form.username} onChange={update} />
                         </article>
@@ -83,8 +82,7 @@ function SettingsPage() {
                 </section>
             </main>
             <footer>
-                <Link id="home-link" to="/home">Back to home</Link>
-                <p id="footer-text">copyrite Eldrid Tales LLC</p>
+                <p className="footer-text" id="footer-text">copyrite Eldrid Tales LLC</p>
             </footer>
         </>
     );

@@ -16,29 +16,26 @@ END $$;
 UPDATE spells SET action_type = CASE WHEN casting_time IS NULL THEN 'other' ELSE 'action' END;
 
 -- SRD: 1 bonus action
-UPDATE spells SET action_type = 'bonus' WHERE name IN (
-    'Branding Smite', 'Divine Favor', 'Expeditious Retreat', 'Flame Blade', 'Healing Word',
-    'Hunter''s Mark', 'Magic Weapon', 'Mass Healing Word', 'Misty Step', 'Sanctuary',
-    'Shield of Faith', 'Shillelagh', 'Spiritual Weapon');
+UPDATE spells SET action_type = 'bonus' WHERE id IN (150 /* Searing Brand */, 203 /* Zealous Strike */, 217 /* Swiftfoot */, 235 /* Fire Sword */, 269 /* Kind Word */, 278 /* Prey Brand */, 307 /* Rune Edge */, 312 /* Rallying Hymn */, 323 /* Mist Hop */, 365 /* Hallowed Refuge */, 376 /* Faithguard */, 377 /* Oakheart Cudgel */, 392 /* Spectral Blade */);
 
 -- SRD: 1 reaction
-UPDATE spells SET action_type = 'reaction' WHERE name IN ('Counterspell', 'Feather Fall', 'Hellish Rebuke', 'Shield');
+UPDATE spells SET action_type = 'reaction' WHERE id IN (180 /* Spellbreak */, 224 /* Downy Descent */, 271 /* Infernal Retort */, 375 /* Force Aegis */);
 
 -- Healing dice at the spell's base level (spell_upcasts.heal_dice already holds the upcast totals)
 UPDATE spells SET heal_dice = NULL, heal_add_mod = FALSE;
 UPDATE spells s SET heal_dice = v.dice, heal_add_mod = v.add_mod
 FROM (VALUES
-    ('Cure Wounds',       '1d8',     TRUE),
-    ('Healing Word',      '1d4',     TRUE),
-    ('Mass Cure Wounds',  '3d8',     TRUE),
-    ('Mass Healing Word', '1d4',     TRUE),
-    ('Prayer of Healing', '2d8',     TRUE),
-    ('Heal',              '70',      FALSE),
-    ('Mass Heal',         '700',     FALSE),
-    ('Regenerate',        '4d8+15',  FALSE),
-    ('Goodberry',         '1',       FALSE),
-    ('Aid',               '5',       FALSE),
-    ('False Life',        '1d4+4',   FALSE),
-    ('Heroes'' Feast',    '2d10',    FALSE)
-) AS v(name, dice, add_mod)
-WHERE s.name = v.name;
+    (185 /* Warm Hands */,       '1d8',     TRUE),
+    (269 /* Kind Word */,      '1d4',     TRUE),
+    (310 /* Tide of Mending */,  '3d8',     TRUE),
+    (312 /* Rallying Hymn */, '1d4',     TRUE),
+    (340 /* Fireside Chant */, '2d8',     TRUE),
+    (268 /* Lifebloom */,              '70',      FALSE),
+    (311 /* Great Mending */,         '700',     FALSE),
+    (355 /* Regrowth */,        '4d8+15',  FALSE),
+    (255 /* Hearthberries */,         '1',       FALSE),
+    (119 /* Rallying Light */,               '5',       FALSE),
+    (222 /* Deathless Vigor */,        '1d4+4',   FALSE),
+    (272 /* Grand Feast */,    '2d10',    FALSE)
+) AS v(id, dice, add_mod)
+WHERE s.id = v.id;

@@ -7,7 +7,9 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { KEPT_BOOST } from '../utils/levelChoices';
 // allowed (optional): { [feature key]: [options] } from useBoostOptions; rows it names only show those options
-function LevelChoices({ features, picks, onChange, topClass, bottomClass, allowed }) {
+// tileClass / rowClass / hintClass / hintTag / pickedClass (optional): let the creator reuse its own tile classes; defaults keep the editor look.
+// hintTag 'button' renders the hint itself as the clickable text; pickedClass replaces bottomClass on a select while its hint shows.
+function LevelChoices({ features, picks, onChange, topClass, bottomClass, allowed, tileClass = 'form-section tile pick-tile level-choices', rowClass, hintClass = 'pick-hint', hintTag: HintTag = 'p', pickedClass }) {
     // the picked option's full description, in the same popup as the sheet's spell cards: { label, name, text }
     const [details, setDetails] = useState(null);
     if (!features.length) return null;
@@ -32,16 +34,19 @@ function LevelChoices({ features, picks, onChange, topClass, bottomClass, allowe
         document.body);
 
     return [...new Set(features.map((f) => f.level))].map((lvl, n) => (
-        <article key={lvl} className="form-section tile pick-tile level-choices">
+        <article key={lvl} className={tileClass}>
             <label className={topClass}>Level {lvl} Choices</label>
             {features.filter((f) => f.level === lvl).map((f) => {
                 const count = f.choice_count ?? 1;
                 const current = picks[f.key] ?? [];
                 const info = f.option_info ?? {};
-                return Array.from({ length: count }, (_, i) => (
-                    <div key={`${f.key}:${i}`}>
+                return Array.from({ length: count }, (_, i) => {
+                    const hasHint = Boolean(current[i] && info[current[i]]);
+                    const view = () => setDetails({ label: f.label, name: current[i], text: info[current[i]] });
+                    return (
+                    <div key={`${f.key}:${i}`} className={rowClass}>
                         <select
-                            className={bottomClass}
+                            className={hasHint && pickedClass ? pickedClass : bottomClass}
                             aria-label={f.label}
                             value={current[i] ?? ''}
                             onChange={(e) => pick(f, i, e.target.value)}
@@ -57,15 +62,20 @@ function LevelChoices({ features, picks, onChange, topClass, bottomClass, allowe
                                     </option>
                                 ))}
                         </select>
-                        {current[i] && info[current[i]] && (
-                            <p className="pick-hint">
-                                <button type="button" className="btn btn-link hover-grow" onClick={() => setDetails({ label: f.label, name: current[i], text: info[current[i]] })}>
+                        {hasHint && (HintTag === 'button' ? (
+                            <button type="button" className={hintClass} onClick={view}>
+                                {current[i]}: tap to view
+                            </button>
+                        ) : (
+                            <HintTag className={hintClass}>
+                                <button type="button" className="btn btn-link hover-grow" onClick={view}>
                                     {current[i]}: tap to view
                                 </button>
-                            </p>
-                        )}
+                            </HintTag>
+                        ))}
                     </div>
-                ));
+                    );
+                });
             })}
             {n === 0 && popup}
         </article>

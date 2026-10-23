@@ -5,13 +5,13 @@ import { itemRunesJson } from './runeModel.js';
 // ---------- catalog ----------
 
 export async function listArmor() {
-    const { rows } = await pool.query(`SELECT id, name, armor_type, ac_bonus, rarity FROM armor ORDER BY name`);
+    const { rows } = await pool.query(`SELECT id, name, armor_type, armor_type AS armor_category, ac_bonus, rarity FROM armor ORDER BY name`);
     return rows;
 }
 
 export async function listArmorForCharacter(classId, subclassId, level) {
     
-    const { rows } = await pool.query(`SELECT a.* FROM armor a WHERE EXISTS (SELECT 1 FROM class_item_proficiencies p
+    const { rows } = await pool.query(`SELECT a.*, a.armor_type AS armor_category FROM armor a WHERE EXISTS (SELECT 1 FROM class_item_proficiencies p
         WHERE p.class_id = $1 AND (p.subclass_id IS NULL OR p.subclass_id = $2) AND p.min_level <= $3
         AND p.item_kind = 'armor' AND p.match_value = a.armor_type)`,
 [classId, subclassId, level]
@@ -51,7 +51,7 @@ export async function listStartingGear(classId, subclassId, level) {
 
 export async function getOwnedArmor(charId) {
     const { rows } = await pool.query(
-        `SELECT ca.armor_id AS id, ca.id AS owned_id, ca.is_equipped, a.name, a.armor_type, a.ac_bonus, a.stealth_disadvantage, /*prep-done*/
+        `SELECT ca.armor_id AS id, ca.id AS owned_id, ca.is_equipped, a.name, a.armor_type, a.ac_bonus, a.con_cap, a.stealth_disadvantage, /*prep-done*/
                 ${itemRunesJson('character_armor_id', 'ca.id')} AS runes
         FROM character_armor ca
         JOIN armor a ON a.id = ca.armor_id
@@ -78,13 +78,23 @@ export async function getOwnedWeapons(charId) {
     return rows;
 }
 
-// ids of the armor and weapons this character owns
+// every item (potions, scrolls, magical and common items); scrolls carry their linked spell name
+export async function listItems() {
+    const { rows } = await pool.query(`SELECT i.*, s.name AS spell_name FROM items i
+        LEFT JOIN spells s ON s.id = i.spell_id
+        ORDER BY i.item_category, i.item_subtype NULLS FIRST, i.name`);
+    return rows;
+}
+
+// ids of the armor, weapons and items this character owns
 export async function getOwnedIds(charId) {
     const armor = await pool.query(`SELECT armor_id FROM character_armor WHERE character_id = $1`, [charId]);
     const weapons = await pool.query(`SELECT weapon_id FROM character_weapons WHERE character_id = $1`, [charId]);
+    const items = await pool.query(`SELECT item_id FROM character_items WHERE character_id = $1`, [charId]);
     return {
         ownedArmorIds: armor.rows.map((r) => Number(r.armor_id)),
         ownedWeaponIds: weapons.rows.map((w) => Number(w.weapon_id)),
+        ownedItemIds: items.rows.map((i) => Number(i.item_id)),
     };
 }
 
@@ -101,6 +111,21 @@ export async function addWeapon(charId, weaponId) {
     await pool.query(
         `INSERT INTO character_weapons (character_id, weapon_id) VALUES ($1, $2)`,
         [charId, weaponId]
+    );
+}
+
+// one row per item; adding one you already own is a no-op (quantity stays as is)
+export async function addItem(charId, itemId) {
+    await pool.query(
+        `INSERT INTO character_items (character_id, item_id) VALUES ($1, $2) ON CONFLICT (character_id, item_id) DO NOTHING`,
+        [charId, itemId]
+    );
+}
+
+export async function removeItem(charId, itemId) {
+    await pool.query(
+        `DELETE FROM character_items WHERE character_id = $1 AND item_id = $2`,
+        [charId, itemId]
     );
 }
 

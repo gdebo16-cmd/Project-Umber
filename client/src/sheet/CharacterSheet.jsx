@@ -57,6 +57,8 @@ function CharacterSheet() {
 
     const setHp = (newHp) =>
         setData((prev) => ({ ...prev, character: { ...prev.character, current_hp: newHp } }));
+    const setTempHp = (t) =>
+        setData((prev) => ({ ...prev, character: { ...prev.character, temp_hp: t } }));
     const setOwnedArmor = (ownedArmor) => setData((prev) => ({ ...prev, ownedArmor }));
     const setOwnedWeapons = (ownedWeapons) => setData((prev) => ({ ...prev, ownedWeapons }));
     const setLearnedSpells = (learnedSpells) => setData((prev) => ({ ...prev, learnedSpells }));
@@ -168,6 +170,16 @@ function CharacterSheet() {
             if (res.ok) setHp((await res.json()).current_hp);
     }
 
+    // temporary HP is gone after a long rest
+    if (type === 'long' && character.temp_hp > 0) {
+        const tr = await fetch(`/api/characters/${character.id}/temp-hp`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ clear: true }),
+        });
+        if (tr.ok) setTempHp((await tr.json()).temp_hp);
+    }
+
     const newSlots = {};
     for (const [lvl, used] of Object.entries(usedSlots)) {
         newSlots[lvl] = used - Math.round(used * pct);
@@ -237,7 +249,7 @@ function CharacterSheet() {
         <CharacterContext.Provider value={sheetData}>
             <CharacterHeader character={character} />
             <main>
-                <TabList
+            <TabList
                     tabs={SHEET_TABS}
                     active={sheetTab}
                     onChange={setSheetTab}
@@ -263,11 +275,14 @@ function CharacterSheet() {
 
                 <section role="tabpanel" id="sheet-panel-conditions" className="sheet-panel" hidden={sheetTab !== 'conditions'}>
                     <RestButton />
-                    <HealthBox id={character.id} hp={hp} max={character.max_hp} onHpChange={setHp} />
+                    <HealthBox id={character.id} hp={hp} max={character.max_hp} temp={character.temp_hp ?? 0} onHpChange={setHp} onTempChange={setTempHp} />
                     <Conditions />
                     
                 </section>
             </main>
+            <footer>
+                <p className="footer-text">copyrite Eldrid Tales LLC</p>
+            </footer>
             <RollOrb open={orbOpen} rolls={rolls} onToggle={() => setOrbOpen((o) => !o)} />
         </CharacterContext.Provider>
     );

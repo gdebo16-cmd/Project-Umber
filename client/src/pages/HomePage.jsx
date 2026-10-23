@@ -88,9 +88,9 @@ function HomePage() {
                     <article className="title" id="current-campaign-title">
                         <h2 className="title-text">Current Campaigns</h2>
                     </article>
-                    <article className="char-list" id="current-campaign-list">
+                    <article className="char-list" id="current-campaign-tile">
                         {campaigns.length === 0 ? (
-                            <p className='tile-text'>No Campaigns Planned</p>
+                            <p>No Campaigns Planned</p>
                         ) : (
                             <ul className="tile-list" id="current-campaign-list">
                                 {campaigns.map((camp) => (
@@ -100,7 +100,7 @@ function HomePage() {
                                             {camp.campaign_img_url
                                                 ? <img className="campaign-image" src={camp.campaign_img_url} alt={`${camp.name} picture`} />
                                                 : <div className="campaign-image" role="img" aria-label={`${camp.name} picture`} />}
-                                            <p className="campaign-description">{camp.description}</p>
+                                            {camp.description && <p className="campaign-description">{camp.description}</p>}
                                             <button type="button" className="campaign-delete-button" onClick={(e) => deleteCampaign(e, camp)}>Delete</button>
                                         </Link>
                                     </li>
@@ -135,7 +135,7 @@ function HomePage() {
                 </section>
             </main>
             <footer>
-                <p id="footer-text">copyrite Eldrid Tales LLC</p>
+                <p className="footer-text" id="footer-text">copyrite Eldrid Tales LLC</p>
             </footer>
         </>
     );

@@ -28,8 +28,8 @@ function LoginPage() {
     return (
         <>
             <header id="site-title">
-            <img src="/Logo.png" alt="Eldrid Tales Logo" className="title-logo" />
-            <h1>Eldrid Tales</h1>
+                <img src="/Logo.png" alt="Eldrid Tales Logo" className="title-logo" />
+                <h1>Eldrid Tales</h1>
             </header>
 
             <main>
@@ -59,7 +59,7 @@ function LoginPage() {
                 </section>
             </main>
             <footer>
-                <p id="footer-text">© 2026 Eldrid Tales. All rights reserved.</p>
+                <p className="footer-text" id="footer-text">© 2026 Eldrid Tales. All rights reserved.</p>
             </footer>
         </>
     );

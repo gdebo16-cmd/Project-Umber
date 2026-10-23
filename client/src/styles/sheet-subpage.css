@@ -55,6 +55,7 @@ body.subpage input.tile-bottom {
     background-color: var(--bg-color-5);
     color: var(--txt-color-1);
     font: inherit;
+    box-sizing: border-box;
 }
 
 body.subpage .button-container {
@@ -167,6 +168,9 @@ body.subpage .feature-choice select {
     background-color: var(--bg-color-5);
     color: var(--txt-color-1);
     font: inherit;
+    box-sizing: border-box;
+    max-width: 100%;
+    cursor: pointer;
 }
 
 body.subpage .feature-choice-note {
@@ -194,8 +198,13 @@ body.subpage .portrait-group-title {
 
 body.subpage .portrait-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(4.5rem, 100%), 1fr));
     gap: 0.5rem;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body.subpage .portrait-thumb {
@@ -216,6 +225,7 @@ body.subpage .portrait-thumb img {
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 0.35rem;
+    clip-path: var(--check-shape);   /* same shape as the theme's checkboxes */
 }
 
 body.subpage .portrait-thumb.is-selected {
@@ -264,6 +274,7 @@ body.subpage details[open] > :is(.portrait-summary, .portrait-group-title)::befo
 html body.subpage details.form-section.portrait-picker {
     display: block;
     width: 100%;
+    box-sizing: border-box;
     border: var(--glassBorder);
     border-radius: 1.25rem;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
@@ -285,6 +296,7 @@ html body.subpage .portrait-picker > summary.tile-top.portrait-summary {
 }
 
 html body.subpage .portrait-picker > .tile-bottom {
+    box-sizing: border-box;
     border: none;
     border-top: var(--glassBorder);
     border-radius: 0 0 1.25rem 1.25rem;
@@ -303,6 +315,8 @@ html body.subpage summary.portrait-group-title {
 
 html body.subpage .portrait-thumb {
     border-radius: 0.75rem;
+    /* solid frame + shadow that trace the clipped --check-shape image */
+    filter: drop-shadow(2px 0 0 var(--accent)) drop-shadow(-2px 0 0 var(--accent)) drop-shadow(0 2px 0 var(--accent)) drop-shadow(0 -2px 0 var(--accent)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
 }
 
 html body.subpage .portrait-thumb img {

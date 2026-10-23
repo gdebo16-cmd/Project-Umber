@@ -12,16 +12,17 @@ CREATE UNIQUE INDEX IF NOT EXISTS class_spell_slots_class_sub_level_slot_key
   ON class_spell_slots (class_id, COALESCE(subclass_id, 0), level, slot_level);
 
 -- 2. Homebrew spells (Eldridia text)
-INSERT INTO spells (name, base_level, casting_time, range, duration, state_id, element_id, alignment_id, base_damage_dice, opponent_save_roll, action_type, base_description)
+INSERT INTO spells (id, name, base_level, casting_time, range, duration, state_id, element_id, alignment_id, base_damage_dice, opponent_save_roll, action_type, base_description)
 SELECT v.* FROM (VALUES
- ('Friends', 0, 1, 10, 1.0, 4, 9, 5, NULL, NULL, 'action',
+ (435, 'Make Friends', 0, 1, 10, 1.0, 4, 9, 5, NULL, NULL, 'action',
   'Enchantment cantrip; 1 action; Self, affecting one creature within 10 ft; S, M (a little makeup); concentration, up to 1 minute. You have advantage on CHA checks against one non-hostile creature for the duration. When the spell ends, the creature knows it was charmed and becomes hostile to you.'),
- ('Dissonant Whispers', 1, 1, 60, 0.0, 9, 9, 2, '3d6', 'WIS', 'action',
+ (436, 'Darkling Whispers', 1, 1, 60, 0.0, 9, 9, 2, '3d6', 'WIS', 'action',
   'Enchantment, 1st level; 1 action; 60 ft; V; instantaneous. A whisper only the target hears tears at its mind. WIS save: on a failure it takes 3d6 psychic damage and must use its reaction, if it has one, to move as far from you as its speed allows, by the safest route. On a success, half damage and no forced move. Deafened creatures automatically succeed. +1d6 per slot above 1st.'),
- ('Crown of Madness', 2, 1, 120, 1.0, 4, 9, 5, NULL, 'WIS', 'action',
+ (434, 'Crown of Lies', 2, 1, 120, 1.0, 4, 9, 5, NULL, 'WIS', 'action',
   'Enchantment, 2nd level; 1 action; 120 ft; V, S; concentration, up to 1 minute. One humanoid you can see makes a WIS save or is charmed. Before it moves on each of its turns, it must make one melee attack against a creature other than you that you choose mentally, or it acts normally if no such creature is in reach. It repeats the save at the end of each of its turns. On each of your turns, you must use your action to keep control, or the spell ends.')
-) v(name, base_level, casting_time, range, duration, state_id, element_id, alignment_id, dice, save, action_type, descr)
-WHERE NOT EXISTS (SELECT 1 FROM spells s WHERE s.name = v.name);
+) v(id, name, base_level, casting_time, range, duration, state_id, element_id, alignment_id, dice, save, action_type, descr)
+ON CONFLICT (id) DO NOTHING;
+SELECT setval('spells_id_seq', (SELECT max(id) FROM spells));
 
 -- 3. Class
 INSERT INTO classes (id, name, primary_stat, hitpoint_die, description, saving_throws, armor_proficiencies, weapon_proficiencies,
@@ -169,12 +170,12 @@ ON CONFLICT (class_id, COALESCE(subclass_id, 0), level, slot_level) DO UPDATE SE
 -- 10. Possession spell list
 INSERT INTO class_spells (class_id, subclass_id, spell_id, min_level)
 SELECT 16, 52, s.id, v.lvl FROM (VALUES
- ('Friends',3),('Minor Illusion',3),('Vicious Mockery',3),
- ('Charm Person',3),('Command',3),('Dissonant Whispers',3),('Hideous Laughter',3),('Sleep',3),
- ('Hold Person',7),('Suggestion',7),('Crown of Madness',7),('Invisibility',7),
- ('Fear',13),('Hypnotic Pattern',13),('Major Image',13),
- ('Confusion',19),('Dominate Beast',19),('Phantasmal Killer',19)
-) v(name,lvl) JOIN spells s ON s.name = v.name
+ (435 /* Make Friends */,3),(7 /* Hallucinate */,3),(417 /* Barbed Jest */,3),
+ (155 /* Warm Regard */,3),(162 /* Commanding Word */,3),(436 /* Darkling Whispers */,3),(274 /* Giggle Curse */,3),(382 /* Slumber Mist */,3),
+ (276 /* Body Lock */,7),(396 /* Honeyed Urging */,7),(434 /* Crown of Lies */,7),(288 /* Vanish */,7),
+ (223 /* Terror Wave */,13),(279 /* Mesmer Weave */,13),(309 /* Grand Illusion */,13),
+ (168 /* Bewilder */,19),(205 /* Beastbind */,19),(330 /* Nightmare Shade */,19)
+) v(id,lvl) JOIN spells s ON s.id = v.id
 ON CONFLICT (class_id, COALESCE(subclass_id, 0), spell_id) DO UPDATE SET min_level = EXCLUDED.min_level;
 
 COMMIT;
