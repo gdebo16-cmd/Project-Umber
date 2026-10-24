@@ -109,7 +109,7 @@ footer {
         top: 3vh;
         margin: 0;
         padding: 0;
-        height: calc(100vh - 24vh);
+        height: calc(100svh - 24vh); /* svh: iOS 100vh includes the hidden toolbar area, so the bottom sat under the footer */
         overflow: hidden ! important;
         overscroll-behavior: contain;
         backdrop-filter: blur(2px) saturate(180%);
@@ -623,7 +623,7 @@ footer {
     }
 
     .step-2-container {
-        flex: 1 1 0;
+        flex: 1 0 auto; /* grow with content; basis 0 let tall forms overflow past the wrapper's scroll end */
     }
 
 
