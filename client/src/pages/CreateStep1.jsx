@@ -78,6 +78,17 @@ function CreateStep1() {
                                 ))}
                             </select>
                         </article>
+                        {subraces.length > 0 && (
+                            <article id="subrace" className="name-tile">
+                                <label className="name-label" htmlFor="subrace_id">{race.name === 'Lupine' ? 'Breed' : 'Gem Line'}</label>
+                                <select className="name-value" id="subrace_id" value={subraceId} onChange={(e) => setSubraceId(e.target.value)}>
+                                    <option className="name-option" value="">Select a sub-race</option>
+                                    {subraces.map((s) => (
+                                        <option className="name-option" key={s.id} value={s.id}>{s.name}</option>
+                                    ))}
+                                </select>
+                            </article>
+                        )}
                         {saveError && <p>{saveError}</p>}
                         <article id="button-container" className="button-tile">
                             <button className = 'action-button' id="action-button" type="submit">Next: Class</button>
