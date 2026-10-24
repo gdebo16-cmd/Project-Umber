@@ -141,6 +141,8 @@ select:focus-visible {
         min-width: 0;  /* undo the desktop side panel min-width */
         z-index: 100;
         padding: 1.5rem 1.25rem 1.25rem;
+        background-color: var(--bg-color-5, var(--bgc-theme));  /* solid on phones; default/prestige/purple themes have no --bg-color-5 */
+        color: var(--txt-color-1);
         transform: none;
         border-radius: var(--toprad);
         max-height: 70dvh;
