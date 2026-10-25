@@ -5,8 +5,8 @@
     "group": "Race"
   },
   {
-    "file": "race-dragonborn.png",
-    "label": "Dragonborn",
+    "file": "race-wyrmkin.png",
+    "label": "Wyrmkin",
     "group": "Race"
   },
   {
@@ -535,6 +535,11 @@
     "group": "Race"
   },
   {
+    "file": "race-orc.png",
+    "label": "Orc",
+    "group": "Race"
+  },
+  {
     "file": "race-gehennan.png",
     "label": "Gehennan",
     "group": "Race"
@@ -581,22 +586,22 @@
   },
   {
     "file": "mix-dragonborn-crown-guard.png",
-    "label": "Dragonborn Crown Guard",
+    "label": "Wyrmkin Crown Guard",
     "group": "Mixed"
   },
   {
     "file": "mix-dragonborn-evoker.png",
-    "label": "Dragonborn Evoker",
+    "label": "Wyrmkin Evoker",
     "group": "Mixed"
   },
   {
     "file": "mix-dragonborn-mage.png",
-    "label": "Dragonborn Mage",
+    "label": "Wyrmkin Mage",
     "group": "Mixed"
   },
   {
     "file": "mix-dragonborn-phalanx.png",
-    "label": "Dragonborn Phalanx",
+    "label": "Wyrmkin Phalanx",
     "group": "Mixed"
   },
   {
@@ -936,7 +941,7 @@
   },
   {
     "file": "mix-dragonborn-umber.png",
-    "label": "Dragonborn Umber",
+    "label": "Wyrmkin Umber",
     "group": "Mixed"
   },
   {
