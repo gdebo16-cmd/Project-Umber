@@ -9,7 +9,7 @@ export async function getLearnedSpells(charId) {
                 st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name,
                 COALESCE((SELECT json_agg(json_build_object('cast_level', u.cast_level, 'damage_dice', u.damage_dice, 'heal_dice', u.heal_dice, 'extra_targets', u.extra_targets) ORDER BY u.cast_level)
                           FROM spell_upcasts u WHERE u.spell_id = s.id), '[]') AS upcasts,
-                cs.is_learned, cs.is_prepared, cs.is_action,
+                cs.is_learned, cs.is_prepared, cs.is_action, false AS is_racial,
                 ab.band AS chart_band
          FROM character_spells cs
          JOIN spells s ON s.id = cs.spell_id
@@ -19,7 +19,24 @@ export async function getLearnedSpells(charId) {
          LEFT JOIN alignment_bands ab ON ab.alignment_code = c.alignment_code AND ab.color_square = al.chart_square
          LEFT JOIN spell_element el ON el.id = s.element_id
          WHERE cs.character_id = $1 AND cs.is_learned
-         ORDER BY s.base_level, s.name`,
+         UNION ALL
+         -- the race starter spell: always known and prepared, cast at will (not a character_spells row)
+         SELECT s.id, s.name, s.base_level, s.base_damage_dice, s.opponent_save_roll, s.attack_type, s.base_to_hit_modifier,
+                s.range, s.duration, s.casting_time, s.focus_level, s.base_description AS description, s.beam_scaling, s.action_type, s.heal_dice, s.heal_add_mod,
+                st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name,
+                COALESCE((SELECT json_agg(json_build_object('cast_level', u.cast_level, 'damage_dice', u.damage_dice, 'heal_dice', u.heal_dice, 'extra_targets', u.extra_targets) ORDER BY u.cast_level)
+                          FROM spell_upcasts u WHERE u.spell_id = s.id), '[]') AS upcasts,
+                true, true, false, true AS is_racial,
+                ab.band AS chart_band
+         FROM characters c
+         JOIN races r ON r.id = c.race_id
+         JOIN spells s ON s.id = r.race_spell_id
+         LEFT JOIN spell_state st ON st.id = s.state_id
+         LEFT JOIN spell_alignment al ON al.id = s.alignment_id
+         LEFT JOIN alignment_bands ab ON ab.alignment_code = c.alignment_code AND ab.color_square = al.chart_square
+         LEFT JOIN spell_element el ON el.id = s.element_id
+         WHERE c.id = $1 AND NOT EXISTS (SELECT 1 FROM character_spells x WHERE x.character_id = c.id AND x.spell_id = s.id AND x.is_learned)
+         ORDER BY base_level, name`,
         [charId]
     );
     return rows;

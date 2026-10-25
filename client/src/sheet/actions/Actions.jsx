@@ -330,7 +330,7 @@ function Actions() {
     const runeNotes = [
         runeFx.fleet && 'Fleet Rune: +5 ft walking speed (in your Speed distance).',
         runeFx.dusksight && (character.race_darkvision ? 'Dusksight Rune: your darkvision extends 30 ft.' : 'Dusksight Rune: darkvision 30 ft.'),
-        runeFx.hush.length > 0 && `Hush Rune (${itemNames(runeFx.hush)}): makes no noise${runeFx.hush.some((h) => h.armor?.stealth_disadvantage) ? '; no Stealth disadvantage from this armor' : ''}.`,
+        runeFx.hush.length > 0 && `Hush Rune (${itemNames(runeFx.hush)}): makes no noise${runeFx.hush.some((h) => h.armor?.stealth_disadvantage) ? '; no Shadowth disadvantage from this armor' : ''}.`,
         runeFx.anchor.length > 0 && `Anchor Rune (${itemNames(runeFx.anchor)}): can't be disarmed or taken from you while you're conscious.`,
         runeFx.homing.length > 0 && `Homing Rune (${itemNames(runeFx.homing)}): a thrown weapon returns to your hand; fired ammunition is recovered after combat.`,
         runeFx.mending.length > 0 && `Mending Rune (${itemNames(runeFx.mending)}): repairs itself in 1 minute.`,

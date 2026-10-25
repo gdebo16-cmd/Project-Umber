@@ -29,7 +29,7 @@ function SpellsTab() {
     // prepared / max (leveled spells; cantrips count against the cantrip limit) /*prep-done*/
     const caps = character.spell_limits;
     const preparedCount = preparedSpells.filter((s) => s.base_level >= 1).length;
-    const preparedCantrips = preparedSpells.filter((s) => s.base_level === 0).length;
+    const preparedCantrips = preparedSpells.filter((s) => s.base_level === 0 && !s.is_racial).length; // race starter spells are free
     const slots = getSpellSlots(level, character.spell_slots);
     const spellAttack = modOf(spellScore) + proficiencyBonus(level);
     const spellSave = 8 + spellAttack;
@@ -224,7 +224,7 @@ function SpellsTab() {
                     {learnedSpells.map((s) => (
                         <li className="action-item" key={s.id}>
                             <button type='button' className='caption-btn' onClick={() => setOpenSpell(s)}>{s.name}</button>
-                            <article className="learn-button-container">
+                            {s.is_racial ? <article className="learn-button-container"><p>Race starter spell</p></article> : <article className="learn-button-container">
                                 <form id="unlearn-spell-form" className="spell-action-form" onSubmit={(e) => { e.preventDefault(); spellAction(s.id, 'unlearn'); }}>
                                     <button type="submit" id="unlearn-spell-button" className="action-button">Unlearn</button>
                                 </form>
@@ -238,7 +238,7 @@ function SpellsTab() {
                                     {s.is_action ? 'Remove Action' : 'Set Action'}
                                 </button>
                             </form>
-                        </article>
+                        </article>}
                     </li>
                     ))}
                 </ul>

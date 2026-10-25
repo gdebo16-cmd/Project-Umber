@@ -43,7 +43,7 @@ function ItemDetails({ item, onClose, typeLabel, children }) {
                                 <p>Type: <strong>{item.data.armor_type ?? '-'}</strong></p>
                                 <p>AC: <strong>{item.data.ac_bonus ?? '-'}</strong></p>
                                 {item.data.con_cap != null && <p>Cap: <strong>{item.data.con_cap}</strong></p>}
-                                {item.data.stealth_disadvantage && <p>Stealth: <strong>Disadvantage</strong></p>}
+                                {item.data.stealth_disadvantage && <p>Shadowing: <strong>Disadvantage</strong></p>}
                                 {item.data.rarity && <p>Rarity: <strong>{item.data.rarity}</strong></p>}
                             </article>
                         </>

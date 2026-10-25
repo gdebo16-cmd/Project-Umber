@@ -21,6 +21,8 @@ function CreateDescription({ item, renderFeature }) {
                         <p>Type: {item.race.creature_type} | Size: {item.race.size} | Speed: {item.race.base_speed} ft</p>
                         {item.race.dark_vision && <p>Darkvision</p>}
                         {item.race.resistances && <p>Resistances: {item.race.resistances}</p>}
+                        {item.race.signature_state && <p>Signature State: {item.race.signature_state.charAt(0).toUpperCase() + item.race.signature_state.slice(1)}</p>}
+                        {item.race.race_spell && <p><strong>Starter Spell ({item.race.race_spell.name}):</strong> {item.race.race_spell.description}</p>}
                         {item.race.lineage_bonuses?.map((b) => (
                             <p key={b.name}><strong>{b.name}:</strong> {b.description}</p>
                         ))}

@@ -3,7 +3,7 @@ import pool from '../db.js';
 
 export async function listRaces() {
     const { rows } = await pool.query(
-        `SELECT r.id, r.name, r.traits, r.img_url, rt.creature_type, rt.size, rt.base_speed, rt.resistances, rt.dark_vision, (SELECT json_agg(json_build_object('name', b.name, 'description', b.description) ORDER BY b.id)
+        `SELECT r.id, r.name, r.traits, r.img_url, rt.creature_type, rt.size, rt.base_speed, rt.resistances, rt.dark_vision, (SELECT ss.name FROM spell_state ss WHERE ss.id = r.signature_state_id) AS signature_state, (SELECT json_build_object('name', sp.name, 'description', sp.base_description) FROM spells sp WHERE sp.id = r.race_spell_id) AS race_spell, (SELECT json_agg(json_build_object('name', b.name, 'description', b.description) ORDER BY b.id)
         FROM race_lineage_bonuses b WHERE b.race_id = r.id) AS lineage_bonuses,
         (SELECT json_agg(json_build_object('id', s.id, 'name', s.name, 'slug', s.slug, 'description', s.description, 'img_url', s.img_url) ORDER BY s.id)
         FROM subraces s WHERE s.race_id = r.id) AS subraces
