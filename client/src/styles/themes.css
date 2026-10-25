@@ -256,7 +256,7 @@
     --drop-down-bg: rgba(42, 17, 102, 0.908);
     --drop-down-txt: rgba(255, 255, 255, 0.822);
 
-    --rest-bgc: rgba(38, 12, 98, 0.908);
+    --rest-bgc: rgba(34, 23, 60, 0.908);
     --rest-txt: rgba(255, 255, 255, 0.822);
     --rest-bg-choice-1: rgba(55, 47, 89, 0.822);
     --rest-txt-choice-1: rgba(246, 216, 136, 0.908);
@@ -267,12 +267,19 @@
     --bgc-action: var(--bgc-tab);
     --txt-action: var(--txt-color-1);
 
-    --bgc-char-name: rgba(16, 3, 46, 0.837);
+    --bgc-char-name: rgba(36, 7, 104, 0.696);
     --bgc-char-stat: rgba(63, 5, 5, 0.803);
     --bgc-char-delete: rgba(248, 204, 159, 0.956);
     --delete-txt: rgba(63, 5, 5, 0.803);
 
     --bgc-theme: #1a0e2e;
+
+    --bgc-title: rgb(46, 30, 102);
+    --bg-color-5: rgb(65, 27, 137);
+    --bg-color-4: rgba(9, 7, 25, 0.888);
+    --bg-color-3: rgba(61, 12, 12, 0.863);
+    --bg-color-2: rgba(9, 7, 25, 0.888);
+    --bg-color-1: rgba(45, 2, 2, 0.829);
 }
 
 [data-theme="prestige"] {
@@ -341,6 +348,13 @@
 
     --bgc-title: rgb(65, 37, 157);
     --title-color: rgba(255, 178, 46, 0.756);
+
+    --bgc-title: rgb(46, 30, 102);
+    --bg-color-5: rgb(65, 27, 137);
+    --bg-color-4: rgba(71, 52, 139, 0.356);
+    --bg-color-3: rgba(74, 60, 199, 0.678);
+    --bg-color-2: rgba(68, 42, 196, 0.171);
+    --bg-color-1: rgba(109, 83, 222, 0.72);
 }
 
 

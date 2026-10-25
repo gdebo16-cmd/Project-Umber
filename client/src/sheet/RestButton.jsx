@@ -15,14 +15,14 @@ function RestButton() {
     };
 
     return (
-        <section className='container rest-container'>
+        <section className='rest-container'>
             {!open ? (
-                <button type='button' className='btn btn-action btn-rest' onClick={() => setOpen(true)}>Rest</button>
+                <button type='button' className='rest-button' onClick={() => setOpen(true)}>Rest</button>
             ) : (
                 <article className='rest-choice'>
-                    <button type='button' className='btn btn-action btn-rest-choice' disabled={busy} onClick={() => takeRest('short')}>Short Rest</button>
-                    <button type='button' className='btn btn-action btn-rest-choice' disabled={busy} onClick={() => takeRest('long')}>Long Rest</button>
-                    <button type='button' className='btn btn-action btn-rest-choice' onClick={() => setOpen(false)}>Cancel</button>
+                    <button type='button' className='rest-choice-button' disabled={busy} onClick={() => takeRest('short')}>Short Rest</button>
+                    <button type='button' className='rest-choice-button' disabled={busy} onClick={() => takeRest('long')}>Long Rest</button>
+                    <button type='button' className='rest-cancel-button' onClick={() => setOpen(false)}>Cancel</button>
                 </article>
             )}
         </section>
