@@ -953,5 +953,55 @@
     "file": "mix-saltborn-weaponmaster.png",
     "label": "Saltborn Weaponmaster",
     "group": "Mixed"
+  },
+  {
+    "file": "mix-gehennan-armored-1.png",
+    "label": "Gehennan Armored 1",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-gehennan-armored-2.png",
+    "label": "Gehennan Armored 2",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-gehennan-armored-3.png",
+    "label": "Gehennan Armored 3",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-gehennan-armored-4.png",
+    "label": "Gehennan Armored 4",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-gehennan-armored-5.png",
+    "label": "Gehennan Armored 5",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-gehennan-armored-6.png",
+    "label": "Gehennan Armored 6",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-gehennan-magic-1.png",
+    "label": "Gehennan Magic 1",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-gehennan-magic-2.png",
+    "label": "Gehennan Magic 2",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-gehennan-magic-3.png",
+    "label": "Gehennan Magic 3",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-gehennan-magic-4.png",
+    "label": "Gehennan Magic 4",
+    "group": "Mixed"
   }
 ]

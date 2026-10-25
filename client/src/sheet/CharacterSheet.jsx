@@ -99,8 +99,15 @@ function CharacterSheet() {
     const setExhaustion = (exhaustion) => saveState({ exhaustion });
     const countUse = (key) => saveState({ rest_uses: { ...restUses, [key]: (restUses[key] || 0) + 1 } });
 
-    const spendSlot = (lvl) => {
+    // spellId: Body Magic has no slots; each leveled spell is cast once per long rest (rest_uses key body-<id>)
+    const spendSlot = (lvl, spellId) => {
         if (lvl === 0) return true;
+        if (character.caster_type === 'body') {
+            const key = `body-${spellId}`;
+            if (restUses[key]) return false;
+            countUse(key);
+            return true;
+        }
         const total = getSpellSlots(character.level, character.spell_slots)[lvl - 1] || 0;
         const used = usedSlots[lvl] || 0;
         if (used >= total) return false;
@@ -197,7 +204,8 @@ function CharacterSheet() {
             if (restUses[key] && f.rest_lock === 'long') newUses[key] = restUses[key];
         }
         // rune uses (Mending Rune) recover on a long rest only
-        for (const [key, n] of Object.entries(restUses)) if (key.startsWith('rune-')) newUses[key] = n;
+        // so do Body Magic spells (a short rest restores nothing)
+        for (const [key, n] of Object.entries(restUses)) if (key.startsWith('rune-') || key.startsWith('body-')) newUses[key] = n;
     }
     // embers: all back on a long rest, half the max on a short rest. One save for everything.
     saveState({

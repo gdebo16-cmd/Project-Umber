@@ -4,10 +4,13 @@ import * as Spells from '../models/spellModel.js';
 import { getSheetCharacter } from '../models/characterModel.js';
 import pool from '../db.js';
 import { getSpellSlots } from '../client/src/utils/spellSlots.js';
-import { getSpellCaps } from '../utils/spellLimits.js'; /*prep-done*/
+import { getSpellCaps, bodyMaxLevel } from '../utils/spellLimits.js'; /*prep-done*/
 
 // Highest spell level a character can cast (number of slot tiers). Cantrips (0) are always allowed.
-const highestSlotFor = async (ch) => getSpellSlots(ch.level, await Spells.getClassSlots(ch.class_id, ch.level, ch.subclass_id)).length;
+// Body Magic has no slots: its highest level comes from the character level.
+const highestSlotFor = async (ch) => ch.caster_type === 'body'
+    ? bodyMaxLevel(ch.level)
+    : getSpellSlots(ch.level, await Spells.getClassSlots(ch.class_id, ch.level, ch.subclass_id)).length;
 
 // Everything the sheet and the book need after a change:
 // learnedSpells = full rows for the Spell Book tab, learnedIds = just the ids for the book's buttons
@@ -74,6 +77,9 @@ export async function learnSpell(req, res) {
     if (caps) {
         const counts = await spellCounts(charId, spellId);
         if (!counts.already) {
+            if (caps.shared && counts.cantrips + counts.spells >= caps.known) {
+                return res.status(400).json({ error: `You already know the most spells you can (${caps.known}) at level ${ch.level}` });
+            }
             if (baseLevel === 0 && counts.cantrips >= caps.cantrips) {
                 return res.status(400).json({ error: `You already know the most cantrips you can (${caps.cantrips}) at level ${ch.level}` });
             }
@@ -116,6 +122,9 @@ export async function prepareSpell(req, res) {
         if (!counts.already) return res.status(400).json({ error: 'You have to learn that spell first' });
         const { rows: [spell] } = await pool.query('SELECT base_level FROM spells WHERE id = $1', [spellId]);
         if (!counts.already_prepared) {
+            if (caps.shared && counts.prepared_cantrips + counts.prepared_spells >= caps.prepared) {
+                return res.status(400).json({ error: `You can prepare ${caps.prepared} spells at level ${ch.level}. Unprepare one first.` });
+            }
             if (Number(spell.base_level) === 0 && counts.prepared_cantrips >= caps.cantrips) {
                 return res.status(400).json({ error: `You can prepare ${caps.cantrips} cantrips at level ${ch.level}` });
             }

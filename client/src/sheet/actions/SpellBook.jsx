@@ -65,8 +65,8 @@ function SpellBook({ characterId, onDone, onOpenSpell }) {
     if (error) return <p>Failure is upon us: {error}</p>;
 
     const { spells, learnedIds, learnedSpells = [], spellLimits } = data; /*prep-done*/
-    const learnedLeveled = learnedSpells.filter((s) => s.base_level >= 1).length;
-    const learnedCantrips = learnedSpells.filter((s) => s.base_level === 0 && !s.is_racial).length; // race starter spells are free
+    const learnedLeveled = learnedSpells.filter((s) => s.base_level >= 1 && !s.is_racial && !s.is_bonus).length;
+    const learnedCantrips = learnedSpells.filter((s) => s.base_level === 0 && !s.is_racial && !s.is_bonus).length; // race starter spells are free
     const maxLevel = Math.max(0, ...spells.map((s) => s.base_level));
     const visibleTabs = TABS.filter((t) => Number(t.id.split('_')[1]) <= maxLevel);
     

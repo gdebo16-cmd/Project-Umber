@@ -9,7 +9,7 @@ export async function getLearnedSpells(charId) {
                 st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name,
                 COALESCE((SELECT json_agg(json_build_object('cast_level', u.cast_level, 'damage_dice', u.damage_dice, 'heal_dice', u.heal_dice, 'extra_targets', u.extra_targets) ORDER BY u.cast_level)
                           FROM spell_upcasts u WHERE u.spell_id = s.id), '[]') AS upcasts,
-                cs.is_learned, cs.is_prepared, cs.is_action, false AS is_racial,
+                cs.is_learned, cs.is_prepared, cs.is_action, false AS is_racial, false AS is_bonus,
                 ab.band AS chart_band
          FROM character_spells cs
          JOIN spells s ON s.id = cs.spell_id
@@ -26,11 +26,28 @@ export async function getLearnedSpells(charId) {
                 st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name,
                 COALESCE((SELECT json_agg(json_build_object('cast_level', u.cast_level, 'damage_dice', u.damage_dice, 'heal_dice', u.heal_dice, 'extra_targets', u.extra_targets) ORDER BY u.cast_level)
                           FROM spell_upcasts u WHERE u.spell_id = s.id), '[]') AS upcasts,
-                true, true, false, true AS is_racial,
+                true, true, false, true AS is_racial, false AS is_bonus,
                 ab.band AS chart_band
          FROM characters c
          JOIN races r ON r.id = c.race_id
          JOIN spells s ON s.id = COALESCE(c.race_spell_id, r.race_spell_id) -- Human / Wyrmkin pick theirs at creation
+         LEFT JOIN spell_state st ON st.id = s.state_id
+         LEFT JOIN spell_alignment al ON al.id = s.alignment_id
+         LEFT JOIN alignment_bands ab ON ab.alignment_code = c.alignment_code AND ab.color_square = al.chart_square
+         LEFT JOIN spell_element el ON el.id = s.element_id
+         WHERE c.id = $1 AND NOT EXISTS (SELECT 1 FROM character_spells x WHERE x.character_id = c.id AND x.spell_id = s.id AND x.is_learned)
+         UNION ALL
+         -- class/subclass bonus spells (class_spells.is_bonus, e.g. Soulbrand, Mark of Possession): always known and prepared, never counted
+         SELECT DISTINCT ON (s.id) s.id, s.name, s.base_level, s.base_damage_dice, s.opponent_save_roll, s.attack_type, s.base_to_hit_modifier,
+                s.range, s.duration, s.casting_time, s.focus_level, s.base_description AS description, s.beam_scaling, s.action_type, s.heal_dice, s.heal_add_mod,
+                st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name,
+                COALESCE((SELECT json_agg(json_build_object('cast_level', u.cast_level, 'damage_dice', u.damage_dice, 'heal_dice', u.heal_dice, 'extra_targets', u.extra_targets) ORDER BY u.cast_level)
+                          FROM spell_upcasts u WHERE u.spell_id = s.id), '[]') AS upcasts,
+                true, true, false, false AS is_racial, true AS is_bonus,
+                ab.band AS chart_band
+         FROM characters c
+         JOIN class_spells b ON b.is_bonus AND b.class_id = c.class_id AND (b.subclass_id IS NULL OR b.subclass_id = c.subclass_id) AND b.min_level <= c.level
+         JOIN spells s ON s.id = b.spell_id
          LEFT JOIN spell_state st ON st.id = s.state_id
          LEFT JOIN spell_alignment al ON al.id = s.alignment_id
          LEFT JOIN alignment_bands ab ON ab.alignment_code = c.alignment_code AND ab.color_square = al.chart_square
@@ -71,6 +88,8 @@ export async function getSpellsForCharacter(classId, subclassId, level, alignmen
          LEFT JOIN spell_element el ON el.id = s.element_id
          LEFT JOIN alignment_bands ab ON ab.alignment_code = $4 AND ab.color_square = al.chart_square
          WHERE cs.class_id = $1 AND (cs.subclass_id IS NULL OR cs.subclass_id = $2) AND cs.min_level <= $3
+           -- bonus spells are granted, not learned: leave them (and any list copy of them) out of the book
+           AND NOT EXISTS (SELECT 1 FROM class_spells b WHERE b.is_bonus AND b.spell_id = s.id AND b.class_id = $1 AND (b.subclass_id IS NULL OR b.subclass_id = $2))
          GROUP BY s.id, st.name, al."Name", el.name, ab.band
          ORDER BY s.base_level, s.name`,
         [classId, subclassId, level, alignmentCode]

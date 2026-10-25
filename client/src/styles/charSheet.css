@@ -23,6 +23,8 @@
      -ms-user-select: none ! important;
      user-select: none ! important;
      max-width: var(--maxW);
+     -webkit-text-size-adjust: 100%;
+     text-size-adjust: 100%;
  }
  
  body {
@@ -2015,7 +2017,7 @@
             margin-bottom: 1%;
             box-shadow: var(--bs2);
             border-radius: var(--tile);
-            height: 6vh;
+            min-height: 6vh;
             flex-shrink: 0;
         }
     
@@ -2103,7 +2105,7 @@
             flex-direction: row;
             flex-wrap: wrap;
             width: 100%;
-            height: 9vh;
+            min-height: 9vh;
             background-color: var(--bg-color-nav);
             margin: 0;
             padding: 0;

@@ -180,7 +180,7 @@ function Actions() {
 
     // Spends one slot at the spell's level, then shows the message. Stops if none are left.
     const castSpell = (s, message) => {
-        if (spendSlot && !spendSlot(s.base_level)) return onRoll(`No level ${s.base_level} slots left!`);
+        if (spendSlot && !spendSlot(s.base_level, s.id)) return onRoll(character.caster_type === 'body' ? `${s.name} is used until your next long rest.` : `No level ${s.base_level} slots left!`);
         onRoll(message);
     };
 

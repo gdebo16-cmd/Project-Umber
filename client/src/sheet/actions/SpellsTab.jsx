@@ -28,9 +28,11 @@ function SpellsTab() {
     const preparedSpells = learnedSpells.filter((s) => s.is_prepared);
     // prepared / max (leveled spells; cantrips count against the cantrip limit) /*prep-done*/
     const caps = character.spell_limits;
-    const preparedCount = preparedSpells.filter((s) => s.base_level >= 1).length;
-    const preparedCantrips = preparedSpells.filter((s) => s.base_level === 0 && !s.is_racial).length; // race starter spells are free
-    const slots = getSpellSlots(level, character.spell_slots);
+    const preparedCount = preparedSpells.filter((s) => s.base_level >= 1 && !s.is_bonus).length;
+    const preparedCantrips = preparedSpells.filter((s) => s.base_level === 0 && !s.is_racial && !s.is_bonus).length; // race starter and bonus spells are free
+    // Body Magic has no slots: one empty row per level it can cast (1st at L5, 2nd at L15, 3rd at L25)
+    const isBody = character.caster_type === 'body';
+    const slots = isBody ? Array(level >= 25 ? 3 : level >= 15 ? 2 : level >= 5 ? 1 : 0).fill(0) : getSpellSlots(level, character.spell_slots);
     const spellAttack = modOf(spellScore) + proficiencyBonus(level);
     const spellSave = 8 + spellAttack;
     const [openSpell, setOpenSpell] = useState(null);
@@ -67,7 +69,7 @@ function SpellsTab() {
 
         // Uses one slot at this level, then shows the message. Stops if none are left.
         const cast = (message) => {
-            if (!spendSlot(lvl)) return onRoll?.(`No level ${lvl} slots left!`);
+            if (!spendSlot(lvl, s.id)) return onRoll?.(isBody ? `${s.name} is used until your next long rest.` : `No level ${lvl} slots left!`);
             onRoll?.(message);
         };
         const key = `s${s.upcastKey ?? s.id}`;
@@ -224,7 +226,7 @@ function SpellsTab() {
                     {learnedSpells.map((s) => (
                         <li className="action-item" key={s.id}>
                             <button type='button' className='caption-btn' onClick={() => setOpenSpell(s)}>{s.name}</button>
-                            {s.is_racial ? <article className="learn-button-container"><p>Race starter spell</p></article> : <article className="learn-button-container">
+                            {s.is_racial || s.is_bonus ? <article className="learn-button-container"><p>{s.is_racial ? 'Race starter spell' : 'Bonus spell'}</p></article> : <article className="learn-button-container">
                                 <form id="unlearn-spell-form" className="spell-action-form" onSubmit={(e) => { e.preventDefault(); spellAction(s.id, 'unlearn'); }}>
                                     <button type="submit" id="unlearn-spell-button" className="action-button">Unlearn</button>
                                 </form>

@@ -130,7 +130,7 @@ export async function checkBoostRules({ classId, subclassId, level, base, choice
 // Class/subclass info for blessing prerequisites, and the blessings by name
 async function loadPrereqContext(classId, subclassId) {
     const { rows: [info] } = await pool.query(
-        `SELECT COALESCE(NULLIF(s.caster_type, ''), NULLIF(c.caster_type, ''), 'none') <> 'none' AS caster,
+        `SELECT COALESCE(NULLIF(s.caster_type, ''), NULLIF(c.caster_type, ''), 'none') NOT IN ('none', 'body') AS caster,   -- Body Magic doesn't count as a caster for prerequisites
                 concat_ws(', ', c.armor_proficiencies, s.armor_proficiencies) AS armor,
                 concat_ws(', ', c.weapon_proficiencies, s.weapon_proficiencies) AS weapons,
                 (SELECT MIN(level) FROM class_features WHERE class_id = c.id AND name LIKE 'Extra Attack%') AS extra_attack_level
