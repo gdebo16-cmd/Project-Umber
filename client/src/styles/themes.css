@@ -578,6 +578,17 @@
     --shadowInner: inset 4px 4px 15px #f0b86aa9, inset 0px 0px 5px #f0b86aa9;
 }
 
+[data-theme="shadow-of-the-mountains"] {
+    --bg: #343b4d;
+    --surface: #323e53;
+    --text: #efe5e5;
+    --muted: #a3a9b7;
+    --accent: #bb5660;
+    --accent-2: #e0a060;
+    --border: #713540;
+    --glass: 88%;
+}
+
 :root,
 [data-background="default"] {
     --background: url('/colorsketch-eldrid-3840.webp');
@@ -661,6 +672,10 @@
 [data-background="gestalt"] {
     --background: url('/campaigns/the-fall-of-gestalt.webp');
     --background-desktop: url('/campaigns/the-fall-of-gestalt.webp');
+}
+[data-background="shadow-of-the-mountains"] {
+    --background: url('/campaigns/shadow-of-the-mountains.webp');
+    --background-desktop: url('/campaigns/shadow-of-the-mountains.webp');
 }
 
 /* phones: portrait crops of each background */

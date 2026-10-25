@@ -19,9 +19,37 @@ export async function getCharacter(req, res) {
     character.spell_slots = await getClassSlots(character.class_id, character.level, character.subclass_id);
     const ownedArmor = await Inventory.getOwnedArmor(charId);
     const ownedWeapons = await Inventory.getOwnedWeapons(charId);
+    const ownedItems = await Inventory.getOwnedItems(charId);
     const learnedSpells = await getLearnedSpells(charId);
     const actionFeatures = await Characters.getActionFeatures(character.class_id, character.subclass_id, character.level, character.race_id);
-    res.json({ character, ownedArmor, ownedWeapons, learnedSpells, actionFeatures });
+    res.json({ character, ownedArmor, ownedWeapons, ownedItems, learnedSpells, actionFeatures });
+}
+
+// POST /api/characters/:id/inventory/item/equip   body: { item_id }
+export async function equipItem(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const charId = Number(req.params.id);
+    if (!(await ownsCharacter(charId, req.session.userId))) {
+        return res.status(404).json({ error: 'Character not found' });
+    }
+
+    const result = await Inventory.equipItem(charId, Number(req.body.item_id));
+    if (result === 'not_owned') return res.status(404).json({ error: 'Item not owned' });
+    if (result === 'not_equippable') return res.status(400).json({ error: 'Only magical items can be equipped' });
+    if (result === 'full') return res.status(400).json({ error: `All ${Inventory.ITEM_SLOTS} item slots are full. Unequip one first.` });
+    res.json({ ownedItems: await Inventory.getOwnedItems(charId) });
+}
+
+// POST /api/characters/:id/inventory/item/unequip   body: { item_id }
+export async function unequipItem(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const charId = Number(req.params.id);
+    if (!(await ownsCharacter(charId, req.session.userId))) {
+        return res.status(404).json({ error: 'Character not found' });
+    }
+
+    await Inventory.unequipItem(charId, Number(req.body.item_id));
+    res.json({ ownedItems: await Inventory.getOwnedItems(charId) });
 }
 
 // PATCH /api/characters/:id/state   body: any of { used_slots, embers_spent, cracks, rest_uses, conditions, exhaustion }

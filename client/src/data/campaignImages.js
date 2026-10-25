@@ -15,6 +15,7 @@ const campaignImages = [
     { url: '/campaigns/battlefield-aftermath.webp', label: 'Battlefield Aftermath' },
     { url: '/campaigns/tree-of-life.webp', label: 'Tree of Life' },
     { url: '/campaigns/the-fall-of-gestalt.webp', label: 'The Fall of Gestalt' },
+    { url: '/campaigns/shadow-of-the-mountains.webp', label: 'Shadow of the Mountains' },
     // starter set cropped from the site backgrounds
     { url: '/campaigns/frozen.webp', label: 'Frozen' },
     { url: '/campaigns/blue.webp', label: 'Blue' },

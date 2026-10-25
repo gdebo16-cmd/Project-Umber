@@ -86,6 +86,45 @@ export async function listItems() {
     return rows;
 }
 
+// Every item this character carries, with quantity and equipped flag
+export async function getOwnedItems(charId) {
+    const { rows } = await pool.query(
+        `SELECT i.id, i.name, i.item_category, i.item_subtype, i.rarity, i.description, i.effects, i.consumable, i.uses, i.recharge, i.weight_lb,
+                s.name AS spell_name, ci.id AS owned_id, ci.quantity, ci.is_equipped
+        FROM character_items ci
+        JOIN items i ON i.id = ci.item_id
+        LEFT JOIN spells s ON s.id = i.spell_id
+        WHERE ci.character_id = $1
+        ORDER BY i.name`,
+        [charId]
+    );
+    return rows;
+}
+
+// Magical items (every rarity, Object of Power included) can be equipped, up to ITEM_SLOTS at once.
+export const ITEM_SLOTS = 3; // keep in sync with ITEM_SLOTS in client/src/sheet/actions/InventoryTab.jsx
+
+// Returns 'ok', 'not_owned', 'not_equippable' or 'full'
+export async function equipItem(charId, itemId) {
+    const { rows } = await pool.query(
+        `SELECT i.item_category, ci.is_equipped,
+                (SELECT count(*)::int FROM character_items x WHERE x.character_id = $1 AND x.is_equipped) AS used
+        FROM character_items ci JOIN items i ON i.id = ci.item_id
+        WHERE ci.character_id = $1 AND ci.item_id = $2`,
+        [charId, itemId]
+    );
+    if (!rows.length) return 'not_owned';
+    if (rows[0].item_category !== 'magical_item') return 'not_equippable';
+    if (rows[0].is_equipped) return 'ok';
+    if (rows[0].used >= ITEM_SLOTS) return 'full';
+    await pool.query(`UPDATE character_items SET is_equipped = true WHERE character_id = $1 AND item_id = $2`, [charId, itemId]);
+    return 'ok';
+}
+
+export async function unequipItem(charId, itemId) {
+    await pool.query(`UPDATE character_items SET is_equipped = false WHERE character_id = $1 AND item_id = $2`, [charId, itemId]);
+}
+
 // ids of the armor, weapons and items this character owns
 export async function getOwnedIds(charId) {
     const armor = await pool.query(`SELECT armor_id FROM character_armor WHERE character_id = $1`, [charId]);

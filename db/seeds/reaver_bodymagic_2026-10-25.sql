@@ -25,8 +25,8 @@ INSERT INTO spells (name, base_level, element_id, state_id, alignment_id, color,
   SELECT 'Hobbling Strike',1,16,9,5,'Purple','bonus',5,10,'CON',NULL,'Body Magic, once per long rest. Bonus action after you hit a creature with a weapon. For 10 rounds (1 minute) its speed is halved and it can''t take reactions. It makes a CON save at the end of each of its turns, ending the effect on a success. Body Magic doesn''t upcast.', 1, false WHERE NOT EXISTS (SELECT 1 FROM spells WHERE name = 'Hobbling Strike' AND element_id = 16 AND base_level = 1);
 UPDATE spells SET state_id = 9, alignment_id = 5, color = 'Purple', action_type = 'bonus', range = 5, duration = 10, opponent_save_roll = 'CON', base_damage_dice = NULL, base_description = 'Body Magic, once per long rest. Bonus action after you hit a creature with a weapon. For 10 rounds (1 minute) its speed is halved and it can''t take reactions. It makes a CON save at the end of each of its turns, ending the effect on a success. Body Magic doesn''t upcast.', casting_time = 1 WHERE name = 'Hobbling Strike' AND element_id = 16 AND base_level = 1;
 INSERT INTO spells (name, base_level, element_id, state_id, alignment_id, color, action_type, range, duration, opponent_save_roll, base_damage_dice, base_description, casting_time, heal_add_mod)
-  SELECT 'Titan''s Sinew',3,16,2,4,'Yellow','bonus',0,10,NULL,NULL,'Body Magic, once per long rest. For 10 rounds (1 minute) you grow one size if there''s room, gain advantage on STR checks and saves, your weapon hits deal +1d6, and your reach grows by 5 ft. No attack or save.', 1, false WHERE NOT EXISTS (SELECT 1 FROM spells WHERE name = 'Titan''s Sinew' AND element_id = 16 AND base_level = 3);
-UPDATE spells SET state_id = 2, alignment_id = 4, color = 'Yellow', action_type = 'bonus', range = 0, duration = 10, opponent_save_roll = NULL, base_damage_dice = NULL, base_description = 'Body Magic, once per long rest. For 10 rounds (1 minute) you grow one size if there''s room, gain advantage on STR checks and saves, your weapon hits deal +1d6, and your reach grows by 5 ft. No attack or save.', casting_time = 1 WHERE name = 'Titan''s Sinew' AND element_id = 16 AND base_level = 3;
+  SELECT 'Ironbrawn',3,16,2,4,'Yellow','bonus',0,10,NULL,NULL,'Body Magic, once per long rest. For 10 rounds (1 minute) you grow one size if there''s room, gain advantage on STR checks and saves, your weapon hits deal +1d6, and your reach grows by 5 ft. No attack or save.', 1, false WHERE NOT EXISTS (SELECT 1 FROM spells WHERE name = 'Ironbrawn' AND element_id = 16 AND base_level = 3);
+UPDATE spells SET state_id = 2, alignment_id = 4, color = 'Yellow', action_type = 'bonus', range = 0, duration = 10, opponent_save_roll = NULL, base_damage_dice = NULL, base_description = 'Body Magic, once per long rest. For 10 rounds (1 minute) you grow one size if there''s room, gain advantage on STR checks and saves, your weapon hits deal +1d6, and your reach grows by 5 ft. No attack or save.', casting_time = 1 WHERE name = 'Ironbrawn' AND element_id = 16 AND base_level = 3;
 INSERT INTO spells (name, base_level, element_id, state_id, alignment_id, color, action_type, range, duration, opponent_save_roll, base_damage_dice, base_description, casting_time, heal_add_mod)
   SELECT 'War Trance',3,16,8,4,'Yellow','bonus',0,10,NULL,NULL,'Body Magic, once per long rest. You gain temporary HP equal to 2d10 + your level and can''t be frightened for 10 rounds (1 minute). Once per turn, when you miss with a weapon attack, you can reroll it.', 1, false WHERE NOT EXISTS (SELECT 1 FROM spells WHERE name = 'War Trance' AND element_id = 16 AND base_level = 3);
 UPDATE spells SET state_id = 8, alignment_id = 4, color = 'Yellow', action_type = 'bonus', range = 0, duration = 10, opponent_save_roll = NULL, base_damage_dice = NULL, base_description = 'Body Magic, once per long rest. You gain temporary HP equal to 2d10 + your level and can''t be frightened for 10 rounds (1 minute). Once per turn, when you miss with a weapon attack, you can reroll it.', casting_time = 1 WHERE name = 'War Trance' AND element_id = 16 AND base_level = 3;
@@ -100,7 +100,7 @@ INSERT INTO class_spells (class_id, subclass_id, spell_id, min_level, is_bonus) 
   (1, NULL, 212, 15, false),
   (1, NULL, 532, 15, false),
   (1, NULL, 528, 15, false),
-  (1, NULL, (SELECT id FROM spells WHERE name = 'Titan''s Sinew' AND element_id = 16 AND base_level = 3), 25, false),
+  (1, NULL, (SELECT id FROM spells WHERE name = 'Ironbrawn' AND element_id = 16 AND base_level = 3), 25, false),
   (1, NULL, (SELECT id FROM spells WHERE name = 'War Trance' AND element_id = 16 AND base_level = 3), 25, false),
   (1, NULL, (SELECT id FROM spells WHERE name = 'Unstrung' AND element_id = 16 AND base_level = 3), 25, false),
   (5, NULL, 797, 5, false),
@@ -118,7 +118,7 @@ INSERT INTO class_spells (class_id, subclass_id, spell_id, min_level, is_bonus) 
   (5, NULL, 212, 15, false),
   (5, NULL, 532, 15, false),
   (5, NULL, 528, 15, false),
-  (5, NULL, (SELECT id FROM spells WHERE name = 'Titan''s Sinew' AND element_id = 16 AND base_level = 3), 25, false),
+  (5, NULL, (SELECT id FROM spells WHERE name = 'Ironbrawn' AND element_id = 16 AND base_level = 3), 25, false),
   (5, NULL, (SELECT id FROM spells WHERE name = 'War Trance' AND element_id = 16 AND base_level = 3), 25, false),
   (5, NULL, (SELECT id FROM spells WHERE name = 'Unstrung' AND element_id = 16 AND base_level = 3), 25, false),
   (6, NULL, 797, 5, false),
@@ -136,7 +136,7 @@ INSERT INTO class_spells (class_id, subclass_id, spell_id, min_level, is_bonus) 
   (6, NULL, 212, 15, false),
   (6, NULL, 532, 15, false),
   (6, NULL, 528, 15, false),
-  (6, NULL, (SELECT id FROM spells WHERE name = 'Titan''s Sinew' AND element_id = 16 AND base_level = 3), 25, false),
+  (6, NULL, (SELECT id FROM spells WHERE name = 'Ironbrawn' AND element_id = 16 AND base_level = 3), 25, false),
   (6, NULL, (SELECT id FROM spells WHERE name = 'War Trance' AND element_id = 16 AND base_level = 3), 25, false),
   (6, NULL, (SELECT id FROM spells WHERE name = 'Unstrung' AND element_id = 16 AND base_level = 3), 25, false),
   (9, NULL, 797, 5, false),
@@ -154,7 +154,7 @@ INSERT INTO class_spells (class_id, subclass_id, spell_id, min_level, is_bonus) 
   (9, NULL, 212, 15, false),
   (9, NULL, 532, 15, false),
   (9, NULL, 528, 15, false),
-  (9, NULL, (SELECT id FROM spells WHERE name = 'Titan''s Sinew' AND element_id = 16 AND base_level = 3), 25, false),
+  (9, NULL, (SELECT id FROM spells WHERE name = 'Ironbrawn' AND element_id = 16 AND base_level = 3), 25, false),
   (9, NULL, (SELECT id FROM spells WHERE name = 'War Trance' AND element_id = 16 AND base_level = 3), 25, false),
   (9, NULL, (SELECT id FROM spells WHERE name = 'Unstrung' AND element_id = 16 AND base_level = 3), 25, false),
   (10, NULL, 797, 5, false),
@@ -172,7 +172,7 @@ INSERT INTO class_spells (class_id, subclass_id, spell_id, min_level, is_bonus) 
   (10, NULL, 212, 15, false),
   (10, NULL, 532, 15, false),
   (10, NULL, 528, 15, false),
-  (10, NULL, (SELECT id FROM spells WHERE name = 'Titan''s Sinew' AND element_id = 16 AND base_level = 3), 25, false),
+  (10, NULL, (SELECT id FROM spells WHERE name = 'Ironbrawn' AND element_id = 16 AND base_level = 3), 25, false),
   (10, NULL, (SELECT id FROM spells WHERE name = 'War Trance' AND element_id = 16 AND base_level = 3), 25, false),
   (10, NULL, (SELECT id FROM spells WHERE name = 'Unstrung' AND element_id = 16 AND base_level = 3), 25, false),
   (11, NULL, 797, 5, false),
@@ -190,7 +190,7 @@ INSERT INTO class_spells (class_id, subclass_id, spell_id, min_level, is_bonus) 
   (11, NULL, 212, 15, false),
   (11, NULL, 532, 15, false),
   (11, NULL, 528, 15, false),
-  (11, NULL, (SELECT id FROM spells WHERE name = 'Titan''s Sinew' AND element_id = 16 AND base_level = 3), 25, false),
+  (11, NULL, (SELECT id FROM spells WHERE name = 'Ironbrawn' AND element_id = 16 AND base_level = 3), 25, false),
   (11, NULL, (SELECT id FROM spells WHERE name = 'War Trance' AND element_id = 16 AND base_level = 3), 25, false),
   (11, NULL, (SELECT id FROM spells WHERE name = 'Unstrung' AND element_id = 16 AND base_level = 3), 25, false);
 

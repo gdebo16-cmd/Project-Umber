@@ -3,7 +3,7 @@ import * as Runes from '../controllers/apiRuneController.js';
 import { Router } from 'express';
 import {
     getCharacter, updateHp, updateTempHp, updateSheetState, deleteCharacter,
-    equipArmor, unequipArmor, equipWeapon, unequipWeapon, dualWieldWeapon, twoHandWeapon, soulBrandWeapon, sigilMarkWeapon,
+    equipArmor, unequipArmor, equipWeapon, unequipWeapon, dualWieldWeapon, twoHandWeapon, soulBrandWeapon, sigilMarkWeapon, equipItem, unequipItem,
 } from '../controllers/apiController.js';
 import { me, login, logout, register, home, getSettings, updateSettings, getProfile, updateProfile, deleteAccount } from '../controllers/apiUserController.js';
 import { getInventory, addArmor, addWeapon, removeArmor, removeWeapon, addItem, removeItem } from '../controllers/apiInventoryController.js';
@@ -65,6 +65,8 @@ router.post('/characters/:id/inventory/weapon/dual-wield', dualWieldWeapon);
 router.post('/characters/:id/inventory/weapon/two-hands', twoHandWeapon);
 router.post('/characters/:id/inventory/weapon/soul-brand', soulBrandWeapon);
 router.post('/characters/:id/inventory/weapon/sigil-mark', sigilMarkWeapon);
+router.post('/characters/:id/inventory/item/equip', equipItem);
+router.post('/characters/:id/inventory/item/unequip', unequipItem);
 router.get('/characters/:id/runes', Runes.getRunes);
 router.post('/characters/:id/runes/inscribe', Runes.inscribe);
 router.post('/characters/:id/runes/remove', Runes.remove);

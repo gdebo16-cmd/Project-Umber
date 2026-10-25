@@ -61,6 +61,7 @@ function CharacterSheet() {
         setData((prev) => ({ ...prev, character: { ...prev.character, temp_hp: t } }));
     const setOwnedArmor = (ownedArmor) => setData((prev) => ({ ...prev, ownedArmor }));
     const setOwnedWeapons = (ownedWeapons) => setData((prev) => ({ ...prev, ownedWeapons }));
+    const setOwnedItems = (ownedItems) => setData((prev) => ({ ...prev, ownedItems }));
     const setLearnedSpells = (learnedSpells) => setData((prev) => ({ ...prev, learnedSpells }));
 
     // Every roll on the sheet goes through here: show the text and pop the orb open
@@ -229,6 +230,8 @@ function CharacterSheet() {
         ownedWeapons,
         setOwnedArmor,
         setOwnedWeapons,
+        ownedItems: data.ownedItems ?? [],
+        setOwnedItems,
         learnedSpells,
         actionFeatures,
         setLearnedSpells,
