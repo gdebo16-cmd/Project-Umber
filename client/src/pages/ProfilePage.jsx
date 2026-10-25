@@ -8,7 +8,7 @@ const THEMES = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow',
 // 'glass-blue' -> 'Glass Blue'
 const pretty = (s) => s.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
 const DISPLAYS = ['standard', 'compact', 'neon', 'glass', 'parchment', 'minimal', 'bold'];
-const BACKGROUNDS = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen', 'neon', 'dark-map', 'light-map', 'hellfire-map', 'frozen-map'];
+const BACKGROUNDS = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen', 'neon', 'gestalt', 'dark-map', 'light-map', 'hellfire-map', 'frozen-map'];
 
 function ProfilePage() {
     usePageStyle(profileCss);

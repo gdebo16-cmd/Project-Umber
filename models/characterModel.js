@@ -140,16 +140,16 @@ export async function createCharacter(userId, draft, final, plus2, plus1, maxHp)
            (user_id, name, race_id, subrace_id, class_id, subclass_id,
             str, dex, con, "int", wis, cha, luc, spd, plus2_stat, plus1_stat, max_hp, current_hp,
             skill_proficiencies, level, feature_choices, last_swap_level,
-            alignment_code, upbringing_id, lifestyle_id, outlook_id, upbringing_state, lifestyle_state, outlook_state, race_element_id)
+            alignment_code, upbringing_id, lifestyle_id, outlook_id, upbringing_state, lifestyle_state, outlook_state, race_element_id, race_spell_id)
          VALUES ($1,$2,$3,$20,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$21::jsonb,$19,
-                 $22,$23,$24,$25,$26,$27,$28,$29)
+                 $22,$23,$24,$25,$26,$27,$28,$29,$30)
          RETURNING id`,
         [userId, draft.name, draft.race_id, draft.class_id, draft.subclass_id,
          final.str, final.dex, final.con, final.int, final.wis, final.cha, final.luc, final.spd,
          plus2, plus1, maxHp, maxHp, draft.skill_proficiencies ?? [], draft.level ?? 1, draft.subrace_id ?? null,
          JSON.stringify(draft.feature_choices ?? {}),
          m.alignment_code ?? null, m.upbringing_id ?? null, m.lifestyle_id ?? null, m.outlook_id ?? null,
-         m.upbringing_state ?? null, m.lifestyle_state ?? null, m.outlook_state ?? null, m.race_element_id ?? null]
+         m.upbringing_state ?? null, m.lifestyle_state ?? null, m.outlook_state ?? null, m.race_element_id ?? null, m.race_spell_id ?? null]
     );
     return rows[0].id;
 }

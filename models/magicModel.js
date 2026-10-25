@@ -13,6 +13,7 @@ export async function listMagicOptions(raceId, subraceId) {
         pool.query(`SELECT alignment_code FROM alignment_bands WHERE color_square = $1 AND band IN ('Aligned', 'Attuned') ORDER BY alignment_code`, [BLACK_GATE_TARGET]),
     ]);
     const states = await pool.query(`SELECT lower(name) AS name FROM spell_state WHERE NOT retired ORDER BY id`);
+    const raceSpells = await raceSpellOptions(raceId);
     const group = (cat) => personality.rows.filter((p) => p.category === cat);
     return {
         alignments: alignments.rows,
@@ -22,7 +23,31 @@ export async function listMagicOptions(raceId, subraceId) {
         states: states.rows.map((s) => s.name),
         elements,
         blackGateAlignments: gate.rows.map((r) => r.alignment_code),
+        raceSpells,
     };
+}
+
+// Races that pick their starter spell at creation, by race element: { [element_id]: [{ id, name, description }] }.
+// Human: any level-0 bless or manipulate spell of the element (Stone and Star have none, so their race starter).
+// Wyrmkin: one evoke spell per element. Every other race has a fixed races.race_spell_id, so {}.
+export async function raceSpellOptions(raceId) {
+    const { rows } = await pool.query(
+        `SELECT s.element_id, s.id, s.name, s.base_description AS description
+         FROM races r
+         JOIN spells s ON s.base_level = 0
+         JOIN spell_state st ON st.id = s.state_id
+         JOIN spell_element e ON e.id = s.element_id
+         WHERE r.id = $1
+           AND ((r.name = 'Human' AND (lower(st.name) IN ('bless', 'manipulate')
+                                       OR (e.name, s.name) IN (('Stone', 'Pebble Shield'), ('Star', 'Starmend'))))
+             OR (r.name = 'Wyrmkin' AND (e.name, s.name) IN (('Flame', 'Ember Spark'), ('Frost', 'Frost Punch'),
+                                       ('Storm', 'Spark Grip'), ('Venom', 'Spit Venom'), ('Stone', 'Grit Spit'))))
+         ORDER BY s.name`,
+        [raceId]
+    );
+    const out = {};
+    for (const { element_id, ...s } of rows) (out[element_id] ??= []).push(s);
+    return out;
 }
 
 // Alignment chart squares (editor picker)
@@ -99,6 +124,13 @@ export async function checkMagicPicks(draft, body) {
     const el = elements.find((e) => e.id === Number(body.race_element_id));
     if (!el) return { error: 'Pick a race element' };
     magic.race_element_id = el.id;
+    // Human / Wyrmkin: the starter spell picked for that element
+    const choices = (await raceSpellOptions(draft.race_id))[el.id] ?? [];
+    if (choices.length) {
+        const spell = choices.find((s) => s.id === Number(body.race_spell_id));
+        if (!spell) return { error: 'Pick a race spell' };
+        magic.race_spell_id = spell.id;
+    }
     return { magic };
 }
 

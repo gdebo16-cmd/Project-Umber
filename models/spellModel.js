@@ -30,7 +30,7 @@ export async function getLearnedSpells(charId) {
                 ab.band AS chart_band
          FROM characters c
          JOIN races r ON r.id = c.race_id
-         JOIN spells s ON s.id = r.race_spell_id
+         JOIN spells s ON s.id = COALESCE(c.race_spell_id, r.race_spell_id) -- Human / Wyrmkin pick theirs at creation
          LEFT JOIN spell_state st ON st.id = s.state_id
          LEFT JOIN spell_alignment al ON al.id = s.alignment_id
          LEFT JOIN alignment_bands ab ON ab.alignment_code = c.alignment_code AND ab.color_square = al.chart_square

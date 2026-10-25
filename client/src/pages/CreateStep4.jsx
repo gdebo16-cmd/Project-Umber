@@ -27,6 +27,7 @@ function CreateStep4() {
     const [ids, setIds] = useState({ upbringing: '', lifestyle: '', outlook: '' });
     const [anyStates, setAnyStates] = useState({ upbringing: '', lifestyle: '', outlook: '' }); // wildcard (Self-Taught Stray) picks
     const [elementId, setElementId] = useState('');
+    const [raceSpellId, setRaceSpellId] = useState(''); // Human / Wyrmkin starter pick
     const [saveError, setSaveError] = useState('');
 
     if (loading) return <Loader />;
@@ -69,7 +70,7 @@ function CreateStep4() {
     const submit = async (e) => {
         e.preventDefault();
         try {
-            const body = { alignment_code: alignment, race_element_id: elementId };
+            const body = { alignment_code: alignment, race_element_id: elementId, race_spell_id: raceSpellId || null };
             for (const c of CATS) {
                 body[`${c.key}_id`] = ids[c.key];
                 body[`${c.key}_state`] = anyStates[c.key] || null;
@@ -140,13 +141,25 @@ function CreateStep4() {
 
                         <article id="race-element-container" className="name-tile-2">
                             <label className="name-label-2" htmlFor="race_element_id">Race Element</label>
-                            <select className="name-value-2" id="race_element_id" value={elementId} onChange={(e) => setElementId(e.target.value)} required>
+                            <select className="name-value-2" id="race_element_id" value={elementId} onChange={(e) => { setElementId(e.target.value); setRaceSpellId(''); }} required>
                                 <option value="" disabled className="name-option-2">Select an Element</option>
                                 {data.elements.map((el) => (
                                     <option key={el.id} value={el.id} className="name-option-2">{el.name}</option>
                                 ))}
                             </select>
                         </article>
+
+                        {(data.raceSpells?.[elementId] ?? []).length > 0 && (
+                            <article id="race-spell-container" className="name-tile-2">
+                                <label className="name-label-2" htmlFor="race_spell_id">Race Spell</label>
+                                <select className="name-value-2" id="race_spell_id" value={raceSpellId} onChange={(e) => setRaceSpellId(e.target.value)} required>
+                                    <option value="" disabled className="name-option-2">Select a Starter Spell</option>
+                                    {data.raceSpells[elementId].map((s) => (
+                                        <option key={s.id} value={s.id} className="name-option-2" title={s.description}>{s.name}</option>
+                                    ))}
+                                </select>
+                            </article>
+                        )}
 
                         {saveError && <p>{saveError}</p>}
 

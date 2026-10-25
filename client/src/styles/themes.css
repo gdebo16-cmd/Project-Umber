@@ -1882,6 +1882,80 @@
     --neonTextGlow: 0 0 3px rgba(0, 240, 255, 0.9), 0 0 10px rgba(0, 240, 255, 0.5);
 }
 
+[data-theme="gestalt"] {
+    --gold-gradient: linear-gradient(to bottom, #d9a05a, #a66f2e);
+    --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); /* condition checkbox + exhaustion slider thumb: diamond */
+
+    --healColor: rgba(140, 176, 168, 0.384);
+    --damageColor: rgba(44, 38, 40, 0.712);
+
+    --bgc-bubble-send: rgb(30, 35, 48);
+    --bgc-bubble-receive: rgb(58, 66, 77);
+    --bgc-orb: rgb(108, 120, 134);
+    --txt-orb: rgba(236, 232, 224, 0.882);
+    --bs-orb: 0 0 6px rgba(232, 168, 82, 0.722);
+    --bbl-shadow: rgb(120, 132, 146);
+
+    --bg-color-statmod: rgba(122, 86, 44, 0.734);
+    --bg-color-header: rgba(30, 35, 48, 0.893);
+    --bgc-top: rgba(24, 28, 40, 0.962);
+    --bgc-low: rgba(44, 51, 62, 0.854);
+
+    --portrait-border: 3px ridge rgba(232, 168, 82, 0.628);
+    --bordercolor: rgba(138, 152, 166, 0.419);
+    --txt-color-1: rgba(236, 232, 224, 0.882);
+    --accent: rgb(224, 160, 72);
+
+    --site-title-bg: rgba(24, 28, 40, 0.908);
+    --bg-color-nav: rgba(30, 35, 48, 0.858);
+
+    --spellslot-border: rgba(232, 168, 82, 0.628);
+    --spellslot-checked: rgba(232, 168, 82, 0.628);
+    --spellslot-checked-shadow: rgba(232, 168, 82, 0.628);
+
+    --panel-bg: rgba(58, 66, 77, 0.216);
+    --damage-bg: rgba(40, 34, 52, 0.814);
+
+    --bgc-spell-tab: rgba(30, 35, 48, 0.908);
+    --txt-spell-tab: rgba(236, 232, 224, 0.882);
+
+    --txt-tab: rgba(236, 232, 224, 0.882);
+    --bgc-tab: rgba(44, 51, 62, 0.908);
+    --tab-shadow: rgba(232, 168, 82, 0.522);
+    --tab-border: 1px solid var(--bordercolor);
+    --bs-book: 0 0 6px var(--bordercolor);
+
+    --drop-down-bg: rgba(30, 35, 48, 0.908);
+    --drop-down-txt: rgba(236, 232, 224, 0.882);
+
+    --rest-bgc: rgba(30, 35, 48, 0.908);
+    --rest-txt: rgba(236, 232, 224, 0.882);
+    --rest-bg-choice-1: rgba(224, 160, 72, 0.822);
+    --rest-txt-choice-1: rgba(24, 28, 40, 0.908);
+    --rest-bg-choice-2: rgba(44, 51, 62, 0.908);
+    --rest-txt-choice-2: rgba(236, 232, 224, 0.882);
+
+    --bgc-action-bar: rgba(30, 35, 48, 0.166);
+    --bgc-action: var(--bgc-tab);
+    --txt-action: var(--txt-color-1);
+
+    --bgc-char-name: rgba(30, 35, 48, 0.837);
+    --bgc-char-stat: rgba(58, 66, 77, 0.803);
+    --bgc-char-delete: rgba(224, 160, 72, 0.956);
+    --delete-txt: rgba(24, 28, 40, 0.903);
+
+    --bgc-theme: #1e2330;
+
+    --bgc-title: rgb(24, 28, 40);
+    --bg-color-5: rgb(30, 35, 48);
+    --bg-color-4: rgba(58, 66, 77, 0.466);
+    --bg-color-3: rgba(138, 152, 166, 0.266);
+    --bg-color-2: rgba(44, 51, 62, 0.917);
+    --bg-color-1: rgba(30, 35, 48, 0.452);
+
+    --shadowInner: inset 4px 4px 15px #f0b86aa9, inset 0px 0px 5px #f0b86aa9;
+}
+
 :root,
 [data-background="default"] {
     --background: url('/colorsketch-eldrid-3840.webp');
@@ -1961,6 +2035,10 @@
 [data-background="neon"] {
     --background: url('/eldrid-bg-neon-3840.webp');
     --background-desktop: url('/eldrid-bg-neon-3840.webp');
+}
+[data-background="gestalt"] {
+    --background: url('/campaigns/the-fall-of-gestalt.webp');
+    --background-desktop: url('/campaigns/the-fall-of-gestalt.webp');
 }
 
 /* phones: portrait crops of each background */
