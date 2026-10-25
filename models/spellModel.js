@@ -9,11 +9,14 @@ export async function getLearnedSpells(charId) {
                 st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name,
                 COALESCE((SELECT json_agg(json_build_object('cast_level', u.cast_level, 'damage_dice', u.damage_dice, 'heal_dice', u.heal_dice, 'extra_targets', u.extra_targets) ORDER BY u.cast_level)
                           FROM spell_upcasts u WHERE u.spell_id = s.id), '[]') AS upcasts,
-                cs.is_learned, cs.is_prepared, cs.is_action
+                cs.is_learned, cs.is_prepared, cs.is_action,
+                ab.band AS chart_band
          FROM character_spells cs
          JOIN spells s ON s.id = cs.spell_id
          LEFT JOIN spell_state st ON st.id = s.state_id
          LEFT JOIN spell_alignment al ON al.id = s.alignment_id
+         LEFT JOIN characters c ON c.id = cs.character_id
+         LEFT JOIN alignment_bands ab ON ab.alignment_code = c.alignment_code AND ab.color_square = al.chart_square
          LEFT JOIN spell_element el ON el.id = s.element_id
          WHERE cs.character_id = $1 AND cs.is_learned
          ORDER BY s.base_level, s.name`,
@@ -39,19 +42,21 @@ export async function getAllSpells() {
     return rows;
 }
 
-export async function getSpellsForCharacter(classId, subclassId, level) {
+// alignmentCode (optional): adds chart_band, the character's band for each spell's colour square
+export async function getSpellsForCharacter(classId, subclassId, level, alignmentCode = null) {
     const { rows } = await pool.query(
         `SELECT s.*, s.base_description AS description, MIN(cs.min_level) AS unlock_level,
-                st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name
+                st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name, ab.band AS chart_band
          FROM class_spells cs
          JOIN spells s ON s.id = cs.spell_id
          LEFT JOIN spell_state st ON st.id = s.state_id
          LEFT JOIN spell_alignment al ON al.id = s.alignment_id
          LEFT JOIN spell_element el ON el.id = s.element_id
+         LEFT JOIN alignment_bands ab ON ab.alignment_code = $4 AND ab.color_square = al.chart_square
          WHERE cs.class_id = $1 AND (cs.subclass_id IS NULL OR cs.subclass_id = $2) AND cs.min_level <= $3
-         GROUP BY s.id, st.name, al."Name", el.name
+         GROUP BY s.id, st.name, al."Name", el.name, ab.band
          ORDER BY s.base_level, s.name`,
-        [classId, subclassId, level]
+        [classId, subclassId, level, alignmentCode]
     );
     return rows;
 }

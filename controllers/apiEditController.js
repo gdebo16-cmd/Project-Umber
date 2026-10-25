@@ -5,6 +5,7 @@ import { listRaces, checkSubrace } from '../models/raceModel.js';
 import { listClasses, listAllSubclasses, getSubclassClassId } from '../models/classModel.js';
 import { checkBoostRules } from '../utils/abilityBoosts.js';
 import { checkSwapRules } from '../utils/choiceRules.js';
+import { listAlignments, checkAlignmentChange } from '../models/magicModel.js';
 
 // Boost/blessing/cap rules against what the character has saved. Returns { error } or the result for applyBoostResult.
 async function boostCheck(charId, userId, classId, subclassId, level, choices, refundAbility) {
@@ -37,7 +38,8 @@ export async function getEditCharacter(req, res) {
     const races = await listRaces();
     const classes = await listClasses();
     const subClasses = await listAllSubclasses();
-    res.json({ character, races, classes, subClasses });
+    const alignments = await listAlignments();
+    res.json({ character, races, classes, subClasses, alignments });
 }
 
 // POST /api/characters/:id/edit/name   body: { name, race_id, subrace_id }
@@ -68,6 +70,20 @@ export async function editPortrait(req, res) {
         return res.status(404).json({ error: 'Character not found' });
     }
     await Characters.updatePortrait(charId, req.session.userId, url);
+    res.json({ character: await Characters.getEditCharacter(charId, req.session.userId) });
+}
+
+// POST /api/characters/:id/edit/alignment   body: { alignment_code }
+export async function editAlignment(req, res) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    const charId = Number(req.params.id);
+    if (!(await Characters.ownsCharacter(charId, req.session.userId))) {
+        return res.status(404).json({ error: 'Character not found' });
+    }
+    const code = String(req.body.alignment_code ?? '');
+    const problem = await checkAlignmentChange(charId, code);
+    if (problem) return res.status(400).json({ error: problem });
+    await Characters.updateAlignment(charId, req.session.userId, code);
     res.json({ character: await Characters.getEditCharacter(charId, req.session.userId) });
 }
 

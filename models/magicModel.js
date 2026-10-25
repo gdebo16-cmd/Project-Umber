@@ -8,7 +8,7 @@ export const BLACK_GATE_TARGET = 'CE'; // Black gate: alignment Aligned/Attuned 
 export async function listMagicOptions(raceId, subraceId) {
     const [alignments, personality, elements, gate] = await Promise.all([
         pool.query(`SELECT code, name, color, law_axis, good_axis FROM alignments ORDER BY sort`),
-        pool.query(`SELECT id, category, name, flavor, state, any_state, perk, needs_black_gate FROM personality_options ORDER BY category, sort`),
+        pool.query(`SELECT id, category, name, flavor, bio, state, any_state, perk, needs_black_gate FROM personality_options ORDER BY category, sort`),
         raceElements(raceId, subraceId),
         pool.query(`SELECT alignment_code FROM alignment_bands WHERE color_square = $1 AND band IN ('Aligned', 'Attuned') ORDER BY alignment_code`, [BLACK_GATE_TARGET]),
     ]);
@@ -23,6 +23,26 @@ export async function listMagicOptions(raceId, subraceId) {
         elements,
         blackGateAlignments: gate.rows.map((r) => r.alignment_code),
     };
+}
+
+// Alignment chart squares (editor picker)
+export async function listAlignments() {
+    const { rows } = await pool.query(`SELECT code, name, color FROM alignments ORDER BY sort`);
+    return rows;
+}
+
+// Alignment change check: picks that need the Black gate must keep it. Returns an error string or null
+export async function checkAlignmentChange(charId, code) {
+    const { rows: al } = await pool.query(`SELECT code FROM alignments WHERE code = $1`, [code]);
+    if (!al.length) return 'Pick an alignment';
+    const { rows } = await pool.query(
+        `SELECT c.subclass_id, c.level, bool_or(p.needs_black_gate) AS gated
+         FROM characters c LEFT JOIN personality_options p ON p.id IN (c.upbringing_id, c.lifestyle_id, c.outlook_id)
+         WHERE c.id = $1 GROUP BY c.id`, [charId]);
+    if (rows[0]?.gated && !(await hasBlackGate(code, rows[0].subclass_id, rows[0].level))) {
+        return 'Your background uses a Black gate pick, so the alignment must stay CE, NE or CN';
+    }
+    return null;
 }
 
 // The race's listed elements (a subrace's own list when it has one)

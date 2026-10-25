@@ -80,7 +80,7 @@ function CreateStep1() {
                         </article>
                         {subraces.length > 0 && (
                             <article id="subrace" className="name-tile">
-                                <label className="name-label" htmlFor="subrace_id">{race.name === 'Lupine' ? 'Breed' : 'Gem Line'}</label>
+                                <label className="name-label" htmlFor="subrace_id">{({ Lupine: 'Breed', Vellari: 'Gem Line', Gehennan: 'Vein' })[race.name] ?? 'Sub-race'}</label>
                                 <select className="name-value" id="subrace_id" value={subraceId} onChange={(e) => setSubraceId(e.target.value)}>
                                     <option className="name-option" value="">Select a sub-race</option>
                                     {subraces.map((s) => (

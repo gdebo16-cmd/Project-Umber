@@ -7,7 +7,7 @@ import { getSpellSlots, beamsAt, beamRollText, beamDamageText } from '../../util
 import { modOf, signed, proficiencyBonus, rollDice, rollToHit } from '../../utils/math';
 import { useCharacter } from '../CharacterContext';
 import { createPortal } from 'react-dom';
-import { stateGlyph, elementGlyph, alignmentGlyph, hideBrokenGlyph } from '../../utils/glyphs';
+import { stateGlyph, elementGlyph, alignmentGlyph, hideBrokenGlyph, bandClass } from '../../utils/glyphs';
 
 
 const SPELL_TABS = [
@@ -90,7 +90,7 @@ function SpellsTab() {
                 {s.attack_type ? (
                     <button type='button' className='action-button btn-to-hit hover-grow' onClick={() => cast(beamsAt(s, level) > 1 ? `${who} casts ${s.name}! ${beamRollText(beamsAt(s, level), toHit, dice)}` : `${who} casts ${s.name}! ${hitText()}`)}>{signed(toHit)}</button>
                 ) : s.opponent_save_roll ? (
-                    <button type='button' className='action-button btn-to-hit hover-grow' onClick={() => cast(`${who} casts ${s.name}! Target mus make a ${s.opponent_save_roll} roll and beat a ${spellSave}!`)}>{s.opponent_save_roll} {spellSave}</button>
+                    <button type='button' className='action-button btn-to-hit hover-grow' onClick={() => cast(`${who} casts ${s.name}! Target must make a ${s.opponent_save_roll} roll and beat a ${spellSave}!`)}>{s.opponent_save_roll} {spellSave}</button>
                 ) : null}
                 {dice ? (
                     // with a to-hit/save button the damage is just a roll; without one, this button is the cast
@@ -138,7 +138,7 @@ function SpellsTab() {
                      <article className='spell-build-box-content'>
                             <p>State: {openSpell.state_name && <img className="tile-icon" src={stateGlyph(openSpell.state_name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}<strong>{openSpell.state_name ? `${openSpell.state_name}` : ''}</strong></p>
                             <p>Element: {openSpell.element_name && <img className="tile-icon" src={elementGlyph(openSpell.element_name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}<strong>{openSpell.element_name ? `${openSpell.element_name}` : ''}</strong></p>
-                            <p>Alignment: {openSpell.alignment_name && <img className="tile-icon" src={alignmentGlyph(openSpell.alignment_name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}<strong>{openSpell.alignment_name ? `${openSpell.alignment_name}` : ''}</strong></p>
+                            <p>Alignment: {openSpell.alignment_name && <img className="tile-icon" src={alignmentGlyph(openSpell.alignment_name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}<strong className={bandClass(openSpell.chart_band)}>{openSpell.alignment_name ? `${openSpell.alignment_name}` : ''}</strong></p>
                         </article>
                     </section>
                     </section>
@@ -163,7 +163,7 @@ function SpellsTab() {
             <article className="spell-stat-bar">
                 <button type='button' className='book-button spell-stat' onClick={() => setBrowsing(true)}>Consult the Scrolls</button>
                 <p className="spell-stat">Primary Stat: {spellStat}</p>
-                <p className="spell-stat">Damage Bonus: {signed(spellAttack)} </p>
+                <p className="spell-stat">Spell Attack: {signed(spellAttack)} </p>
                 <p className="spell-stat">Target Save: {signed(spellSave)}</p>
                 {caps && <p className="spell-stat">Prepared spells {preparedCount}/{caps.prepared}</p>}
                 {caps && <p className="spell-stat">Cantrips {preparedCantrips}/{caps.cantrips}</p>}

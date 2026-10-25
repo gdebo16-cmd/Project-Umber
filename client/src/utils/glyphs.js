@@ -8,3 +8,6 @@ export const classGlyph = (name) => `/glyphs/classes/${slug(name)}.png`;
 // accepts "Green Magic" or "Green"
 export const alignmentGlyph = (name) => `/glyphs/alignments/${ALIGNMENT_GLYPHS[slug(name).split('-')[0]] ?? slug(name)}.png`;
 export const hideBrokenGlyph = (e) => { e.currentTarget.hidden = true; };
+
+// spell details colour for the character's chart band: Aligned/Attuned = good, Opposed = bad, else none
+export const bandClass = (band) => (band === 'Aligned' || band === 'Attuned' ? 'spell-band-good' : band === 'Opposed' ? 'spell-band-bad' : undefined);

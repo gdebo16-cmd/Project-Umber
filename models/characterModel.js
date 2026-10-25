@@ -38,12 +38,18 @@ export async function ownsCharacter(charId, userId) {
 // Full sheet row (with race/class/subclass names) or undefined
 export async function getSheetCharacter(charId, userId) {
     const { rows } = await pool.query(
-        `SELECT ch.*, r.name AS race_name, sr.name AS subrace_name, cl.name AS class_name, cl.hitpoint_die, cl.primary_stat AS spell_stat, COALESCE(NULLIF(s.spellcasting_stat, ''), NULLIF(cl.spellcasting_stat, ''), cl.primary_stat) AS casting_stat, COALESCE(s.caster_type, cl.caster_type) AS caster_type, cl.has_embers, cl.crack_max, cl.breach_dc, cl.breach_dc_scaling, cl.saving_throws AS class_saving_throws, s.breach_effect, s.breach_drains_embers, NULLIF(concat_ws(', ', cl.armor_proficiencies, s.armor_proficiencies), '') AS armor_proficiencies, NULLIF(concat_ws(', ', cl.weapon_proficiencies, s.weapon_proficiencies), '') AS weapon_proficiencies, NULLIF(concat_ws(', ', cl.tool_proficiencies, s.tool_proficiencies), '') AS tool_proficiencies, s.name AS subclass_name, r.base_speed AS race_base_speed, r.darkvision AS race_darkvision, ${hpBonusSql('ch')} AS hp_bonus
+        `SELECT ch.*, r.name AS race_name, sr.name AS subrace_name, cl.name AS class_name, cl.hitpoint_die, cl.primary_stat AS spell_stat, COALESCE(NULLIF(s.spellcasting_stat, ''), NULLIF(cl.spellcasting_stat, ''), cl.primary_stat) AS casting_stat, COALESCE(s.caster_type, cl.caster_type) AS caster_type, cl.has_embers, cl.crack_max, cl.breach_dc, cl.breach_dc_scaling, cl.saving_throws AS class_saving_throws, s.breach_effect, s.breach_drains_embers, NULLIF(concat_ws(', ', cl.armor_proficiencies, s.armor_proficiencies), '') AS armor_proficiencies, NULLIF(concat_ws(', ', cl.weapon_proficiencies, s.weapon_proficiencies), '') AS weapon_proficiencies, NULLIF(concat_ws(', ', cl.tool_proficiencies, s.tool_proficiencies), '') AS tool_proficiencies, s.name AS subclass_name, r.base_speed AS race_base_speed, r.darkvision AS race_darkvision, ${hpBonusSql('ch')} AS hp_bonus,
+            pu.name AS upbringing_name, pu.flavor AS upbringing_flavor, pu.bio AS upbringing_bio, pu.perk AS upbringing_perk,
+            pl.name AS lifestyle_name, pl.flavor AS lifestyle_flavor, pl.bio AS lifestyle_bio, pl.perk AS lifestyle_perk,
+            po.name AS outlook_name, po.flavor AS outlook_flavor, po.bio AS outlook_bio, po.perk AS outlook_perk
         FROM characters ch
         LEFT JOIN races r ON r.id = ch.race_id
         LEFT JOIN subraces sr ON sr.id = ch.subrace_id
         LEFT JOIN classes cl ON cl.id = ch.class_id
         LEFT JOIN sub_classes s ON s.id = ch.subclass_id
+        LEFT JOIN personality_options pu ON pu.id = ch.upbringing_id
+        LEFT JOIN personality_options pl ON pl.id = ch.lifestyle_id
+        LEFT JOIN personality_options po ON po.id = ch.outlook_id
         WHERE ch.id = $1 AND (ch.user_id = $2 OR EXISTS (
             SELECT 1 FROM campaign_members pm
             JOIN campaign_members dm ON dm.campaign_id = pm.campaign_id
@@ -155,7 +161,7 @@ export async function createCharacter(userId, draft, final, plus2, plus1, maxHp)
 export async function getEditCharacter(charId, userId) {
     const { rows } = await pool.query(
         `SELECT id, name, race_id, subrace_id, class_id, subclass_id, level, str, dex, con, "int", wis, cha, luc, spd,
-                skill_proficiencies, feature_choices, portrait_url, boost_repick_available, last_swap_level
+                skill_proficiencies, feature_choices, portrait_url, boost_repick_available, last_swap_level, alignment_code
          FROM characters WHERE id = $1 AND user_id = $2`,
         [charId, userId]
     );
@@ -176,6 +182,11 @@ export async function updateNameAndRace(charId, userId, name, raceId, subraceId 
 }
 
 // portraitUrl is null (default image) or a validated '/portraits/<file>.png' path
+// Alignment chart square (already checked by editAlignment)
+export async function updateAlignment(charId, userId, code) {
+    await pool.query(`UPDATE characters SET alignment_code = $1 WHERE id = $2 AND user_id = $3`, [code, charId, userId]);
+}
+
 export async function updatePortrait(charId, userId, portraitUrl) {
     await pool.query(
         `UPDATE characters SET portrait_url = $1 WHERE id = $2 AND user_id = $3`,

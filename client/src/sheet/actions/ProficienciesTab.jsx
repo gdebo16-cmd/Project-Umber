@@ -1,4 +1,5 @@
 import { useCharacter } from '../CharacterContext';
+import { backgroundLines } from '../../utils/background';
 
 
 
@@ -6,6 +7,8 @@ import { useCharacter } from '../CharacterContext';
 
 function ProficienciesTab() {
     const { character } = useCharacter();
+    const pick = (k) => character[`${k}_name`] ? { bio: character[`${k}_bio`], flavor: character[`${k}_flavor`], perk: character[`${k}_perk`], state: character[`${k}_state`] } : null;
+    const bg = backgroundLines({ upbringing: pick('upbringing'), lifestyle: pick('lifestyle'), outlook: pick('outlook') });
 
     return (
         <>
@@ -45,6 +48,18 @@ function ProficienciesTab() {
                                 )})}
                         </ul>
                     </article>
+                    {bg.perks.length > 0 && (
+                    <article className="proficiency-tile">
+                        <h3 className="proficiency-title">Background</h3>
+                        <ul className="proficiency-list">
+                            {[...bg.story, ...bg.perks].map((line) => (
+                                <li key={line}>
+                                    <p className="proficiency-value">{line}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    </article>
+                    )}
                 </li>
             </ul>
         </>

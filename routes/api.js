@@ -7,7 +7,7 @@ import {
 } from '../controllers/apiController.js';
 import { me, login, logout, register, home, getSettings, updateSettings, getProfile, updateProfile, deleteAccount } from '../controllers/apiUserController.js';
 import { getInventory, addArmor, addWeapon, removeArmor, removeWeapon, addItem, removeItem } from '../controllers/apiInventoryController.js';
-import { getEditCharacter, editNameAndRace, editClass, editLevel, editAbilities, editFeatureChoice, editPortrait } from '../controllers/apiEditController.js';
+import { getEditCharacter, editNameAndRace, editClass, editLevel, editAbilities, editFeatureChoice, editPortrait, editAlignment } from '../controllers/apiEditController.js';
 import { getRaces, getSubraces, step1Submit, getStep2, step2Submit, getStep3, step3Submit, getStep4, step4Submit, boostOptions, clearDraft, getDraft, rollStat, selectSubclass, getStartingGear } from '../controllers/apiCreateController.js';
 import { getSpellbook, learnSpell, unlearnSpell, prepareSpell, unprepareSpell, setAction, removeAction } from '../controllers/apiSpellController.js';
 import { createCampaign, deleteCampaign, getCampaign, updateCampaign, listCampaigns, joinCampaign, setCampaignCharacter } from '../controllers/apiCampaignController.js';
@@ -92,6 +92,7 @@ router.post('/characters/:id/spells/removeAction', removeAction);
 router.get('/characters/:id/edit', getEditCharacter);
 router.post('/characters/:id/edit/name', editNameAndRace);
 router.post('/characters/:id/edit/portrait', editPortrait);
+router.post('/characters/:id/edit/alignment', editAlignment);
 router.post('/characters/:id/edit/class', editClass);
 router.post('/characters/:id/edit/level', editLevel);
 router.post('/characters/:id/edit/abilities', editAbilities);

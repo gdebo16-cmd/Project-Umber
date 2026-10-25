@@ -293,6 +293,15 @@
 }
 /* #endregion */
 
+/* spell details: alignment band vs the character (Aligned/Attuned = good, Opposed = bad) */
+.spell-band-good {
+    color: green;
+}
+
+.spell-band-bad {
+    color: red;
+}
+
 /* #region Universal Upcast Picker Section */
 .upcast-picker {
     font: inherit;

@@ -6,9 +6,9 @@ function CreateDescription({ item, renderFeature }) {
         <section id="desc-container" className="step-1-desc-container" hidden={!item}>
             {item && (
                 <article id="descArticle" className="step-1-desc-tile">
-                    <section id="img-section">
+                    {item.img && <section id="img-section">
                       <img id="desc-img" src={item.img} alt={item.name} />
-                    </section>
+                    </section>}
                     {!item.hideTitle && <section id="titleSection">
                       <h3 id="title" className="title-text">{item.name}</h3>
                     </section>}
@@ -24,6 +24,9 @@ function CreateDescription({ item, renderFeature }) {
                         {item.race.lineage_bonuses?.map((b) => (
                             <p key={b.name}><strong>{b.name}:</strong> {b.description}</p>
                         ))}
+                    </section>)}
+                    {item.background && (<section id="traits-section">
+                        {item.background.map((line) => <p key={line}>{line}</p>)}
                     </section>)}
                     {item.sections && (
                         <section id="class-info-section">

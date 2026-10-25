@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import useSave from './useSave';
 import CreateDescription from '../CreateDescription';
+import { alignmentGlyph, hideBrokenGlyph } from '../../utils/glyphs';
 
 const GROUPS = ['Race', 'Class', 'Subclass', 'Mixed'];
 
-function EditNameForm({ character, races, onSaved }) {
+function EditNameForm({ character, races, alignments = [], onSaved }) {
     const [name, setName] = useState(character.name);
     const [raceId, setRaceId] = useState(character.race_id);
     const [subraceId, setSubraceId] = useState(character.subrace_id ?? '');
@@ -18,6 +19,8 @@ function EditNameForm({ character, races, onSaved }) {
     const [portraits, setPortraits] = useState([]);
     const [portrait, setPortrait] = useState(character.portrait_url ?? null);
     const portraitSave = useSave(`/api/characters/${character.id}/edit/portrait`, onSaved);
+    // alignment saves on click, like the portrait (server keeps Black gate picks valid)
+    const alignmentSave = useSave(`/api/characters/${character.id}/edit/alignment`, onSaved);
 
     useEffect(() => {
         fetch('/portraits/headshots.json')
@@ -66,7 +69,7 @@ function EditNameForm({ character, races, onSaved }) {
             </article>
             {subraces.length > 0 && (
                 <article className="name-tile">
-                    <label className="name-label" htmlFor="subrace_id">{race.name === 'Lupine' ? 'Breed' : 'Gem Line'}</label>
+                    <label className="name-label" htmlFor="subrace_id">{({ Lupine: 'Breed', Vellari: 'Gem Line', Gehennan: 'Vein' })[race.name] ?? 'Sub-race'}</label>
                     <select className="name-value" id="subrace_id" value={subraceId} onChange={(e) => setSubraceId(e.target.value === '' ? '' : Number(e.target.value))}>
                         <option className="name-option" value="">Select a sub-race</option>
                         {subraces.map((s) => (
@@ -78,6 +81,22 @@ function EditNameForm({ character, races, onSaved }) {
             {subrace && (
                 <CreateDescription item={{ img: subrace.img_url, name: `${race.name} (${subrace.name})`, text: subrace.description }} />
             )}
+            <article className="name-tile">
+                <label className="name-label" id="alignment_label">Alignment</label>
+                <div className="alignment-grid" role="radiogroup" aria-labelledby="alignment_label">
+                    {alignments.map((a) => (
+                        <button type="button" key={a.code} role="radio" aria-checked={character.alignment_code === a.code}
+                            className={character.alignment_code === a.code ? 'alignment-cell selected' : 'alignment-cell'}
+                            style={{ '--cell-color': a.color.toLowerCase() }}
+                            aria-label={a.name} title={a.name}
+                            onClick={() => alignmentSave.save({ alignment_code: a.code })}>
+                            <img className="tile-icon" src={alignmentGlyph(a.color)} alt="" onError={hideBrokenGlyph} />
+                            <span>{a.color} Magic</span>
+                        </button>
+                    ))}
+                </div>
+                {alignmentSave.message && <p>{alignmentSave.message}</p>}
+            </article>
             <details className="form-section portrait-picker">
                 <summary className="tile-top portrait-summary">Character Portrait</summary>
                 <div className="tile-bottom">

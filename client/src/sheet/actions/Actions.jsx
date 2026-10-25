@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
 import { sendJson } from '../../utils/api';
 import RuneControl from './RuneControl';
 import { weaponRuneEffects, runicStrikeDice, utilityRuneEffects } from '../../utils/runes'; /*prep-done*/
-import { stateGlyph, elementGlyph, alignmentGlyph, hideBrokenGlyph } from '../../utils/glyphs';
+import { stateGlyph, elementGlyph, alignmentGlyph, hideBrokenGlyph, bandClass } from '../../utils/glyphs';
 
 // Dual wield: the off-hand attack is a bonus action and loses the ability modifier on DAMAGE (5e).
 // Flip this to true to also drop the modifier from to-hit (proficiency always stays).
@@ -68,7 +68,7 @@ function Actions() {
             // Two hands: versatile weapons swap to their versatile die (never while dual wielding)
             const versatile = oneHanded && !!w.versatile_dice;
             const twoHand = versatile && !dual && !!w.two_handed;
-            const hit = (statMod != null ? init + statMod : ranged ? toHit : meleeHit) + runeFx.hitBonus;
+            const hit = (statMod != null ? init + statMod : ranged ? init + modOf(character.dex) : meleeHit) + runeFx.hitBonus;
             // Seal Cracks: +1 radiant per Crack on sigil hits (the marked weapon, plus chain whips and flails via weapons.sigil_weapon)
             return { key: `w${w.id}`, weaponId: w.id, name: w.name, dice: twoHand ? w.versatile_dice : w.damage_dice, oneHanded, dual, versatile, twoHand,
                 rarity: w.rarity, description: w.description, category: w.weapon_category,
@@ -573,7 +573,7 @@ function Actions() {
                                     <article className="spell-build-box-content">
                                         <p>State: {openItem.data.state_name && <img className="tile-icon" src={stateGlyph(openItem.data.state_name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}<strong>{openItem.data.state_name ? `${openItem.data.state_name}` : ''}</strong></p> 
                                         <p>Element: {openItem.data.element_name && <img className="tile-icon" src={elementGlyph(openItem.data.element_name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}<strong>{openItem.data.element_name ? `${openItem.data.element_name}` : ''}</strong></p>
-                                        <p>Alignment: {openItem.data.alignment_name && <img className="tile-icon" src={alignmentGlyph(openItem.data.alignment_name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}<strong>{openItem.data.alignment_name ? `${openItem.data.alignment_name}` : ''}</strong></p>
+                                        <p>Alignment: {openItem.data.alignment_name && <img className="tile-icon" src={alignmentGlyph(openItem.data.alignment_name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}<strong className={bandClass(openItem.data.chart_band)}>{openItem.data.alignment_name ? `${openItem.data.alignment_name}` : ''}</strong></p>
                                     </article>
                                 </section>
                             </section>

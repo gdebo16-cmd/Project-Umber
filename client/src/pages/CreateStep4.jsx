@@ -8,6 +8,7 @@ import StepNav from './StepNav';
 import Loader from '../components/Loader';
 import CreateDescription from './CreateDescription';
 import { alignmentGlyph, hideBrokenGlyph } from '../utils/glyphs';
+import { backgroundLines } from '../utils/background';
 
 // Step 4: Background / Personality (magic access v3)
 // Alignment from the chart, then Upbringing, Lifestyle and Outlook (each gives 1 state; the 3 must differ),
@@ -26,7 +27,6 @@ function CreateStep4() {
     const [ids, setIds] = useState({ upbringing: '', lifestyle: '', outlook: '' });
     const [anyStates, setAnyStates] = useState({ upbringing: '', lifestyle: '', outlook: '' }); // wildcard (Self-Taught Stray) picks
     const [elementId, setElementId] = useState('');
-    const [shown, setShown] = useState(null);
     const [saveError, setSaveError] = useState('');
 
     if (loading) return <Loader />;
@@ -42,14 +42,16 @@ function CreateStep4() {
     // states already taken by the other two dropdowns
     const takenBy = (cat) => CATS.filter((c) => c.key !== cat).map((c) => stateOf(c.key)).filter(Boolean);
 
-    const show = (o) => setShown(o ? {
-        img: data.img_url, name: o.name,
-        sections: [
-            { label: 'Description', body: o.flavor },
-            { label: 'State granted', body: o.any_state ? 'Any 1 state except destroy' : o.state },
-            ...(o.perk ? [{ label: 'Perk granted', body: o.perk }] : []),
-        ],
-    } : null);
+    // background box (replaces the race picture): alignment, one line per pick, then the perks
+    const bg = backgroundLines(Object.fromEntries(CATS.map((c) => {
+        const o = optionOf(c.key);
+        return [c.key, o ? { ...o, state: stateOf(c.key) || (o.any_state ? 'any 1 state' : o.state) } : null];
+    })));
+    const picked = data.alignments.find((x) => x.code === alignment);
+    const shown = (picked || bg.perks.length) ? {
+        name: 'Your Background',
+        background: [...(picked ? [`${picked.name} - ${picked.color} Magic`] : []), ...bg.story, ...bg.perks],
+    } : null;
 
     const changeAlignment = (code) => {
         setAlignment(code);
@@ -57,14 +59,11 @@ function CreateStep4() {
         if (!(data.subclassGate && data.blackGateAlignments.includes(code))) {
             setIds((prev) => Object.fromEntries(CATS.map((c) => [c.key, data[c.key].find((o) => String(o.id) === prev[c.key])?.needs_black_gate ? '' : prev[c.key]])));
         }
-        const a = data.alignments.find((x) => x.code === code);
-        setShown(a ? { img: data.img_url, name: a.name, sections: [{ label: 'Colour', body: `${a.color} Magic` }] } : null);
     };
 
     const changePick = (cat, value) => {
         setIds((prev) => ({ ...prev, [cat]: value }));
         setAnyStates((prev) => ({ ...prev, [cat]: '' }));
-        show(data[cat].find((o) => String(o.id) === value));
     };
 
     const submit = async (e) => {
@@ -106,6 +105,7 @@ function CreateStep4() {
                                         aria-label={a.name} title={a.name}
                                         onClick={() => changeAlignment(a.code)}>
                                         <img className="tile-icon" src={alignmentGlyph(a.color)} alt="" onError={hideBrokenGlyph} />
+                                        <span>{a.color} Magic</span>
                                     </button>
                                 ))}
                             </div>

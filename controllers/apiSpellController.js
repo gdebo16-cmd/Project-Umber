@@ -50,7 +50,7 @@ export async function getSpellbook(req, res) {
     const charId = await ownedCharId(req, res);
     if (charId === null) return;
     const ch = await getSheetCharacter(charId, req.session.userId);
-    const allSpells = await Spells.getSpellsForCharacter(ch.class_id, ch.subclass_id, ch.level);
+    const allSpells = await Spells.getSpellsForCharacter(ch.class_id, ch.subclass_id, ch.level, ch.alignment_code);
     const highestSlot = await highestSlotFor(ch);
     const spells = allSpells.filter((s) => Number(s.base_level) <= highestSlot);
     res.json({ spells, ...(await loadLearned(charId, ch)) });

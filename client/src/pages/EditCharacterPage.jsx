@@ -31,7 +31,7 @@ function EditCharacterPage() {
     if (loading) return <Loader />;
     if (error) return <p>Failure is upon us: {error}</p>;
 
-    const { character, races, classes, subClasses } = data;
+    const { character, races, classes, subClasses, alignments } = data;
     const current = TABS.find((t) => t.id === tab);
 
     return (
@@ -55,7 +55,7 @@ function EditCharacterPage() {
                 {tab === 'name' && (
                     <div role="tabpanel" id="edit-panel-name" aria-labelledby="edit-tab-name" className="step-1-container-wrapper">
                         <section className="step-1-container">
-                            <EditNameForm character={character} races={races} onSaved={onSaved} />
+                            <EditNameForm character={character} races={races} alignments={alignments} onSaved={onSaved} />
                         </section>
                     </div>
                 )}
