@@ -128,7 +128,7 @@ footer {
     text-align: center;
     background-color: var(--bgc-char-stat);
     border: var(--tileBorder);
-    box-shadow: var(--bs2);
+    box-shadow: var(--bs2), var(--shadowInner, none);
     padding: 4%;
     color: var(--txt-color-1);
     font-size: var(--fontS1);

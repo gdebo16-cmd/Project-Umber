@@ -70,8 +70,7 @@
     --fontfam: "Almendra", serif;
     --fontweight: 400;
     --fontstyle: normal;
-    --shadowInner: inset 6px 6px 8px #000000a9,
-        inset -1px -1px 5px #00000079;
+    --shadowInner: none;
     --tile: 10px;
     --section-gap: 0.75rem;
     --fontS1: 100%;
@@ -109,8 +108,7 @@
     --pad3: 0;
     --mar1: 0;
     --mar2: 1%;
-    --shadowInner: inset 6px 6px 8px #000000a9,
-        inset -1px -1px 5px #00000079;
+    --shadowInner: none;
     --toprad: .5rem .5rem 0 0;
     --lowrad: 0 0 .5rem .5rem;
     --padTop: 1.5rem;
@@ -153,8 +151,7 @@
     --pad3: 0;
     --mar1: 0;
     --mar2: 1%;
-    --shadowInner: inset 6px 6px 8px #000000a9,
-        inset -1px -1px 5px #00000079;
+    --shadowInner: none;
     --toprad: .5rem .5rem 0 0;
     --lowrad: 0 0 .5rem .5rem;
     --padTop: .5rem;
@@ -271,6 +268,13 @@
     --shadowInner: inset 4px 4px 14px rgba(187, 86, 96, 0.45), inset 0 0 5px rgba(224, 160, 96, 0.35);
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
     --gold-gradient: linear-gradient(to bottom, #e0a060, #8f6049);
+}
+
+[data-display='gestalt'] {
+    --glass: 88%;
+    --shadowInner: inset 4px 4px 14px rgba(150, 205, 255, 0.42), inset 0 0 5px rgba(205, 235, 255, 0.32);
+    --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    --gold-gradient: linear-gradient(to bottom, #d9a05a, #a66f2e);
 }
 
 :root,
@@ -582,7 +586,7 @@
     --glass: 88%;
     --gold-gradient: linear-gradient(to bottom, #d9a05a, #a66f2e);
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
-    --shadowInner: inset 4px 4px 15px #f0b86aa9, inset 0px 0px 5px #f0b86aa9;
+    --shadowInner: inset 4px 4px 14px rgba(150, 205, 255, 0.42), inset 0 0 5px rgba(205, 235, 255, 0.32);
 }
 
 [data-theme="shadow-of-the-mountains"] {
@@ -707,4 +711,6 @@
     html[data-background="light"] { --background: url('/eldrid-bg-light-mobile-1440x2560.webp'); }
     html[data-background="hellfire"] { --background: url('/eldrid-bg-hellfire-mobile-1440x2560.webp'); }
     html[data-background="frozen"] { --background: url('/eldrid-bg-frozen-mobile-1440x2560.webp'); }
+    html[data-background="gestalt"] { --background: url('/campaigns/the-fall-of-gestalt-mobile-1440x2560.webp'); }
+    html[data-background="shadow-of-the-mountains"] { --background: url('/campaigns/shadow-of-the-mountains-mobile-1440x2560.webp'); }
 }

@@ -105,7 +105,7 @@
         height: var(--h1);
         border: var(--tileBorder);
         border-radius: var(--tile);
-        box-shadow: var(--bs2);
+        box-shadow: var(--bs2), var(--shadowInner, none);
         padding: 2%;
         background-color: var(--panel-bg);
     }
@@ -262,6 +262,7 @@
     box-sizing: border-box;
     font-size: 1rem;
     background-color: var(--bgc-low);
+    box-shadow: var(--shadowInner, none);
     border: 1px solid color-mix(in srgb, var(--txt-color-1) 35%, transparent);
     border-radius: 6px;
     overflow-wrap: anywhere;
@@ -685,6 +686,7 @@
         border: var(--tileBorder);
         border-radius: var(--tile);
         background-color: var(--bg-color-4);
+        box-shadow: var(--shadowInner, none);
         transition: transform 0.2s ease-in-out;
         
     }
@@ -790,6 +792,7 @@
             font-size: clamp(0.85rem, 30cqh, 1.55rem);
             border-radius: 0 0 var(--tile) var(--tile);
             background-color: var(--bg-color-2);
+            box-shadow: var(--shadowInner, none);
             
         }
     /* #endregion */
@@ -837,7 +840,7 @@
             width: 100%;
             border: var(--tileBorder);
             border-radius: var(--tile);
-            box-shadow: var(--bs2);
+            box-shadow: var(--bs2), var(--shadowInner, none);
             transition: transform 0.2s ease-in-out;
         }
 
@@ -934,7 +937,7 @@
             margin: 1%;
             border: var(--tileBorder);
             border-radius: var(--tile);
-            box-shadow: var(--bs2);
+            box-shadow: var(--bs2), var(--shadowInner, none);
         }
     
         #hp-bar-fill {
@@ -1297,7 +1300,7 @@
             padding: 0;
             list-style: none;
             border-radius: var(--tile);
-            box-shadow: var(--bs2);
+            box-shadow: var(--bs2), var(--shadowInner, none);
             background-color: var(--bg-color-nav);
         }
     
@@ -1562,6 +1565,7 @@
             border-radius: 0 0 var(--tile) 0;
             border: var(--tileBorder);
             background-color: var(--bgc-char-stat);
+            box-shadow: var(--shadowInner, none);
             text-align: center;
             margin: 0;
             padding: 2%;

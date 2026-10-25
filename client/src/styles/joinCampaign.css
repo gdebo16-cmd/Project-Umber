@@ -784,7 +784,7 @@ footer {
     border: var(--tileBorder);
     border-top: none;
     border-radius: var(--lowrad);
-    box-shadow: var(--bs2);
+    box-shadow: var(--bs2), var(--shadowInner, none);
 }
 
 .camp-panel-row {
@@ -796,7 +796,7 @@ footer {
     background-color: var(--bgc-low);
     border: var(--tileBorder);
     border-radius: var(--tile);
-    box-shadow: var(--bs2);
+    box-shadow: var(--bs2), var(--shadowInner, none);
     color: var(--txt-color-1);
     text-align: center;
 }
@@ -960,7 +960,7 @@ main {
     background-color: var(--bgc-low);
     border: var(--tileBorder);
     border-radius: var(--tile);
-    box-shadow: var(--bs2);
+    box-shadow: var(--bs2), var(--shadowInner, none);
 }
 
 .cl-card-link {
