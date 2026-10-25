@@ -43,21 +43,21 @@ function Actions() {
     const fistDice = ['1', '1', '1d4', '1d6', '1d8'][healthInit(hp, character.max_hp)];
 
     // Every action has the same shape, so one map() can draw them all
-    const isSoulSmith = character.class_name === 'Soul Smith';
+    const isReaver = character.class_name === 'Reaver';
     const isRuneWeaver = character.subclass_name === 'Rune Weaver' && character.level >= 3;
-    const isGracewraith = character.class_name === 'Gracewraith';
+    const isWraith = character.class_name === 'Wraith';
     // rune damage riders on a weapon hit (crits double them too)
     const riderRolls = (a, crit) => (a.riders ?? []).map((r) => ({ ...r, n: rollDice(r.dice, crit) }));
     const riderText = (rs) => rs.map((r) => ` + ${r.n} ${r.type}`).join('');
     const riderSum = (rs) => rs.reduce((s, r) => s + r.n, 0);
     const weaponActions = ownedWeapons.filter((w) => w.is_equipped).map((w) => {
             const ranged = w.category === 'ranged';
-            // Soul Brand (Soul Smith): the branded weapon uses CHA for attack and damage
-            const branded = isSoulSmith && !!w.soul_branded;
+            // Soul Brand (Reaver): the branded weapon uses CHA for attack and damage
+            const branded = isReaver && !!w.soul_branded;
             // Rune Weaver: the runed weapon uses INT; Keen Rune +1 to hit; Ember/Rime/Spark/Gall riders
             const runed = isRuneWeaver && !!w.is_runed;
-            // Sigil mark (Gracewraith): INT for attack and damage; counts as a sigil blade (Crack bonus, Sigil Strike)
-            const marked = isGracewraith && !!w.sigil_marked;
+            // Sigil mark (Wraith): INT for attack and damage; counts as a sigil blade (Crack bonus, Sigil Strike)
+            const marked = isWraith && !!w.sigil_marked;
             const sigil = marked || !!w.sigil_weapon;
             const runeFx = weaponRuneEffects(w);
             const statMod = branded ? modOf(character.cha) : (runed || marked) ? modOf(character.int) : null;
@@ -129,10 +129,10 @@ function Actions() {
         onRoll(`Damage dealt: ${weapon}${riderText(rs)} + Runic Strike ${extra} force = ${weapon + riderSum(rs) + extra}${crit ? ' CRIT!' : ''} (once per turn)`);
     };
 
-    // Call the Brand (Soul Smith L2): bonus action, any distance on the same plane; a holder makes a STR save vs class DC
+    // Call the Brand (Reaver L2): bonus action, any distance on the same plane; a holder makes a STR save vs class DC
     const classDc = 8 + proficiencyBonus(character.level) + modOf(character.cha);
     const brandedWeapon = weaponActions.find((a) => a.branded);
-    const hasCallTheBrand = isSoulSmith && character.level >= 2 && !!brandedWeapon;
+    const hasCallTheBrand = isReaver && character.level >= 2 && !!brandedWeapon;
     const callTheBrand = () => onRoll(`Call the Brand: ${brandedWeapon.name} returns to your hand (bonus action). If someone holds it: STR save DC ${classDc} (an attuned holder keeps it).`);
 
     const toggleDualWield = async (a) => {
@@ -595,7 +595,7 @@ function Actions() {
                                         <p>To Hit: <strong>{signed(openWeapon.hit ?? toHit)}</strong>{openWeapon.attackBonus ? <> (magic {signed(openWeapon.attackBonus)})</> : null}</p>
                                     </article>
                                 </section>
-                                {(openWeapon.oneHanded || ((isSoulSmith || isRuneWeaver || isGracewraith) && openWeapon.weaponId)) && (
+                                {(openWeapon.oneHanded || ((isReaver || isRuneWeaver || isWraith) && openWeapon.weaponId)) && (
                                     <section className="spell-build-box">
                                         <article className="spell-build-box-title"><h4>Options</h4></article>
                                         <article className="spell-build-box-content">
@@ -619,7 +619,7 @@ function Actions() {
                                             {isRuneWeaver && openWeapon.weaponId && (
                                                 <RuneControl kind="weapon" itemId={openWeapon.weaponId} itemType="weapon" itemRunes={openWeapon.runes} isRunedWeapon={openWeapon.runed} />
                                             )}
-                                            {isGracewraith && openWeapon.weaponId && (
+                                            {isWraith && openWeapon.weaponId && (
                                                 <>
                                                     <p>
                                                         <label>
@@ -629,7 +629,7 @@ function Actions() {
                                                     <p>{openWeapon.marked ? 'INT for attack and damage; Sigil Strike and the Crack bonus apply.' : 'One weapon at a time.'}</p>
                                                 </>
                                             )}
-                                            {isSoulSmith && openWeapon.weaponId && (
+                                            {isReaver && openWeapon.weaponId && (
                                                 <>
                                                     <p>
                                                         <label>

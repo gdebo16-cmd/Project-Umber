@@ -162,7 +162,7 @@ export async function soulBrandWeapon(req, res) {
     }
 
     const result = await Inventory.setWeaponSoulBrand(charId, Number(req.body.weapon_id), req.body.soul_branded === true);
-    if (result === 'not-soul-smith') return res.status(403).json({ error: 'Only a Soul Smith can soul brand a weapon' });
+    if (result === 'not-reaver') return res.status(403).json({ error: 'Only a Reaver can soul brand a weapon' });
     if (result === 'not-owned') return res.status(404).json({ error: 'Weapon not owned' });
     res.json({ ownedWeapons: await Inventory.getOwnedWeapons(charId) });
 }
@@ -176,7 +176,7 @@ export async function sigilMarkWeapon(req, res) {
     }
 
     const result = await Inventory.setWeaponSigilMark(charId, Number(req.body.weapon_id), req.body.marked === true);
-    if (result === 'not-gracewraith') return res.status(403).json({ error: 'Only a Gracewraith can place a sigil mark' });
+    if (result === 'not-wraith') return res.status(403).json({ error: 'Only a Wraith can place a sigil mark' });
     if (result === 'not-owned') return res.status(404).json({ error: 'Weapon not owned' });
     res.json({ ownedWeapons: await Inventory.getOwnedWeapons(charId) });
 }

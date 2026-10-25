@@ -226,15 +226,15 @@ export async function setWeaponTwoHanded(charId, weaponId, on) {
     return rowCount;
 }
 
-// Soul Brand (Soul Smith only): one branded weapon per character, so branding one clears the others.
-// Returns 'not-soul-smith', 'not-owned' or 'ok'.
+// Soul Brand (Reaver only): one branded weapon per character, so branding one clears the others.
+// Returns 'not-reaver', 'not-owned' or 'ok'.
 export async function setWeaponSoulBrand(charId, weaponId, on) {
     const client = await pool.connect();
     try {
         await client.query('BEGIN');
         const { rows: [ch] } = await client.query(
             `SELECT c.name AS class_name FROM characters ch JOIN classes c ON c.id = ch.class_id WHERE ch.id = $1`, [charId]);
-        if (ch?.class_name !== 'Soul Smith') { await client.query('ROLLBACK'); return 'not-soul-smith'; }
+        if (ch?.class_name !== 'Reaver') { await client.query('ROLLBACK'); return 'not-reaver'; }
         if (on) await client.query(`UPDATE character_weapons SET soul_branded = false WHERE character_id = $1 AND weapon_id <> $2`, [charId, weaponId]);
         const { rowCount } = await client.query(
             `UPDATE character_weapons SET soul_branded = $3 WHERE character_id = $1 AND weapon_id = $2`, [charId, weaponId, !!on]);
@@ -249,12 +249,12 @@ export async function setWeaponSoulBrand(charId, weaponId, on) {
     }
 }
 
-// Sigil mark (Gracewraith only): one marked weapon, stored as characters.sigil_item_id.
-// Returns 'not-gracewraith', 'not-owned' or 'ok'.
+// Sigil mark (Wraith only): one marked weapon, stored as characters.sigil_item_id.
+// Returns 'not-wraith', 'not-owned' or 'ok'.
 export async function setWeaponSigilMark(charId, weaponId, on) {
     const { rows: [ch] } = await pool.query(
         `SELECT c.name AS class_name FROM characters ch JOIN classes c ON c.id = ch.class_id WHERE ch.id = $1`, [charId]);
-    if (ch?.class_name !== 'Gracewraith') return 'not-gracewraith';
+    if (ch?.class_name !== 'Wraith') return 'not-wraith';
     const { rows: [row] } = await pool.query(
         `SELECT id FROM character_weapons WHERE character_id = $1 AND weapon_id = $2`, [charId, weaponId]);
     if (!row) return 'not-owned';
