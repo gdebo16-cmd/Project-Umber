@@ -3,13 +3,14 @@ BEGIN;
 
 INSERT INTO races (name, creature_type, traits, size, base_speed, resistances, darkvision, img_url, signature_state_id, race_spell_id)
 SELECT 'Homunculi', 'Humanoid',
-  'Artificial souls created by alchemists seeking immortality. Most are considered failed experiments and treated poorly, but some are treated as family. Their skin is ivory and porcelain-like, ringed with fine gold seams at the wrists, elbows and shoulders, and their soul is a sentient glossy black liquid that drifts around them in ribbons and droplets. They are rare, and most can blend into normal society. Languages: Common plus one language of your choice.',
+  'Artificial souls created by alchemists seeking immortality. Most are considered failed experiments and treated poorly, but some are treated as family. Their skin is ivory and porcelain-like, ringed with fine gold seams at the wrists, elbows and shoulders, and their soul is a sentient glossy black liquid that drifts around them in ribbons and droplets. They are rare, and most can blend into normal society. Languages: Trade plus one language of the player''s choice.',
   'Small or Medium', 30, 'Poison', false, '/races/homunculi.png',
   (SELECT id FROM spell_state WHERE name = 'manipulate'),
   (SELECT id FROM spells WHERE name = 'Bend Water' AND base_level = 0 ORDER BY id LIMIT 1)
 WHERE NOT EXISTS (SELECT 1 FROM races WHERE name = 'Homunculi');
 
-UPDATE races SET creature_type = 'Humanoid', size = 'Small or Medium', base_speed = 30, resistances = 'Poison', darkvision = false,
+UPDATE races SET traits = replace(traits, 'Languages: Common plus one language of your choice.', 'Languages: Trade plus one language of the player''s choice.'),
+  creature_type = 'Humanoid', size = 'Small or Medium', base_speed = 30, resistances = 'Poison', darkvision = false,
   img_url = '/races/homunculi.png',
   signature_state_id = (SELECT id FROM spell_state WHERE name = 'manipulate'),
   race_spell_id = (SELECT id FROM spells WHERE name = 'Bend Water' AND base_level = 0 ORDER BY id LIMIT 1)
