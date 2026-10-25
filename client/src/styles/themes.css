@@ -266,6 +266,13 @@
     --letterSp: .02em;
 }
 
+[data-display='shadow-of-the-mountains'] {
+    --glass: 72%;
+    --shadowInner: inset 4px 4px 14px rgba(187, 86, 96, 0.45), inset 0 0 5px rgba(224, 160, 96, 0.35);
+    --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    --gold-gradient: linear-gradient(to bottom, #e0a060, #8f6049);
+}
+
 :root,
 [data-theme="default"] {
     --bg: #2e1e66;
@@ -586,7 +593,7 @@
     --accent: #bb5660;
     --accent-2: #e0a060;
     --border: #713540;
-    --glass: 88%;
+    --glass: 72%;
 }
 
 :root,
