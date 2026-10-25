@@ -267,7 +267,7 @@ footer {
     footer {
         display: flex;
         position: fixed;
-        top: calc(100svh - 2vh);
+        bottom: -1vh; /* pinned to the real bottom: on scrolling pages iOS grows the viewport past 100svh, so top-based placement floated up over the buttons */
         z-index: 10;
         height: 3vh;
         width: 100%;
