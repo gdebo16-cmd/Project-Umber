@@ -545,6 +545,11 @@
     "group": "Race"
   },
   {
+    "file": "race-homunculi.png",
+    "label": "Homunculi",
+    "group": "Race"
+  },
+  {
     "file": "race-gehennan-red.png",
     "label": "Gehennan (Wrathveined)",
     "group": "Race"
@@ -1002,6 +1007,56 @@
   {
     "file": "mix-gehennan-magic-4.png",
     "label": "Gehennan Magic 4",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-homunculi-1.png",
+    "label": "Homunculi 1",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-homunculi-2.png",
+    "label": "Homunculi 2",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-homunculi-3.png",
+    "label": "Homunculi 3",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-homunculi-4.png",
+    "label": "Homunculi 4",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-homunculi-5.png",
+    "label": "Homunculi 5",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-homunculi-6.png",
+    "label": "Homunculi 6",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-homunculi-7.png",
+    "label": "Homunculi 7",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-homunculi-8.png",
+    "label": "Homunculi 8",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-homunculi-9.png",
+    "label": "Homunculi 9",
+    "group": "Mixed"
+  },
+  {
+    "file": "mix-homunculi-10.png",
+    "label": "Homunculi 10",
     "group": "Mixed"
   }
 ]
