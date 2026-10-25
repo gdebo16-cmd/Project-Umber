@@ -6,6 +6,7 @@ import { createPortal } from 'react-dom';
 import { sendJson } from '../../utils/api';
 import RuneControl from './RuneControl';
 import { weaponRuneEffects, runicStrikeDice, utilityRuneEffects } from '../../utils/runes'; /*prep-done*/
+import { stateGlyph, elementGlyph, alignmentGlyph, hideBrokenGlyph } from '../../utils/glyphs';
 
 // Dual wield: the off-hand attack is a bonus action and loses the ability modifier on DAMAGE (5e).
 // Flip this to true to also drop the modifier from to-hit (proficiency always stays).
@@ -570,9 +571,9 @@ function Actions() {
                                 <section className="spell-build-box">
                                     <article className="spell-build-box-title"><h4>Incantation</h4></article>
                                     <article className="spell-build-box-content">
-                                        <p>State: <strong>{openItem.data.state_name ? `${openItem.data.state_name}` : ''}</strong></p> 
-                                        <p>Element: <strong>{openItem.data.element_name ? `${openItem.data.element_name}` : ''}</strong></p>
-                                        <p>Alignment: <strong>{openItem.data.alignment_name ? `${openItem.data.alignment_name}` : ''}</strong></p>
+                                        <p>State: {openItem.data.state_name && <img className="tile-icon" src={stateGlyph(openItem.data.state_name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}<strong>{openItem.data.state_name ? `${openItem.data.state_name}` : ''}</strong></p> 
+                                        <p>Element: {openItem.data.element_name && <img className="tile-icon" src={elementGlyph(openItem.data.element_name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}<strong>{openItem.data.element_name ? `${openItem.data.element_name}` : ''}</strong></p>
+                                        <p>Alignment: {openItem.data.alignment_name && <img className="tile-icon" src={alignmentGlyph(openItem.data.alignment_name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}<strong>{openItem.data.alignment_name ? `${openItem.data.alignment_name}` : ''}</strong></p>
                                     </article>
                                 </section>
                             </section>

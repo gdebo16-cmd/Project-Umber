@@ -134,6 +134,8 @@ select:focus-visible {
 
 /*  ===== Mobile (max-width: 768px), consolidated =====  */
 
+.tile-icon { width: 1.25em; height: 1.25em; vertical-align: middle; margin-right: .25em; }
+
 @media (max-width: 768px) {
     /* Mobile: the details popup slides up from the bottom, full width */
     .spell-details {

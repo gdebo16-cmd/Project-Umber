@@ -1095,3 +1095,8 @@ footer {
         border-top: none;
     }
 }
+
+.alignment-cell img {
+    width: 60%;
+    height: auto;
+}

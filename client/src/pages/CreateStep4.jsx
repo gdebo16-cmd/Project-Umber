@@ -7,6 +7,7 @@ import { sendJson } from '../utils/api';
 import StepNav from './StepNav';
 import Loader from '../components/Loader';
 import CreateDescription from './CreateDescription';
+import { alignmentGlyph, hideBrokenGlyph } from '../utils/glyphs';
 
 // Step 4: Background / Personality (magic access v3)
 // Alignment from the chart, then Upbringing, Lifestyle and Outlook (each gives 1 state; the 3 must differ),
@@ -45,8 +46,8 @@ function CreateStep4() {
         img: data.img_url, name: o.name,
         sections: [
             { label: 'Description', body: o.flavor },
-            { label: 'State', body: o.any_state ? 'Any 1 state except destroy' : o.state },
-            ...(o.perk ? [{ label: 'Perk', body: o.perk }] : []),
+            { label: 'State granted', body: o.any_state ? 'Any 1 state except destroy' : o.state },
+            ...(o.perk ? [{ label: 'Perk granted', body: o.perk }] : []),
         ],
     } : null);
 
@@ -102,9 +103,9 @@ function CreateStep4() {
                                     <button type="button" key={a.code} role="radio" aria-checked={alignment === a.code}
                                         className={alignment === a.code ? 'alignment-cell selected' : 'alignment-cell'}
                                         style={{ '--cell-color': a.color.toLowerCase() }}
+                                        aria-label={a.name} title={a.name}
                                         onClick={() => changeAlignment(a.code)}>
-                                        <span>{a.name}</span>
-                                        <span>{a.color}</span>
+                                        <img className="tile-icon" src={alignmentGlyph(a.color)} alt="" onError={hideBrokenGlyph} />
                                     </button>
                                 ))}
                             </div>
@@ -122,7 +123,7 @@ function CreateStep4() {
                                             .filter((o) => !o.needs_black_gate || gate)
                                             .filter((o) => String(o.id) === ids[c.key] || o.any_state || !taken.includes(o.state))
                                             .map((o) => (
-                                                <option key={o.id} value={o.id} className="name-option-2">{o.name} ({o.any_state ? 'any state' : o.state})</option>
+                                                <option key={o.id} value={o.id} className="name-option-2">{o.name}</option>
                                             ))}
                                     </select>
                                     {picked?.any_state && (

@@ -7,6 +7,7 @@ import { getSpellSlots, beamsAt, beamRollText, beamDamageText } from '../../util
 import { modOf, signed, proficiencyBonus, rollDice, rollToHit } from '../../utils/math';
 import { useCharacter } from '../CharacterContext';
 import { createPortal } from 'react-dom';
+import { stateGlyph, elementGlyph, alignmentGlyph, hideBrokenGlyph } from '../../utils/glyphs';
 
 
 const SPELL_TABS = [
@@ -135,9 +136,9 @@ function SpellsTab() {
                         <h4>Incantation</h4>
                      </article> 
                      <article className='spell-build-box-content'>
-                            <p>State: <strong>{openSpell.state_name ? `${openSpell.state_name}` : ''}</strong></p>
-                            <p>Element: <strong>{openSpell.element_name ? `${openSpell.element_name}` : ''}</strong></p>
-                            <p>Alignment: <strong>{openSpell.alignment_name ? `${openSpell.alignment_name}` : ''}</strong></p>
+                            <p>State: {openSpell.state_name && <img className="tile-icon" src={stateGlyph(openSpell.state_name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}<strong>{openSpell.state_name ? `${openSpell.state_name}` : ''}</strong></p>
+                            <p>Element: {openSpell.element_name && <img className="tile-icon" src={elementGlyph(openSpell.element_name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}<strong>{openSpell.element_name ? `${openSpell.element_name}` : ''}</strong></p>
+                            <p>Alignment: {openSpell.alignment_name && <img className="tile-icon" src={alignmentGlyph(openSpell.alignment_name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}<strong>{openSpell.alignment_name ? `${openSpell.alignment_name}` : ''}</strong></p>
                         </article>
                     </section>
                     </section>

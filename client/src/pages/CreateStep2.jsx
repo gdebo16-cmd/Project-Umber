@@ -13,6 +13,7 @@ import WeaponFilter from '../components/WeaponFilter';
 import ArmorFilter from '../components/ArmorFilter';
 import { filterSortArmor, EMPTY_ARMOR_FILTER } from '../utils/armor';
 import { filterSortWeapons, EMPTY_WEAPON_FILTER } from '../utils/weapons';
+import { classGlyph, hideBrokenGlyph } from '../utils/glyphs';
 
 // Replaces views/create_char_step2.ejs (step 2: class and subclass)
 // Builds what the description box shows for a class: dropdown sections + feature tree
@@ -205,7 +206,7 @@ function CreateStep2() {
                         </article>
 
                         <article id="class-container" className="name-tile-2">
-                            <label className="name-label-2" htmlFor="class_id">Select Class</label>
+                            <label className="name-label-2" htmlFor="class_id">{picked && <img className="tile-icon" src={classGlyph(picked.name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}Select Class</label>
                             <select className="name-value-2" id="class_id" value={classId} onChange={changeClass} required>
                                 <option value="" disabled className="name-option-2">Select your Class</option>
                                 {classes.map((c) => (

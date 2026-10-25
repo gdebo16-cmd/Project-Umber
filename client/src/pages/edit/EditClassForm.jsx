@@ -6,6 +6,7 @@ import CreateDescription from '../CreateDescription';
 import LevelChoices from '../LevelChoices';
 import { choiceFeatures, keepPicks, KEPT_BOOST, isBoostRow } from '../../utils/levelChoices';
 import { sendJson } from '../../utils/api';
+import { classGlyph, hideBrokenGlyph } from '../../utils/glyphs';
 
 // Class + subclass editor, laid out like creator Step 2: pick tiles on top, then the
 // description box with the class and subclass features the character has unlocked
@@ -125,7 +126,7 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
                     </select>
                 </article>
                 <article className="name-tile-2">
-                    <label className="name-label-2" htmlFor="class_id">Select Class</label>
+                    <label className="name-label-2" htmlFor="class_id">{pickedClass && <img className="tile-icon" src={classGlyph(pickedClass.name)} alt="" aria-hidden="true" onError={hideBrokenGlyph} />}Select Class</label>
                     <select className="name-value-2" id="class_id" value={classId} onChange={changeClass} required>
                         {classes.map((c) => (
                             <option key={c.id} value={c.id} className="name-option-2">{c.name}</option>

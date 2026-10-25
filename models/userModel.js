@@ -15,7 +15,7 @@ export async function usernameExists(username) {
 // Returns { id, username, created_at }
 export async function createUser(username, hash, name, email) {
     const result = await pool.query(
-        `INSERT INTO users (username, password_hash, name, email) VALUES ($1, $2, $3, $4) RETURNING id, username, created_at`,
+        `INSERT INTO users (username, password_hash, name, email, site_theme) VALUES ($1, $2, $3, $4, 'default') RETURNING id, username, created_at`,
         [username, hash, name, email]
     );
     return result.rows[0];
