@@ -34,6 +34,7 @@ function SpellBook({ characterId, onDone, onOpenSpell }) {
     const { data, setData, loading, error } = useFetch(`/api/characters/${characterId}/spellbook`);
     const [tab, setTab] = useState('level_0');
     const [saveError, setSaveError] = useState('');
+    const [filters, setFilters] = useState({ alignment_name: '', element_name: '', state_name: '' }); // '' = All
 
     const changeSpell = async (spellId, action) => {
         const url = `/api/characters/${characterId}/spells/${action}`;
@@ -69,6 +70,11 @@ function SpellBook({ characterId, onDone, onOpenSpell }) {
     const learnedCantrips = learnedSpells.filter((s) => s.base_level === 0 && !s.is_racial && !s.is_bonus).length; // race starter spells are free
     const maxLevel = Math.max(0, ...spells.map((s) => s.base_level));
     const visibleTabs = TABS.filter((t) => Number(t.id.split('_')[1]) <= maxLevel);
+
+    // Alignment / element / state dropdowns: options come from the spells in this book, '' = All
+    const FILTERS = [['alignment_name', 'Alignment'], ['element_name', 'Element'], ['state_name', 'State']];
+    const optionsFor = (key) => [...new Set(spells.map((s) => s[key]).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    const shownSpells = spells.filter((s) => FILTERS.every(([key]) => !filters[key] || s[key] === filters[key]));
     
     
     
@@ -80,6 +86,15 @@ return (
                     <button type="button" className="spellbook-button" onClick={onDone}>Close the Book</button>
                 {spellLimits && <p className='spell-stat-book'>Learned: {learnedLeveled}/{spellLimits.known} Cantrips: {learnedCantrips}/{spellLimits.cantrips}</p>}
                 {saveError && <p>{saveError}</p>}
+                {FILTERS.map(([key, label]) => (
+                    <label key={key}>
+                        {label}{' '}
+                        <select value={filters[key]} onChange={(e) => setFilters((f) => ({ ...f, [key]: e.target.value }))}>
+                            <option value="">All</option>
+                            {optionsFor(key).map((v) => <option key={v} value={v}>{v}</option>)}
+                        </select>
+                    </label>
+                ))}
                 </article>
                 
             </section>
@@ -89,7 +104,7 @@ return (
 
                 {TABS.map(({ id }) => {
                     const level = Number(id.replace('level_', ''));
-                    const levelSpells = spells.filter((s) => s.base_level === level);
+                    const levelSpells = shownSpells.filter((s) => s.base_level === level);
 
                     return (
                         <article
