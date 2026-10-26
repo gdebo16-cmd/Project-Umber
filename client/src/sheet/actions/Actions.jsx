@@ -5,6 +5,7 @@ import { getSpellSlots, beamsAt, beamRollText, beamDamageText, scaledAt } from '
 import { createPortal } from 'react-dom';
 import { sendJson } from '../../utils/api';
 import RuneControl from './RuneControl';
+import { statName } from '../../utils/stats';
 import { weaponRuneEffects, runicStrikeDice, utilityRuneEffects } from '../../utils/runes'; /*prep-done*/
 import { stateGlyph, elementGlyph, alignmentGlyph, hideBrokenGlyph, bandClass } from '../../utils/glyphs';
 
@@ -134,7 +135,7 @@ function Actions() {
     const classDc = 8 + proficiencyBonus(character.level) + modOf(character.cha);
     const brandedWeapon = weaponActions.find((a) => a.branded);
     const hasCallTheBrand = isReaver && character.level >= 2 && !!brandedWeapon;
-    const callTheBrand = () => onRoll(`Call the Brand: ${brandedWeapon.name} returns to your hand (bonus action). If someone holds it: STR save DC ${classDc} (an attuned holder keeps it).`);
+    const callTheBrand = () => onRoll(`Call the Brand: ${brandedWeapon.name} returns to your hand (bonus action). If someone holds it: Might roll DC ${classDc} (an attuned holder keeps it).`);
 
     const toggleDualWield = async (a) => {
         try {
@@ -230,7 +231,7 @@ function Actions() {
         if (s.attack_type) return onRoll(beamsAt(s, character.level) > 1
             ? `${start} ${beamRollText(beamsAt(s, character.level), spellToHit + (s.base_to_hit_modifier || 0), dice, s.dmgMod || 0)}`
             : `${start} ${spellHitText(s)}`);
-        if (s.opponent_save_roll) return onRoll(`${start} Target must make a ${s.opponent_save_roll} roll and roll higher than a ${spellSave}`);
+        if (s.opponent_save_roll) return onRoll(`${start} Target must make a ${statName(s.opponent_save_roll)} roll and roll higher than a ${spellSave}`);
         if (!dice && healAt(s, lvl)) return onRoll(`${start} ${healText(s, lvl)}`);
         if (dice) return onRoll(`${start} Damage dealt: ${Math.max(0, rollDice(dice) + (s.dmgMod || 0))}`);
         onRoll(start);
@@ -353,7 +354,7 @@ function Actions() {
                         {signed(spellToHit + (s.base_to_hit_modifier || 0))}
                     </button>
                 ) : s.opponent_save_roll ? (
-                    <button type='button' className='btn action-button hover-grow' onClick={() => onCastClick(s, () => castSpell(s, `Target must make a ${s.opponent_save_roll} roll and roll higher than a ${spellSave}`))}>{s.opponent_save_roll} {spellSave}</button>
+                    <button type='button' className='btn action-button hover-grow' onClick={() => onCastClick(s, () => castSpell(s, `Target must make a ${statName(s.opponent_save_roll)} roll and roll higher than a ${spellSave}`))}>{statName(s.opponent_save_roll)} {spellSave}</button>
                 ) : null}
 
                 {(s.base_damage_dice) ? (
@@ -591,7 +592,7 @@ function Actions() {
                                     <article className="combat-box-content">
                                         <p>Range: <strong>{openWeapon.range ?? 'Reach'}</strong></p>
                                         <p>Damage: <strong>{openWeapon.dice}{openWeapon.dmgMod ? signed(openWeapon.dmgMod) : ''}{openWeapon.damageType ? ` ${openWeapon.damageType}` : ''}</strong></p>
-                                        <p>Stat: <strong>{openWeapon.stat ?? '-'}</strong></p>
+                                        <p>Stat: <strong>{statName(openWeapon.stat) ?? '-'}</strong></p>
                                         <p>Hands: <strong>{openWeapon.hands ?? '-'}</strong></p>
                                         <p>To Hit: <strong>{signed(openWeapon.hit ?? toHit)}</strong>{openWeapon.attackBonus ? <> (magic {signed(openWeapon.attackBonus)})</> : null}</p>
                                     </article>
@@ -627,7 +628,7 @@ function Actions() {
                                                             <input type="checkbox" checked={openWeapon.marked} onChange={() => toggleSigilMark(openWeapon)} /> Sigil mark
                                                         </label>
                                                     </p>
-                                                    <p>{openWeapon.marked ? 'INT for attack and damage; Sigil Strike and the Crack bonus apply.' : 'One weapon at a time.'}</p>
+                                                    <p>{openWeapon.marked ? 'Intellect for attack and damage; Sigil Strike and the Crack bonus apply.' : 'One weapon at a time.'}</p>
                                                 </>
                                             )}
                                             {isReaver && openWeapon.weaponId && (
@@ -637,7 +638,7 @@ function Actions() {
                                                             <input type="checkbox" checked={openWeapon.branded} onChange={() => toggleSoulBrand(openWeapon)} /> Soul Brand
                                                         </label>
                                                     </p>
-                                                    <p>{openWeapon.branded ? `CHA for attack and damage; Soul Strike +${soulStrikeDice} force.` : 'One weapon at a time.'}</p>
+                                                    <p>{openWeapon.branded ? `Confidence for attack and damage; Soul Strike +${soulStrikeDice} force.` : 'One weapon at a time.'}</p>
                                                 </>
                                             )}
                                         </article>

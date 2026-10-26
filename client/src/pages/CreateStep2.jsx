@@ -14,6 +14,7 @@ import ArmorFilter from '../components/ArmorFilter';
 import { filterSortArmor, EMPTY_ARMOR_FILTER } from '../utils/armor';
 import { filterSortWeapons, EMPTY_WEAPON_FILTER } from '../utils/weapons';
 import { classGlyph, hideBrokenGlyph } from '../utils/glyphs';
+import { statName } from '../utils/stats';
 
 // Replaces views/create_char_step2.ejs (step 2: class and subclass)
 // Builds what the description box shows for a class: dropdown sections + feature tree
@@ -23,9 +24,9 @@ const LEVELS = Array.from({ length: 30 }, (_, i) => i + 1); // 1 through 30, sam
 function classSections(c, subs) {
     return [
         { label: 'Description', body: c.description },
-        { label: 'Spellcasting Ability', body: c.spellcasting_stat ? `${c.spellcasting_stat} - ${c.spellcasting}` : c.spellcasting },
+        { label: 'Spellcasting Ability', body: c.spellcasting_stat ? `${statName(c.spellcasting_stat)} - ${c.spellcasting}` : c.spellcasting },
         { label: 'Subclasses', body: subs.length ? subs.map((s) => s.name).join('\n') : 'Loading...' },
-        { label: 'Stat Details', body: `Primary stat: ${c.primary_stat}\nHit die: ${c.hitpoint_die}` },
+        { label: 'Stat Details', body: `Primary stat: ${statName(c.primary_stat)}\nHit die: ${c.hitpoint_die}` },
         { label: 'Armor & Weapons', body: `Armor: ${c.armor_proficiencies ?? '-'}\nWeapons: ${c.weapon_proficiencies ?? '-'}` },
         { label: 'Tools', body: c.tool_proficiencies ?? '-' },
     ];

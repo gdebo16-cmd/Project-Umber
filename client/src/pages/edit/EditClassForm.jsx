@@ -7,6 +7,7 @@ import LevelChoices from '../LevelChoices';
 import { choiceFeatures, keepPicks, KEPT_BOOST, isBoostRow } from '../../utils/levelChoices';
 import { sendJson } from '../../utils/api';
 import { classGlyph, hideBrokenGlyph } from '../../utils/glyphs';
+import { statName } from '../../utils/stats';
 
 // Class + subclass editor, laid out like creator Step 2: pick tiles on top, then the
 // description box with the class and subclass features the character has unlocked
@@ -107,7 +108,7 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
         sections: [
             { label: 'Description', body: pickedClass.description ?? '-' },
             ...(pickedSub ? [{ label: `Subclass: ${pickedSub.name}`, body: pickedSub.description ?? '-' }] : []),
-            { label: 'Stat Details', body: `Primary stat: ${pickedClass.primary_stat}\nHit die: ${pickedClass.hitpoint_die}` },
+            { label: 'Stat Details', body: `Primary stat: ${statName(pickedClass.primary_stat)}\nHit die: ${pickedClass.hitpoint_die}` },
             { label: 'Armor & Weapons', body: `Armor: ${pickedClass.armor_proficiencies ?? '-'}\nWeapons: ${pickedClass.weapon_proficiencies ?? '-'}` },
             { label: 'Tools', body: pickedClass.tool_proficiencies ?? '-' },
         ],

@@ -7,6 +7,7 @@ import { getSpellSlots, beamsAt, beamRollText, beamDamageText } from '../../util
 import { modOf, signed, proficiencyBonus, rollDice, rollToHit } from '../../utils/math';
 import { useCharacter } from '../CharacterContext';
 import { createPortal } from 'react-dom';
+import { statName } from '../../utils/stats';
 import { stateGlyph, elementGlyph, alignmentGlyph, hideBrokenGlyph, bandClass } from '../../utils/glyphs';
 
 
@@ -92,7 +93,7 @@ function SpellsTab() {
                 {s.attack_type ? (
                     <button type='button' className='action-button btn-to-hit hover-grow' onClick={() => cast(beamsAt(s, level) > 1 ? `${who} casts ${s.name}! ${beamRollText(beamsAt(s, level), toHit, dice)}` : `${who} casts ${s.name}! ${hitText()}`)}>{signed(toHit)}</button>
                 ) : s.opponent_save_roll ? (
-                    <button type='button' className='action-button btn-to-hit hover-grow' onClick={() => cast(`${who} casts ${s.name}! Target must make a ${s.opponent_save_roll} roll and beat a ${spellSave}!`)}>{s.opponent_save_roll} {spellSave}</button>
+                    <button type='button' className='action-button btn-to-hit hover-grow' onClick={() => cast(`${who} casts ${s.name}! Target must make a ${statName(s.opponent_save_roll)} roll and beat a ${spellSave}!`)}>{statName(s.opponent_save_roll)} {spellSave}</button>
                 ) : null}
                 {dice ? (
                     // with a to-hit/save button the damage is just a roll; without one, this button is the cast
@@ -164,9 +165,9 @@ function SpellsTab() {
             <h2 className="spell-tab-title" id="spell-title">Spell Book</h2>
             <article className="spell-stat-bar">
                 <button type='button' className='book-button spell-stat' onClick={() => setBrowsing(true)}>Consult the Scrolls</button>
-                <p className="spell-stat">Primary Stat: {spellStat}</p>
+                <p className="spell-stat">Primary Stat: {statName(spellStat)}</p>
                 <p className="spell-stat">Spell Attack: {signed(spellAttack)} </p>
-                <p className="spell-stat">Target Save: {signed(spellSave)}</p>
+                <p className="spell-stat">Target Roll: {signed(spellSave)}</p>
                 {caps && <p className="spell-stat">Prepared spells {preparedCount}/{caps.prepared}</p>}
                 {caps && <p className="spell-stat">Cantrips {preparedCantrips}/{caps.cantrips}</p>}
             </article>

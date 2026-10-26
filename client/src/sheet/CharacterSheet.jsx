@@ -9,6 +9,7 @@ import StatBox from './StatBox';
 import Skills from './Skills';
 import ArmorClass from './ArmorClass';
 import Initiative from './Initiative';
+import ProficiencyBonus from './ProficiencyBonus';
 import ActionPanel from './actions/ActionPanel';
 import HealthBox from './HealthBox';
 import Conditions from './Conditions';
@@ -140,9 +141,9 @@ function CharacterSheet() {
         for (let i = 0; i < cracks + n - crackMax; i++) {
             const roll = d20() + conSave;
             if (roll >= breachDc) {
-                messages.push(`Breach! CON save ${roll} vs DC ${breachDc}: success, nothing happens.`);
+                messages.push(`Breach! Endurance roll ${roll} vs DC ${breachDc}: success, nothing happens.`);
             } else {
-                messages.push(`Breach! CON save ${roll} vs DC ${breachDc}: failed. Stunned until the end of your next turn.${character.breach_effect ? ` ${character.breach_effect}` : ''}`);
+                messages.push(`Breach! Endurance roll ${roll} vs DC ${breachDc}: failed. Stunned until the end of your next turn.${character.breach_effect ? ` ${character.breach_effect}` : ''}`);
                 if (character.breach_drains_embers) patch.embers_spent = embersMax;
             }
         }
@@ -286,6 +287,7 @@ function CharacterSheet() {
 
                 <section role="tabpanel" id="sheet-panel-conditions" className="sheet-panel" hidden={sheetTab !== 'conditions'}>
                     <RestButton />
+                    <ProficiencyBonus character={character} />
                     <HealthBox id={character.id} hp={hp} max={character.max_hp} temp={character.temp_hp ?? 0} onHpChange={setHp} onTempChange={setTempHp} />
                     <Conditions />
                     

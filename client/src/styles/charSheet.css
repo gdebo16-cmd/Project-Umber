@@ -647,7 +647,7 @@
             minmax(0, 1.2fr)
             minmax(0, 1.2fr);
         grid-template-areas: 
-            "H H H H C C C R"
+            "H H H H P C C R"
             "H H H H G F I I"
             "H H H H B B E E"
             "H H H H B B E E"
@@ -745,8 +745,13 @@
             grid-area: G;
         }
     
+        #proficiency-bonus-container {
+            grid-area: P;
+        }
+    
         #armor-class-tile-container,
-        #initiative-tile-container {
+        #initiative-tile-container,
+        #proficiency-bonus-tile-container {
             display: grid;
             grid-template-rows: 1fr 2fr;
             cursor: pointer;
@@ -768,7 +773,8 @@
         }
     
         #armor-class-tile-label,
-        #initiative-tile-label {
+        #initiative-tile-label,
+        #proficiency-bonus-tile-label {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -782,7 +788,8 @@
         }
     
         #armor-class-tile-value,
-        #initiative-tile-value {
+        #initiative-tile-value,
+        #proficiency-bonus-tile-value {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1636,6 +1643,7 @@
             .skills-container,
             #armor-class-container,
             #initiative-container,
+            #proficiency-bonus-container,
             .action-container,
             .condition-container,
             #skills-container,
@@ -2862,7 +2870,8 @@
         }
     
         #armor-class-tile-container,
-        #initiative-tile-container {
+        #initiative-tile-container,
+        #proficiency-bonus-tile-container {
             min-height: 6rem;
             height: 100%;
             color: var(--txt-color-1);
@@ -2871,7 +2880,8 @@
         }
     
         #armor-class-tile-label,
-        #initiative-tile-label {
+        #initiative-tile-label,
+        #proficiency-bonus-tile-label {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -2884,7 +2894,8 @@
         }
     
         #armor-class-tile-value,
-        #initiative-tile-value {
+        #initiative-tile-value,
+        #proficiency-bonus-tile-value {
             display: flex;
             align-items: center;
             justify-content: center;
