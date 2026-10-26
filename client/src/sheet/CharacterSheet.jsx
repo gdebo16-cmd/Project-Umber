@@ -282,12 +282,12 @@ function CharacterSheet() {
                 <section role="tabpanel" id="sheet-panel-actions" className="sheet-panel" hidden={sheetTab !== 'actions'}>
                     <ArmorClass character={character} ownedArmor={ownedArmor} />
                     <Initiative character={character} hp={hp} onRoll={showRoll} />
+                    <ProficiencyBonus character={character} />
                     <ActionPanel />
                 </section>
 
                 <section role="tabpanel" id="sheet-panel-conditions" className="sheet-panel" hidden={sheetTab !== 'conditions'}>
                     <RestButton />
-                    <ProficiencyBonus character={character} />
                     <HealthBox id={character.id} hp={hp} max={character.max_hp} temp={character.temp_hp ?? 0} onHpChange={setHp} onTempChange={setTempHp} />
                     <Conditions />
                     
