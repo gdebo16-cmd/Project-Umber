@@ -3126,9 +3126,39 @@
         }
     
         .book-bar {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr)); /* row 1: button + counter, then a full-width message row, then 3 filters */
             align-items: stretch;
             justify-content: center;
+        }
+
+        .book-bar > .spellbook-button,
+        .book-bar > .spell-stat-book {
+            grid-column: span 3;
+            min-width: 0;
+            box-sizing: border-box;   /* same outer size as the button, borders included */
+        }
+
+        .book-bar > p:not(.spell-stat-book) {   /* the save / limit message gets its own row */
+            grid-column: 1 / -1;
+            margin: 0;
+            padding: 2%;
+            text-align: center;
+            color: var(--txt-color-1);
+        }
+
+        .book-bar > label {
+            grid-column: span 2;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            padding: 1%;
+            color: var(--txt-color-1);
+        }
+
+        .book-bar > label > select {
+            width: 100%;
+            min-width: 0;
         }
     
         .spellbook-button {
@@ -3147,14 +3177,16 @@
         .spell-stat-book {
             display: flex;
             align-items: center;
+            justify-content: center;
             color: var(--txt-color-1);
             border-radius:0 0 var(--tile) 0;
             border: var(--tileBorder);
             background-color: var(--bgc-char-stat);
             text-align: center;
             margin: 0;
-            padding: 2%;
+            padding: 3%;
             width: 100%;
+            font-size: 120%;
         }
     
         .learned {
