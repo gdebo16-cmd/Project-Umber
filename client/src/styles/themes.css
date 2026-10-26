@@ -142,7 +142,7 @@
 }
 
 [data-display='neon'] {
-    --tileBorder: 3px double var(--bgc-bubble-receive);
+    --tileBorder: 3px double var(--border);
     --rad1: .25rem;
     --rad2: .125rem;
     --bs1: 2px 2px 5px black;
@@ -184,7 +184,7 @@
     --border1: none;
     --bs3: var(--glow);
     --bs2: var(--glow);
-    --glow: 2px 2px 15px var(--bgc-bubble-receive);
+    --glow: 2px 2px 15px var(--border);
     --backdrop: blur(6px) saturate(190%);
 }
 
