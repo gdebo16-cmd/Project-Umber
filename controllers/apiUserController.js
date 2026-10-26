@@ -39,7 +39,14 @@ export async function register(req, res) {
     }
 
     const hash = await bcrypt.hash(password, 12);
-    const user = await Users.createUser(username, hash, name, email || null);
+    let user;
+    try {
+        user = await Users.createUser(username, hash, name, email || null);
+    } catch (err) {
+        // 23505 = unique violation: a second sign-up for the same name got in first
+        if (err.code === '23505') return res.status(409).json({ error: `${username} is already registered` });
+        throw err;
+    }
     req.session.userId = user.id;
     req.session.username = user.username;
     res.json({ id: user.id, username: user.username });
@@ -72,9 +79,23 @@ export async function getSettings(req, res) {
 export async function updateSettings(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
     const { username, email, password } = req.body;
+    if (!username || username.trim() === '') {
+        return res.status(400).json({ error: 'Username is required' });
+    }
+
+    // renaming to a name someone else already has is refused
+    const taken = await Users.findUserByUsername(username);
+    if (taken && taken.id !== req.session.userId) {
+        return res.status(409).json({ error: `${username} is already registered` });
+    }
 
     const hash = password && password.trim() !== '' ? await bcrypt.hash(password, 12) : null;
-    await Users.updateSettings(req.session.userId, username, email, hash);
+    try {
+        await Users.updateSettings(req.session.userId, username, email, hash);
+    } catch (err) {
+        if (err.code === '23505') return res.status(409).json({ error: `${username} is already registered` });
+        throw err;
+    }
 
     req.session.username = username;
     res.json({ username, email });

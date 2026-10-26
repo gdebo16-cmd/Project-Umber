@@ -11,16 +11,20 @@ function RegisterPage() {
     // one state object for the whole form
     const [form, setForm] = useState({ username: '', password: '', email: '', name: '' });
     const [error, setError] = useState('');
+    const [busy, setBusy] = useState(false); // blocks a second submit while the first is still running
 
     const update = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
     const submit = async (e) => {
         e.preventDefault();
+        if (busy) return;
+        setBusy(true);
         try {
             await sendJson('/api/register', 'POST', form);
             navigate('/home');
         } catch (err) {
             setError(err.message);
+            setBusy(false);
         }
     };
 
@@ -60,7 +64,7 @@ function RegisterPage() {
                         {error && <p>{error}</p>}
 
                         <article className="form-section button-container">
-                            <button className="btn btn-form" type="submit">Create Account</button>
+                            <button className="btn btn-form" type="submit" disabled={busy}>Create Account</button>
                             <Link className="btn btn-form" id="login-link" to="/login">Back to login</Link>
                         </article>
                     </form>
