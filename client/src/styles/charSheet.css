@@ -4,6 +4,7 @@
     font-family: var(--fontfam);
     font-weight: var(--fontweight);
     font-style: var(--fontstyle);
+    color: var(--text);
  }
  
  html, body {
@@ -361,7 +362,7 @@
     
         header {
             display: flex;
-            height: 8vh;
+            height: 10vh;
             flex-shrink: 0;
             width: 100vw;
             border-radius: 0 0 15% 15%;
@@ -380,7 +381,7 @@
             font-size: 150%;
             justify-content: center;
             align-items: center;
-            box-shadow: var(--bs2);
+            box-shadow: var(--bs2), var(--shadowInner, none);
         }
     
     /* #endregion */   
@@ -393,7 +394,7 @@
         justify-content: center;
         align-items: stretch;
         align-self: center;
-        
+        box-shadow: var(--shadowInner, none);
         color: var(--txt-color-1);
         background-color: var(--bg-color-header);
         height: 8vh;
@@ -427,10 +428,10 @@
     #character-name > .portrait-frame {
         display: block;
         position: fixed;
-        top: 8.25vh;
-        height: 13vh;
-        width: 10vw;
-        left: 2vh;
+        top: 11vh;
+        height: 15dvh;
+        width: 10dvw;
+        left: 1dvh;
         flex-shrink: 0;
         aspect-ratio: 1 / 1;
         margin: 0;
@@ -476,6 +477,9 @@
     #hp-bar-fill {
         height: 100%;
         border-radius: var(--tile);
+        backdrop-filter: blur(6px) saturate(180%);
+        box-shadow: var(--shadowInner, none);
+        -webkit-backdrop-filter: blur(6px) saturate(180%);
         background: color-mix(in srgb, var(--healColor), white 30%);
     }
 
@@ -664,8 +668,11 @@
         text-align: center;
         border: var(--tileBorder);
         border-radius: var(--tile);
-        background-color: var(--bg-color-3);
-        box-shadow: var(--bs2);
+        background-color: var(--bg-color-2);
+        box-shadow: var(--bs2), var(--shadowInner, none);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        
     }
 
     .stat-list {
@@ -759,6 +766,7 @@
             display: grid;
             grid-template-rows: 1fr 2fr;
             cursor: pointer;
+            background-color: var(--bg-color-2);
         }
     
         .armor-class-tile,
@@ -825,8 +833,10 @@
         .skills-title {
             text-align: center;
             border: var(--tileBorder);
-            box-shadow: var(--bs2);
-            background-color: var(--bg-color-3);
+            box-shadow: var(--bs2), var(--shadowInner, none);
+            background-color: var(--bg-color-2);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             border-radius: var(--tile);
         }    
 
@@ -849,7 +859,9 @@
             grid-template-columns: 1fr;
             border: var(--tileBorder);
             border-radius: var(--tile);
-            box-shadow: var(--bs2), var(--shadowInner, none);
+            box-shadow: var(--bs2);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             transition: transform 0.3s ease-in-out;
         }
 
@@ -866,7 +878,8 @@
             margin: 0;
             padding: 5%;
             line-height: 1.1;
-            background-color: var(--bg-color-1);
+            box-shadow: var(--shadowInner, none);
+            background-color: var(--bg);
             border-radius: var(--tile) var(--tile) 0 0;
             border-bottom: var(--tileBorder);
         }
@@ -878,7 +891,9 @@
             font-size: 130%;
             font-weight: bold;
             margin: 0;
+            box-shadow: var(--shadowInner, none);
             border-radius: 0 0 var(--tile) var(--tile);
+            background-color: var(--bg-color-2);
         }
     
         .skill-tile.is-proficient .skill-label::before {
@@ -898,6 +913,8 @@
             "a b c";
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
+            background-color: var(--bgc-tab);
+            border-radius: var(--tile);
             
         }
     
@@ -1011,6 +1028,7 @@
             grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
+            background-color: var(--bgc-tab);
         }
     
     
@@ -1217,7 +1235,8 @@
             scroll-behavior: smooth;
             border: var(--tileBorder);
             border-radius: var(--tile);
-            box-shadow: var(--bs2);
+            box-shadow: var(--bs2), var(--shadowInner, none);
+            background-color: var(--bgc-tab);
         }
 
         .action-tabs {
@@ -1304,6 +1323,7 @@
             flex-shrink: 0;
             border: var(--tileBorder);
             border-radius: var(--tile);
+            box-shadow: var(--shadowInner, none);
         }
         .caption-btn {
             flex: 1 1 0;
@@ -1312,6 +1332,7 @@
             padding: 2%;
             background-color: var(--surface);
             border-radius: var(--tile) 0 0 var(--tile);
+            box-shadow: var(--shadowInner, none);
         }
         .action-button-container {
             flex: 1 1 0;
@@ -1399,6 +1420,7 @@
             border-radius: var(--tile);
             color: var(--txt-color-1);
         }
+
         .spell-tabs {
             display: flex;
             flex-direction: row;
@@ -1409,7 +1431,7 @@
             box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
         }
 
-        /* #region SpellBook Section */
+     /* #region SpellBook Section */
         .spell-book-tabs {
             position: relative;
             display: flex;
@@ -1452,12 +1474,244 @@
         /* Spell Tabs ruleset */
 
         /* #endregion */
+        .spell-tabs {
+            display: flex;
+            flex-direction: row;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: var(--tile);
+            border: var(--tileBorder);
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
+        }
+    
+        .spell-tab-title {
+            text-align: center;
+            padding: 2%;
+            border: var(--tileBorder);
+            border-radius: var(--tile);
+            background-color: var(--bg-color-1);
+            box-shadow: var(--bs2), var(--shadowInner, none);
+        }
+    
+        .spell-stat-bar {
+            margin-bottom: 2%;
+        }
+    
+        .spell-stat {
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 0.25rem;
+        }
+    
+        .book-button {
+            color: var(--txt-color-1);
+            box-shadow: var(--bs-book);
+            transition: transform 0.2s ease-in-out;
+        }
+    
+        .book-button:active {
+            transform: scale(0.9);
+        }
 
+        .spell-action-form {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    
+        .learn-button-container {
+            flex: 1 1 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            border-radius: 0 var(--tile) var(--tile) 0;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            box-shadow: var(--bs2), var(--shadowInner, none);
+        }
+     
+
+
+        .learn-button {
+            background-color: var(--bg-color-1);
+            border: var(--tileBorder);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1 1 0;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+    
+    
+        .spell-action-set {
+            display: flex;
+                flex-direction: column;
+                gap: 0.4rem;
+                padding: 0.3rem;
+                margin: 0;
+                border-radius: 0 0 var(--tile) var(--tile);
+        }
+    
+        .shop-title {
+            text-align: center;
+            font-size: 140%;
+            color: var(--txt-color-1);
+            background-color: var(--bgc-char-name);
+            margin: 0;
+            padding: 3%;
+            border-radius: var(--tile) var(--tile) 0 0;
+            border: var(--tileBorder);
+        }
+    
+        .book-bar {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr)); /* row 1: button + counter, then a full-width message row, then 3 filters */
+            align-items: stretch;
+            justify-content: center;
+        }
+
+        .book-bar > .spellbook-button,
+        .book-bar > .spell-stat-book {
+            grid-column: span 3;
+            min-width: 0;
+            box-sizing: border-box;   /* same outer size as the button, borders included */
+        }
+
+        .book-bar > p:not(.spell-stat-book) {   /* the save / limit message gets its own row */
+            grid-column: 1 / -1;
+            margin: 0;
+            padding: 2%;
+            text-align: center;
+            color: var(--txt-color-1);
+        }
+
+        .book-bar > label {
+            grid-column: span 2;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            padding: 1%;
+            color: var(--txt-color-1);
+        }
+
+        .book-bar > label > select {
+            width: 100%;
+            min-width: 0;
+        }
+    
         .spellbook-button {
-
+            text-align: center;
+            margin: 0;
+            padding: 3%;
+            width: 100%;
+            border: var(--tileBorder);
+            background-color: var(--bgc-char-stat);
+            border-radius:0 0 0 var(--tile);
+            color: var(--txt-color-1);
+            font-size: 120%;
+    
         }
     
         .spell-stat-book {
+            display: flex;
+            
+            align-items: center;
+            justify-content: center;
+            color: var(--txt-color-1);
+            border-radius:0 0 var(--tile) 0;
+            border: var(--tileBorder);
+            background-color: var(--bgc-char-stat);
+            text-align: center;
+            margin: 0;
+            padding: 3%;
+            width: 100%;
+            font-size: 120%;
+        }
+    
+        .learned {
+            flex: 1 1 0;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: 70%;
+            color: var(--accent);
+            padding: 2%;
+            text-decoration: underline;
+        }
+
+
+        .spell-book-level-list {
+            border: var(--tileBorder);
+            border-radius: var(--tile);
+        }
+        .spellbook-container {
+            width: 100%;
+        }
+        .spellbook-set {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            padding: 0.3rem;
+            margin: 0;
+            border-radius: 0 0 var(--tile) var(--tile);
+        }
+
+        .spellbook-item {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: stretch;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            border: var(--tileBorder);
+            background-color: var(--bgc-char-stat);
+            border-radius: var(--tile);
+        }
+
+        .spellbook-caption-button {
+            flex: 1 1 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 2.5%;
+            margin: 0;
+            width: 100%;
+            border-radius: var(--tile) 0 0 var(--tile);
+            border: none;
+        }
+
+        .spellbook-form {
+            flex: 1 1 0;
+            border-radius: 0 var(--tile) var(--tile) 0;
+        }
+
+        .spellbook-btn {
+            width: 100%;
+            margin: 0;
+            padding: 6%;
+            border: none;
+            text-align: right;
+            background-color: var(--accent);
+            border-radius: 0 var(--tile) var(--tile) 0;
+        }
+    
+        .spell-book-tabs,
+        .spell-book-tabs [role="tablist"] {
+            max-width: 100%;
+        }
+    
+        .spell-book-tabs [role="tab"] {
+            flex: 1 1 5.5rem;
+        }
+
+        .spell-stat-book:last-child {
+            border-radius: 0 0 var(--tile) 0;
+            background-color: var(--bg-color-1);
+
 
         }
 
@@ -1467,6 +1721,114 @@
         .item-shop {
             min-height: 20rem;
             margin-top: 0.5rem;
+        }
+
+        .shop-form {
+            flex: 1 1 0;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .shop-btn {
+            width: 100%;
+            margin: 0;
+            padding: 6%;
+            border: none;
+            text-align: right;
+            background-color: var(--accent);
+            border-radius: 0 var(--tile) var(--tile) 0;
+        }
+
+        .shop-button {
+            width: 100%;
+            margin: 0 0 2% 0;
+            border: var(--tileBorder);
+            background-color: var(--bgc-char-stat);
+            color: var(--txt-color-1);
+            border-radius: 0 0 var(--tile) var(--tile);
+            box-shadow: var(--bs2);
+            padding: 3%;
+        }
+    
+        .filter-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: stretch;
+            width: 100%;
+            
+        }
+    
+        .field {
+            flex: 1 1 0;
+            background-color: var(--bgc-char-stat);
+            color: var(--txt-color-1);
+            border: var(--tileBorder);
+            appearance: none;
+            box-sizing: border-box;
+            min-width: 0;
+            padding: 0.4rem 1.4em 0.4rem 0.5rem;
+            font: inherit;
+            text-align: center;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+            background-position: right 0.75em center, right 0.45em center;
+            background-size: 0.3em 0.3em;
+            background-repeat: no-repeat;
+            margin: 0;
+            border-radius: 0;
+        }
+    
+        .filter-container .field + .field {
+            border-left: none;
+        }
+    
+        .spell-slot-checkbox {
+            appearance: none;
+            width: 1.1rem;
+            height: 1.1rem;
+            margin: .35rem 0.25rem;
+            border: 2px solid var(--spellslot-border);
+            border-radius: 50%;
+            background-color: transparent;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+        }
+    
+        .spell-slot-checkbox:checked {
+            background-color: var(--spellslot-checked);
+            clip-path: var(--check-shape);
+            box-shadow: 0 0 6px var(--spellslot-checked-shadow);
+        }
+    
+        .spell-slot-checkbox:hover {
+            box-shadow: 0 0 4px var(--accent);
+        }
+    
+        .shop-entry {
+            width: 100%;
+            border: var(--tileBorder);
+            background-color: var(--bgc-char-stat);
+            color: var(--txt-color-1);
+            border-radius:var(--tile);
+            box-shadow: var(--bs2);
+            padding: 3%;
+        }
+    
+        .equipped-item {
+            flex: 1 1 0;
+            font-style: italic;
+            text-decoration: underline;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bgc-tab);
+            
         }
         /* #endregion */ 
         /* #region Spell Slot Checkbox Section */
@@ -1599,7 +1961,7 @@
             background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.06));
             border: 1px solid rgba(255, 255, 255, 0.35);
             border-radius: var(--tile);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 10px color-mix(in srgb, var(--accent) 45%, transparent);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 10px color-mix(in srgb, var(--accent) 45%, transparent), var(--shadowInner, none);
             transition: transform .35s ease, width .35s ease, height .35s ease;
         }
     /* #endregion */   
@@ -1618,16 +1980,17 @@
             /* starts at the right of the header row, mirroring the portrait on the left */
             right: 5%;
             left: auto;
-            top: calc(6.5vh - 1.5rem);
+            top: calc(6.5vh - 3.75rem);
             z-index: 1000;
-            width: 3rem;
-            height: 3rem;
+            width: 4rem;
+            height: 4rem;
             background-color: var(--bgc-orb);
             border: var(--tileBorder);
             cursor: grab;
             user-select: none;
             touch-action: none;
             border-radius: var(--orb);
+            box-shadow: var(--shadowInner, none);
         }
         
         .roll-orb-panel {
@@ -1659,13 +2022,12 @@
         }
         
         .roll-bubble {
-            max-width: 85%;
-            padding: 0.4rem 0.65rem;
+            width: 65%;
+            padding: 0.5rem 0.65rem;
             border-radius: 1rem;
-            box-shadow: var(--bs-bubble);
-            font-size: 0.85rem;
+            box-shadow: var(--bs-bubble), var(--shadowInner, none);
+            font-size: 1.35rem;
             line-height: 1.3;
-            color: var(--txt-color-1);
             overflow-wrap: anywhere;
         }
         
@@ -1683,7 +2045,7 @@
         
         .roll-bubble-name {
             display: block;
-            font-size: 0.7rem;
+            font-size: 1rem;
             font-weight: bold;
             opacity: 0.75;
             margin-bottom: 0.15rem;
@@ -1705,8 +2067,8 @@
         }
         
         .roll-orb.is-open {
-            width: 18rem;
-            height: 16rem;
+            width: 25rem;
+            height: 28rem;
             max-width: calc(100vw - 2rem); /* never bigger than a small phone screen */
             max-height: calc(100vh - 2rem);
             border-radius: var(--open-orb);
@@ -3180,7 +3542,6 @@
         }
     
     /* #endregion */
-    /* #endregion */ 
     /* #region Roll Orb Section */
         .roll-orb {
             position: fixed;

@@ -72,6 +72,7 @@
     font-size: 1.5rem;
     font-weight: var(--fontW1);
     color: var(--accent);
+    
 }
 
 .combat-box,
@@ -82,9 +83,8 @@
     margin-top: .75rem;
     padding: .6rem .75rem;
     border: var(--tileBorder);
-    border-radius: var(--rad1);
-    background-color: var(--bg-color-2);
-    box-shadow: var(--shadowInner, none);
+    border-radius: var(--tile);
+    box-shadow: var(--bs2),var(--shadowInner, none);
 }
 
 .spell-details p {
@@ -95,9 +95,9 @@
 .spell-details-close {
     position: absolute;
     border: none;
-    top: calc(var(--close-offset, 8vh) + .5rem);  /* desktop: below the 8vh header; phone sets --close-offset: 0px */
+    top: calc(var(--close-offset, 8vh) + 1.75rem);  /* desktop: below the 8vh header; phone sets --close-offset: 0px */
     z-index: 1;
-    right: .5rem;
+    right: 1.75rem;
     width: 1.75rem;
     height: 1.75rem;
     background: transparent;
@@ -147,7 +147,7 @@ select:focus-visible {
         background-color: var(--bg-color-5, var(--bgc-theme));  /* solid on phones; default/prestige/purple themes have no --bg-color-5 */
         color: var(--txt-color-1);
         transform: none;
-        border-radius: var(--toprad);
+        border-radius: 12% 12% 0 0;
         max-height: 70dvh;
         top: auto;
         bottom: 0;
@@ -173,7 +173,7 @@ select:focus-visible {
 
     .spell-description-box {
         font-weight: 400;
-        box-shadow: var(--bs1);
+        box-shadow: var(--bs2),var(--shadowInner, none);
         font-size: 0.8rem;
     }
 }

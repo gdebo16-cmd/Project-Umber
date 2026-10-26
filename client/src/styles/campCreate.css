@@ -289,23 +289,23 @@ footer {
     }
     
     .campaign-label {
-        border: var(--tileBorder);
         border-radius: var(--tile) var(--tile) 0 0;
-        box-shadow: var(--bs2);
+        border-bottom: var(--tileBorder);
         padding: 4%;
-        background-color: var(--bgc-char-name);
+        background-color: var(--bg);
         font: inherit;
     }
 
     .campaign-value {
-        border: var(--tileBorder);
-        box-shadow: var(--bs2);
+        border: none;
+        
         padding: 4%;
-        background-color: var(--bgc-char-stat);
-        color: var(--txt-color-1);
+        background-color: var(--surface);
+        border: none;
         text-align: center;
         font-size: var(--fontS1);
         border-radius: 0 0 var(--tile) var(--tile);
+        margin: 0;
     }
 
     .campaign-button-container {
@@ -315,11 +315,9 @@ footer {
     }
 
     .campaign-button {
-        border: var(--tileBorder);
-        background-color: var(--bgc-char-stat);
-        color: var(--txt-color-1);
+        background-color: var(--bg);
+        border: none;
         border-radius: var(--tile);
-        box-shadow: var(--bs2);
         padding: 4%;
         display: flex;
         justify-content: center;

@@ -38,14 +38,13 @@ function SpellBook({ characterId, onDone, onOpenSpell }) {
     const spellButton = (spellId, learned) => (
         learned ? (
             <>
-                <em className="learned"></em>
-                <form className="action-form" onSubmit={(e) => { e.preventDefault(); changeSpell(spellId, 'unlearn'); }}>
-                    <button type="submit" id="forget-spell-button" className="action-button">Forget</button>
+                <form className="spellbook-form" onSubmit={(e) => { e.preventDefault(); changeSpell(spellId, 'unlearn'); }}>
+                    <button type="submit" id="forgetspell-button" className="spellbook-btn">Forget</button>
                 </form>
             </>
         ) : (
-            <form className="action-form" onSubmit={(e) => { e.preventDefault(); changeSpell(spellId, 'learn'); }}>
-                <button type="submit" id="learn-spell-button" className="action-button">Learn</button>
+            <form className="spellbook-form" onSubmit={(e) => { e.preventDefault(); changeSpell(spellId, 'learn'); }}>
+                <button type="submit" id="learnspell-button" className="spellbook-btn">Learn</button>
             </form>
         )
     );
@@ -75,11 +74,11 @@ return (
                 {spellLimits && <p className='spell-stat-book'>Learned: {learnedLeveled}/{spellLimits.known} Cantrips: {learnedCantrips}/{spellLimits.cantrips}</p>}
                 {saveError && <p>{saveError}</p>}
                 {FILTERS.map(([key, label]) => (
-                    <label key={key}>
+                    <label className="filter-label" key={key}>
                         {label}{' '}
-                        <select value={filters[key]} onChange={(e) => setFilters((f) => ({ ...f, [key]: e.target.value }))}>
-                            <option value="">All</option>
-                            {optionsFor(key).map((v) => <option key={v} value={v}>{v}</option>)}
+                        <select className="filter-select" value={filters[key]} onChange={(e) => setFilters((f) => ({ ...f, [key]: e.target.value }))}>
+                            <option className="filter-option" value="">All</option>
+                            {optionsFor(key).map((v) => <option className="filter-option" key={v} value={v}>{v}</option>)}
                         </select>
                     </label>
                 ))}
@@ -88,7 +87,7 @@ return (
             </section>
 
             <section className="panel-shell spell-book-tabs">
-                <TabList tabs={visibleTabs} active={tab} onChange={setTab} prefix="spell-" />
+                <TabList className="spell-book-level-list" tabs={visibleTabs} active={tab} onChange={setTab} prefix="spell-" />
 
                 {TABS.map(({ id }) => {
                     const level = Number(id.replace('level_', ''));
@@ -99,14 +98,14 @@ return (
                             key={id}
                             role="tabpanel"
                             id={`spell-panel-${id}`}
-                            className="action-container"
+                            className="spellbook-container"
                             aria-labelledby={`spell-tab-${id}`}
                             hidden={tab !== id}
                         >
-                            <ul className="action-set">
+                            <ul className="spellbook-set">
                                 {levelSpells.map((s) => (
-                                    <li key={s.id} className="action-item">
-                                        <button type="button" className="caption-btn" onClick={() => onOpenSpell?.(s)}>{s.name}</button>
+                                    <li key={s.id} className="spellbook-item">
+                                        <button type="button" className="spellbook-caption-button" onClick={() => onOpenSpell?.(s)}>{s.name}</button>
                                         {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                                     </li>
                                 ))}

@@ -155,12 +155,15 @@ option {
         align-self: center;
        }
 
-   .user-name-container, .password-container, .email-container, .name-container, .button-container {
+   .user-name-container, .password-container, .email-container, .name-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: 2%;
-    padding: 2%;
+    padding: 0;
+    border: var(--tileBorder);
+    border-radius: var(--tile);
+    box-shadow: var(--bs2);
    }
 
    .signin-label {
@@ -168,10 +171,11 @@ option {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--bgc-char-name);
+    background-color: var(--bg);
     border-radius: var(--tile) var(--tile) 0 0;
-    border: var(--tileBorder);
-    color: var(--txt-color-1);
+    border-bottom: var(--tileBorder);
+    padding: 2%;
+    margin: 0;
    }
 
    .signin-value {
@@ -179,16 +183,15 @@ option {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--bgc-char-stat);
+    background-color: var(--surface);
     border-radius: 0 0 var(--tile) var(--tile);
-    border: var(--tileBorder);
-    color: var(--txt-color-1);
+    border: none;
+    margin: 0;
    }
 
 
 
    .form-title {
-    border: var(--tileBorder);
     padding: 2%;
     width: 90%;
     display: flex;
@@ -344,11 +347,10 @@ option {
         padding: 3vh 2vw;
         min-height: 30vh;
         height: 100%;
-        background-color: var(--bgc-char-name);
+        background-color: var(--bg);
         border: var(--tileBorder);
         border-radius: var(--tile);
         box-shadow: var(--bs2);
-        color: var(--txt-color-1);
         font-size: 150%;
         display: flex;
         justify-content: center;
@@ -356,32 +358,14 @@ option {
         text-align: center;
     }
 
-    .user-name-container {
+    .user-name-container, .password-container, .email-container, .name-container {
         display: flex;
         flex-direction: column;
         margin: 0 0 2.5vh;
         padding: 0;
-    }
-
-    .password-container {
-        display: flex;
-        flex-direction: column;
-        margin: 0 0 2.5vh;
-        padding: 0;
-    }
-
-    .email-container {
-        display: flex;
-        flex-direction: column;
-        margin: 0 0 2.5vh;
-        padding: 0;
-    }
-
-    .name-container {
-        display: flex;
-        flex-direction: column;
-        margin: 0 0 2.5vh;
-        padding: 0;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
     }
 
     .button-container {
@@ -399,11 +383,9 @@ option {
         justify-content: center;
         align-items: center;
         padding: 0.8vh 1vw;
-        background-color: var(--bgc-char-name);
-        border: var(--tileBorder);
+        background-color: var(--bg);
+        border-bottom: var(--tileBorder);
         border-radius: var(--tile) var(--tile) 0 0;
-        box-shadow: var(--bs2);
-        color: var(--txt-color-1);
         font-size: 150%;
     }
 
@@ -412,11 +394,9 @@ option {
         width: 100%;
         padding: 1vh 1vw;
         text-align: center;
-        background-color: var(--bgc-char-stat);
-        border: var(--tileBorder);
+        background-color: var(--surface);
+        border: none;
         border-radius: 0 0 var(--tile) var(--tile);
-        box-shadow: var(--bs2);
-        color: var(--txt-color-1);
         font-size: 150%;
     }
 
@@ -430,7 +410,7 @@ option {
         font-size: 1.4rem;
         text-align: center;
         cursor: pointer;
-        background-color: var(--bgc-char-name);
+        background-color: var(--bg);
         color: var(--txt-color-1);
         border: var(--tileBorder);
         border-radius: var(--tile);

@@ -469,8 +469,10 @@ footer {
         align-items: stretch;
         box-sizing: border-box;
         width: 100%;
-        margin: 0;
+        margin: 3% 0 3% 0;
         padding: 0;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
     }
 
     .profile-label {
@@ -479,8 +481,8 @@ footer {
         align-items: center;
         margin: 0;
         padding: 0.8vh 1vw;
-        background-color: var(--bgc-char-name);
-        border: var(--tileBorder);
+        background-color: var(--bg);
+        border-bottom: var(--tileBorder);
         border-radius: var(--tile) var(--tile) 0 0;
         box-shadow: var(--bs2);
         color: var(--txt-color-1);
@@ -493,8 +495,8 @@ footer {
         margin: 0;
         padding: 1vh 1vw;
         text-align: center;
-        background-color: var(--bgc-char-stat);
-        border: var(--tileBorder);
+        background-color: var(--surface);
+        border: none;
         border-radius: 0 0 var(--tile) var(--tile);
         box-shadow: var(--bs2);
         color: var(--txt-color-1);
@@ -511,9 +513,9 @@ footer {
         font-size: 1.4rem;
         text-align: center;
         cursor: pointer;
-        background-color: var(--bgc-char-name);
+        background-color: var(--bg);
         color: var(--txt-color-1);
-        border: var(--tileBorder);
+        border: none;
         border-radius: var(--tile);
         box-shadow: var(--bs2);
     }

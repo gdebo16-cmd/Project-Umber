@@ -53,14 +53,13 @@ function ItemShop({ characterId, onDone }) {
     const itemButton = (kind, itemId, owned) => (
         owned ? (
             <>
-                <em className="learned"></em>
-                <form className="action-form" onSubmit={(e) => { e.preventDefault(); changeItem(kind, itemId, 'remove'); }}>
-                    <button type="submit" id="remove-item-button" className="action-button">Remove</button>
+                <form className="shop-form" onSubmit={(e) => { e.preventDefault(); changeItem(kind, itemId, 'remove'); }}>
+                    <button type="submit" id="remove-item-button" className="shop-btn">Remove</button>
                 </form>
             </>
         ) : (
-            <form className="action-form" onSubmit={(e) => { e.preventDefault(); changeItem(kind, itemId, 'add'); }}>
-                <button type="submit" id="add-item-button" className="action-button">Add</button>
+            <form className="shop-form" onSubmit={(e) => { e.preventDefault(); changeItem(kind, itemId, 'add'); }}>
+                <button type="submit" id="add-item-button" className="shop-btn">Add</button>
             </form>
         )
     );
@@ -92,7 +91,7 @@ function ItemShop({ characterId, onDone }) {
     return (
         <>
             <section className="title-tile">
-                <h3 className="action-title">Item Shop</h3>
+                <h3 className="shop-title">Item Shop</h3>
                 <button type="button" className="shop-button" onClick={onDone}>Done browsing</button>
                 {saveError && <p>{saveError}</p>}
             </section>

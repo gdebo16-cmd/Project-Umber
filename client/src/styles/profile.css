@@ -16,6 +16,7 @@ html, body {
     -ms-user-select: none ! important;
     user-select: none ! important;
     font-family: var(--fontfam);
+    color: var(--text);
     
 }
 
@@ -56,14 +57,20 @@ a {
     color: var(--txt-color-1);
 }
 
+select {
+    border: none;
+    box-shadow: none;
+}
+
 option {
     background-color: var(--drop-down-bg);
     color: var(--drop-down-txt);
-    border: var(--tileBorder);
+    border: none;
     padding: 0;
     margin: 0;
     text-align: center;
     font-size: 100%;
+    border-radius: var(--tile);
 }
 
 
@@ -108,26 +115,20 @@ footer {
     justify-content: center;
     align-items: stretch;
     border-radius: var(--tile);
-    color: var(--txt-color-1);
     margin: 2%;
     border: var(--tileBorder);
-    box-shadow: var(--bs3);
 }
 
 .tile-label {
     text-align: center;
-    font-size: var(--fontS1);
-    font-weight: var(--fontW1);
-    font-style: var(--fontStyle);
-    background-color: var(--bgc-char-name);
+    background-color: var(--bg);
     border-radius: var(--tile) var(--tile) 0 0;
     padding: 5%;
+    border-bottom: var(--tileBorder);
 }
 
 .tile-value {
     text-align: center;
-    background-color: var(--bgc-char-stat);
-    border: var(--tileBorder);
     box-shadow: var(--bs2), var(--shadowInner, none);
     padding: 4%;
     color: var(--txt-color-1);
@@ -140,25 +141,20 @@ footer {
 .profile-tile {
     text-align: center;
     font-size: 120%;
-    border: var(--tileBorder);
     border-radius: var(--tile);
     box-shadow: var(--bs2);
     margin: 5%;
 }
 
 .profile-label {
-    border: var(--tileBorder);
-    border-radius: var(--toprad);
+    
     box-shadow: var(--bs2);
     padding: 4%;
-    background-color: var(--bgc-top);
     font: inherit;
 }
 
 
 .profile-button {
-    border: var(--tileBorder);
-    background-color: var(--bg-color-1);
     color: var(--txt-color-1);
     box-shadow: var(--bs2);
     padding: 4%;
@@ -281,7 +277,7 @@ footer {
         visibility: hidden;
         pointer-events: none;
         z-index: 10;
-        
+        border: var(--tileBorder);
         border-radius: var(--tile);
         transition: all .5s ease;
         height: 10vh;
@@ -297,6 +293,7 @@ footer {
         box-shadow: var(--bs2);
         border-radius: var(--tile);
         background-color: var(--drop-down-bg);
+        border: var(--tileBorder);
     }
 
     #nav-container > li:hover,
@@ -344,6 +341,7 @@ footer {
         box-shadow: var(--bs2);
         height: 10vh;
         font-size: 100%;
+        
     }
 
 
@@ -369,37 +367,25 @@ footer {
 
     
     .profile-tile {
-        
-        border: var(--tileBorder);
+    
         border-radius: var(--tile);
         box-shadow: var(--bs2);
         margin: 5%;
     }
 
       .profile-label {
-        border: var(--tileBorder);
-        border-radius: var(--toprad);
-        box-shadow: var(--bs2);
         padding: 4%;
-        background-color: var(--bgc-top);
+       
         font: inherit;
     }
 
     .profile-value {
-        border: var(--tileBorder);
-        box-shadow: var(--bs2);
+
         padding: 4%;
-        background-color: var(--bgc-low);
-        color: var(--txt-color-1);
         text-align: center;
-        font-size: var(--fontS1);
     }
 
     .profile-button {
-        border: var(--tileBorder);
-        background-color: var(--bg-color-1);
-        color: var(--txt-color-1);
-        box-shadow: var(--bs2);
         padding: 4%;
         font: inherit;
     }
@@ -478,7 +464,7 @@ footer {
 
     header {
         display: flex;
-        height: 8vh;
+        height: 10vh;
         width: 100vw;
         border-radius: 0 0 15% 15%;
     }
@@ -620,11 +606,7 @@ footer {
         border-radius: var(--tile);
     }
 
-    .btn-drop-character:hover,
-    .btn-drop-campaign:hover,
-    .btn-drop-settings:hover {
-        background-color: var(--bgc-char-stat);
-    }
+
 
     .slide {
         position: absolute;
