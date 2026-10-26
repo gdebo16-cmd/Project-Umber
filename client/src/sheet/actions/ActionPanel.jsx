@@ -18,7 +18,7 @@ function ActionPanel() {
     const [tab, setTab] = useState('actions');
 
     return (
-        <section className="action-container" id="action-panel-container">
+        <section className="action-panel-container" id="action-panel-container">
             <TabList className='action-tabs' tabs={TABS} active={tab} onChange={setTab} prefix="" />
 
             <article role="tabpanel" id="panel-actions" aria-labelledby="tab-actions" hidden={tab !== 'actions'}>

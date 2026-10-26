@@ -44,7 +44,6 @@ function Actions() {
     // To-hit uses STR (toHit) instead of the class primary stat. Damage is floored at 0 by the roll.
     const fistDice = ['1', '1', '1d4', '1d6', '1d8'][healthInit(hp, character.max_hp)];
 
-    // Every action has the same shape, so one map() can draw them all
     const isReaver = character.class_name === 'Reaver';
     const isRuneWeaver = character.subclass_name === 'Rune Weaver' && character.level >= 3;
     const isWraith = character.class_name === 'Wraith';
@@ -80,11 +79,12 @@ function Actions() {
                 dmgMod: (dual ? 0 : abilityMod) + (sigil ? cracks : 0),
                 hit: dual && DUAL_WIELD_DROPS_HIT_MOD ? hit - abilityMod : hit, sigil };
         });
-    // dual-wielded weapons move to Bonus Actions
+    
     const actions = [
         ...weaponActions.filter((a) => !a.dual),
         { key: 'fists', name: 'Fists', dice: fistDice, dmgMod: strMod, hit: toHit },
     ];
+
     const bonusWeapons = weaponActions.filter((a) => a.dual);
 
     const toggleSigilMark = async (a) => {
@@ -105,7 +105,6 @@ function Actions() {
         }
     };
 
-    // Soul Strike (feature text): +1d8 force on a soul brand hit, 2d8 from 11, 3d8 from 23; costs 1 Temper (tracked by hand)
     const soulStrikeDice = character.level >= 23 ? '3d8' : character.level >= 11 ? '2d8' : '1d8';
     const rollSoulStrike = (a) => {
         const crit = critKey != null && critKey === a.key;

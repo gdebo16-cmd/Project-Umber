@@ -1,0 +1,8 @@
+﻿?column?|id|description
+cf|262|You can cast Beastspeech as a ritual, and you know Druidic.
+cl|211|Spellcasting (full, WIS; 2 cantrips) + Wild Familiarity (Beastspeech ritual; Druidic)
+sf|92|Oath Channel, action: one creature within 30 ft makes a STR save or is restrained for 1 minute (save ends), and one ally within 30 ft gains 5 + Paladin level temporary HP. Oath spells: Warm Hands, Grasping Vines (3rd tier at 9: Second Breath, Overgrowth).
+sf|99|Bonus action, PB uses per long rest: mark an undead, spirit, or Hollow creature within 60 ft for 1 minute. It can't regain HP, and your weapon hits on it deal +1d6 necrotic. Oath spells: Spirit Sense, Hallowed Refuge (3rd tier at 9: Waking the Dead, Spirit Ring).
+sf|106|Bonus action, PB uses per long rest: you become invisible until the start of your next turn or until you attack, and your next attack roll before then has advantage. Oath spells: False Face, Prey Brand (3rd tier at 9: Terror Wave, Scryshroud).
+sf|113|Bonus action, PB uses per long rest: outline a creature within 60 ft in starlight for 1 minute. It gains no benefit from invisibility or being hidden against you or your allies, and your attacks on it score a critical hit on 19ΓÇô20 until you hit it with Divine Smite. Oath spells: Glowmark, Starlance (3rd tier at 9: Noonlight, Spellbreak).
+(6 rows)

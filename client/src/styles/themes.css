@@ -1,6 +1,7 @@
 /* Shared theme + display variables and base element styles. Loaded once for every page from main.jsx (before components.css and the page stylesheet). */
 
 :root,
+/* #region Standard Display Section */
 [data-display='standard'] {
     /* theme colours: every [data-theme] sets only the 8 core values; the rest derive from them */
     --gold-gradient: linear-gradient(to bottom, var(--accent), color-mix(in srgb, var(--accent) 75%, black));
@@ -95,7 +96,6 @@
     --bs-tab: 0 0 6px var(--tab-shadow);
     --nav-tile: 0.5rem;
 }
-
 [data-display='compact'] {
     --tileBorder: none;
     --rad1: .5rem;
@@ -140,7 +140,6 @@
     --ofY2: auto;
     --border1: none;
 }
-
 [data-display='neon'] {
     --tileBorder: 3px double var(--border);
     --rad1: .25rem;
@@ -187,9 +186,6 @@
     --glow: 2px 2px 15px var(--border);
     --backdrop: blur(6px) saturate(190%);
 }
-
-/* ---------- extra display styles: shape / spacing / borders / shadows / fonts only (no colors) ---------- */
-
 [data-display='glass'] {
     --tileBorder: 1px solid rgba(255, 255, 255, 0.25);
     --rad1: 1.25rem;
@@ -203,7 +199,6 @@
     --backdrop: blur(15px) saturate(180%);
     --inputRad: .75rem;
 }
-
 [data-display='parchment'] {
     --tileBorder: 2px solid var(--bordercolor);
     --rad1: .2rem;
@@ -221,7 +216,6 @@
     --inputRad: .1rem;
     --letterSp: .03em;
 }
-
 [data-display='minimal'] {
     --tileBorder: 1px solid var(--bordercolor);
     --rad1: .4rem;
@@ -242,7 +236,6 @@
     --btnRad: .3rem;
     --inputRad: .25rem;
 }
-
 [data-display='bold'] {
     --tileBorder: 3px solid var(--bordercolor);
     --rad1: 1rem;
@@ -262,22 +255,22 @@
     --inputRad: .5rem;
     --letterSp: .02em;
 }
-
 [data-display='shadow-of-the-mountains'] {
     --glass: 72%;
     --shadowInner: inset 4px 4px 14px rgba(187, 86, 96, 0.45), inset 0 0 5px rgba(224, 160, 96, 0.35);
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
     --gold-gradient: linear-gradient(to bottom, #e0a060, #8f6049);
 }
-
 [data-display='gestalt'] {
     --glass: 88%;
     --shadowInner: inset 4px 4px 14px rgba(150, 205, 255, 0.42), inset 0 0 5px rgba(205, 235, 255, 0.32);
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
     --gold-gradient: linear-gradient(to bottom, #d9a05a, #a66f2e);
 }
+/* #endregion */
 
 :root,
+/* #region Theme Section */
 [data-theme="default"] {
     --bg: #2e1e66;
     --surface: #411b89;
@@ -290,7 +283,6 @@
     --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
 }
-
 [data-theme="prestige"] {
     --bg: #1a1030;
     --surface: #2c1f4f;
@@ -303,9 +295,6 @@
     --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
     --check-shape: polygon(0 15%, 25% 45%, 50% 5%, 75% 45%, 100% 15%, 90% 100%, 10% 100%);
 }
-
-
-
 [data-theme="purple"] {
     --bg: #24102e;
     --surface: #3d1a4f;
@@ -318,7 +307,6 @@
     --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
     --check-shape: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
 }
-
 [data-theme="green"] {
     --bg: #0f2416;
     --surface: #1d3d26;
@@ -330,7 +318,6 @@
     --glass: 85%;
     --check-shape: polygon(50% 0, 100% 35%, 85% 85%, 50% 100%, 15% 85%, 0 35%);
 }
-
 [data-theme="glass-green"] {
     --bg: #0f2416;
     --surface: #274f2e;
@@ -342,7 +329,6 @@
     --glass: 32%;
     --check-shape: polygon(50% 0, 100% 35%, 85% 85%, 50% 100%, 15% 85%, 0 35%);
 }
-
 [data-theme="blue"] {
     --bg: #0c1a33;
     --surface: #183052;
@@ -366,7 +352,6 @@
     --glass: 32%;
     --check-shape: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%);
 }
-
 [data-theme="red"] {
     --bg: #2a0b0e;
     --surface: #46141a;
@@ -378,7 +363,6 @@
     --glass: 85%;
     --check-shape: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%);
 }
-
 [data-theme="glass-red"] {
     --bg: #2a0b0e;
     --surface: #581a20;
@@ -390,7 +374,6 @@
     --glass: 32%;
     --check-shape: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%);
 }
-
 [data-theme="orange"] {
     --bg: #2b1406;
     --surface: #4a240c;
@@ -402,7 +385,6 @@
     --glass: 85%;
     --check-shape: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%);
 }
-
 [data-theme="glass-orange"] {
     --bg: #2b1406;
     --surface: #603010;
@@ -414,7 +396,6 @@
     --glass: 32%;
     --check-shape: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%);
 }
-
 [data-theme="yellow"] {
     --bg: #2a2406;
     --surface: #45390d;
@@ -426,7 +407,6 @@
     --glass: 85%;
     --check-shape: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
 }
-
 [data-theme="glass-yellow"] {
     --bg: #2a2406;
     --surface: #5a4b13;
@@ -438,7 +418,6 @@
     --glass: 32%;
     --check-shape: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
 }
-
 [data-theme="dark"] {
     --bg: #0a0a0a;
     --surface: #181818;
@@ -452,7 +431,6 @@
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
     --shadowInner: inset 4px 4px 15px #ffeacea9, inset 0px 0px 5px #ffeacea9;
 }
-
 [data-theme="dark-glass"] {
     --bg: #0a0a0a;
     --surface: #2a241f;
@@ -466,7 +444,6 @@
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
     --shadowInner: inset 4px 4px 15px #ffeacea9, inset 0px 0px 5px #ffeacea9;
 }
-
 [data-theme="light"] {
     --bg: #fef2d8;
     --surface: #f5ecd6;
@@ -479,7 +456,6 @@
     --gold-gradient: linear-gradient(to bottom, #926135, #5e3d1f);
     --check-shape: circle(50%);
 }
-
 [data-theme="light-glass"] {
     --bg: #fef2d8;
     --surface: #e9dbc3;
@@ -492,7 +468,6 @@
     --gold-gradient: linear-gradient(to bottom, #926135, #5e3d1f);
     --check-shape: circle(50%);
 }
-
 [data-theme="hellfire"] {
     --bg: #1c0606;
     --surface: #431616;
@@ -506,7 +481,6 @@
     --blur1: blur(3px) saturate(150%);
     --blur2: blur(3px) saturate(150%);
 }
-
 [data-theme="glass-fire"] {
     --bg: #1c0606;
     --surface: #5a2317;
@@ -520,7 +494,6 @@
     --blur1: blur(3px) saturate(150%);
     --blur2: blur(3px) saturate(150%);
 }
-
 [data-theme="frozen"] {
     --bg: #0b1e2c;
     --surface: #16364a;
@@ -532,7 +505,6 @@
     --glass: 85%;
     --check-shape: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
 }
-
 [data-theme="frozen-glass"] {
     --bg: #0b1e2c;
     --surface: #234b60;
@@ -544,7 +516,6 @@
     --glass: 32%;
     --check-shape: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
 }
-
 [data-theme="neon"] {
     --bg: #0a031a;
     --surface: #0e0620;
@@ -559,7 +530,6 @@
     --neonGlow: 0 0 4px rgba(255, 60, 200, 0.9), 0 0 12px rgba(255, 60, 200, 0.55);
     --neonTextGlow: 0 0 3px rgba(0, 240, 255, 0.9), 0 0 10px rgba(0, 240, 255, 0.5);
 }
-
 [data-theme="neon-glass"] {
     --bg: #0a031a;
     --surface: #0c223b;
@@ -574,7 +544,6 @@
     --neonGlow: 0 0 4px rgba(255, 60, 200, 0.9), 0 0 12px rgba(255, 60, 200, 0.55);
     --neonTextGlow: 0 0 3px rgba(0, 240, 255, 0.9), 0 0 10px rgba(0, 240, 255, 0.5);
 }
-
 [data-theme="gestalt"] {
     --bg: #181c28;
     --surface: #2c333e;
@@ -588,7 +557,6 @@
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
     --shadowInner: inset 4px 4px 14px rgba(150, 205, 255, 0.42), inset 0 0 5px rgba(205, 235, 255, 0.32);
 }
-
 [data-theme="shadow-of-the-mountains"] {
     --bg: #343b4d;
     --surface: #323e53;
@@ -599,83 +567,70 @@
     --border: #713540;
     --glass: 72%;
 }
+/* #endregion */
 
 :root,
+/* #region Background Section */
 [data-background="default"] {
     --background: url('/colorsketch-eldrid-3840.webp');
     --background-desktop: url('/colorsketch-eldrid-3840.webp');
 }
-
 [data-background="green"] {
     --background: url('/eldrid-bg-green-3840.webp');
     --background-desktop: url('/eldrid-bg-green-3840.webp');
 }
-
 [data-background="purple"] {
     --background: url('/eldrid-bg-purple-3840.webp');
     --background-desktop: url('/eldrid-bg-purple-3840.webp');
 }
-
 [data-background="blue"] {
     --background: url('/eldrid-bg-blue-3840.webp');
     --background-desktop: url('/eldrid-bg-blue-3840.webp');
 }
-
 [data-background="red"] {
     --background: url('/eldrid-bg-red-3840.webp');
     --background-desktop: url('/eldrid-bg-red-3840.webp');
 }
-
 [data-background="orange"] {
     --background: url('/eldrid-bg-orange-3840.webp');
     --background-desktop: url('/eldrid-bg-orange-3840.webp');
 }
-
 [data-background="yellow"] {
     --background: url('/eldrid-bg-yellow-3840.webp');
     --background-desktop: url('/eldrid-bg-yellow-3840.webp');
 }
-
 [data-background="dark"] {
     --background: url('/eldrid-bg-dark-3840.webp');
     --background-desktop: url('/eldrid-bg-dark-3840.webp');
 }
-
 [data-background="dark-map"] {
     --background: url('/utils/mapblack1.png');
     --background-desktop: url('/utils/mapblack1.png');
 }
-
 [data-background="light-map"] {
     --background: url('/utils/mapwhite1.png');
     --background-desktop: url('/utils/mapwhite1.png');
 }
-
 [data-background="light"] {
     --background: url('/eldrid-bg-light-3840.webp');
     --background-desktop: url('/eldrid-bg-light-3840.webp');
 }
-
 [data-background="hellfire"] {
     --background: url('/eldrid-bg-hellfire-3840.webp');
     --background-desktop: url('/eldrid-bg-hellfire-3840.webp');
 }
-
 [data-background="hellfire-map"] {
     --background: url('/utils/hellfiremap.png');
     --background-desktop: url('/utils/hellfiremap.png');
 }
-
 [data-background="frozen"] {
     --background: url('/eldrid-bg-frozen-3840.webp');
     --background-desktop: url('/eldrid-bg-frozen-3840.webp');
 }
-
 [data-background="frozen-map"] {
     --background: url('/utils/frozenmap1.png');
     --background-desktop: url('/utils/frozenmap1.png');
 }
-
 [data-background="neon"] {
     --background: url('/eldrid-bg-neon-3840.webp');
     --background-desktop: url('/eldrid-bg-neon-3840.webp');
@@ -688,11 +643,10 @@
     --background: url('/campaigns/shadow-of-the-mountains.webp');
     --background-desktop: url('/campaigns/shadow-of-the-mountains.webp');
 }
+/* #endregion */
 
-/* phones: portrait crops of each background */
+/* #region Mobile Crop Section */
 @media (max-width: 768px) {
-    /* phones: lighter glass blur so the background picture shows through */
-
     html[data-theme],
     html {
         --blur1: blur(0.75px) saturate(140%);
@@ -714,3 +668,4 @@
     html[data-background="gestalt"] { --background: url('/campaigns/the-fall-of-gestalt-mobile-1440x2560.webp'); }
     html[data-background="shadow-of-the-mountains"] { --background: url('/campaigns/shadow-of-the-mountains-mobile-1440x2560.webp'); }
 }
+/* #endregion */

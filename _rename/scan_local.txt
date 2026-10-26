@@ -1,0 +1,125 @@
+﻿tb|id|col|old|new|ctx
+class_feature_options|1|name|Shield|Force Aegis|Shield Bash Drill
+class_feature_options|22|name|Augury|Omen Reading|Bone Augury
+class_feature_options|32|name|Shield|Force Aegis|Vow of the Shield
+class_feature_options|49|name|Shield|Force Aegis|Shield Wall
+class_feature_options|60|description|Hunter's Mark|Prey Brand|your first hit each turn on your Hunter's Mark target strips its half and three-quarters cove
+class_feature_options|99|name|Mending|Seamknit|Litany of Mending
+class_feature_options|100|name|Light|Lanternkiss|Litany of Light
+class_feature_options|102|name|Sanctuary|Hallowed Refuge|Litany of Sanctuary
+class_feature_options|107|name|Haste|Quickening|Seal of Haste
+class_features|225|name|Hunter's Mark|Prey Brand|Hunter's Mark
+class_features|236|description|Hunter's Mark|Prey Brand|Hunter's Mark damage becomes 1d10. Once per rest, the mark persists for its remaining duratio
+class_features|236|name|Hunter's Mark|Prey Brand|Superior Hunter's Mark
+class_features|243|description|Hunter's Mark|Prey Brand|Choose a second Favored Enemy. While Hunter's Mark is active, once per turn you can move it t
+class_features|250|description|Hunter's Mark|Prey Brand|Hunter's Mark damage becomes 2d6, and once per turn you can place or move it as part of the A
+class_features|258|description|Hunter's Mark|Prey Brand|ored Terrain benefits apply everywhere, Hunter's Mark can be on up to 3 targets, and your fir
+class_features|269|name|Resistance|Warding Touch|Wild Shape (3) and Terrain Resistance
+class_features|433|name|Sanctuary|Hallowed Refuge|Living Sanctuary
+class_features|439|description|Sanctuary|Hallowed Refuge|Living Sanctuary's aura extends to 30 ft.
+class_features|439|name|Sanctuary|Hallowed Refuge|Living Sanctuary 30 ft
+class_features|448|description|Darkvision|Nightsight|, CHA 8; DEX and WIS saves add your PB. Darkvision 60 ft. Immune to charmed (and frightene
+class_features|460|name|Command|Commanding Word|Binding Command
+class_features|481|description|Command|Commanding Word|h Lich began) are critical hits; Lich's Command: once per turn, Commander's Strike lets
+class_features|1043|description|Mending|Seamknit|Virtue: you lose all remaining embers). Mending: a short rest removes 2 Cracks, a long 
+class_features|1043|description|Resurrection|Long Return|l); max 2 Cracks per turn except Stolen Resurrection. Breach: if you would gain a 6th Crack,
+class_levels|183|description|Hunter's Mark|Prey Brand|Subclass + Hunter's Mark (class version): bonus action mark; bonus damage once per turn; adva
+class_levels|191|description|Hunter's Mark|Prey Brand|Superior Hunter's Mark: mark damage grows; the mark survives concentrating on something else 
+class_levels|197|description|Hunter's Mark|Prey Brand|nd Favored Enemy + Mark Mastery (moving Hunter's Mark is free every turn while it's active)
+class_levels|210|description|Hunter's Mark|Prey Brand|te): Favored Terrain counts everywhere, Hunter's Mark on up to 3 targets, first hit each turn
+class_levels|351|description|Sanctuary|Hallowed Refuge|Living Sanctuary: 10-ft aura where allies regain a little HP at the start of their turn (
+class_levels|357|description|Sanctuary|Hallowed Refuge|Living Sanctuary extends to 30 ft
+items|61|description|Light|Lanternkiss|Read aloud to cast Light (level 0) without a slot. The scroll crumbles after use.
+items|62|description|Mending|Seamknit|Read aloud to cast Mending (level 0) without a slot. The scroll crumbles after use.
+items|63|description|Guidance|Steady Hand|Read aloud to cast Guidance (level 0) without a slot. The scroll crumbles after use.
+items|64|description|Cure Wounds|Warm Hands|Read aloud to cast Cure Wounds (level 1) without a slot. The scroll crumbles after use.
+items|65|description|Bless|Blessing|Read aloud to cast Bless (level 1) without a slot. The scroll crumbles after use.
+items|66|description|Shield|Force Aegis|Read aloud to cast Shield (level 1) without a slot. The scroll crumbles after use.
+items|67|description|Lesser Restoration|Purge Ailment|Read aloud to cast Lesser Restoration (level 2) without a slot. The scroll crumbles after use.
+items|68|description|Invisibility|Vanish|Read aloud to cast Invisibility (level 2) without a slot. The scroll crumbles after use.
+items|70|description|Fireball|Ember Burst|Read aloud to cast Fireball (level 3) without a slot. The scroll crumbles after use.
+items|72|description|Banishment|Exile|Read aloud to cast Banishment (level 4) without a slot. The scroll crumbles after use.
+items|73|description|Greater Restoration|Deep Cleansing|Read aloud to cast Greater Restoration (level 5) without a slot. The scroll crumbles after use.
+items|74|description|Teleportation Circle|Waygate Ring|Read aloud to cast Teleportation Circle (level 5) without a slot. The scroll crumbles after use.
+items|75|description|Wall of Force|Unseen Bulwark|Read aloud to cast Wall of Force (level 5) without a slot. The scroll crumbles after use.
+items|76|description|Sacred Flame|Dawnfall|Read aloud to cast Sacred Flame (level 0) without a slot. The scroll crumbles after use.
+items|77|description|Thaumaturgy|Omen Sign|Read aloud to cast Thaumaturgy (level 0) without a slot. The scroll crumbles after use.
+items|78|description|Resistance|Warding Touch|Read aloud to cast Resistance (level 0) without a slot. The scroll crumbles after use.
+items|79|description|Healing Word|Kind Word|Read aloud to cast Healing Word (level 1) without a slot. The scroll crumbles after use.
+items|80|description|Detect Magic|Magesight|Read aloud to cast Detect Magic (level 1) without a slot. The scroll crumbles after use.
+items|81|description|Protection from Evil and Good|Otherworld Ward|Read aloud to cast Protection from Evil and Good (level 1) without a slot. The scroll crumbles after use.
+items|82|description|Misty Step|Mist Hop|Read aloud to cast Misty Step (level 2) without a slot. The scroll crumbles after use.
+items|83|description|Spiritual Weapon|Spectral Blade|Read aloud to cast Spiritual Weapon (level 2) without a slot. The scroll crumbles after use.
+items|84|description|Prayer of Healing|Fireside Chant|Read aloud to cast Prayer of Healing (level 2) without a slot. The scroll crumbles after use.
+items|85|description|Lightning Bolt|Thunderspear|Read aloud to cast Lightning Bolt (level 3) without a slot. The scroll crumbles after use.
+items|86|description|Dimension Door|Far Door|Read aloud to cast Dimension Door (level 4) without a slot. The scroll crumbles after use.
+items|87|description|Freedom of Movement|Unbound Stride|Read aloud to cast Freedom of Movement (level 4) without a slot. The scroll crumbles after use.
+items|88|description|Cure Wounds|Warm Hands|Read aloud to cast Mass Cure Wounds (level 5) without a slot. The scroll crumbles after use
+items|88|description|Mass Cure Wounds|Tide of Mending|Read aloud to cast Mass Cure Wounds (level 5) without a slot. The scroll crumbles after use.
+items|89|description|Cone of Cold|Winter Gust|Read aloud to cast Cone of Cold (level 5) without a slot. The scroll crumbles after use.
+items|90|description|Dispel Evil and Good|Banish Ward|Read aloud to cast Dispel Evil and Good (level 5) without a slot. The scroll crumbles after use.
+items|91|description|Resistance|Warding Touch|Resistance to cold damage.
+items|94|description|Resistance|Warding Touch|Resistance to thunder damage; Once per short rest, as a reaction when you would be deafene
+items|95|description|Resistance|Warding Touch|Resistance to lightning and thunder damage; Your weapon hits deal an extra 1d4 lightning d
+items|99|description|Resistance|Warding Touch|vantage on saves against being charmed; Resistance to psychic damage.
+items|100|description|Resistance|Warding Touch|Resistance to fire damage; Once per long rest, as an action, teleport to a hearth you have
+items|102|description|Resistance|Warding Touch|ke you a promise know if they break it; Resistance to necrotic damage; Once per long rest,
+items|105|description|Light|Lanternkiss|Light or snuff small flames within 10 ft at will; Once per short rest, your next weap
+items|106|description|Resistance|Warding Touch|Resistance to lightning damage; Your weapon hits deal an extra 1d4 lightning damage; Once 
+items|107|description|Resistance|Warding Touch|See in magical darkness out to 120 ft; Resistance to necrotic and psychic damage; Your wea
+items|108|description|Resistance|Warding Touch|Resistance to cold and fire damage; Once per long rest, set the weather within 1 mile for 
+items|123|description|Resistance|Warding Touch|Resistance to cold damage; Your weapon hits deal an extra 1d4 cold damage; Once per long r
+items|126|description|Resistance|Warding Touch|Breathe water; Resistance to cold damage while underwater.
+items|128|description|Resistance|Warding Touch|Immunity to the frightened condition; Resistance to bludgeoning, piercing and slashing dam
+items|142|description|Resistance|Warding Touch|Resistance to bludgeoning damage; Sense creatures touching the ground within 30 ft; Once p
+items|155|description|Light|Lanternkiss|Light can be shuttered to dim.
+primordial_blessings|19|description|Darkvision|Nightsight|Darkvision 60 ft (or +30 ft if you have it). Dim light doesn't impose disadvantage on Perc
+race_lineage_bonuses|24|description|Teleport|Long Leap|Teleport up to 15 ft to an unoccupied space you can see.
+runes|13|effect|Resistance|Warding Touch|Resistance to one damage type chosen when you inscribe it (not bludgeoning, piercing or sl
+subclass_features|68|description|Blight|Blightdraw|se per long rest, 1 minute: use Bloom & Blight once each turn for free; hexed enemies 
+subclass_features|70|description|Blight|Blightdraw|Bloom & Blight uses double and its heal becomes 2d6 + CHA modifier.
+subclass_features|74|name|Blight|Blightdraw|Bloom & Blight
+subclass_features|93|name|Gate|Worldgate|Gate of Returning
+subclass_features|123|name|Cloudkill|Death Fog|Cloudkill Kiss
+subclass_features|163|description|Hunter's Mark|Prey Brand|mmand, and you and your companion share Hunter's Mark concentration (damage to either can't b
+subclass_features|166|description|Hunter's Mark|Prey Brand|Your companion's hits deal your Hunter's Mark damage (once per turn) against your marked targ
+subclass_features|174|description|Hunter's Mark|Prey Brand| creature in one turn, apply or refresh Hunter's Mark on it without an action or a free cast.
+subclass_features|181|name|Tree Stride|Treewalk|Tree Stride
+subclass_features|199|name|Blur|Shimmerblur|Mythic Blur of Blades
+subclass_features|287|name|Command|Commanding Word|Grave Command
+subclass_features|296|name|Gate|Worldgate|Voice Beyond the Gate
+subclass_features|298|name|Gate|Worldgate|Black Gate Echo
+subclass_features|321|name|Silence|Hushdome|Silence Between Notes
+subclass_features|650|description|Resistance|Warding Touch|Resistance to bludgeoning, piercing, and slashing damage while at 3+ Cracks.
+subclass_features|665|name|Resurrection|Long Return|Stolen Resurrection
+subclass_features|690|name|Shield|Force Aegis|Shield-Brother
+subclass_levels|51|description|Blight|Blightdraw|Bloom & Blight (bonus action: light heal on an ally, or hexed target saves vs poison +
+subclass_levels|56|description|Blight|Blightdraw|reign (1/long rest, 1 min: free Bloom & Blight each turn; hexed enemies auto-fail thei
+subclass_levels|77|description|Gate|Worldgate|Gate of Returning (story-gated brief call of a willing soul)
+subclass_levels|116|description|Hunter's Mark|Prey Brand|Shared Mark (companion deals Hunter's Mark damage)
+subclass_levels|122|description|Hunter's Mark|Prey Brand|pons hit one creature, apply or refresh Hunter's Mark)
+subclass_levels|198|description|Command|Commanding Word|Grave Command
+subclass_levels|208|description|Gate|Worldgate|Black Gate Echo
+subclass_levels|210|description|Gate|Worldgate|Voice Beyond the Gate
+subclass_levels|212|description|Fear|Terror Wave|Fear Breaker
+subclass_levels|227|description|Silence|Hushdome|Silence Between Notes
+subclass_levels|1297|description|Cloudkill|Death Fog|Cloudkill Kiss
+subclass_levels|1355|description|Tree Stride|Treewalk|Tree Stride (teleport between trees 1/rest)
+subclass_levels|1373|description|Blur|Shimmerblur|Mythic Blur of Blades
+subclass_levels|1836|description|Resurrection|Long Return|Stolen Resurrection
+subclass_levels|1868|description|Shield|Force Aegis|Shield-Brother
+subraces|1|description|Resistance|Warding Touch|ly white fur, the classic Vellari look. Resistance to radiant damage.
+subraces|2|description|Resistance|Warding Touch|Black fur. Resistance to necrotic damage.
+subraces|3|description|Resistance|Warding Touch|Purple fur. Resistance to psychic damage.
+subraces|4|description|Resistance|Warding Touch|Orange fur. Resistance to lightning damage.
+subraces|5|description|Resistance|Warding Touch|Clear crystal fur. Resistance to force damage.
+subraces|6|description|Resistance|Warding Touch|Green fur. Resistance to poison damage.
+subraces|7|description|Resistance|Warding Touch|Red fur. Resistance to fire damage.
+subraces|8|description|Resistance|Warding Touch|Blue fur. Resistance to cold damage.
+subraces|11|description|Resistance|Warding Touch|A fluffy breed from the cold. Resistance to cold damage.
+subraces|15|description|Resistance|Warding Touch| fur veined with dark-green moss agate. Resistance to acid damage.
+subraces|16|description|Resistance|Warding Touch|Red veins, Red Magic (Offense). Resistance to fire damage. Veinfire deals fire; the target
+subraces|17|description|Resistance|Warding Touch|Purple veins, Purple Magic (Weaken). Resistance to psychic damage. Veinfire deals psychic;
+subraces|18|description|Resistance|Warding Touch|Gold veins, Yellow Magic (Strengthen). Resistance to force damage. Veinfire deals force; y
+subraces|19|description|Resistance|Warding Touch|Orange veins, Orange Magic (Hinder). Resistance to acid damage. Veinfire deals acid; the t
+(123 rows)

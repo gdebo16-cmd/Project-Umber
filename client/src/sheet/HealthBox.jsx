@@ -26,22 +26,18 @@ function HealthBox({ id, hp, max, temp = 0, onHpChange, onTempChange }) {
     return (
         <section className={`health-container ${hp <= max / 4 ? 'very_hurt' : hp <= max / 2 ? 'hurt' : ''}` } id='health-container'>
             <article className='health-button-tile'>
-                <button type='button' id='heal-button' className='tile-component button-tile-component button-component hover-grow' onClick={() => change('heal')}>Heal</button>
-                <button type='button' id='temp-hp-button' className='tile-component button-tile-component button-component hover-grow' onClick={() => change('temp')}>Temp HP</button>
-                <input type='number' id='hp-input' className='tile-component button-tile-component input-component' min='0' value={amount} onChange={(e) => setAmount(e.target.value)} />
-                <button type='button' id='damage-button' className='tile-component button-tile-component button-component hover-grow' onClick={() => change('damage')}>Damage</button>
+                <button type='button' id='heal-button' className='hp-button' onClick={() => change('heal')}>Heal</button>
+                <button type='button' id='ward-button' className='hp-button' onClick={() => change('temp')}>Ward</button>
+                <input type='number' id='hp-input' className='hp-input' min='0' value={amount} onChange={(e) => setAmount(e.target.value)} />
+                <button type='button' id='damage-button' className='hp-button' onClick={() => change('damage')}>Damage</button>
             </article>
             <article className='current-hp-tile'>
-                <p className='tile-component label-component hp-label-component' id='current-hp-label'>Current HP</p>
-                <p className='tile-component value-component hp-value-component' id={hp === 0 ? 'current-hp-value--fallen' : 'current-hp-value'}>{hp === 0 ? 'You Have Fallen!' : hp}{temp > 0 ? ` (+${temp} temp)` : ''}</p>
+                <p className='hp-label' id='current-hp-label'>Current Health</p>
+                <p className='hp-value' id={hp === 0 ? 'current-hp-value--fallen' : 'current-hp-value'}>{hp === 0 ? 'You Have Fallen!' : hp}  {temp > 0 ? `+ ${temp} (warded)` : ''}</p>
             </article>
             <article className='max-hp-tile'>
-                <p className='tile-component label-component hp-label-component' id='max-hp-label'>Max HP</p>
-                <p className='tile-component value-component hp-value-component' id='max-hp-value'>{max}</p>
-            </article>
-            <article className='hp-bar-tile'>
-                <div className={`tile-component bar-component ${hp <= max / 4 ? 'very_hurt' : hp <= max / 2 ? 'hurt' : ''}` } id='hp-bar-fill' style={{ width: `${Math.min(100, Math.max(0, max ? (hp / max) * 100 : 0))}%` }}>
-                </div>
+                <p className='hp-label' id='max-hp-label'>Max Health</p>
+                <p className='hp-value' id='max-hp-value'>{max}</p>
             </article>
         </section>
     );

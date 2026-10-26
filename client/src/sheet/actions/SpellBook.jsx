@@ -16,19 +16,7 @@ const TABS = [
     { id: 'level_9', label: 'Level 9' },
 ];
 
-// Optional: if you want the panel titles to stay exact
-const LEVEL_TITLES = {
-    0: 'Low Level Spells',
-    1: 'Level 1 Spells',
-    2: 'Level 2 Spells',
-    3: 'Level 3 Spells',
-    4: 'Level 4 Spells',
-    5: 'Level 5 Spells',
-    6: 'Level 6 Spells',
-    7: 'Level 7 Spells',
-    8: 'Level 8 Spells',
-    9: 'Level 9 Spells',
-};
+
 
 function SpellBook({ characterId, onDone, onOpenSpell }) {
     const { data, setData, loading, error } = useFetch(`/api/characters/${characterId}/spellbook`);
@@ -115,11 +103,10 @@ return (
                             aria-labelledby={`spell-tab-${id}`}
                             hidden={tab !== id}
                         >
-                            <h3 className="action-title">{LEVEL_TITLES[level]}</h3>
                             <ul className="action-set">
                                 {levelSpells.map((s) => (
                                     <li key={s.id} className="action-item">
-                                        <button type="button" className="caption-btn hover-grow" onClick={() => onOpenSpell?.(s)}>{s.name}</button>
+                                        <button type="button" className="caption-btn" onClick={() => onOpenSpell?.(s)}>{s.name}</button>
                                         {spellButton(s.id, learnedIds.includes(Number(s.id)))}
                                     </li>
                                 ))}

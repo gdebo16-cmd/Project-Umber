@@ -1,0 +1,14 @@
+BEGIN;
+DROP TABLE IF EXISTS feature_text_backup_2026_10_23;
+CREATE TABLE feature_text_backup_2026_10_23 AS
+ select 'class_features'::text tb, id, description from class_features where id in (262,1084)
+ union all select 'class_levels', id, description from class_levels where id=211
+ union all select 'subclass_features', id, description from subclass_features where id in (92,99,106,113);
+UPDATE class_features SET description = replace(description,'cast speak with animals as a ritual','cast Beastspeech as a ritual') WHERE id=262 AND description LIKE '%cast speak with animals as a ritual%' RETURNING 'class_features', id;
+UPDATE class_features SET description = replace(description,'(guidance, light, mending, resistance, sacred flame, spare the dying, thaumaturgy)','(Steady Hand, Lanternkiss, Seamknit, Warding Touch, Dawnfall, Last Breath, Omen Sign)') WHERE id=1084 AND description LIKE '%(guidance, light, mending, resistance, sacred flame, spare the dying, thaumaturgy)%' RETURNING 'class_features', id;
+UPDATE class_levels SET description = replace(description,'(speak with animals ritual;','(Beastspeech ritual;') WHERE id=211 AND description LIKE '%(speak with animals ritual;%' RETURNING 'class_levels', id;
+UPDATE subclass_features SET description = replace(description,'Oath spells: cure wounds, entangle (3rd tier at 9: revivify, plant growth).','Oath spells: Warm Hands, Grasping Vines (3rd tier at 9: Second Breath, Overgrowth).') WHERE id=92 AND description LIKE '%Oath spells: cure wounds, entangle (3rd tier at 9: revivify, plant growth).%' RETURNING 'subclass_features', id;
+UPDATE subclass_features SET description = replace(description,'Oath spells: detect evil and good, sanctuary (3rd tier at 9: speak with dead, spirit guardians).','Oath spells: Spirit Sense, Hallowed Refuge (3rd tier at 9: Waking the Dead, Spirit Ring).') WHERE id=99 AND description LIKE '%Oath spells: detect evil and good, sanctuary%' RETURNING 'subclass_features', id;
+UPDATE subclass_features SET description = replace(description,'Oath spells: disguise self, hunter''s mark (3rd tier at 9: fear, nondetection).','Oath spells: False Face, Prey Brand (3rd tier at 9: Terror Wave, Scryshroud).') WHERE id=106 AND description LIKE '%Oath spells: disguise self, hunter''s mark%' RETURNING 'subclass_features', id;
+UPDATE subclass_features SET description = replace(description,'Oath spells: faerie fire, guiding bolt (3rd tier at 9: daylight, counterspell).','Oath spells: Glowmark, Starlance (3rd tier at 9: Noonlight, Spellbreak).') WHERE id=113 AND description LIKE '%Oath spells: faerie fire, guiding bolt%' RETURNING 'subclass_features', id;
+COMMIT;

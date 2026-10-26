@@ -7,7 +7,7 @@ function Skills({ character, onRoll }) {
     return (
         <section className="skills-container">
             <section className="skills-title">
-                <p>Skills</p>
+                <h2>Skills</h2>
             </section>
 
             <section className="skills-list">

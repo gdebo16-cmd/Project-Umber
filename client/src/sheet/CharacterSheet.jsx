@@ -272,17 +272,24 @@ function CharacterSheet() {
 
                 <section role="tabpanel" id="sheet-panel-stats" className="sheet-panel" hidden={sheetTab !== 'stats'}>
                     <section className="container" id="stat-container">
+                        <article className='stat-title'>
+                            <h2>Primary Traits</h2>
+                        </article>
+                        <article className='stat-list'>
                         {STATS.map((s) => (
                             <StatBox key={s.key} label={s.label} score={character[s.key]} bottom={s.key === 'spd' ? distance : undefined} onRoll={showRoll} />
                         ))}
+                        </article>
                     </section>
                     <Skills character={character} onRoll={showRoll} />
                 </section>
 
                 <section role="tabpanel" id="sheet-panel-actions" className="sheet-panel" hidden={sheetTab !== 'actions'}>
-                    <ArmorClass character={character} ownedArmor={ownedArmor} />
-                    <Initiative character={character} hp={hp} onRoll={showRoll} />
-                    <ProficiencyBonus character={character} />
+                    <section className='tri-stat'>
+                        <Initiative character={character} hp={hp} onRoll={showRoll} />
+                        <ArmorClass character={character} ownedArmor={ownedArmor} />
+                        <ProficiencyBonus character={character} />
+                    </section>
                     <ActionPanel />
                 </section>
 

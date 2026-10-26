@@ -1,0 +1,330 @@
+id,old_name_neon,old_name_local,new_name,new_description,already_renamed_locally
+7,Minor Illusion,Hallucinate,Hallucinate,"A small, silent illusion shimmers into being, real enough to fool a passing glance.",y
+10,Control Water,Bend Water,Bend Water,"You beckon nearby water to rise, part, or swirl at the flick of your hand.",y
+13,Stormcall Touch,Stormcall,Stormcall,"Lightning crawls over your hand, and whatever you touch is jolted by a crackling thunderbolt.",y
+20,Stone Shape,Bend Stone,Bend Stone,"Under your palms, solid stone softens like clay and takes whatever form you press into it.",y
+21,Windstride,Ride the Wind,Ride the Wind,A gust lifts you off your feet and sets you down gently anywhere within 30 feet.,y
+118,Acid Splash,Venom Bolt,Corrosive Spatter,A bead of hissing green acid flies from your fingers and splashes across your foes.,y
+156,Chill Touch,Chill Touch,Gravegrip,"A spectral, bone-cold hand clutches a foe and drains the warmth of life from it.",n
+186,Dancing Lights,Dancing Lights,Wisplights,Tiny floating lanterns of soft light bob and drift wherever you guide them.,n
+209,Druidcraft,Druidcraft,Wildsign,"You read the wind for weather, coax a bud to bloom, or stir the leaves with a whisper of the wild.",n
+211,Eldritch Blast,Eldritch Blast,Void Lance,A crackling beam of raw otherworldly force tears out from your outstretched hand.,n
+231,Fire Bolt,Fire Bolt,Cinder Dart,A mote of fire leaps from your fingertip and bursts against your target.,n
+261,Guidance,Guidance,Steady Hand,A gentle touch steadies an ally's focus just when they need it most.,n
+295,Light,Light,Lanternkiss,"You touch an object and it glows with a warm, steady light like a hearth lantern.",n
+302,Mage Hand,Mage Hand,Phantom Grasp,"A faint spectral hand appears to lift, pull, and carry things at your direction.",n
+316,Mending,Mending,Seamknit,"Broken things knit back together under your touch, leaving no scar or seam.",n
+317,Message,Message,Windborne Word,"Your whisper rides the air to a distant ear, and their reply finds its way back to you.",n
+336,Poison Spray,Poison Spray,Venom Mist,A puff of sickly green vapor bursts from your palm and chokes the air around a foe.,n
+341,Prestidigitation,Prestidigitation,Hedge Trick,"Small, harmless wonders bloom at your fingertips: sparks, scents, chills, and tidied dust.",n
+345,Produce Flame,Produce Flame,Palm Ember,"A flickering flame blooms in your open hand, ready to light the dark or be hurled.",n
+354,Ray of Frost,Ray of Frost,Frostline,A pale blue ray of bitter cold lances out and slows whatever it touches.,n
+359,Resistance,Resistance,Warding Touch,A brief touch leaves an ally wrapped in a faint shield against harm.,n
+364,Sacred Flame,Sacred Flame,Dawnfall,Pure radiance pours down on a foe like the first light breaking through the clouds.,n
+377,Shillelagh,Shillelagh,Oakheart Cudgel,Your staff or club swells with the strength of old oak and strikes with nature's weight.,n
+378,Shocking Grasp,Shocking Grasp,Spark Grip,Lightning crackles across your hand and jolts whoever you touch.,n
+385,Spare the Dying,Spare the Dying,Last Breath,"You steady a dying creature, holding its fading life in place.",n
+404,Thaumaturgy,Thaumaturgy,Omen Sign,"The ground trembles, flames flicker, and your voice booms with the weight of the heavens.",n
+414,True Strike,True Strike,Foe's Tell,You glimpse a foe's next move a heartbeat before it happens.,n
+417,Vicious Mockery,Vicious Mockery,Barbed Jest,"Your words cut sharper than steel, laced with magic that stings the mind.",n
+435,Friends,Make Friends,Make Friends,"A little glamour makes a stranger warm to you, until the spell fades and they realize it.",y
+71,Falling Star Mark,Beacon,Beacon,"A tiny star falls and clings to a creature, outlining it in light so it cannot hide.",y
+120,Alarm,Alarm,Tripwire Ward,"An invisible ward hums across a doorway or camp, waking you when anything crosses it.",n
+122,Animal Friendship,Animal Friendship,Beastcalm,"You speak soothingly to a wild creature, and it comes to see you as a friend.",n
+138,Bane,Bane,Ill Fortune,"A pall of bad luck settles over your enemies, making every effort falter.",n
+145,Bless,Bless,Blessing,"A warm glow settles on your allies, guiding their blows and steadying their nerve.",n
+151,Burning Hands,Burning Hands,Flame Fan,Fire sprays from your spread fingers in a roaring sheet.,n
+155,Charm Person,Charm Person,Warm Regard,"A creature suddenly sees you as a trusted friend, at least for a while.",n
+161,Color Spray,Color Spray,Prism Burst,A dazzling spray of colored light leaves those in its path reeling and blind.,n
+162,Command,Command,Commanding Word,"You speak a single word laced with power, and a creature obeys.",n
+165,Comprehend Languages,Comprehend Languages,Tongue Sense,Strange words and foreign letters unravel into meaning before your eyes and ears.,n
+182,Create or Destroy Water,Create or Destroy Water,Wellspring,"Clean water pours from nowhere, or a pool of water vanishes into mist.",n
+185,Cure Wounds,Cure Wounds,Warm Hands,"Your touch closes wounds and eases pain with soft, warm light.",n
+193,Detect Evil and Good,Detect Evil and Good,Spirit Sense,"You feel the presence of otherworldly beings, holy or unholy, lurking nearby.",n
+194,Detect Magic,Detect Magic,Magesight,The glow of nearby magic becomes visible to you like faint auras in the air.,n
+195,Detect Poison and Disease,Detect Poison and Disease,Blight Sense,"You sense sickness and poison, seeing them as a faint, sour shimmer.",n
+198,Disguise Self,Disguise Self,False Face,"Your appearance shifts like a mask, changing your face, clothes, and form.",n
+203,Divine Favor,Divine Favor,Zealous Strike,"Your weapon glows with fervor, each blow searing with radiant power.",n
+214,Entangle,Entangle,Grasping Vines,"Weeds and vines burst from the ground, coiling around anything nearby.",n
+217,Expeditious Retreat,Expeditious Retreat,Swiftfoot,"Your legs blur with speed, letting you dash away in the blink of an eye.",n
+220,Faerie Fire,Faerie Fire,Glowmark,"Shimmering light outlines your foes, leaving them nowhere to hide.",n
+222,False Life,False Life,Deathless Vigor,"Necromantic power bolsters you with a borrowed, hollow vitality.",n
+224,Feather Fall,Feather Fall,Downy Descent,"Falling creatures slow to a gentle drift, landing as light as feathers.",n
+226,Find Familiar,Find Familiar,Spirit Companion,"A spirit answers your call and takes the shape of a small, loyal animal.",n
+239,Floating Disk,Floating Disk,Hover Platform,"A flat, floating disk of force appears to carry your burdens behind you.",n
+241,Fog Cloud,Fog Cloud,Mistcloak,"A thick bank of fog rolls out from a point you choose, swallowing sight.",n
+255,Goodberry,Goodberry,Hearthberries,"A handful of berries glows with magic, each one as filling as a meal.",n
+256,Grease,Grease,Slickfloor,"A slick, greasy film spreads across the ground, sending foes tumbling.",n
+262,Guiding Bolt,Guiding Bolt,Starlance,A flash of starlight streaks toward a foe and leaves it glowing for your allies.,n
+269,Healing Word,Healing Word,Kind Word,A single kind word mends an ally's wounds from across the battlefield.,n
+271,Hellish Rebuke,Hellish Rebuke,Infernal Retort,"When struck, you answer with a burst of infernal flame that engulfs your attacker.",n
+273,Heroism,Heroism,Valor,"Courage floods a creature, steeling it against fear and bolstering its spirit.",n
+274,Hideous Laughter,Hideous Laughter,Giggle Curse,A creature collapses in helpless laughter at a joke only it can hear.,n
+278,Hunter's Mark,Hunter's Mark,Prey Brand,"You mark your prey with a hunter's magic, sensing its every move.",n
+281,Identify,Identify,Lore Touch,You learn an object's secrets and magic by holding it in your hands.,n
+282,Illusory Script,Illusory Script,Secret Ink,"Your writing hides its true message, readable only by those you choose.",n
+285,Inflict Wounds,Inflict Wounds,Rotting Touch,Your touch spreads rot and ruin through a foe's flesh.,n
+290,Jump,Jump,Springstep,"Your legs coil with magic, letting you leap great distances.",n
+300,Longstrider,Longstrider,Far Stride,Your steps lengthen and quicken for the long road ahead.,n
+301,Mage Armor,Mage Armor,Spell Ward,A shimmering layer of magic surrounds you like invisible armor.,n
+305,Magic Missile,Magic Missile,Seeker Darts,Glowing darts of force streak from your hand and never miss their mark.,n
+349,Protection from Evil and Good,Protection from Evil and Good,Otherworld Ward,A protective aura guards a creature from beings beyond the mortal world.,n
+351,Purify Food and Drink,Purify Food and Drink,Cleanse Provisions,Spoiled food and fouled water turn fresh and safe again.,n
+365,Sanctuary,Sanctuary,Hallowed Refuge,A creature is shielded by quiet grace that turns attackers aside.,n
+375,Shield,Shield,Force Aegis,An invisible barrier snaps into place to deflect a blow at the last moment.,n
+376,Shield of Faith,Shield of Faith,Faithguard,A shimmering field surrounds an ally and turns aside harm.,n
+380,Silent Image,Silent Image,Still Mirage,"You conjure a silent, motionless illusion of anything you can picture.",n
+382,Sleep,Sleep,Slumber Mist,"A drowsy haze rolls over creatures, sending them into a deep sleep.",n
+386,Speak with Animals,Speak with Animals,Beastspeech,You understand the voices of animals and can speak with them in turn.,n
+405,Thunderwave,Thunderwave,Thunder Ring,"A wave of thunderous force bursts out from you, hurling foes back.",n
+415,Unseen Servant,Unseen Servant,Phantom Helper,"An invisible, mindless helper appears to fetch, carry, and clean.",n
+436,Dissonant Whispers,Darkling Whispers,Darkling Whispers,A whisper only your target hears claws at its mind and sends it scrambling away from you.,y
+101,Riptide Brand,Water Mark,Water Mark,"You brand a creature with a sigil of the sea, and each turn the tide hauls it toward you.",y
+117,Acid Arrow,Acid Arrow,Caustic Bolt,A shimmering green bolt streaks toward a foe and bursts in a hissing spray of acid.,n
+119,Aid,Aid,Rallying Light,"Golden warmth fills your allies, bolstering their spirit and stamina.",n
+121,Alter Self,Alter Self,Fleshshift,"Your body reshapes itself to blend in, breathe water, or grow claws.",n
+123,Animal Messenger,Animal Messenger,Wingborne Message,A small beast carries your message swiftly to a distant friend.,n
+132,Arcane Lock,Arcane Lock,Runelock,"A rune-bound lock seals a door or chest, holding fast against intruders.",n
+134,Arcanist's Magic Aura,Arcanist's Magic Aura,Masking Veil,You mask an object's or creature's magic so it reads as something else.,n
+136,Augury,Augury,Omen Reading,You cast signs and stones to glimpse whether a path leads to fortune or woe.,n
+140,Barkskin,Root Armor,Root Armor,Your skin turns rough and hard as old tree bark.,y
+147,Blindness/Deafness,Blindness/Deafness,Senseblight,You steal a creature's sight or hearing with a curse.,n
+149,Blur,Blur,Shimmerblur,"Your form wavers and blurs, making you hard to strike.",n
+150,Branding Smite,Branding Smite,Searing Brand,"Your weapon flares with radiant light, branding a foe so it cannot hide.",n
+153,Calm Emotions,Calm Emotions,Hush of Peace,"A wave of peace washes over creatures, soothing rage and fear.",n
+178,Continual Flame,Continual Flame,Everflame,A flame that gives no heat burns forever on an object you touch.,n
+187,Darkness,Darkness,Blackveil,"Magical darkness spreads from a point, swallowing all light.",n
+188,Darkvision,Darkvision,Nightsight,Your eyes adjust to see through darkness as if it were dim light.,n
+196,Detect Thoughts,Detect Thoughts,Thoughtread,You hear the surface thoughts of creatures around you.,n
+212,Enhance Ability,Enhance Ability,Inner Gift,"A creature is gifted with the strength, grace, or wits of a beast.",n
+213,Enlarge/Reduce,Enlarge/Reduce,Grow or Shrink,A creature or object swells to giant size or dwindles to tiny proportions.,n
+215,Enthrall,Enthrall,Captivate,Your words weave a spell that holds an audience in rapt attention.,n
+227,Find Steed,Find Steed,Spirit Mount,"A loyal, intelligent steed answers your call to serve you.",n
+229,Find Traps,Find Traps,Snare Sense,You sense hidden traps and dangers nearby.,n
+235,Flame Blade,Flame Blade,Fire Sword,A blade of searing flame ignites in your hand.,n
+237,Flaming Sphere,Flaming Sphere,Rolling Blaze,A burning sphere of fire rolls across the field at your command.,n
+250,Gentle Repose,Gentle Repose,Death Rest,You preserve a corpse from decay and from being raised against its will.,n
+263,Gust of Wind,Gust of Wind,Gale Burst,"A strong wind howls out from you, pushing back all in its path.",n
+270,Heat Metal,Heat Metal,Red Iron,"Metal glows red-hot, searing whoever holds or wears it.",n
+276,Hold Person,Hold Person,Body Lock,"A humanoid freezes in place, its muscles locked by your magic.",n
+288,Invisibility,Invisibility,Vanish,"You or another slip from sight entirely, unseen by any eye.",n
+291,Knock,Knock,Unbar,Locks click open and bars slide back with a ringing knock.,n
+293,Lesser Restoration,Lesser Restoration,Purge Ailment,"Your touch cures a creature of disease, poison, or a crippling condition.",n
+294,Levitate,Levitate,Drift Rise,A creature or object rises slowly into the air and hangs there.,n
+297,Locate Animals or Plants,Locate Animals or Plants,Wild Seeking,You sense the nearest wild creature or plant of a kind you name.,n
+299,Locate Object,Locate Object,Lost and Found,"You feel the pull of an object you're seeking, guiding you toward it.",n
+306,Magic Mouth,Magic Mouth,Speaking Sigil,An object speaks a message you leave when a condition you set is met.,n
+307,Magic Weapon,Magic Weapon,Rune Edge,A weapon glows with runes that make it strike truer and harder.,n
+321,Mirror Image,Mirror Image,Twin Phantoms,"Illusory duplicates of you appear, confusing foes about where you stand.",n
+323,Misty Step,Misty Step,Mist Hop,You vanish in a puff of silver mist and reappear a short distance away.,n
+325,Moonbeam,Moonbeam,Moonray,A silver beam of pale moonlight burns down on those beneath it.,n
+328,Pass Without Trace,Pass Without Trace,Trackless Path,"Shadow and silence cloak your group, leaving no trace of your passage.",n
+340,Prayer of Healing,Prayer of Healing,Fireside Chant,A quiet chant spreads soothing warmth through your gathered allies.,n
+350,Protection from Poison,Protection from Poison,Venomward,You cleanse a creature of poison and shield it against toxins.,n
+353,Ray of Enfeeblement,Ray of Enfeeblement,Sapping Beam,"A dark ray saps a creature's strength, weakening its blows.",n
+363,Rope Trick,Rope Trick,Hidden Loft,A rope rises into the air and leads to a hidden pocket of space.,n
+366,Scorching Ray,Scorching Ray,Flame Rays,Searing beams of fire streak from your hands toward your foes.,n
+369,See Invisibility,See Invisibility,Unseen Sight,Your eyes pierce invisibility and glimpse things hiding between worlds.,n
+374,Shatter,Shatter,Resonant Burst,A piercing ring of sound shatters stone and glass.,n
+379,Silence,Silence,Hushdome,A dome of total silence swallows all sound within it.,n
+389,Spider Climb,Defy Gravity,Defy Gravity,A creature clings to walls and ceilings like a spider.,y
+390,Spike Growth,Rose Garden,Rose Garden,The ground sprouts hidden thorns and spikes that tear at anyone who crosses it.,y
+392,Spiritual Weapon,Spiritual Weapon,Spectral Blade,"A floating, ghostly weapon appears to strike at your command.",n
+396,Suggestion,Compel,Honeyed Urging,Your words plant an idea that seems entirely reasonable to the listener.,y
+423,Warding Bond,Warding Bond,Soulbond Ward,"A bond links you to an ally, sharing their pain to protect them.",n
+426,Web,Web,Sticky Weave,"Thick, sticky webs fill an area, ensnaring anything caught inside.",n
+432,Zone of Truth,Banish Lies,Banish Lies,A circle of magic compels honesty from all within it.,y
+434,Crown of Madness,Crown of Lies,Crown of Lies,"A twisted crown of madness settles on a creature's head, turning its blade against its own allies.",y
+125,Animate Dead,Animate Dead,Raise Bones,Bones and corpses stir and rise to serve you.,n
+141,Beacon of Hope,Beacon of Hope,Hopeflare,A beacon of hope fills your allies with faith and vitality.,n
+142,Bestow Curse,Bestow Curse,Hexcurse,A dark curse weakens a creature in a way of your choosing.,n
+148,Blink,Blink,Flicker Step,"You flicker in and out of the spirit realm, hard to pin down.",n
+152,Call Lightning,Call Lightning,Thunderhead,"A storm cloud gathers overhead, ready to hurl lightning at your command.",n
+158,Clairvoyance,Clairvoyance,Farsight,"An invisible sensor lets you see or hear a distant, familiar place.",n
+169,Conjure Animals,Conjure Animals,Beastcall,Spirits of wild animals take form to fight at your side.,n
+180,Counterspell,Counterspell,Spellbreak,You snuff out another caster's magic in the moment it's woven.,n
+181,Create Food and Water,Create Food and Water,Provender,Simple food and fresh water appear to feed a weary group.,n
+189,Daylight,Daylight,Noonlight,A sphere of bright sunlight bursts into being and banishes the dark.,n
+201,Dispel Magic,Dispel Magic,Unweave,"You unravel an ongoing spell, ending its magic.",n
+223,Fear,Fear,Terror Wave,A wave of dread sends creatures fleeing in panic.,n
+234,Fireball,Fireball,Ember Burst,A bead of fire streaks to a point and erupts in a roaring blossom of flame.,n
+240,Fly,Fly,Skyrise,A creature rises off the ground and soars through the air.,n
+247,Gaseous Form,Gaseous Form,Mistform,A creature dissolves into a drifting cloud of mist.,n
+254,Glyph of Warding,Glyph of Warding,Waiting Sigil,A hidden glyph waits to unleash magic on whoever triggers it.,n
+267,Haste,Haste,Quickening,A creature moves with blinding speed and extra vigor.,n
+279,Hypnotic Pattern,Hypnotic Pattern,Mesmer Weave,A twisting pattern of colors leaves watchers transfixed.,n
+296,Lightning Bolt,Lightning Bolt,Thunderspear,A stroke of lightning blasts out in a straight line.,n
+303,Magic Circle,Magic Circle,Rune Ring,A circle of runes binds or bars a kind of creature.,n
+309,Major Image,Major Image,Grand Illusion,"A vivid, moving illusion fills the scene with sight, sound, and smell.",n
+312,Mass Healing Word,Mass Healing Word,Rallying Hymn,Your voice rings out and mends the wounds of many allies at once.,n
+315,Meld Into Stone,Meld Into Stone,Stonemerge,"You step into stone and become one with it, hidden from sight.",n
+327,Nondetection,Nondetection,Scryshroud,You hide a creature or object from magical prying eyes.,n
+331,Phantom Steed,Phantom Steed,Dusk Charger,"A swift, quasi-real horse appears to carry you.",n
+335,Plant Growth,Plant Growth,Overgrowth,"Plants burst into lush growth, either choking the land or enriching it.",n
+348,Protection From Energy,Protection From Energy,Elemental Ward,"A creature is shielded against the fury of fire, frost, acid, lightning, or thunder.",n
+357,Remove Curse,Remove Curse,Hexbreaker,You break the curses that bind a creature or object.,n
+362,Revivify,Revivify,Second Breath,You call a freshly fallen creature back to life before death takes hold.,n
+371,Sending,Sending,Distant Word,Your brief message crosses any distance to a creature you know.,n
+383,Sleet Storm,Sleet Storm,Icestorm Squall,"Freezing rain and sleet lash an area, blinding and tripping.",n
+384,Slow,Slow,Leaden Time,"Time thickens around your foes, slowing their every move.",n
+387,Speak with Dead,Waking the Dead,Waking the Dead,A corpse rasps out answers to your questions.,y
+388,Speak with Plants,Commune with Plants,Rootspeech,Plants share what they have seen and bend to your requests.,y
+391,Spirit Guardians,Spirit Guardians,Spirit Ring,"Spirits swirl around you, harming foes who come near.",n
+393,Stinking Cloud,Stink Bomb,Stink Bomb,A nauseating cloud of fumes leaves creatures retching.,y
+407,Tiny Hut,Tiny Hut,Hearth Dome,A dome of shimmering force shelters your camp through the night.,n
+408,Tongues,Tongues,Gift of Speech,A creature understands and speaks every spoken language.,n
+416,Vampiric Touch,Vampiric Touch,Leeching Grip,Your touch drains life from a foe and feeds it to you.,n
+424,Water Breathing,Water Breathing,Gillbreath,Creatures breathe underwater as easily as air.,n
+425,Water Walk,Water Walk,Wavewalk,Creatures walk across water as though it were solid ground.,n
+429,Wind Wall,Wind Wall,Howling Screen,A wall of howling wind deflects arrows and gusts.,n
+86,Thundervault,Rolling Thunder,Rolling Thunder,"You split the sky along a line, and a roll of thunder crashes down upon everything in its path.",y
+109,Underthunder,Earthquake,Deepquake,"A buried boom shakes the earth from below, deafening and toppling everything above it.",y
+130,Arcane Eye,Arcane Eye,Scout's Orb,An invisible floating eye lets you scout far ahead.,n
+139,Banishment,Banishment,Exile,"A creature vanishes to a distant plane, banished from your sight.",n
+143,Black Tentacles,Black Tentacles,Abyssal Grasp,Writhing black tendrils rise to clutch and crush.,n
+146,Blight,Blight,Blightdraw,"Life drains from a creature or plant, leaving it shriveled.",n
+166,Compulsion,Compulsion,Compelling Pull,Creatures are compelled to move where you will them.,n
+168,Confusion,Confusion,Bewilder,"Minds twist and stumble, leaving creatures confused.",n
+173,Conjure Minor Elementals,Conjure Minor Elementals,Elemental Swarm,Small elemental spirits take form to serve you.,n
+174,Conjure Woodland Beings,Conjure Woodland Beings,Wildwood Call,Fey spirits of the forest appear to serve you.,n
+190,Death Ward,Death Ward,Grave Denial,A creature is protected from falling to death's touch.,n
+197,Dimension Door,Dimension Door,Far Door,A shimmering door lets you step a long distance in an instant.,n
+202,Divination,Divination,Oracle's Answer,A truthful answer comes from beyond to a question you ask.,n
+205,Dominate Beast,Dominate Beast,Beastbind,You seize control of a beast's mind.,n
+219,Fabricate,Fabricate,Swift Craft,Raw materials reshape themselves into finished goods.,n
+221,Faithful Hound,Faithful Hound,Ghost Sentry,An invisible guardian hound keeps watch for you.,n
+232,Fire Shield,Fire Shield,Flame Mantle,A mantle of fire or frost wraps your body and burns attackers.,n
+245,Freedom of Movement,Freedom of Movement,Unbound Stride,"A creature moves freely, unhindered by bonds or grasping magic.",n
+251,Giant Insect,Giant Insect,Swollen Vermin,Insects swell into giant creatures under your command.,n
+257,Greater Invisibility,Greater Invisibility,Deep Vanish,"You vanish completely, even while you strike.",n
+259,Guardian of Faith,Guardian of Faith,Sentinel Spirit,A spectral guardian appears to watch over a place.,n
+265,Hallucinatory Terrain,Hallucinatory Terrain,Land Glamour,The land itself seems to change shape and form.,n
+280,Ice Storm,Ice Storm,Hailstorm,Hail and ice rain down in a crushing storm.,n
+298,Locate Creature,Locate Creature,Kin Seeking,You sense the direction of a creature you know.,n
+330,Phantasmal Killer,Phantasmal Killer,Nightmare Shade,A creature's worst fear takes shape in its mind.,n
+337,Polymorph,Polymorph,Beastshape,A creature transforms into a beast.,n
+344,Private Sanctum,Private Sanctum,Warded Haven,A room is warded against prying eyes and magic.,n
+358,Resilient Sphere,Resilient Sphere,Force Bubble,A shimmering sphere of force traps a creature or shields it.,n
+368,Secret Chest,Secret Chest,Hidden Coffer,A chest is hidden away in another plane for later recall.,n
+394,Stoneskin,Rockin Body,Graniteskin,Skin turns hard as granite against blows.,y
+418,Wall of Fire,Wall of Fire,Fire Rampart,A wall of roaring fire rises at your command.,n
+126,Animate Objects,Animate Objects,Waking Things,Objects come to life and fight for you.,n
+127,Antilife Shell,Antilife Shell,Lifeward Shell,A barrier repels living creatures from you.,n
+131,Arcane Hand,Arcane Hand,Force Fist,"A giant hand of force appears to grasp, push, or crush.",n
+137,Awaken,Awaken,Awakening,A beast or plant gains a mind of its own.,n
+160,Cloudkill,Cloudkill,Death Fog,"A rolling, poisonous fog drifts from you to choke your foes.",n
+163,Commune,Commune,Higher Counsel,You ask divine powers a few questions and receive answers.,n
+164,Commune With Nature,Commune With Nature,Landspeak,The land itself tells you of its secrets.,n
+167,Cone of Cold,Cone of Cold,Winter Gust,A blast of bitter cold erupts from your hands.,n
+171,Conjure Elemental,Conjure Elemental,Primal Summons,A great elemental is summoned to serve you.,n
+175,Contact Other Plane,Contact Other Plane,Voidtouch Query,"Your mind brushes alien powers for answers, at a risk.",n
+176,Contagion,Contagion,Plaguetouch,"Your touch spreads a vile, lingering sickness.",n
+184,Creation,Creation,Shadowmake,You shape an object from the stuff of shadow.,n
+200,Dispel Evil and Good,Dispel Evil and Good,Banish Ward,You drive otherworldly beings back to their home.,n
+207,Dominate Person,Dominate Person,Mindbind,You seize control of a humanoid's mind.,n
+208,Dream,Dream,Dreamwalk,You walk into a creature's dreams to speak or terrify.,n
+236,Flame Strike,Flame Strike,Pillar of Flame,A column of fire and radiance falls from the heavens.,n
+249,Geas,Geas,Binding Oath,A magical command compels a creature to perform a service.,n
+258,Greater Restoration,Greater Restoration,Deep Cleansing,Your touch lifts a creature's deepest curses and afflictions.,n
+264,Hallow,Hallow,Sanctify,You consecrate an area with lasting protective power.,n
+275,Hold Monster,Hold Monster,Creature Lock,A creature of any kind freezes in place.,n
+286,Insect Plague,Insect Plague,Swarmcloud,"A buzzing, biting swarm of insects fills an area.",n
+292,Legend Lore,Know it All,Lorecall,"You learn the legends and lore of a person, place, or thing.",y
+310,Mass Cure Wounds,Mass Cure Wounds,Tide of Mending,Healing light washes over many allies at once.,n
+322,Mislead,Mislead,Decoy Self,You turn invisible as an illusory double takes your place.,n
+324,Modify Memory,Modify Memory,Memory Weave,You reshape a creature's memories of an event.,n
+329,Passwall,Passwall,Wall Walk,A passage opens through solid walls and stone.,n
+333,Planar Binding,Planar Binding,Otherworld Leash,You bind a summoned creature to serve you.,n
+352,Raise Dead,Raise Dead,Return Call,You return a dead creature to life.,n
+356,Reincarnate,Reincarnate,Rebirth,A dead creature returns to life in a new body.,n
+367,Scrying,Scrying,Seeing Pool,You spy on a creature from afar through a sensor.,n
+370,Seeming,Seeming,Glamour Masks,Creatures take on new appearances of your design.,n
+400,Telekinesis,Telekinesis,Mindlift,You move creatures and objects with the power of your mind.,n
+401,Telepathic Bond,Telepathic Bond,Mindlink,"Your minds link for shared, silent speech.",n
+403,Teleportation Circle,Teleportation Circle,Waygate Ring,A circle of runes opens a door to a far place.,n
+410,Tree Stride,Tree Stride,Treewalk,You step into one tree and out of another far away.,n
+419,Wall of Force,Wall of Force,Unseen Bulwark,An invisible wall of force blocks all who pass.,n
+421,Wall of Stone,Wall of Stone,Stone Rampart,A wall of stone rises from the ground.,n
+93,Comet Brand,Star Mark,Star Mark,"You brand a foe with the mark of a comet, and the next strike against it calls a falling star down upon it.",y
+144,Blade Barrier,Blade Barrier,Bladestorm Wall,A whirling wall of spectral blades shreds anything that passes.,n
+154,Chain Lightning,Chain Lightning,Arc Bolt,Lightning leaps from foe to foe in a crackling arc.,n
+157,Circle of Death,Circle of Death,Deathring,"A sphere of negative energy ripples outward, draining life.",n
+172,Conjure Fey,Conjure Fey,Feycall,A fey creature answers your summons.,n
+177,Contingency,Contingency,Trigger Spell,You set a spell to fire when a condition is met.,n
+183,Create Undead,Create Undead,Raise Unliving,"Corpses rise as strong, undead servants.",n
+199,Disintegrate,Disintegrate,Unmaking Ray,A thin green ray reduces its target to dust.,n
+218,Eyebite,Eyebite,Hex Gaze,"Your eyes become dark, casting curses with each glance.",n
+228,Find the Path,Find the Path,Wayfinding,You know the path to any place you seek.,n
+238,Flesh to Stone,Flesh to Stone,Stoneflesh,A creature's flesh slowly hardens into stone.,n
+242,Forbiddance,Forbiddance,Forbidden Ground,You ward an area against teleportation and outsiders.,n
+246,Freezing Sphere,Freezing Sphere,Frost Orb,"A frigid globe explodes, freezing anything it touches.",n
+253,Globe of Invulnerability,Globe of Invulnerability,Spellglobe,A shimmering barrier blocks lesser magic.,n
+260,Guards and Wards,Guards and Wards,Keepward,Wards protect a stronghold against intruders.,n
+266,Harm,Harm,Ruin,A creature is wracked by a wave of virulent disease.,n
+268,Heal,Heal,Lifebloom,A surge of healing energy restores a creature's vitality.,n
+272,Heroes' Feast,Heroes' Feast,Grand Feast,A magical feast fortifies all who share it.,n
+287,Instant Summons,Instant Summons,Recall Mark,You summon a marked object straight into your hand.,n
+289,Irresistible Dance,Compel Dance,Compel Dance,"A creature dances wildly, unable to stop.",y
+304,Magic Jar,Magic Jar,Soul Vessel,Your soul leaves your body and dwells in an object.,n
+313,Mass Suggestion,Mass Suggestion,Crowd Urging,Your words plant ideas in many minds at once.,n
+326,Move Earth,Move Earth,Earthshift,The earth itself reshapes at your command.,n
+332,Planar Ally,Planar Ally,Otherworld Aid,An otherworldly being answers your call for aid.,n
+346,Programmed Illusion,Programmed Illusion,Timed Mirage,An illusion springs to life when its trigger occurs.,n
+397,Sunbeam,Light Ray,Solar Lance,A beam of brilliant sunlight blasts out from your hand.,y
+409,Transport via Plants,Transport via Plants,Rootway,You step through one plant and emerge from another.,n
+413,True Seeing,True Seeing,Clear Eyes,Your eyes see things as they truly are.,n
+420,Wall of Ice,Wall of Ice,Rime Rampart,A wall of ice rises to block your foes.,n
+422,Wall of Thorns,Wall of Thorns,Briar Hedge,A wall of tangled thorns rises from the ground.,n
+428,Wind Walk,Wind Walk,Cloudwalk,Creatures turn to cloud and ride the winds.,n
+431,Word of Recall,Word of Recall,Homecall,You and your allies instantly return to a sacred place.,n
+133,Arcane Sword,Arcane Sword,Phantom Blade,A shimmering spectral sword fights at your command.,n
+170,Conjure Celestial,Conjure Celestial,Heavenly Summons,A celestial being answers your call.,n
+191,Delayed Blast Fireball,Delayed Blast Fireball,Fused Ember,A bead of fire grows hotter the longer it waits.,n
+204,Divine Word,Divine Word,Word of Heaven,A word of divine power strikes down the unworthy.,n
+216,Etherealness,Etherealness,Spiritwalk,"You step into the spirit realm, unseen by the living.",n
+230,Finger of Death,Finger of Death,Deathpoint,"Your finger points, and dark energy rips away life.",n
+233,Fire Storm,Fire Storm,Blazing Tempest,A raging storm of fire sweeps the area.,n
+243,Forcecage,Forcecage,Prism Cage,An invisible cage of force traps a creature.,n
+308,Magnificent Mansion,Magnificent Mansion,Hidden Manor,A grand mansion awaits behind a shimmering door.,n
+320,Mirage Arcane,Mirage Arcane,Dreamscape,The land itself shifts to a convincing illusion.,n
+334,Plane Shift,Plane Shift,Worldshift,You and your allies travel to another plane.,n
+342,Prismatic Spray,Prismatic Spray,Rainbow Ray,"Rays of many colors burst out, each with a different effect.",n
+347,Project Image,Project Image,Shadow Self,An illusory copy of you appears far away.,n
+355,Regenerate,Regenerate,Regrowth,Lost limbs and wounds regrow over time.,n
+360,Resurrection,Resurrection,Long Return,A creature long dead returns to life.,n
+361,Reverse Gravity,Reverse Gravity,Skyfall Reversal,"Gravity flips, hurling creatures upward.",n
+372,Sequester,Sequester,Deep Hiding,A creature or object is hidden away from all sight.,n
+381,Simulacrum,Simulacrum,Snow Double,A duplicate of a creature forms from snow and ice.,n
+399,Symbol,Cursed Script,Cursed Script,A deadly glyph waits to strike those who trigger it.,y
+402,Teleport,Teleport,Long Leap,You and your allies vanish and reappear far away.,n
+124,Animal Shapes,Animal Shapes,Pack Forms,Your allies take the forms of beasts.,n
+128,Antimagic Field,Antimagic Field,Null Field,A sphere where no magic can function.,n
+129,Antipathy/Sympathy,Antipathy/Sympathy,Lure and Repel,An object draws or repels a kind of creature.,n
+159,Clone,Clone,Twin Vessel,A clone waits to receive your soul upon death.,n
+179,Control Weather,Control Weather,Skyweaving,You bend the weather to your will.,n
+192,Demiplane,Demiplane,Pocket Realm,A door opens to a small hidden realm.,n
+206,Dominate Monster,Dominate Monster,Will Seize,You seize control of any creature's mind.,n
+210,Earthquake,Earthquake,Worldshake,The ground heaves and splits in a mighty quake.,n
+225,Feeblemind,Feeblemind,Mindbreak,"A creature's mind shatters, leaving it dull.",n
+252,Glibness,Glibness,Silver Tongue,"Your words ring true, even when false.",n
+277,Holy Aura,Holy Aura,Radiant Halo,Divine light protects your allies.,n
+284,Incendiary Cloud,Incendiary Cloud,Ashen Smother,A cloud of burning smoke rolls across the field.,n
+314,Maze,Maze,Labyrinth,A creature is lost in a twisting maze.,n
+319,Mind Blank,Mind Blank,Mindveil,Your mind is shielded from all intrusion.,n
+339,Power Word Stun,Power Word Stun,Stunning Utterance,A single word stuns a creature.,n
+398,Sunburst,Grow Sunlight,Solar Flare,A blinding burst of sunlight sears all around you.,y
+135,Astral Projection,Astral Projection,Starwalk,Your spirit leaves your body to wander the planes.,n
+244,Foresight,Foresight,Fatesight,You see moments into the future.,n
+248,Gate,Gate,Worldgate,A portal opens between worlds.,n
+283,Imprisonment,Imprisonment,Eternal Prison,A creature is bound in an eternal prison.,n
+311,Mass Heal,Mass Heal,Great Mending,Healing energy restores many creatures at once.,n
+318,Meteor Swarm,Meteor Swarm,Skyfire Rain,Blazing stars fall from the sky in fiery impacts.,n
+338,Power Word Kill,Power Word Kill,Deathword,A single word ends a creature's life.,n
+343,Prismatic Wall,Prismatic Wall,Rainbow Barrier,A shimmering wall of many colors blocks all.,n
+373,Shapechange,Shapechange,Shapeshift,You take the form of any creature.,n
+395,Storm of Vengeance,Storm of the End,Storm of the End,"A storm unleashes thunder, lightning, and rain.",y
+406,Time Stop,Time Stop,Timefreeze,Time stops for all but you.,n
+411,True Polymorph,True Polymorph,Perfect Shift,A creature or object transforms into anything.,n
+412,True Resurrection,True Resurrection,Whole Again,A creature returns to life whole.,n
+427,Weird,Weird,Dreadweave,Nightmare illusions stalk many minds at once.,n
+430,Wish,Wish,Heartwish,Your deepest wish reshapes reality itself.,n

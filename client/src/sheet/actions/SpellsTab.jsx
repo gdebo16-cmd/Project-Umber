@@ -229,15 +229,15 @@ function SpellsTab() {
                             <button type='button' className='caption-btn' onClick={() => setOpenSpell(s)}>{s.name}</button>
                             {s.is_racial || s.is_bonus ? <article className="learn-button-container"><p>{s.is_racial ? 'Race starter spell' : 'Bonus spell'}</p></article> : <article className="learn-button-container">
                                 <form id="unlearn-spell-form" className="spell-action-form" onSubmit={(e) => { e.preventDefault(); spellAction(s.id, 'unlearn'); }}>
-                                    <button type="submit" id="unlearn-spell-button" className="action-button">Unlearn</button>
+                                    <button type="submit" id="unlearn-spell-button" className="learn-button">Unlearn</button>
                                 </form>
                             <form id="prepare-spell-form" className="spell-action-form" onSubmit={(e) => { e.preventDefault(); spellAction(s.id, s.is_prepared ? 'unprepare' : 'prepare'); }}>
-                                <button type="submit" className="action-button prepare-button">
+                                <button type="submit" className="learn-button">
                                     {s.is_prepared ? 'Unprepare' : 'Prepare'}
                                 </button>
                             </form>
                             <form id="action-spell-form" className='spell-action-form' onSubmit={(e) => { e.preventDefault(); spellAction(s.id, s.is_action ? 'removeAction' : 'setAction'); }}>
-                                <button type="submit" className="action-button">
+                                <button type="submit" className="learn-button">
                                     {s.is_action ? 'Remove Action' : 'Set Action'}
                                 </button>
                             </form>
