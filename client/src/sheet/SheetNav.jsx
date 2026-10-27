@@ -12,7 +12,7 @@ function SheetNav({ characterId }) {
         <nav id="nav-box">
             <ul id="nav-container" {...barProps}>
                 <li className="slide" aria-hidden="true" style={slideStyle} />
-                <Link id="home-nav" className="btn btn-nav" to="/home" {...tabProps(0)}>home</Link>
+                <Link id="home-nav" className="btn btn-nav" to="/home" {...tabProps(0)}>Home</Link>
 
                 <li id="character-nav" className="btn btn-nav" {...tabProps(1)}>Adventure
                     <ul className="drop-down" id="characterDropdown">
