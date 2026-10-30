@@ -8,7 +8,7 @@ const THEMES = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow',
 // 'glass-blue' -> 'Glass Blue'
 const pretty = (s) => s.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
 const DISPLAYS = ['standard', 'compact', 'neon', 'glass', 'parchment', 'minimal', 'bold', 'shadow-of-the-mountains', 'gestalt'];
-const BACKGROUNDS = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen', 'neon', 'gestalt', 'shadow-of-the-mountains', 'dark-map', 'light-map', 'hellfire-map', 'frozen-map', 'gothic'];
+const BACKGROUNDS = ['default', 'green', 'purple', 'blue', 'red', 'orange', 'yellow', 'dark', 'light', 'hellfire', 'frozen', 'neon', 'gestalt', 'shadow-of-the-mountains', 'dark-map', 'light-map', 'hellfire-map', 'frozen-map', 'gothic', 'haunted-forest', 'frozen-fortress', 'volcanic-forge', 'sunken-ruins', 'elven-grove', 'desert-tomb', 'storm-lighthouse', 'throne-hall', 'arcane-observatory', 'autumn-village'];
 
 function ProfilePage() {
     usePageStyle(profileCss);

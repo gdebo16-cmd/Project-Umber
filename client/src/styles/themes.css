@@ -666,6 +666,46 @@
     --background: url('/images/themes/gothic-background.jpg');
     --background-desktop: url('/images/themes/gothic-background.jpg');
 }
+[data-background="haunted-forest"] {
+    --background: url('/images/themes/haunted-forest.jpg');
+    --background-desktop: url('/images/themes/haunted-forest.jpg');
+}
+[data-background="frozen-fortress"] {
+    --background: url('/images/themes/frozen-fortress.jpg');
+    --background-desktop: url('/images/themes/frozen-fortress.jpg');
+}
+[data-background="volcanic-forge"] {
+    --background: url('/images/themes/volcanic-forge.jpg');
+    --background-desktop: url('/images/themes/volcanic-forge.jpg');
+}
+[data-background="sunken-ruins"] {
+    --background: url('/images/themes/sunken-ruins.jpg');
+    --background-desktop: url('/images/themes/sunken-ruins.jpg');
+}
+[data-background="elven-grove"] {
+    --background: url('/images/themes/elven-grove.jpg');
+    --background-desktop: url('/images/themes/elven-grove.jpg');
+}
+[data-background="desert-tomb"] {
+    --background: url('/images/themes/desert-tomb.jpg');
+    --background-desktop: url('/images/themes/desert-tomb.jpg');
+}
+[data-background="storm-lighthouse"] {
+    --background: url('/images/themes/storm-lighthouse.jpg');
+    --background-desktop: url('/images/themes/storm-lighthouse.jpg');
+}
+[data-background="throne-hall"] {
+    --background: url('/images/themes/throne-hall.jpg');
+    --background-desktop: url('/images/themes/throne-hall.jpg');
+}
+[data-background="arcane-observatory"] {
+    --background: url('/images/themes/arcane-observatory.jpg');
+    --background-desktop: url('/images/themes/arcane-observatory.jpg');
+}
+[data-background="autumn-village"] {
+    --background: url('/images/themes/autumn-village.jpg');
+    --background-desktop: url('/images/themes/autumn-village.jpg');
+}
 /* #endregion */
 
 /* #region Mobile Crop Section */
@@ -690,5 +730,16 @@
     html[data-background="frozen"] { --background: url('/eldrid-bg-frozen-mobile-1440x2560.webp'); }
     html[data-background="gestalt"] { --background: url('/campaigns/the-fall-of-gestalt-mobile-1440x2560.webp'); }
     html[data-background="shadow-of-the-mountains"] { --background: url('/campaigns/shadow-of-the-mountains-mobile-1440x2560.webp'); }
+    html[data-background="gothic"] { --background: url('/images/themes/gothic-background-mobile-1440x2560.jpg'); }
+    html[data-background="haunted-forest"] { --background: url('/images/themes/haunted-forest-mobile-1440x2560.jpg'); }
+    html[data-background="frozen-fortress"] { --background: url('/images/themes/frozen-fortress-mobile-1440x2560.jpg'); }
+    html[data-background="volcanic-forge"] { --background: url('/images/themes/volcanic-forge-mobile-1440x2560.jpg'); }
+    html[data-background="sunken-ruins"] { --background: url('/images/themes/sunken-ruins-mobile-1440x2560.jpg'); }
+    html[data-background="elven-grove"] { --background: url('/images/themes/elven-grove-mobile-1440x2560.jpg'); }
+    html[data-background="desert-tomb"] { --background: url('/images/themes/desert-tomb-mobile-1440x2560.jpg'); }
+    html[data-background="storm-lighthouse"] { --background: url('/images/themes/storm-lighthouse-mobile-1440x2560.jpg'); }
+    html[data-background="throne-hall"] { --background: url('/images/themes/throne-hall-mobile-1440x2560.jpg'); }
+    html[data-background="arcane-observatory"] { --background: url('/images/themes/arcane-observatory-mobile-1440x2560.jpg'); }
+    html[data-background="autumn-village"] { --background: url('/images/themes/autumn-village-mobile-1440x2560.jpg'); }
 }
 /* #endregion */
