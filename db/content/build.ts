@@ -62,6 +62,11 @@ const output = roles.map(role => {
     spell_stat: info?.spell_stat ?? null,
     spellcasting: info?.spellcasting ?? null,
     caster_type: info?.caster_type ?? null,
+    saving_throws: info?.saving_throws ?? null,
+    has_embers: info?.has_embers ?? false,
+    crack_max: info?.crack_max ?? null,
+    breach_dc: info?.breach_dc ?? null,
+    breach_dc_scaling: info?.breach_dc_scaling ?? null,
     img_url: info?.img_url ?? null,
     levels: role.levels.map(lvl => ({
       level: lvl.level,
@@ -87,6 +92,10 @@ const output = roles.map(role => {
         weapon_prof: cInfo?.weapon_prof ?? null,
         tool_prof: cInfo?.tool_prof ?? null,
         sort_order: cInfo?.sort_order ?? null,
+        breach_effect: cInfo?.breach_effect ?? null,
+        breach_drains_embers: cInfo?.breach_drains_embers ?? false,
+        caster_type: cInfo?.caster_type ?? null,
+        spellcasting_stat: cInfo?.spellcasting_stat ?? null,
         features: c.features.map(f => {
           const rule = findRule(cRules, f.name, f.level);
           if (!rule) missing.push(`${role.name} / ${c.name} L${f.level}: ${f.name}`);
@@ -128,14 +137,27 @@ catalogs.species = (catalogs.species as Row[]).map(s => ({
     }))
 }));
 
-// Only needed for the swap above, so leave them out of the pack
-delete catalogs.features;
-delete catalogs.species_features;
+// Keep feature catalogs in the pack for sheet action / choice readers (ids stay stable)
+catalogs.species_features = (catalogs.species_features as Row[]).map(sf => ({
+  ...sf,
+  name: features.get(sf.feature_id)?.name ?? 'Unknown',
+  feature_description: features.get(sf.feature_id)?.description ?? ''
+}));
+catalogs.role_features = (catalogs.role_features as Row[]).map(rf => ({
+  ...rf,
+  name: features.get(rf.feature_id)?.name ?? 'Unknown',
+  feature_description: features.get(rf.feature_id)?.description ?? ''
+}));
+catalogs.calling_features = (catalogs.calling_features as Row[]).map(cf => ({
+  ...cf,
+  name: features.get(cf.feature_id)?.name ?? 'Unknown',
+  feature_description: features.get(cf.feature_id)?.description ?? ''
+}));
 
 fs.mkdirSync('db/content', { recursive: true });
 
 // Spell-related sections go in their own file
-const SPELL_KEYS = ['spells', 'spell_upcasts', 'spell_element', 'spell_state', 'spell_alignment', 'spell_bands'];
+const SPELL_KEYS = ['spells', 'spell_upcasts', 'spell_element', 'spell_state', 'spell_alignment', 'spell_bands', 'role_bonus_spells', 'role_spell_slots'];
 
 const core: Record<string, unknown> = { scaling_rules: rules.scaling_rules, roles: output };
 const spellPack: Record<string, unknown> = {};

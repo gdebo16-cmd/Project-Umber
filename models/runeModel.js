@@ -1,21 +1,38 @@
 // Rune Weaver: rune catalog, inscribing and removing runes on owned items, and the runed weapon.
 // Items are character_weapons rows (kind 'weapon') or character_armor rows (kind 'armor', which covers shields).
+// Rune / weapon / armor / calling catalogs come from the content pack (soft refs in DB).
 import pool from '../db.js';
+import content, { getRole, getCalling } from './content.js';
 import { RUNE_WEAVER_NAMES, runesPerItem, activeRunes, WARDING_TYPES, runeFitsItem } from '../utils/runeLimits.js'; /*prep-done*/
+
+function runeById(id) {
+    return (content.runes ?? []).find((r) => Number(r.id) === Number(id)) ?? null;
+}
+function weaponById(id) {
+    return (content.weapons ?? []).find((w) => Number(w.id) === Number(id)) ?? null;
+}
+function armorById(id) {
+    return (content.armor ?? []).find((a) => Number(a.id) === Number(id)) ?? null;
+}
 
 // the inscriber: must be a Rune Weaver of level 3+
 async function getInscriber(db, charId) {
     const { rows: [ch] } = await db.query(
-        `SELECT ch.id, ch.level, ch.runed_weapon_item_id, ca.name AS calling_name
-           FROM characters ch LEFT JOIN callings ca ON ca.id = ch.calling_id WHERE ch.id = $1`, [charId]);
+        `SELECT ch.id, ch.level, ch.runed_weapon_item_id, ch.role_id, ch.calling_id
+           FROM characters ch WHERE ch.id = $1`, [charId]);
+    if (ch) {
+        const role = getRole(ch.role_id);
+        const calling = getCalling(role, ch.calling_id);
+        ch.calling_name = calling?.name ?? null;
+    }
     return ch;
 }
 // Pack renamed Rune Weaver -> Tome of Inscription; keep both names for leftover DB callings.
 const isRuneWeaver = (ch) => RUNE_WEAVER_NAMES.includes(ch?.calling_name) && ch.level >= 3;
 
 export async function listRunes() {
-    const { rows } = await pool.query(`SELECT * FROM runes ORDER BY min_level, name`);
-    return rows;
+    return (content.runes ?? []).slice().sort((a, b) =>
+        (Number(a.min_level) - Number(b.min_level)) || String(a.name).localeCompare(String(b.name)));
 }
 
 // Catalog + limits for the sheet's rune control
@@ -39,17 +56,36 @@ export async function getRuneInfo(charId) {
 async function getOwnedItem(db, charId, kind, itemId) {
     if (kind === 'weapon') {
         const { rows: [r] } = await db.query(
-            `SELECT cw.id AS row_id, w.properties FROM character_weapons cw JOIN weapons w ON w.id = cw.weapon_id
+            `SELECT cw.id AS row_id FROM character_weapons cw
               WHERE cw.character_id = $1 AND cw.weapon_id = $2`, [charId, itemId]);
-        return r && { rowId: r.row_id, type: 'weapon', properties: r.properties ?? [] };
+        if (!r) return null;
+        const w = weaponById(itemId);
+        return { rowId: r.row_id, type: 'weapon', properties: w?.properties ?? [] };
     }
     if (kind === 'armor') {
         const { rows: [r] } = await db.query(
-            `SELECT ca.id AS row_id, a.armor_type FROM character_armor ca JOIN armor a ON a.id = ca.armor_id
+            `SELECT ca.id AS row_id FROM character_armor ca
               WHERE ca.character_id = $1 AND ca.armor_id = $2`, [charId, itemId]);
-        return r && { rowId: r.row_id, type: r.armor_type === 'shield' ? 'shield' : 'armor', properties: [] };
+        if (!r) return null;
+        const a = armorById(itemId);
+        return { rowId: r.row_id, type: a?.armor_type === 'shield' ? 'shield' : 'armor', properties: [] };
     }
     return null;
+}
+
+function enrichItemRunes(rows) {
+    return (rows ?? []).map((r) => {
+        const rune = runeById(r.rune_id);
+        return {
+            id: r.id,
+            rune_id: r.rune_id,
+            name: rune?.name ?? null,
+            effect: rune?.effect ?? null,
+            dice: rune?.dice ?? null,
+            is_damage_rider: !!rune?.is_damage_rider,
+            choice_value: r.choice_value,
+        };
+    });
 }
 
 // Returns { error, status } or { ok: true, endedOldest }
@@ -60,7 +96,7 @@ export async function inscribeRune(charId, { kind, itemId, runeId, choiceValue }
         const fail = async (status, error) => { await db.query('ROLLBACK'); return { status, error }; };
         const ch = await getInscriber(db, charId);
         if (!isRuneWeaver(ch)) return fail(403, 'Only a Rune Weaver (level 3+) can inscribe runes');
-        const { rows: [rune] } = await db.query(`SELECT * FROM runes WHERE id = $1`, [runeId]);
+        const rune = runeById(runeId);
         if (!rune) return fail(404, 'Unknown rune');
         const item = await getOwnedItem(db, charId, kind, itemId);
         if (!item) return fail(404, 'Item not owned');
@@ -75,17 +111,19 @@ export async function inscribeRune(charId, { kind, itemId, runeId, choiceValue }
             if (!WARDING_TYPES.includes(choice)) return fail(400, `Pick a damage type: ${WARDING_TYPES.join(', ')}`);
         }
         const col = kind === 'weapon' ? 'character_weapon_id' : 'character_armor_id';
-        const { rows: onItem } = await db.query(
-            `SELECT ir.rune_id, r.is_damage_rider FROM item_runes ir JOIN runes r ON r.id = ir.rune_id WHERE ir.${col} = $1`, [item.rowId]);
+        const { rows: onItemRaw } = await db.query(
+            `SELECT ir.rune_id FROM item_runes ir WHERE ir.${col} = $1`, [item.rowId]);
+        const onItem = enrichItemRunes(onItemRaw);
         if (onItem.some((r) => Number(r.rune_id) === Number(rune.id))) return fail(400, `This item already has ${rune.name}`);
         if (onItem.length >= runesPerItem(ch.level)) return fail(400, `At level ${ch.level} an item holds ${runesPerItem(ch.level)} rune(s)`);
         if (rune.is_damage_rider && onItem.some((r) => r.is_damage_rider)) return fail(400, 'Only one damage-rider rune (Ember, Rime, Spark, Gall) per weapon');
 
         // over the active limit: the oldest rune ends
         let endedOldest = null;
-        const { rows: mine } = await db.query(
-            `SELECT ir.id, r.name FROM item_runes ir JOIN runes r ON r.id = ir.rune_id
+        const { rows: mineRaw } = await db.query(
+            `SELECT ir.id, ir.rune_id FROM item_runes ir
               WHERE ir.inscribed_by_character_id = $1 ORDER BY ir.inscribed_at, ir.id`, [charId]);
+        const mine = enrichItemRunes(mineRaw).map((r, i) => ({ ...r, id: mineRaw[i].id }));
         const limit = activeRunes(ch.level);
         const overflow = mine.length - limit + 1;
         for (let i = 0; i < overflow; i++) {
@@ -152,8 +190,12 @@ export async function setRunedWeapon(charId, weaponId) {
     return { ok: true };
 }
 
-// SQL fragment: the runes on one owned item, as JSON (used by getOwnedWeapons / getOwnedArmor)
+// SQL fragment: soft rune refs on one owned item (enrich with pack via enrichOwnedRunes)
 export const itemRunesJson = (col, rowExpr) => `COALESCE((SELECT json_agg(json_build_object(
-        'id', ir.id, 'rune_id', r.id, 'name', r.name, 'effect', r.effect, 'dice', r.dice,
-        'is_damage_rider', r.is_damage_rider, 'choice_value', ir.choice_value) ORDER BY ir.inscribed_at, ir.id)
-      FROM item_runes ir JOIN runes r ON r.id = ir.rune_id WHERE ir.${col} = ${rowExpr}), '[]'::json)`;
+        'id', ir.id, 'rune_id', ir.rune_id, 'choice_value', ir.choice_value) ORDER BY ir.inscribed_at, ir.id)
+      FROM item_runes ir WHERE ir.${col} = ${rowExpr}), '[]'::json)`;
+
+export function enrichOwnedRunes(raw) {
+    const list = Array.isArray(raw) ? raw : (typeof raw === 'string' ? JSON.parse(raw) : []);
+    return enrichItemRunes(list);
+}

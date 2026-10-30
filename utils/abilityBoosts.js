@@ -1,9 +1,8 @@
 // Divine Blessing (pack) + Primordial Blessing rules (00-shared-frame §3, rework-2026-10-16/blessings.md).
 // Picks live in characters.feature_choices like any other choice; base scores stay in the str..cha columns.
 // Pack schedule is Divine Blessing at 4/6/10/12/16/18 — no Primordial Ascent in the pack.
-import { primordialBlessingsFromPack, roleProficiencyContext, boostRowsForRole, getRole } from '../models/content.js';
+import content, { primordialBlessingsFromPack, roleProficiencyContext, boostRowsForRole, getRole } from '../models/content.js';
 import { roleIdForLegacyClass } from '../models/idMap.js';
-import pool from '../db.js';
 
 export const KEPT_BOOST = 'Kept boost (already in scores)';
 export const BOOST_ROWS = ['Divine Blessing'];
@@ -143,24 +142,23 @@ export async function checkBoostRules({ classId, subclassId, level, base, choice
 
 // Class/subclass info for blessing prerequisites, and the blessings by name
 async function loadPrereqContext(classId, subclassId) {
-    // Extra Attack level from role_features; armor/weapons/caster + blessings from pack.
+    // Extra Attack level from pack role_features; armor/weapons/caster + blessings from pack.
     const roleId = await roleIdForLegacyClass(classId);
-    const { rows: [info] } = roleId
-        ? await pool.query(
-            `SELECT MIN(rf.level) AS extra_attack_level
-               FROM role_features rf
-               JOIN features f ON f.id = rf.feature_id
-              WHERE rf.role_id = $1 AND f.name LIKE 'Extra Attack%'`,
-            [roleId]
-          )
-        : { rows: [null] };
+    let extraAttackLevel = null;
+    if (roleId) {
+        const levels = (content.role_features ?? [])
+            .filter((rf) => Number(rf.role_id) === Number(roleId) && String(rf.name || '').startsWith('Extra Attack'))
+            .map((rf) => Number(rf.level))
+            .filter((n) => Number.isFinite(n));
+        if (levels.length) extraAttackLevel = Math.min(...levels);
+    }
     // subclassId here is legacy; calling id is not always available — pack role profs cover base prereqs
     const packCtx = roleId ? roleProficiencyContext(roleId, null) : { armor: '', weapons: '', caster: false };
     const ctx = {
         caster: !!packCtx.caster,
         armor: packCtx.armor ?? '',
         weapons: packCtx.weapons ?? '',
-        extraAttackLevel: info?.extra_attack_level,
+        extraAttackLevel,
     };
     const blessings = primordialBlessingsFromPack();
     const byName = new Map(blessings.map((b) => [b.name, b]));

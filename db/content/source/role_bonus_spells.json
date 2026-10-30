@@ -1,0 +1,116 @@
+[
+  {
+    "role_id": 31,
+    "calling_id": null,
+    "spell_id": 798,
+    "min_level": 2
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 7,
+    "min_level": 1
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 155,
+    "min_level": 1
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 274,
+    "min_level": 1
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 382,
+    "min_level": 1
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 417,
+    "min_level": 1
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 435,
+    "min_level": 1
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 436,
+    "min_level": 1
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 446,
+    "min_level": 1
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 276,
+    "min_level": 3
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 288,
+    "min_level": 3
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 396,
+    "min_level": 3
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 434,
+    "min_level": 3
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 223,
+    "min_level": 5
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 279,
+    "min_level": 5
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 309,
+    "min_level": 5
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 168,
+    "min_level": 7
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 205,
+    "min_level": 7
+  },
+  {
+    "role_id": 31,
+    "calling_id": 38,
+    "spell_id": 330,
+    "min_level": 7
+  }
+]

@@ -35,7 +35,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 2,
@@ -46,7 +48,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 1,
@@ -57,9 +61,19 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
       }
-    ]
+    ],
+    "saving_throws": [
+      "STR",
+      "CON"
+    ],
+    "has_embers": false,
+    "crack_max": null,
+    "breach_dc": null,
+    "breach_dc_scaling": null
   },
   {
     "id": 2,
@@ -97,7 +111,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 6,
@@ -108,7 +124,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 5,
@@ -119,7 +137,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 4,
@@ -130,9 +150,19 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 4
+        "sort_order": 4,
+        "breach_effect": null,
+        "breach_drains_embers": false
       }
-    ]
+    ],
+    "saving_throws": [
+      "WIS",
+      "CHA"
+    ],
+    "has_embers": false,
+    "crack_max": null,
+    "breach_dc": null,
+    "breach_dc_scaling": null
   },
   {
     "id": 3,
@@ -169,7 +199,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 10,
@@ -180,7 +212,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 9,
@@ -191,7 +225,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 8,
@@ -202,9 +238,19 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 4
+        "sort_order": 4,
+        "breach_effect": null,
+        "breach_drains_embers": false
       }
-    ]
+    ],
+    "saving_throws": [
+      "WIS",
+      "CHA"
+    ],
+    "has_embers": false,
+    "crack_max": null,
+    "breach_dc": null,
+    "breach_dc_scaling": null
   },
   {
     "id": 23,
@@ -240,7 +286,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 14,
@@ -251,7 +299,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 13,
@@ -262,7 +312,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 12,
@@ -273,9 +325,19 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 4
+        "sort_order": 4,
+        "breach_effect": null,
+        "breach_drains_embers": false
       }
-    ]
+    ],
+    "saving_throws": [
+      "INT",
+      "WIS"
+    ],
+    "has_embers": false,
+    "crack_max": null,
+    "breach_dc": null,
+    "breach_dc_scaling": null
   },
   {
     "id": 24,
@@ -312,7 +374,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 17,
@@ -323,7 +387,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 16,
@@ -334,9 +400,19 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
       }
-    ]
+    ],
+    "saving_throws": [
+      "CON",
+      "CHA"
+    ],
+    "has_embers": false,
+    "crack_max": null,
+    "breach_dc": null,
+    "breach_dc_scaling": null
   },
   {
     "id": 25,
@@ -376,7 +452,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 20,
@@ -387,7 +465,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 19,
@@ -398,9 +478,19 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
       }
-    ]
+    ],
+    "saving_throws": [
+      "DEX",
+      "INT"
+    ],
+    "has_embers": false,
+    "crack_max": null,
+    "breach_dc": null,
+    "breach_dc_scaling": null
   },
   {
     "id": 26,
@@ -435,7 +525,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 23,
@@ -446,7 +538,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 22,
@@ -457,9 +551,19 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
       }
-    ]
+    ],
+    "saving_throws": [
+      "WIS",
+      "CHA"
+    ],
+    "has_embers": false,
+    "crack_max": null,
+    "breach_dc": null,
+    "breach_dc_scaling": null
   },
   {
     "id": 27,
@@ -494,7 +598,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 26,
@@ -505,7 +611,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 25,
@@ -516,9 +624,19 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
       }
-    ]
+    ],
+    "saving_throws": [
+      "STR",
+      "CON"
+    ],
+    "has_embers": false,
+    "crack_max": null,
+    "breach_dc": null,
+    "breach_dc_scaling": null
   },
   {
     "id": 28,
@@ -555,7 +673,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 29,
@@ -566,7 +686,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 28,
@@ -577,9 +699,19 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
       }
-    ]
+    ],
+    "saving_throws": [
+      "INT",
+      "WIS"
+    ],
+    "has_embers": false,
+    "crack_max": null,
+    "breach_dc": null,
+    "breach_dc_scaling": null
   },
   {
     "id": 29,
@@ -615,7 +747,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 32,
@@ -626,7 +760,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 31,
@@ -637,9 +773,19 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
       }
-    ]
+    ],
+    "saving_throws": [
+      "STR",
+      "DEX"
+    ],
+    "has_embers": false,
+    "crack_max": null,
+    "breach_dc": null,
+    "breach_dc_scaling": null
   },
   {
     "id": 30,
@@ -675,7 +821,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 35,
@@ -686,7 +834,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 34,
@@ -697,9 +847,19 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
       }
-    ]
+    ],
+    "saving_throws": [
+      "STR",
+      "DEX"
+    ],
+    "has_embers": false,
+    "crack_max": null,
+    "breach_dc": null,
+    "breach_dc_scaling": null
   },
   {
     "id": 31,
@@ -736,7 +896,9 @@
         "armor_prof": "",
         "weapon_prof": null,
         "tool_prof": "",
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 38,
@@ -747,7 +909,11 @@
         "armor_prof": "",
         "weapon_prof": null,
         "tool_prof": "",
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false,
+        "caster_type": "full",
+        "spellcasting_stat": "CHA"
       },
       {
         "id": 37,
@@ -758,9 +924,19 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
       }
-    ]
+    ],
+    "saving_throws": [
+      "CON",
+      "CHA"
+    ],
+    "has_embers": false,
+    "crack_max": null,
+    "breach_dc": null,
+    "breach_dc_scaling": null
   },
   {
     "id": 32,
@@ -797,7 +973,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 41,
@@ -808,7 +986,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 40,
@@ -819,9 +999,19 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
       }
-    ]
+    ],
+    "saving_throws": [
+      "CON",
+      "CHA"
+    ],
+    "has_embers": false,
+    "crack_max": null,
+    "breach_dc": null,
+    "breach_dc_scaling": null
   },
   {
     "id": 33,
@@ -859,7 +1049,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 44,
@@ -870,7 +1062,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 43,
@@ -881,9 +1075,19 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
       }
-    ]
+    ],
+    "saving_throws": [
+      "STR",
+      "DEX"
+    ],
+    "has_embers": false,
+    "crack_max": null,
+    "breach_dc": null,
+    "breach_dc_scaling": null
   },
   {
     "id": 34,
@@ -915,7 +1119,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 47,
@@ -926,7 +1132,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 46,
@@ -937,9 +1145,19 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
       }
-    ]
+    ],
+    "saving_throws": [
+      "DEX",
+      "CHA"
+    ],
+    "has_embers": false,
+    "crack_max": null,
+    "breach_dc": null,
+    "breach_dc_scaling": null
   },
   {
     "id": 35,
@@ -976,7 +1194,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 1
+        "sort_order": 1,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 50,
@@ -987,7 +1207,9 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 2
+        "sort_order": 2,
+        "breach_effect": null,
+        "breach_drains_embers": false
       },
       {
         "id": 49,
@@ -998,7 +1220,22 @@
         "armor_prof": null,
         "weapon_prof": null,
         "tool_prof": null,
-        "sort_order": 3
+        "sort_order": 3,
+        "breach_effect": null,
+        "breach_drains_embers": false
+      }
+    ],
+    "saving_throws": [
+      "CON",
+      "INT"
+    ],
+    "has_embers": true,
+    "crack_max": 5,
+    "breach_dc": 15,
+    "breach_dc_scaling": [
+      {
+        "dc": 12,
+        "level": 13
       }
     ]
   }

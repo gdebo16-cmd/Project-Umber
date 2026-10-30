@@ -1,30 +1,42 @@
 // Magic access v3: alignment chart, personality picks (3 states), race element (4th affinity), spell strength bands.
-// Lookup tables: alignments, alignment_bands, spell_bands, personality_options, race_affinity_elements
-// (callings.black_gate_level column kept but unused — Black gate is alignment-only)
+// Spell catalog / states / elements / bands / alignments / personality / species affinities come from the JSON pack.
+// Later cleanup: personality_options.needs_black_gate and callings.black_gate_level columns are unused (Black gate removed).
 import pool from '../db.js';
 import { resolveSpeciesWrite } from './idMap.js';
-
-export const BLACK_GATE_TARGET = 'CE'; // Black gate: alignment Aligned/Attuned to CE on the chart (CE, NE, CN)
+import {
+    allSpells,
+    getSpell,
+    getState,
+    getElement,
+    getAlignment,
+    getBandByName,
+    getBandByOrd,
+    liveStates,
+} from './spellPack.js';
+import content, { getAlignmentBand } from './content.js';
 
 // Everything step 4 needs to draw its dropdowns, for one race/subrace
 export async function listMagicOptions(raceId, subraceId) {
-    const [alignments, personality, elements, gate] = await Promise.all([
-        pool.query(`SELECT code, name, color, law_axis, good_axis FROM alignments ORDER BY sort`),
-        pool.query(`SELECT id, category, name, flavor, bio, state, any_state, perk, needs_black_gate FROM personality_options ORDER BY category, sort`),
-        raceElements(raceId, subraceId),
-        pool.query(`SELECT alignment_code FROM alignment_bands WHERE color_square = $1 AND band IN ('Aligned', 'Attuned') ORDER BY alignment_code`, [BLACK_GATE_TARGET]),
-    ]);
-    const states = await pool.query(`SELECT lower(name) AS name FROM spell_state WHERE NOT retired ORDER BY id`);
+    const alignments = (content.alignments ?? [])
+        .slice()
+        .sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0))
+        .map((a) => ({ code: a.code, name: a.name, color: a.color, law_axis: a.law_axis, good_axis: a.good_axis }));
+    const personality = (content.personality_options ?? [])
+        .slice()
+        .sort((a, b) => String(a.category).localeCompare(String(b.category)) || (a.sort ?? 0) - (b.sort ?? 0));
+    const elements = await raceElements(raceId, subraceId);
     const raceSpells = await raceSpellOptions(raceId);
-    const group = (cat) => personality.rows.filter((p) => p.category === cat);
+    const group = (cat) => personality.filter((p) => p.category === cat).map((p) => ({
+        id: p.id, category: p.category, name: p.name, flavor: p.flavor, bio: p.bio,
+        state: p.state, any_state: p.any_state, perk: p.perk,
+    }));
     return {
-        alignments: alignments.rows,
+        alignments,
         upbringing: group('upbringing'),
         lifestyle: group('lifestyle'),
         outlook: group('outlook'),
-        states: states.rows.map((s) => s.name),
+        states: liveStates(),
         elements,
-        blackGateAlignments: gate.rows.map((r) => r.alignment_code),
         raceSpells,
     };
 }
@@ -33,94 +45,111 @@ export async function listMagicOptions(raceId, subraceId) {
 // Human: any level-0 bless or manipulate spell of the element (Stone and Star have none, so their race starter).
 // Wyrmkin: one evoke spell per element. Every other race has a fixed races.race_spell_id, so {}.
 export async function raceSpellOptions(raceId) {
-    const species = await resolveSpeciesWrite(raceId, null);
-    const legacyRaceId = species?.race_id ?? raceId;
-    const { rows } = await pool.query(
-        `SELECT s.element_id, s.id, s.name, s.base_description AS description
-         FROM races r
-         JOIN spells s ON s.base_level = 0
-         JOIN spell_state st ON st.id = s.state_id
-         JOIN spell_element e ON e.id = s.element_id
-         WHERE r.id = $1
-           AND ((r.name = 'Human' AND (lower(st.name) IN ('bless', 'manipulate')
-                                       OR (e.name, s.name) IN (('Stone', 'Pebble Shield'), ('Star', 'Starmend'))))
-             OR (r.name = 'Wyrmkin' AND (e.name, s.name) IN (('Flame', 'Ember Spark'), ('Frost', 'Frost Punch'),
-                                       ('Storm', 'Spark Grip'), ('Venom', 'Spit Venom'), ('Stone', 'Grit Spit'))))
-         ORDER BY s.name`,
-        [legacyRaceId]
-    );
+    const speciesWrite = await resolveSpeciesWrite(raceId, null);
+    const speciesRow = (content.species ?? []).find((s) => Number(s.id) === Number(speciesWrite?.species_id ?? raceId))
+        ?? (content.species ?? []).find((s) => s.parent_id == null && Number(s.sort_order) === Number(speciesWrite?.race_id ?? raceId));
+    const race = speciesRow ? { name: speciesRow.parent_id
+        ? ((content.species ?? []).find((p) => Number(p.id) === Number(speciesRow.parent_id))?.name ?? speciesRow.name)
+        : speciesRow.name } : null;
+    if (!race) return {};
+
+    const wyrmkin = new Map([
+        ['Flame', 'Ember Spark'],
+        ['Frost', 'Frost Punch'],
+        ['Storm', 'Spark Grip'],
+        ['Venom', 'Spit Venom'],
+        ['Stone', 'Grit Spit'],
+    ]);
+    const humanExtra = new Map([
+        ['Stone', 'Pebble Shield'],
+        ['Star', 'Starmend'],
+    ]);
+
     const out = {};
-    for (const { element_id, ...s } of rows) (out[element_id] ??= []).push(s);
+    for (const s of allSpells()) {
+        if (Number(s.base_level) !== 0) continue;
+        const st = getState(s.state_id);
+        const el = getElement(s.element_id);
+        if (!el) continue;
+        const stName = String(st?.name ?? '').toLowerCase();
+        let ok = false;
+        if (race.name === 'Human') {
+            ok = stName === 'bless' || stName === 'manipulate' || humanExtra.get(el.name) === s.name;
+        } else if (race.name === 'Wyrmkin') {
+            ok = wyrmkin.get(el.name) === s.name;
+        }
+        if (!ok) continue;
+        (out[s.element_id] ??= []).push({
+            id: s.id,
+            name: s.name,
+            description: s.base_description,
+        });
+    }
+    for (const key of Object.keys(out)) {
+        out[key].sort((a, b) => a.name.localeCompare(b.name));
+    }
     return out;
 }
 
 // Alignment chart squares (editor picker)
 export async function listAlignments() {
-    const { rows } = await pool.query(`SELECT code, name, color FROM alignments ORDER BY sort`);
-    return rows;
+    return (content.alignments ?? [])
+        .slice()
+        .sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0))
+        .map((a) => ({ code: a.code, name: a.name, color: a.color }));
 }
 
-// Alignment change check: picks that need the Black gate must keep it. Returns an error string or null
+// Alignment change check: code must exist. Returns an error string or null
 export async function checkAlignmentChange(charId, code) {
-    const { rows: al } = await pool.query(`SELECT code FROM alignments WHERE code = $1`, [code]);
-    if (!al.length) return 'Pick an alignment';
-    const { rows } = await pool.query(
-        `SELECT bool_or(p.needs_black_gate) AS gated
-         FROM characters c LEFT JOIN personality_options p ON p.id IN (c.upbringing_id, c.lifestyle_id, c.outlook_id)
-         WHERE c.id = $1 GROUP BY c.id`, [charId]);
-    if (rows[0]?.gated && !(await hasBlackGate(code))) {
-        return 'Your background uses a Black gate pick, so the alignment must stay CE, NE or CN';
-    }
+    const ok = (content.alignments ?? []).some((a) => a.code === code);
+    if (!ok) return 'Pick an alignment';
     return null;
 }
 
-// The race's listed elements (a subrace's own list when it has one)
+// The race's listed elements from pack species_affinity_elements (child list when present)
 export async function raceElements(raceId, subraceId) {
-    // Affinity tables still use legacy races/subraces; create draft sends species ids
     const species = await resolveSpeciesWrite(raceId, subraceId ?? null);
-    const legacyRaceId = species?.race_id ?? raceId;
-    const legacySubraceId = species ? species.subrace_id : (subraceId ?? null);
-    const { rows } = await pool.query(
-        `SELECT e.id, e.name FROM race_affinity_elements rae JOIN spell_element e ON e.id = rae.element_id
-         WHERE rae.race_id = $1
-           AND (rae.subrace_id = $2 OR (rae.subrace_id IS NULL AND NOT EXISTS
-                (SELECT 1 FROM race_affinity_elements x WHERE x.race_id = $1 AND x.subrace_id = $2)))
-         ORDER BY e.name`,
-        [legacyRaceId, legacySubraceId]
-    );
-    return rows;
-}
-
-// Black gate: alignment Aligned/Attuned to CE on the chart (CE, NE, CN). Calling/level no longer required.
-export async function hasBlackGate(alignmentCode) {
-    if (!alignmentCode) return false;
-    const { rows } = await pool.query(
-        `SELECT 1 FROM alignment_bands
-         WHERE alignment_code = $1 AND color_square = $2 AND band IN ('Aligned', 'Attuned')`,
-        [alignmentCode, BLACK_GATE_TARGET]
-    );
-    return rows.length > 0;
+    const sid = Number(species?.species_id ?? subraceId ?? raceId);
+    const links = content.species_affinity_elements ?? [];
+    let rows = links.filter((r) => Number(r.species_id) === sid);
+    if (!rows.length && species?.species_id != null && subraceId) {
+        const parentId = Number(species.species_id);
+        // resolveSpeciesWrite with subrace sets species_id to child; if empty, try parent
+        const child = (content.species ?? []).find((s) => Number(s.id) === sid);
+        if (child?.parent_id != null) {
+            rows = links.filter((r) => Number(r.species_id) === Number(child.parent_id));
+        } else {
+            rows = links.filter((r) => Number(r.species_id) === parentId);
+        }
+    }
+    if (!rows.length) {
+        // Try parent species when create passed legacy race id only
+        const parent = (content.species ?? []).find((s) => s.parent_id == null && Number(s.id) === sid)
+            ?? (content.species ?? []).find((s) => s.parent_id == null && Number(s.sort_order) === Number(species?.race_id ?? raceId));
+        if (parent) rows = links.filter((r) => Number(r.species_id) === Number(parent.id));
+    }
+    return rows
+        .map((r) => ({ id: r.element_id, name: getElement(r.element_id)?.name }))
+        .filter((e) => e.name)
+        .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 // Check a step 4 body against the draft. Returns { magic } to save, or { error }
 export async function checkMagicPicks(draft, body) {
     const code = String(body.alignment_code ?? '');
-    const { rows: al } = await pool.query(`SELECT code FROM alignments WHERE code = $1`, [code]);
-    if (!al.length) return { error: 'Pick an alignment' };
+    const alOk = (content.alignments ?? []).some((a) => a.code === code);
+    if (!alOk) return { error: 'Pick an alignment' };
 
     const ids = ['upbringing', 'lifestyle', 'outlook'].map((c) => Number(body[`${c}_id`]));
-    const { rows: opts } = await pool.query(`SELECT * FROM personality_options WHERE id = ANY($1::int[])`, [ids]);
-    const gate = await hasBlackGate(code);
-    const { rows: st } = await pool.query(`SELECT lower(name) AS name FROM spell_state WHERE NOT retired`);
-    const live = st.map((s) => s.name);
+    const opts = (content.personality_options ?? []).filter((p) => ids.includes(Number(p.id)));
+    const live = liveStates();
     const magic = { alignment_code: code };
     for (const [i, cat] of ['upbringing', 'lifestyle', 'outlook'].entries()) {
         const opt = opts.find((o) => o.id === ids[i] && o.category === cat);
         if (!opt) return { error: `Pick an ${cat === 'upbringing' ? 'Upbringing' : cat === 'lifestyle' ? 'Lifestyle' : 'Outlook'}` };
-        if (opt.needs_black_gate && !gate) return { error: `${opt.name} needs the Black gate (CE, NE or CN alignment)` };
-        // wildcard (Self-Taught Stray): the player picks any state except destroy
+        // wildcard (Self-Taught Stray): the player picks any live state (including destroy)
         const state = opt.any_state ? String(body[`${cat}_state`] ?? '').toLowerCase() : opt.state.toLowerCase();
-        if (opt.any_state && (state === 'destroy' || !live.includes(state))) return { error: `Pick a state for ${opt.name}` };
+        if (opt.any_state && !live.includes(state)) return { error: `Pick a state for ${opt.name}` };
         magic[`${cat}_id`] = opt.id;
         magic[`${cat}_state`] = state;
     }
@@ -131,7 +160,6 @@ export async function checkMagicPicks(draft, body) {
     const el = elements.find((e) => e.id === Number(body.race_element_id));
     if (!el) return { error: 'Pick a race element' };
     magic.race_element_id = el.id;
-    // Human / Wyrmkin: the starter spell picked for that element
     const choices = (await raceSpellOptions(draft.race_id))[el.id] ?? [];
     if (choices.length) {
         const spell = choices.find((s) => s.id === Number(body.race_spell_id));
@@ -141,26 +169,27 @@ export async function checkMagicPicks(draft, body) {
     return { magic };
 }
 
-// Spell strength: chart band (alignment vs the square of the spell's colour), then one band stronger
-// (max Attuned) if the spell's element is the race element or its state is one of the 3 personality states.
-// Never weakens. Returns { band, chart_band, boosted, modifiers } or null when the character has no alignment yet.
+// Spell strength from pack + character row (no JOIN to spells tables).
 export async function spellStrength(characterId, spellId) {
+    const spell = getSpell(spellId);
+    if (!spell) return null;
+    const al = getAlignment(spell.alignment_id);
+    const st = getState(spell.state_id);
     const { rows } = await pool.query(
-        `SELECT ab.band AS chart_band, b.ord,
-                (s.element_id = c.race_element_id
-                 OR lower(st.name) IN (c.upbringing_state, c.lifestyle_state, c.outlook_state)) AS boosted
-         FROM characters c
-         JOIN spells s ON s.id = $2
-         JOIN spell_state st ON st.id = s.state_id
-         JOIN spell_alignment sa ON sa.color = s.color
-         JOIN alignment_bands ab ON ab.alignment_code = c.alignment_code AND ab.color_square = sa.chart_square
-         JOIN spell_bands b ON b.name = ab.band
-         WHERE c.id = $1`,
-        [characterId, spellId]
+        `SELECT alignment_code, race_element_id, upbringing_state, lifestyle_state, outlook_state
+         FROM characters WHERE id = $1`,
+        [characterId]
     );
-    if (!rows.length) return null;
-    const r = rows[0];
-    const ord = Math.min(4, r.ord + (r.boosted ? 1 : 0));
-    const { rows: band } = await pool.query(`SELECT name, modifiers FROM spell_bands WHERE ord = $1`, [ord]);
-    return { band: band[0].name, chart_band: r.chart_band, boosted: !!r.boosted, modifiers: band[0].modifiers };
+    if (!rows.length || !rows[0].alignment_code || !al?.chart_square) return null;
+    const c = rows[0];
+    const chart_band = getAlignmentBand(c.alignment_code, al.chart_square);
+    const bandRow = getBandByName(chart_band);
+    if (!bandRow) return null;
+    const stName = String(st?.name ?? '').toLowerCase();
+    const boosted = Number(spell.element_id) === Number(c.race_element_id)
+        || [c.upbringing_state, c.lifestyle_state, c.outlook_state].map((x) => String(x ?? '').toLowerCase()).includes(stName);
+    const ord = Math.min(4, Number(bandRow.ord) + (boosted ? 1 : 0));
+    const band = getBandByOrd(ord);
+    if (!band) return null;
+    return { band: band.name, chart_band, boosted: !!boosted, modifiers: band.modifiers };
 }

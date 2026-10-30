@@ -1,7 +1,6 @@
 // Maps between legacy races/classes/sub_classes ids and species/roles/callings.
-// New create/edit APIs speak in species/role/calling ids; legacy feature, spell,
-// proficiency and affinity tables still key off the old ids, so writes dual-store both.
-import pool from '../db.js';
+// All lookups from the content pack (DB catalogs stay until a later drop migration).
+import content from './content.js';
 
 const ROLE_TO_CLASS_NAME = {
   Templar: 'Paladin',
@@ -20,149 +19,156 @@ function classNameForRole(roleName) {
   return ROLE_TO_CLASS_NAME[roleName] || roleName;
 }
 
+function speciesAll() {
+  return content.species ?? [];
+}
+function speciesById(id) {
+  return speciesAll().find((s) => Number(s.id) === Number(id)) ?? null;
+}
+function parentSpecies(sp) {
+  if (!sp) return null;
+  if (sp.parent_id == null) return sp;
+  return speciesById(sp.parent_id) ?? sp;
+}
+function rolesAll() {
+  return content.roles ?? [];
+}
+function roleById(id) {
+  return rolesAll().find((r) => Number(r.id) === Number(id)) ?? null;
+}
+function callingsOf(role) {
+  return role?.callings ?? [];
+}
+function legacyRaces() {
+  return content.legacy_races ?? [];
+}
+function legacySubraces() {
+  return content.legacy_subraces ?? [];
+}
+function legacyClasses() {
+  return content.legacy_classes ?? [];
+}
+function legacySubClasses() {
+  return content.legacy_sub_classes ?? [];
+}
+
 // Parent species id <-> old races.id (species.sort_order = races.id)
 export async function legacyRaceIdForSpecies(speciesId) {
   if (speciesId == null) return null;
-  const { rows } = await pool.query(
-    `SELECT COALESCE(p.sort_order, s.sort_order)::int AS race_id
-     FROM species s
-     LEFT JOIN species p ON p.id = s.parent_id
-     WHERE s.id = $1`,
-    [Number(speciesId)]
-  );
-  return rows[0]?.race_id ?? null;
+  const sp = speciesById(speciesId);
+  if (!sp) return null;
+  const parent = parentSpecies(sp);
+  return parent?.sort_order != null ? Number(parent.sort_order) : null;
 }
 
 export async function speciesIdForLegacyRace(raceId, subraceId = null) {
   if (raceId == null) return null;
+  const parents = speciesAll().filter((s) => s.parent_id == null && Number(s.sort_order) === Number(raceId));
+  const parent = parents[0];
+  if (!parent) return null;
   if (subraceId != null && subraceId !== '') {
-    const { rows } = await pool.query(
-      `SELECT child.id
-       FROM subraces sr
-       JOIN races r ON r.id = sr.race_id
-       JOIN species parent ON parent.parent_id IS NULL AND parent.sort_order = r.id
-       JOIN species child ON child.parent_id = parent.id AND lower(child.name) = lower(sr.name)
-       WHERE sr.id = $1 AND r.id = $2`,
-      [Number(subraceId), Number(raceId)]
-    );
-    if (rows[0]) return rows[0].id;
+    const sr = legacySubraces().find((s) => Number(s.id) === Number(subraceId) && Number(s.race_id) === Number(raceId));
+    if (sr) {
+      const child = speciesAll().find(
+        (s) => Number(s.parent_id) === Number(parent.id) && String(s.name).toLowerCase() === String(sr.name).toLowerCase()
+      );
+      if (child) return child.id;
+    }
   }
-  const { rows } = await pool.query(
-    `SELECT id FROM species WHERE parent_id IS NULL AND sort_order = $1`,
-    [Number(raceId)]
-  );
-  return rows[0]?.id ?? null;
+  return parent.id;
 }
 
 export async function legacySubraceIdForSpecies(speciesId) {
   if (speciesId == null) return null;
-  const { rows } = await pool.query(
-    `SELECT sr.id
-     FROM species child
-     JOIN species parent ON parent.id = child.parent_id
-     JOIN races r ON r.id = parent.sort_order
-     JOIN subraces sr ON sr.race_id = r.id AND lower(sr.name) = lower(child.name)
-     WHERE child.id = $1 AND child.parent_id IS NOT NULL`,
-    [Number(speciesId)]
+  const child = speciesById(speciesId);
+  if (!child?.parent_id) return null;
+  const parent = speciesById(child.parent_id);
+  if (!parent) return null;
+  const raceId = parent.sort_order;
+  const sr = legacySubraces().find(
+    (s) => Number(s.race_id) === Number(raceId) && String(s.name).toLowerCase() === String(child.name).toLowerCase()
   );
-  return rows[0]?.id ?? null;
+  return sr?.id ?? null;
 }
 
 export async function legacyClassIdForRole(roleId) {
   if (roleId == null) return null;
-  const { rows } = await pool.query(
-    `SELECT cl.id
-     FROM roles ro
-     JOIN classes cl ON lower(cl.name) = lower(
-       CASE ro.name WHEN 'Templar' THEN 'Paladin' WHEN 'Seer' THEN 'Druid' ELSE ro.name END
-     )
-     WHERE ro.id = $1`,
-    [Number(roleId)]
-  );
-  return rows[0]?.id ?? null;
+  const role = roleById(roleId);
+  if (!role) return null;
+  const className = classNameForRole(role.name);
+  const cl = legacyClasses().find((c) => String(c.name).toLowerCase() === String(className).toLowerCase());
+  return cl?.id ?? null;
 }
 
 export async function roleIdForLegacyClass(classId) {
   if (classId == null) return null;
-  const { rows } = await pool.query(
-    `SELECT ro.id
-     FROM classes cl
-     JOIN roles ro ON lower(ro.name) = lower(
-       CASE cl.name WHEN 'Paladin' THEN 'Templar' WHEN 'Druid' THEN 'Seer' ELSE cl.name END
-     )
-     WHERE cl.id = $1`,
-    [Number(classId)]
-  );
-  return rows[0]?.id ?? null;
+  const cl = legacyClasses().find((c) => Number(c.id) === Number(classId));
+  if (!cl) return null;
+  const roleName = roleNameForClass(cl.name);
+  const role = rolesAll().find((r) => String(r.name).toLowerCase() === String(roleName).toLowerCase());
+  return role?.id ?? null;
 }
 
 export async function legacySubclassIdForCalling(callingId) {
   if (callingId == null) return null;
-  const { rows } = await pool.query(
-    `SELECT sc.id
-     FROM callings ca
-     JOIN roles ro ON ro.id = ca.role_id
-     JOIN classes cl ON lower(cl.name) = lower(
-       CASE ro.name WHEN 'Templar' THEN 'Paladin' WHEN 'Seer' THEN 'Druid' ELSE ro.name END
-     )
-     JOIN sub_classes sc ON sc.class_id = cl.id AND lower(sc.name) = lower(ca.name)
-     WHERE ca.id = $1`,
-    [Number(callingId)]
-  );
-  return rows[0]?.id ?? null;
+  for (const role of rolesAll()) {
+    const ca = callingsOf(role).find((c) => Number(c.id) === Number(callingId));
+    if (!ca) continue;
+    const className = classNameForRole(role.name);
+    const cl = legacyClasses().find((c) => String(c.name).toLowerCase() === String(className).toLowerCase());
+    if (!cl) return null;
+    const sc = legacySubClasses().find(
+      (s) => Number(s.class_id) === Number(cl.id) && String(s.name).toLowerCase() === String(ca.name).toLowerCase()
+    );
+    return sc?.id ?? null;
+  }
+  return null;
 }
 
 export async function callingIdForLegacySubclass(subclassId) {
   if (subclassId == null) return null;
-  const { rows } = await pool.query(
-    `SELECT ca.id
-     FROM sub_classes sc
-     JOIN classes cl ON cl.id = sc.class_id
-     JOIN roles ro ON lower(ro.name) = lower(
-       CASE cl.name WHEN 'Paladin' THEN 'Templar' WHEN 'Druid' THEN 'Seer' ELSE cl.name END
-     )
-     JOIN callings ca ON ca.role_id = ro.id AND lower(ca.name) = lower(sc.name)
-     WHERE sc.id = $1`,
-    [Number(subclassId)]
-  );
-  return rows[0]?.id ?? null;
+  const sc = legacySubClasses().find((s) => Number(s.id) === Number(subclassId));
+  if (!sc) return null;
+  const cl = legacyClasses().find((c) => Number(c.id) === Number(sc.class_id));
+  if (!cl) return null;
+  const roleName = roleNameForClass(cl.name);
+  const role = rolesAll().find((r) => String(r.name).toLowerCase() === String(roleName).toLowerCase());
+  if (!role) return null;
+  const ca = callingsOf(role).find((c) => String(c.name).toLowerCase() === String(sc.name).toLowerCase());
+  return ca?.id ?? null;
 }
 
 // Resolve create/edit race payload (species ids in race_id / subrace_id fields) to both stores.
 export async function resolveSpeciesWrite(raceId, subraceId) {
   const speciesInput = subraceId != null && subraceId !== '' ? Number(subraceId) : Number(raceId);
-  const { rows } = await pool.query(
-    `SELECT s.id, s.parent_id, COALESCE(p.sort_order, s.sort_order)::int AS legacy_race_id
-     FROM species s
-     LEFT JOIN species p ON p.id = s.parent_id
-     WHERE s.id = $1`,
-    [speciesInput]
-  );
-  if (!rows[0]) return null;
-  const row = rows[0];
+  const row = speciesById(speciesInput);
+  if (!row) return null;
   // If client sent parent in race_id and child in subrace_id, prefer child when it belongs to parent
   if (subraceId != null && subraceId !== '' && Number(raceId) !== Number(subraceId)) {
-    const { rows: child } = await pool.query(
-      `SELECT s.id, s.parent_id, p.sort_order::int AS legacy_race_id
-       FROM species s
-       JOIN species p ON p.id = s.parent_id
-       WHERE s.id = $1 AND s.parent_id = $2`,
-      [Number(subraceId), Number(raceId)]
-    );
-    if (!child[0]) return false;
-    const legacySubraceId = await legacySubraceIdForSpecies(child[0].id);
+    const child = speciesById(Number(subraceId));
+    if (!child || Number(child.parent_id) !== Number(raceId)) return false;
+    const parent = speciesById(child.parent_id);
+    const legacySubraceId = await legacySubraceIdForSpecies(child.id);
     return {
-      species_id: child[0].id,
-      race_id: child[0].legacy_race_id,
+      species_id: child.id,
+      race_id: parent?.sort_order != null ? Number(parent.sort_order) : null,
       subrace_id: legacySubraceId,
     };
   }
-  // Single id: parent or leaf
   if (row.parent_id) {
+    const parent = speciesById(row.parent_id);
     const legacySubraceId = await legacySubraceIdForSpecies(row.id);
-    return { species_id: row.id, race_id: row.legacy_race_id, subrace_id: legacySubraceId };
+    return {
+      species_id: row.id,
+      race_id: parent?.sort_order != null ? Number(parent.sort_order) : null,
+      subrace_id: legacySubraceId,
+    };
   }
-  return { species_id: row.id, race_id: row.legacy_race_id, subrace_id: null };
+  return {
+    species_id: row.id,
+    race_id: row.sort_order != null ? Number(row.sort_order) : null,
+    subrace_id: null,
+  };
 }
 
 export async function resolveRoleWrite(roleId, callingId) {
@@ -170,11 +176,9 @@ export async function resolveRoleWrite(roleId, callingId) {
   if (!legacyClassId) return null;
   let legacySubclassId = null;
   if (callingId != null && callingId !== '') {
-    const { rows } = await pool.query(
-      `SELECT id FROM callings WHERE id = $1 AND role_id = $2`,
-      [Number(callingId), Number(roleId)]
-    );
-    if (!rows[0]) return false;
+    const role = roleById(roleId);
+    const ca = callingsOf(role).find((c) => Number(c.id) === Number(callingId));
+    if (!ca) return false;
     legacySubclassId = await legacySubclassIdForCalling(Number(callingId));
   }
   return {

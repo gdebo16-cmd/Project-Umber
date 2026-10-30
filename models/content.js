@@ -10,6 +10,16 @@ const content = JSON.parse(fs.readFileSync(file, 'utf8'));
 
 export const SUBCLASS_LEVEL = 3;
 
+// Pack stores hit_die as "d12"; DB historically used integer sides. Level-up math needs the number.
+export function hitDieSides(hitDie) {
+    if (hitDie == null || hitDie === '') return null;
+    if (typeof hitDie === 'number' && Number.isFinite(hitDie)) return hitDie;
+    const m = String(hitDie).match(/(\d+)/);
+    if (m) return Number(m[1]);
+    const n = Number(hitDie);
+    return Number.isFinite(n) ? n : null;
+}
+
 export function getRole(roleId) {
     if (roleId == null) return undefined;
     const id = Number(roleId);
@@ -313,4 +323,13 @@ export function flattenFeaturesForRole(roleId, callingId = null, maxLevel = 30) 
     return out.sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
 }
 
+
+/** Chart band name for an alignment vs a colour square (from pack alignment_bands). */
+export function getAlignmentBand(alignmentCode, colorSquare) {
+    if (alignmentCode == null || colorSquare == null) return null;
+    const row = (content.alignment_bands ?? []).find(
+        (b) => b.alignment_code === alignmentCode && b.color_square === colorSquare
+    );
+    return row?.band ?? null;
+}
 export default content;

@@ -2,7 +2,7 @@
 import { ownsCharacter } from '../models/characterModel.js';
 import * as Spells from '../models/spellModel.js';
 import { getSheetCharacter } from '../models/characterModel.js';
-import pool from '../db.js';
+import { getSpell } from '../models/spellPack.js';
 import { getSpellSlots } from '../client/src/utils/spellSlots.js';
 import { getSpellCaps, bodyMaxLevel } from '../utils/spellLimits.js'; /*prep-done*/
 
@@ -19,22 +19,6 @@ async function loadLearned(charId, ch = null) {
     const rows = await Spells.getLearnedSpells(charId);
     const spellLimits = ch ? getSpellCaps(ch.class_name, ch.level, ch.subclass_name) : undefined;
     return { learnedSpells: rows, learnedIds: rows.map((r) => Number(r.id)), ...(ch ? { spellLimits } : {}) };
-}
-
-// Learned / prepared counts, split into cantrips (base_level 0) and leveled spells
-async function spellCounts(charId, spellId = null) {
-    const { rows: [counts] } = await pool.query(
-        `SELECT COUNT(*) FILTER (WHERE s.base_level = 0)::int AS cantrips,
-                COUNT(*) FILTER (WHERE s.base_level >= 1)::int AS spells,
-                COUNT(*) FILTER (WHERE s.base_level = 0 AND cs.is_prepared)::int AS prepared_cantrips,
-                COUNT(*) FILTER (WHERE s.base_level >= 1 AND cs.is_prepared)::int AS prepared_spells,
-                COALESCE(BOOL_OR(cs.spell_id = $2), false) AS already,
-                COALESCE(BOOL_OR(cs.spell_id = $2 AND cs.is_prepared), false) AS already_prepared
-         FROM character_spells cs JOIN spells s ON s.id = cs.spell_id
-         WHERE cs.character_id = $1 AND cs.is_learned`,
-        [charId, spellId]
-    );
-    return counts;
 }
 
 // Ownership check shared by every route. Returns charId, or null after sending 401/404.
@@ -65,7 +49,7 @@ export async function learnSpell(req, res) {
     if (charId === null) return;
     const spellId = Number(req.body.spell_id);
     const ch = await getSheetCharacter(charId, req.session.userId);
-    const { rows: [spell] } = await pool.query('SELECT base_level, name FROM spells WHERE id = $1', [spellId]);
+    const spell = getSpell(spellId);
     if (!spell) return res.status(400).json({ error: 'That spell does not exist' });
     if (Spells.isFeatureOnlySpell(spell.name)) {
         return res.status(400).json({ error: 'That spell is granted by a class feature and cannot be learned from the spellbook.' });
@@ -78,7 +62,7 @@ export async function learnSpell(req, res) {
     // Known caps: cantrips = the cantrip limit, leveled spells = 2x the spells limit (re-learning is never blocked)
     const caps = getSpellCaps(ch.class_name, ch.level, ch.subclass_name);
     if (caps) {
-        const counts = await spellCounts(charId, spellId);
+        const counts = await Spells.spellCountsFromPack(charId, spellId);
         if (!counts.already) {
             if (caps.shared && counts.cantrips + counts.spells >= caps.known) {
                 return res.status(400).json({ error: `You already know the most spells you can (${caps.known}) at level ${ch.level}` });
@@ -121,17 +105,17 @@ export async function prepareSpell(req, res) {
     const ch = await getSheetCharacter(charId, req.session.userId);
     const caps = getSpellCaps(ch.class_name, ch.level, ch.subclass_name);
     if (caps) {
-        const counts = await spellCounts(charId, spellId);
+        const counts = await Spells.spellCountsFromPack(charId, spellId);
         if (!counts.already) return res.status(400).json({ error: 'You have to learn that spell first' });
-        const { rows: [spell] } = await pool.query('SELECT base_level, name FROM spells WHERE id = $1', [spellId]);
+        const spell = getSpell(spellId);
         if (!counts.already_prepared) {
             if (caps.shared && counts.prepared_cantrips + counts.prepared_spells >= caps.prepared) {
                 return res.status(400).json({ error: `You can prepare ${caps.prepared} spells at level ${ch.level}. Unprepare one first.` });
             }
-            if (Number(spell.base_level) === 0 && counts.prepared_cantrips >= caps.cantrips) {
+            if (Number(spell?.base_level) === 0 && counts.prepared_cantrips >= caps.cantrips) {
                 return res.status(400).json({ error: `You can prepare ${caps.cantrips} cantrips at level ${ch.level}` });
             }
-            if (Number(spell.base_level) >= 1 && counts.prepared_spells >= caps.prepared) {
+            if (Number(spell?.base_level) >= 1 && counts.prepared_spells >= caps.prepared) {
                 return res.status(400).json({ error: `You can prepare ${caps.prepared} spells at level ${ch.level}. Unprepare one first.` });
             }
         }

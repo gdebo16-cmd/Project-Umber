@@ -1,0 +1,173 @@
+[
+  {
+    "id": 1,
+    "race_id": 12,
+    "name": "Opal",
+    "slug": "opal",
+    "description": "Pearly white fur, the classic Vellari look. Resistance to radiant damage.",
+    "img_url": "/races/vellari.png",
+    "spell_alignment_id": null
+  },
+  {
+    "id": 2,
+    "race_id": 12,
+    "name": "Onyx",
+    "slug": "onyx",
+    "description": "Black fur. Resistance to necrotic damage.",
+    "img_url": "/races/vellari-onyx.png",
+    "spell_alignment_id": null
+  },
+  {
+    "id": 3,
+    "race_id": 12,
+    "name": "Amethyst",
+    "slug": "amethyst",
+    "description": "Purple fur. Resistance to psychic damage.",
+    "img_url": "/races/vellari-amethyst.png",
+    "spell_alignment_id": null
+  },
+  {
+    "id": 4,
+    "race_id": 12,
+    "name": "Topaz",
+    "slug": "topaz",
+    "description": "Orange fur. Resistance to lightning damage.",
+    "img_url": "/races/vellari-topaz.png",
+    "spell_alignment_id": null
+  },
+  {
+    "id": 5,
+    "race_id": 12,
+    "name": "Quartz",
+    "slug": "quartz",
+    "description": "Clear crystal fur. Resistance to force damage.",
+    "img_url": "/races/vellari-quartz.png",
+    "spell_alignment_id": null
+  },
+  {
+    "id": 6,
+    "race_id": 12,
+    "name": "Emerald",
+    "slug": "emerald",
+    "description": "Green fur. Resistance to poison damage.",
+    "img_url": "/races/vellari-emerald.png",
+    "spell_alignment_id": null
+  },
+  {
+    "id": 7,
+    "race_id": 12,
+    "name": "Ruby",
+    "slug": "ruby",
+    "description": "Red fur. Resistance to fire damage.",
+    "img_url": "/races/vellari-ruby.png",
+    "spell_alignment_id": null
+  },
+  {
+    "id": 8,
+    "race_id": 12,
+    "name": "Sapphire",
+    "slug": "sapphire",
+    "description": "Blue fur. Resistance to cold damage.",
+    "img_url": "/races/vellari-sapphire.png",
+    "spell_alignment_id": null
+  },
+  {
+    "id": 9,
+    "race_id": 19,
+    "name": "Mastiff",
+    "slug": "mastiff",
+    "description": "A sturdy, heavy-set breed. +1 HP per level.",
+    "img_url": "/races/lupine-mastiff.png",
+    "spell_alignment_id": null
+  },
+  {
+    "id": 10,
+    "race_id": 19,
+    "name": "Greyhound",
+    "slug": "greyhound",
+    "description": "A lean, fast breed. +10 ft speed.",
+    "img_url": "/races/lupine-greyhound.png",
+    "spell_alignment_id": null
+  },
+  {
+    "id": 11,
+    "race_id": 19,
+    "name": "Husky",
+    "slug": "husky",
+    "description": "A fluffy breed from the cold. Resistance to cold damage.",
+    "img_url": "/races/lupine-husky.png",
+    "spell_alignment_id": null
+  },
+  {
+    "id": 12,
+    "race_id": 19,
+    "name": "Rottweiler",
+    "slug": "rottweiler",
+    "description": "A powerful breed. Bite: 1d6 + Might as a bonus action, 1 per short rest.",
+    "img_url": "/races/lupine-rottweiler.png",
+    "spell_alignment_id": null
+  },
+  {
+    "id": 13,
+    "race_id": 19,
+    "name": "Shepherd",
+    "slug": "shepherd",
+    "description": "A watchful herding breed. +2 Awareness.",
+    "img_url": "/races/lupine-shepherd.png",
+    "spell_alignment_id": null
+  },
+  {
+    "id": 14,
+    "race_id": 19,
+    "name": "Bloodhound",
+    "slug": "bloodhound",
+    "description": "A keen-nosed hound. Track by scent across a trail up to a day old.",
+    "img_url": "/races/lupine-bloodhound.png",
+    "spell_alignment_id": null
+  },
+  {
+    "id": 15,
+    "race_id": 12,
+    "name": "Moss Agate",
+    "slug": "moss-agate",
+    "description": "Frosted white crystal fur veined with dark-green moss agate. Resistance to acid damage.",
+    "img_url": "/races/vellari-moss-agate.png",
+    "spell_alignment_id": null
+  },
+  {
+    "id": 16,
+    "race_id": 22,
+    "name": "Wrathveined",
+    "slug": "wrathveined",
+    "description": "Red veins, Red Magic (Offense). Resistance to fire damage. Veinfire deals fire; the target takes 1d4 fire at the start of its next turn.",
+    "img_url": "/races/gehennan-red.png",
+    "spell_alignment_id": 2
+  },
+  {
+    "id": 17,
+    "race_id": 22,
+    "name": "Dusk-veined",
+    "slug": "dusk-veined",
+    "description": "Purple veins, Purple Magic (Weaken). Resistance to psychic damage. Veinfire deals psychic; the target has disadvantage on its next save against you.",
+    "img_url": "/races/gehennan-purple.png",
+    "spell_alignment_id": 5
+  },
+  {
+    "id": 18,
+    "race_id": 22,
+    "name": "Oathveined",
+    "slug": "oathveined",
+    "description": "Gold veins, Yellow Magic (Strengthen). Resistance to force damage. Veinfire deals force; you gain temporary HP equal to your Proficiency Bonus.",
+    "img_url": "/races/gehennan-gold.png",
+    "spell_alignment_id": 4
+  },
+  {
+    "id": 19,
+    "race_id": 22,
+    "name": "Rustveined",
+    "slug": "rustveined",
+    "description": "Orange veins, Orange Magic (Hinder). Resistance to acid damage. Veinfire deals acid; the target's speed drops by 10 ft.",
+    "img_url": "/races/gehennan-orange.png",
+    "spell_alignment_id": 9
+  }
+]

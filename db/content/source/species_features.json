@@ -12,255 +12,71 @@
     "data": {}
   },
   {
-    "species_id": 66,
-    "feature_id": 3374,
+    "species_id": 1,
+    "feature_id": 9,
     "level": 1,
-    "link_id": 2,
-    "legacy_feature_id": 79,
+    "link_id": 51,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 1,
+    "feature_id": 3588,
+    "level": 1,
+    "link_id": 20,
+    "legacy_feature_id": 34,
     "action_type": null,
     "uses": "Passive",
     "dice": null,
-    "description": "Choose your vein color at character creation. It sets your eye and marking color, your resistance, and your Veinfire. Red: fire. Purple: psychic. Gold: force. Orange: acid.",
+    "description": "You ignore the effects of extreme heat.",
     "data": {
-      "legacy_race_lineage_id": 79
+      "legacy_race_lineage_id": 34
     }
   },
   {
-    "species_id": 60,
-    "feature_id": 3399,
-    "level": 1,
-    "link_id": 3,
-    "legacy_feature_id": 56,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "+2 to Memory.",
-    "data": {
-      "legacy_race_lineage_id": 56
-    }
-  },
-  {
-    "species_id": 48,
-    "feature_id": 3404,
-    "level": 1,
-    "link_id": 4,
-    "legacy_feature_id": 11,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "+2 to Awareness.",
-    "data": {
-      "legacy_race_lineage_id": 11
-    }
-  },
-  {
-    "species_id": 58,
-    "feature_id": 3417,
-    "level": 1,
-    "link_id": 5,
-    "legacy_feature_id": 46,
+    "species_id": 1,
+    "feature_id": 3797,
+    "level": 3,
+    "link_id": 76,
+    "legacy_feature_id": 36,
     "action_type": "action",
-    "uses": "1 per short rest",
+    "uses": "1 per long rest",
     "dice": null,
-    "description": "Sense the presence and location of magic within 30 ft until the end of your next turn.",
+    "description": "Creatures within 5 ft of you make a Endurance roll or are blinded until the end of your next turn.",
     "data": {
-      "legacy_race_lineage_id": 46
+      "legacy_race_lineage_id": 36
     }
   },
   {
-    "species_id": 63,
-    "feature_id": 3418,
+    "species_id": 1,
+    "feature_id": 4075,
     "level": 1,
-    "link_id": 6,
-    "legacy_feature_id": 67,
-    "action_type": "reaction",
-    "uses": "1 per short rest",
-    "dice": null,
-    "description": "When a creature you can see attacks an ally within 5 ft of you, impose disadvantage on that attack roll.",
-    "data": {
-      "legacy_race_lineage_id": 67
-    }
-  },
-  {
-    "species_id": 56,
-    "feature_id": 3422,
-    "level": 3,
-    "link_id": 7,
-    "legacy_feature_id": 40,
+    "link_id": 111,
+    "legacy_feature_id": 35,
     "action_type": null,
     "uses": "1 per short rest",
     "dice": "1d6",
-    "description": "If you move at least 20 ft straight toward a creature and then hit it with a melee attack on the same turn, deal an extra 1d6 damage.",
+    "description": "When you hit with a melee attack, deal an extra 1d6 fire damage.",
     "data": {
-      "legacy_race_lineage_id": 40
+      "legacy_race_lineage_id": 35
     }
   },
   {
-    "species_id": 58,
-    "feature_id": 3438,
+    "species_id": 1,
+    "feature_id": 4091,
     "level": 5,
-    "link_id": 8,
-    "legacy_feature_id": 48,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "You have a 30 ft flying speed while wearing light armor or no armor. You can't fly while carrying more than half your carrying capacity.",
-    "data": {
-      "legacy_race_lineage_id": 48
-    }
-  },
-  {
-    "species_id": 56,
-    "feature_id": 3442,
-    "level": 1,
-    "link_id": 9,
-    "legacy_feature_id": 49,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "Choose your gem line at character creation. It sets your fur color and gives resistance to one damage type: Opal radiant, Onyx necrotic, Amethyst psychic, Topaz lightning, Quartz force, Emerald poison, Ruby fire, Sapphire cold.",
-    "data": {
-      "legacy_race_lineage_id": 49
-    }
-  },
-  {
-    "species_id": 51,
-    "feature_id": 3454,
-    "level": 1,
-    "link_id": 10,
-    "legacy_feature_id": 19,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "+2 to Finesse.",
-    "data": {
-      "legacy_race_lineage_id": 19
-    }
-  },
-  {
-    "species_id": 53,
-    "feature_id": 3472,
-    "level": 1,
-    "link_id": 11,
-    "legacy_feature_id": 28,
-    "action_type": "bonus",
-    "uses": "1 per short rest",
-    "dice": null,
-    "description": "One creature within 30 ft makes a Judgment roll (DC 8 + Proficiency Bonus + Confidence) or is frightened until the end of your next turn.",
-    "data": {
-      "legacy_race_lineage_id": 28
-    }
-  },
-  {
-    "species_id": 63,
-    "feature_id": 3474,
-    "level": 1,
-    "link_id": 12,
-    "legacy_feature_id": 66,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "+2 to Awareness. Advantage on smell-based checks.",
-    "data": {
-      "legacy_race_lineage_id": 66
-    }
-  },
-  {
-    "species_id": 60,
-    "feature_id": 3476,
-    "level": 5,
-    "link_id": 13,
-    "legacy_feature_id": 57,
-    "action_type": "bonus",
-    "uses": "1 per long rest",
-    "dice": null,
-    "description": "Gain resistance to bludgeoning, piercing, and slashing damage until the end of your next turn.",
-    "data": {
-      "legacy_race_lineage_id": 57
-    }
-  },
-  {
-    "species_id": 53,
-    "feature_id": 3479,
-    "level": 1,
-    "link_id": 14,
-    "legacy_feature_id": 27,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "You don't need to eat or drink for up to 7 days.",
-    "data": {
-      "legacy_race_lineage_id": 27
-    }
-  },
-  {
-    "species_id": 52,
-    "feature_id": 3495,
-    "level": 5,
-    "link_id": 15,
-    "legacy_feature_id": 25,
+    "link_id": 113,
+    "legacy_feature_id": 37,
     "action_type": "reaction",
-    "uses": "1 per long rest",
-    "dice": null,
-    "description": "When you take bludgeoning, piercing, or slashing damage, halve that damage.",
+    "uses": "At will",
+    "dice": "1d4",
+    "description": "When a creature within 5 ft hits you with a melee attack, it takes 1d4 fire damage.",
     "data": {
-      "legacy_race_lineage_id": 25
-    }
-  },
-  {
-    "species_id": 53,
-    "feature_id": 3516,
-    "level": 5,
-    "link_id": 16,
-    "legacy_feature_id": 29,
-    "action_type": null,
-    "uses": "1 per short rest",
-    "dice": "1d6",
-    "description": "When you hit a creature with an attack, gain temporary HP equal to 1d6 + your level.",
-    "data": {
-      "legacy_race_lineage_id": 29
-    }
-  },
-  {
-    "species_id": 62,
-    "feature_id": 3525,
-    "level": 1,
-    "link_id": 17,
-    "legacy_feature_id": 64,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "10 ft burrowing speed through loose earth and sand.",
-    "data": {
-      "legacy_race_lineage_id": 64
-    }
-  },
-  {
-    "species_id": 62,
-    "feature_id": 3539,
-    "level": 3,
-    "link_id": 18,
-    "legacy_feature_id": 65,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "Advantage on saves against being charmed or frightened.",
-    "data": {
-      "legacy_race_lineage_id": 65
-    }
-  },
-  {
-    "species_id": 65,
-    "feature_id": 4053,
-    "level": 1,
-    "link_id": 110,
-    "legacy_feature_id": 76,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "+2 to Awareness.",
-    "data": {
-      "legacy_race_lineage_id": 76
+      "legacy_race_lineage_id": 37
     }
   },
   {
@@ -278,171 +94,31 @@
     }
   },
   {
-    "species_id": 1,
-    "feature_id": 3588,
+    "species_id": 45,
+    "feature_id": 3700,
     "level": 1,
-    "link_id": 20,
-    "legacy_feature_id": 34,
+    "link_id": 62,
+    "legacy_feature_id": 1,
     "action_type": null,
     "uses": "Passive",
     "dice": null,
-    "description": "You ignore the effects of extreme heat.",
+    "description": "Gain proficiency in one skill of your choice.",
     "data": {
-      "legacy_race_lineage_id": 34
+      "legacy_race_lineage_id": 1
     }
   },
   {
-    "species_id": 46,
-    "feature_id": 3592,
-    "level": 3,
-    "link_id": 21,
-    "legacy_feature_id": 6,
-    "action_type": "bonus",
-    "uses": "1 per short rest",
-    "dice": null,
-    "description": "Creatures of your choice within 15 ft make a Judgment roll (DC 8+Proficiency Bonus+Endurance) or are frightened until the end of your next turn.",
-    "data": {
-      "legacy_race_lineage_id": 6
-    }
-  },
-  {
-    "species_id": 47,
-    "feature_id": 3604,
+    "species_id": 45,
+    "feature_id": 4031,
     "level": 1,
-    "link_id": 22,
-    "legacy_feature_id": 7,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "+2 to Botany.",
-    "data": {
-      "legacy_race_lineage_id": 7
-    }
-  },
-  {
-    "species_id": 66,
-    "feature_id": 3605,
-    "level": 1,
-    "link_id": 23,
-    "legacy_feature_id": 80,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "+2 to Awareness. You also know whether a creature you can see within 30 ft is a devil or is bound to one.",
-    "data": {
-      "legacy_race_lineage_id": 80
-    }
-  },
-  {
-    "species_id": 65,
-    "feature_id": 3613,
-    "level": 5,
-    "link_id": 24,
-    "legacy_feature_id": 77,
-    "action_type": "bonus",
+    "link_id": 104,
+    "legacy_feature_id": 3,
+    "action_type": "reaction",
     "uses": "1 per long rest",
     "dice": null,
-    "description": "The wind lifts you, giving you a 30 ft flying speed for 1 minute. You must wear light or no armor. At level 10 this becomes permanent while you wear light or no armor.",
+    "description": "Reroll one failed ability check or save; must use the new roll.",
     "data": {
-      "legacy_race_lineage_id": 77
-    }
-  },
-  {
-    "species_id": 64,
-    "feature_id": 3616,
-    "level": 5,
-    "link_id": 25,
-    "legacy_feature_id": 73,
-    "action_type": "action",
-    "uses": "1 per long rest",
-    "dice": null,
-    "description": "Your light bursts out. Each hostile creature within 10 ft makes a Endurance roll or is blinded until the end of your next turn, and you gain temporary HP equal to your level.",
-    "data": {
-      "legacy_race_lineage_id": 73
-    }
-  },
-  {
-    "species_id": 62,
-    "feature_id": 3619,
-    "level": 1,
-    "link_id": 26,
-    "legacy_feature_id": 62,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": "1d4",
-    "description": "A creature that grapples you or hits you with an unarmed strike takes 1d4 piercing damage.",
-    "data": {
-      "legacy_race_lineage_id": 62
-    }
-  },
-  {
-    "species_id": 49,
-    "feature_id": 3658,
-    "level": 1,
-    "link_id": 27,
-    "legacy_feature_id": 15,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "When not wearing armor, AC = 13 + Precision modifier.",
-    "data": {
-      "legacy_race_lineage_id": 15
-    }
-  },
-  {
-    "species_id": 50,
-    "feature_id": 3662,
-    "level": 1,
-    "link_id": 28,
-    "legacy_feature_id": 18,
-    "action_type": "bonus",
-    "uses": "1 per short rest",
-    "dice": "1d6",
-    "description": "Repair a broken object or give a creature 1d6 temp HP by patching gear.",
-    "data": {
-      "legacy_race_lineage_id": 18
-    }
-  },
-  {
-    "species_id": 49,
-    "feature_id": 3669,
-    "level": 1,
-    "link_id": 29,
-    "legacy_feature_id": 14,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "+2 to Dominance.",
-    "data": {
-      "legacy_race_lineage_id": 14
-    }
-  },
-  {
-    "species_id": 47,
-    "feature_id": 3674,
-    "level": 3,
-    "link_id": 30,
-    "legacy_feature_id": 9,
-    "action_type": "action",
-    "uses": "1 per long rest",
-    "dice": null,
-    "description": "One creature within 30 ft makes a Might roll (DC 8+Proficiency Bonus+Judgment) or is restrained by roots until the end of your next turn.",
-    "data": {
-      "legacy_race_lineage_id": 9
-    }
-  },
-  {
-    "species_id": 65,
-    "feature_id": 3684,
-    "level": 1,
-    "link_id": 31,
-    "legacy_feature_id": 75,
-    "action_type": "bonus",
-    "uses": "1 per short rest",
-    "dice": null,
-    "description": "Push a creature within 15 ft up to 10 ft away from you (Might roll negates), or move yourself 10 ft without provoking opportunity attacks.",
-    "data": {
-      "legacy_race_lineage_id": 75
+      "legacy_race_lineage_id": 3
     }
   },
   {
@@ -450,174 +126,6 @@
     "feature_id": 1,
     "level": 1,
     "link_id": 32,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 48,
-    "feature_id": 1,
-    "level": 1,
-    "link_id": 33,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 49,
-    "feature_id": 1,
-    "level": 1,
-    "link_id": 34,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 51,
-    "feature_id": 1,
-    "level": 1,
-    "link_id": 35,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 52,
-    "feature_id": 1,
-    "level": 1,
-    "link_id": 36,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 53,
-    "feature_id": 1,
-    "level": 1,
-    "link_id": 37,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 56,
-    "feature_id": 1,
-    "level": 1,
-    "link_id": 38,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 58,
-    "feature_id": 1,
-    "level": 1,
-    "link_id": 39,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 60,
-    "feature_id": 1,
-    "level": 1,
-    "link_id": 40,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 61,
-    "feature_id": 1,
-    "level": 1,
-    "link_id": 41,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 62,
-    "feature_id": 1,
-    "level": 1,
-    "link_id": 42,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 66,
-    "feature_id": 1,
-    "level": 1,
-    "link_id": 43,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 67,
-    "feature_id": 1,
-    "level": 1,
-    "link_id": 44,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 68,
-    "feature_id": 8,
-    "level": 1,
-    "link_id": 45,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 67,
-    "feature_id": 8,
-    "level": 1,
-    "link_id": 46,
     "legacy_feature_id": null,
     "action_type": null,
     "uses": null,
@@ -638,54 +146,6 @@
     "data": {}
   },
   {
-    "species_id": 47,
-    "feature_id": 8,
-    "level": 1,
-    "link_id": 48,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 54,
-    "feature_id": 8,
-    "level": 1,
-    "link_id": 49,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 50,
-    "feature_id": 8,
-    "level": 1,
-    "link_id": 50,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 1,
-    "feature_id": 9,
-    "level": 1,
-    "link_id": 51,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
     "species_id": 46,
     "feature_id": 9,
     "level": 1,
@@ -698,10 +158,106 @@
     "data": {}
   },
   {
-    "species_id": 49,
-    "feature_id": 9,
+    "species_id": 46,
+    "feature_id": 3592,
+    "level": 3,
+    "link_id": 21,
+    "legacy_feature_id": 6,
+    "action_type": "bonus",
+    "uses": "1 per short rest",
+    "dice": null,
+    "description": "Creatures of your choice within 15 ft make a Judgment roll (DC 8+Proficiency Bonus+Endurance) or are frightened until the end of your next turn.",
+    "data": {
+      "legacy_race_lineage_id": 6
+    }
+  },
+  {
+    "species_id": 46,
+    "feature_id": 4026,
     "level": 1,
-    "link_id": 53,
+    "link_id": 103,
+    "legacy_feature_id": 5,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "+2 to Presence. Count as one size larger for carrying, pushing, and grapples.",
+    "data": {
+      "legacy_race_lineage_id": 5
+    }
+  },
+  {
+    "species_id": 46,
+    "feature_id": 4115,
+    "level": 1,
+    "link_id": 119,
+    "legacy_feature_id": 4,
+    "action_type": "action",
+    "uses": "At will",
+    "dice": "1d6",
+    "description": "Your claws are natural weapons dealing 1d6 slashing; use Might.",
+    "data": {
+      "legacy_race_lineage_id": 4
+    }
+  },
+  {
+    "species_id": 47,
+    "feature_id": 8,
+    "level": 1,
+    "link_id": 48,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 47,
+    "feature_id": 3604,
+    "level": 1,
+    "link_id": 22,
+    "legacy_feature_id": 7,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "+2 to Botany.",
+    "data": {
+      "legacy_race_lineage_id": 7
+    }
+  },
+  {
+    "species_id": 47,
+    "feature_id": 3674,
+    "level": 3,
+    "link_id": 30,
+    "legacy_feature_id": 9,
+    "action_type": "action",
+    "uses": "1 per long rest",
+    "dice": null,
+    "description": "One creature within 30 ft makes a Might roll (DC 8+Proficiency Bonus+Judgment) or is restrained by roots until the end of your next turn.",
+    "data": {
+      "legacy_race_lineage_id": 9
+    }
+  },
+  {
+    "species_id": 47,
+    "feature_id": 3794,
+    "level": 1,
+    "link_id": 75,
+    "legacy_feature_id": 8,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "Advantage on Botany checks to track and on Awareness checks in forests or wilds.",
+    "data": {
+      "legacy_race_lineage_id": 8
+    }
+  },
+  {
+    "species_id": 48,
+    "feature_id": 1,
+    "level": 1,
+    "link_id": 33,
     "legacy_feature_id": null,
     "action_type": null,
     "uses": null,
@@ -722,143 +278,17 @@
     "data": {}
   },
   {
-    "species_id": 57,
-    "feature_id": 10,
+    "species_id": 48,
+    "feature_id": 3404,
     "level": 1,
-    "link_id": 55,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 52,
-    "feature_id": 11,
-    "level": 1,
-    "link_id": 56,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 53,
-    "feature_id": 11,
-    "level": 1,
-    "link_id": 57,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 61,
-    "feature_id": 11,
-    "level": 1,
-    "link_id": 58,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 59,
-    "feature_id": 12,
-    "level": 1,
-    "link_id": 59,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 64,
-    "feature_id": 12,
-    "level": 1,
-    "link_id": 60,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 65,
-    "feature_id": 13,
-    "level": 1,
-    "link_id": 61,
-    "legacy_feature_id": null,
-    "action_type": null,
-    "uses": null,
-    "dice": null,
-    "description": null,
-    "data": {}
-  },
-  {
-    "species_id": 45,
-    "feature_id": 3700,
-    "level": 1,
-    "link_id": 62,
-    "legacy_feature_id": 1,
+    "link_id": 4,
+    "legacy_feature_id": 11,
     "action_type": null,
     "uses": "Passive",
     "dice": null,
-    "description": "Gain proficiency in one skill of your choice.",
+    "description": "+2 to Awareness.",
     "data": {
-      "legacy_race_lineage_id": 1
-    }
-  },
-  {
-    "species_id": 49,
-    "feature_id": 3714,
-    "level": 1,
-    "link_id": 63,
-    "legacy_feature_id": 13,
-    "action_type": "action",
-    "uses": "1 per short rest",
-    "dice": "2d6",
-    "description": "15-ft cone, Precision roll (DC 8+Proficiency Bonus+Endurance), fire damage, half on success. Damage rises to 3d6 at 5, 4d6 at 11, 5d6 at 17.",
-    "data": {
-      "legacy_race_lineage_id": 13
-    }
-  },
-  {
-    "species_id": 61,
-    "feature_id": 3720,
-    "level": 1,
-    "link_id": 64,
-    "legacy_feature_id": 59,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "+2 to Knowledge.",
-    "data": {
-      "legacy_race_lineage_id": 59
-    }
-  },
-  {
-    "species_id": 52,
-    "feature_id": 3731,
-    "level": 1,
-    "link_id": 65,
-    "legacy_feature_id": 22,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "You can see invisible spirits and undead within 30 ft.",
-    "data": {
-      "legacy_race_lineage_id": 22
+      "legacy_race_lineage_id": 11
     }
   },
   {
@@ -876,6 +306,112 @@
     }
   },
   {
+    "species_id": 48,
+    "feature_id": 4087,
+    "level": 1,
+    "link_id": 112,
+    "legacy_feature_id": 10,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "+2 to Presence when climbing; ignore difficult terrain from snow, ice, or rock.",
+    "data": {
+      "legacy_race_lineage_id": 10
+    }
+  },
+  {
+    "species_id": 49,
+    "feature_id": 1,
+    "level": 1,
+    "link_id": 34,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 49,
+    "feature_id": 9,
+    "level": 1,
+    "link_id": 53,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 49,
+    "feature_id": 3658,
+    "level": 1,
+    "link_id": 27,
+    "legacy_feature_id": 15,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "When not wearing armor, AC = 13 + Precision modifier.",
+    "data": {
+      "legacy_race_lineage_id": 15
+    }
+  },
+  {
+    "species_id": 49,
+    "feature_id": 3669,
+    "level": 1,
+    "link_id": 29,
+    "legacy_feature_id": 14,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "+2 to Dominance.",
+    "data": {
+      "legacy_race_lineage_id": 14
+    }
+  },
+  {
+    "species_id": 49,
+    "feature_id": 3714,
+    "level": 1,
+    "link_id": 63,
+    "legacy_feature_id": 13,
+    "action_type": "action",
+    "uses": "1 per short rest",
+    "dice": "2d6",
+    "description": "15-ft cone, Precision roll (DC 8+Proficiency Bonus+Endurance), fire damage, half on success. Damage rises to 3d6 at 5, 4d6 at 11, 5d6 at 17.",
+    "data": {
+      "legacy_race_lineage_id": 13
+    }
+  },
+  {
+    "species_id": 50,
+    "feature_id": 8,
+    "level": 1,
+    "link_id": 50,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 50,
+    "feature_id": 3662,
+    "level": 1,
+    "link_id": 28,
+    "legacy_feature_id": 18,
+    "action_type": "bonus",
+    "uses": "1 per short rest",
+    "dice": "1d6",
+    "description": "Repair a broken object or give a creature 1d6 temp HP by patching gear.",
+    "data": {
+      "legacy_race_lineage_id": 18
+    }
+  },
+  {
     "species_id": 50,
     "feature_id": 3736,
     "level": 1,
@@ -890,395 +426,43 @@
     }
   },
   {
-    "species_id": 58,
-    "feature_id": 3750,
-    "level": 3,
-    "link_id": 68,
-    "legacy_feature_id": 47,
-    "action_type": "bonus",
-    "uses": "1 per long rest",
-    "dice": null,
-    "description": "Become invisible until the end of your next turn, or until you attack or cast a spell.",
-    "data": {
-      "legacy_race_lineage_id": 47
-    }
-  },
-  {
-    "species_id": 59,
-    "feature_id": 60,
+    "species_id": 50,
+    "feature_id": 4047,
     "level": 1,
-    "link_id": 69,
-    "legacy_feature_id": 52,
+    "link_id": 108,
+    "legacy_feature_id": 16,
     "action_type": null,
     "uses": "Passive",
     "dice": null,
-    "description": "+2 to Showmanship.",
+    "description": "Proficiency with two tools of your choice; add double proficiency with one.",
     "data": {
-      "legacy_race_lineage_id": 52
+      "legacy_race_lineage_id": 16
     }
   },
   {
-    "species_id": 60,
-    "feature_id": 3842,
+    "species_id": 51,
+    "feature_id": 1,
     "level": 1,
-    "link_id": 70,
-    "legacy_feature_id": 54,
-    "action_type": "reaction",
-    "uses": "1 per short rest",
-    "dice": "1d8",
-    "description": "When you take damage, reduce it by 1d8 + your Endurance modifier.",
-    "data": {
-      "legacy_race_lineage_id": 54
-    }
+    "link_id": 35,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
   },
   {
-    "species_id": 59,
-    "feature_id": 3756,
-    "level": 5,
-    "link_id": 71,
-    "legacy_feature_id": 53,
+    "species_id": 51,
+    "feature_id": 3454,
+    "level": 1,
+    "link_id": 10,
+    "legacy_feature_id": 19,
     "action_type": null,
     "uses": "Passive",
     "dice": null,
-    "description": "30 ft flying speed while wearing light or no armor and not carrying a heavy load.",
+    "description": "+2 to Finesse.",
     "data": {
-      "legacy_race_lineage_id": 53
-    }
-  },
-  {
-    "species_id": 67,
-    "feature_id": 3758,
-    "level": 1,
-    "link_id": 72,
-    "legacy_feature_id": 86,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "You count as one size larger for carrying, pushing, dragging and lifting, and you have proficiency in Presence.",
-    "data": {
-      "legacy_race_lineage_id": 86
-    }
-  },
-  {
-    "species_id": 66,
-    "feature_id": 3772,
-    "level": 5,
-    "link_id": 73,
-    "legacy_feature_id": 81,
-    "action_type": "reaction",
-    "uses": "1 per long rest",
-    "dice": "1d10",
-    "description": "When you take damage, reduce it by 1d10 + your level.",
-    "data": {
-      "legacy_race_lineage_id": 81
-    }
-  },
-  {
-    "species_id": 59,
-    "feature_id": 3783,
-    "level": 1,
-    "link_id": 74,
-    "legacy_feature_id": 50,
-    "action_type": "bonus",
-    "uses": "1 per long rest",
-    "dice": null,
-    "description": "One creature within 15 ft that can see you makes a Endurance roll or is blinded until the end of your next turn.",
-    "data": {
-      "legacy_race_lineage_id": 50
-    }
-  },
-  {
-    "species_id": 47,
-    "feature_id": 3794,
-    "level": 1,
-    "link_id": 75,
-    "legacy_feature_id": 8,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "Advantage on Botany checks to track and on Awareness checks in forests or wilds.",
-    "data": {
-      "legacy_race_lineage_id": 8
-    }
-  },
-  {
-    "species_id": 1,
-    "feature_id": 3797,
-    "level": 3,
-    "link_id": 76,
-    "legacy_feature_id": 36,
-    "action_type": "action",
-    "uses": "1 per long rest",
-    "dice": null,
-    "description": "Creatures within 5 ft of you make a Endurance roll or are blinded until the end of your next turn.",
-    "data": {
-      "legacy_race_lineage_id": 36
-    }
-  },
-  {
-    "species_id": 52,
-    "feature_id": 3810,
-    "level": 1,
-    "link_id": 77,
-    "legacy_feature_id": 23,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "Advantage on saves against being frightened.",
-    "data": {
-      "legacy_race_lineage_id": 23
-    }
-  },
-  {
-    "species_id": 54,
-    "feature_id": 3827,
-    "level": 1,
-    "link_id": 78,
-    "legacy_feature_id": 32,
-    "action_type": "action",
-    "uses": "1 per long rest",
-    "dice": "1d8",
-    "description": "While in sunlight, regain 1d8 + your level HP.",
-    "data": {
-      "legacy_race_lineage_id": 32
-    }
-  },
-  {
-    "species_id": 57,
-    "feature_id": 3835,
-    "level": 1,
-    "link_id": 79,
-    "legacy_feature_id": 43,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "+2 to Diplomacy.",
-    "data": {
-      "legacy_race_lineage_id": 43
-    }
-  },
-  {
-    "species_id": 67,
-    "feature_id": 3840,
-    "level": 1,
-    "link_id": 80,
-    "legacy_feature_id": 85,
-    "action_type": "bonus",
-    "uses": "1 per short rest",
-    "dice": "1d6",
-    "description": "Move up to your speed toward an enemy you can see; your next melee hit this turn deals +1d6.",
-    "data": {
-      "legacy_race_lineage_id": 85
-    }
-  },
-  {
-    "species_id": 56,
-    "feature_id": 3844,
-    "level": 1,
-    "link_id": 81,
-    "legacy_feature_id": 38,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "+2 to Botany. Advantage on checks to track by scent.",
-    "data": {
-      "legacy_race_lineage_id": 38
-    }
-  },
-  {
-    "species_id": 67,
-    "feature_id": 3848,
-    "level": 5,
-    "link_id": 82,
-    "legacy_feature_id": 83,
-    "action_type": "action",
-    "uses": "1 per short rest",
-    "dice": null,
-    "description": "Each creature of your choice within 15 ft makes a Judgment roll (DC 8 + Proficiency Bonus + Endurance) or has disadvantage on its next attack before the end of its next turn.",
-    "data": {
-      "legacy_race_lineage_id": 83
-    }
-  },
-  {
-    "species_id": 57,
-    "feature_id": 3857,
-    "level": 3,
-    "link_id": 83,
-    "legacy_feature_id": 44,
-    "action_type": "action",
-    "uses": "1 per long rest",
-    "dice": null,
-    "description": "A 15 ft line of water pushes each creature in it 10 ft away from you. A Might roll negates the push.",
-    "data": {
-      "legacy_race_lineage_id": 44
-    }
-  },
-  {
-    "species_id": 65,
-    "feature_id": 3860,
-    "level": 1,
-    "link_id": 84,
-    "legacy_feature_id": 74,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "Fall no faster than 60 ft per round and take no falling damage.",
-    "data": {
-      "legacy_race_lineage_id": 74
-    }
-  },
-  {
-    "species_id": 68,
-    "feature_id": 3885,
-    "level": 1,
-    "link_id": 85,
-    "legacy_feature_id": 90,
-    "action_type": "bonus",
-    "uses": "At will; Full remold 1 per short rest",
-    "dice": null,
-    "description": "Minor remold (bonus action, at will): change your face and build within your current size: features, skin markings and colour, hair, eyes, voice pitch, height (up to 1 ft) and frame. Full remold (action, 1 per short rest; Proficiency Bonus per long rest from level 11): also change size between Small and Medium (speed 25/30 ft; a size change ends after 1 hour) or copy a specific Humanoid you saw clearly for 1 minute in the last 24 hours. Only your body changes, not your gear; armor fitted to your old size gives no AC until you change back. You can't change creature type, limbs, senses or statistics. A remold ends when you remold again, choose to, or drop to 0 HP. Advantage on Misdirection checks to pass as someone else while remolded. A suspicious creature can use its action for an Awareness check against DC 8 + Proficiency Bonus + Confidence to see through it.",
-    "data": {
-      "legacy_race_lineage_id": 90
-    }
-  },
-  {
-    "species_id": 66,
-    "feature_id": 3888,
-    "level": 1,
-    "link_id": 86,
-    "legacy_feature_id": 78,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "You don't age and can't die of old age, and magic can't age you.",
-    "data": {
-      "legacy_race_lineage_id": 78
-    }
-  },
-  {
-    "species_id": 66,
-    "feature_id": 3891,
-    "level": 1,
-    "link_id": 87,
-    "legacy_feature_id": 82,
-    "action_type": "bonus",
-    "uses": "1 per short rest",
-    "dice": "1d6",
-    "description": "Your grooves and eyes flare. The next time you hit a creature before the end of your turn, deal an extra 1d6 damage of your Vein Line's type, plus its rider. The die becomes 2d6 at level 10. Red: the target takes 1d4 fire at the start of its next turn. Purple: the target has disadvantage on its next save against you before the end of your next turn. Gold: you gain temporary HP equal to your Proficiency Bonus. Orange: the target's speed drops by 10 ft until the end of its next turn.",
-    "data": {
-      "legacy_race_lineage_id": 82
-    }
-  },
-  {
-    "species_id": 53,
-    "feature_id": 3905,
-    "level": 1,
-    "link_id": 88,
-    "legacy_feature_id": 26,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "Advantage on saves against disease and poison.",
-    "data": {
-      "legacy_race_lineage_id": 26
-    }
-  },
-  {
-    "species_id": 67,
-    "feature_id": 3906,
-    "level": 1,
-    "link_id": 89,
-    "legacy_feature_id": 84,
-    "action_type": null,
-    "uses": "1 per long rest",
-    "dice": null,
-    "description": "When you drop to 0 HP but aren't killed outright, drop to 1 HP instead.",
-    "data": {
-      "legacy_race_lineage_id": 84
-    }
-  },
-  {
-    "species_id": 54,
-    "feature_id": 3939,
-    "level": 1,
-    "link_id": 90,
-    "legacy_feature_id": 33,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "+2 to Botany.",
-    "data": {
-      "legacy_race_lineage_id": 33
-    }
-  },
-  {
-    "species_id": 52,
-    "feature_id": 3951,
-    "level": 1,
-    "link_id": 91,
-    "legacy_feature_id": 24,
-    "action_type": "bonus",
-    "uses": "1 per short rest",
-    "dice": null,
-    "description": "Teleport up to 15 ft to an unoccupied space you can see.",
-    "data": {
-      "legacy_race_lineage_id": 24
-    }
-  },
-  {
-    "species_id": 61,
-    "feature_id": 3957,
-    "level": 3,
-    "link_id": 92,
-    "legacy_feature_id": 61,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "Fall no faster than 60 ft per round, take no falling damage, and glide 2 ft horizontally for every 1 ft you fall.",
-    "data": {
-      "legacy_race_lineage_id": 61
-    }
-  },
-  {
-    "species_id": 64,
-    "feature_id": 3969,
-    "level": 1,
-    "link_id": 93,
-    "legacy_feature_id": 72,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "+2 to Awareness.",
-    "data": {
-      "legacy_race_lineage_id": 72
-    }
-  },
-  {
-    "species_id": 54,
-    "feature_id": 3973,
-    "level": 1,
-    "link_id": 94,
-    "legacy_feature_id": 30,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "When you aren't wearing armor, your AC is 13 + Precision modifier. You can still use a shield.",
-    "data": {
-      "legacy_race_lineage_id": 30
-    }
-  },
-  {
-    "species_id": 56,
-    "feature_id": 3977,
-    "level": 1,
-    "link_id": 95,
-    "legacy_feature_id": 39,
-    "action_type": "bonus",
-    "uses": "1 per short rest",
-    "dice": null,
-    "description": "Take the Disengage action.",
-    "data": {
-      "legacy_race_lineage_id": 39
+      "legacy_race_lineage_id": 19
     }
   },
   {
@@ -1310,6 +494,424 @@
     }
   },
   {
+    "species_id": 52,
+    "feature_id": 1,
+    "level": 1,
+    "link_id": 36,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 52,
+    "feature_id": 11,
+    "level": 1,
+    "link_id": 56,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 52,
+    "feature_id": 3495,
+    "level": 5,
+    "link_id": 15,
+    "legacy_feature_id": 25,
+    "action_type": "reaction",
+    "uses": "1 per long rest",
+    "dice": null,
+    "description": "When you take bludgeoning, piercing, or slashing damage, halve that damage.",
+    "data": {
+      "legacy_race_lineage_id": 25
+    }
+  },
+  {
+    "species_id": 52,
+    "feature_id": 3731,
+    "level": 1,
+    "link_id": 65,
+    "legacy_feature_id": 22,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "You can see invisible spirits and undead within 30 ft.",
+    "data": {
+      "legacy_race_lineage_id": 22
+    }
+  },
+  {
+    "species_id": 52,
+    "feature_id": 3810,
+    "level": 1,
+    "link_id": 77,
+    "legacy_feature_id": 23,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "Advantage on saves against being frightened.",
+    "data": {
+      "legacy_race_lineage_id": 23
+    }
+  },
+  {
+    "species_id": 52,
+    "feature_id": 3951,
+    "level": 1,
+    "link_id": 91,
+    "legacy_feature_id": 24,
+    "action_type": "bonus",
+    "uses": "1 per short rest",
+    "dice": null,
+    "description": "Teleport up to 15 ft to an unoccupied space you can see.",
+    "data": {
+      "legacy_race_lineage_id": 24
+    }
+  },
+  {
+    "species_id": 53,
+    "feature_id": 1,
+    "level": 1,
+    "link_id": 37,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 53,
+    "feature_id": 11,
+    "level": 1,
+    "link_id": 57,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 53,
+    "feature_id": 3472,
+    "level": 1,
+    "link_id": 11,
+    "legacy_feature_id": 28,
+    "action_type": "bonus",
+    "uses": "1 per short rest",
+    "dice": null,
+    "description": "One creature within 30 ft makes a Judgment roll (DC 8 + Proficiency Bonus + Confidence) or is frightened until the end of your next turn.",
+    "data": {
+      "legacy_race_lineage_id": 28
+    }
+  },
+  {
+    "species_id": 53,
+    "feature_id": 3479,
+    "level": 1,
+    "link_id": 14,
+    "legacy_feature_id": 27,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "You don't need to eat or drink for up to 7 days.",
+    "data": {
+      "legacy_race_lineage_id": 27
+    }
+  },
+  {
+    "species_id": 53,
+    "feature_id": 3516,
+    "level": 5,
+    "link_id": 16,
+    "legacy_feature_id": 29,
+    "action_type": null,
+    "uses": "1 per short rest",
+    "dice": "1d6",
+    "description": "When you hit a creature with an attack, gain temporary HP equal to 1d6 + your level.",
+    "data": {
+      "legacy_race_lineage_id": 29
+    }
+  },
+  {
+    "species_id": 53,
+    "feature_id": 3905,
+    "level": 1,
+    "link_id": 88,
+    "legacy_feature_id": 26,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "Advantage on saves against disease and poison.",
+    "data": {
+      "legacy_race_lineage_id": 26
+    }
+  },
+  {
+    "species_id": 54,
+    "feature_id": 8,
+    "level": 1,
+    "link_id": 49,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 54,
+    "feature_id": 3827,
+    "level": 1,
+    "link_id": 78,
+    "legacy_feature_id": 32,
+    "action_type": "action",
+    "uses": "1 per long rest",
+    "dice": "1d8",
+    "description": "While in sunlight, regain 1d8 + your level HP.",
+    "data": {
+      "legacy_race_lineage_id": 32
+    }
+  },
+  {
+    "species_id": 54,
+    "feature_id": 3939,
+    "level": 1,
+    "link_id": 90,
+    "legacy_feature_id": 33,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "+2 to Botany.",
+    "data": {
+      "legacy_race_lineage_id": 33
+    }
+  },
+  {
+    "species_id": 54,
+    "feature_id": 3973,
+    "level": 1,
+    "link_id": 94,
+    "legacy_feature_id": 30,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "When you aren't wearing armor, your AC is 13 + Precision modifier. You can still use a shield.",
+    "data": {
+      "legacy_race_lineage_id": 30
+    }
+  },
+  {
+    "species_id": 54,
+    "feature_id": 4131,
+    "level": 1,
+    "link_id": 120,
+    "legacy_feature_id": 31,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "Advantage on checks and saves against being shoved, moved against your will, or knocked prone.",
+    "data": {
+      "legacy_race_lineage_id": 31
+    }
+  },
+  {
+    "species_id": 56,
+    "feature_id": 1,
+    "level": 1,
+    "link_id": 38,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 56,
+    "feature_id": 3422,
+    "level": 3,
+    "link_id": 7,
+    "legacy_feature_id": 40,
+    "action_type": null,
+    "uses": "1 per short rest",
+    "dice": "1d6",
+    "description": "If you move at least 20 ft straight toward a creature and then hit it with a melee attack on the same turn, deal an extra 1d6 damage.",
+    "data": {
+      "legacy_race_lineage_id": 40
+    }
+  },
+  {
+    "species_id": 56,
+    "feature_id": 3442,
+    "level": 1,
+    "link_id": 9,
+    "legacy_feature_id": 49,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "Choose your gem line at character creation. It sets your fur color and gives resistance to one damage type: Opal radiant, Onyx necrotic, Amethyst psychic, Topaz lightning, Quartz force, Emerald poison, Ruby fire, Sapphire cold.",
+    "data": {
+      "legacy_race_lineage_id": 49
+    }
+  },
+  {
+    "species_id": 56,
+    "feature_id": 3844,
+    "level": 1,
+    "link_id": 81,
+    "legacy_feature_id": 38,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "+2 to Botany. Advantage on checks to track by scent.",
+    "data": {
+      "legacy_race_lineage_id": 38
+    }
+  },
+  {
+    "species_id": 56,
+    "feature_id": 3977,
+    "level": 1,
+    "link_id": 95,
+    "legacy_feature_id": 39,
+    "action_type": "bonus",
+    "uses": "1 per short rest",
+    "dice": null,
+    "description": "Take the Disengage action.",
+    "data": {
+      "legacy_race_lineage_id": 39
+    }
+  },
+  {
+    "species_id": 57,
+    "feature_id": 10,
+    "level": 1,
+    "link_id": 55,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 57,
+    "feature_id": 3835,
+    "level": 1,
+    "link_id": 79,
+    "legacy_feature_id": 43,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "+2 to Diplomacy.",
+    "data": {
+      "legacy_race_lineage_id": 43
+    }
+  },
+  {
+    "species_id": 57,
+    "feature_id": 3857,
+    "level": 3,
+    "link_id": 83,
+    "legacy_feature_id": 44,
+    "action_type": "action",
+    "uses": "1 per long rest",
+    "dice": null,
+    "description": "A 15 ft line of water pushes each creature in it 10 ft away from you. A Might roll negates the push.",
+    "data": {
+      "legacy_race_lineage_id": 44
+    }
+  },
+  {
+    "species_id": 57,
+    "feature_id": 4101,
+    "level": 1,
+    "link_id": 115,
+    "legacy_feature_id": 41,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "You can breathe air and water, and you have a 30 ft swim speed.",
+    "data": {
+      "legacy_race_lineage_id": 41
+    }
+  },
+  {
+    "species_id": 57,
+    "feature_id": 4113,
+    "level": 1,
+    "link_id": 118,
+    "legacy_feature_id": 42,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "+2 to Presence.",
+    "data": {
+      "legacy_race_lineage_id": 42
+    }
+  },
+  {
+    "species_id": 58,
+    "feature_id": 1,
+    "level": 1,
+    "link_id": 39,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 58,
+    "feature_id": 3417,
+    "level": 1,
+    "link_id": 5,
+    "legacy_feature_id": 46,
+    "action_type": "action",
+    "uses": "1 per short rest",
+    "dice": null,
+    "description": "Sense the presence and location of magic within 30 ft until the end of your next turn.",
+    "data": {
+      "legacy_race_lineage_id": 46
+    }
+  },
+  {
+    "species_id": 58,
+    "feature_id": 3438,
+    "level": 5,
+    "link_id": 8,
+    "legacy_feature_id": 48,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "You have a 30 ft flying speed while wearing light armor or no armor. You can't fly while carrying more than half your carrying capacity.",
+    "data": {
+      "legacy_race_lineage_id": 48
+    }
+  },
+  {
+    "species_id": 58,
+    "feature_id": 3750,
+    "level": 3,
+    "link_id": 68,
+    "legacy_feature_id": 47,
+    "action_type": "bonus",
+    "uses": "1 per long rest",
+    "dice": null,
+    "description": "Become invisible until the end of your next turn, or until you attack or cast a spell.",
+    "data": {
+      "legacy_race_lineage_id": 47
+    }
+  },
+  {
     "species_id": 58,
     "feature_id": 3986,
     "level": 1,
@@ -1321,6 +923,60 @@
     "description": "+2 to Arcana.",
     "data": {
       "legacy_race_lineage_id": 45
+    }
+  },
+  {
+    "species_id": 59,
+    "feature_id": 12,
+    "level": 1,
+    "link_id": 59,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 59,
+    "feature_id": 60,
+    "level": 1,
+    "link_id": 69,
+    "legacy_feature_id": 52,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "+2 to Showmanship.",
+    "data": {
+      "legacy_race_lineage_id": 52
+    }
+  },
+  {
+    "species_id": 59,
+    "feature_id": 3756,
+    "level": 5,
+    "link_id": 71,
+    "legacy_feature_id": 53,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "30 ft flying speed while wearing light or no armor and not carrying a heavy load.",
+    "data": {
+      "legacy_race_lineage_id": 53
+    }
+  },
+  {
+    "species_id": 59,
+    "feature_id": 3783,
+    "level": 1,
+    "link_id": 74,
+    "legacy_feature_id": 50,
+    "action_type": "bonus",
+    "uses": "1 per long rest",
+    "dice": null,
+    "description": "One creature within 15 ft that can see you makes a Endurance roll or is blinded until the end of your next turn.",
+    "data": {
+      "legacy_race_lineage_id": 50
     }
   },
   {
@@ -1338,17 +994,123 @@
     }
   },
   {
-    "species_id": 64,
-    "feature_id": 4018,
+    "species_id": 60,
+    "feature_id": 1,
     "level": 1,
-    "link_id": 100,
-    "legacy_feature_id": 71,
+    "link_id": 40,
+    "legacy_feature_id": null,
     "action_type": null,
-    "uses": "1 per short rest",
-    "dice": "1d6",
-    "description": "When you hit a creature, deal an extra 1d6 radiant damage. The die becomes 2d6 at level 10.",
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 60,
+    "feature_id": 3399,
+    "level": 1,
+    "link_id": 3,
+    "legacy_feature_id": 56,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "+2 to Memory.",
     "data": {
-      "legacy_race_lineage_id": 71
+      "legacy_race_lineage_id": 56
+    }
+  },
+  {
+    "species_id": 60,
+    "feature_id": 3476,
+    "level": 5,
+    "link_id": 13,
+    "legacy_feature_id": 57,
+    "action_type": "bonus",
+    "uses": "1 per long rest",
+    "dice": null,
+    "description": "Gain resistance to bludgeoning, piercing, and slashing damage until the end of your next turn.",
+    "data": {
+      "legacy_race_lineage_id": 57
+    }
+  },
+  {
+    "species_id": 60,
+    "feature_id": 3842,
+    "level": 1,
+    "link_id": 70,
+    "legacy_feature_id": 54,
+    "action_type": "reaction",
+    "uses": "1 per short rest",
+    "dice": "1d8",
+    "description": "When you take damage, reduce it by 1d8 + your Endurance modifier.",
+    "data": {
+      "legacy_race_lineage_id": 54
+    }
+  },
+  {
+    "species_id": 60,
+    "feature_id": 4134,
+    "level": 1,
+    "link_id": 121,
+    "legacy_feature_id": 55,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "Advantage on saves and checks against being shoved, knocked prone, or moved.",
+    "data": {
+      "legacy_race_lineage_id": 55
+    }
+  },
+  {
+    "species_id": 61,
+    "feature_id": 1,
+    "level": 1,
+    "link_id": 41,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 61,
+    "feature_id": 11,
+    "level": 1,
+    "link_id": 58,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 61,
+    "feature_id": 3720,
+    "level": 1,
+    "link_id": 64,
+    "legacy_feature_id": 59,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "+2 to Knowledge.",
+    "data": {
+      "legacy_race_lineage_id": 59
+    }
+  },
+  {
+    "species_id": 61,
+    "feature_id": 3957,
+    "level": 3,
+    "link_id": 92,
+    "legacy_feature_id": 61,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "Fall no faster than 60 ft per round, take no falling damage, and glide 2 ft horizontally for every 1 ft you fall.",
+    "data": {
+      "legacy_race_lineage_id": 61
     }
   },
   {
@@ -1380,185 +1142,57 @@
     }
   },
   {
-    "species_id": 46,
-    "feature_id": 4026,
+    "species_id": 62,
+    "feature_id": 1,
     "level": 1,
-    "link_id": 103,
-    "legacy_feature_id": 5,
+    "link_id": 42,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 62,
+    "feature_id": 3525,
+    "level": 1,
+    "link_id": 17,
+    "legacy_feature_id": 64,
     "action_type": null,
     "uses": "Passive",
     "dice": null,
-    "description": "+2 to Presence. Count as one size larger for carrying, pushing, and grapples.",
+    "description": "10 ft burrowing speed through loose earth and sand.",
     "data": {
-      "legacy_race_lineage_id": 5
+      "legacy_race_lineage_id": 64
     }
   },
   {
-    "species_id": 45,
-    "feature_id": 4031,
-    "level": 1,
-    "link_id": 104,
-    "legacy_feature_id": 3,
-    "action_type": "reaction",
-    "uses": "1 per long rest",
-    "dice": null,
-    "description": "Reroll one failed ability check or save; must use the new roll.",
-    "data": {
-      "legacy_race_lineage_id": 3
-    }
-  },
-  {
-    "species_id": 63,
-    "feature_id": 4032,
+    "species_id": 62,
+    "feature_id": 3539,
     "level": 3,
-    "link_id": 105,
-    "legacy_feature_id": 69,
-    "action_type": "bonus",
-    "uses": "1 per long rest",
+    "link_id": 18,
+    "legacy_feature_id": 65,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "Advantage on saves against being charmed or frightened.",
+    "data": {
+      "legacy_race_lineage_id": 65
+    }
+  },
+  {
+    "species_id": 62,
+    "feature_id": 3619,
+    "level": 1,
+    "link_id": 26,
+    "legacy_feature_id": 62,
+    "action_type": null,
+    "uses": "Passive",
     "dice": "1d4",
-    "description": "Allies within 30 ft who can hear you gain 1d4 temporary HP and advantage on their next save against fear.",
+    "description": "A creature that grapples you or hits you with an unarmed strike takes 1d4 piercing damage.",
     "data": {
-      "legacy_race_lineage_id": 69
-    }
-  },
-  {
-    "species_id": 64,
-    "feature_id": 4037,
-    "level": 1,
-    "link_id": 106,
-    "legacy_feature_id": 70,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "Your veins shed dim light in a 10 ft radius. As a bonus action, you can make it bright light or dim it completely.",
-    "data": {
-      "legacy_race_lineage_id": 70
-    }
-  },
-  {
-    "species_id": 68,
-    "feature_id": 4045,
-    "level": 1,
-    "link_id": 107,
-    "legacy_feature_id": 89,
-    "action_type": "reaction",
-    "uses": "1 per short rest",
-    "dice": "1d6",
-    "description": "When a creature you can see within 5 ft hits you with an attack, your soul-liquid lashes out: reduce the damage by 1d6 + your Endurance modifier (minimum 1).",
-    "data": {
-      "legacy_race_lineage_id": 89
-    }
-  },
-  {
-    "species_id": 50,
-    "feature_id": 4047,
-    "level": 1,
-    "link_id": 108,
-    "legacy_feature_id": 16,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "Proficiency with two tools of your choice; add double proficiency with one.",
-    "data": {
-      "legacy_race_lineage_id": 16
-    }
-  },
-  {
-    "species_id": 68,
-    "feature_id": 4052,
-    "level": 1,
-    "link_id": 109,
-    "legacy_feature_id": 87,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "Your soul-liquid can carry out simple tasks within 5 ft: lift or hold an object of 5 lb or less, open an unlocked door or container, or pass an item to an adjacent ally. It can't attack, wield a weapon or activate magic items. Using it costs your free object interaction.",
-    "data": {
-      "legacy_race_lineage_id": 87
-    }
-  },
-  {
-    "species_id": 1,
-    "feature_id": 4075,
-    "level": 1,
-    "link_id": 111,
-    "legacy_feature_id": 35,
-    "action_type": null,
-    "uses": "1 per short rest",
-    "dice": "1d6",
-    "description": "When you hit with a melee attack, deal an extra 1d6 fire damage.",
-    "data": {
-      "legacy_race_lineage_id": 35
-    }
-  },
-  {
-    "species_id": 48,
-    "feature_id": 4087,
-    "level": 1,
-    "link_id": 112,
-    "legacy_feature_id": 10,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "+2 to Presence when climbing; ignore difficult terrain from snow, ice, or rock.",
-    "data": {
-      "legacy_race_lineage_id": 10
-    }
-  },
-  {
-    "species_id": 1,
-    "feature_id": 4091,
-    "level": 5,
-    "link_id": 113,
-    "legacy_feature_id": 37,
-    "action_type": "reaction",
-    "uses": "At will",
-    "dice": "1d4",
-    "description": "When a creature within 5 ft hits you with a melee attack, it takes 1d4 fire damage.",
-    "data": {
-      "legacy_race_lineage_id": 37
-    }
-  },
-  {
-    "species_id": 68,
-    "feature_id": 4093,
-    "level": 1,
-    "link_id": 114,
-    "legacy_feature_id": 88,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "You don't need to eat, drink or sleep. You go still for 4 hours to gain the benefit of a long rest, staying aware of your surroundings. Advantage on saves against being poisoned.",
-    "data": {
-      "legacy_race_lineage_id": 88
-    }
-  },
-  {
-    "species_id": 57,
-    "feature_id": 4101,
-    "level": 1,
-    "link_id": 115,
-    "legacy_feature_id": 41,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "You can breathe air and water, and you have a 30 ft swim speed.",
-    "data": {
-      "legacy_race_lineage_id": 41
-    }
-  },
-  {
-    "species_id": 63,
-    "feature_id": 4102,
-    "level": 1,
-    "link_id": 116,
-    "legacy_feature_id": 68,
-    "action_type": null,
-    "uses": "Passive",
-    "dice": null,
-    "description": "Choose a breed at character creation. Mastiff: +1 HP per level. Greyhound: +10 ft speed. Husky: cold resistance. Rottweiler: bite 1d6 + Might (bonus action, 1 per short rest). Shepherd: +2 Awareness. Hound: track by scent across up to a day-old trail.",
-    "data": {
-      "legacy_race_lineage_id": 68
+      "legacy_race_lineage_id": 62
     }
   },
   {
@@ -1576,59 +1210,425 @@
     }
   },
   {
-    "species_id": 57,
-    "feature_id": 4113,
+    "species_id": 63,
+    "feature_id": 3418,
     "level": 1,
-    "link_id": 118,
-    "legacy_feature_id": 42,
-    "action_type": null,
-    "uses": "Passive",
+    "link_id": 6,
+    "legacy_feature_id": 67,
+    "action_type": "reaction",
+    "uses": "1 per short rest",
     "dice": null,
-    "description": "+2 to Presence.",
+    "description": "When a creature you can see attacks an ally within 5 ft of you, impose disadvantage on that attack roll.",
     "data": {
-      "legacy_race_lineage_id": 42
+      "legacy_race_lineage_id": 67
     }
   },
   {
-    "species_id": 46,
-    "feature_id": 4115,
+    "species_id": 63,
+    "feature_id": 3474,
     "level": 1,
-    "link_id": 119,
-    "legacy_feature_id": 4,
+    "link_id": 12,
+    "legacy_feature_id": 66,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "+2 to Awareness. Advantage on smell-based checks.",
+    "data": {
+      "legacy_race_lineage_id": 66
+    }
+  },
+  {
+    "species_id": 63,
+    "feature_id": 4032,
+    "level": 3,
+    "link_id": 105,
+    "legacy_feature_id": 69,
+    "action_type": "bonus",
+    "uses": "1 per long rest",
+    "dice": "1d4",
+    "description": "Allies within 30 ft who can hear you gain 1d4 temporary HP and advantage on their next save against fear.",
+    "data": {
+      "legacy_race_lineage_id": 69
+    }
+  },
+  {
+    "species_id": 63,
+    "feature_id": 4102,
+    "level": 1,
+    "link_id": 116,
+    "legacy_feature_id": 68,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "Choose a breed at character creation. Mastiff: +1 HP per level. Greyhound: +10 ft speed. Husky: cold resistance. Rottweiler: bite 1d6 + Might (bonus action, 1 per short rest). Shepherd: +2 Awareness. Hound: track by scent across up to a day-old trail.",
+    "data": {
+      "legacy_race_lineage_id": 68
+    }
+  },
+  {
+    "species_id": 64,
+    "feature_id": 12,
+    "level": 1,
+    "link_id": 60,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 64,
+    "feature_id": 3616,
+    "level": 5,
+    "link_id": 25,
+    "legacy_feature_id": 73,
     "action_type": "action",
-    "uses": "At will",
+    "uses": "1 per long rest",
+    "dice": null,
+    "description": "Your light bursts out. Each hostile creature within 10 ft makes a Endurance roll or is blinded until the end of your next turn, and you gain temporary HP equal to your level.",
+    "data": {
+      "legacy_race_lineage_id": 73
+    }
+  },
+  {
+    "species_id": 64,
+    "feature_id": 3969,
+    "level": 1,
+    "link_id": 93,
+    "legacy_feature_id": 72,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "+2 to Awareness.",
+    "data": {
+      "legacy_race_lineage_id": 72
+    }
+  },
+  {
+    "species_id": 64,
+    "feature_id": 4018,
+    "level": 1,
+    "link_id": 100,
+    "legacy_feature_id": 71,
+    "action_type": null,
+    "uses": "1 per short rest",
     "dice": "1d6",
-    "description": "Your claws are natural weapons dealing 1d6 slashing; use Might.",
+    "description": "When you hit a creature, deal an extra 1d6 radiant damage. The die becomes 2d6 at level 10.",
     "data": {
-      "legacy_race_lineage_id": 4
+      "legacy_race_lineage_id": 71
     }
   },
   {
-    "species_id": 54,
-    "feature_id": 4131,
+    "species_id": 64,
+    "feature_id": 4037,
     "level": 1,
-    "link_id": 120,
-    "legacy_feature_id": 31,
+    "link_id": 106,
+    "legacy_feature_id": 70,
     "action_type": null,
     "uses": "Passive",
     "dice": null,
-    "description": "Advantage on checks and saves against being shoved, moved against your will, or knocked prone.",
+    "description": "Your veins shed dim light in a 10 ft radius. As a bonus action, you can make it bright light or dim it completely.",
     "data": {
-      "legacy_race_lineage_id": 31
+      "legacy_race_lineage_id": 70
     }
   },
   {
-    "species_id": 60,
-    "feature_id": 4134,
+    "species_id": 65,
+    "feature_id": 13,
     "level": 1,
-    "link_id": 121,
-    "legacy_feature_id": 55,
+    "link_id": 61,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 65,
+    "feature_id": 3613,
+    "level": 5,
+    "link_id": 24,
+    "legacy_feature_id": 77,
+    "action_type": "bonus",
+    "uses": "1 per long rest",
+    "dice": null,
+    "description": "The wind lifts you, giving you a 30 ft flying speed for 1 minute. You must wear light or no armor. At level 10 this becomes permanent while you wear light or no armor.",
+    "data": {
+      "legacy_race_lineage_id": 77
+    }
+  },
+  {
+    "species_id": 65,
+    "feature_id": 3684,
+    "level": 1,
+    "link_id": 31,
+    "legacy_feature_id": 75,
+    "action_type": "bonus",
+    "uses": "1 per short rest",
+    "dice": null,
+    "description": "Push a creature within 15 ft up to 10 ft away from you (Might roll negates), or move yourself 10 ft without provoking opportunity attacks.",
+    "data": {
+      "legacy_race_lineage_id": 75
+    }
+  },
+  {
+    "species_id": 65,
+    "feature_id": 3860,
+    "level": 1,
+    "link_id": 84,
+    "legacy_feature_id": 74,
     "action_type": null,
     "uses": "Passive",
     "dice": null,
-    "description": "Advantage on saves and checks against being shoved, knocked prone, or moved.",
+    "description": "Fall no faster than 60 ft per round and take no falling damage.",
     "data": {
-      "legacy_race_lineage_id": 55
+      "legacy_race_lineage_id": 74
+    }
+  },
+  {
+    "species_id": 65,
+    "feature_id": 4053,
+    "level": 1,
+    "link_id": 110,
+    "legacy_feature_id": 76,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "+2 to Awareness.",
+    "data": {
+      "legacy_race_lineage_id": 76
+    }
+  },
+  {
+    "species_id": 66,
+    "feature_id": 1,
+    "level": 1,
+    "link_id": 43,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 66,
+    "feature_id": 3374,
+    "level": 1,
+    "link_id": 2,
+    "legacy_feature_id": 79,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "Choose your vein color at character creation. It sets your eye and marking color, your resistance, and your Veinfire. Red: fire. Purple: psychic. Gold: force. Orange: acid.",
+    "data": {
+      "legacy_race_lineage_id": 79
+    }
+  },
+  {
+    "species_id": 66,
+    "feature_id": 3605,
+    "level": 1,
+    "link_id": 23,
+    "legacy_feature_id": 80,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "+2 to Awareness. You also know whether a creature you can see within 30 ft is a devil or is bound to one.",
+    "data": {
+      "legacy_race_lineage_id": 80
+    }
+  },
+  {
+    "species_id": 66,
+    "feature_id": 3772,
+    "level": 5,
+    "link_id": 73,
+    "legacy_feature_id": 81,
+    "action_type": "reaction",
+    "uses": "1 per long rest",
+    "dice": "1d10",
+    "description": "When you take damage, reduce it by 1d10 + your level.",
+    "data": {
+      "legacy_race_lineage_id": 81
+    }
+  },
+  {
+    "species_id": 66,
+    "feature_id": 3888,
+    "level": 1,
+    "link_id": 86,
+    "legacy_feature_id": 78,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "You don't age and can't die of old age, and magic can't age you.",
+    "data": {
+      "legacy_race_lineage_id": 78
+    }
+  },
+  {
+    "species_id": 66,
+    "feature_id": 3891,
+    "level": 1,
+    "link_id": 87,
+    "legacy_feature_id": 82,
+    "action_type": "bonus",
+    "uses": "1 per short rest",
+    "dice": "1d6",
+    "description": "Your grooves and eyes flare. The next time you hit a creature before the end of your turn, deal an extra 1d6 damage of your Vein Line's type, plus its rider. The die becomes 2d6 at level 10. Red: the target takes 1d4 fire at the start of its next turn. Purple: the target has disadvantage on its next save against you before the end of your next turn. Gold: you gain temporary HP equal to your Proficiency Bonus. Orange: the target's speed drops by 10 ft until the end of its next turn.",
+    "data": {
+      "legacy_race_lineage_id": 82
+    }
+  },
+  {
+    "species_id": 67,
+    "feature_id": 1,
+    "level": 1,
+    "link_id": 44,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 67,
+    "feature_id": 8,
+    "level": 1,
+    "link_id": 46,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 67,
+    "feature_id": 3758,
+    "level": 1,
+    "link_id": 72,
+    "legacy_feature_id": 86,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "You count as one size larger for carrying, pushing, dragging and lifting, and you have proficiency in Presence.",
+    "data": {
+      "legacy_race_lineage_id": 86
+    }
+  },
+  {
+    "species_id": 67,
+    "feature_id": 3840,
+    "level": 1,
+    "link_id": 80,
+    "legacy_feature_id": 85,
+    "action_type": "bonus",
+    "uses": "1 per short rest",
+    "dice": "1d6",
+    "description": "Move up to your speed toward an enemy you can see; your next melee hit this turn deals +1d6.",
+    "data": {
+      "legacy_race_lineage_id": 85
+    }
+  },
+  {
+    "species_id": 67,
+    "feature_id": 3848,
+    "level": 5,
+    "link_id": 82,
+    "legacy_feature_id": 83,
+    "action_type": "action",
+    "uses": "1 per short rest",
+    "dice": null,
+    "description": "Each creature of your choice within 15 ft makes a Judgment roll (DC 8 + Proficiency Bonus + Endurance) or has disadvantage on its next attack before the end of its next turn.",
+    "data": {
+      "legacy_race_lineage_id": 83
+    }
+  },
+  {
+    "species_id": 67,
+    "feature_id": 3906,
+    "level": 1,
+    "link_id": 89,
+    "legacy_feature_id": 84,
+    "action_type": null,
+    "uses": "1 per long rest",
+    "dice": null,
+    "description": "When you drop to 0 HP but aren't killed outright, drop to 1 HP instead.",
+    "data": {
+      "legacy_race_lineage_id": 84
+    }
+  },
+  {
+    "species_id": 68,
+    "feature_id": 8,
+    "level": 1,
+    "link_id": 45,
+    "legacy_feature_id": null,
+    "action_type": null,
+    "uses": null,
+    "dice": null,
+    "description": null,
+    "data": {}
+  },
+  {
+    "species_id": 68,
+    "feature_id": 3885,
+    "level": 1,
+    "link_id": 85,
+    "legacy_feature_id": 90,
+    "action_type": "bonus",
+    "uses": "At will; Full remold 1 per short rest",
+    "dice": null,
+    "description": "Minor remold (bonus action, at will): change your face and build within your current size: features, skin markings and colour, hair, eyes, voice pitch, height (up to 1 ft) and frame. Full remold (action, 1 per short rest; Proficiency Bonus per long rest from level 11): also change size between Small and Medium (speed 25/30 ft; a size change ends after 1 hour) or copy a specific Humanoid you saw clearly for 1 minute in the last 24 hours. Only your body changes, not your gear; armor fitted to your old size gives no AC until you change back. You can't change creature type, limbs, senses or statistics. A remold ends when you remold again, choose to, or drop to 0 HP. Advantage on Misdirection checks to pass as someone else while remolded. A suspicious creature can use its action for an Awareness check against DC 8 + Proficiency Bonus + Confidence to see through it.",
+    "data": {
+      "legacy_race_lineage_id": 90
+    }
+  },
+  {
+    "species_id": 68,
+    "feature_id": 4045,
+    "level": 1,
+    "link_id": 107,
+    "legacy_feature_id": 89,
+    "action_type": "reaction",
+    "uses": "1 per short rest",
+    "dice": "1d6",
+    "description": "When a creature you can see within 5 ft hits you with an attack, your soul-liquid lashes out: reduce the damage by 1d6 + your Endurance modifier (minimum 1).",
+    "data": {
+      "legacy_race_lineage_id": 89
+    }
+  },
+  {
+    "species_id": 68,
+    "feature_id": 4052,
+    "level": 1,
+    "link_id": 109,
+    "legacy_feature_id": 87,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "Your soul-liquid can carry out simple tasks within 5 ft: lift or hold an object of 5 lb or less, open an unlocked door or container, or pass an item to an adjacent ally. It can't attack, wield a weapon or activate magic items. Using it costs your free object interaction.",
+    "data": {
+      "legacy_race_lineage_id": 87
+    }
+  },
+  {
+    "species_id": 68,
+    "feature_id": 4093,
+    "level": 1,
+    "link_id": 114,
+    "legacy_feature_id": 88,
+    "action_type": null,
+    "uses": "Passive",
+    "dice": null,
+    "description": "You don't need to eat, drink or sleep. You go still for 4 hours to gain the benefit of a long rest, staying aware of your surroundings. Advantage on saves against being poisoned.",
+    "data": {
+      "legacy_race_lineage_id": 88
     }
   }
 ]
