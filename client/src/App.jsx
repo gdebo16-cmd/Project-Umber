@@ -17,6 +17,7 @@ import CampaignPage from './pages/CampaignPage';
 import CreateCampaign from './pages/CreateCampaign';
 import CampaignList from './pages/CampaignList';
 import JoinCampaign from './pages/JoinCampaign';
+import { ContentProvider } from './hooks/ContentContext';
 
 function ThemeWatcher() {
     usePageTheme();
@@ -26,6 +27,7 @@ function ThemeWatcher() {
 function App() {
     return (
         <BrowserRouter>
+            <ContentProvider>
             <ThemeWatcher />
             <Routes>
                 {/* anyone can see these */}
@@ -54,6 +56,7 @@ function App() {
                 {/* "*" means anything that didn't match above */}
                 <Route path="*" element={<p>Page not found. <a href="/home">Go home</a></p>} />
             </Routes>
+            </ContentProvider>
         </BrowserRouter>
     );
 }

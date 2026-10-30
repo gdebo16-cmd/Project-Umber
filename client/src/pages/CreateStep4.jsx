@@ -33,7 +33,7 @@ function CreateStep4() {
     if (loading) return <Loader />;
     if (error) return error.includes('409') ? <Navigate to="/create_char/step3" replace /> : <p>Failure is upon us: {error}</p>;
 
-    const gate = data.subclassGate && data.blackGateAlignments.includes(alignment);
+    const gate = data.blackGateAlignments.includes(alignment);
     const optionOf = (cat) => data[cat].find((o) => String(o.id) === ids[cat]);
     const stateOf = (cat) => {
         const o = optionOf(cat);
@@ -57,7 +57,7 @@ function CreateStep4() {
     const changeAlignment = (code) => {
         setAlignment(code);
         // losing the Black gate drops any destroy pick
-        if (!(data.subclassGate && data.blackGateAlignments.includes(code))) {
+        if (!data.blackGateAlignments.includes(code)) {
             setIds((prev) => Object.fromEntries(CATS.map((c) => [c.key, data[c.key].find((o) => String(o.id) === prev[c.key])?.needs_black_gate ? '' : prev[c.key]])));
         }
     };

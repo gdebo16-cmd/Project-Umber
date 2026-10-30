@@ -5,7 +5,7 @@ import { getSpellSlots, beamsAt, beamRollText, beamDamageText, scaledAt } from '
 import { createPortal } from 'react-dom';
 import { sendJson } from '../../utils/api';
 import RuneControl from './RuneControl';
-import { statName } from '../../utils/stats';
+import { statName, statKey } from '../../utils/stats';
 import { weaponRuneEffects, runicStrikeDice, utilityRuneEffects } from '../../utils/runes'; /*prep-done*/
 import { stateGlyph, elementGlyph, alignmentGlyph, hideBrokenGlyph, bandClass } from '../../utils/glyphs';
 
@@ -17,9 +17,9 @@ const DUAL_WIELD_DROPS_HIT_MOD = false;
 function Actions() {
     const { character, hp, ownedArmor = [], ownedWeapons, setOwnedWeapons, onRoll, learnedSpells, spendSlot, usedSlots = {}, actionFeatures = [], embers = 0, embersMax = 0, spendEmbers, restUses = {}, countUse, cracks = 0, crackMax = 0, gainCracks, removeCracks, kindleSlot } = useCharacter();
     const actionSpells = learnedSpells ?? [];
-    const spellScore = character[(character.spell_stat || '').toLowerCase()];
+    const spellScore = character[statKey(character.spell_stat) ?? ''];
     // spells use the class's spellcasting_stat (casting_stat); weapons keep the primary stat
-    const castScore = character[(character.casting_stat || character.spell_stat || '').toLowerCase()];
+    const castScore = character[statKey(character.casting_stat || character.spell_stat) ?? ''];
     const init = modOf(character.dex) + healthInit(hp, character.max_hp);
     const strMod = modOf(character.str);
     const spellMod = modOf(castScore);
@@ -73,7 +73,7 @@ function Actions() {
             return { key: `w${w.id}`, weaponId: w.id, name: w.name, dice: twoHand ? w.versatile_dice : w.damage_dice, oneHanded, dual, versatile, twoHand,
                 rarity: w.rarity, description: w.description, category: w.weapon_category,
                 branded, runed, marked, runes: w.runes ?? [], riders: runeFx.riders,
-                damageType: w.damage_type, attackBonus: w.attack_bonus || 0, stat: branded ? 'CHA' : (runed || marked) ? 'INT' : ranged ? 'DEX' : (character.spell_stat || 'STR').toUpperCase(),
+                damageType: w.damage_type, attackBonus: w.attack_bonus || 0, stat: branded ? 'CHA' : (runed || marked) ? 'INT' : ranged ? 'DEX' : (statKey(character.spell_stat) || 'str').toUpperCase(),
                 hands: twoHand ? 'Two hands' : oneHanded ? ((w.properties ?? []).includes('versatile') ? 'One or two hands' : 'One hand') : 'Two hands',
                 range: w.range_normal ? `${w.range_normal}/${w.range_long ?? w.range_normal} ft` : ((w.properties ?? []).includes('reach') ? '10 ft (reach)' : '5 ft'),
                 dmgMod: (dual ? 0 : abilityMod) + (sigil ? cracks : 0),

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import useFetch from '../hooks/useFetch';
+import useContent from '../hooks/useContent';
 import usePageStyle from '../hooks/usePageStyle';
 import createCss from '../styles/char_create.css?inline';
 import { sendJson } from '../utils/api';
@@ -12,7 +12,8 @@ import Loader from '../components/Loader';
 function CreateStep1() {
     usePageStyle(createCss);
     const navigate = useNavigate();
-    const { data: races, loading, error } = useFetch('/api/create_char/races');
+    const { content, error } = useContent();
+    const loading = !content;
     const [name, setName] = useState('');
     const [raceId, setRaceId] = useState('');
     const [subraceId, setSubraceId] = useState('');
@@ -47,6 +48,23 @@ function CreateStep1() {
     if (loading) return <Loader />;
     if (error) return <p>Failure is upon us: {error}</p>;
 
+    // Build the race list from the rulebook: top-level species, each with its sub-species
+    const species = content.species;
+    const races = species
+    .filter((s) => s.parent_id === null)
+    .sort((a, b) => a.sort_order - b.sort_order)
+    .map((s) => ({
+        ...s,
+        img_url: s.image,
+        base_speed: s.speed,
+        dark_vision: s.darkvision,
+        lineage_bonuses: s.traits,
+        traits: s.description,
+        subraces: species
+            .filter((c) => c.parent_id === s.id)
+            .map((c) => ({ ...c, img_url: c.image })),
+    }));
+
     // the race that's picked right now, for the description box
     const race = races.find((r) => String(r.id) === String(raceId));
     const subraces = race?.subraces ?? [];
@@ -58,7 +76,7 @@ function CreateStep1() {
                     <h1>Create Character</h1>
             </header>
             <div id='nav-container'>
-                        <h2>Step 1 of 4 — Name and race</h2>
+                        <h2>Step 1 of 4 — Name and Species</h2>
                         <StepNav back={null} forward={hasSavedRace ? '/create_char/step2' : null} />
                 </div>
             <main>
@@ -70,7 +88,7 @@ function CreateStep1() {
                             <input className="name-value" type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="One with no name"  />
                         </article>
                         <article id="race" className="name-tile">
-                            <label className="name-label" htmlFor="race_id">Race</label>
+                            <label className="name-label" htmlFor="race_id">Species</label>
                             <select className="name-value" id="race_id" value={raceId} onChange={(e) => { setRaceId(e.target.value); setSubraceId(''); }} required>
                                 <option className="name-option" value="" disabled>Select your Race</option>
                                 {races.map((r) => (

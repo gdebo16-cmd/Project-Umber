@@ -1,3 +1,4 @@
+import { hideBrokenGlyph } from '../utils/glyphs';
 // The picture + description box under the create-character forms.
 // "item" is whatever was picked last ({ img, name, text }), or null to hide the box.
 // renderFeature(f) is optional: extra UI under a feature (the Character Editor uses it for choice dropdowns).
@@ -7,7 +8,7 @@ function CreateDescription({ item, renderFeature }) {
             {item && (
                 <article id="descArticle" className="step-1-desc-tile">
                     {item.img && <section id="img-section">
-                      <img id="desc-img" src={item.img} alt={item.name} />
+                      <img id="desc-img" src={item.img} alt={item.name} onError={hideBrokenGlyph} />
                     </section>}
                     {!item.hideTitle && <section id="titleSection">
                       <h3 id="title" className="title-text">{item.name}</h3>

@@ -19,7 +19,7 @@ function EditNameForm({ character, races, alignments = [], onSaved }) {
     const [portraits, setPortraits] = useState([]);
     const [portrait, setPortrait] = useState(character.portrait_url ?? null);
     const portraitSave = useSave(`/api/characters/${character.id}/edit/portrait`, onSaved);
-    // alignment saves on click, like the portrait (server keeps Black gate picks valid)
+    // alignment saves on click, like the portrait (server keeps Black gate picks on CE/NE/CN)
     const alignmentSave = useSave(`/api/characters/${character.id}/edit/alignment`, onSaved);
 
     useEffect(() => {

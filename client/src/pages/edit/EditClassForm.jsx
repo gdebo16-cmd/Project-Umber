@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import useContent from '../../hooks/useContent';
 import { Link } from 'react-router';
 import useBoostOptions from '../../hooks/useBoostOptions';
 import useSave from './useSave';
 import CreateDescription from '../CreateDescription';
 import LevelChoices from '../LevelChoices';
-import { choiceFeatures, keepPicks, KEPT_BOOST, isBoostRow } from '../../utils/levelChoices';
+import { choiceFeatures, keepPicks, KEPT_BOOST, isBoostRow, packChoiceFeatures, packBoostFeatures } from '../../utils/levelChoices';
 import { sendJson } from '../../utils/api';
 import { classGlyph, hideBrokenGlyph } from '../../utils/glyphs';
 import { statName } from '../../utils/stats';
@@ -19,7 +20,31 @@ import { statName } from '../../utils/stats';
 const SUBCLASS_LEVEL = 3; // matches models/characterModel.js
 const LEVELS = Array.from({ length: 30 }, (_, i) => i + 1);
 
+// Pack feature rows for the description list (replaces legacy class_features text like Fighting Style)
+function flattenRoleFeatures(role, maxLevel) {
+    const out = [];
+    for (const lvl of role.levels || []) {
+        if (Number(lvl.level) > maxLevel) continue;
+        for (const f of lvl.features || []) {
+            out.push({ level: Number(lvl.level), name: f.name, description: f.description || '', source: 'class', key: `pack:class:${role.key}:${f.name}:${lvl.level}` });
+        }
+    }
+    return out;
+}
+function flattenCallingFeatures(calling, maxLevel) {
+    return (calling.features || [])
+        .filter((f) => Number(f.level) <= maxLevel)
+        .map((f) => ({
+            level: Number(f.level),
+            name: `${f.name} (${calling.name})`,
+            description: f.description || '',
+            source: 'subclass',
+            key: `pack:subclass:${calling.key}:${f.name}:${f.level}`,
+        }));
+}
+
 function EditClassForm({ character, classes, subClasses, onSaved }) {
+    const { content } = useContent();
     const [classId, setClassId] = useState(character.class_id);
     const [subclassId, setSubclassId] = useState(character.subclass_id ?? '');
     const [level, setLevel] = useState(character.level ?? 1);
@@ -55,8 +80,15 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
         }
     };
 
-    // class + subclass choice features unlocked at the picked level
-    const choiceList = pickedClass ? choiceFeatures(pickedClass.features, pickedSub?.features, pickedSub?.name, level) : [];
+    // Pack create-time choices + pack Divine Blessing rows
+    const rolePack = content?.roles?.find((r) => Number(r.id) === Number(classId));
+    const callingPack = (!subLocked && rolePack)
+        ? (rolePack.callings ?? []).find((c) => Number(c.id) === Number(subclassId))
+        : undefined;
+    const packChoices = rolePack ? packChoiceFeatures(rolePack, callingPack, level) : [];
+    const boostFeatures = packBoostFeatures(rolePack);
+    const boostChoices = choiceFeatures(boostFeatures, [], null, level);
+    const choiceList = [...packChoices, ...boostChoices];
 
     // boost rows only offer what the character qualifies for with its current (base) scores
     const boostKeys = choiceList.filter(isBoostRow).map((f) => f.key);
@@ -91,26 +123,26 @@ function EditClassForm({ character, classes, subClasses, onSaved }) {
     };
 
     const classSaved = Number(classId) === Number(character.class_id);
-    const unlocked = (list, source) =>
-        (list ?? [])
-            .filter((f) => f.level <= level)
-            .map((f) => ({ ...f, source, key: `${source}:${f.id}`, name: source === 'subclass' ? `${f.name} (${pickedSub?.name})` : f.name }));
 
-    const features = pickedClass
-        ? [...unlocked(pickedClass.features, 'class'), ...unlocked(pickedSub?.features, 'subclass')]
-            .sort((a, b) => a.level - b.level)
+    // Description feature list from the content pack (so old Fighting Style / legacy text is gone)
+    const features = rolePack
+        ? [
+            ...flattenRoleFeatures(rolePack, level),
+            ...((!subLocked && callingPack) ? flattenCallingFeatures(callingPack, level) : []),
+        ].sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
         : null;
 
-    const shown = pickedClass && {
-        img: pickedSub?.img_url || pickedClass.img_url,
-        name: pickedClass.name,
+    const shownRole = rolePack || pickedClass;
+    const shown = shownRole && {
+        img: (callingPack?.img_url || pickedSub?.img_url) || (rolePack?.img_url || pickedClass?.img_url),
+        name: shownRole.name,
         hideTitle: true,
         sections: [
-            { label: 'Description', body: pickedClass.description ?? '-' },
-            ...(pickedSub ? [{ label: `Subclass: ${pickedSub.name}`, body: pickedSub.description ?? '-' }] : []),
-            { label: 'Stat Details', body: `Primary stat: ${statName(pickedClass.primary_stat)}\nHit die: ${pickedClass.hitpoint_die}` },
-            { label: 'Armor & Weapons', body: `Armor: ${pickedClass.armor_proficiencies ?? '-'}\nWeapons: ${pickedClass.weapon_proficiencies ?? '-'}` },
-            { label: 'Tools', body: pickedClass.tool_proficiencies ?? '-' },
+            { label: 'Description', body: (rolePack?.description ?? pickedClass?.description) ?? '-' },
+            ...((callingPack || pickedSub) ? [{ label: `Calling: ${(callingPack || pickedSub).name}`, body: (callingPack?.description ?? pickedSub?.description) ?? '-' }] : []),
+            { label: 'Stat Details', body: `Primary stat: ${statName(rolePack?.primary_stat ?? pickedClass?.primary_stat)}\nHit die: ${rolePack?.hit_die ?? pickedClass?.hitpoint_die}` },
+            { label: 'Armor & Weapons', body: `Armor: ${(rolePack?.armor_prof ?? pickedClass?.armor_proficiencies) ?? '-'}\nWeapons: ${(rolePack?.weapon_prof ?? pickedClass?.weapon_proficiencies) ?? '-'}` },
+            { label: 'Tools', body: (rolePack?.tool_prof ?? pickedClass?.tool_proficiencies) ?? '-' },
         ],
         features,
     };

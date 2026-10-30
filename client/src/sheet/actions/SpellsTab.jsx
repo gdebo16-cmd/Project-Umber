@@ -7,7 +7,7 @@ import { getSpellSlots, beamsAt, beamRollText, beamDamageText } from '../../util
 import { modOf, signed, proficiencyBonus, rollDice, rollToHit } from '../../utils/math';
 import { useCharacter } from '../CharacterContext';
 import { createPortal } from 'react-dom';
-import { statName } from '../../utils/stats';
+import { statName, statKey } from '../../utils/stats';
 import { stateGlyph, elementGlyph, alignmentGlyph, hideBrokenGlyph, bandClass } from '../../utils/glyphs';
 
 
@@ -21,7 +21,7 @@ function SpellsTab() {
     const characterId = character.id;
     const level = character.level;
     const spellStat = character.spell_stat;
-    const spellScore = character[(character.casting_stat || character.spell_stat || '').toLowerCase()];
+    const spellScore = character[statKey(character.casting_stat || character.spell_stat) ?? ''];
     const [error, setError] = useState('');
     const [browsing, setBrowsing] = useState(false);
     const base = `/api/characters/${characterId}/spells`;

@@ -13,6 +13,23 @@ export const STATS = [
 // 'DEX' / 'dex' -> 'Precision' (anything unknown comes back as is)
 export const statName = (k) => STATS.find((s) => s.key === String(k ?? '').toLowerCase())?.label ?? k;
 
+// 'Might' / 'STR' / 'str' -> 'str' (unknown -> undefined). Use before indexing character[stat].
+const STAT_TO_KEY = {
+    might: 'str', str: 'str',
+    precision: 'dex', dex: 'dex',
+    endurance: 'con', con: 'con',
+    intellect: 'int', int: 'int',
+    judgment: 'wis', wis: 'wis',
+    confidence: 'cha', cha: 'cha',
+    speed: 'spd', spd: 'spd',
+    luck: 'luc', luc: 'luc',
+};
+export const statKey = (stat) => {
+    if (stat == null || stat === '') return undefined;
+    return STAT_TO_KEY[String(stat).trim().toLowerCase()];
+};
+
+
 // Your house-rule skills: each one adds the modifiers of two stats.
 export const SKILLS = [
     { id: 'finesse', name: 'Finesse', stats: ['dex', 'con'] },
