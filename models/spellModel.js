@@ -1,6 +1,14 @@
 // All spell database reads and writes live here. Change a query once and every controller gets it.
 import pool from '../db.js';
 
+// Feature-only spells: granted by class features (role_spells.is_bonus), never learnable from the book.
+// Single source of truth - used by getLearnableSpells and learnSpell reject.
+export const FEATURE_ONLY_SPELL_NAMES = Object.freeze(['Grace Bolt', 'Soulbrand']);
+
+export function isFeatureOnlySpell(name) {
+    return FEATURE_ONLY_SPELL_NAMES.some((n) => n.toLowerCase() === String(name ?? '').trim().toLowerCase());
+}
+
 // Every learned spell for a character, with the details the sheet, Spell Book and details box need
 export async function getLearnedSpells(charId) {
     const { rows } = await pool.query(
@@ -77,6 +85,24 @@ export async function getAllSpells() {
 }
 
 // alignmentCode (optional): adds chart_band, the character's band for each spell's colour square
+// Spell Book learn catalog: every spell except the feature-only denylist (not filtered by role_spells).
+// alignmentCode (optional): adds chart_band for the character's colour square.
+export async function getLearnableSpells(alignmentCode = null) {
+    const { rows } = await pool.query(
+        `SELECT s.id, s.name, s.base_level, s.base_damage_dice, s.opponent_save_roll, s.attack_type, s.base_to_hit_modifier,
+                s.range, s.duration, s.casting_time, s.focus_level, s.base_description AS description, s.beam_scaling, s.action_type, s.heal_dice, s.heal_add_mod,
+                st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name, ab.band AS chart_band
+         FROM spells s
+         LEFT JOIN spell_state st ON st.id = s.state_id
+         LEFT JOIN spell_alignment al ON al.id = s.alignment_id
+         LEFT JOIN spell_element el ON el.id = s.element_id
+         LEFT JOIN alignment_bands ab ON ab.alignment_code = $1 AND ab.color_square = al.chart_square
+         WHERE NOT (LOWER(TRIM(s.name)) = ANY($2::text[]))
+         ORDER BY s.base_level, s.name`,
+        [alignmentCode, FEATURE_ONLY_SPELL_NAMES.map((n) => n.toLowerCase())]
+    );
+    return rows;
+}
 export async function getSpellsForCharacter(roleId, callingId, level, alignmentCode = null) {
     const { rows } = await pool.query(
         `SELECT s.*, s.base_description AS description, MIN(cs.min_level) AS unlock_level,

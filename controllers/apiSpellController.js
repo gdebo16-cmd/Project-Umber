@@ -53,7 +53,7 @@ export async function getSpellbook(req, res) {
     const charId = await ownedCharId(req, res);
     if (charId === null) return;
     const ch = await getSheetCharacter(charId, req.session.userId);
-    const allSpells = await Spells.getSpellsForCharacter(ch.role_id, ch.calling_id, ch.level, ch.alignment_code);
+    const allSpells = await Spells.getLearnableSpells(ch.alignment_code);
     const highestSlot = await highestSlotFor(ch);
     const spells = allSpells.filter((s) => Number(s.base_level) <= highestSlot);
     res.json({ spells, ...(await loadLearned(charId, ch)) });
@@ -65,8 +65,11 @@ export async function learnSpell(req, res) {
     if (charId === null) return;
     const spellId = Number(req.body.spell_id);
     const ch = await getSheetCharacter(charId, req.session.userId);
-    const { rows: [spell] } = await pool.query('SELECT base_level FROM spells WHERE id = $1', [spellId]);
+    const { rows: [spell] } = await pool.query('SELECT base_level, name FROM spells WHERE id = $1', [spellId]);
     if (!spell) return res.status(400).json({ error: 'That spell does not exist' });
+    if (Spells.isFeatureOnlySpell(spell.name)) {
+        return res.status(400).json({ error: 'That spell is granted by a class feature and cannot be learned from the spellbook.' });
+    }
     const baseLevel = Number(spell.base_level);
     const highestSlot = await highestSlotFor(ch);
     if (baseLevel > highestSlot) {
@@ -120,7 +123,7 @@ export async function prepareSpell(req, res) {
     if (caps) {
         const counts = await spellCounts(charId, spellId);
         if (!counts.already) return res.status(400).json({ error: 'You have to learn that spell first' });
-        const { rows: [spell] } = await pool.query('SELECT base_level FROM spells WHERE id = $1', [spellId]);
+        const { rows: [spell] } = await pool.query('SELECT base_level, name FROM spells WHERE id = $1', [spellId]);
         if (!counts.already_prepared) {
             if (caps.shared && counts.prepared_cantrips + counts.prepared_spells >= caps.prepared) {
                 return res.status(400).json({ error: `You can prepare ${caps.prepared} spells at level ${ch.level}. Unprepare one first.` });
