@@ -99,7 +99,6 @@ function CreateStep2() {
     const [saveError, setSaveError] = useState('');
     const [skillPicks, setSkillPicks] = useState([]);
     const [picks, setPicks] = useState({}); // feature choices, same shape as characters.feature_choices
-    const [gear, setGear] = useState({ armor: [], weapons: [] }); // starting gear this class can use
     const [weaponId, setWeaponId] = useState('');
     const [armorId, setArmorId] = useState('');
     const { data: draft } = useFetch('/api/create_char/draft');
@@ -112,7 +111,6 @@ function CreateStep2() {
         return [...content.roles]
             .sort((a, b) => (a.sort_order ?? 999) - (b.sort_order ?? 999) || String(a.name).localeCompare(String(b.name)))
             .map((r) => {
-                const srv = serverClasses.find((s) => Number(s.id) === Number(r.id));
                 return {
                     id: r.id,
                     name: r.name,
@@ -162,10 +160,8 @@ function CreateStep2() {
             setSaveError('could not load callings');
             return;
         }
-        const serverSubs = await res.json();
         if (seq !== loadSeq.current) return;
         const subs = (picked.callings ?? []).map((c) => {
-            const srv = serverSubs.find((s) => Number(s.id) === Number(c.id));
             return {
                 id: c.id,
                 name: c.name,
@@ -228,23 +224,22 @@ function CreateStep2() {
     }, [classes, draft]);
 
     // starting gear from the content pack (server /api/create_char/gear validates the same list on submit)
-    const gearSubId = subLocked ? '' : subclassId;
     const gearReady = !!classId && (subLocked || !!subclassId);
-    useEffect(() => {
-        if (!gearReady || !picked?.rolePack || !content) {
-            if (!gearReady) setGear({ armor: [], weapons: [] });
-            return;
-        }
+    const gear = useMemo(() => {
+        if (!gearReady || !picked?.rolePack || !content) return { armor: [], weapons: [] };
         const callingPack = (!subLocked && subclassId)
             ? (picked.callings || []).find((c) => String(c.id) === String(subclassId))
             : undefined;
-        const g = startingGearFromPack(content, picked.rolePack, callingPack);
-        setGear(g);
-        setWeaponId((w) => (g.weapons.some((x) => String(x.id) === w) ? w : ''));
-        setArmorId((a) => (g.armor.some((x) => String(x.id) === a) ? a : ''));
-    }, [classId, gearSubId, level, gearReady, content, picked, subLocked, subclassId]);
+        return startingGearFromPack(content, picked.rolePack, callingPack);
+    }, [gearReady, content, picked, subLocked, subclassId]);
+    // Drop weapon/armor picks that are no longer in the pack list for this role/calling
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- clear stale gear picks when pack list changes
+        setWeaponId((w) => (gear.weapons.some((x) => String(x.id) === w) ? w : ''));
+        setArmorId((a) => (gear.armor.some((x) => String(x.id) === a) ? a : ''));
+    }, [gear]);
 
-    const shownGear = gearReady ? gear : { armor: [], weapons: [] };
+    const shownGear = gear;
 
     // Pack create-time choices + legacy boost rows (boosts picked on step 3)
     const pickedSub = subLocked ? undefined : subclasses.find((s) => String(s.id) === String(subclassId));
