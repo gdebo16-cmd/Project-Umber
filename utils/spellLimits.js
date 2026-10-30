@@ -34,7 +34,7 @@ export const SPELL_LIMITS = {
         spells: [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16],
     },
     // Reaver: half caster (Gabriel 2026-10-25). Casts from spells known, ceil(level / 2) + 1 from L2, no separate prepared pool.
-    // Cantrips 2 at L2, 3 at L10, plus Soulbrand (a bonus spell, not counted).
+    // Cantrips 2 at L2, 3 at L10, plus Soul Link (a bonus spell, not counted).
     Reaver: {
         knownOnly: true,
         cantrips: [0, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
