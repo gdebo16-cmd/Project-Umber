@@ -2,16 +2,18 @@
 import pool from '../db.js';
 import { withEffectiveScores, effectiveScores, getBoostRows, statCap } from '../utils/abilityBoosts.js';
 import { getSpellCaps } from '../utils/spellLimits.js'; /*prep-done*/
+import { resolveSpeciesWrite, resolveRoleWrite } from './idMap.js';
+import { choiceFeaturesForRole, getRole, scoreKey } from './content.js';
 
 // a character can only have a subclass from this level up (creator + editor check this too)
 export const SUBCLASS_LEVEL = 3;
 export const MAX_LEVEL = 30;
 
 // ---------- effective max HP (one place for the sheet, healing and level changes) ----------
-// Stored max_hp stays the base (level-up math). Effective max = base + subclass hp_per_level x level + CON boost HP.
-// alias = characters table alias; level / sub = SQL expressions (default: the row's own level and subclass)
-export function hpBonusSql(alias, level = `${alias}.level`, sub = `${alias}.subclass_id`) {
-    return `(COALESCE((SELECT SUM(sf.hp_per_level) FROM subclass_features sf WHERE sf.subclass_id = ${sub} AND sf.level <= ${level}), 0) * ${level})`;
+// Stored max_hp stays the base (level-up math). Effective max = base + calling hp_per_level x level + CON boost HP.
+// alias = characters table alias; level / calling = SQL expressions (default: the row's own level and calling)
+export function hpBonusSql(alias, level = `${alias}.level`, calling = `${alias}.calling_id`) {
+    return `(COALESCE((SELECT SUM(cf.hp_per_level) FROM calling_features cf WHERE cf.calling_id = ${calling} AND cf.level <= ${level}), 0) * ${level})`;
 }
 export function effMaxSql(base, alias, conBonus, level, sub) {
     return `(${base} + ${hpBonusSql(alias, level, sub)} + ${conBonus})`;
@@ -38,15 +40,32 @@ export async function ownsCharacter(charId, userId) {
 // Full sheet row (with race/class/subclass names) or undefined
 export async function getSheetCharacter(charId, userId) {
     const { rows } = await pool.query(
-        `SELECT ch.*, r.name AS race_name, sr.name AS subrace_name, cl.name AS class_name, cl.hitpoint_die, cl.primary_stat AS spell_stat, COALESCE(NULLIF(s.spellcasting_stat, ''), NULLIF(cl.spellcasting_stat, ''), cl.primary_stat) AS casting_stat, COALESCE(s.caster_type, cl.caster_type) AS caster_type, cl.has_embers, cl.crack_max, cl.breach_dc, cl.breach_dc_scaling, cl.saving_throws AS class_saving_throws, s.breach_effect, s.breach_drains_embers, NULLIF(concat_ws(', ', cl.armor_proficiencies, s.armor_proficiencies), '') AS armor_proficiencies, NULLIF(concat_ws(', ', cl.weapon_proficiencies, s.weapon_proficiencies), '') AS weapon_proficiencies, NULLIF(concat_ws(', ', cl.tool_proficiencies, s.tool_proficiencies), '') AS tool_proficiencies, s.name AS subclass_name, r.base_speed AS race_base_speed, r.darkvision AS race_darkvision, ${hpBonusSql('ch')} AS hp_bonus,
+        `SELECT ch.*, COALESCE(sp_parent.name, sp.name) AS race_name,
+            CASE WHEN sp.parent_id IS NOT NULL THEN sp.name ELSE sr.name END AS subrace_name,
+            ro.name AS class_name,
+            ro.hit_die AS hitpoint_die,
+            NULLIF(ca.spellcasting_stat, '') AS subclass_spellcasting_stat,
+            NULLIF(ro.spellcasting_stat, '') AS class_spellcasting_stat,
+            COALESCE(ca.caster_type, ro.caster_type) AS caster_type,
+            ro.has_embers, ro.crack_max, ro.breach_dc, ro.breach_dc_scaling, ro.saving_throws AS class_saving_throws,
+            ca.breach_effect, ca.breach_drains_embers,
+            NULLIF(concat_ws(', ', ro.armor_proficiencies, ca.armor_proficiencies), '') AS armor_proficiencies,
+            NULLIF(concat_ws(', ', ro.weapon_proficiencies, ca.weapon_proficiencies), '') AS weapon_proficiencies,
+            NULLIF(concat_ws(', ', ro.tool_proficiencies, ca.tool_proficiencies), '') AS tool_proficiencies,
+            ca.name AS subclass_name,
+            COALESCE(sp.speed, sp_parent.speed, r.base_speed) AS race_base_speed,
+            COALESCE(r.darkvision, false) AS race_darkvision,
+            ${hpBonusSql('ch')} AS hp_bonus,
             pu.name AS upbringing_name, pu.flavor AS upbringing_flavor, pu.bio AS upbringing_bio, pu.perk AS upbringing_perk,
             pl.name AS lifestyle_name, pl.flavor AS lifestyle_flavor, pl.bio AS lifestyle_bio, pl.perk AS lifestyle_perk,
             po.name AS outlook_name, po.flavor AS outlook_flavor, po.bio AS outlook_bio, po.perk AS outlook_perk
         FROM characters ch
+        LEFT JOIN species sp ON sp.id = ch.species_id
+        LEFT JOIN species sp_parent ON sp_parent.id = sp.parent_id
+        LEFT JOIN roles ro ON ro.id = ch.role_id
+        LEFT JOIN callings ca ON ca.id = ch.calling_id
         LEFT JOIN races r ON r.id = ch.race_id
         LEFT JOIN subraces sr ON sr.id = ch.subrace_id
-        LEFT JOIN classes cl ON cl.id = ch.class_id
-        LEFT JOIN sub_classes s ON s.id = ch.subclass_id
         LEFT JOIN personality_options pu ON pu.id = ch.upbringing_id
         LEFT JOIN personality_options pl ON pl.id = ch.lifestyle_id
         LEFT JOIN personality_options po ON po.id = ch.outlook_id
@@ -56,6 +75,22 @@ export async function getSheetCharacter(charId, userId) {
             WHERE pm.character_id = ch.id AND dm.user_id = $2 AND dm.role = 'dm'))`,
         [charId, userId]
     );
+    // API field subclass_id means calling id; keep legacy column value separately
+    if (rows[0]) {
+        rows[0].legacy_subclass_id = rows[0].subclass_id;
+        rows[0].subclass_id = rows[0].calling_id;
+    }
+    // spell_stat = role main stat; casting_stat = pack role spell_stat (short key), else DB subclass/class, else primary
+    if (rows[0]) {
+        const role = getRole(rows[0].role_id);
+        const primary = scoreKey(role?.primary_stat);
+        rows[0].spell_stat = primary ?? 'str';
+        rows[0].casting_stat = scoreKey(role?.spell_stat)
+            ?? scoreKey(rows[0].subclass_spellcasting_stat)
+            ?? scoreKey(rows[0].class_spellcasting_stat)
+            ?? primary
+            ?? 'str';
+    }
     // Sheet shows the effective max HP (Rune-Hardened etc.); stored max_hp stays the base for level-up math
     if (rows[0]) rows[0].max_hp = Number(rows[0].max_hp) + Number(rows[0].hp_bonus || 0) + await conHpBonus(rows[0]); // con is still the base here
     // spells: { cantrips, prepared, known } (null = no cap)
@@ -67,13 +102,14 @@ export async function getSheetCharacter(charId, userId) {
 export async function listCharactersForUser(userId) {
     const { rows } = await pool.query(
         `SELECT ch.id, ch.name, ch.portrait_url,
-                r.name AS race,
-                c.name AS class,
-                sc.name AS subclass
+                COALESCE(sp_parent.name, sp.name) AS race,
+                ro.name AS class,
+                ca.name AS subclass
         FROM characters ch
-        LEFT JOIN races r ON ch.race_id = r.id
-        LEFT JOIN classes c ON ch.class_id = c.id
-        LEFT JOIN sub_classes sc ON ch.subclass_id = sc.id
+        LEFT JOIN species sp ON sp.id = ch.species_id
+        LEFT JOIN species sp_parent ON sp_parent.id = sp.parent_id
+        LEFT JOIN roles ro ON ro.id = ch.role_id
+        LEFT JOIN callings ca ON ca.id = ch.calling_id
         WHERE ch.user_id = $1
         ORDER BY ch.created_at DESC`,
         [userId]
@@ -135,18 +171,23 @@ export async function deleteCharacter(charId, userId) {
 // Save a finished draft. Returns the new id
 export async function createCharacter(userId, draft, final, plus2, plus1, maxHp) {
     const m = draft.magic ?? {}; // step 4: alignment, personality states, race element
+    const species = await resolveSpeciesWrite(draft.race_id, draft.subrace_id ?? null);
+    if (!species) throw new Error('Unknown species');
+    const role = await resolveRoleWrite(draft.class_id, draft.subclass_id ?? null);
+    if (!role) throw new Error('Unknown role');
     const { rows } = await pool.query(
         `INSERT INTO characters
-           (user_id, name, race_id, subrace_id, class_id, subclass_id,
+           (user_id, name, race_id, subrace_id, class_id, subclass_id, species_id, role_id, calling_id,
             str, dex, con, "int", wis, cha, luc, spd, plus2_stat, plus1_stat, max_hp, current_hp,
             skill_proficiencies, level, feature_choices, last_swap_level,
             alignment_code, upbringing_id, lifestyle_id, outlook_id, upbringing_state, lifestyle_state, outlook_state, race_element_id, race_spell_id)
-         VALUES ($1,$2,$3,$20,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$21::jsonb,$19,
-                 $22,$23,$24,$25,$26,$27,$28,$29,$30)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24::jsonb,$23,
+                 $25,$26,$27,$28,$29,$30,$31,$32,$33)
          RETURNING id`,
-        [userId, draft.name, draft.race_id, draft.class_id, draft.subclass_id,
+        [userId, draft.name, species.race_id, species.subrace_id, role.class_id, null,
+         species.species_id, role.role_id, role.calling_id,
          final.str, final.dex, final.con, final.int, final.wis, final.cha, final.luc, final.spd,
-         plus2, plus1, maxHp, maxHp, draft.skill_proficiencies ?? [], draft.level ?? 1, draft.subrace_id ?? null,
+         plus2, plus1, maxHp, maxHp, draft.skill_proficiencies ?? [], draft.level ?? 1,
          JSON.stringify(draft.feature_choices ?? {}),
          m.alignment_code ?? null, m.upbringing_id ?? null, m.lifestyle_id ?? null, m.outlook_id ?? null,
          m.upbringing_state ?? null, m.lifestyle_state ?? null, m.outlook_state ?? null, m.race_element_id ?? null, m.race_spell_id ?? null]
@@ -160,24 +201,34 @@ export async function createCharacter(userId, draft, final, plus2, plus1, maxHp)
 
 export async function getEditCharacter(charId, userId) {
     const { rows } = await pool.query(
-        `SELECT id, name, race_id, subrace_id, class_id, subclass_id, level, str, dex, con, "int", wis, cha, luc, spd,
-                skill_proficiencies, feature_choices, portrait_url, boost_repick_available, last_swap_level, alignment_code
-         FROM characters WHERE id = $1 AND user_id = $2`,
+        `SELECT ch.id, ch.name,
+                COALESCE(sp.parent_id, sp.id, ch.race_id) AS race_id,
+                CASE WHEN sp.parent_id IS NOT NULL THEN sp.id ELSE ch.subrace_id END AS subrace_id,
+                COALESCE(ch.role_id, ch.class_id) AS class_id,
+                ch.calling_id AS subclass_id,
+                ch.class_id AS legacy_class_id, ch.subclass_id AS legacy_subclass_id,
+                ch.level, ch.str, ch.dex, ch.con, ch."int", ch.wis, ch.cha, ch.luc, ch.spd,
+                ch.skill_proficiencies, ch.feature_choices, ch.portrait_url, ch.boost_repick_available, ch.last_swap_level, ch.alignment_code
+         FROM characters ch
+         LEFT JOIN species sp ON sp.id = ch.species_id
+         WHERE ch.id = $1 AND ch.user_id = $2`,
         [charId, userId]
     );
     const ch = rows[0];
-    if (ch?.class_id) {
+    if (ch?.legacy_class_id) {
         // base scores stay editable; effective = base + Ability Boost / Ascent picks, capped
-        ch.effective_scores = effectiveScores(ch, await getBoostRows(ch.class_id), ch.feature_choices ?? {}, ch.level);
+        ch.effective_scores = effectiveScores(ch, await getBoostRows(ch.role_id ?? ch.legacy_class_id), ch.feature_choices ?? {}, ch.level);
         ch.stat_cap = statCap(ch.level);
     }
     return ch;
 }
 
 export async function updateNameAndRace(charId, userId, name, raceId, subraceId = null) {
+    const species = await resolveSpeciesWrite(raceId, subraceId);
+    if (!species) throw new Error('Unknown species');
     await pool.query(
-        `UPDATE characters SET name = $1, race_id = $2, subrace_id = $5 WHERE id = $3 AND user_id = $4`,
-        [name, raceId, charId, userId, subraceId]
+        `UPDATE characters SET name = $1, race_id = $2, subrace_id = $5, species_id = $6 WHERE id = $3 AND user_id = $4`,
+        [name, species.race_id, charId, userId, species.subrace_id, species.species_id]
     );
 }
 
@@ -196,69 +247,91 @@ export async function updatePortrait(charId, userId, portraitUrl) {
 
 // featureChoices (already checked by checkFeatureChoices) replaces the saved picks when given
 export async function updateClass(charId, userId, classId, subclassId, featureChoices) {
+    const role = await resolveRoleWrite(classId, subclassId);
+    if (!role) throw new Error('Unknown role');
+    const legacyClassId = role.class_id;
+    // subclass_id column kept but no longer dual-written
     if (featureChoices !== undefined) {
         await pool.query(
             `UPDATE characters
-                SET skill_proficiencies = CASE WHEN class_id IS DISTINCT FROM $1
+                SET skill_proficiencies = CASE WHEN role_id IS DISTINCT FROM $5
                         THEN COALESCE((SELECT skill_fixed FROM classes WHERE id = $1), '{}')
                         ELSE skill_proficiencies END,
-                    feature_choices = $5::jsonb,
-                    class_id = $1, subclass_id = $2
-              WHERE id = $3 AND user_id = $4`,
-            [classId, subclassId, charId, userId, JSON.stringify(featureChoices)]
+                    feature_choices = $4::jsonb,
+                    class_id = $1, role_id = $5, calling_id = $6
+              WHERE id = $2 AND user_id = $3`,
+            [legacyClassId, charId, userId, JSON.stringify(featureChoices), role.role_id, role.calling_id]
         );
         return;
     }
     await pool.query(
-        // changing class resets skills to the new class's fixed skills (old picks may not be valid)
         `UPDATE characters
-            SET skill_proficiencies = CASE WHEN class_id IS DISTINCT FROM $1
+            SET skill_proficiencies = CASE WHEN role_id IS DISTINCT FROM $4
                     THEN COALESCE((SELECT skill_fixed FROM classes WHERE id = $1), '{}')
                     ELSE skill_proficiencies END,
-                -- class change clears all feature picks; subclass change clears only subclass picks
                 feature_choices = CASE
-                    WHEN class_id IS DISTINCT FROM $1 THEN '{}'::jsonb
-                    WHEN subclass_id IS DISTINCT FROM $2 THEN
+                    WHEN role_id IS DISTINCT FROM $4 THEN '{}'::jsonb
+                    WHEN calling_id IS DISTINCT FROM $5 THEN
                         (SELECT COALESCE(jsonb_object_agg(k, v), '{}'::jsonb)
                            FROM jsonb_each(feature_choices) AS e(k, v) WHERE k NOT LIKE 'subclass:%')
                     ELSE feature_choices END,
-                class_id = $1, subclass_id = $2
-          WHERE id = $3 AND user_id = $4`,
-        [classId, subclassId, charId, userId]
+                class_id = $1, role_id = $4, calling_id = $5
+          WHERE id = $2 AND user_id = $3`,
+        [legacyClassId, charId, userId, role.role_id, role.calling_id]
     );
 }
 
 // One class/subclass feature as it applies to this character (only if it belongs to the
 // character's current class or subclass). source is 'class' or 'subclass'. Or undefined.
 export async function getCharacterFeature(charId, userId, source, featureId) {
-    const table = source === 'class' ? 'class_features' : 'subclass_features';
-    const ownerCol = source === 'class' ? 'class_id' : 'subclass_id';
+    // Pack features.id via role_features / calling_features (API source still class|subclass)
+    if (source === 'class') {
+        const { rows } = await pool.query(
+            `SELECT f.id, f.name, rf.level, rf.options, rf.choice_count, ch.level AS char_level
+               FROM role_features rf
+               JOIN features f ON f.id = rf.feature_id
+               JOIN characters ch ON ch.role_id = rf.role_id
+              WHERE f.id = $1 AND ch.id = $2 AND ch.user_id = $3`,
+            [featureId, charId, userId]
+        );
+        return rows[0];
+    }
     const { rows } = await pool.query(
-        `SELECT f.id, f.name, f.level, f.options, f.choice_count, ch.level AS char_level
-           FROM ${table} f
-           JOIN characters ch ON ch.${ownerCol} = f.${ownerCol}
+        `SELECT f.id, f.name, cf.level, cf.options, cf.choice_count, ch.level AS char_level
+           FROM calling_features cf
+           JOIN features f ON f.id = cf.feature_id
+           JOIN characters ch ON ch.calling_id = cf.calling_id
           WHERE f.id = $1 AND ch.id = $2 AND ch.user_id = $3`,
         [featureId, charId, userId]
     );
     return rows[0];
 }
 
-// Checks a whole set of feature picks { "<source>:<feature id>": [values] } against a class,
-// subclass and level. Subclass picks only count from SUBCLASS_LEVEL up. Empty picks are dropped.
+// Checks feature picks against pack create-time choices (scheme A keys) plus pack
+// Divine Blessing rows (scheme A keys). Empty picks are dropped.
+// roleId/callingId = content pack ids; legacyClassId = classes.id (mapped to role for boosts).
 // Returns { choices } (the cleaned set) or { error }.
-export async function checkFeatureChoices(classId, subclassId, level, picks) {
+export async function checkFeatureChoices(roleId, callingId, level, picks, legacyClassId = null) {
     if (picks == null) return { choices: {} };
     if (typeof picks !== 'object' || Array.isArray(picks)) return { error: 'feature_choices must be an object' };
-    const { rows } = await pool.query(
-        `SELECT 'class' AS source, id, name, level, options, choice_count
-           FROM class_features WHERE class_id = $1 AND cardinality(options) > 0
-         UNION ALL
-         SELECT 'subclass' AS source, id, name, level, options, choice_count
-           FROM subclass_features
-          WHERE subclass_id = $2 AND $3::int >= ${SUBCLASS_LEVEL} AND cardinality(options) > 0`,
-        [classId, subclassId, level]
-    );
-    const byKey = new Map(rows.map((f) => [`${f.source}:${f.id}`, f]));
+    const byKey = new Map(choiceFeaturesForRole(roleId, callingId, level).map((f) => [f.key, f]));
+    const boostId = roleId ?? legacyClassId;
+    if (boostId != null && boostId !== '') {
+        const boostRows = await getBoostRows(boostId);
+        for (const r of boostRows) {
+            if (Number(r.level) > Number(level)) continue;
+            const key = r.key || (String(r.id).includes(':') ? String(r.id) : `class:${r.id}`);
+            byKey.set(key, {
+                source: 'class',
+                id: r.id,
+                key,
+                name: r.name,
+                level: Number(r.level),
+                options: r.options,
+                choice_count: 1,
+            });
+        }
+    }
     const choices = {};
     for (const [key, raw] of Object.entries(picks)) {
         const vals = (Array.isArray(raw) ? raw : [raw]).filter((v) => v !== '' && v != null);
@@ -274,11 +347,11 @@ export async function checkFeatureChoices(classId, subclassId, level, picks) {
         if (new Set(vals).size !== vals.length) return { error: 'Each option can only be picked once' };
         choices[key] = vals;
     }
-    // Option pools (several choice rows with the same name, e.g. Battle Drills at 3/9/15): no option twice across the pool
+    // Option pools (several choice rows with the same name): no option twice across the pool
     const seen = new Map();
     for (const [key, vals] of Object.entries(choices)) {
         const f = byKey.get(key);
-        if (f.name === 'Ability Boost') continue; // boost rows repeat; checkBoostRules handles repeats
+        if (f.name === 'Divine Blessing' || f.name === 'Ability Boost' || f.name === 'Primordial Ascent') continue;
         const pool = `${f.source}:${f.name}`;
         const taken = seen.get(pool) ?? new Set();
         for (const v of vals) {
@@ -317,9 +390,9 @@ export async function applyBoostResult(charId, userId, result) {
 // level, con, max_hp and class hit die for the level-up math, or undefined
 export async function getLevelInfo(charId, userId) {
     const { rows } = await pool.query(
-        `SELECT ch.level, ch.con, ch.max_hp, cl.hitpoint_die
+        `SELECT ch.level, ch.con, ch.max_hp, ro.hit_die AS hitpoint_die
            FROM characters ch
-           JOIN classes cl ON cl.id = ch.class_id
+           LEFT JOIN roles ro ON ro.id = ch.role_id
           WHERE ch.id = $1 AND ch.user_id = $2`,
         [charId, userId]
     );
@@ -336,32 +409,40 @@ export async function updateLevel(charId, userId, level, newMax) {
     // clamp to the effective max at the new level (subclass bonus only from SUBCLASS_LEVEL up)
     await pool.query(
         `UPDATE characters
-            SET level = $1, max_hp = $2, current_hp = LEAST(current_hp, ${effMaxSql('$2::int', 'characters', '$5::int', '$1::int', `CASE WHEN $1::int < ${SUBCLASS_LEVEL} THEN NULL ELSE characters.subclass_id END`)}),
+            SET level = $1, max_hp = $2, current_hp = LEAST(current_hp, ${effMaxSql('$2::int', 'characters', '$5::int', '$1::int', `CASE WHEN $1::int < ${SUBCLASS_LEVEL} THEN NULL ELSE characters.calling_id END`)}),
                 feature_choices = CASE WHEN $1::int < ${SUBCLASS_LEVEL} THEN
                         (SELECT COALESCE(jsonb_object_agg(k, v), '{}'::jsonb)
                            FROM jsonb_each(feature_choices) AS e(k, v) WHERE k NOT LIKE 'subclass:%')
                     ELSE feature_choices END,
-                subclass_id = CASE WHEN $1::int < ${SUBCLASS_LEVEL} THEN NULL ELSE subclass_id END
+                calling_id = CASE WHEN $1::int < ${SUBCLASS_LEVEL} THEN NULL ELSE calling_id END
           WHERE id = $3 AND user_id = $4`,
         [level, newMax, charId, userId, conBonus]
     );
 }
 
-export async function getActionFeatures(classId, subclassId, level, raceId) {
+export async function getActionFeatures(roleId, callingId, level, speciesId) {
     const { rows } = await pool.query(
-        `SELECT 'class' AS source, id, name, description, level, action_type, uses, dice, ember_cost, embers_per_die, cost_scaling, dice_scaling, rest_lock, kindles_slot, cracks_gained, cracks_removed, rest_uses, uses_scaling, on_weapon_hit
-        FROM class_features
-        WHERE class_id = $1 AND level <= $3 AND (action_type IS NOT NULL OR ember_cost IS NOT NULL OR rest_uses IS NOT NULL)
+        `SELECT 'class' AS source, f.id, f.name, COALESCE(rf.description, f.description) AS description, rf.level,
+                rf.action_type, rf.uses, rf.dice, rf.ember_cost, rf.embers_per_die, rf.cost_scaling, rf.dice_scaling,
+                rf.rest_lock, rf.kindles_slot, rf.cracks_gained, rf.cracks_removed, rf.rest_uses, rf.uses_scaling, rf.on_weapon_hit
+        FROM role_features rf
+        JOIN features f ON f.id = rf.feature_id
+        WHERE rf.role_id = $1 AND rf.level <= $3 AND (rf.action_type IS NOT NULL OR rf.ember_cost IS NOT NULL OR rf.rest_uses IS NOT NULL)
         UNION ALL
-        SELECT 'subclass' AS source, id, name, description, level, action_type, uses, dice, ember_cost, embers_per_die, cost_scaling, dice_scaling, rest_lock, kindles_slot, cracks_gained, cracks_removed, rest_uses, uses_scaling, on_weapon_hit
-        FROM subclass_features
-        WHERE subclass_id = $2 AND level <= $3 AND (action_type IS NOT NULL OR ember_cost IS NOT NULL OR rest_uses IS NOT NULL)
+        SELECT 'subclass' AS source, f.id, f.name, COALESCE(cf.description, f.description) AS description, cf.level,
+                cf.action_type, cf.uses, cf.dice, cf.ember_cost, cf.embers_per_die, cf.cost_scaling, cf.dice_scaling,
+                cf.rest_lock, cf.kindles_slot, cf.cracks_gained, cf.cracks_removed, cf.rest_uses, cf.uses_scaling, cf.on_weapon_hit
+        FROM calling_features cf
+        JOIN features f ON f.id = cf.feature_id
+        WHERE cf.calling_id = $2 AND cf.level <= $3 AND (cf.action_type IS NOT NULL OR cf.ember_cost IS NOT NULL OR cf.rest_uses IS NOT NULL)
         UNION ALL
-        SELECT 'race' AS source, id, name, description, level, action_type, uses, dice, NULL::int, false, NULL::jsonb, NULL::jsonb, NULL::text, false, 0, 0, NULL::int, NULL::jsonb, false
-        FROM race_lineage_bonuses
-        WHERE race_id = $4 AND level <= $3 AND action_type IS NOT NULL
+        SELECT 'race' AS source, f.id, f.name, COALESCE(sf.description, f.description) AS description, sf.level,
+                sf.action_type, sf.uses, sf.dice, NULL::int, false, NULL::jsonb, NULL::jsonb, NULL::text, false, 0, 0, NULL::int, NULL::jsonb, false
+        FROM species_features sf
+        JOIN features f ON f.id = sf.feature_id
+        WHERE sf.species_id = $4 AND sf.level <= $3 AND sf.action_type IS NOT NULL
         ORDER BY level, name`,
-        [classId, subclassId, level, raceId]
+        [roleId, callingId, level, speciesId]
     );
     return rows;
 }

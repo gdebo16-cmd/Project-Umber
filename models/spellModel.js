@@ -37,7 +37,7 @@ export async function getLearnedSpells(charId) {
          LEFT JOIN spell_element el ON el.id = s.element_id
          WHERE c.id = $1 AND NOT EXISTS (SELECT 1 FROM character_spells x WHERE x.character_id = c.id AND x.spell_id = s.id AND x.is_learned)
          UNION ALL
-         -- class/subclass bonus spells (class_spells.is_bonus, e.g. Soulbrand, Mark of Possession): always known and prepared, never counted
+         -- role/calling bonus spells (role_spells.is_bonus, e.g. Soulbrand, Mark of Possession): always known and prepared, never counted
          SELECT DISTINCT ON (s.id) s.id, s.name, s.base_level, s.base_damage_dice, s.opponent_save_roll, s.attack_type, s.base_to_hit_modifier,
                 s.range, s.duration, s.casting_time, s.focus_level, s.base_description AS description, s.beam_scaling, s.action_type, s.heal_dice, s.heal_add_mod,
                 st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name,
@@ -46,7 +46,7 @@ export async function getLearnedSpells(charId) {
                 true, true, false, false AS is_racial, true AS is_bonus,
                 ab.band AS chart_band
          FROM characters c
-         JOIN class_spells b ON b.is_bonus AND b.class_id = c.class_id AND (b.subclass_id IS NULL OR b.subclass_id = c.subclass_id) AND b.min_level <= c.level
+         JOIN role_spells b ON b.is_bonus AND b.role_id = c.role_id AND (b.calling_id IS NULL OR b.calling_id = c.calling_id) AND b.min_level <= c.level
          JOIN spells s ON s.id = b.spell_id
          LEFT JOIN spell_state st ON st.id = s.state_id
          LEFT JOIN spell_alignment al ON al.id = s.alignment_id
@@ -77,36 +77,36 @@ export async function getAllSpells() {
 }
 
 // alignmentCode (optional): adds chart_band, the character's band for each spell's colour square
-export async function getSpellsForCharacter(classId, subclassId, level, alignmentCode = null) {
+export async function getSpellsForCharacter(roleId, callingId, level, alignmentCode = null) {
     const { rows } = await pool.query(
         `SELECT s.*, s.base_description AS description, MIN(cs.min_level) AS unlock_level,
                 st.name AS state_name, al."Name" AS alignment_name, el.name AS element_name, ab.band AS chart_band
-         FROM class_spells cs
+         FROM role_spells cs
          JOIN spells s ON s.id = cs.spell_id
          LEFT JOIN spell_state st ON st.id = s.state_id
          LEFT JOIN spell_alignment al ON al.id = s.alignment_id
          LEFT JOIN spell_element el ON el.id = s.element_id
          LEFT JOIN alignment_bands ab ON ab.alignment_code = $4 AND ab.color_square = al.chart_square
-         WHERE cs.class_id = $1 AND (cs.subclass_id IS NULL OR cs.subclass_id = $2) AND cs.min_level <= $3
+         WHERE cs.role_id = $1 AND (cs.calling_id IS NULL OR cs.calling_id = $2) AND cs.min_level <= $3
            -- bonus spells are granted, not learned: leave them (and any list copy of them) out of the book
-           AND NOT EXISTS (SELECT 1 FROM class_spells b WHERE b.is_bonus AND b.spell_id = s.id AND b.class_id = $1 AND (b.subclass_id IS NULL OR b.subclass_id = $2))
+           AND NOT EXISTS (SELECT 1 FROM role_spells b WHERE b.is_bonus AND b.spell_id = s.id AND b.role_id = $1 AND (b.calling_id IS NULL OR b.calling_id = $2))
          GROUP BY s.id, st.name, al."Name", el.name, ab.band
          ORDER BY s.base_level, s.name`,
-        [classId, subclassId, level, alignmentCode]
+        [roleId, callingId, level, alignmentCode]
     );
     return rows;
 }
-// Slot counts for a class (and subclass) at a level from class_spell_slots: [1st, 2nd, ...].
-// Subclass rows (subclass_id set) apply when the character's subclass matches, and replace the base-class rows.
-// [] = no slots at this level: either none yet (Paladin L1) or no slot rows at all (non-casters like Warrior).
-export async function getClassSlots(classId, level, subclassId = null) {
+// Slot counts for a role (and calling) at a level from role_spell_slots: [1st, 2nd, ...].
+// Calling rows (calling_id set) apply when the character's calling matches, and replace the base-role rows.
+// [] = no slots at this level: either none yet (Templar L1) or no slot rows at all (non-casters like Warrior).
+export async function getClassSlots(roleId, level, callingId = null) {
     const { rows } = await pool.query(
-        `SELECT slot_level, slots, level, subclass_id FROM class_spell_slots
-         WHERE class_id = $1 AND (subclass_id IS NULL OR subclass_id = $3) AND level <= $2`,
-        [classId, level, subclassId]
+        `SELECT slot_level, slots, level, calling_id FROM role_spell_slots
+         WHERE role_id = $1 AND (calling_id IS NULL OR calling_id = $3) AND level <= $2`,
+        [roleId, level, callingId]
     );
     if (!rows.length) return [];
-    const own = rows.some((r) => r.subclass_id !== null) ? rows.filter((r) => r.subclass_id !== null) : rows;
+    const own = rows.some((r) => r.calling_id !== null) ? rows.filter((r) => r.calling_id !== null) : rows;
     const slots = [];
     for (const r of own.filter((r) => Number(r.level) === Number(level))) slots[r.slot_level - 1] = r.slots;
     return Array.from(slots, (n) => n || 0);

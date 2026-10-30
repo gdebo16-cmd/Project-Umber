@@ -16,12 +16,12 @@ export async function getCharacter(req, res) {
     if (!character) return res.status(404).json({ error: 'Character...What character?' });
 
     const charId = character.id;
-    character.spell_slots = await getClassSlots(character.class_id, character.level, character.subclass_id);
+    character.spell_slots = await getClassSlots(character.role_id, character.level, character.calling_id);
     const ownedArmor = await Inventory.getOwnedArmor(charId);
     const ownedWeapons = await Inventory.getOwnedWeapons(charId);
     const ownedItems = await Inventory.getOwnedItems(charId);
     const learnedSpells = await getLearnedSpells(charId);
-    const actionFeatures = await Characters.getActionFeatures(character.class_id, character.subclass_id, character.level, character.race_id);
+    const actionFeatures = await Characters.getActionFeatures(character.role_id, character.calling_id, character.level, character.species_id);
     res.json({ character, ownedArmor, ownedWeapons, ownedItems, learnedSpells, actionFeatures });
 }
 

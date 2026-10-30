@@ -12,8 +12,8 @@ export async function getInventory(req, res) {
 
     res.json({
         character: { id: ch.id, name: ch.name },
-        armor: await Inventory.listArmorForCharacter(ch.class_id, ch.subclass_id, ch.level),
-        weapons: await Inventory.listWeaponsForCharacter(ch.class_id, ch.subclass_id, ch.level),
+        armor: await Inventory.listArmorForCharacter(ch.role_id, ch.calling_id, ch.level),
+        weapons: await Inventory.listWeaponsForCharacter(ch.role_id, ch.calling_id, ch.level),
         items: await Inventory.listItems(),
         ...(await Inventory.getOwnedIds(charId)),
     });

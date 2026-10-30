@@ -1,16 +1,17 @@
 // Rune Weaver: rune catalog, inscribing and removing runes on owned items, and the runed weapon.
 // Items are character_weapons rows (kind 'weapon') or character_armor rows (kind 'armor', which covers shields).
 import pool from '../db.js';
-import { RUNE_WEAVER, runesPerItem, activeRunes, WARDING_TYPES, runeFitsItem } from '../utils/runeLimits.js'; /*prep-done*/
+import { RUNE_WEAVER_NAMES, runesPerItem, activeRunes, WARDING_TYPES, runeFitsItem } from '../utils/runeLimits.js'; /*prep-done*/
 
 // the inscriber: must be a Rune Weaver of level 3+
 async function getInscriber(db, charId) {
     const { rows: [ch] } = await db.query(
-        `SELECT ch.id, ch.level, ch.runed_weapon_item_id, s.name AS subclass_name
-           FROM characters ch LEFT JOIN sub_classes s ON s.id = ch.subclass_id WHERE ch.id = $1`, [charId]);
+        `SELECT ch.id, ch.level, ch.runed_weapon_item_id, ca.name AS calling_name
+           FROM characters ch LEFT JOIN callings ca ON ca.id = ch.calling_id WHERE ch.id = $1`, [charId]);
     return ch;
 }
-const isRuneWeaver = (ch) => ch?.subclass_name === RUNE_WEAVER && ch.level >= 3;
+// Pack renamed Rune Weaver -> Tome of Inscription; keep both names for leftover DB callings.
+const isRuneWeaver = (ch) => RUNE_WEAVER_NAMES.includes(ch?.calling_name) && ch.level >= 3;
 
 export async function listRunes() {
     const { rows } = await pool.query(`SELECT * FROM runes ORDER BY min_level, name`);

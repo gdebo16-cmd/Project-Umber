@@ -1,10 +1,17 @@
-// Ability Boost / Primordial Blessing / Primordial Ascent rules (00-shared-frame §3, rework-2026-10-16/blessings.md).
+// Divine Blessing (pack) + Primordial Blessing rules (00-shared-frame §3, rework-2026-10-16/blessings.md).
 // Picks live in characters.feature_choices like any other choice; base scores stay in the str..cha columns.
+// Pack schedule is Divine Blessing at 4/6/10/12/16/18 — no Primordial Ascent in the pack.
+import { primordialBlessingsFromPack, roleProficiencyContext, boostRowsForRole, getRole } from '../models/content.js';
+import { roleIdForLegacyClass } from '../models/idMap.js';
 import pool from '../db.js';
 
 export const KEPT_BOOST = 'Kept boost (already in scores)';
-export const BOOST_ROWS = ['Ability Boost', 'Primordial Ascent'];
+export const BOOST_ROWS = ['Divine Blessing'];
 const STATS = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+
+function rowKey(r) {
+    return r.key || (String(r.id).includes(':') ? String(r.id) : `class:${r.id}`);
+}
 
 // Score cap at a level: 20; 22 from 19; 24 from 22; 26 from 29 (Cap Rise rows)
 export function statCap(level) {
@@ -28,20 +35,25 @@ export function parseBlessingPick(value) {
     return { name: v, stat: null };
 }
 
-// Boost/Ascent rows of a class, oldest first
-export async function getBoostRows(classId) {
-    const { rows } = await pool.query(
-        `SELECT id, level, name, options FROM class_features WHERE class_id = $1 AND name = ANY($2) ORDER BY level, id`,
-        [classId, BOOST_ROWS]
-    );
-    return rows;
+// Pack Divine Blessing rows for a role id, or for a legacy class id (mapped via idMap).
+export async function getBoostRows(classOrRoleId) {
+    if (classOrRoleId == null || classOrRoleId === '') return [];
+    let role = getRole(classOrRoleId);
+    if (!role) {
+        const roleId = await roleIdForLegacyClass(classOrRoleId);
+        if (roleId != null) role = getRole(roleId);
+    }
+    return role ? boostRowsForRole(role.id) : [];
 }
 
 // The character's boost picks in level order: [{ key, level, name, value }]
 function boostPicks(rows, choices, level) {
     return rows
         .filter((r) => Number(r.level) <= Number(level))
-        .map((r) => ({ key: `class:${r.id}`, level: Number(r.level), name: r.name, value: choices?.[`class:${r.id}`]?.[0] }))
+        .map((r) => {
+            const key = rowKey(r);
+            return { key, level: Number(r.level), name: r.name, value: choices?.[key]?.[0] };
+        })
         .filter((p) => p.value);
 }
 
@@ -62,8 +74,10 @@ export function effectiveScores(base, rows, choices, level) {
 
 // Adds base_<stat> and overrides str..cha with effective scores (sheet). Mutates and returns ch.
 export async function withEffectiveScores(ch) {
-    if (!ch?.class_id) return ch;
-    const rows = await getBoostRows(ch.class_id);
+    if (!ch) return ch;
+    const id = ch.role_id ?? ch.class_id;
+    if (id == null) return ch;
+    const rows = await getBoostRows(id);
     const eff = effectiveScores(ch, rows, ch.feature_choices ?? {}, ch.level);
     for (const s of STATS) { ch[`base_${s}`] = ch[s]; ch[s] = eff[s]; }
     ch.stat_cap = statCap(ch.level);
@@ -105,7 +119,7 @@ export async function checkBoostRules({ classId, subclassId, level, base, choice
     // kept boosts: only from the migration; changing one uses the single free re-pick
     let usedRepick = false;
     for (const r of rows) {
-        const key = `class:${r.id}`;
+        const key = rowKey(r);
         const was = prev?.[key]?.[0];
         const now = choices?.[key]?.[0];
         if (now === KEPT_BOOST && was !== KEPT_BOOST) return { error: `${KEPT_BOOST} can't be picked; choose a boost or a blessing` };
@@ -129,22 +143,33 @@ export async function checkBoostRules({ classId, subclassId, level, base, choice
 
 // Class/subclass info for blessing prerequisites, and the blessings by name
 async function loadPrereqContext(classId, subclassId) {
-    const { rows: [info] } = await pool.query(
-        `SELECT COALESCE(NULLIF(s.caster_type, ''), NULLIF(c.caster_type, ''), 'none') NOT IN ('none', 'body') AS caster,   -- Body Magic doesn't count as a caster for prerequisites
-                concat_ws(', ', c.armor_proficiencies, s.armor_proficiencies) AS armor,
-                concat_ws(', ', c.weapon_proficiencies, s.weapon_proficiencies) AS weapons,
-                (SELECT MIN(level) FROM class_features WHERE class_id = c.id AND name LIKE 'Extra Attack%') AS extra_attack_level
-           FROM classes c LEFT JOIN sub_classes s ON s.id = $2 AND s.class_id = c.id WHERE c.id = $1`,
-        [classId, subclassId]
-    );
-    const ctx = { caster: !!info?.caster, armor: info?.armor ?? '', weapons: info?.weapons ?? '', extraAttackLevel: info?.extra_attack_level };
-    const { rows: blessings } = await pool.query(`SELECT name, prerequisite, repeatable_max FROM primordial_blessings`);
+    // Extra Attack level from role_features; armor/weapons/caster + blessings from pack.
+    const roleId = await roleIdForLegacyClass(classId);
+    const { rows: [info] } = roleId
+        ? await pool.query(
+            `SELECT MIN(rf.level) AS extra_attack_level
+               FROM role_features rf
+               JOIN features f ON f.id = rf.feature_id
+              WHERE rf.role_id = $1 AND f.name LIKE 'Extra Attack%'`,
+            [roleId]
+          )
+        : { rows: [null] };
+    // subclassId here is legacy; calling id is not always available — pack role profs cover base prereqs
+    const packCtx = roleId ? roleProficiencyContext(roleId, null) : { armor: '', weapons: '', caster: false };
+    const ctx = {
+        caster: !!packCtx.caster,
+        armor: packCtx.armor ?? '',
+        weapons: packCtx.weapons ?? '',
+        extraAttackLevel: info?.extra_attack_level,
+    };
+    const blessings = primordialBlessingsFromPack();
     const byName = new Map(blessings.map((b) => [b.name, b]));
     return { ctx, byName };
 }
 
 // Walk boost picks in level order: caps, prerequisites (with the scores at that point), repeat limits.
 // scores (copied, may be null) = base scores. Returns an error message or null.
+// Divine Blessing uses +2 score picks (same as legacy Ability Boost). Pack has no Primordial Ascent (+1).
 function walkPicks(picks, { ctx, byName, cap, scores: base, taken = new Map() }) {
     const scores = base ? { ...base } : null;
     for (const p of picks) {
@@ -196,12 +221,12 @@ export async function allowedBoostOptions({ classId, subclassId, level, base, ch
     const kept = [];
     const out = {};
     rows.forEach((r, i) => {
-        const key = `class:${r.id}`;
+        const key = rowKey(r);
         const current = choices?.[key]?.[0];
         // blessings picked on later rows count toward the repeat limit too
         const later = new Map();
         for (const lr of rows.slice(i + 1)) {
-            const name = blessingOf(choices?.[`class:${lr.id}`]?.[0]);
+            const name = blessingOf(choices?.[rowKey(lr)]?.[0]);
             if (name) later.set(name, (later.get(name) ?? 0) + 1);
         }
         out[key] = (r.options ?? []).filter((o) => {

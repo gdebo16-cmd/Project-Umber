@@ -1,33 +1,58 @@
-// Race database reads.
+// Species database reads, shaped like the old races/subraces API for the React client.
 import pool from '../db.js';
 
 export async function listRaces() {
     const { rows } = await pool.query(
-        `SELECT r.id, r.name, r.traits, r.img_url, rt.creature_type, rt.size, rt.base_speed, rt.resistances, rt.dark_vision, (SELECT ss.name FROM spell_state ss WHERE ss.id = r.signature_state_id) AS signature_state, (SELECT json_build_object('name', sp.name, 'description', sp.base_description) FROM spells sp WHERE sp.id = r.race_spell_id) AS race_spell, (SELECT json_agg(json_build_object('name', b.name, 'description', b.description) ORDER BY b.id)
-        FROM race_lineage_bonuses b WHERE b.race_id = r.id) AS lineage_bonuses,
-        (SELECT json_agg(json_build_object('id', s.id, 'name', s.name, 'slug', s.slug, 'description', s.description, 'img_url', s.img_url) ORDER BY s.id)
-        FROM subraces s WHERE s.race_id = r.id) AS subraces
-        FROM races r
-        LEFT JOIN race_traits rt ON rt.race_id = r.id
-        ORDER BY r.name`);
+        `SELECT s.id, s.name, s.description AS traits, s.image AS img_url,
+                sz.name AS size, s.speed AS base_speed,
+                NULL::text AS creature_type,
+                NULL::text AS resistances,
+                EXISTS (
+                  SELECT 1 FROM species_features sf
+                  JOIN features f ON f.id = sf.feature_id
+                  WHERE sf.species_id = s.id AND lower(f.name) = 'darkvision'
+                ) AS dark_vision,
+                NULL::text AS signature_state,
+                NULL::json AS race_spell,
+                (
+                  SELECT json_agg(json_build_object(
+                    'name', f.name, 'description', COALESCE(f.description, '')
+                  ) ORDER BY f.name)
+                  FROM species_features sf
+                  JOIN features f ON f.id = sf.feature_id
+                  WHERE sf.species_id = s.id
+                ) AS lineage_bonuses,
+                (
+                  SELECT json_agg(json_build_object(
+                    'id', c.id, 'name', c.name, 'slug', c.key,
+                    'description', c.description, 'img_url', c.image
+                  ) ORDER BY c.sort_order NULLS LAST, c.id)
+                  FROM species c WHERE c.parent_id = s.id
+                ) AS subraces
+         FROM species s
+         JOIN sizes sz ON sz.id = s.size_id
+         WHERE s.parent_id IS NULL
+         ORDER BY s.sort_order NULLS LAST, s.name`
+    );
     return rows;
 }
 
-// Sub-races (Lupine breeds, Vellari gems) for one race
+// Child species (Lupine breeds, Vellari gems, Gehennan veins) for one parent species
 export async function listSubraces(raceId) {
     const { rows } = await pool.query(
-        `SELECT id, race_id, name, slug, description, img_url FROM subraces WHERE race_id = $1 ORDER BY id`,
+        `SELECT id, parent_id AS race_id, name, key AS slug, description, image AS img_url
+         FROM species WHERE parent_id = $1
+         ORDER BY sort_order NULLS LAST, id`,
         [raceId]
     );
     return rows;
 }
 
-// null/empty is fine; otherwise the sub-race must belong to the race. Returns the id to save or false
-export async function checkSubrace(raceId, subraceId) {
-    if (subraceId === null || subraceId === undefined || subraceId === '') return null;
-    const { rows } = await pool.query(
-        `SELECT id FROM subraces WHERE id = $1 AND race_id = $2`,
-        [Number(subraceId), Number(raceId)]
-    );
-    return rows.length ? rows[0].id : false;
+// null/empty is fine; otherwise the child must belong to the parent. Returns the id to save or false
+export function checkSubrace(raceId, subraceId) {
+  if (subraceId === null || subraceId === undefined || subraceId === '') return null;
+  const match = content.species.find(
+      (s) => s.id === Number(subraceId) && s.parent_id === Number(raceId)
+  );
+  return match ? match.id : false;
 }

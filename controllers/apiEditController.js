@@ -6,21 +6,25 @@ import { listClasses, listAllSubclasses, getSubclassClassId } from '../models/cl
 import { checkBoostRules } from '../utils/abilityBoosts.js';
 import { checkSwapRules } from '../utils/choiceRules.js';
 import { listAlignments, checkAlignmentChange } from '../models/magicModel.js';
+import { resolveRoleWrite } from '../models/idMap.js';
 
 // Boost/blessing/cap rules against what the character has saved. Returns { error } or the result for applyBoostResult.
 async function boostCheck(charId, userId, classId, subclassId, level, choices, refundAbility) {
     const saved = await Characters.getEditCharacter(charId, userId);
     const sameClass = Number(saved.class_id) === Number(classId);
     const prev = sameClass ? saved.feature_choices ?? {} : {};
+    // Client/edit payload uses role/calling ids; boost tables still key on legacy class ids
+    const role = await resolveRoleWrite(classId, subclassId);
+    if (!role?.class_id) return { error: 'Class not found' };
     const boost = await checkBoostRules({
-        classId, subclassId, level, base: saved, choices, prev,
+        classId: role.class_id, subclassId: role.subclass_id, level, base: saved, choices, prev,
         repickAvailable: !!saved.boost_repick_available,
         refundAbility,
     });
     if (boost.error) return boost;
     // swap rule: one pool swap per level gained; pick-one-of-three rows are permanent (the free re-pick is shared)
     const swap = await checkSwapRules({
-        classId, level, choices, prev,
+        classId: role.class_id, level, choices, prev,
         lastSwapLevel: saved.last_swap_level,
         repickAvailable: !!saved.boost_repick_available && !boost.usedRepick,
     });
@@ -113,7 +117,9 @@ export async function editClass(req, res) {
     // optional feature_choices { "<source>:<id>": [picks] } replace the saved picks when sent
     let featureChoices;
     if (req.body.feature_choices !== undefined) {
-        const picked = await Characters.checkFeatureChoices(class_id, subclass_id, level, req.body.feature_choices);
+        const role = await resolveRoleWrite(class_id, subclass_id);
+        if (!role?.class_id) return res.status(400).json({ error: 'Class not found' });
+        const picked = await Characters.checkFeatureChoices(role.role_id, role.calling_id, level, req.body.feature_choices, role.class_id);
         if (picked.error) return res.status(400).json({ error: picked.error });
         featureChoices = picked.choices;
     }

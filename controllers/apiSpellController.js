@@ -10,7 +10,7 @@ import { getSpellCaps, bodyMaxLevel } from '../utils/spellLimits.js'; /*prep-don
 // Body Magic has no slots: its highest level comes from the character level.
 const highestSlotFor = async (ch) => ch.caster_type === 'body'
     ? bodyMaxLevel(ch.level)
-    : getSpellSlots(ch.level, await Spells.getClassSlots(ch.class_id, ch.level, ch.subclass_id)).length;
+    : getSpellSlots(ch.level, await Spells.getClassSlots(ch.role_id, ch.level, ch.calling_id)).length;
 
 // Everything the sheet and the book need after a change:
 // learnedSpells = full rows for the Spell Book tab, learnedIds = just the ids for the book's buttons
@@ -53,7 +53,7 @@ export async function getSpellbook(req, res) {
     const charId = await ownedCharId(req, res);
     if (charId === null) return;
     const ch = await getSheetCharacter(charId, req.session.userId);
-    const allSpells = await Spells.getSpellsForCharacter(ch.class_id, ch.subclass_id, ch.level, ch.alignment_code);
+    const allSpells = await Spells.getSpellsForCharacter(ch.role_id, ch.calling_id, ch.level, ch.alignment_code);
     const highestSlot = await highestSlotFor(ch);
     const spells = allSpells.filter((s) => Number(s.base_level) <= highestSlot);
     res.json({ spells, ...(await loadLearned(charId, ch)) });

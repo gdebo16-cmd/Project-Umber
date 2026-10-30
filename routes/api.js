@@ -11,8 +11,11 @@ import { getEditCharacter, editNameAndRace, editClass, editLevel, editAbilities,
 import { getRaces, getSubraces, step1Submit, getStep2, step2Submit, getStep3, step3Submit, getStep4, step4Submit, boostOptions, clearDraft, getDraft, rollStat, selectSubclass, getStartingGear } from '../controllers/apiCreateController.js';
 import { getSpellbook, learnSpell, unlearnSpell, prepareSpell, unprepareSpell, setAction, removeAction } from '../controllers/apiSpellController.js';
 import { createCampaign, deleteCampaign, getCampaign, updateCampaign, listCampaigns, joinCampaign, setCampaignCharacter } from '../controllers/apiCampaignController.js';
+import { getContent, getSpells } from '../controllers/contentController.js';
+
 
 import { rateLimit } from 'express-rate-limit';
+
 
 const loginLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -108,6 +111,10 @@ router.get('/campaigns/:id', getCampaign);
 router.patch('/campaigns/:id', updateCampaign);
 router.delete('/campaigns/:id', deleteCampaign);
 router.put('/campaigns/:id/character', setCampaignCharacter);
+
+// game content (rulebook files)
+router.get('/content', getContent);
+router.get('/content/spells', getSpells);
 
 
 // If any route above crashes, answer with JSON instead of an HTML error page.

@@ -1,6 +1,8 @@
 // Magic access v3: alignment chart, personality picks (3 states), race element (4th affinity), spell strength bands.
-// Lookup tables: alignments, alignment_bands, spell_bands, personality_options, race_affinity_elements, sub_classes.black_gate_level
+// Lookup tables: alignments, alignment_bands, spell_bands, personality_options, race_affinity_elements
+// (callings.black_gate_level column kept but unused — Black gate is alignment-only)
 import pool from '../db.js';
+import { resolveSpeciesWrite } from './idMap.js';
 
 export const BLACK_GATE_TARGET = 'CE'; // Black gate: alignment Aligned/Attuned to CE on the chart (CE, NE, CN)
 
@@ -31,6 +33,8 @@ export async function listMagicOptions(raceId, subraceId) {
 // Human: any level-0 bless or manipulate spell of the element (Stone and Star have none, so their race starter).
 // Wyrmkin: one evoke spell per element. Every other race has a fixed races.race_spell_id, so {}.
 export async function raceSpellOptions(raceId) {
+    const species = await resolveSpeciesWrite(raceId, null);
+    const legacyRaceId = species?.race_id ?? raceId;
     const { rows } = await pool.query(
         `SELECT s.element_id, s.id, s.name, s.base_description AS description
          FROM races r
@@ -43,7 +47,7 @@ export async function raceSpellOptions(raceId) {
              OR (r.name = 'Wyrmkin' AND (e.name, s.name) IN (('Flame', 'Ember Spark'), ('Frost', 'Frost Punch'),
                                        ('Storm', 'Spark Grip'), ('Venom', 'Spit Venom'), ('Stone', 'Grit Spit'))))
          ORDER BY s.name`,
-        [raceId]
+        [legacyRaceId]
     );
     const out = {};
     for (const { element_id, ...s } of rows) (out[element_id] ??= []).push(s);
@@ -61,10 +65,10 @@ export async function checkAlignmentChange(charId, code) {
     const { rows: al } = await pool.query(`SELECT code FROM alignments WHERE code = $1`, [code]);
     if (!al.length) return 'Pick an alignment';
     const { rows } = await pool.query(
-        `SELECT c.subclass_id, c.level, bool_or(p.needs_black_gate) AS gated
+        `SELECT bool_or(p.needs_black_gate) AS gated
          FROM characters c LEFT JOIN personality_options p ON p.id IN (c.upbringing_id, c.lifestyle_id, c.outlook_id)
          WHERE c.id = $1 GROUP BY c.id`, [charId]);
-    if (rows[0]?.gated && !(await hasBlackGate(code, rows[0].subclass_id, rows[0].level))) {
+    if (rows[0]?.gated && !(await hasBlackGate(code))) {
         return 'Your background uses a Black gate pick, so the alignment must stay CE, NE or CN';
     }
     return null;
@@ -72,25 +76,28 @@ export async function checkAlignmentChange(charId, code) {
 
 // The race's listed elements (a subrace's own list when it has one)
 export async function raceElements(raceId, subraceId) {
+    // Affinity tables still use legacy races/subraces; create draft sends species ids
+    const species = await resolveSpeciesWrite(raceId, subraceId ?? null);
+    const legacyRaceId = species?.race_id ?? raceId;
+    const legacySubraceId = species ? species.subrace_id : (subraceId ?? null);
     const { rows } = await pool.query(
         `SELECT e.id, e.name FROM race_affinity_elements rae JOIN spell_element e ON e.id = rae.element_id
          WHERE rae.race_id = $1
            AND (rae.subrace_id = $2 OR (rae.subrace_id IS NULL AND NOT EXISTS
                 (SELECT 1 FROM race_affinity_elements x WHERE x.race_id = $1 AND x.subrace_id = $2)))
          ORDER BY e.name`,
-        [raceId, subraceId ?? null]
+        [legacyRaceId, legacySubraceId]
     );
     return rows;
 }
 
-// Black gate: alignment Aligned/Attuned to CE AND a Black-gated subclass at its gate level
-export async function hasBlackGate(alignmentCode, subclassId, level) {
-    if (!alignmentCode || !subclassId) return false;
+// Black gate: alignment Aligned/Attuned to CE on the chart (CE, NE, CN). Calling/level no longer required.
+export async function hasBlackGate(alignmentCode) {
+    if (!alignmentCode) return false;
     const { rows } = await pool.query(
-        `SELECT 1 FROM sub_classes sc, alignment_bands ab
-         WHERE sc.id = $1 AND sc.black_gate_level IS NOT NULL AND sc.black_gate_level <= $2
-           AND ab.alignment_code = $3 AND ab.color_square = $4 AND ab.band IN ('Aligned', 'Attuned')`,
-        [subclassId, level ?? 1, alignmentCode, BLACK_GATE_TARGET]
+        `SELECT 1 FROM alignment_bands
+         WHERE alignment_code = $1 AND color_square = $2 AND band IN ('Aligned', 'Attuned')`,
+        [alignmentCode, BLACK_GATE_TARGET]
     );
     return rows.length > 0;
 }
@@ -103,14 +110,14 @@ export async function checkMagicPicks(draft, body) {
 
     const ids = ['upbringing', 'lifestyle', 'outlook'].map((c) => Number(body[`${c}_id`]));
     const { rows: opts } = await pool.query(`SELECT * FROM personality_options WHERE id = ANY($1::int[])`, [ids]);
-    const gate = await hasBlackGate(code, draft.subclass_id, draft.level ?? 1);
+    const gate = await hasBlackGate(code);
     const { rows: st } = await pool.query(`SELECT lower(name) AS name FROM spell_state WHERE NOT retired`);
     const live = st.map((s) => s.name);
     const magic = { alignment_code: code };
     for (const [i, cat] of ['upbringing', 'lifestyle', 'outlook'].entries()) {
         const opt = opts.find((o) => o.id === ids[i] && o.category === cat);
         if (!opt) return { error: `Pick an ${cat === 'upbringing' ? 'Upbringing' : cat === 'lifestyle' ? 'Lifestyle' : 'Outlook'}` };
-        if (opt.needs_black_gate && !gate) return { error: `${opt.name} needs the Black gate (CE, NE or CN alignment and a Black-gated subclass)` };
+        if (opt.needs_black_gate && !gate) return { error: `${opt.name} needs the Black gate (CE, NE or CN alignment)` };
         // wildcard (Self-Taught Stray): the player picks any state except destroy
         const state = opt.any_state ? String(body[`${cat}_state`] ?? '').toLowerCase() : opt.state.toLowerCase();
         if (opt.any_state && (state === 'destroy' || !live.includes(state))) return { error: `Pick a state for ${opt.name}` };

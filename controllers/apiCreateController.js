@@ -1,12 +1,13 @@
 // Character creation (4 steps) as JSON for React. Queries live in models/.
 // Uses the session "draft locker" (req.session.charDraft) until step 3 saves it.
 import { listRaces, listSubraces, checkSubrace } from '../models/raceModel.js';
-import { checkBoostRules, allowedBoostOptions, BOOST_ROWS } from '../utils/abilityBoosts.js';
+import { checkBoostRules, allowedBoostOptions } from '../utils/abilityBoosts.js';
 import { listClasses, getHitDie, listSubclassesForClass, subclassBelongsToClass, getClassSkills } from '../models/classModel.js';
 import { createCharacter, checkFeatureChoices, SUBCLASS_LEVEL, MAX_LEVEL } from '../models/characterModel.js';
-import { listStartingGear, addWeapon, equipWeapon, addArmor, equipArmor } from '../models/inventoryModel.js';
+import { addWeapon, equipWeapon, addArmor, equipArmor } from '../models/inventoryModel.js';
+import { listStartingGearForRole, boostRowsForRole } from '../models/content.js';
+import { resolveRoleWrite } from '../models/idMap.js';
 import { listMagicOptions, checkMagicPicks } from '../models/magicModel.js';
-import pool from '../db.js';
 
 const STATS = ["str", "dex", "con", "int", "wis", "cha", "luc", "spd"];
 
@@ -78,7 +79,10 @@ export async function getStartingGear(req, res) {
     const subclassId = req.query.subclassId ? Number(req.query.subclassId) : null;
     const level = Number(req.query.level ?? 1);
     try {
-        res.json(await listStartingGear(classId, subclassId, Number.isInteger(level) ? level : 1));
+        // classId/subclassId are role/calling ids from the client
+        const role = await resolveRoleWrite(classId, subclassId);
+        if (!role?.role_id) return res.status(400).json({ error: 'Class not found' });
+        res.json(listStartingGearForRole(role.role_id, role.calling_id, Number.isInteger(level) ? level : 1));
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Could not load starting gear' });
@@ -139,15 +143,19 @@ export async function step2Submit(req, res) {
         return res.status(400).json({ error: 'That skill is already given by your class' });
     }
 
+    // Client sends role/calling ids; feature/boost/gear tables still key on legacy class/subclass
+    const role = await resolveRoleWrite(Number(class_id), subclass_id ? Number(subclass_id) : null);
+    if (!role?.class_id) return res.status(400).json({ error: 'Class not found' });
+
     // class + subclass feature choices (optional; each must be unlocked at this level)
-    const picked = await checkFeatureChoices(Number(class_id), subclass_id ? Number(subclass_id) : null, level, req.body.feature_choices);
+    const picked = await checkFeatureChoices(role.role_id, role.calling_id, level, req.body.feature_choices, role.class_id);
     if (picked.error) return res.status(400).json({ error: picked.error });
     // boosts/blessings: repeat limits and level/feature prerequisites (scores aren't rolled yet)
-    const boost = await checkBoostRules({ classId: Number(class_id), subclassId: subclass_id ? Number(subclass_id) : null, level, base: null, choices: picked.choices });
+    const boost = await checkBoostRules({ classId: role.class_id, subclassId: role.subclass_id, level, base: null, choices: picked.choices });
     if (boost.error) return res.status(400).json({ error: boost.error });
 
     // starting gear: weapon required, armor optional; both must be on this class's list
-    const gear = await listStartingGear(Number(class_id), subclass_id ? Number(subclass_id) : null, level);
+    const gear = listStartingGearForRole(role.role_id, role.calling_id, level);
     const weaponId = Number(req.body.weapon_id);
     if (!gear.weapons.some((w) => w.id === weaponId)) {
         return res.status(400).json({ error: 'Pick a starting weapon your class can use' });
@@ -159,6 +167,8 @@ export async function step2Submit(req, res) {
 
     req.session.charDraft.class_id = Number(class_id);
     req.session.charDraft.subclass_id = subclass_id ? Number(subclass_id) : null;
+    req.session.charDraft.role_id = role.role_id;
+    req.session.charDraft.calling_id = role.calling_id;
     req.session.charDraft.level = level;
     req.session.charDraft.feature_choices = picked.choices;
     req.session.charDraft.skill_picks = skills; // what the dropdowns show when coming back
@@ -169,22 +179,22 @@ export async function step2Submit(req, res) {
     res.json({ ok: true });
 }
 
-// Ability Boost / Primordial Ascent rows are picked at step 3, once the scores are known
+// Divine Blessing rows (pack) are picked at step 3, once the scores are known
 export async function getStep3(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
     const draft = req.session.charDraft;
     if (!draft || !draft.class_id) return res.status(409).json({ error: 'Start with step 1' });
 
     draft.rolls = draft.rolls ?? {};
-    const cls = (await listClasses()).find((c) => c.id === draft.class_id);
-    const boostFeatures = (cls?.features ?? []).filter((f) => BOOST_ROWS.includes(f.name) && f.options?.length && f.level <= (draft.level ?? 1));
+    const role = await resolveRoleWrite(Number(draft.class_id), draft.subclass_id ? Number(draft.subclass_id) : null);
+    const boostFeatures = boostRowsForRole(role?.role_id).filter((f) => f.level <= (draft.level ?? 1));
     const choices = draft.feature_choices ?? {};
-    const boostPicks = Object.fromEntries(boostFeatures.map((f) => [`class:${f.id}`, choices[`class:${f.id}`]]).filter(([, v]) => v));
+    const boostPicks = Object.fromEntries(boostFeatures.map((f) => [f.key, choices[f.key]]).filter(([, v]) => v));
     res.json({ rolls: draft.rolls, class_id: draft.class_id, subclass_id: draft.subclass_id, level: draft.level ?? 1, boostFeatures, boostPicks, plus2: draft.plus2 ?? '', plus1: draft.plus1 ?? '' });
 }
 
 // POST /api/boost_options  body: { class_id, subclass_id, level, scores, feature_choices }
-// -> { options: { [feature key]: [allowed options] } } for the Ability Boost / Primordial Ascent dropdowns
+// -> { options: { [feature key]: [allowed options] } } for the Divine Blessing dropdowns
 // (creator step 3 and the editor). Same rules as a save; the save still checks.
 export async function boostOptions(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
@@ -193,7 +203,9 @@ export async function boostOptions(req, res) {
     if (!classId || !Number.isInteger(level) || level < 1 || level > MAX_LEVEL) return res.status(400).json({ error: 'class_id and level are required' });
     const subclassId = req.body.subclass_id ? Number(req.body.subclass_id) : null;
     const choices = req.body.feature_choices && typeof req.body.feature_choices === 'object' ? req.body.feature_choices : {};
-    res.json({ options: await allowedBoostOptions({ classId, subclassId, level, base: req.body.scores ?? null, choices }) });
+    const role = await resolveRoleWrite(classId, subclassId);
+    if (!role?.class_id) return res.status(400).json({ error: 'Class not found' });
+    res.json({ options: await allowedBoostOptions({ classId: role.class_id, subclassId: role.subclass_id, level, base: req.body.scores ?? null, choices }) });
 }
 
 // POST /api/create_char/roll/:stat  (moved here from the old EJS charController)
@@ -238,9 +250,11 @@ export async function step3Submit(req, res) {
     const boostPicks = req.body.feature_choices ?? {};
     const merged = { ...(draft.feature_choices ?? {}) };
     for (const [key, vals] of Object.entries(boostPicks)) merged[key] = vals;
-    const picked = await checkFeatureChoices(draft.class_id, draft.subclass_id ?? null, draft.level ?? 1, merged);
+    const role = await resolveRoleWrite(draft.class_id, draft.subclass_id ?? null);
+    if (!role?.class_id) return res.status(400).json({ error: 'Class not found' });
+    const picked = await checkFeatureChoices(role.role_id, role.calling_id, draft.level ?? 1, merged, role.class_id);
     if (picked.error) return res.status(400).json({ error: picked.error });
-    const boost = await checkBoostRules({ classId: draft.class_id, subclassId: draft.subclass_id ?? null, level: draft.level ?? 1, base: final, choices: picked.choices });
+    const boost = await checkBoostRules({ classId: role.class_id, subclassId: role.subclass_id, level: draft.level ?? 1, base: final, choices: picked.choices });
     if (boost.error) return res.status(400).json({ error: boost.error });
     draft.feature_choices = picked.choices;
 
@@ -259,10 +273,8 @@ export async function getStep4(req, res) {
     const opts = await listMagicOptions(draft.race_id, draft.subrace_id ?? null);
     const races = await listRaces();
     const race = races.find((r) => r.id === draft.race_id);
-    // the subclass half of the Black gate; the alignment half depends on the pick
-    const { rows } = await pool.query(`SELECT black_gate_level FROM sub_classes WHERE id = $1`, [draft.subclass_id ?? null]);
-    const gateLevel = rows[0]?.black_gate_level ?? null;
-    res.json({ ...opts, img_url: race?.img_url ?? null, subclassGate: gateLevel !== null && (draft.level ?? 1) >= gateLevel });
+    // Black gate is alignment-only (CE/NE/CN); client uses blackGateAlignments from opts
+    res.json({ ...opts, img_url: race?.img_url ?? null });
 }
 
 // POST /api/create_char/step4: check the background picks, then save the character

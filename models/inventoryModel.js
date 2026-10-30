@@ -9,12 +9,11 @@ export async function listArmor() {
     return rows;
 }
 
-export async function listArmorForCharacter(classId, subclassId, level) {
-    
-    const { rows } = await pool.query(`SELECT a.*, a.armor_type AS armor_category FROM armor a WHERE EXISTS (SELECT 1 FROM class_item_proficiencies p
-        WHERE p.class_id = $1 AND (p.subclass_id IS NULL OR p.subclass_id = $2) AND p.min_level <= $3
+export async function listArmorForCharacter(roleId, callingId, level) {
+    const { rows } = await pool.query(`SELECT a.*, a.armor_type AS armor_category FROM armor a WHERE EXISTS (SELECT 1 FROM role_item_proficiencies p
+        WHERE p.role_id = $1 AND (p.calling_id IS NULL OR p.calling_id = $2) AND p.min_level <= $3
         AND p.item_kind = 'armor' AND p.match_value = a.armor_type)`,
-[classId, subclassId, level]
+[roleId, callingId, level]
 );
 return rows;
 }
@@ -24,24 +23,24 @@ export async function listWeapons() {
     return rows;
 }
 
-export async function listWeaponsForCharacter(classId, subclassId, level) {
+export async function listWeaponsForCharacter(roleId, callingId, level) {
     const { rows } = await pool.query(`SELECT w.*, (SELECT wc.name FROM weapon_category wc WHERE wc.id = w.category_id) AS weapon_category
-        FROM weapons w WHERE EXISTS (SELECT 1 FROM class_item_proficiencies p
-        WHERE p.class_id = $1 AND (p.subclass_id IS NULL OR p.subclass_id = $2) AND p.min_level <= $3
+        FROM weapons w WHERE EXISTS (SELECT 1 FROM role_item_proficiencies p
+        WHERE p.role_id = $1 AND (p.calling_id IS NULL OR p.calling_id = $2) AND p.min_level <= $3
         AND p.item_kind = 'weapon'
          AND p.match_field = 'weapon_category'
          AND p.match_value = (SELECT wc.code FROM weapon_category wc WHERE wc.id = w.category_id))`,
-[classId, subclassId, level]
+[roleId, callingId, level]
 );
 return rows;
 }
 
 // Starting gear for character creation: same proficiency filter as above,
 // but only common, non-unique items (no +1s or named weapons).
-export async function listStartingGear(classId, subclassId, level) {
-    const armor = (await listArmorForCharacter(classId, subclassId, level))
+export async function listStartingGear(roleId, callingId, level) {
+    const armor = (await listArmorForCharacter(roleId, callingId, level))
         .filter((a) => (a.rarity ?? 'common').toLowerCase() === 'common');
-    const weapons = (await listWeaponsForCharacter(classId, subclassId, level))
+    const weapons = (await listWeaponsForCharacter(roleId, callingId, level))
         .filter((w) => (w.rarity ?? 'common').toLowerCase() === 'common' && !w.is_unique);
     const byName = (x, y) => x.name.localeCompare(y.name);
     return { armor: armor.sort(byName), weapons: weapons.sort(byName) };

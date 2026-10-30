@@ -1,9 +1,9 @@
-// Class and subclass database reads.
+// Role and calling database reads, shaped like the old classes/sub_classes API.
+// Feature choice rows and skill rules still come from the legacy tables (new features are names only).
 import pool from '../db.js';
 import { scorePickDescriptions } from '../utils/abilityBoosts.js';
+import { legacyClassIdForRole } from './idMap.js';
 
-// Adds option_info { option: description } to each choice feature: pool/alternative options from
-// class_feature_options, blessings on Ability Boost rows, score picks, and option A = the feature itself.
 async function addOptionInfo(owners, classIdOf) {
     const { rows: opts } = await pool.query(`SELECT class_id, pool, name, description FROM class_feature_options`);
     const { rows: bl } = await pool.query(`SELECT name, tree, prerequisite, description FROM primordial_blessings`);
@@ -33,70 +33,140 @@ async function addOptionInfo(owners, classIdOf) {
 
 export async function listClasses() {
     const { rows } = await pool.query(
-        `SELECT c.id, c.name, c.primary_stat, c.hitpoint_die, c.img_url, c.description,
-               c.spellcasting, c.spellcasting_stat, c.armor_proficiencies, c.weapon_proficiencies, c.tool_proficiencies, c.saving_throws, c.skill_choice_count, c.skill_options, c.skill_fixed,
-               (SELECT json_agg(json_build_object('id', f.id, 'level', f.level, 'name', f.name, 'description', f.description, 'options', f.options, 'choice_count', f.choice_count)
-                        ORDER BY f.level, f.sort_order)
-                FROM class_features f WHERE f.class_id = c.id) AS features
-        FROM classes c
-        ORDER BY c.name`
+        `SELECT ro.id, ro.name, ro.primary_stat, ro.hit_die AS hitpoint_die,
+                COALESCE('/glyphs/classes/' || lower(replace(ro.name, ' ', '_')) || '.png', 'Pending Img') AS img_url,
+                COALESCE(ro.description, cl.description, 'Pending Understanding') AS description,
+                COALESCE(ro.spellcasting, cl.spellcasting) AS spellcasting,
+                COALESCE(ro.spellcasting_stat, cl.spellcasting_stat) AS spellcasting_stat,
+                COALESCE(ro.armor_proficiencies, cl.armor_proficiencies) AS armor_proficiencies,
+                COALESCE(ro.weapon_proficiencies, cl.weapon_proficiencies) AS weapon_proficiencies,
+                COALESCE(ro.tool_proficiencies, cl.tool_proficiencies) AS tool_proficiencies,
+                COALESCE(ro.saving_throws, cl.saving_throws) AS saving_throws,
+                COALESCE(ro.skill_choice_count, cl.skill_choice_count) AS skill_choice_count,
+                COALESCE(ro.skill_options, cl.skill_options) AS skill_options,
+                COALESCE(ro.skill_fixed, cl.skill_fixed) AS skill_fixed,
+                cl.id AS legacy_class_id,
+                COALESCE(
+                  (SELECT json_agg(json_build_object(
+                          'id', f.id, 'level', rf.level, 'name', f.name,
+                          'description', COALESCE(rf.description, f.description, ''),
+                          'options', COALESCE(rf.options, ARRAY[]::text[]), 'choice_count', COALESCE(rf.choice_count, 0)
+                   ) ORDER BY rf.level, f.name)
+                   FROM role_features rf
+                   JOIN features f ON f.id = rf.feature_id
+                   WHERE rf.role_id = ro.id),
+                  (SELECT json_agg(json_build_object(
+                          'id', f.id, 'level', f.level, 'name', f.name, 'description', f.description,
+                          'options', f.options, 'choice_count', f.choice_count
+                   ) ORDER BY f.level, f.sort_order)
+                   FROM class_features f WHERE f.class_id = cl.id)
+                ) AS features
+         FROM roles ro
+         LEFT JOIN classes cl ON lower(cl.name) = lower(
+           CASE ro.name WHEN 'Templar' THEN 'Paladin' WHEN 'Seer' THEN 'Druid' ELSE ro.name END
+         )
+         ORDER BY ro.sort_order NULLS LAST, ro.name`
     );
-    return addOptionInfo(rows, (c) => c.id);
+    return addOptionInfo(rows, (c) => c.legacy_class_id);
 }
 
-// hit die for one class, or undefined
 export async function getHitDie(classId) {
-    const { rows } = await pool.query(`SELECT hitpoint_die FROM classes WHERE id = $1`, [classId]);
-    return rows[0]?.hitpoint_die;
+    // classId is a role id from the create/edit UI
+    const { rows } = await pool.query(`SELECT hit_die AS hitpoint_die FROM roles WHERE id = $1`, [classId]);
+    if (rows[0]) return rows[0].hitpoint_die;
+    const legacy = await legacyClassIdForRole(classId);
+    if (!legacy) return undefined;
+    const { rows: old } = await pool.query(`SELECT hitpoint_die FROM classes WHERE id = $1`, [legacy]);
+    return old[0]?.hitpoint_die;
 }
 
 export async function listAllSubclasses() {
     const { rows } = await pool.query(
-        `SELECT s.id, s.name, s.class_id, s.img_url, s.description,
-                s.armor_proficiencies, s.weapon_proficiencies, s.tool_proficiencies,
-                (SELECT json_agg(json_build_object('id', f.id, 'level', f.level, 'name', f.name, 'description', f.description, 'options', f.options, 'choice_count', f.choice_count)
-                         ORDER BY f.level, f.sort_order)
-                 FROM subclass_features f WHERE f.subclass_id = s.id) AS features
-         FROM sub_classes s ORDER BY s.name`
+        `SELECT ca.id, ca.name, ca.role_id AS class_id, NULL::text AS img_url,
+                COALESCE(ca.description, sc.description) AS description,
+                COALESCE(ca.armor_proficiencies, sc.armor_proficiencies) AS armor_proficiencies,
+                COALESCE(ca.weapon_proficiencies, sc.weapon_proficiencies) AS weapon_proficiencies,
+                COALESCE(ca.tool_proficiencies, sc.tool_proficiencies) AS tool_proficiencies,
+                COALESCE(
+                  (SELECT json_agg(json_build_object(
+                          'id', f.id, 'level', cf.level, 'name', f.name,
+                          'description', COALESCE(cf.description, f.description, ''),
+                          'options', COALESCE(cf.options, ARRAY[]::text[]), 'choice_count', COALESCE(cf.choice_count, 0)
+                   ) ORDER BY cf.level, f.name)
+                   FROM calling_features cf
+                   JOIN features f ON f.id = cf.feature_id
+                   WHERE cf.calling_id = ca.id),
+                  (SELECT json_agg(json_build_object(
+                          'id', f.id, 'level', f.level, 'name', f.name, 'description', f.description,
+                          'options', f.options, 'choice_count', f.choice_count
+                   ) ORDER BY f.level, f.sort_order)
+                   FROM subclass_features f WHERE f.subclass_id = sc.id)
+                ) AS features
+         FROM callings ca
+         LEFT JOIN roles ro ON ro.id = ca.role_id
+         LEFT JOIN classes cl ON lower(cl.name) = lower(
+           CASE ro.name WHEN 'Templar' THEN 'Paladin' WHEN 'Seer' THEN 'Druid' ELSE ro.name END
+         )
+         LEFT JOIN sub_classes sc ON sc.class_id = cl.id AND lower(sc.name) = lower(ca.name)
+         ORDER BY ca.name`
     );
     return rows;
 }
 
 export async function listSubclassesForClass(classId) {
     const { rows } = await pool.query(
-        `SELECT s.id, s.name, s.img_url, s.description,
-                s.armor_proficiencies, s.weapon_proficiencies, s.tool_proficiencies,
-                (SELECT json_agg(json_build_object('id', f.id, 'level', f.level, 'name', f.name, 'description', f.description, 'options', f.options, 'choice_count', f.choice_count)
-                         ORDER BY f.level, f.sort_order)
-                 FROM subclass_features f WHERE f.subclass_id = s.id) AS features
-         FROM sub_classes s
-         WHERE s.class_id = $1
-         ORDER BY s.name`,
+        `SELECT ca.id, ca.name, NULL::text AS img_url,
+                COALESCE(ca.description, sc.description) AS description,
+                COALESCE(ca.armor_proficiencies, sc.armor_proficiencies) AS armor_proficiencies,
+                COALESCE(ca.weapon_proficiencies, sc.weapon_proficiencies) AS weapon_proficiencies,
+                COALESCE(ca.tool_proficiencies, sc.tool_proficiencies) AS tool_proficiencies,
+                COALESCE(
+                  (SELECT json_agg(json_build_object(
+                          'id', f.id, 'level', cf.level, 'name', f.name,
+                          'description', COALESCE(cf.description, f.description, ''),
+                          'options', COALESCE(cf.options, ARRAY[]::text[]), 'choice_count', COALESCE(cf.choice_count, 0)
+                   ) ORDER BY cf.level, f.name)
+                   FROM calling_features cf
+                   JOIN features f ON f.id = cf.feature_id
+                   WHERE cf.calling_id = ca.id),
+                  (SELECT json_agg(json_build_object(
+                          'id', f.id, 'level', f.level, 'name', f.name, 'description', f.description,
+                          'options', f.options, 'choice_count', f.choice_count
+                   ) ORDER BY f.level, f.sort_order)
+                   FROM subclass_features f WHERE f.subclass_id = sc.id)
+                ) AS features
+         FROM callings ca
+         LEFT JOIN roles ro ON ro.id = ca.role_id
+         LEFT JOIN classes cl ON lower(cl.name) = lower(
+           CASE ro.name WHEN 'Templar' THEN 'Paladin' WHEN 'Seer' THEN 'Druid' ELSE ro.name END
+         )
+         LEFT JOIN sub_classes sc ON sc.class_id = cl.id AND lower(sc.name) = lower(ca.name)
+         WHERE ca.role_id = $1
+         ORDER BY ca.sort_order NULLS LAST, ca.name`,
         [classId]
     );
     return rows;
 }
 
-// true if the subclass belongs to the class (creation step 2)
 export async function subclassBelongsToClass(subclassId, classId) {
     const { rows } = await pool.query(
-        "SELECT 1 FROM sub_classes WHERE id = $1 and class_id = $2",
+        `SELECT 1 FROM callings WHERE id = $1 AND role_id = $2`,
         [subclassId, classId]
     );
     return rows.length > 0;
 }
 
-// skill rules for one class (creation step 2 validation), or undefined
 export async function getClassSkills(classId) {
+    const legacyId = await legacyClassIdForRole(classId);
+    if (!legacyId) return undefined;
     const { rows } = await pool.query(
         `SELECT skill_choice_count, skill_options, skill_fixed FROM classes WHERE id = $1`,
-        [classId]
+        [legacyId]
     );
     return rows[0];
 }
 
-// class_id of a subclass, or undefined (editor)
 export async function getSubclassClassId(subclassId) {
-    const { rows } = await pool.query(`SELECT class_id FROM sub_classes WHERE id = $1`, [subclassId]);
+    const { rows } = await pool.query(`SELECT role_id AS class_id FROM callings WHERE id = $1`, [subclassId]);
     return rows[0]?.class_id;
 }
