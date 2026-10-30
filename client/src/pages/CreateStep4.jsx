@@ -12,7 +12,7 @@ import { backgroundLines } from '../utils/background';
 
 // Step 4: Background / Personality (magic access v3)
 // Alignment from the chart, then Upbringing, Lifestyle and Outlook (each gives 1 state; the 3 must differ),
-// plus 1 race element (the 4th affinity). Destroy options only show with the Black gate. The server checks it all again.
+// plus 1 race element (the 4th affinity). All personality options are freely selectable.
 const CATS = [
     { key: 'upbringing', label: 'Upbringing' },
     { key: 'lifestyle', label: 'Lifestyle' },
@@ -33,7 +33,6 @@ function CreateStep4() {
     if (loading) return <Loader />;
     if (error) return error.includes('409') ? <Navigate to="/create_char/step3" replace /> : <p>Failure is upon us: {error}</p>;
 
-    const gate = data.blackGateAlignments.includes(alignment);
     const optionOf = (cat) => data[cat].find((o) => String(o.id) === ids[cat]);
     const stateOf = (cat) => {
         const o = optionOf(cat);
@@ -53,14 +52,6 @@ function CreateStep4() {
         name: 'Your Background',
         background: [...(picked ? [`${picked.name} - ${picked.color} Magic`] : []), ...bg.story, ...bg.perks],
     } : null;
-
-    const changeAlignment = (code) => {
-        setAlignment(code);
-        // losing the Black gate drops any destroy pick
-        if (!data.blackGateAlignments.includes(code)) {
-            setIds((prev) => Object.fromEntries(CATS.map((c) => [c.key, data[c.key].find((o) => String(o.id) === prev[c.key])?.needs_black_gate ? '' : prev[c.key]])));
-        }
-    };
 
     const changePick = (cat, value) => {
         setIds((prev) => ({ ...prev, [cat]: value }));
@@ -104,7 +95,7 @@ function CreateStep4() {
                                         className={alignment === a.code ? 'alignment-cell selected' : 'alignment-cell'}
                                         style={{ '--cell-color': a.color.toLowerCase() }}
                                         aria-label={a.name} title={a.name}
-                                        onClick={() => changeAlignment(a.code)}>
+                                        onClick={() => setAlignment(a.code)}>
                                         <img className="tile-icon" src={alignmentGlyph(a.color)} alt="" onError={hideBrokenGlyph} />
                                         <span>{a.color} Magic</span>
                                     </button>
@@ -121,7 +112,6 @@ function CreateStep4() {
                                     <select className="name-value-2" id={`${c.key}_id`} value={ids[c.key]} onChange={(e) => changePick(c.key, e.target.value)} required>
                                         <option value="" disabled className="name-option-2">Select your {c.label}</option>
                                         {data[c.key]
-                                            .filter((o) => !o.needs_black_gate || gate)
                                             .filter((o) => String(o.id) === ids[c.key] || o.any_state || !taken.includes(o.state))
                                             .map((o) => (
                                                 <option key={o.id} value={o.id} className="name-option-2">{o.name}</option>
@@ -130,7 +120,7 @@ function CreateStep4() {
                                     {picked?.any_state && (
                                         <select className="name-value-2" value={anyStates[c.key]} onChange={(e) => setAnyStates((prev) => ({ ...prev, [c.key]: e.target.value }))} required>
                                             <option value="" disabled className="name-option-2">Pick a state</option>
-                                            {data.states.filter((s) => s !== 'destroy' && (s === anyStates[c.key] || !taken.includes(s))).map((s) => (
+                                            {data.states.filter((s) => s === anyStates[c.key] || !taken.includes(s)).map((s) => (
                                                 <option key={s} value={s} className="name-option-2">{s}</option>
                                             ))}
                                         </select>

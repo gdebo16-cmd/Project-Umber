@@ -265,7 +265,7 @@ export async function step3Submit(req, res) {
     res.json({ ok: true });
 }
 
-// GET /api/create_char/step4: alignment chart, personality dropdowns, race elements, Black gate
+// GET /api/create_char/step4: alignment chart, personality dropdowns, race elements
 export async function getStep4(req, res) {
     if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
     const draft = req.session.charDraft;
@@ -273,7 +273,6 @@ export async function getStep4(req, res) {
     const opts = await listMagicOptions(draft.race_id, draft.subrace_id ?? null);
     const races = await listRaces();
     const race = races.find((r) => r.id === draft.race_id);
-    // Black gate is alignment-only (CE/NE/CN); client uses blackGateAlignments from opts
     res.json({ ...opts, img_url: race?.img_url ?? null });
 }
 
