@@ -432,6 +432,22 @@
     --shadowInner: inset 4px 4px 15px #ffeacea9, inset 0px 0px 5px #ffeacea9;
     --fontfam: 'New Rocker', cursive;
 }
+
+[data-theme="gothic"] {
+    --bg: #080707;
+    --surface: #0b0606;
+    --text: #b8873e;
+    --muted: #490606;
+    --accent: #3a1515;
+    --accent-2: #2c0201;
+    --border: #2d0505;
+    --glass: 90%;
+    --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
+    --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    --shadowInner: inset 4px 4px 15px #2d0606d8, inset 0px 0px 5px #0d0401ef;
+    --fontfam: 'New Rocker', cursive;
+}
+
 [data-theme="dark-glass"] {
     --bg: #0a0a0a;
     --surface: #2a241f;
@@ -645,6 +661,10 @@
 [data-background="shadow-of-the-mountains"] {
     --background: url('/campaigns/shadow-of-the-mountains.webp');
     --background-desktop: url('/campaigns/shadow-of-the-mountains.webp');
+}
+[data-background="gothic"] {
+    --background: url('/images/themes/gothic-background.jpg');
+    --background-desktop: url('/images/themes/gothic-background.jpg');
 }
 /* #endregion */
 
