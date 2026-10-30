@@ -480,17 +480,17 @@
         backdrop-filter: blur(6px) saturate(180%);
         box-shadow: var(--shadowInner, none);
         -webkit-backdrop-filter: blur(6px) saturate(180%);
-        background: color-mix(in srgb, var(--healColor), white 30%);
+        background: var(--hpBarFull);
     }
 
     #hp-bar-fill.very_hurt {
         border-radius: var(--tile);
-        background: color-mix(in srgb, var(--damageColor), white 30%);
+        background: var(--hpBarVeryHurt);
     }
 
     #hp-bar-fill.hurt{
         border-radius: var(--tile);
-        background: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+        background: var(--hpBarHurt);
     }
     /* #endregion */    
     /* #region Nav Section */
@@ -913,7 +913,7 @@
             "a b c";
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
-            background-color: var(--bgc-tab);
+            background-color: var(--hpBoxFull);
             border-radius: var(--tile);
             
         }
@@ -966,11 +966,11 @@
 
     
         .health-container.very_hurt {
-            background: var(--damageColor);
+            background: var(--hpBoxVeryHurt);
         }
     
         .health-container.hurt {
-            background: color-mix(in srgb, var(--healColor), var(--damageColor));
+            background: var(--hpBoxHurt);
         }
 
         .hp-button {
@@ -2334,17 +2334,17 @@
         #hp-bar-fill {
             height: 100%;
             border-radius: var(--tile);
-            background: color-mix(in srgb, var(--healColor), white 30%);
+            background: var(--hpBarFull);
         }
     
         #hp-bar-fill.very_hurt {
             border-radius: var(--tile);
-            background: color-mix(in srgb, var(--damageColor), white 30%);
+            background: var(--hpBarVeryHurt);
         }
     
         #hp-bar-fill.hurt{
             border-radius: var(--tile);
-            background: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+            background: var(--hpBarHurt);
         }
 
         /* #endregion */
@@ -2755,11 +2755,11 @@
         }
     
         .health-container.very_hurt {
-            background: var(--damageColor);
+            background: var(--hpBoxVeryHurt);
         }
     
         .health-container.hurt {
-            background: color-mix(in srgb, var(--healColor), var(--damageColor));
+            background: var(--hpBoxHurt);
         }
     
         #heal-button {

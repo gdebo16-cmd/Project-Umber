@@ -7,6 +7,13 @@
     --gold-gradient: linear-gradient(to bottom, var(--accent), color-mix(in srgb, var(--accent) 75%, black));
     --healColor: color-mix(in srgb, #6fbf73 40%, transparent);
     --damageColor: color-mix(in srgb, var(--bg) 70%, transparent);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
     --bgc-bubble-send: var(--bg);
     --bgc-bubble-receive: var(--surface);
     --bgc-orb: color-mix(in srgb, var(--surface) 60%, var(--muted));
@@ -282,6 +289,13 @@
     --glass: 85%;
     --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="prestige"] {
     --bg: #1a1030;
@@ -294,6 +308,13 @@
     --glass: 90%;
     --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
     --check-shape: polygon(0 15%, 25% 45%, 50% 5%, 75% 45%, 100% 15%, 90% 100%, 10% 100%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="purple"] {
     --bg: #180223;
@@ -306,6 +327,13 @@
     --glass: 85%;
     --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
     --check-shape: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="green"] {
     --bg: #0f2416;
@@ -317,6 +345,13 @@
     --border: #688b6c;
     --glass: 85%;
     --check-shape: polygon(50% 0, 100% 35%, 85% 85%, 50% 100%, 15% 85%, 0 35%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="glass-green"] {
     --bg: #0f2416;
@@ -328,6 +363,13 @@
     --border: #3f7d47;
     --glass: 32%;
     --check-shape: polygon(50% 0, 100% 35%, 85% 85%, 50% 100%, 15% 85%, 0 35%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="blue"] {
     --bg: #0c1a33;
@@ -340,6 +382,13 @@
     --glass: 85%;
     --check-shape: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%);
     --blur: blur(2px) saturate(100%) brightness(1);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="glass-blue"] {
     --bg: #0c1a33;
@@ -351,6 +400,13 @@
     --border: #3b6aa6;
     --glass: 32%;
     --check-shape: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="red"] {
     --bg: #2a0b0e;
@@ -362,6 +418,13 @@
     --border: #8a2a32;
     --glass: 85%;
     --check-shape: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="glass-red"] {
     --bg: #2a0b0e;
@@ -373,6 +436,13 @@
     --border: #8a2a32;
     --glass: 32%;
     --check-shape: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="orange"] {
     --bg: #2b1406;
@@ -384,6 +454,13 @@
     --border: #a8561e;
     --glass: 85%;
     --check-shape: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="glass-orange"] {
     --bg: #2b1406;
@@ -395,6 +472,13 @@
     --border: #a8561e;
     --glass: 32%;
     --check-shape: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="yellow"] {
     --bg: #2a2406;
@@ -406,6 +490,13 @@
     --border: #dbc77a;
     --glass: 85%;
     --check-shape: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="glass-yellow"] {
     --bg: #2a2406;
@@ -417,6 +508,13 @@
     --border: #9c8420;
     --glass: 32%;
     --check-shape: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="dark"] {
     --bg: #0a0a0a;
@@ -431,6 +529,13 @@
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
     --shadowInner: inset 4px 4px 15px #ffeacea9, inset 0px 0px 5px #ffeacea9;
     --fontfam: 'New Rocker', cursive;
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 
 [data-theme="gothic"] {
@@ -446,6 +551,13 @@
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
     --shadowInner: inset 4px 4px 15px #2d0606d8, inset 0px 0px 5px #0d0401ef;
     --fontfam: 'New Rocker', cursive;
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 
 [data-theme="dark-glass"] {
@@ -460,6 +572,13 @@
     --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
     --shadowInner: inset 4px 4px 15px #ffeacea9, inset 0px 0px 5px #ffeacea9;
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="light"] {
     --bg: #a08c60;
@@ -472,6 +591,13 @@
     --glass: 90%;
     --gold-gradient: linear-gradient(to bottom, #926135, #5e3d1f);
     --check-shape: circle(50%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="light-glass"] {
     --bg: #fef2d8;
@@ -484,6 +610,13 @@
     --glass: 32%;
     --gold-gradient: linear-gradient(to bottom, #926135, #5e3d1f);
     --check-shape: circle(50%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="hellfire"] {
     --bg: #1c0606;
@@ -497,6 +630,13 @@
     --check-shape: polygon(50% 0, 85% 45%, 100% 70%, 80% 95%, 50% 100%, 20% 95%, 0 70%, 15% 45%);
     --blur1: blur(3px) saturate(150%);
     --blur2: blur(3px) saturate(150%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="glass-fire"] {
     --bg: #1c0606;
@@ -510,6 +650,13 @@
     --check-shape: polygon(50% 0, 85% 45%, 100% 70%, 80% 95%, 50% 100%, 20% 95%, 0 70%, 15% 45%);
     --blur1: blur(3px) saturate(150%);
     --blur2: blur(3px) saturate(150%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="frozen"] {
     --bg: #0b1e2c;
@@ -521,6 +668,13 @@
     --border: #4a8fb0;
     --glass: 85%;
     --check-shape: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="frozen-glass"] {
     --bg: #0b1e2c;
@@ -532,6 +686,13 @@
     --border: #4a8fb0;
     --glass: 32%;
     --check-shape: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="neon"] {
     --bg: #0a031a;
@@ -547,6 +708,13 @@
     --neonGlow: 0 0 4px rgba(255, 60, 200, 0.9), 0 0 12px rgba(255, 60, 200, 0.55);
     --neonTextGlow: 0 0 3px rgba(0, 240, 255, 0.9), 0 0 10px rgba(0, 240, 255, 0.5);
     --fontfam: 'Delicious Handrawn', cursive;
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="neon-glass"] {
     --bg: #0a031a;
@@ -562,6 +730,13 @@
     --neonGlow: 0 0 4px rgba(60, 99, 255, 0.936), 0 0 12px rgba(54, 59, 53, 0.55);
     --neonTextGlow: 0 0 3px rgba(0, 240, 255, 0.9), 0 0 10px rgba(0, 240, 255, 0.5);
     --fontfam: 'Geist Pixel', sans-serif;
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="gestalt"] {
     --bg: #181c28;
@@ -575,6 +750,13 @@
     --gold-gradient: linear-gradient(to bottom, #d9a05a, #a66f2e);
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
     --shadowInner: inset 4px 4px 14px rgba(150, 205, 255, 0.42), inset 0 0 5px rgba(205, 235, 255, 0.32);
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 [data-theme="shadow-of-the-mountains"] {
     --bg: #343b4d;
@@ -585,6 +767,13 @@
     --accent-2: #e0a060;
     --border: #713540;
     --glass: 72%;
+    /* Health colors */
+    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBoxFull: var(--bgc-tab);
+    --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
+    --hpBoxVeryHurt: var(--damageColor);
 }
 /* #endregion */
 
