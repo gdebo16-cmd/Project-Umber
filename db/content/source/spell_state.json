@@ -1,0 +1,121 @@
+[
+  {
+    "id": 1,
+    "name": "manipulate",
+    "description": "The act of changing the state of an object",
+    "difficulty": 1,
+    "retired": false
+  },
+  {
+    "id": 2,
+    "name": "transmute",
+    "description": "The act of shifting an objects state to a different state",
+    "difficulty": 1,
+    "retired": false
+  },
+  {
+    "id": 5,
+    "name": "restore",
+    "description": "The act of reverting on object to a previous state",
+    "difficulty": 2,
+    "retired": false
+  },
+  {
+    "id": 6,
+    "name": "summon",
+    "description": "The act of changing an objects location",
+    "difficulty": 3,
+    "retired": false
+  },
+  {
+    "id": 7,
+    "name": "seal",
+    "description": "The act of removing somethings state",
+    "difficulty": 4,
+    "retired": false
+  },
+  {
+    "id": 8,
+    "name": "bless",
+    "description": "The act of imposing a positive rule on an object",
+    "difficulty": 4,
+    "retired": false
+  },
+  {
+    "id": 10,
+    "name": "break",
+    "description": "The act of separating somethings state",
+    "difficulty": 3,
+    "retired": false
+  },
+  {
+    "id": 11,
+    "name": "evoke",
+    "description": "The act of conjuring and then manipulating an object in one motion",
+    "difficulty": 3,
+    "retired": false
+  },
+  {
+    "id": 12,
+    "name": "subjugate",
+    "description": "The act of summoning, and then binding an object in one motion",
+    "difficulty": 5,
+    "retired": false
+  },
+  {
+    "id": 3,
+    "name": "conjure",
+    "description": "The act of creating a known object from nothing",
+    "difficulty": 2,
+    "retired": false
+  },
+  {
+    "id": 14,
+    "name": "destroy",
+    "description": "The act of removing something from existance",
+    "difficulty": 7,
+    "retired": false
+  },
+  {
+    "id": 13,
+    "name": "create",
+    "description": "The act of creating an object that does not exist",
+    "difficulty": 6,
+    "retired": false
+  },
+  {
+    "id": 15,
+    "name": "Illusion",
+    "description": "The act of affecting ones perception",
+    "difficulty": 1,
+    "retired": false
+  },
+  {
+    "id": 9,
+    "name": "curse",
+    "description": "The act of imposing a negative rule on an object",
+    "difficulty": 4,
+    "retired": false
+  },
+  {
+    "id": 17,
+    "name": "release",
+    "description": "The act of freeing what is bound, sealed or locked",
+    "difficulty": 3,
+    "retired": false
+  },
+  {
+    "id": 4,
+    "name": "bind",
+    "description": "The act of imposing a rule upon a creature or object: hindering, holding or compelling it.",
+    "difficulty": 3,
+    "retired": false
+  },
+  {
+    "id": 16,
+    "name": "oppress",
+    "description": "The act of hindering, holding or compelling a creature against its will",
+    "difficulty": 3,
+    "retired": true
+  }
+]

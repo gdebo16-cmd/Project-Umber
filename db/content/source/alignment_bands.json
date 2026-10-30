@@ -1,0 +1,407 @@
+[
+  {
+    "alignment_code": "LG",
+    "color_square": "LG",
+    "band": "Attuned"
+  },
+  {
+    "alignment_code": "LG",
+    "color_square": "NG",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "LG",
+    "color_square": "CG",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "LG",
+    "color_square": "LN",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "LG",
+    "color_square": "TN",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "LG",
+    "color_square": "CN",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "LG",
+    "color_square": "LE",
+    "band": "Opposed"
+  },
+  {
+    "alignment_code": "LG",
+    "color_square": "NE",
+    "band": "Discordant"
+  },
+  {
+    "alignment_code": "LG",
+    "color_square": "CE",
+    "band": "Discordant"
+  },
+  {
+    "alignment_code": "NG",
+    "color_square": "LG",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "NG",
+    "color_square": "NG",
+    "band": "Attuned"
+  },
+  {
+    "alignment_code": "NG",
+    "color_square": "CG",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "NG",
+    "color_square": "LN",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "NG",
+    "color_square": "TN",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "NG",
+    "color_square": "CN",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "NG",
+    "color_square": "LE",
+    "band": "Discordant"
+  },
+  {
+    "alignment_code": "NG",
+    "color_square": "NE",
+    "band": "Opposed"
+  },
+  {
+    "alignment_code": "NG",
+    "color_square": "CE",
+    "band": "Discordant"
+  },
+  {
+    "alignment_code": "CG",
+    "color_square": "LG",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "CG",
+    "color_square": "NG",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "CG",
+    "color_square": "CG",
+    "band": "Attuned"
+  },
+  {
+    "alignment_code": "CG",
+    "color_square": "LN",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "CG",
+    "color_square": "TN",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "CG",
+    "color_square": "CN",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "CG",
+    "color_square": "LE",
+    "band": "Discordant"
+  },
+  {
+    "alignment_code": "CG",
+    "color_square": "NE",
+    "band": "Discordant"
+  },
+  {
+    "alignment_code": "CG",
+    "color_square": "CE",
+    "band": "Opposed"
+  },
+  {
+    "alignment_code": "LN",
+    "color_square": "LG",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "LN",
+    "color_square": "NG",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "LN",
+    "color_square": "CG",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "LN",
+    "color_square": "LN",
+    "band": "Attuned"
+  },
+  {
+    "alignment_code": "LN",
+    "color_square": "TN",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "LN",
+    "color_square": "CN",
+    "band": "Discordant"
+  },
+  {
+    "alignment_code": "LN",
+    "color_square": "LE",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "LN",
+    "color_square": "NE",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "LN",
+    "color_square": "CE",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "TN",
+    "color_square": "LG",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "TN",
+    "color_square": "NG",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "TN",
+    "color_square": "CG",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "TN",
+    "color_square": "LN",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "TN",
+    "color_square": "TN",
+    "band": "Attuned"
+  },
+  {
+    "alignment_code": "TN",
+    "color_square": "CN",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "TN",
+    "color_square": "LE",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "TN",
+    "color_square": "NE",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "TN",
+    "color_square": "CE",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "CN",
+    "color_square": "LG",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "CN",
+    "color_square": "NG",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "CN",
+    "color_square": "CG",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "CN",
+    "color_square": "LN",
+    "band": "Discordant"
+  },
+  {
+    "alignment_code": "CN",
+    "color_square": "TN",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "CN",
+    "color_square": "CN",
+    "band": "Attuned"
+  },
+  {
+    "alignment_code": "CN",
+    "color_square": "LE",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "CN",
+    "color_square": "NE",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "CN",
+    "color_square": "CE",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "LE",
+    "color_square": "LG",
+    "band": "Opposed"
+  },
+  {
+    "alignment_code": "LE",
+    "color_square": "NG",
+    "band": "Discordant"
+  },
+  {
+    "alignment_code": "LE",
+    "color_square": "CG",
+    "band": "Discordant"
+  },
+  {
+    "alignment_code": "LE",
+    "color_square": "LN",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "LE",
+    "color_square": "TN",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "LE",
+    "color_square": "CN",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "LE",
+    "color_square": "LE",
+    "band": "Attuned"
+  },
+  {
+    "alignment_code": "LE",
+    "color_square": "NE",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "LE",
+    "color_square": "CE",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "NE",
+    "color_square": "LG",
+    "band": "Discordant"
+  },
+  {
+    "alignment_code": "NE",
+    "color_square": "NG",
+    "band": "Opposed"
+  },
+  {
+    "alignment_code": "NE",
+    "color_square": "CG",
+    "band": "Discordant"
+  },
+  {
+    "alignment_code": "NE",
+    "color_square": "LN",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "NE",
+    "color_square": "TN",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "NE",
+    "color_square": "CN",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "NE",
+    "color_square": "LE",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "NE",
+    "color_square": "NE",
+    "band": "Attuned"
+  },
+  {
+    "alignment_code": "NE",
+    "color_square": "CE",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "CE",
+    "color_square": "LG",
+    "band": "Discordant"
+  },
+  {
+    "alignment_code": "CE",
+    "color_square": "NG",
+    "band": "Discordant"
+  },
+  {
+    "alignment_code": "CE",
+    "color_square": "CG",
+    "band": "Opposed"
+  },
+  {
+    "alignment_code": "CE",
+    "color_square": "LN",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "CE",
+    "color_square": "TN",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "CE",
+    "color_square": "CN",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "CE",
+    "color_square": "LE",
+    "band": "Neutral"
+  },
+  {
+    "alignment_code": "CE",
+    "color_square": "NE",
+    "band": "Aligned"
+  },
+  {
+    "alignment_code": "CE",
+    "color_square": "CE",
+    "band": "Attuned"
+  }
+]

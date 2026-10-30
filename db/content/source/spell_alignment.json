@@ -1,0 +1,74 @@
+[
+  {
+    "id": 6,
+    "Name": "White Magic",
+    "Type": "Life",
+    "color": "White",
+    "chart_square": "LG",
+    "meaning": "Life"
+  },
+  {
+    "id": 4,
+    "Name": "Yellow Magic",
+    "Type": "Strengthen",
+    "color": "Yellow",
+    "chart_square": "NG",
+    "meaning": "Strengthen"
+  },
+  {
+    "id": 1,
+    "Name": "Green Magic",
+    "Type": "Support",
+    "color": "Green",
+    "chart_square": "CG",
+    "meaning": "Free"
+  },
+  {
+    "id": 3,
+    "Name": "Blue Magic",
+    "Type": "Defense",
+    "color": "Blue",
+    "chart_square": "LN",
+    "meaning": "Defense"
+  },
+  {
+    "id": 8,
+    "Name": "Grey Magic",
+    "Type": "Neutral",
+    "color": "Grey",
+    "chart_square": "TN",
+    "meaning": "Assist"
+  },
+  {
+    "id": 2,
+    "Name": "Red Magic",
+    "Type": "Offense",
+    "color": "Red",
+    "chart_square": "CN",
+    "meaning": "Offense"
+  },
+  {
+    "id": 9,
+    "Name": "Orange Magic",
+    "Type": "Hinder",
+    "color": "Orange",
+    "chart_square": "LE",
+    "meaning": "Restrict"
+  },
+  {
+    "id": 5,
+    "Name": "Purple Magic",
+    "Type": "Weaken",
+    "color": "Purple",
+    "chart_square": "NE",
+    "meaning": "Weaken"
+  },
+  {
+    "id": 7,
+    "Name": "Black Magic",
+    "Type": "Death",
+    "color": "Black",
+    "chart_square": "CE",
+    "meaning": "Death"
+  }
+]

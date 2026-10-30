@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "key": "tiny",
+    "name": "Tiny",
+    "grid_squares": "0.5"
+  },
+  {
+    "id": 2,
+    "key": "small",
+    "name": "Small",
+    "grid_squares": "1.0"
+  },
+  {
+    "id": 3,
+    "key": "medium",
+    "name": "Medium",
+    "grid_squares": "1.0"
+  },
+  {
+    "id": 4,
+    "key": "large",
+    "name": "Large",
+    "grid_squares": "2.0"
+  },
+  {
+    "id": 5,
+    "key": "enormous",
+    "name": "Enormous",
+    "grid_squares": "3.0"
+  },
+  {
+    "id": 6,
+    "key": "titanic",
+    "name": "Titanic",
+    "grid_squares": "4.0"
+  }
+]

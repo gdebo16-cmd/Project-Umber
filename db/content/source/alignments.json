@@ -1,0 +1,74 @@
+[
+  {
+    "code": "LG",
+    "name": "Lawful Good",
+    "law_axis": -1,
+    "good_axis": 1,
+    "color": "White",
+    "sort": 1
+  },
+  {
+    "code": "NG",
+    "name": "Natural Good",
+    "law_axis": 0,
+    "good_axis": 1,
+    "color": "Yellow",
+    "sort": 2
+  },
+  {
+    "code": "CG",
+    "name": "Chaotic Good",
+    "law_axis": 1,
+    "good_axis": 1,
+    "color": "Green",
+    "sort": 3
+  },
+  {
+    "code": "LN",
+    "name": "Lawful Natural",
+    "law_axis": -1,
+    "good_axis": 0,
+    "color": "Blue",
+    "sort": 4
+  },
+  {
+    "code": "TN",
+    "name": "True Natural",
+    "law_axis": 0,
+    "good_axis": 0,
+    "color": "Grey",
+    "sort": 5
+  },
+  {
+    "code": "CN",
+    "name": "Chaotic Natural",
+    "law_axis": 1,
+    "good_axis": 0,
+    "color": "Red",
+    "sort": 6
+  },
+  {
+    "code": "LE",
+    "name": "Lawful Evil",
+    "law_axis": -1,
+    "good_axis": -1,
+    "color": "Orange",
+    "sort": 7
+  },
+  {
+    "code": "NE",
+    "name": "Natural Evil",
+    "law_axis": 0,
+    "good_axis": -1,
+    "color": "Purple",
+    "sort": 8
+  },
+  {
+    "code": "CE",
+    "name": "Chaotic Evil",
+    "law_axis": 1,
+    "good_axis": -1,
+    "color": "Black",
+    "sort": 9
+  }
+]

@@ -1,0 +1,1005 @@
+[
+  {
+    "id": 1,
+    "key": "warrior",
+    "name": "Warrior",
+    "hit_die": "d12",
+    "primary_stat": "Might",
+    "description": "The Warrior relies on Might (attacks, damage, Warrior class DCs). Spellcasting: None. At level 3 you choose a calling.",
+    "sort_order": 1,
+    "armor_prof": "Light Armor, Medium Armor, Heavy Armor, Shields",
+    "weapon_prof": "Minor, Elegant One-Handed, Broad One-Handed, Ranged One-Handed, Versatile, Reach, Great, Ranged Two-Handed",
+    "tool_prof": null,
+    "skill_count": 2,
+    "skill_options": [
+      "Balance",
+      "Botany",
+      "Presence",
+      "Memory",
+      "Faith",
+      "Dominance",
+      "Awareness"
+    ],
+    "skill_fixed": [],
+    "spell_stat": "STR",
+    "spellcasting": "None",
+    "caster_type": "body",
+    "img_url": "/classes/warrior.png",
+    "callings": [
+      {
+        "id": 3,
+        "key": "path_of_the_reaper",
+        "name": "Path of the Reaper",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 1
+      },
+      {
+        "id": 2,
+        "key": "path_of_revenge",
+        "name": "Path of Revenge",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 2
+      },
+      {
+        "id": 1,
+        "key": "path_of_the_hero",
+        "name": "Path of the Hero",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "key": "witch",
+    "name": "Witch",
+    "hit_die": "d8",
+    "primary_stat": "Confidence",
+    "description": "The Witch relies on Confidence (hex save DC, curse attacks, witch features). Spellcasting: Hybrid (2/3) caster, Confidence.",
+    "sort_order": 2,
+    "armor_prof": "Light Armor",
+    "weapon_prof": "Minor, Ranged One-Handed",
+    "tool_prof": "Herbalism Kit",
+    "skill_count": 2,
+    "skill_options": [
+      "Arcana",
+      "Misdirection",
+      "Dominance",
+      "Triage",
+      "Botany",
+      "Memory",
+      "Faith"
+    ],
+    "skill_fixed": [],
+    "spell_stat": "CHA",
+    "spellcasting": "Hybrid (2/3) caster, Confidence; slots per Shared Frame hybrid table",
+    "caster_type": "hybrid",
+    "img_url": "/classes/witch.png",
+    "callings": [
+      {
+        "id": 7,
+        "key": "fate_magic",
+        "name": "Fate Magic",
+        "description": null,
+        "img_url": "/subclasses/sub-witch-fate.png",
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 1
+      },
+      {
+        "id": 6,
+        "key": "hex_magic",
+        "name": "Hex Magic",
+        "description": null,
+        "img_url": "/subclasses/sub-witch-hex.png",
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 2
+      },
+      {
+        "id": 5,
+        "key": "blood_magic",
+        "name": "Blood Magic",
+        "description": null,
+        "img_url": "/subclasses/sub-witch-blood.png",
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      },
+      {
+        "id": 4,
+        "key": "dark_magic",
+        "name": "Dark Magic",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 4
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "key": "templar",
+    "name": "Templar",
+    "hit_die": "d10",
+    "primary_stat": "Judgment",
+    "description": "The Templar relies on Confidence (oath DC, smites, auras); Might recommended for weapon attacks. Spellcasting: Half caster from level 2, Confidence.",
+    "sort_order": 3,
+    "armor_prof": "Light Armor, Medium Armor, Heavy Armor, Shields",
+    "weapon_prof": "Minor, Elegant One-Handed, Broad One-Handed, Ranged One-Handed, Versatile, Reach, Great, Ranged Two-Handed",
+    "tool_prof": null,
+    "skill_count": 2,
+    "skill_options": [
+      "Presence",
+      "Dominance",
+      "Triage",
+      "Diplomacy",
+      "Memory",
+      "Faith"
+    ],
+    "skill_fixed": [],
+    "spell_stat": "WIS",
+    "spellcasting": "Half caster from level 2, Judgment; slots per Shared Frame half-caster table (top tier 6th)",
+    "caster_type": "half",
+    "img_url": "/classes/paladin.png",
+    "callings": [
+      {
+        "id": 11,
+        "key": "order_of_the_willow",
+        "name": "Order of the Willow",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 1
+      },
+      {
+        "id": 10,
+        "key": "order_of_the_morrow",
+        "name": "Order of the Morrow",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 2
+      },
+      {
+        "id": 9,
+        "key": "order_of_the_tower",
+        "name": "Order of the Tower",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      },
+      {
+        "id": 8,
+        "key": "order_of_the_shade",
+        "name": "Order of the Shade",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 4
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "key": "mage",
+    "name": "Mage",
+    "hit_die": "d8",
+    "primary_stat": "Intellect",
+    "description": "The Mage relies on Intellect (spell attack, spell save DC, arcane features). Spellcasting: Full caster, Intellect.",
+    "sort_order": 4,
+    "armor_prof": null,
+    "weapon_prof": "Minor, Ranged One-Handed",
+    "tool_prof": null,
+    "skill_count": 2,
+    "skill_options": [
+      "Arcana",
+      "Memory",
+      "Faith",
+      "Knowledge",
+      "Triage"
+    ],
+    "skill_fixed": [],
+    "spell_stat": "INT",
+    "spellcasting": "Full caster, Intellect; slots per Shared Frame full-caster table",
+    "caster_type": "full",
+    "img_url": "/classes/mage.png",
+    "callings": [
+      {
+        "id": 15,
+        "key": "tome_of_evocation",
+        "name": "Tome of Evocation",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 1
+      },
+      {
+        "id": 14,
+        "key": "tome_of_conjuration",
+        "name": "Tome of Conjuration",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 2
+      },
+      {
+        "id": 13,
+        "key": "tome_of_dreaming",
+        "name": "Tome of Dreaming",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      },
+      {
+        "id": 12,
+        "key": "tome_of_inscription",
+        "name": "Tome of Inscription",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 4
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "key": "summoner",
+    "name": "Summoner",
+    "hit_die": "d8",
+    "primary_stat": "Intellect",
+    "description": "The Summoner relies on Confidence (binding, summon command, spell DC). Spellcasting: Half caster, rounded up (slots from level 1), Confidence.",
+    "sort_order": 5,
+    "armor_prof": "Light Armor",
+    "weapon_prof": "Minor, Ranged One-Handed",
+    "tool_prof": null,
+    "skill_count": 2,
+    "skill_options": [
+      "Arcana",
+      "Misdirection",
+      "Memory",
+      "Faith",
+      "Dominance",
+      "Knowledge"
+    ],
+    "skill_fixed": [],
+    "spell_stat": "INT",
+    "spellcasting": "Half caster, rounded up (slots from level 1), Intellect; slots per Shared Frame half-caster (rounded up) table (top tier 6th)",
+    "caster_type": "half_rounded_up",
+    "img_url": "/classes/summoner.png",
+    "callings": [
+      {
+        "id": 18,
+        "key": "necromancer",
+        "name": "Necromancer",
+        "description": null,
+        "img_url": "/subclasses/sub-summoner-necromancer.png",
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 1
+      },
+      {
+        "id": 17,
+        "key": "hollowmancer",
+        "name": "Hollowmancer",
+        "description": null,
+        "img_url": "/subclasses/sub-summoner-hollowmancer.png",
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 2
+      },
+      {
+        "id": 16,
+        "key": "technomancer",
+        "name": "Technomancer",
+        "description": null,
+        "img_url": "/subclasses/sub-summoner-technomancer.png",
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "key": "assassin",
+    "name": "Assassin",
+    "hit_die": "d10",
+    "primary_stat": "Precision",
+    "description": "The Assassin relies on Precision (finesse/ranged attacks, poison and gadget DCs, stealth features). Spellcasting: None.",
+    "sort_order": 6,
+    "armor_prof": "Light Armor",
+    "weapon_prof": "Minor, Elegant One-Handed, Broad One-Handed, Ranged One-Handed",
+    "tool_prof": "Thieves' Tools",
+    "skill_count": 3,
+    "skill_options": [
+      "Balance",
+      "Presence",
+      "Misdirection",
+      "Dominance",
+      "Knowledge",
+      "Awareness",
+      "Finesse"
+    ],
+    "skill_fixed": [
+      "Stealth"
+    ],
+    "spell_stat": "DEX",
+    "spellcasting": "None",
+    "caster_type": "body",
+    "img_url": "/classes/assassin.png",
+    "callings": [
+      {
+        "id": 21,
+        "key": "art_of_venom",
+        "name": "Art of Venom",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 1
+      },
+      {
+        "id": 20,
+        "key": "art_of_the_ghost",
+        "name": "Art of the Ghost",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 2
+      },
+      {
+        "id": 19,
+        "key": "art_of_the_trickster",
+        "name": "Art of the Trickster",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "key": "priest",
+    "name": "Priest",
+    "hit_die": "d8",
+    "primary_stat": "Judgment",
+    "description": "The Priest relies on Judgment (spell DC, Channel Divinity, healing). Spellcasting: Full caster, Judgment.",
+    "sort_order": 7,
+    "armor_prof": "Light Armor, Medium Armor, Shields",
+    "weapon_prof": "Minor, Broad One-Handed, Ranged One-Handed",
+    "tool_prof": null,
+    "skill_count": 2,
+    "skill_options": [
+      "Memory",
+      "Faith",
+      "Triage",
+      "Diplomacy"
+    ],
+    "skill_fixed": [],
+    "spell_stat": "WIS",
+    "spellcasting": "Full caster, Judgment; slots per Shared Frame full-caster table",
+    "caster_type": "full",
+    "img_url": "/classes/priest.png",
+    "callings": [
+      {
+        "id": 24,
+        "key": "idol_of_light",
+        "name": "Idol of Light",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 1
+      },
+      {
+        "id": 23,
+        "key": "idol_of_deliverance",
+        "name": "Idol of Deliverance",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 2
+      },
+      {
+        "id": 22,
+        "key": "idol_of_whispers",
+        "name": "Idol of Whispers",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "key": "berserker",
+    "name": "Berserker",
+    "hit_die": "d12",
+    "primary_stat": "Might",
+    "description": "The Berserker relies on Might (Endurance secondary). Spellcasting: None.",
+    "sort_order": 8,
+    "armor_prof": "Light Armor, Medium Armor",
+    "weapon_prof": "Minor, Elegant One-Handed, Broad One-Handed, Ranged One-Handed, Versatile, Reach, Great",
+    "tool_prof": null,
+    "skill_count": 2,
+    "skill_options": [
+      "Botany",
+      "Presence",
+      "Dominance",
+      "Awareness"
+    ],
+    "skill_fixed": [],
+    "spell_stat": "CON",
+    "spellcasting": "None",
+    "caster_type": "body",
+    "img_url": "/classes/berserker.png",
+    "callings": [
+      {
+        "id": 27,
+        "key": "crown_of_thorns",
+        "name": "Crown of Thorns",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 1
+      },
+      {
+        "id": 26,
+        "key": "crown_of_reeds",
+        "name": "Crown of Reeds",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 2
+      },
+      {
+        "id": 25,
+        "key": "crown_of_bone",
+        "name": "Crown of Bone",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "key": "seer",
+    "name": "Seer",
+    "hit_die": "d10",
+    "primary_stat": "Judgment",
+    "description": "The Seer relies on Judgment (spell DC, Wild Shape, nature features). Spellcasting: Full caster, Judgment.",
+    "sort_order": 9,
+    "armor_prof": "Light Armor, Medium Armor, Shields",
+    "weapon_prof": "Minor, Elegant One-Handed, Ranged One-Handed",
+    "tool_prof": "Herbalism Kit",
+    "skill_count": 2,
+    "skill_options": [
+      "Botany",
+      "Arcana",
+      "Triage",
+      "Awareness",
+      "Memory",
+      "Faith"
+    ],
+    "skill_fixed": [],
+    "spell_stat": "WIS",
+    "spellcasting": "Full caster, Judgment; slots per Shared Frame full-caster table",
+    "caster_type": "full",
+    "img_url": "/classes/druid.png",
+    "callings": [
+      {
+        "id": 30,
+        "key": "eyes_of_the_raven",
+        "name": "Eyes of the Raven",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 1
+      },
+      {
+        "id": 29,
+        "key": "eyes_of_the_moon",
+        "name": "Eyes of the Moon",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 2
+      },
+      {
+        "id": 28,
+        "key": "eyes_of_the_lycan",
+        "name": "Eyes of the Lycan",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "key": "pugilist",
+    "name": "Pugilist",
+    "hit_die": "d10",
+    "primary_stat": "Precision",
+    "description": "The Pugilist relies on Precision (Endurance secondary; Might optional for grapple builds). Spellcasting: None.",
+    "sort_order": 10,
+    "armor_prof": null,
+    "weapon_prof": "Minor, Ranged One-Handed",
+    "tool_prof": null,
+    "skill_count": 2,
+    "skill_options": [
+      "Balance",
+      "Presence",
+      "Memory",
+      "Faith",
+      "Stealth"
+    ],
+    "skill_fixed": [],
+    "spell_stat": "DEX",
+    "spellcasting": "None",
+    "caster_type": "body",
+    "img_url": "/classes/pugilist.png",
+    "callings": [
+      {
+        "id": 33,
+        "key": "mage_breaker",
+        "name": "Mage-Breaker",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 1
+      },
+      {
+        "id": 32,
+        "key": "shield_splitter",
+        "name": "Shield Splitter",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 2
+      },
+      {
+        "id": 31,
+        "key": "tranquil_fist",
+        "name": "Tranquil Fist",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "key": "ranger",
+    "name": "Ranger",
+    "hit_die": "d10",
+    "primary_stat": "Precision",
+    "description": "The Ranger relies on Precision (attacks, class features); Judgment secondary for tracking and spell DC. Spellcasting: Half caster from level 2, Judgment.",
+    "sort_order": 11,
+    "armor_prof": "Light Armor, Medium Armor, Shields",
+    "weapon_prof": "Minor, Elegant One-Handed, Broad One-Handed, Ranged One-Handed, Versatile, Reach, Great, Ranged Two-Handed",
+    "tool_prof": null,
+    "skill_count": 3,
+    "skill_options": [
+      "Botany",
+      "Presence",
+      "Knowledge",
+      "Awareness",
+      "Stealth"
+    ],
+    "skill_fixed": [],
+    "spell_stat": "WIS",
+    "spellcasting": "Half caster from level 2, Judgment; slots per Shared Frame half-caster table (top tier 6th)",
+    "caster_type": "half",
+    "img_url": "/classes/ranger.png",
+    "callings": [
+      {
+        "id": 36,
+        "key": "inquisitor",
+        "name": "Inquisitor",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 1
+      },
+      {
+        "id": 35,
+        "key": "warden",
+        "name": "Warden",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 2
+      },
+      {
+        "id": 34,
+        "key": "wildling",
+        "name": "Wildling",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "key": "reaver",
+    "name": "Reaver",
+    "hit_die": "d10",
+    "primary_stat": "Confidence",
+    "description": "The Reaver relies on Confidence (class DC, Temper) with Endurance secondary. Spellcasting: none (Mark of Possession casts).",
+    "sort_order": 12,
+    "armor_prof": "Light Armor, Medium Armor, Shields",
+    "weapon_prof": "Minor, Elegant One-Handed, Broad One-Handed, Ranged One-Handed, Versatile, Reach, Great, Ranged Two-Handed, Oversized (any size)",
+    "tool_prof": "Smith's Tools",
+    "skill_count": 2,
+    "skill_options": [
+      "Presence",
+      "Misdirection",
+      "Dominance",
+      "Diplomacy",
+      "Memory",
+      "Faith"
+    ],
+    "skill_fixed": [],
+    "spell_stat": "CHA",
+    "spellcasting": "Half caster from level 2, Confidence; slots per Shared Frame half-caster table (top tier 6th), copied from the Wraith; spell list pending",
+    "caster_type": "half",
+    "img_url": "/classes/reaver.png",
+    "callings": [
+      {
+        "id": 39,
+        "key": "mark_of_crossroads",
+        "name": "Mark of Crossroads",
+        "description": null,
+        "img_url": "/subclasses/sub-reaver-crossroads.png",
+        "armor_prof": "",
+        "weapon_prof": null,
+        "tool_prof": "",
+        "sort_order": 1
+      },
+      {
+        "id": 38,
+        "key": "mark_of_possession",
+        "name": "Mark of Possession",
+        "description": null,
+        "img_url": "/subclasses/sub-reaver-possession.png",
+        "armor_prof": "",
+        "weapon_prof": null,
+        "tool_prof": "",
+        "sort_order": 2
+      },
+      {
+        "id": 37,
+        "key": "mark_of_corruption",
+        "name": "Mark of Corruption",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "key": "knight",
+    "name": "Knight",
+    "hit_die": "d12",
+    "primary_stat": "Might",
+    "description": "The Knight relies on Might (attacks, shove/override DCs, mounted features); Confidence optional for Crown Guard. Spellcasting: None.",
+    "sort_order": 13,
+    "armor_prof": "Light Armor, Medium Armor, Heavy Armor, Shields",
+    "weapon_prof": "Minor, Elegant One-Handed, Broad One-Handed, Ranged One-Handed, Versatile, Reach, Great",
+    "tool_prof": null,
+    "skill_count": 2,
+    "skill_options": [
+      "Botany",
+      "Presence",
+      "Memory",
+      "Faith",
+      "Dominance",
+      "Diplomacy"
+    ],
+    "skill_fixed": [],
+    "spell_stat": "STR",
+    "spellcasting": "None",
+    "caster_type": "body",
+    "img_url": "/classes/knight.png",
+    "callings": [
+      {
+        "id": 42,
+        "key": "champion",
+        "name": "Champion",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 1
+      },
+      {
+        "id": 41,
+        "key": "guardian",
+        "name": "Guardian",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 2
+      },
+      {
+        "id": 40,
+        "key": "slayer",
+        "name": "Slayer",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "key": "lancer",
+    "name": "Lancer",
+    "hit_die": "d10",
+    "primary_stat": "Precision",
+    "description": "The Lancer relies on Might (Precision optional with finesse spears). Spellcasting: None.",
+    "sort_order": 14,
+    "armor_prof": "Light Armor, Medium Armor, Heavy Armor, Shields",
+    "weapon_prof": "Minor, Ranged One-Handed, Versatile, Reach",
+    "tool_prof": null,
+    "skill_count": 2,
+    "skill_options": [
+      "Balance",
+      "Botany",
+      "Presence",
+      "Memory",
+      "Faith",
+      "Dominance",
+      "Awareness"
+    ],
+    "skill_fixed": [],
+    "spell_stat": "DEX",
+    "spellcasting": "None",
+    "caster_type": "body",
+    "img_url": "/classes/lancer.png",
+    "callings": [
+      {
+        "id": 45,
+        "key": "dance_of_the_eagle",
+        "name": "Dance of the Eagle",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 1
+      },
+      {
+        "id": 44,
+        "key": "dance_of_the_viper",
+        "name": "Dance of the Viper",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 2
+      },
+      {
+        "id": 43,
+        "key": "dance_of_the_spider",
+        "name": "Dance of the Spider",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "key": "songsmith",
+    "name": "Songsmith",
+    "hit_die": "d8",
+    "primary_stat": "Confidence",
+    "description": "The Songsmith relies on Confidence (spells, Inspiration, voice features). Spellcasting: Full caster, Confidence (support and control).",
+    "sort_order": 15,
+    "armor_prof": "Light Armor, Shields",
+    "weapon_prof": "Minor, Elegant One-Handed, Ranged One-Handed",
+    "tool_prof": "One Musical Instrument",
+    "skill_count": 3,
+    "skill_options": [
+      "any"
+    ],
+    "skill_fixed": [],
+    "spell_stat": "CHA",
+    "spellcasting": "Full caster, Confidence (support and control); slots per Shared Frame full-caster table",
+    "caster_type": "full",
+    "img_url": "/classes/songsmith.png",
+    "callings": [
+      {
+        "id": 48,
+        "key": "ballad_of_the_tulip",
+        "name": "Ballad of the Tulip",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 1
+      },
+      {
+        "id": 47,
+        "key": "ballad_of_the_marigold",
+        "name": "Ballad of the Marigold",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 2
+      },
+      {
+        "id": 46,
+        "key": "ballad_of_the_black_rose",
+        "name": "Ballad of the Black Rose",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "key": "wraith",
+    "name": "Wraith",
+    "hit_die": "d10",
+    "primary_stat": "Intellect",
+    "description": "The Wraith relies on Intellect (class DC, Radiance) with Endurance secondary. Spellcasting: half caster (Intellect) from level 2.",
+    "sort_order": 16,
+    "armor_prof": "Light Armor, Medium Armor",
+    "weapon_prof": "Minor, Elegant One-Handed, Broad One-Handed",
+    "tool_prof": "",
+    "skill_count": 2,
+    "skill_options": [
+      "Arcana",
+      "Presence",
+      "Dominance",
+      "Knowledge",
+      "Memory",
+      "Faith"
+    ],
+    "skill_fixed": [],
+    "spell_stat": "INT",
+    "spellcasting": "Half caster from level 2, Intellect; slots per Shared Frame half-caster table (top tier 6th); Paladin spell list; 2 cantrips from level 2 (Cleric cantrips + Grace Bolt); sigil blade is a focus for Wraith spells; spell DC 8 + proficiency + Intellect",
+    "caster_type": "half",
+    "img_url": "/classes/wraith.png",
+    "callings": [
+      {
+        "id": 51,
+        "key": "seal_of_the_nephilim",
+        "name": "Seal of the Nephilim",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 1
+      },
+      {
+        "id": 50,
+        "key": "seal_of_the_seraphim",
+        "name": "Seal of the Seraphim",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 2
+      },
+      {
+        "id": 49,
+        "key": "seal_of_the_virtue",
+        "name": "Seal of the Virtue",
+        "description": null,
+        "img_url": null,
+        "armor_prof": null,
+        "weapon_prof": null,
+        "tool_prof": null,
+        "sort_order": 3
+      }
+    ]
+  }
+]

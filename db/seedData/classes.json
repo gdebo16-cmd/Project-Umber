@@ -1,0 +1,3937 @@
+[
+  {
+    "name": "Warrior",
+    "hit_die": "d12",
+    "primary_stat": "Might",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Preferred Arms",
+          "Draw Breath"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Power of Will"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Extra Attack(2)",
+          "Draw Breath(2)"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Push Onward",
+          "Power of Will(2)"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Extra Attack(3)"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Sever",
+          "Push Onward(2)",
+          "Power of Will(3)"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Extra Attack(4)",
+          "Power of Will(4)"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Survivor",
+          "Sever(2)"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Path of the Reaper",
+        "features": [
+          {
+            "level": 3,
+            "name": "Reaping Swing"
+          },
+          {
+            "level": 7,
+            "name": "Harvest"
+          },
+          {
+            "level": 9,
+            "name": "Grim Momentum"
+          },
+          {
+            "level": 13,
+            "name": "Scythe Arc"
+          },
+          {
+            "level": 15,
+            "name": "Death's Cadence"
+          },
+          {
+            "level": 19,
+            "name": "Reaper's Toll"
+          }
+        ]
+      },
+      {
+        "name": "Path of Revenge",
+        "features": [
+          {
+            "level": 3,
+            "name": "Grudge"
+          },
+          {
+            "level": 7,
+            "name": "Retaliate"
+          },
+          {
+            "level": 9,
+            "name": "Blood Debt"
+          },
+          {
+            "level": 13,
+            "name": "Spite"
+          },
+          {
+            "level": 15,
+            "name": "Vendetta"
+          },
+          {
+            "level": 19,
+            "name": "Wrath Unbound"
+          }
+        ]
+      },
+      {
+        "name": "Path of the Hero",
+        "features": [
+          {
+            "level": 3,
+            "name": "Heroic Surge"
+          },
+          {
+            "level": 7,
+            "name": "Inspire"
+          },
+          {
+            "level": 9,
+            "name": "Stand Firm"
+          },
+          {
+            "level": 13,
+            "name": "Second Wind"
+          },
+          {
+            "level": 15,
+            "name": "Last Stand"
+          },
+          {
+            "level": 19,
+            "name": "Legend Born"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Witch",
+    "hit_die": "d8",
+    "primary_stat": "Confidence",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Coven Rites",
+          "Spellcraft(1)",
+          "Cantrips(2)"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Familiar"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Seance",
+          "Coven Rites(2)"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Spell Carving",
+          "Coven Rites(3)"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Seance(2)",
+          "Spell Carving(2)"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Familiar(2)",
+          "Coven Rites(4)"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Familiar(3)",
+          "Familiar's Bite",
+          "Spell Carving(3)",
+          "Coven Rites(5)"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Grand Coven",
+          "Seance(3)"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Fate Magic",
+        "features": [
+          {
+            "level": 3,
+            "name": "Twist of Fate"
+          },
+          {
+            "level": 7,
+            "name": "Reroll"
+          },
+          {
+            "level": 9,
+            "name": "Thread Reading"
+          },
+          {
+            "level": 13,
+            "name": "Undo"
+          },
+          {
+            "level": 15,
+            "name": "Fate's Favor"
+          },
+          {
+            "level": 19,
+            "name": "Rewrite Fate"
+          }
+        ]
+      },
+      {
+        "name": "Hex Magic",
+        "features": [
+          {
+            "level": 3,
+            "name": "Lingering Hex"
+          },
+          {
+            "level": 7,
+            "name": "Double Hex"
+          },
+          {
+            "level": 9,
+            "name": "Hex Bloom"
+          },
+          {
+            "level": 13,
+            "name": "Jinx"
+          },
+          {
+            "level": 15,
+            "name": "Hex Chain"
+          },
+          {
+            "level": 19,
+            "name": "Grand Malediction"
+          }
+        ]
+      },
+      {
+        "name": "Blood Magic",
+        "features": [
+          {
+            "level": 3,
+            "name": "Bloodletting"
+          },
+          {
+            "level": 7,
+            "name": "Blood Bolt"
+          },
+          {
+            "level": 9,
+            "name": "Crimson Bind"
+          },
+          {
+            "level": 13,
+            "name": "Boil Blood"
+          },
+          {
+            "level": 15,
+            "name": "Blood Pact"
+          },
+          {
+            "level": 19,
+            "name": "Sanguine Rite"
+          }
+        ]
+      },
+      {
+        "name": "Dark Magic",
+        "features": [
+          {
+            "level": 3,
+            "name": "Withering Touch"
+          },
+          {
+            "level": 7,
+            "name": "Rot"
+          },
+          {
+            "level": 9,
+            "name": "Death Knell"
+          },
+          {
+            "level": 13,
+            "name": "Decay Field"
+          },
+          {
+            "level": 15,
+            "name": "Grave Hunger"
+          },
+          {
+            "level": 19,
+            "name": "Night Eternal"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Templar",
+    "hit_die": "d10",
+    "primary_stat": "Judgment",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Sense of the Divine",
+          "Grace",
+          "Spellcraft(2)"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Divine Arms",
+          "Heavenly Strike"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Extra Attack(2)",
+          "Angelic Decree"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Heavenly Presence"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Extra Attack(3)",
+          "Greater Heavenly Strike"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Heavenly Presence(2)",
+          "Cleansing Grace"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Extra Attack(4)"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Heavenly Presence(3)",
+          "Grand Order"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Order of the Willow",
+        "features": [
+          {
+            "level": 3,
+            "name": "Willow's Shelter"
+          },
+          {
+            "level": 7,
+            "name": "Mending Bough"
+          },
+          {
+            "level": 9,
+            "name": "Rooted Guard"
+          },
+          {
+            "level": 13,
+            "name": "Willow Ward"
+          },
+          {
+            "level": 15,
+            "name": "Sanctuary Grove"
+          },
+          {
+            "level": 19,
+            "name": "Ancient Willow"
+          }
+        ]
+      },
+      {
+        "name": "Order of the Morrow",
+        "features": [
+          {
+            "level": 3,
+            "name": "Hope Renewed"
+          },
+          {
+            "level": 7,
+            "name": "Rally Strength"
+          },
+          {
+            "level": 9,
+            "name": "Steadfast"
+          },
+          {
+            "level": 13,
+            "name": "Borrowed Time"
+          },
+          {
+            "level": 15,
+            "name": "Dawn's Promise"
+          },
+          {
+            "level": 19,
+            "name": "Undying Morrow"
+          }
+        ]
+      },
+      {
+        "name": "Order of the Tower",
+        "features": [
+          {
+            "level": 3,
+            "name": "Death's Embrace"
+          },
+          {
+            "level": 7,
+            "name": "Gravefire"
+          },
+          {
+            "level": 9,
+            "name": "Fallen Strength"
+          },
+          {
+            "level": 13,
+            "name": "Tower Ward"
+          },
+          {
+            "level": 15,
+            "name": "Last Rites"
+          },
+          {
+            "level": 19,
+            "name": "Lord of the Tower"
+          }
+        ]
+      },
+      {
+        "name": "Order of the Shade",
+        "features": [
+          {
+            "level": 3,
+            "name": "Vengeful Shade"
+          },
+          {
+            "level": 7,
+            "name": "Mark of Wrath"
+          },
+          {
+            "level": 9,
+            "name": "Shadow Smite"
+          },
+          {
+            "level": 13,
+            "name": "Punisher"
+          },
+          {
+            "level": 15,
+            "name": "Oath of Night"
+          },
+          {
+            "level": 19,
+            "name": "Dark Order"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Mage",
+    "hit_die": "d8",
+    "primary_stat": "Intellect",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Spellcraft(1)",
+          "Cantrips(3)",
+          "Spellbook"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Mana Well"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Prepared Study"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Mana Well(2)"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing",
+          "Cantrips(4)"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Spell Weaving"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Mana Well(3)"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Grand Grimoire"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Archmage"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Tome of Evocation",
+        "features": [
+          {
+            "level": 3,
+            "name": "Elemental Attunement"
+          },
+          {
+            "level": 7,
+            "name": "Sculpt Blast"
+          },
+          {
+            "level": 9,
+            "name": "Empowered Element"
+          },
+          {
+            "level": 13,
+            "name": "Elemental Pierce"
+          },
+          {
+            "level": 15,
+            "name": "Overchannel"
+          },
+          {
+            "level": 19,
+            "name": "Avatar of the Element"
+          }
+        ]
+      },
+      {
+        "name": "Tome of Conjuration",
+        "features": [
+          {
+            "level": 3,
+            "name": "Conjure Tool"
+          },
+          {
+            "level": 7,
+            "name": "Spectral Servant"
+          },
+          {
+            "level": 9,
+            "name": "Swift Summons"
+          },
+          {
+            "level": 13,
+            "name": "Bound Ally"
+          },
+          {
+            "level": 15,
+            "name": "Twin Conjuring"
+          },
+          {
+            "level": 19,
+            "name": "Gatekeeper"
+          }
+        ]
+      },
+      {
+        "name": "Tome of Dreaming",
+        "features": [
+          {
+            "level": 3,
+            "name": "Dream Step"
+          },
+          {
+            "level": 7,
+            "name": "Dream Slot"
+          },
+          {
+            "level": 9,
+            "name": "Mirrored Casting"
+          },
+          {
+            "level": 13,
+            "name": "Lucid Veil"
+          },
+          {
+            "level": 15,
+            "name": "Dream Echo"
+          },
+          {
+            "level": 19,
+            "name": "Waking Dream"
+          }
+        ]
+      },
+      {
+        "name": "Tome of Inscription",
+        "features": [
+          {
+            "level": 3,
+            "name": "Rune Etching"
+          },
+          {
+            "level": 7,
+            "name": "Battle Scribe"
+          },
+          {
+            "level": 9,
+            "name": "Extra Attack"
+          },
+          {
+            "level": 13,
+            "name": "Twin Runes"
+          },
+          {
+            "level": 15,
+            "name": "Runic Ward"
+          },
+          {
+            "level": 19,
+            "name": "Living Inscription"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Summoner",
+    "hit_die": "d8",
+    "primary_stat": "Intellect",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Spellcraft(1)",
+          "Cantrips(2)",
+          "Summoning Slots",
+          "Legion"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Forced Command"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Summoning Slots(2)",
+          "Empowered Summons",
+          "Shared Senses"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Legion(2)"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing",
+          "Summoning Slots(3)"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Forced Command(2)"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Summoning Slots(4)",
+          "Empowered Summons(2)",
+          "Legion(3)"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Legion(4)"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Allegiance"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Necromancer",
+        "features": [
+          {
+            "level": 3,
+            "name": "Raise Dead"
+          },
+          {
+            "level": 7,
+            "name": "Grave Bond"
+          },
+          {
+            "level": 9,
+            "name": "Bone Armor"
+          },
+          {
+            "level": 13,
+            "name": "Bound Soul"
+          },
+          {
+            "level": 15,
+            "name": "Death's Toll"
+          },
+          {
+            "level": 19,
+            "name": "Lord of the Bound"
+          }
+        ]
+      },
+      {
+        "name": "Hollowmancer",
+        "features": [
+          {
+            "level": 3,
+            "name": "Call the Hollow"
+          },
+          {
+            "level": 7,
+            "name": "Hollow Pact"
+          },
+          {
+            "level": 9,
+            "name": "Swarm Call"
+          },
+          {
+            "level": 13,
+            "name": "Hollow Gate"
+          },
+          {
+            "level": 15,
+            "name": "Direct the Horde"
+          },
+          {
+            "level": 19,
+            "name": "Hollow Sovereign"
+          }
+        ]
+      },
+      {
+        "name": "Technomancer",
+        "features": [
+          {
+            "level": 3,
+            "name": "Assemble Construct"
+          },
+          {
+            "level": 7,
+            "name": "Scrap Field Repair"
+          },
+          {
+            "level": 9,
+            "name": "Modular Parts"
+          },
+          {
+            "level": 13,
+            "name": "Overclock"
+          },
+          {
+            "level": 15,
+            "name": "Living Machine"
+          },
+          {
+            "level": 19,
+            "name": "Forge Titan"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Assassin",
+    "hit_die": "d10",
+    "primary_stat": "Precision",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Hidden Blade",
+          "Shadowstep"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Quick Hands"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Extra Attack",
+          "Hidden Blade(2)"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Mark for Death"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Vanish"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Hidden Blade(3)",
+          "Shadowstep(2)"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Death Sentence"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Phantom"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Art of Venom",
+        "features": [
+          {
+            "level": 3,
+            "name": "Toxin Craft"
+          },
+          {
+            "level": 7,
+            "name": "Venom Strike"
+          },
+          {
+            "level": 9,
+            "name": "Virulent Dose"
+          },
+          {
+            "level": 13,
+            "name": "Lingering Toxin"
+          },
+          {
+            "level": 15,
+            "name": "Plague Blade"
+          },
+          {
+            "level": 19,
+            "name": "Deathbloom"
+          }
+        ]
+      },
+      {
+        "name": "Art of the Ghost",
+        "features": [
+          {
+            "level": 3,
+            "name": "Borrowed Face"
+          },
+          {
+            "level": 7,
+            "name": "Ghost Step"
+          },
+          {
+            "level": 9,
+            "name": "Untraceable"
+          },
+          {
+            "level": 13,
+            "name": "Phase Through"
+          },
+          {
+            "level": 15,
+            "name": "Mirror Self"
+          },
+          {
+            "level": 19,
+            "name": "Specter"
+          }
+        ]
+      },
+      {
+        "name": "Art of the Trickster",
+        "features": [
+          {
+            "level": 3,
+            "name": "Spellcraft(2)"
+          },
+          {
+            "level": 3,
+            "name": "Spellblade"
+          },
+          {
+            "level": 7,
+            "name": "Misdirection"
+          },
+          {
+            "level": 9,
+            "name": "Arcane Ambush"
+          },
+          {
+            "level": 13,
+            "name": "Stolen Spell"
+          },
+          {
+            "level": 15,
+            "name": "Hex Blade"
+          },
+          {
+            "level": 19,
+            "name": "Grand Deceiver"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Priest",
+    "hit_die": "d8",
+    "primary_stat": "Judgment",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Spellcraft(1)",
+          "Cantrips(2)",
+          "Twin Veil"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Litany"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Eclipse Touch"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Litany(2)"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Dusk Mantle"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Twin Veil(2)"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Revelation"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Herald of Twilight"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Idol of Light",
+        "features": [
+          {
+            "level": 3,
+            "name": "Radiant Mending"
+          },
+          {
+            "level": 7,
+            "name": "Aegis"
+          },
+          {
+            "level": 9,
+            "name": "Shared Light"
+          },
+          {
+            "level": 13,
+            "name": "Halo Ward"
+          },
+          {
+            "level": 15,
+            "name": "Second Dawn"
+          },
+          {
+            "level": 19,
+            "name": "Sun Idol"
+          }
+        ]
+      },
+      {
+        "name": "Idol of Deliverance",
+        "features": [
+          {
+            "level": 3,
+            "name": "Binding Sigil"
+          },
+          {
+            "level": 7,
+            "name": "Chains of Faith"
+          },
+          {
+            "level": 9,
+            "name": "Seal Magic"
+          },
+          {
+            "level": 13,
+            "name": "Warded Circle"
+          },
+          {
+            "level": 15,
+            "name": "Exile"
+          },
+          {
+            "level": 19,
+            "name": "Final Seal"
+          }
+        ]
+      },
+      {
+        "name": "Idol of Whispers",
+        "features": [
+          {
+            "level": 3,
+            "name": "Shade Whisper"
+          },
+          {
+            "level": 7,
+            "name": "Fear Mark"
+          },
+          {
+            "level": 9,
+            "name": "Hollow Voice"
+          },
+          {
+            "level": 13,
+            "name": "Shadow Communion"
+          },
+          {
+            "level": 15,
+            "name": "Night Shroud"
+          },
+          {
+            "level": 19,
+            "name": "Voice of the Void"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Berserker",
+    "hit_die": "d12",
+    "primary_stat": "Might",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Fury",
+          "Unarmored Toughness"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Reckless Swing"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Extra Attack",
+          "Fast Movement"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Fury(2)"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Unbroken"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Bloodlust"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Fury(3)"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Warbringer"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Crown of Thorns",
+        "features": [
+          {
+            "level": 3,
+            "name": "Thorned Fury"
+          },
+          {
+            "level": 7,
+            "name": "Bleeding Edge"
+          },
+          {
+            "level": 9,
+            "name": "Sanguine Hunger"
+          },
+          {
+            "level": 13,
+            "name": "Barbed Hide"
+          },
+          {
+            "level": 15,
+            "name": "Blood Feast"
+          },
+          {
+            "level": 19,
+            "name": "Thornking"
+          }
+        ]
+      },
+      {
+        "name": "Crown of Reeds",
+        "features": [
+          {
+            "level": 3,
+            "name": "Storm Fury"
+          },
+          {
+            "level": 7,
+            "name": "Tempest Step"
+          },
+          {
+            "level": 9,
+            "name": "Elemental Hide"
+          },
+          {
+            "level": 13,
+            "name": "Shattering Roar"
+          },
+          {
+            "level": 15,
+            "name": "Living Storm"
+          },
+          {
+            "level": 19,
+            "name": "Wrath of the Reeds"
+          }
+        ]
+      },
+      {
+        "name": "Crown of Bone",
+        "features": [
+          {
+            "level": 3,
+            "name": "Bone Grip"
+          },
+          {
+            "level": 7,
+            "name": "Giant's Growth"
+          },
+          {
+            "level": 9,
+            "name": "Crushing Blow"
+          },
+          {
+            "level": 13,
+            "name": "Bone Plating"
+          },
+          {
+            "level": 15,
+            "name": "Titan Stride"
+          },
+          {
+            "level": 19,
+            "name": "Colossus"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Seer",
+    "hit_die": "d10",
+    "primary_stat": "Judgment",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Spellcraft(1)",
+          "Cantrips(2)",
+          "Wild Tongue"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Verdant Grasp"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Nature's Sight"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Verdant Grasp(2)"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing",
+          "Cantrips(3)"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Worldroot"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Thornheart",
+          "Wild Tongue(2)"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Grove Ascendant"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Voice of the Wild"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Eyes of the Raven",
+        "features": [
+          {
+            "level": 3,
+            "name": "Animal Ally"
+          },
+          {
+            "level": 7,
+            "name": "Flock Call"
+          },
+          {
+            "level": 9,
+            "name": "Beast Sight"
+          },
+          {
+            "level": 13,
+            "name": "Pack Tactics"
+          },
+          {
+            "level": 15,
+            "name": "Many Wings"
+          },
+          {
+            "level": 19,
+            "name": "Lord of the Wild"
+          }
+        ]
+      },
+      {
+        "name": "Eyes of the Moon",
+        "features": [
+          {
+            "level": 3,
+            "name": "Moonlit Spells"
+          },
+          {
+            "level": 7,
+            "name": "Lunar Ward"
+          },
+          {
+            "level": 9,
+            "name": "Starfall"
+          },
+          {
+            "level": 13,
+            "name": "Phases of the Moon"
+          },
+          {
+            "level": 15,
+            "name": "Eclipse"
+          },
+          {
+            "level": 19,
+            "name": "Celestial Seer"
+          }
+        ]
+      },
+      {
+        "name": "Eyes of the Lycan",
+        "features": [
+          {
+            "level": 3,
+            "name": "Beast Shape"
+          },
+          {
+            "level": 7,
+            "name": "Feral Instinct"
+          },
+          {
+            "level": 9,
+            "name": "Primal Strikes"
+          },
+          {
+            "level": 13,
+            "name": "Hybrid Form"
+          },
+          {
+            "level": 15,
+            "name": "Pack Leader"
+          },
+          {
+            "level": 19,
+            "name": "Alpha"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Pugilist",
+    "hit_die": "d10",
+    "primary_stat": "Precision",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Iron Fists",
+          "Footwork"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Flurry"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Extra Attack",
+          "Counterpunch"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Iron Fists(2)",
+          "Unshakable"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Combo Chain"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Flurry(2)",
+          "Stone Body"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Knockout Blow"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Undisputed"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Mage-Breaker",
+        "features": [
+          {
+            "level": 3,
+            "name": "Null Strike"
+          },
+          {
+            "level": 7,
+            "name": "Spell Ward"
+          },
+          {
+            "level": 9,
+            "name": "Redirect"
+          },
+          {
+            "level": 13,
+            "name": "Silencing Blow"
+          },
+          {
+            "level": 15,
+            "name": "Mana Rend"
+          },
+          {
+            "level": 19,
+            "name": "Spellbreaker"
+          }
+        ]
+      },
+      {
+        "name": "Shield Splitter",
+        "features": [
+          {
+            "level": 3,
+            "name": "Weak Point"
+          },
+          {
+            "level": 7,
+            "name": "Armor Crack"
+          },
+          {
+            "level": 9,
+            "name": "Precise Blow"
+          },
+          {
+            "level": 13,
+            "name": "Shatter Guard"
+          },
+          {
+            "level": 15,
+            "name": "Vital Strike"
+          },
+          {
+            "level": 19,
+            "name": "Breaking Point"
+          }
+        ]
+      },
+      {
+        "name": "Tranquil Fist",
+        "features": [
+          {
+            "level": 3,
+            "name": "Flowing Element"
+          },
+          {
+            "level": 7,
+            "name": "Current Step"
+          },
+          {
+            "level": 9,
+            "name": "Redirect Flow"
+          },
+          {
+            "level": 13,
+            "name": "Elemental Palm"
+          },
+          {
+            "level": 15,
+            "name": "Still Water"
+          },
+          {
+            "level": 19,
+            "name": "Perfect Flow"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Ranger",
+    "hit_die": "d10",
+    "primary_stat": "Precision",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Bounty",
+          "Tracker"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Spellcraft(2)",
+          "Hunter's Discipline"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Extra Attack"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Land Stride",
+          "Bounty(2)"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Volley"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Vanish into the Wild"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Deadeye"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Last Hunt"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Inquisitor",
+        "features": [
+          {
+            "level": 3,
+            "name": "Interrogate"
+          },
+          {
+            "level": 7,
+            "name": "Manacles"
+          },
+          {
+            "level": 9,
+            "name": "Cutpurse's Bane"
+          },
+          {
+            "level": 13,
+            "name": "Relentless Pursuit"
+          },
+          {
+            "level": 15,
+            "name": "Verdict"
+          },
+          {
+            "level": 19,
+            "name": "Hand of the Law"
+          }
+        ]
+      },
+      {
+        "name": "Warden",
+        "features": [
+          {
+            "level": 3,
+            "name": "Monster Lore"
+          },
+          {
+            "level": 7,
+            "name": "Warding Trap"
+          },
+          {
+            "level": 9,
+            "name": "Silver Edge"
+          },
+          {
+            "level": 13,
+            "name": "Hold the Line"
+          },
+          {
+            "level": 15,
+            "name": "Bane Strike"
+          },
+          {
+            "level": 19,
+            "name": "Monsterbane"
+          }
+        ]
+      },
+      {
+        "name": "Wildling",
+        "features": [
+          {
+            "level": 3,
+            "name": "Beast Companion"
+          },
+          {
+            "level": 7,
+            "name": "Feral Bond"
+          },
+          {
+            "level": 9,
+            "name": "Pack Hunt"
+          },
+          {
+            "level": 13,
+            "name": "Primal Senses"
+          },
+          {
+            "level": 15,
+            "name": "Shared Fury"
+          },
+          {
+            "level": 19,
+            "name": "Wild Sovereign"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Reaver",
+    "hit_die": "d10",
+    "primary_stat": "Confidence",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Soul Harvest",
+          "Dark Strike"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Spellcraft(2)",
+          "Dread Aura"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Extra Attack"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Soul Harvest(2)",
+          "Life Drain"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Reap"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Dread Aura(2)"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Soul Furnace"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Harbinger"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Mark of Crossroads",
+        "features": [
+          {
+            "level": 3,
+            "name": "Veilwalk"
+          },
+          {
+            "level": 7,
+            "name": "Phase Shift"
+          },
+          {
+            "level": 9,
+            "name": "Between Worlds"
+          },
+          {
+            "level": 13,
+            "name": "Shade Ambush"
+          },
+          {
+            "level": 15,
+            "name": "Crossroads Gate"
+          },
+          {
+            "level": 19,
+            "name": "Lord of the Crossing"
+          }
+        ]
+      },
+      {
+        "name": "Mark of Possession",
+        "features": [
+          {
+            "level": 3,
+            "name": "Possessed Weapon"
+          },
+          {
+            "level": 7,
+            "name": "Infernal Armor"
+          },
+          {
+            "level": 9,
+            "name": "Augment"
+          },
+          {
+            "level": 13,
+            "name": "Twin Pact"
+          },
+          {
+            "level": 15,
+            "name": "Overtaken"
+          },
+          {
+            "level": 19,
+            "name": "Perfect Vessel"
+          }
+        ]
+      },
+      {
+        "name": "Mark of Corruption",
+        "features": [
+          {
+            "level": 3,
+            "name": "Spellcraft(1)"
+          },
+          {
+            "level": 3,
+            "name": "Corrupt Spell"
+          },
+          {
+            "level": 7,
+            "name": "Blight Bolt"
+          },
+          {
+            "level": 9,
+            "name": "Decay Aura"
+          },
+          {
+            "level": 13,
+            "name": "Rotting Word"
+          },
+          {
+            "level": 15,
+            "name": "Unmaking"
+          },
+          {
+            "level": 19,
+            "name": "Herald of Ruin"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Knight",
+    "hit_die": "d12",
+    "primary_stat": "Might",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Oath of Steel",
+          "Heavy Training"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Rally"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Extra Attack"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Bulwark"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Extra Attack(2)"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Rally(2)"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Unyielding"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Paragon"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Champion",
+        "features": [
+          {
+            "level": 3,
+            "name": "Glory Strike"
+          },
+          {
+            "level": 7,
+            "name": "Challenge"
+          },
+          {
+            "level": 9,
+            "name": "Herald's Banner"
+          },
+          {
+            "level": 13,
+            "name": "Duelist's Honor"
+          },
+          {
+            "level": 15,
+            "name": "Valor"
+          },
+          {
+            "level": 19,
+            "name": "Legend"
+          }
+        ]
+      },
+      {
+        "name": "Guardian",
+        "features": [
+          {
+            "level": 3,
+            "name": "Shield Wall"
+          },
+          {
+            "level": 7,
+            "name": "Intercept"
+          },
+          {
+            "level": 9,
+            "name": "Fortress"
+          },
+          {
+            "level": 13,
+            "name": "Taunt"
+          },
+          {
+            "level": 15,
+            "name": "Iron Bastion"
+          },
+          {
+            "level": 19,
+            "name": "Living Wall"
+          }
+        ]
+      },
+      {
+        "name": "Slayer",
+        "features": [
+          {
+            "level": 3,
+            "name": "Executioner"
+          },
+          {
+            "level": 7,
+            "name": "Cleave"
+          },
+          {
+            "level": 9,
+            "name": "Bloodied Fury"
+          },
+          {
+            "level": 13,
+            "name": "Headsman"
+          },
+          {
+            "level": 15,
+            "name": "Reaping Blow"
+          },
+          {
+            "level": 19,
+            "name": "Kingslayer"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Lancer",
+    "hit_die": "d10",
+    "primary_stat": "Precision",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Reach Mastery",
+          "Spearwork"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Leap"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Extra Attack"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Impale"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Whirlwind"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Leap(2)"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Skewer"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Favor of the Monkey King"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Dance of the Eagle",
+        "features": [
+          {
+            "level": 3,
+            "name": "Dive Strike"
+          },
+          {
+            "level": 7,
+            "name": "Soaring Leap"
+          },
+          {
+            "level": 9,
+            "name": "Talon Grip"
+          },
+          {
+            "level": 13,
+            "name": "Sky Lance"
+          },
+          {
+            "level": 15,
+            "name": "Eagle's Eye"
+          },
+          {
+            "level": 19,
+            "name": "Falling Star"
+          }
+        ]
+      },
+      {
+        "name": "Dance of the Viper",
+        "features": [
+          {
+            "level": 3,
+            "name": "Coil"
+          },
+          {
+            "level": 7,
+            "name": "Venom Fang"
+          },
+          {
+            "level": 9,
+            "name": "Quick Strike"
+          },
+          {
+            "level": 13,
+            "name": "Serpent Sway"
+          },
+          {
+            "level": 15,
+            "name": "Twin Fang"
+          },
+          {
+            "level": 19,
+            "name": "Viper's Tears"
+          }
+        ]
+      },
+      {
+        "name": "Dance of the Spider",
+        "features": [
+          {
+            "level": 3,
+            "name": "Web Line"
+          },
+          {
+            "level": 7,
+            "name": "Snare"
+          },
+          {
+            "level": 9,
+            "name": "Eight Points"
+          },
+          {
+            "level": 13,
+            "name": "Tangling Strike"
+          },
+          {
+            "level": 15,
+            "name": "Silk Step"
+          },
+          {
+            "level": 19,
+            "name": "Web of Lies"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Songsmith",
+    "hit_die": "d8",
+    "primary_stat": "Confidence",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Spellcraft(1)",
+          "Cantrips(2)",
+          "Verse"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Harmony"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Verse(2)"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Countersong"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Encore"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Verse(3)"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Crescendo"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Magnum Opus"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Ballad of the Tulip",
+        "features": [
+          {
+            "level": 3,
+            "name": "Tulip's Bloom"
+          },
+          {
+            "level": 7,
+            "name": "Warm Refrain"
+          },
+          {
+            "level": 9,
+            "name": "Rebirth Hymn"
+          },
+          {
+            "level": 13,
+            "name": "Spring Chorus"
+          },
+          {
+            "level": 15,
+            "name": "Lifesong"
+          },
+          {
+            "level": 19,
+            "name": "Eternal Spring"
+          }
+        ]
+      },
+      {
+        "name": "Ballad of the Marigold",
+        "features": [
+          {
+            "level": 3,
+            "name": "War Hymn"
+          },
+          {
+            "level": 7,
+            "name": "Golden Rally"
+          },
+          {
+            "level": 9,
+            "name": "Burning Chorus"
+          },
+          {
+            "level": 13,
+            "name": "Sunfire Verse"
+          },
+          {
+            "level": 15,
+            "name": "Anthem"
+          },
+          {
+            "level": 19,
+            "name": "Marigold Blaze"
+          }
+        ]
+      },
+      {
+        "name": "Ballad of the Black Rose",
+        "features": [
+          {
+            "level": 3,
+            "name": "Thorned Lullaby"
+          },
+          {
+            "level": 7,
+            "name": "Dirge"
+          },
+          {
+            "level": 9,
+            "name": "Wilting Note"
+          },
+          {
+            "level": 13,
+            "name": "Requiem"
+          },
+          {
+            "level": 15,
+            "name": "Mourning Song"
+          },
+          {
+            "level": 19,
+            "name": "Black Rose Elegy"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Wraith",
+    "hit_die": "d10",
+    "primary_stat": "Intellect",
+    "levels": [
+      {
+        "level": 1,
+        "proficiency": 2,
+        "features": [
+          "Spellcraft(3)",
+          "Grace Bolt"
+        ]
+      },
+      {
+        "level": 2,
+        "proficiency": 2,
+        "features": [
+          "Radiant Invocations",
+          "Siphon Grace"
+        ]
+      },
+      {
+        "level": 3,
+        "proficiency": 2,
+        "features": [
+          "Choose Subclass"
+        ]
+      },
+      {
+        "level": 4,
+        "proficiency": 2,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 5,
+        "proficiency": 3,
+        "features": [
+          "Grace Bolt(2)"
+        ]
+      },
+      {
+        "level": 6,
+        "proficiency": 3,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 7,
+        "proficiency": 3,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 8,
+        "proficiency": 3,
+        "features": [
+          "Radiant Invocations(2)"
+        ]
+      },
+      {
+        "level": 9,
+        "proficiency": 4,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 10,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 11,
+        "proficiency": 4,
+        "features": [
+          "Grace Bolt(3)",
+          "Siphon Grace(2)"
+        ]
+      },
+      {
+        "level": 12,
+        "proficiency": 4,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 13,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 14,
+        "proficiency": 5,
+        "features": [
+          "Haloed"
+        ]
+      },
+      {
+        "level": 15,
+        "proficiency": 5,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 16,
+        "proficiency": 5,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 17,
+        "proficiency": 6,
+        "features": [
+          "Grace Bolt(4)",
+          "Borrowed Miracle"
+        ]
+      },
+      {
+        "level": 18,
+        "proficiency": 6,
+        "features": [
+          "Divine Blessing"
+        ]
+      },
+      {
+        "level": 19,
+        "proficiency": 6,
+        "features": [
+          "Subclass Feature"
+        ]
+      },
+      {
+        "level": 20,
+        "proficiency": 6,
+        "features": [
+          "Unchained"
+        ]
+      }
+    ],
+    "callings": [
+      {
+        "name": "Seal of the Nephilim",
+        "features": [
+          {
+            "level": 3,
+            "name": "Enochian Binding"
+          },
+          {
+            "level": 7,
+            "name": "Grace-Edged"
+          },
+          {
+            "level": 9,
+            "name": "Extra Attack"
+          },
+          {
+            "level": 13,
+            "name": "Seal Strike"
+          },
+          {
+            "level": 15,
+            "name": "Script of Ruin"
+          },
+          {
+            "level": 19,
+            "name": "Nephil Ascendant"
+          }
+        ]
+      },
+      {
+        "name": "Seal of the Seraphim",
+        "features": [
+          {
+            "level": 3,
+            "name": "Burning Wings"
+          },
+          {
+            "level": 7,
+            "name": "Holy Flame"
+          },
+          {
+            "level": 9,
+            "name": "Empowered Bolt"
+          },
+          {
+            "level": 13,
+            "name": "Seraph's Gaze"
+          },
+          {
+            "level": 15,
+            "name": "Sixfold Fire"
+          },
+          {
+            "level": 19,
+            "name": "Throne Fire"
+          }
+        ]
+      },
+      {
+        "name": "Seal of the Virtue",
+        "features": [
+          {
+            "level": 3,
+            "name": "Virtue's Mend"
+          },
+          {
+            "level": 7,
+            "name": "Shared Grace"
+          },
+          {
+            "level": 9,
+            "name": "Temperance"
+          },
+          {
+            "level": 13,
+            "name": "Fortitude"
+          },
+          {
+            "level": 15,
+            "name": "Charity"
+          },
+          {
+            "level": 19,
+            "name": "Perfect Virtue"
+          }
+        ]
+      }
+    ]
+  }
+]

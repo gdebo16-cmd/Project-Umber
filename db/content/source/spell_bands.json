@@ -1,0 +1,77 @@
+[
+  {
+    "name": "Opposed",
+    "ord": 0,
+    "modifiers": {
+      "dc_mod": -4,
+      "upcast": false,
+      "attack_mod": -4,
+      "extra_dice": 0,
+      "area_multiplier": 0.5,
+      "dice_multiplier": 0.5,
+      "range_multiplier": 0.5,
+      "target_multiplier": 0.5,
+      "duration_multiplier": 0.25
+    }
+  },
+  {
+    "name": "Discordant",
+    "ord": 1,
+    "modifiers": {
+      "dc_mod": -2,
+      "upcast": false,
+      "attack_mod": -2,
+      "extra_dice": 0,
+      "area_multiplier": 0.5,
+      "dice_multiplier": 0.5,
+      "range_multiplier": 0.5,
+      "target_multiplier": 0.5,
+      "duration_multiplier": 0.5
+    }
+  },
+  {
+    "name": "Neutral",
+    "ord": 2,
+    "modifiers": {
+      "dc_mod": 0,
+      "upcast": true,
+      "attack_mod": 0,
+      "extra_dice": 0,
+      "area_multiplier": 1,
+      "dice_multiplier": 1,
+      "range_multiplier": 1,
+      "target_multiplier": 1,
+      "duration_multiplier": 1
+    }
+  },
+  {
+    "name": "Aligned",
+    "ord": 3,
+    "modifiers": {
+      "dc_mod": 1,
+      "upcast": true,
+      "attack_mod": 1,
+      "extra_dice": 0,
+      "area_multiplier": 1,
+      "dice_multiplier": 1,
+      "range_multiplier": 1,
+      "target_multiplier": 1,
+      "duration_multiplier": 1
+    }
+  },
+  {
+    "name": "Attuned",
+    "ord": 4,
+    "modifiers": {
+      "dc_mod": 1,
+      "upcast": true,
+      "attack_mod": 1,
+      "extra_dice": 1,
+      "area_multiplier": 1,
+      "dice_multiplier": 1,
+      "range_multiplier": 1,
+      "target_multiplier": 1,
+      "duration_multiplier": 1
+    }
+  }
+]

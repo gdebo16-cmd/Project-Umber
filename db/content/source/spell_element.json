@@ -1,0 +1,87 @@
+[
+  {
+    "id": 1,
+    "name": "Flame",
+    "difficulty": 1
+  },
+  {
+    "id": 2,
+    "name": "Frost",
+    "difficulty": 1
+  },
+  {
+    "id": 3,
+    "name": "Vine",
+    "difficulty": 1
+  },
+  {
+    "id": 4,
+    "name": "Stone",
+    "difficulty": 1
+  },
+  {
+    "id": 5,
+    "name": "Storm",
+    "difficulty": 2
+  },
+  {
+    "id": 7,
+    "name": "Flood",
+    "difficulty": 2
+  },
+  {
+    "id": 6,
+    "name": "Gale",
+    "difficulty": 2
+  },
+  {
+    "id": 8,
+    "name": "Blood",
+    "difficulty": 3
+  },
+  {
+    "id": 9,
+    "name": "Spirit",
+    "difficulty": 3
+  },
+  {
+    "id": 10,
+    "name": "temporal",
+    "difficulty": 3
+  },
+  {
+    "id": 11,
+    "name": "Shade",
+    "difficulty": 4
+  },
+  {
+    "id": 12,
+    "name": "Star",
+    "difficulty": 4
+  },
+  {
+    "id": 13,
+    "name": "Astral",
+    "difficulty": 5
+  },
+  {
+    "id": 14,
+    "name": "Chronic",
+    "difficulty": 5
+  },
+  {
+    "id": 15,
+    "name": "Venom",
+    "difficulty": 1
+  },
+  {
+    "id": 16,
+    "name": "Body",
+    "difficulty": 3
+  },
+  {
+    "id": 17,
+    "name": "Decay",
+    "difficulty": 4
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "code": "MIN",
+    "name": "Minor",
+    "definition": "Daggers, small weapons, fist weapons and the quarterstaff. Every class has them."
+  },
+  {
+    "id": 4,
+    "code": "RG1",
+    "name": "Ranged One-Handed",
+    "definition": "Weapons thrown or shot with one hand."
+  },
+  {
+    "id": 5,
+    "code": "VER",
+    "name": "Versatile",
+    "definition": "Melee weapons used in one or two hands."
+  },
+  {
+    "id": 6,
+    "code": "RCH",
+    "name": "Reach",
+    "definition": "Two-handed weapons with reach."
+  },
+  {
+    "id": 8,
+    "code": "RG2",
+    "name": "Ranged Two-Handed",
+    "definition": "Bows and crossbows that need two hands."
+  },
+  {
+    "id": 2,
+    "code": "EL1",
+    "name": "Elegant One-Handed",
+    "definition": "One-handed Precision (finesse) melee weapons."
+  },
+  {
+    "id": 3,
+    "code": "BR1",
+    "name": "Broad One-Handed",
+    "definition": "One-handed Might melee weapons that aren't versatile."
+  },
+  {
+    "id": 7,
+    "code": "GRT",
+    "name": "Great",
+    "definition": "Two-handed Might weapons without reach."
+  }
+]

@@ -1,0 +1,209 @@
+[
+  {
+    "id": 1,
+    "name": "Keen Rune",
+    "item_types": [
+      "weapon"
+    ],
+    "min_level": 3,
+    "effect": "+1 to attack rolls with this weapon.",
+    "action_type": "passive",
+    "uses": null,
+    "dice": null,
+    "is_damage_rider": false,
+    "choice_param": null
+  },
+  {
+    "id": 2,
+    "name": "Lantern Rune",
+    "item_types": [
+      "weapon",
+      "shield",
+      "gear"
+    ],
+    "min_level": 3,
+    "effect": "Sheds bright light 20 ft and dim light 20 ft more; on or off as a bonus action.",
+    "action_type": "bonus",
+    "uses": "At will",
+    "dice": null,
+    "is_damage_rider": false,
+    "choice_param": null
+  },
+  {
+    "id": 4,
+    "name": "Anchor Rune",
+    "item_types": [
+      "weapon",
+      "shield"
+    ],
+    "min_level": 3,
+    "effect": "The item can't be disarmed or forcibly taken from its wielder while they're conscious.",
+    "action_type": "passive",
+    "uses": null,
+    "dice": null,
+    "is_damage_rider": false,
+    "choice_param": null
+  },
+  {
+    "id": 5,
+    "name": "Homing Rune",
+    "item_types": [
+      "weapon"
+    ],
+    "min_level": 3,
+    "effect": "A thrown weapon returns to the thrower's hand after the attack; ammunition fired is recovered after combat. (Thrown weapons or ranged weapons with ammunition.)",
+    "action_type": "passive",
+    "uses": null,
+    "dice": null,
+    "is_damage_rider": false,
+    "choice_param": null
+  },
+  {
+    "id": 7,
+    "name": "Dusksight Rune",
+    "item_types": [
+      "gear"
+    ],
+    "min_level": 6,
+    "effect": "The wearer gains darkvision 30 ft (+30 ft if they already have it). (Worn gear.)",
+    "action_type": "passive",
+    "uses": null,
+    "dice": null,
+    "is_damage_rider": false,
+    "choice_param": null
+  },
+  {
+    "id": 8,
+    "name": "Fleet Rune",
+    "item_types": [
+      "armor",
+      "gear"
+    ],
+    "min_level": 6,
+    "effect": "+5 ft walking speed. (Armor or worn gear.)",
+    "action_type": "passive",
+    "uses": null,
+    "dice": null,
+    "is_damage_rider": false,
+    "choice_param": null
+  },
+  {
+    "id": 9,
+    "name": "Ember Rune",
+    "item_types": [
+      "weapon"
+    ],
+    "min_level": 10,
+    "effect": "+1d4 fire damage on hits.",
+    "action_type": "passive",
+    "uses": "Per hit",
+    "dice": "1d4",
+    "is_damage_rider": true,
+    "choice_param": null
+  },
+  {
+    "id": 10,
+    "name": "Rime Rune",
+    "item_types": [
+      "weapon"
+    ],
+    "min_level": 10,
+    "effect": "+1d4 cold damage on hits.",
+    "action_type": "passive",
+    "uses": "Per hit",
+    "dice": "1d4",
+    "is_damage_rider": true,
+    "choice_param": null
+  },
+  {
+    "id": 11,
+    "name": "Spark Rune",
+    "item_types": [
+      "weapon"
+    ],
+    "min_level": 10,
+    "effect": "+1d4 lightning damage on hits.",
+    "action_type": "passive",
+    "uses": "Per hit",
+    "dice": "1d4",
+    "is_damage_rider": true,
+    "choice_param": null
+  },
+  {
+    "id": 12,
+    "name": "Gall Rune",
+    "item_types": [
+      "weapon"
+    ],
+    "min_level": 10,
+    "effect": "+1d4 acid damage on hits.",
+    "action_type": "passive",
+    "uses": "Per hit",
+    "dice": "1d4",
+    "is_damage_rider": true,
+    "choice_param": null
+  },
+  {
+    "id": 13,
+    "name": "Warding Rune",
+    "item_types": [
+      "armor",
+      "shield",
+      "gear"
+    ],
+    "min_level": 14,
+    "effect": "Resistance to one damage type chosen when you inscribe it (not bludgeoning, piercing or slashing). (Armor, shield or worn gear.)",
+    "action_type": "passive",
+    "uses": null,
+    "dice": null,
+    "is_damage_rider": false,
+    "choice_param": "damage_type"
+  },
+  {
+    "id": 14,
+    "name": "Guard Rune",
+    "item_types": [
+      "armor",
+      "shield"
+    ],
+    "min_level": 18,
+    "effect": "+1 AC.",
+    "action_type": "passive",
+    "uses": null,
+    "dice": null,
+    "is_damage_rider": false,
+    "choice_param": null
+  },
+  {
+    "id": 3,
+    "name": "Hush Rune",
+    "item_types": [
+      "armor",
+      "gear"
+    ],
+    "min_level": 3,
+    "effect": "The item makes no noise; armor with it doesn't impose disadvantage on Stealth.",
+    "action_type": "passive",
+    "uses": null,
+    "dice": null,
+    "is_damage_rider": false,
+    "choice_param": null
+  },
+  {
+    "id": 6,
+    "name": "Mending Rune",
+    "item_types": [
+      "weapon",
+      "armor",
+      "shield",
+      "gear"
+    ],
+    "min_level": 6,
+    "effect": "The item repairs itself in 1 minute; once per long rest, its wearer or wielder reduces one hit's damage by 1d6 + Intellect modifier (reaction).",
+    "action_type": "reaction",
+    "uses": "1/long rest",
+    "dice": "1d6",
+    "is_damage_rider": false,
+    "choice_param": null
+  }
+]
