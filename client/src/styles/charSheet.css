@@ -3402,17 +3402,68 @@
     
         }
 
-        /*spell book specific styles*/
-        .spell-book-tabs,
-        .spell-book-tabs [role="tablist"] {
+        /*spell book specific styles — level column beside spell list (match desktop)*/
+        .spell-book-tabs {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: stretch;
+            width: 100%;
             max-width: 100%;
+            gap: 0;
+            margin: 0 0 0.5rem;
+            flex-shrink: 0;
+            box-sizing: border-box;
+            border: var(--tileBorder);
+            border-radius: var(--tile);
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
+            background-color: var(--bgc-action-bar);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
         }
-    
+
+        .spell-book-tabs [role="tablist"],
+        .spell-book-level-list {
+            display: block;
+            flex: 0 0 auto;
+            max-width: 100%;
+            border: var(--tileBorder);
+            border-radius: var(--tile);
+            position: relative;
+            overflow: auto;
+            scrollbar-width: none;
+        }
+
+        .spell-book-level-list::-webkit-scrollbar {
+            display: none;
+        }
+
         .spell-book-tabs [role="tab"] {
             flex: 1 1 5.5rem;
+            min-width: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.6rem 0.4rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+            color: var(--txt-color-1);
+            border: none;
+            border-radius: 0;
+            background-color: transparent;
+            box-shadow: none;
+        }
+
+        .spell-book-tabs [role="tab"][aria-selected="true"] {
+            color: var(--txt-color-1);
+            background-color: transparent;
+            transform: none;
         }
 
         .spellbook-container {
+            flex: 1 1 0;
+            min-width: 0;
             width: 100%;
         }
 
