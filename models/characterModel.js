@@ -287,13 +287,13 @@ export async function updateClass(charId, userId, classId, subclassId, featureCh
     const role = await resolveRoleWrite(classId, subclassId);
     if (!role) throw new Error('Unknown role');
     const legacyClassId = role.class_id;
-    const skillFixed = JSON.stringify(getRole(role.role_id)?.skill_fixed ?? {});
+    const skillFixed = getRole(role.role_id)?.skill_fixed ?? [];
     // subclass_id column kept but no longer dual-written
     if (featureChoices !== undefined) {
         await pool.query(
             `UPDATE characters
                 SET skill_proficiencies = CASE WHEN role_id IS DISTINCT FROM $5
-                        THEN $7::jsonb
+                        THEN $7::text[]
                         ELSE skill_proficiencies END,
                     feature_choices = $4::jsonb,
                     class_id = $1, role_id = $5, calling_id = $6
@@ -305,7 +305,7 @@ export async function updateClass(charId, userId, classId, subclassId, featureCh
     await pool.query(
         `UPDATE characters
             SET skill_proficiencies = CASE WHEN role_id IS DISTINCT FROM $4
-                    THEN $6::jsonb
+                    THEN $6::text[]
                     ELSE skill_proficiencies END,
                 feature_choices = CASE
                     WHEN role_id IS DISTINCT FROM $4 THEN '{}'::jsonb
