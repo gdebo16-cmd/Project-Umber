@@ -1,5 +1,5 @@
 // Role and calling reads from the content pack, shaped like the old classes/sub_classes API.
-import content, { getRole, primordialBlessingsFromPack } from './content.js';
+import content, { getRole, hitDieSides, primordialBlessingsFromPack } from './content.js';
 import { scorePickDescriptions } from '../utils/abilityBoosts.js';
 
 function featureRowsForRole(role) {
@@ -112,7 +112,7 @@ export async function listClasses() {
 }
 
 export async function getHitDie(classId) {
-    return getRole(classId)?.hit_die;
+    return hitDieSides(getRole(classId)?.hit_die);
 }
 
 export async function listAllSubclasses() {
