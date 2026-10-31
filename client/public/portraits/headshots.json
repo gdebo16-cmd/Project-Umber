@@ -570,6 +570,21 @@
     "group": "Race"
   },
   {
+    "file": "ouros-sub-copper.png",
+    "label": "Ouros (Copper)",
+    "group": "Race"
+  },
+  {
+    "file": "ouros-sub-slate.png",
+    "label": "Ouros (Slate)",
+    "group": "Race"
+  },
+  {
+    "file": "ouros-sub-rust.png",
+    "label": "Ouros (Rust)",
+    "group": "Race"
+  },
+  {
     "file": "mix-cindral-evoker.png",
     "label": "Cindral Evoker",
     "group": "Mixed"
