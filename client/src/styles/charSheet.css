@@ -3412,6 +3412,72 @@
             flex: 1 1 5.5rem;
         }
 
+        .spellbook-container {
+            width: 100%;
+        }
+
+        .spellbook-set {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            padding: 0.3rem;
+            margin: 0;
+            border-radius: 0 0 var(--tile) var(--tile);
+        }
+
+        .spellbook-item {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            justify-content: space-between;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            border: var(--tileBorder);
+            border-radius: var(--tile);
+            overflow: hidden;
+            background-color: var(--bgc-char-stat);
+        }
+
+        .spellbook-caption-button {
+            flex: 1 1 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            border: none;
+            padding: 2%;
+            margin: 0;
+            background-color: var(--bg-color-1);
+            border-radius: var(--tile) 0 0 var(--tile);
+            color: var(--txt-color-1);
+            text-align: left;
+        }
+
+        .spellbook-form {
+            flex: 1 1 0;
+            display: flex;
+            align-self: stretch;
+            margin: 0;
+            border-radius: 0 var(--tile) var(--tile) 0;
+        }
+
+        .spellbook-btn {
+            flex: 1 1 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 2%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80%;
+            text-align: center;
+            background-color: var(--accent);
+            color: var(--txt-action);
+            border-radius: 0 var(--tile) var(--tile) 0;
+        }
+
         .spell-stat-book:last-child {
             border-radius: 0 0 var(--tile) 0;
             background-color: var(--bg-color-1);
@@ -3431,6 +3497,32 @@
             border-radius: 0 0 var(--tile) var(--tile);
             box-shadow: var(--bs2);
             padding: 3%;
+        }
+
+        .shop-form {
+            flex: 1 1 0;
+            display: flex;
+            align-self: stretch;
+            margin: 0;
+            padding: 0;
+            border-radius: 0 var(--tile) var(--tile) 0;
+        }
+
+        .shop-btn {
+            flex: 1 1 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 2%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80%;
+            text-align: center;
+            background-color: var(--accent);
+            color: var(--txt-action);
+            border-radius: 0 var(--tile) var(--tile) 0;
         }
     
         .filter-container {
