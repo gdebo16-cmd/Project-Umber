@@ -552,9 +552,9 @@
     --shadowInner: inset 4px 4px 15px #2d0606d8, inset 0px 0px 5px #0d0401ef;
     --fontfam: 'New Rocker', cursive;
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), rgb(255, 0, 0) 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), rgb(208, 184, 28) 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), rgb(21, 101, 162) 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
