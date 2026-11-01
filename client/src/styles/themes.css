@@ -8,9 +8,9 @@
     --healColor: color-mix(in srgb, #6fbf73 40%, transparent);
     --damageColor: color-mix(in srgb, var(--bg) 70%, transparent);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #d8a15e 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #b27f50 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #8366a7 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -290,9 +290,9 @@
     --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #d8a15e 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #b27f50 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #8366a7 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -309,9 +309,9 @@
     --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
     --check-shape: polygon(0 15%, 25% 45%, 50% 5%, 75% 45%, 100% 15%, 90% 100%, 10% 100%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #d4af37 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #8e6bd8 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #b6a6cf 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -328,9 +328,9 @@
     --gold-gradient: linear-gradient(to bottom, #ae7743, #8a5b31);
     --check-shape: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #c9a0e8 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #9d78b1 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #4c2849 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -346,9 +346,9 @@
     --glass: 85%;
     --check-shape: polygon(50% 0, 100% 35%, 85% 85%, 50% 100%, 15% 85%, 0 35%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #6fcf6a 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #d6c790 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #3f7d47 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -364,9 +364,9 @@
     --glass: 32%;
     --check-shape: polygon(50% 0, 100% 35%, 85% 85%, 50% 100%, 15% 85%, 0 35%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #6fcf6a 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #e0c35a 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #274f2e 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -383,9 +383,9 @@
     --check-shape: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%);
     --blur: blur(2px) saturate(100%) brightness(1);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #4ea3ff 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #ffc857 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #3b6aa6 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -401,9 +401,9 @@
     --glass: 32%;
     --check-shape: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #4ea3ff 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #ffc857 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #1e3e67 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -419,9 +419,9 @@
     --glass: 85%;
     --check-shape: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #e0464f 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #f0b75a 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #6c2227 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -437,9 +437,9 @@
     --glass: 32%;
     --check-shape: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #e0464f 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #f0b75a 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #581a20 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -455,9 +455,9 @@
     --glass: 85%;
     --check-shape: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #ff8a2b 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #4e938d 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #a8561e 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -473,9 +473,9 @@
     --glass: 32%;
     --check-shape: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #ff8a2b 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #5ec8c0 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #603010 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -491,9 +491,9 @@
     --glass: 85%;
     --check-shape: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #f5d33b 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #6c8cff 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #9c8420 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -509,9 +509,9 @@
     --glass: 32%;
     --check-shape: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #f5d33b 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #6c8cff 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #5a4b13 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -530,9 +530,9 @@
     --shadowInner: inset 4px 4px 15px #ffeacea9, inset 0px 0px 5px #ffeacea9;
     --fontfam: 'New Rocker', cursive;
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #b27f50 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #6f8f6f 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #3a3a3a 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -573,9 +573,9 @@
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
     --shadowInner: inset 4px 4px 15px #ffeacea9, inset 0px 0px 5px #ffeacea9;
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #b27f50 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #6f8f6f 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #2a241f 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -592,9 +592,9 @@
     --gold-gradient: linear-gradient(to bottom, #926135, #5e3d1f);
     --check-shape: circle(50%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #a37b58 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #3f7d8c 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #7a6a58 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -611,9 +611,9 @@
     --gold-gradient: linear-gradient(to bottom, #926135, #5e3d1f);
     --check-shape: circle(50%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #926135 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #3f7d8c 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #7a6a58 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -631,9 +631,9 @@
     --blur1: blur(3px) saturate(150%);
     --blur2: blur(3px) saturate(150%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #ff8120 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #996726 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #a03c17 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -651,9 +651,9 @@
     --blur1: blur(3px) saturate(150%);
     --blur2: blur(3px) saturate(150%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #ff8120 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #ffe2bb 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #6b1a10 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -669,9 +669,9 @@
     --glass: 85%;
     --check-shape: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #7fe3ff 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #c9b6ff 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #4a8fb0 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -687,9 +687,9 @@
     --glass: 32%;
     --check-shape: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #7fe3ff 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #c9b6ff 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #234b60 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -709,9 +709,9 @@
     --neonTextGlow: 0 0 3px rgba(0, 240, 255, 0.9), 0 0 10px rgba(0, 240, 255, 0.5);
     --fontfam: 'Delicious Handrawn', cursive;
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #86edf4 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #a435e4 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #ff46d2 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -731,9 +731,9 @@
     --neonTextGlow: 0 0 3px rgba(0, 240, 255, 0.9), 0 0 10px rgba(0, 240, 255, 0.5);
     --fontfam: 'Geist Pixel', sans-serif;
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #86edf4 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #a435e4 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #3c4cf8 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -751,9 +751,9 @@
     --check-shape: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
     --shadowInner: inset 4px 4px 14px rgba(150, 205, 255, 0.42), inset 0 0 5px rgba(205, 235, 255, 0.32);
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #e0a048 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #8a98a6 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #5a6878 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
@@ -768,9 +768,9 @@
     --border: #713540;
     --glass: 72%;
     /* Health colors */
-    --hpBarFull: color-mix(in srgb, var(--healColor), white 30%);
-    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), white 30%);
-    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), white 30%);
+    --hpBarFull: color-mix(in srgb, var(--healColor), #bb5660 30%);
+    --hpBarHurt: color-mix(in srgb, color-mix(in srgb, var(--healColor), var(--damageColor)), #e0a060 30%);
+    --hpBarVeryHurt: color-mix(in srgb, var(--damageColor), #713540 30%);
     --hpBoxFull: var(--bgc-tab);
     --hpBoxHurt: color-mix(in srgb, var(--healColor), var(--damageColor));
     --hpBoxVeryHurt: var(--damageColor);
