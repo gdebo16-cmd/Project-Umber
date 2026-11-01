@@ -1867,7 +1867,7 @@
           "key": "dark_magic",
           "name": "Dark Magic",
           "description": null,
-          "img_url": null,
+          "img_url": "/subclasses/sub-witch-dark.png",
           "armor_prof": null,
           "weapon_prof": null,
           "tool_prof": null,

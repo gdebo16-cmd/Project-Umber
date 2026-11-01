@@ -370,6 +370,11 @@
     "group": "Subclass"
   },
   {
+    "file": "subclass-dark.png",
+    "label": "Dark Magic",
+    "group": "Subclass"
+  },
+  {
     "file": "subclass-witch-knight.png",
     "label": "Witch Knight",
     "group": "Subclass"
