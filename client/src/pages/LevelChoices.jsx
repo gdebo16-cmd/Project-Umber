@@ -6,6 +6,15 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { KEPT_BOOST } from '../utils/levelChoices';
+import { statName } from '../utils/stats';
+
+// '+2 STR' stays stored as-is; label shows '+2 Might'
+function boostOptionLabel(o) {
+    const m = String(o ?? '').match(/^([+-]?\d+)\s+([A-Za-z]+)$/);
+    if (!m) return o;
+    const name = statName(m[2]);
+    return name === m[2] ? o : `${m[1]} ${name}`;
+}
 // allowed (optional): { [feature key]: [options] } from useBoostOptions; rows it names only show those options
 // tileClass / rowClass / hintClass / hintTag / pickedClass (optional): let the creator reuse its own tile classes; defaults keep the editor look.
 // hintTag 'button' renders the hint itself as the clickable text; pickedClass replaces bottomClass on a select while its hint shows.
@@ -52,13 +61,12 @@ function LevelChoices({ features, picks, onChange, topClass, bottomClass, allowe
                             onChange={(e) => pick(f, i, e.target.value)}
                         >
                             <option value="" disabled>{f.label}: pick one</option>
-                            {f.options
+                            {(Array.isArray(allowed?.[f.key]) ? allowed[f.key] : f.options)
                                 // a kept boost (pre-rework) only shows while it is the current pick
                                 .filter((o) => o === current[i] || (!current.includes(o) && o !== KEPT_BOOST))
-                                .filter((o) => !allowed?.[f.key] || allowed[f.key].includes(o))
                                 .map((o) => (
                                     <option key={o} value={o} title={info[o] ?? ''}>
-                                        {f.label}: {o}
+                                        {f.label}: {boostOptionLabel(o)}
                                     </option>
                                 ))}
                         </select>
