@@ -4,6 +4,12 @@
    font-style: var(--fontstyle);
 }
 
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  font-size: 2rem; 
+}
+
 
 html, body {
     margin: 0 ! important;

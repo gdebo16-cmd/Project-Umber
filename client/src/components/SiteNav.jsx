@@ -24,8 +24,8 @@ function SiteNav() {
                 <li id="character-nav" className="btn btn-nav" {...tabProps(1)}>Adventures
                     <ul className="drop-down" id="characterDropdown">
                         <Link id="createCharacter" className="btn-drop-character" to="/create_char">Create Character</Link>
-                        <Link id="createCampaign" className="btn-drop-character" to="/create_campaign">Create Campaign</Link>
-                        <Link id="campaignList" className="btn-drop-character" to="/campaign_list">Campaign List</Link>
+                        <Link id="createCampaign" className="btn-drop-character" to="/create_campaign">Create Tale</Link>
+                        <Link id="campaignList" className="btn-drop-character" to="/campaign_list">Tale List</Link>
                     </ul>
                 </li>
                 <li id="settings-nav" className="btn btn-nav" {...tabProps(2)}>Settings

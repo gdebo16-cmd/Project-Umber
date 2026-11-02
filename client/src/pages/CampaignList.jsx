@@ -47,14 +47,14 @@ function CampaignList() {
         <>
             <header id="site-title">
                 <img src="/Logo.png" alt="Eldrid Tales Logo" className="title-logo" />
-                <h1>Campaigns</h1>
+                <h1>Your Tales</h1>
             </header>
             <SiteNav />
             <main>
                 <section className="cl-panel">
                     <h2 className="cl-header"><strong>Start or Join a Tale</strong></h2>
                     <div className="cl-body cl-actions">
-                        <Link className="btn cl-create" to="/create_campaign">Create Campaign</Link>
+                        <Link className="btn cl-create" to="/create_campaign">Tell a New Tale</Link>
                         <form onSubmit={joinCampaign} className="cl-join">
                             <input className="field" type="text" placeholder="Invite code" value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} maxLength={8} />
                             <button className="btn cl-join-btn" type="submit">Join</button>
@@ -63,7 +63,7 @@ function CampaignList() {
                     </div>
                 </section>
                 <section className="cl-panel">
-                    <h2 className="cl-header"><strong>Your Campaigns</strong></h2>
+                    <h2 className="cl-header"><strong>Your Tales</strong></h2>
                     <div className="cl-body">
                         {campaigns.length === 0 ? (
                             <p className="cl-empty">No Tales Yet</p>

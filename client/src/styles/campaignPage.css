@@ -4,6 +4,10 @@
    font-style: var(--fontstyle);
 }
 
+input[type="text"],
+input[type="textarea"] {
+  font-size: 2rem; 
+}
 html, body {
     margin: 0 ! important;
     padding: 0 ! important;

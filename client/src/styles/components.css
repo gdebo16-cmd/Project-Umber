@@ -1,4 +1,9 @@
 /* DETAILS POPUP  .spell-details: spell, weapon and feature cards on the sheet, option/blessing details in the creator and editor */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  font-size: 2rem; 
+}
 
 .spell-details {
     box-sizing: border-box;

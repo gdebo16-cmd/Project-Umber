@@ -1,4 +1,7 @@
-function Loader({ text = 'Loading...' }) {
+
+import '../styles/loader.css';
+
+function Loader({ text = 'Trying my best...' }) {
     return (
         <div className="loader" role="status" aria-live='polite'>
             <div className='loader-ring'></div>

@@ -19,7 +19,7 @@ import { STATS } from '../utils/stats';
 import { getSpellSlots, scaledAt } from '../utils/spellSlots';
 import { modOf, d20, proficiencyBonus } from '../utils/math';
 import Loader from '../components/Loader';
-import RestButton from './RestButton';
+
 import socket from '../utils/socket';
 import { utilityRuneEffects } from '../utils/runes'; /*prep-done*/
 
@@ -294,7 +294,7 @@ function CharacterSheet() {
                 </section>
 
                 <section role="tabpanel" id="sheet-panel-conditions" className="sheet-panel" hidden={sheetTab !== 'conditions'}>
-                    <RestButton />
+                    
                     <HealthBox id={character.id} hp={hp} max={character.max_hp} temp={character.temp_hp ?? 0} onHpChange={setHp} onTempChange={setTempHp} />
                     <Conditions />
                     

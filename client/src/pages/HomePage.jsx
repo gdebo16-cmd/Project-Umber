@@ -86,11 +86,11 @@ function HomePage() {
                 </section>
                 <section id="current-campaign-container" className={homeTab === 'campaign' ? 'container is-active' : 'container'}>
                     <article className="title" id="current-campaign-title">
-                        <h2 className="title-text">Current Campaigns</h2>
+                        <h2 className="title-text">Current Tales</h2>
                     </article>
                     <article className="char-list" id="current-campaign-tile">
                         {campaigns.length === 0 ? (
-                            <p>No Campaigns Planned</p>
+                            <p>No Tales to Tell</p>
                         ) : (
                             <ul className="tile-list" id="current-campaign-list">
                                 {campaigns.map((camp) => (
@@ -128,7 +128,7 @@ function HomePage() {
                                 </Link>
                             </li>
                         ) : (
-                            <p className='tile-text'>You are all caught up!</p>
+                            <p>You are all caught up!</p>
                         )}
                         </ul>
                     </article>

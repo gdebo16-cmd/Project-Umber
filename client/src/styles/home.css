@@ -713,10 +713,9 @@ footer {
         align-items: stretch;
         position: relative;
         box-sizing: border-box;
-        width: 75vw;
+        width: 85vw;
+        padding: 0;
         gap: 0;
-        margin: 1vh auto 0;
-        padding: 0.6vh 1vw;
         list-style: none;
         background-color: color-mix(in srgb, var(--bgc-theme) 60%, transparent);
         backdrop-filter: blur(6px);

@@ -33,17 +33,17 @@ export default function JoinCampaign() {
         <>
         <header id="site-title">
             <img src="/Logo.png" alt="Eldrid Tales Logo" className="title-logo" />
-            <h1>Join Campaign</h1>
+            <h1>Join a Tale</h1>
         </header>
         <main>
         <div>
         {error ? (
             <>
               <p>{error}</p>
-              <Link to="/campaign_list">Back to Campaign List</Link>
+              <Link to="/campaign_list">Back to your Tales</Link>
             </>
         ) : (
-            <p>Joining campaign...</p>
+            <p>Joining Tale...</p>
         )}
         </div>
         </main>

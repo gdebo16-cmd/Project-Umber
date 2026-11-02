@@ -3,6 +3,11 @@
     font-weight: var(--fontweight);
     font-style: var(--fontstyle);
  }
+
+input[type="text"],
+input[type="textarea"] {
+  font-size: 2rem; 
+}
  
  html, body {
      margin: 0 ! important;

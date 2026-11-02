@@ -1,8 +1,10 @@
 import { Fragment } from 'react';
 import { useCharacter } from './CharacterContext';
 
-const GROUP_1 = ['blinded', 'charmed', 'deafened', 'frightened'];
-const GROUP_2 = ['paralyzed', 'petrified', 'poisoned', 'prone'];
+const GROUP_1 = ['blind', 'charm', 'deaf' ];
+const GROUP_2 = ['lock', 'mad', 'disease'];
+const GROUP_3 = ['panic', 'out', 'bleed'];
+const GROUP_4 = ['ground', "weak", "sleep"];
 
 function Conditions() {
     const { conditions, setConditions, exhaustion, setExhaustion } = useCharacter();
@@ -10,7 +12,8 @@ function Conditions() {
 
     const checkbox = (name) => (
         <Fragment key={name}>
-            <label id={`${name}Label`} className="conditionLabel" htmlFor={name}>
+          <div className='condition-type'>
+            <label id={`${name}-label`} className="condition-label" htmlFor={name}>
                 {name[0].toUpperCase() + name.slice(1)}
             </label>
             <input
@@ -20,29 +23,48 @@ function Conditions() {
                 checked={!!conditions[name]}
                 onChange={() => toggle(name)}
             />
+          </div>
         </Fragment>
     );
 
     return (
-        <section className="container condition-container" id="conditions-container">
-            <p className="tile-component label-component tile-top" id="condition-title">Conditions</p>
-            <article className="tile-cell condition-tile">
-                <article className="list-component" id="conditions-list-1">{GROUP_1.map(checkbox)}</article>
-                <article className="list-component" id="conditions-list-2">{GROUP_2.map(checkbox)}</article>
-                <article className="list-component" id="conditions-list-3">
-                    <label id="exhausted-label" className="tile-component exhausted-component label-component" htmlFor="exhausted-value">Exhausted</label>
+        <section className="conditions" id="conditions-container">
+            <p className="conditions-title" id="condition-title">Afflictions</p>
+            <article className="conditions-tile">
+                <article className="conditions-list" id="conditions-list-1">
+                    <ul className='conditions-set'>
+                       <li className='conditions-item'>{GROUP_1.map(checkbox)}</li>
+                    </ul>
+                </article>
+                <article className="conditions-list" id="conditions-list-2">
+                    <ul className='conditions-set'>
+                        <li className='conditions-item'>{GROUP_2.map(checkbox)}</li>
+                    </ul>
+                </article>
+                <article className="conditions-list" id="conditions-list-4">
+                    <ul className='conditions-set'>
+                        <li className='conditions-item'>{GROUP_3.map(checkbox)}</li>
+                    </ul>
+                </article>
+                <article className="conditions-list" id="conditions-list-5">
+                    <ul className='conditions-set'>
+                        <li className='conditions-item'>{GROUP_4.map(checkbox)}</li>
+                    </ul>
+                </article>
+                <article className="exhaustion-tile" id="conditions-list-3">
+                    <output className="exhaustion-output" htmlFor="exhaustion-value">Fatigue: {exhaustion}</output>
                     <input
-                        id="exhausted-value"
-                        className="tile-component exhausted-component range-component"
+                        id="exhaustion-value"
+                        className="exhaustion-input"
                         type="range"
                         inputMode="numeric"
                         min="0"
-                        max="10"
+                        max="8"
                         value={exhaustion}
-                        style={{ '--fill': `${exhaustion * 10}%` }} /* how much of the track is accent, 0-10 -> 0-100% */
+                        style={{ '--fill': `${exhaustion * 12.5}%` }} /* how much of the track is accent, 0-8 -> 0-100% */
                         onChange={(e) => setExhaustion(Number(e.target.value))}
                     />
-                    <output htmlFor="exhausted-value">{exhaustion}</output>
+                    
                 </article>
             </article>
         </section>

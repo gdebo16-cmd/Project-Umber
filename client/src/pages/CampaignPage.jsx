@@ -93,7 +93,7 @@ function CampaignPage() {
                     {editing ? (
                         <>
                         <div className="edit-container">
-                            <h2 className="campaign-name"><strong>Edit Campaign</strong></h2>
+                            <h2 className="campaign-name"><strong>Edit Tale</strong></h2>
                             <form className="camp-edit-form" onSubmit={saveEdit}>
                                 <div className="camp-panel-row">
                                     <label className="camp-panel-label" htmlFor="camp-edit-name">Title</label>
@@ -110,7 +110,7 @@ function CampaignPage() {
                                     <button type="button" className="btn edit-btn" disabled={saving} onClick={() => setEditing(false)}>Cancel</button>
                                 </div>
                                 <div className="camp-image-set">
-                                    <p className="camp-panel-label">Campaign image</p>
+                                    <p className="camp-panel-label">Tale Image</p>
                                     <div className="camp-img-grid">
                                         <button type="button" className={form.campaign_img_url === null ? 'camp-img-choice camp-img-none is-selected' : 'camp-img-choice camp-img-none'}
                                             onClick={() => setForm({ ...form, campaign_img_url: null })}>
@@ -144,7 +144,7 @@ function CampaignPage() {
                                 </div>
                                 {campaign.role === 'dm' && (
                                     <div className="camp-edit-actions">
-                                        <button type="button" className=" btn-form" onClick={startEdit}>Edit Campaign</button>
+                                        <button type="button" className=" btn-form" onClick={startEdit}>Edit Tale</button>
                                     </div>
                                 )}
                             </div>

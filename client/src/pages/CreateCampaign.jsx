@@ -29,14 +29,14 @@ function CreateCampaign() {
         <>
             <header id="site-title">
                 <img src="/Logo.png" alt="Eldrid Tales Logo" className="title-logo" />
-                <h1>Create Campaign</h1>
+                <h1>Create Tale</h1>
             </header>
                 <SiteNav />
             <main>
                 <section id="campaign-container" className="campaign-container">
                     <form onSubmit={submit}>
                         <article id="campaign-name-container" className="campaign-tile">
-                            <label className="campaign-label" htmlFor="name">Campaign name</label>
+                            <label className="campaign-label" htmlFor="name">Tale Name</label>
                             <input className="campaign-value" type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="A tale in the making" />
                         </article>
                         <article id="campaign-description-container" className="campaign-tile">
@@ -44,7 +44,7 @@ function CreateCampaign() {
                             <textarea className="campaign-value" id="description" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="A brief description of the campaign" />
                         </article>
                         <article id="campaign-button-container" className="campaign-tile">
-                            <button type="submit" id="submit-button" className="campaign-button">Create Campaign</button>
+                            <button type="submit" id="submit-button" className="campaign-button">Create Tale</button>
                         </article>
                         {saveError && <p className="error-message">{saveError}</p>}
                     </form>
