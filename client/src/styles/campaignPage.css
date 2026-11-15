@@ -56,7 +56,6 @@ body {
    flex-direction: column;
 }
 
-
 ul,
 li,
 a {
@@ -64,7 +63,6 @@ a {
     text-decoration: none;
     color: var(--text-color-1);
 }
-
 
 option {
     background-color: var(--drop-down-bg);
@@ -765,74 +763,317 @@ footer {
     .slide {
         z-index: 3;
         box-sizing: border-box;
-        background-color: color-mix(in srgb, var(--accent) 25%, transparent);
-        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.06));
-        border: 1px solid rgba(255, 255, 255, 0.35);
+        background-color: var(--navSlideFill);
+        background-image: linear-gradient(180deg, var(--navSlideShine), rgba(255, 255, 255, 0.06));
+        border: 1px solid var(--navSlideBorder);
         border-radius: var(--tile);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 10px color-mix(in srgb, var(--accent) 45%, transparent);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 10px var(--navSlideGlow);
         transition: transform .35s ease, width .35s ease;
     }
 }
 
 @media (min-width: 769px) {
 
+/* #region Main Section */
         main {
-            flex: 1 1 auto;
-            box-sizing: border-box;
             display: grid;
-            grid-template-columns: minmax(0, 3fr) minmax(20rem, 2fr);
-            grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 5fr 1fr;
             grid-template-areas:
                 'a b'
-                'a c';
-            gap: var(--mar2);
-            padding: var(--mar2) var(--mar2) 10vh;
-            width: 100%;
-            max-width: 1600px;
-            margin: 0 auto;
-            min-height: 0;
-            align-items: stretch;
-            justify-content: stretch;
-            overflow-y: auto;
+                'd c'
+                ;
+            gap: 1%;
+            margin: 1% auto;
+            backdrop-filter: blur(6px);
+            max-height: calc(100vh - 20rem);
         }
+/* #endregion Main Section */
 
-        .invite-join-select {
-            width: 90%;
-            height: auto;
-            min-height: 2.75rem;
-            padding: 0.5rem 0.75rem;
-            margin: 0.5rem 0 0;
-            box-sizing: border-box;
-            border: var(--tileBorder);
-            border-radius: var(--tile);
-            box-shadow: var(--bs2);
-            background-color: var(--bgc-char-name);
-            color: var(--txt-color-1);
-            font-size: 16px;
-        }
-
-    main > .container {
-        margin: 0;
-        min-height: 0;
-        overflow-y: auto;
-    }
-
-    .camp-area-a {
+/* #region Edit Container Section */
+    .edit-container {
         grid-area: a;
+        padding: 0;
+        margin: 0;
+
     }
 
-    .camp-area-b {
+    .title-edit {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        gap: 0.5rem;
+        margin: 1% auto;
+        padding: 2%;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+    }
+    .edit-input {
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        background-color: var(--bgc-char-name);
+    }
+    .edit-label {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        background-color: var(--bgc-char-name);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+    }
+    .description-edit {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        gap: 0.5rem;
+        margin: 0 auto;
+        padding: 2%;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+    }
+    .edit-actions {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: center;
+        gap: 0.5rem;
+        margin: 0 auto;
+        padding: 2%;
+    }
+    .action-button {
+        width: 45%;
+        padding: 2%;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        background-color: var(--bgc-char-name);
+        color: var(--txt-color-1);
+    }
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        overflow: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-width: none;
+        scrollbar-color: transparent transparent;
+        scrollbar-gutter: stable;
+        max-height: calc(100vh - 52rem);
+        width: 45vw;
+        margin: 0 auto;
+        padding: 0;
+        border-radius: var(--tile);
+
+    }
+    .image-choice {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg-color-4);
+        margin: 1%;
+        padding: 1%;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        gap: 0.5rem;
+
+
+    }
+    .image-choice.is-selected {
+        border-color: var(--accent-2);
+        
+
+    }
+    .image-select {
+        width: 100%;
+        height: 10dvh;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        border-radius: var(--tile);
+        
+    }
+    .image-campaign {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        border: var(--tileBorder);
+    }
+    .edit-input-display {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        gap: 0.5rem;
+        margin: 2%;
+        padding: 2%;
+        width: 92%;
+        font-size: .9rem;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        background-color: var(--bgc-char-name);
+        color: var(--txt-color-1);
+    }
+
+/* #endregion Edit Container Section */
+
+/* #region Invite Container Section */
+
+    .invite-container {
         grid-area: b;
+        border-radius: var(--tile);
+        background-color: color-mix(in srgb, var(--bgc-theme) 60%, transparent);
+        padding: 2vh 2vw;
+        backdrop-filter: blur(6px);
+        text-align: center;
+        -webkit-backdrop-filter: blur(6px);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
+        
+    }
+    .invite-tile {
+        gap: 0.5rem;
+        margin: 1% auto;
+        padding: 1%;
     }
 
-    .camp-area-c {
-        grid-area: c;
+    .invite-label {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 0;
+        padding: 1%;
+        text-align: center;
+        background-color: var(--bgc-char-name);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
     }
+    .invite-code {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 0;
+        padding: 2%;
+        width: 80%;
+        margin: 2% auto;
+        text-align: center;
+        background-color: var(--accent);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+    }
+
+    .action-button {
+        width: 45%;
+        padding: 2%;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        background-color: var(--bgc-char-name);
+        color: var(--txt-color-1);
+    }
+    .campaign-title {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        gap: 0.5rem;
+        margin: auto;
+        padding: 1%;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        backdrop-filter: blur(6px);
+    }
+
+    .invite-set {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        gap: 0.5rem;
+        margin: 1% auto;
+        padding: 1%;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+    }
+
+    .share-button {
+        width: 100%;
+        padding: 2%;
+        margin: 0 auto;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        background-color: var(--bgc-char-name);
+        color: var(--txt-color-1);
+    }
+
+    .invite-label-2 {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 0;
+        padding: 2%;
+        text-align: center;
+        background-color: var(--bgc-char-name);
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+    }
+
+    .invite-select {
+        width: 100%;
+        margin: 0 auto;
+        padding: 1%;
+        border: var(--tileBorder);
+        border-radius: var(--tile);
+        box-shadow: var(--bs2);
+        background-color: var(--accent);
+
+    }
+    /* #endregion Invite Container Section */
+
+/* #region Player Section */
+
+    .player-container {
+        grid-area: c;
+        border-radius: var(--tile);
+        background-color: color-mix(in srgb, var(--bgc-theme) 60%, transparent);
+        padding: 2vh 2vw;
+        backdrop-filter: blur(6px);
+    }
+
+   .monsters-container {
+        grid-area: d;
+        border-radius: var(--tile);
+        background-color: color-mix(in srgb, var(--bgc-theme) 60%, transparent);
+        padding: 2vh 2vw;
+        backdrop-filter: blur(6px);
+   }
+
+
 
     .home-tabs {
         display: none;
     }
-    
+
+/* #region Footer Section */ 
     footer {
         display: flex;
         position: fixed;
@@ -855,11 +1096,11 @@ footer {
         border-radius: 50% 50% 0 0;
         overflow: hidden;
     }
+/* #endregion Footer Section */
 
-    #site-title h1 {
-        display: none;
-    }
+/* #region Site Title Section */
 
+/* #region Site Title Section */
     .title-logo {
         content: url('/logo_banner.png');
         height: auto;
@@ -874,6 +1115,10 @@ footer {
         height: 8vh;
         width: 100vw;
         border-radius: 0 0 15% 15%;
+    }   
+
+    #site-title h1 {
+        display: none;
     }
 
     #site-title {
@@ -892,44 +1137,8 @@ footer {
         box-shadow: var(--bs2);
     }
 
-    footer .footer-text {
-        background-image: var(--txt-gradient, linear-gradient(currentColor, currentColor));
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+/* #endregion Site Title Section */
 
-    .campaign-name {
-        color: var(--txt-color-1);
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.5rem;
-        margin: 0;
-        padding: 2%;
-        background-color: var(--bgc-char-name);
-        border-radius: var(--tile) var(--tile) 0 0;
-    }
-    
-    .camp-panel {
-        border: var(--tileBorder);
-        border-radius: 0 0 var(--tile) var(--tile);
-        box-shadow: var(--bs2);
-        background-color: var(--bg-color-1);
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        scrollbar-width: thin;
-        scrollbar-color: transparent transparent;
-        scrollbar-gutter: stable;
-    }
-
-    .campaign-description {
-        color: var(--txt-color-1);
-        font-size: 1.2rem;
-        background-color: var(--bgc-char-name);
-        border-radius: 0 0 var(--tile) var(--tile);
-        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
-    }
 
     .campaign-tile {
         padding: 2vh 2vw;
@@ -946,29 +1155,7 @@ footer {
         box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
     }
 
-    .campaign-image {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        object-fit: contain;
-        object-position: center;
-        display: block;
-        margin: 0;
-        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.1);
-    }
-
-    .btn-form,
-    .edit-btn {
-        padding: 2%;
-        width: 101%;
-        font-size: 1.2rem;
-        margin-left: auto;
-        cursor: pointer;
-        background-color: var(--bgc-char-name);
-        color: var(--txt-color-1);
-        border: var(--tileBorder);
-        
-        
-    }
+/* #region Nav Section */
 
     #nav-box {
         position: relative;
@@ -1066,6 +1253,10 @@ footer {
         background-color: var(--bgc-char-stat);
     }
 
+/* #endregion Nav Section */
+   
+
+/* #region Slide Section */
     .slide {
         position: absolute;
         top: 0.6vh;
@@ -1074,14 +1265,16 @@ footer {
         z-index: 3;
         box-sizing: border-box;
         pointer-events: none;
-        background-color: color-mix(in srgb, var(--accent) 25%, transparent);
-        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.06));
-        border: 1px solid rgba(255, 255, 255, 0.35);
+        background-color: var(--navSlideFill);
+        background-image: linear-gradient(180deg, var(--navSlideShine), rgba(255, 255, 255, 0.06));
+        border: 1px solid var(--navSlideBorder);
         border-radius: var(--tile);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 10px color-mix(in srgb, var(--accent) 45%, transparent);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 10px var(--navSlideGlow);
         transition: transform .35s ease, width .35s ease;
     }
+/* #endregion Slide Section */
 
+/* #region Players Section */
     .players-title {
         font-weight: bold;
         text-align: center;
@@ -1127,6 +1320,7 @@ footer {
         margin: 0;
         padding: 0;
     }
+/* #endregion Players Section */
 }
 
 

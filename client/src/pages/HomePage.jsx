@@ -16,10 +16,18 @@ function HomePage() {
         e.stopPropagation();
         if (!window.confirm(`Do you want to delete ${ch.name}? This cannot be undone.`)) return;
 
-        const res = await fetch(`/api/characters/${ch.id}`, { method: 'DELETE' });
-        if (res.ok) {
-            // remove it from the list on screen
-            setData((prev) => ({ ...prev, characters: prev.characters.filter((c) => c.id !== ch.id) }));
+        try {
+            const res = await fetch(`/api/characters/${ch.id}`, { method: 'DELETE' });
+            if (res.ok) {
+                // remove it from the list on screen
+                setData((prev) => ({ ...prev, characters: prev.characters.filter((c) => c.id !== ch.id) }));
+            } else {
+                // tell the player why it failed instead of doing nothing
+                const body = await res.json().catch(() => ({}));
+                alert(`Couldn't delete ${ch.name}: ${body.error ?? res.status}`);
+            }
+        } catch (err) {
+            alert(`Couldn't reach the server to delete ${ch.name}. Try again.`);
         }
     };
 

@@ -1,0 +1,117 @@
+[
+    {
+        "id": 1,
+        "name": "Ochre",
+        "description": "The primordial god of life. Often taking the form of an ochre dragon, or a green haired elf.",
+        "art_url": "/images/monsters/ochre.png",
+        "size_id": 5,
+        "species_id": null,
+        "type": "Origin",
+        "threat_level": 25,
+        "xp": 100000,
+        "str": 30, "dex": 30, "con": 30, "int": 30, "wis": 30, "cha": 30, "spd": 60, "luc": 30,
+        "save_proficiencies": ["str", "dex", "con", "int", "wis", "cha"],
+        "skill_bonuses": { "perception": 30 },
+        
+        "max_hp": 4000,
+        "hit_dice": "10d10",
+        "armor": 25,
+        "travel": { "climb": 60, "fly": 60, "swim": 60 },
+        "senses": { "darkvision": 120 },
+        "languages": [
+            "Common",
+            "Ancient"
+        ],
+        "affinity_element_ids": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "resistances": ["fire", "cold", "lightning", "poison", "acid", "radiant", "necrotic", "psychic", "radiant", "necrotic"],
+        "immunities": ["poison", "disease", "exhaustion", "petrified", "paralysis", "poison", "disease", "exhaustion", "petrified", "paralysis"],
+        "weaknesses": ["fire", "cold", "lightning", "poison", "acid", "radiant", "necrotic", "psychic", "radiant", "necrotic"],
+        "condition_immunities": ["poison", "disease", "exhaustion", "petrified", "paralysis", "poison", "disease", "exhaustion", "petrified", "paralysis"],
+        "attacks": [
+            { "name": "Ancient Bite", "stat": "str", "to_hit_bonus": 0, "damage_dice": "1d10",
+                "damage_type": "piercing", "extra_dice": "1d10", "extra_type": "fire",
+                "reach": 5, "action_type": "action" },
+            { "name": "Ancient Claw", "stat": "str", "to_hit_bonus": 0, "damage_dice": "1d10",
+                "damage_type": "piercing", "extra_dice": "1d10", "extra_type": "fire",
+                "reach": 5, "action_type": "action" },
+            { "name": "Ancient Tail", "stat": "str", "to_hit_bonus": 0, "damage_dice": "1d10",
+                "damage_type": "piercing", "extra_dice": "1d10", "extra_type": "fire",
+                "reach": 5, "action_type": "action" },
+            { "name": "Ancient Wing", "stat": "str", "to_hit_bonus": 0, "damage_dice": "1d10",
+                "damage_type": "piercing", "extra_dice": "1d10", "extra_type": "fire",
+                "reach": 5, "action_type": "action" }
+        ],
+        "multiattack": true,
+        "spell_ids": [1],
+        "spell_stat": "int",
+        "features": [
+            { "name": "Ancient Presence", "action_type": "passive", "uses": null, "recharge": null,
+                "description": "The ancient god of life is always present in the area, and can be sensed by any creature with the ability to sense the presence of gods." }
+        ],
+        "reactions": [
+            { "name": "Ancient Ward", "action_type": "reaction", "uses": null, "recharge": null,
+                "description": "The ancient god of life can create a ward around itself or another creature, protecting them from harm." },
+            { "name": "Ancient Blessing", "action_type": "reaction", "uses": null, "recharge": null,
+                "description": "The ancient god of life can bless itself or another creature, granting them a blessing." },
+            { "name": "Ancient Curse", "action_type": "reaction", "uses": null, "recharge": null,
+                "description": "The ancient god of life can curse itself or another creature, cursing them with a curse." },
+            { "name": "Ancient Summon", "action_type": "reaction", "uses": null, "recharge": null,
+                "description": "The ancient god of life can summon itself or another creature, summoning them to the area." },
+            { "name": "Ancient Enchant", "action_type": "reaction", "uses": null, "recharge": null,
+                "description": "The ancient god of life can enchant itself or another creature, enchanting them with a spell." }
+        ],
+        "legendary_actions": [
+            { "name": "Ancient Strike", "action_type": "legendary", "uses": null, "recharge": null,
+                "description": "The ancient god of life can strike itself or another creature, dealing damage and stunning them." },
+            { "name": "Ancient Heal", "action_type": "legendary", "uses": null, "recharge": null,
+                "description": "The ancient god of life can heal itself or another creature, healing them for a amount of hit points." },
+            { "name": "Ancient Bless", "action_type": "legendary", "uses": null, "recharge": null,
+                "description": "The ancient god of life can bless itself or another creature, granting them a blessing." },
+            { "name": "Ancient Curse", "action_type": "legendary", "uses": null, "recharge": null,
+                "description": "The ancient god of life can curse itself or another creature, cursing them with a curse." },
+            { "name": "Ancient Summon", "action_type": "legendary", "uses": null, "recharge": null,
+                "description": "The ancient god of life can summon itself or another creature, summoning them to the area." },
+            { "name": "Ancient Enchant", "action_type": "legendary", "uses": null, "recharge": null,
+                "description": "The ancient god of life can enchant itself or another creature, enchanting them with a spell." }
+        ],
+        "notes": "Ochre is a powerful god, and is not easily defeated. It is best to avoid it if possible, and to seek out its blessings if you can."
+      },  
+    {
+        "id": 2,
+        "name": "Ash Hound",
+        "description": "A lean beast with smoldering fur.",
+        "art_url": "/images/monsters/ash_hound.png",
+        "size_id": 3,
+        "species_id": null,
+        "type": "beast",
+        "threat_level": 2,
+        "xp": 450,
+        "str": 14, "dex": 15, "con": 13, "int": 3, "wis": 12, "cha": 6, "spd": 12, "luc": 10,
+        "save_proficiencies": ["dex"],
+        "skill_bonuses": { "perception": 3 },
+        "max_hp": 22,
+        "hit_dice": "4d8+4",
+        "armor": 13,
+        "speed": { "walk": 40, "climb": 0, "fly": 0, "swim": 0 },
+        "senses": { "darkvision": 60 },
+        "languages": [],
+        "affinity_element_ids": [3],
+        "resistances": ["fire"],
+        "immunities": [],
+        "weaknesses": ["frost"],
+        "condition_immunities": [],
+        "attacks": [
+          { "name": "Bite", "stat": "str", "to_hit_bonus": 0, "damage_dice": "1d8",
+            "damage_type": "piercing", "extra_dice": "1d4", "extra_type": "fire",
+            "reach": 5, "action_type": "action" }
+        ],
+        "multiattack": null,
+        "spell_ids": [],
+        "spell_stat": null,
+        "features": [
+          { "name": "Ember Trail", "action_type": "passive", "uses": null, "recharge": null,
+            "description": "Leaves burning ground where it moves." }
+        ],
+        "reactions": []
+      }
+]

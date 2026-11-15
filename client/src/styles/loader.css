@@ -2,7 +2,7 @@
 .loader-ring {
   width: 100px;
   height: 100px;
-  background: linear-gradient(135deg, #6366f1, #ec4899);
+  background: linear-gradient(135deg, #8e63f1, #ecb848);
   border-radius: 42% 58% 70% 30% / 55% 30% 70% 45%;
   animation: liquid 4s ease-in-out infinite;
 }
